@@ -1,0 +1,985 @@
+# Canonical root section of the only runtime config:
+# config/elder_bosses-common.toml
+#
+# This file contains global client visuals and both server-authoritative boss subtrees.
+
+[indicators]
+enabled = true
+opacity = 0.60
+occluded_outline_opacity_multiplier = 0.35
+render_distance = 64.0
+surface_offset = 0.02
+max_active_indicators = 64
+max_segments_per_shape = 96
+
+# Corruption Goddess (Malenia) server-authoritative values.
+[malenia.general]
+phase_one_health = 900.0
+phase_two_health = 900.0
+phase_two_start_ratio = 0.80
+attack_damage = 20.0
+movement_speed = 0.34
+follow_range = 56.0
+max_active_players = 4
+combat_snapshot_on_start = true
+
+[malenia.damage_routing]
+ordinary_physical = "physical"
+pierce = "physical"
+bleed_trigger = "physical"
+magic = "magic"
+holy = "magic"
+frost_trigger = "magic"
+physical_uses_armor = true
+magic_bypasses_armor = true
+
+[malenia.multiplayer]
+health_per_extra_player = 0.50
+damage_multiplier_per_extra_player = 0.0
+healing_window_cap_per_extra_player = 0.15
+retarget_interval_ticks = 15
+same_target_penalty_after_ticks = 180
+same_target_score_multiplier = 0.78
+
+[malenia.arena]
+generation_mode = "programmatic"
+radius = 26.0
+minimum_clear_height = 18
+validation_radius = 32.0
+validation_height = 24
+clear_radius = 28.0
+clear_height = 20
+foundation_depth = 4
+inner_floor_radius = 8.0
+middle_slope_end_radius = 18.0
+outer_slope_end_radius = 24.0
+middle_height_offset = 1
+outer_height_offset = 3
+rim_height_offset = 5
+height_noise_start_radius = 18.0
+height_noise_amplitude = 1
+visual_water_depth = 0.125
+leash_grace_ticks = 100
+logical_shallow_water = false
+unload_resets_fight = true
+boss_ignores_arena_height_variation = true
+allow_block_breaking = true
+breakable_block_tag = "elder_bosses:boss_breakable"
+protected_block_tag = "elder_bosses:arena_protected"
+block_break_radius = 1.5
+max_blocks_broken_per_tick = 24
+restore_broken_blocks_on_reset = true
+allow_wall_phasing = true
+wall_phase_max_ticks = 20
+
+[malenia.arena.anchors]
+arena_center = [0.0, 1.0, 0.0]
+boss_spawn = [0.0, 1.0, -11.0]
+aeonia_opening = [0.0, 8.0, 0.0]
+player_entry = [0.0, 1.0, 23.0]
+fog_gate = [0.0, 2.0, 26.0]
+exit_gate = [0.0, 2.0, -25.0]
+
+[malenia.arena.materials]
+foundation = [
+  { block = "minecraft:stone", weight = 0.70 },
+  { block = "minecraft:deepslate", weight = 0.30 }
+]
+center_surface = [
+  { block = "minecraft:calcite", weight = 0.45 },
+  { block = "minecraft:smooth_sandstone", weight = 0.35 },
+  { block = "minecraft:light_gray_concrete_powder", weight = 0.20 }
+]
+outer_slope = [
+  { block = "minecraft:dirt", weight = 0.35 },
+  { block = "minecraft:rooted_dirt", weight = 0.35 },
+  { block = "minecraft:tuff", weight = 0.30 }
+]
+root_bank = [
+  { block = "minecraft:stripped_oak_wood", weight = 0.30 },
+  { block = "minecraft:mud_bricks", weight = 0.20 },
+  { block = "elder_bosses:haligtree_root", weight = 0.50 }
+]
+
+[malenia.targeting]
+distance_weight = 0.45
+recent_damage_weight = 0.35
+item_use_weight = 0.10
+interrupt_weight = 0.10
+recent_damage_window_ticks = 160
+
+[malenia.stagger]
+damage_conversion_ratio = 0.75
+capacity_health_ratio = 0.10
+distance_bands = [
+  { max_distance = 4.0, multiplier = 1.00 },
+  { max_distance = 8.0, multiplier = 0.70 },
+  { max_distance = 16.0, multiplier = 0.40 },
+  { max_distance = -1.0, multiplier = 0.20 }
+]
+uses_actual_health_loss = true
+aggregate_by_hit_id = true
+eligible_sources = "player_and_owned"
+source_dedupe_ticks = 5
+decay_delay_ticks = 120
+decay_per_tick = 1.5
+stun_ticks = 70
+post_stun_immunity_ticks = 80
+reset_on_phase_change = true
+
+[malenia.instant_guard]
+enabled = true
+start_tick = 3
+end_tick = 6
+rearm_ticks = 4
+blocked_damage_multiplier = 0.0
+shield_durability_multiplier = 0.50
+default_cue_lead_ticks = 6
+cue_pulse_count = 3
+red_cue_color = "#FF2020"
+cue_sound = "elder_bosses:malenia.instant_guard_cue"
+eligible_item_tag = "elder_bosses:instant_guard_items"
+
+[malenia.healing]
+enabled = true
+blocked_hit_multiplier = 1.0
+heal_from_players = true
+heal_from_tamed_entities = false
+heal_from_summons = false
+heal_from_armor_stands = false
+action_cap = 16.0
+window_ticks = 100
+window_cap = 36.0
+standard_heal = { flat = 1.0, attack_ratio = 0.06 }
+heavy_heal = { flat = 2.0, attack_ratio = 0.08 }
+waterfowl_heal = { flat = 0.0, attack_ratio = 0.04 }
+grab_heal = { flat = 3.0, attack_ratio = 0.10 }
+
+[malenia.resistance.phase_one]
+physical = 0.90
+fire = 1.00
+magic = 0.80
+lightning = 0.80
+
+[malenia.resistance.phase_two]
+physical = 0.90
+fire = 1.00
+magic = 0.80
+lightning = 0.80
+
+# Source tags modify damage after routing without becoming damage types.
+[malenia.source_multiplier.phase_one]
+ordinary_physical = 1.00
+pierce = 1.00
+bleed_trigger = 1.00
+magic = 1.00
+holy = 0.75
+frost_trigger = 1.00
+
+[malenia.source_multiplier.phase_two]
+ordinary_physical = 1.00
+pierce = 1.00
+bleed_trigger = 1.00
+magic = 1.00
+holy = 0.75
+frost_trigger = 1.00
+
+[malenia.status]
+poison_buildup_multiplier = 0.20
+scarlet_rot_buildup_multiplier = 0.10
+bleed_buildup_multiplier = 0.75
+frost_buildup_multiplier = 0.85
+sleep_buildup_multiplier = 0.35
+sleep_stun_ticks = 40
+madness_immune = true
+
+[malenia.scarlet_rot]
+player_threshold = 100.0
+decay_delay_ticks = 60
+decay_per_20_ticks = 8.0
+duration_ticks = 120
+damage_interval_ticks = 20
+damage = { flat = 0.0, attack_ratio = 0.10 }
+healing_reduction = 0.30
+movement_speed_reduction = 0.10
+honey_buildup_reduction = 25.0
+cleanse_item = "elder_bosses:golden_needle"
+consume_cleanse_item = true
+cleanse_use_ticks = 32
+milk_clears_rot = false
+
+[malenia.selector]
+phase_one_idle_min_ticks = 15
+phase_one_idle_max_ticks = 35
+phase_two_idle_min_ticks = 8
+phase_two_idle_max_ticks = 20
+avoid_last_action_count = 2
+item_use_punish_min_range = 4.0
+item_use_punish_max_range = 10.0
+item_use_weight_multiplier = 1.70
+shield_kick_after_ticks = 40
+shield_kick_weight_multiplier = 1.80
+shield_grab_weight_multiplier = 1.40
+high_threat_group_cooldown_ticks = 140
+
+[malenia.phase_transition]
+duration_ticks = 150
+clear_owned_slash_hazards = true
+preserve_player_rot_buildup = true
+reset_stagger = true
+phase_two_start_ratio = 0.80
+opening_aeonia = true
+
+[malenia.performance]
+max_logical_phantom_hitboxes = 2
+max_visual_phantoms = 6
+max_rot_zones = 3
+waterfowl_samples_per_tick = 24
+normal_particles_per_tick = 36
+burst_particles_per_tick = 150
+burst_particle_max_ticks = 24
+dynamic_lights = false
+
+[malenia.dialogue]
+enabled = true
+max_queued_lines = 1
+subtitle_duration_ticks = 70
+player_defeat_delay_ticks = 12
+intro_warning_tick = 20
+transition_release_tick = 42
+defeated_tick = 28
+
+[malenia.nonverbal_audio]
+enabled = true
+volume = 1.0
+pitch = 1.0
+hurt_cooldown_ticks = 20
+grunt_cooldown_ticks = 80
+
+[malenia.rewards.consecrated_prosthetic_blade]
+attack_damage = 9.0
+attack_speed = 1.6
+durability = 2300
+enchantability = 15
+
+[malenia.rewards.unalloyed_winged_helm]
+armor = 3.0
+armor_toughness = 3.5
+knockback_resistance = 0.11
+durability = 450
+rot_buildup_multiplier = 0.85
+
+[malenia.skills.single_slash]
+enabled = true
+weight = 1.0
+cooldown_ticks = 28
+range = 3.4
+arc_degrees = 120.0
+windup_ticks = 10
+active_ticks = 3
+recovery_ticks = 14
+damage = { flat = 1.0, attack_ratio = 0.45 }
+heal_profile = "standard"
+
+[malenia.skills.double_slash]
+enabled = true
+weight = 1.0
+cooldown_ticks = 42
+range = 3.5
+windup_ticks = [11, 9]
+active_ticks = [3, 3]
+recovery_ticks = [6, 18]
+damage = [
+  { flat = 1.0, attack_ratio = 0.42 },
+  { flat = 1.0, attack_ratio = 0.42 }
+]
+heal_profile = "standard"
+
+[malenia.skills.rapid_slashes]
+enabled = true
+weight = 0.9
+cooldown_ticks = 70
+range = 3.6
+windup_ticks = 14
+active_ticks = 18
+recovery_ticks = 22
+opening_damage = { flat = 0.0, attack_ratio = 0.34 }
+finisher_damage = { flat = 2.0, attack_ratio = 0.50 }
+opening_hits = 3
+finisher_delay_ticks = 8
+heal_profile = "standard"
+
+[malenia.skills.running_slash]
+enabled = true
+weight = 0.9
+cooldown_ticks = 55
+range = 6.0
+windup_ticks = 16
+active_ticks = 4
+recovery_ticks = 18
+damage = { flat = 2.0, attack_ratio = 0.55 }
+heal_profile = "standard"
+
+[malenia.skills.upward_combo]
+enabled = true
+weight = 0.75
+cooldown_ticks = 90
+range = 3.5
+windup_ticks = [18, 14]
+active_ticks = [4, 5]
+recovery_ticks = [8, 24]
+damage = [
+  { flat = 2.0, attack_ratio = 0.50 },
+  { flat = 3.0, attack_ratio = 0.65 }
+]
+heal_profile = "heavy"
+
+[malenia.skills.kick]
+enabled = true
+weight = 0.8
+cooldown_ticks = 50
+range = 2.3
+arc_degrees = 100.0
+windup_ticks = 9
+active_ticks = 4
+recovery_ticks = 18
+damage = { flat = 2.0, attack_ratio = 0.42 }
+shield_stamina_multiplier = 1.8
+heal_profile = "standard"
+hyper_armor = true
+
+[malenia.skills.thrust]
+enabled = true
+weight = 0.75
+cooldown_ticks = 85
+range = 7.0
+width = 1.2
+windup_ticks = 22
+active_ticks = 4
+recovery_ticks = 24
+damage = { flat = 3.0, attack_ratio = 0.70 }
+heal_profile = "heavy"
+
+[malenia.skills.grab_impale]
+enabled = true
+weight = 0.45
+cooldown_ticks = 180
+range = 5.0
+width = 1.2
+windup_ticks = 24
+active_ticks = 5
+recovery_ticks = 38
+grab_damage = { flat = 0.0, attack_ratio = 0.0 }
+impale_damage = { flat = 6.0, attack_ratio = 0.95 }
+throw_damage = { flat = 2.0, attack_ratio = 0.35 }
+heal_profile = "grab"
+
+[malenia.skills.retreat_slash]
+enabled = true
+weight = 0.8
+cooldown_ticks = 65
+range = 3.4
+retreat_distance = 3.0
+windup_ticks = 8
+active_ticks = 4
+recovery_ticks = 20
+damage = { flat = 1.0, attack_ratio = 0.45 }
+heal_profile = "standard"
+
+[malenia.skills.waterfowl_dance]
+enabled = true
+weight = 0.40
+cooldown_ticks = 320
+first_eligible_ticks = 260
+phase_one_first_health_ratio = 0.70
+phase_two_opening_delay_ticks = 180
+minimum_start_range = 6.0
+windup_ticks = 32
+active_ticks = 68
+recovery_ticks = 42
+burst_visual_slashes = [4, 3, 3]
+burst_max_hits_per_target = [2, 2, 2]
+burst_max_travel = [7.0, 6.0, 5.0]
+slash_damage = { flat = 0.0, attack_ratio = 0.22 }
+final_wind_damage = { flat = 1.0, attack_ratio = 0.30 }
+action_heal_cap = 16.0
+heal_profile = "waterfowl"
+hyper_armor_after_tick = 22
+
+[malenia.skills.scarlet_aeonia]
+enabled = true
+weight = 0.35
+cooldown_ticks = 360
+radius = 5.5
+windup_ticks = 42
+active_ticks = 58
+recovery_ticks = 54
+target_lock_tick = 26
+telegraph_start_tick = 27
+dive_damage = { flat = 3.0, attack_ratio = 0.60 }
+explosion_damage = { flat = 5.0, attack_ratio = 0.90 }
+zone_damage = { flat = 0.0, attack_ratio = 0.15 }
+dive_rot_buildup = 15.0
+explosion_rot_buildup = 45.0
+zone_rot_buildup = 12.0
+zone_duration_ticks = 84
+zone_interval_ticks = 20
+heal_profile = "none"
+
+[malenia.skills.scarlet_plunge]
+enabled = true
+weight = 0.65
+cooldown_ticks = 130
+range = 4.0
+windup_ticks = 24
+active_ticks = 12
+recovery_ticks = 30
+blade_damage = { flat = 3.0, attack_ratio = 0.65 }
+burst_damage = { flat = 2.0, attack_ratio = 0.45 }
+blade_rot_buildup = 8.0
+burst_rot_buildup = 24.0
+heal_profile = "heavy"
+
+[malenia.skills.flying_slash]
+enabled = true
+weight = 0.75
+cooldown_ticks = 120
+range = 7.0
+windup_ticks = [20, 12]
+active_ticks = [5, 4]
+recovery_ticks = [8, 24]
+damage = [
+  { flat = 2.0, attack_ratio = 0.50 },
+  { flat = 3.0, attack_ratio = 0.65 }
+]
+rot_buildup = [6.0, 9.0]
+heal_profile = "heavy"
+
+[malenia.skills.scarlet_phantoms]
+enabled = true
+weight = 0.35
+cooldown_ticks = 280
+windup_ticks = 36
+active_ticks = 72
+recovery_ticks = 38
+phantom_count = 6
+phantom_interval_ticks = 8
+max_early_hits_per_target = 2
+max_late_hits_per_target = 2
+phantom_damage = { flat = 1.0, attack_ratio = 0.28 }
+dive_damage = { flat = 4.0, attack_ratio = 0.75 }
+phantom_rot_buildup = 8.0
+dive_rot_buildup = 12.0
+heal_profile = "none"
+hyper_armor = true
+
+[malenia.skills.winged_sweep]
+enabled = true
+weight = 0.70
+cooldown_ticks = 85
+range = 4.0
+windup_ticks = 16
+active_ticks = 8
+recovery_ticks = 22
+damage = { flat = 2.0, attack_ratio = 0.55 }
+rot_buildup = 10.0
+heal_profile = "standard"
+
+# Promised Consort server-authoritative values.
+[promised_consort.general]
+base_health = 1600.0
+attack_damage = 24.0
+movement_speed = 0.30
+follow_range = 64.0
+phase_two_health_ratio = 0.65
+meteor_health_ratio = 0.25
+max_active_players = 4
+health_per_extra_player = 0.55
+combat_snapshot_on_start = true
+
+[promised_consort.damage_routing]
+ordinary_physical = "physical"
+pierce = "physical"
+bleed_trigger = "physical"
+magic = "magic"
+holy = "magic"
+frost_trigger = "magic"
+physical_uses_armor = true
+magic_bypasses_armor = true
+
+[promised_consort.multiplayer]
+damage_multiplier_per_extra_player = 0.0
+retarget_interval_ticks = 20
+same_target_penalty_after_ticks = 200
+same_target_score_multiplier = 0.75
+
+[promised_consort.arena]
+generation_mode = "programmatic"
+radius = 28.0
+minimum_clear_height = 20
+validation_radius = 34.0
+validation_height = 28
+clear_radius = 30.0
+clear_height = 22
+foundation_depth = 5
+flat_radius = 22.0
+floor_height_variation = 1
+gate_distance = 24.0
+gate_width = 11.0
+gate_height = 18.0
+entry_direction = "south"
+leash_grace_ticks = 100
+unload_resets_fight = true
+allow_block_breaking = true
+breakable_block_tag = "elder_bosses:boss_breakable"
+protected_block_tag = "elder_bosses:arena_protected"
+block_break_radius = 2.5
+max_blocks_broken_per_tick = 40
+restore_broken_blocks_on_reset = true
+allow_wall_phasing = true
+wall_phase_max_ticks = 24
+
+[promised_consort.arena.anchors]
+arena_center = [0.0, 1.0, 0.0]
+boss_spawn = [0.0, 12.0, 12.0]
+phase_return = [0.0, 1.0, -18.0]
+meteor_departure = [0.0, 18.0, 0.0]
+meteor_default_impact = [0.0, 1.0, 0.0]
+player_entry = [0.0, 1.0, 24.0]
+fog_gate = [0.0, 2.0, 28.0]
+
+[promised_consort.arena.materials]
+foundation = [
+  { block = "minecraft:stone", weight = 0.40 },
+  { block = "minecraft:deepslate", weight = 0.30 },
+  { block = "minecraft:tuff", weight = 0.30 }
+]
+battle_surface = [
+  { block = "minecraft:calcite", weight = 0.35 },
+  { block = "minecraft:smooth_stone", weight = 0.35 },
+  { block = "minecraft:light_gray_concrete_powder", weight = 0.30 }
+]
+ash_and_cracks = [
+  { block = "minecraft:gray_concrete_powder", weight = 0.35 },
+  { block = "minecraft:andesite", weight = 0.35 },
+  { block = "elder_bosses:ash_crack", weight = 0.30 }
+]
+divine_gate = [
+  { block = "minecraft:bone_block", weight = 0.20 },
+  { block = "minecraft:calcite", weight = 0.30 },
+  { block = "elder_bosses:weathered_gate_stone", weight = 0.50 }
+]
+outer_debris = [
+  { block = "minecraft:tuff_wall", weight = 0.40 },
+  { block = "minecraft:cracked_stone_bricks", weight = 0.30 },
+  { block = "elder_bosses:gate_debris", weight = 0.30 }
+]
+
+[promised_consort.targeting]
+distance_weight = 0.50
+recent_damage_weight = 0.35
+item_use_weight = 0.15
+recent_damage_window_ticks = 160
+
+[promised_consort.stagger]
+damage_conversion_ratio = 0.75
+capacity_health_ratio = 0.10
+distance_bands = [
+  { max_distance = 4.0, multiplier = 1.00 },
+  { max_distance = 8.0, multiplier = 0.70 },
+  { max_distance = 16.0, multiplier = 0.40 },
+  { max_distance = -1.0, multiplier = 0.20 }
+]
+uses_actual_health_loss = true
+aggregate_by_hit_id = true
+eligible_sources = "player_and_owned"
+source_dedupe_ticks = 5
+decay_delay_ticks = 120
+decay_per_tick = 2.0
+stun_ticks = 80
+post_stun_immunity_ticks = 100
+reset_on_phase_change = false
+
+[promised_consort.instant_guard]
+enabled = true
+start_tick = 3
+end_tick = 6
+rearm_ticks = 4
+blocked_damage_multiplier = 0.0
+shield_durability_multiplier = 0.50
+default_cue_lead_ticks = 6
+cue_pulse_count = 3
+red_cue_color = "#FF2020"
+cue_sound = "elder_bosses:promised_consort.instant_guard_cue"
+eligible_item_tag = "elder_bosses:instant_guard_items"
+
+[promised_consort.resistance.phase_one]
+physical = 0.80
+fire = 0.80
+magic = 0.80
+lightning = 0.80
+
+[promised_consort.resistance.phase_two]
+physical = 0.80
+fire = 0.80
+magic = 0.80
+lightning = 0.80
+
+# Source tags modify damage after routing without becoming damage types.
+[promised_consort.source_multiplier.phase_one]
+ordinary_physical = 1.00
+pierce = 1.25
+bleed_trigger = 1.00
+magic = 1.00
+holy = 1.25
+frost_trigger = 1.00
+
+[promised_consort.source_multiplier.phase_two]
+ordinary_physical = 1.00
+pierce = 1.25
+bleed_trigger = 1.00
+magic = 1.00
+holy = 0.75
+frost_trigger = 1.00
+
+[promised_consort.status]
+poison_strength_multiplier = 0.35
+wither_strength_multiplier = 0.35
+bleed_strength_multiplier = 0.50
+frost_strength_multiplier = 0.50
+sleep_immune = true
+
+[promised_consort.selector]
+avoid_last_action_count = 2
+item_use_punish_min_range = 4.0
+item_use_punish_max_range = 12.0
+item_use_weight_multiplier = 1.80
+ranged_weight_multiplier = 2.00
+crowd_weight_multiplier = 1.70
+miss_recovery_weight_multiplier = 1.20
+
+[promised_consort.phase_transition]
+duration_ticks = 140
+forced_recovery_ticks = 10
+clear_owned_hazards = true
+return_impact_tick = 127
+return_physical_damage = { flat = 4.0, attack_ratio = 0.70 }
+return_holy_damage = { flat = 2.0, attack_ratio = 0.35 }
+
+[promised_consort.light_echo]
+enabled = true
+delay_ticks = 8
+telegraph_ticks = 8
+active_ticks = 3
+width = 0.80
+height = 8.0
+max_logical_columns = 24
+damage = { flat = 1.0, attack_ratio = 0.25 }
+
+[promised_consort.performance]
+max_logical_projectiles = 16
+max_logical_light_columns = 24
+max_visual_clones = 4
+normal_particles_per_tick = 40
+burst_particles_per_tick = 160
+burst_particle_max_ticks = 20
+dynamic_lights = false
+
+[promised_consort.dialogue]
+enabled = true
+max_queued_lines = 1
+player_defeat_delay_ticks = 12
+subtitle_duration_ticks = 70
+transition_call_tick = 58
+phase_two_vow_tick = 92
+defeated_tick = 24
+
+[promised_consort.nonverbal_audio]
+enabled = true
+volume = 1.0
+pitch = 1.0
+intro_roar_tick = 18
+victory_roar_delay_ticks = 12
+hurt_cooldown_ticks = 20
+
+[promised_consort.rewards.young_lion_greatsword]
+attack_damage = 11.0
+attack_speed = 0.90
+durability = 2300
+enchantability = 14
+
+[promised_consort.rewards.circlet_of_fading_light]
+armor = 3.0
+armor_toughness = 3.5
+knockback_resistance = 0.11
+durability = 450
+holy_damage_multiplier = 1.10
+
+[promised_consort.skills.gravity_dive]
+enabled = true
+weight = 1.0
+cooldown_ticks = 160
+range = 4.5
+windup_ticks = 24
+active_ticks = 6
+recovery_ticks = 24
+sword_damage = { flat = 4.0, attack_ratio = 0.80 }
+impact_damage = { flat = 3.0, attack_ratio = 0.55 }
+
+[promised_consort.skills.left_combo_cross]
+enabled = true
+weight = 1.0
+cooldown_ticks = 50
+range = 3.8
+windup_ticks = [9, 8, 14]
+active_ticks = [3, 3, 4]
+recovery_ticks = [7, 8, 22]
+damage = [
+  { flat = 2.0, attack_ratio = 0.45 },
+  { flat = 2.0, attack_ratio = 0.45 },
+  { flat = 4.0, attack_ratio = 0.70 }
+]
+
+[promised_consort.skills.left_combo_bloodflame]
+enabled = true
+weight = 0.8
+cooldown_ticks = 100
+thrust_range = 5.0
+sweep_range = 4.0
+windup_ticks = [13, 12]
+active_ticks = [3, 4]
+recovery_ticks = [8, 24]
+thrust_damage = { flat = 3.0, attack_ratio = 0.60 }
+sweep_damage = { flat = 2.0, attack_ratio = 0.50 }
+burst_damage = { flat = 2.0, attack_ratio = 0.35 }
+fissure_lifetime_ticks = 24
+burst_tick = 16
+
+[promised_consort.skills.right_combo_cross]
+enabled = true
+weight = 1.0
+cooldown_ticks = 55
+range = 3.8
+windup_ticks = [9, 15]
+active_ticks = [3, 4]
+recovery_ticks = [8, 22]
+damage = [
+  { flat = 2.0, attack_ratio = 0.45 },
+  { flat = 4.0, attack_ratio = 0.75 }
+]
+
+[promised_consort.skills.right_combo_left_twin]
+enabled = true
+weight = 1.0
+cooldown_ticks = 50
+range = 3.6
+windup_ticks = [9, 7, 8]
+active_ticks = [3, 3, 3]
+recovery_ticks = [7, 7, 20]
+damage = [
+  { flat = 2.0, attack_ratio = 0.45 },
+  { flat = 2.0, attack_ratio = 0.40 },
+  { flat = 2.0, attack_ratio = 0.45 }
+]
+
+[promised_consort.skills.right_combo_tempest]
+enabled = true
+weight = 0.7
+cooldown_ticks = 110
+range = 4.2
+windup_ticks = [10, 10, 10, 18]
+active_ticks = [3, 3, 3, 8]
+recovery_ticks = [6, 6, 6, 26]
+opening_damage = { flat = 2.0, attack_ratio = 0.45 }
+tempest_damage = { flat = 3.0, attack_ratio = 0.55 }
+tempest_hits = 2
+
+[promised_consort.skills.right_combo_earthheave]
+enabled = true
+weight = 0.7
+cooldown_ticks = 140
+range = 7.0
+windup_ticks = [10, 10, 10, 20, 10]
+active_ticks = [3, 3, 3, 5, 6]
+recovery_ticks = [6, 6, 6, 12, 30]
+opening_damage = { flat = 2.0, attack_ratio = 0.45 }
+slam_damage = { flat = 5.0, attack_ratio = 0.80 }
+fissure_damage = { flat = 4.0, attack_ratio = 0.65 }
+
+[promised_consort.skills.lion_claw]
+enabled = true
+weight = 0.9
+cooldown_ticks = 100
+range = 3.5
+windup_ticks = 22
+active_ticks = 5
+recovery_ticks = 28
+damage = { flat = 5.0, attack_ratio = 0.85 }
+double_followup_chance = 0.35
+double_windup_ticks = 16
+double_active_ticks = 5
+double_recovery_ticks = 34
+double_damage = { flat = 5.0, attack_ratio = 0.90 }
+
+[promised_consort.skills.starcaller_cry]
+enabled = true
+weight = 0.7
+cooldown_ticks = 180
+pull_radius = 12.0
+impact_radius = 6.0
+windup_ticks = 30
+active_ticks = 10
+recovery_ticks = 34
+pull_damage = { flat = 0.0, attack_ratio = 0.0 }
+impact_damage = { flat = 4.0, attack_ratio = 0.70 }
+spike_damage = { flat = 2.0, attack_ratio = 0.40 }
+max_pull_per_tick = 0.35
+jump_avoid_height = 0.60
+
+[promised_consort.skills.gravity_meteor]
+enabled = true
+weight = 0.7
+cooldown_ticks = 220
+windup_ticks = 32
+active_ticks = 50
+recovery_ticks = 36
+projectile_count = 8
+max_hits_per_target = 3
+projectile_lifetime_ticks = 60
+max_turn_degrees_per_tick = 4.0
+damage = { flat = 2.0, attack_ratio = 0.35 }
+
+[promised_consort.skills.stomp]
+enabled = true
+weight = 1.0
+cooldown_ticks = 70
+forward_range = 5.0
+width = 4.0
+windup_ticks = 14
+active_ticks = 5
+recovery_ticks = 24
+damage = { flat = 3.0, attack_ratio = 0.55 }
+
+[promised_consort.skills.cross_slash]
+enabled = true
+weight = 0.9
+cooldown_ticks = 90
+sword_range = 4.0
+debris_range = 7.0
+windup_ticks = 18
+active_ticks = 5
+recovery_ticks = 26
+sword_damage = { flat = 4.0, attack_ratio = 0.75 }
+debris_damage = { flat = 2.0, attack_ratio = 0.35 }
+
+[promised_consort.skills.spiral_assault]
+enabled = true
+weight = 0.8
+cooldown_ticks = 150
+range = 12.0
+width = 3.0
+windup_ticks = 26
+active_ticks = 8
+recovery_ticks = 30
+spin_damage = { flat = 3.0, attack_ratio = 0.60 }
+slam_damage = { flat = 5.0, attack_ratio = 0.85 }
+
+[promised_consort.skills.light_of_miquella]
+enabled = true
+weight = 0.6
+cooldown_ticks = 300
+radius = 8.0
+windup_ticks = 44
+active_ticks = 10
+recovery_ticks = 42
+main_damage = { flat = 5.0, attack_ratio = 0.90 }
+afterglow_damage = { flat = 1.0, attack_ratio = 0.20 }
+afterglow_count = 8
+
+[promised_consort.skills.ring_of_light]
+enabled = true
+weight = 0.7
+cooldown_ticks = 140
+inner_radius = 3.0
+outer_radius = 11.0
+windup_ticks = 24
+active_ticks = 5
+recovery_ticks = 30
+damage = { flat = 3.0, attack_ratio = 0.55 }
+
+[promised_consort.skills.lightspeed_slash]
+enabled = true
+weight = 0.8
+cooldown_ticks = 160
+windup_ticks = 28
+active_ticks = 24
+recovery_ticks = 34
+clone_count = 3
+clone_damage = { flat = 1.0, attack_ratio = 0.20 }
+body_damage = { flat = 5.0, attack_ratio = 0.80 }
+
+[promised_consort.skills.lightspeed_dash]
+enabled = true
+weight = 0.7
+cooldown_ticks = 170
+range = 16.0
+width = 2.5
+windup_ticks = 26
+active_ticks = 20
+recovery_ticks = 36
+clone_damage = { flat = 1.0, attack_ratio = 0.20 }
+body_damage = { flat = 4.0, attack_ratio = 0.75 }
+trail_damage = { flat = 1.0, attack_ratio = 0.20 }
+
+[promised_consort.skills.lightspeed_side_dash]
+enabled = true
+weight = 0.8
+cooldown_ticks = 150
+windup_ticks = 18
+active_ticks = 20
+recovery_ticks = 30
+clone_count = 3
+clone_damage = { flat = 1.0, attack_ratio = 0.20 }
+body_damage = { flat = 4.0, attack_ratio = 0.70 }
+
+[promised_consort.skills.promised_consort]
+enabled = true
+weight = 0.5
+cooldown_ticks = 260
+windup_ticks = 26
+active_ticks = 54
+recovery_ticks = 48
+opening_damage = { flat = 3.0, attack_ratio = 0.55 }
+spin_damage = { flat = 3.0, attack_ratio = 0.50 }
+finisher_damage = { flat = 6.0, attack_ratio = 0.95 }
+holy_ring_damage = { flat = 2.0, attack_ratio = 0.35 }
+
+[promised_consort.skills.enhanced_earthheave]
+enabled = true
+weight = 0.6
+cooldown_ticks = 170
+radius = 6.0
+windup_ticks = 20
+active_ticks = 20
+recovery_ticks = 38
+slam_damage = { flat = 5.0, attack_ratio = 0.85 }
+fissure_damage = { flat = 4.0, attack_ratio = 0.70 }
+light_damage = { flat = 1.0, attack_ratio = 0.25 }
+
+[promised_consort.skills.consort_meteor]
+enabled = true
+weight = 0.0
+cooldown_ticks = 3600
+core_radius = 9.0
+outer_radius = 13.0
+windup_ticks = 90
+active_ticks = 12
+recovery_ticks = 48
+lock_target_tick = 91
+telegraph_tick = 110
+impact_tick = 121
+prediction_sample_ticks = 10
+prediction_lead_ticks = 12
+core_damage = { flat = 8.0, attack_ratio = 1.20 }
+outer_damage = { flat = 4.0, attack_ratio = 0.65 }
+aftershock_damage = { flat = 2.0, attack_ratio = 0.30 }

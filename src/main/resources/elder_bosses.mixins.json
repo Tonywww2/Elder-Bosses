@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.tonywww.elder_bosses.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "elder_bosses.refmap.json",
+  "mixins": [],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

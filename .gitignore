@@ -1,0 +1,32 @@
+# Gradle and Stonecutter
+.gradle/
+**/.gradle/
+.stonecutter/
+**/build/
+**/bin/
+
+# Minecraft development runs
+**/run/
+crash-reports/
+logs/
+saves/
+*.log
+hs_err_pid*
+replay_pid*
+
+# IDE-local files
+.idea/
+.vscode/
+.settings/
+.classpath
+.project
+*.iml
+out/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Java build artifacts
+*.class

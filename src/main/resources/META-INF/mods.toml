@@ -1,0 +1,27 @@
+modLoader = "javafml"
+loaderVersion = "${loaderVersion}"
+license = "${license}"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+authors = "${authors}"
+description = '''${description}'''
+
+[[mixins]]
+config = "${id}.mixins.json"
+
+[[dependencies.elder_bosses]]
+modId = "forge"
+mandatory = true
+versionRange = "${forgeVersionRange}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.elder_bosses]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraftVersionRange}"
+ordering = "NONE"
+side = "BOTH"
