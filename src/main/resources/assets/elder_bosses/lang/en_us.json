@@ -1,0 +1,21 @@
+{
+  "death.attack.scarlet_rot": "%1$s was consumed by scarlet rot",
+  "death.attack.scarlet_rot.player": "%1$s was consumed by scarlet rot while fighting %2$s",
+  "attribute.name.elder_bosses.scarlet_rot_capacity": "Scarlet Rot Capacity",
+  "entity.elder_bosses.malenia": "Goddess of Rot",
+  "dialogue.elder_bosses.malenia.intro_warning": "I guard the Haligtree. You shall go no farther.",
+  "dialogue.elder_bosses.malenia.player_defeated_p1": "This path is closed to you.",
+  "dialogue.elder_bosses.malenia.transition_release": "Then so be it... Let the scarlet bloom once more.",
+  "dialogue.elder_bosses.malenia.player_defeated_p2": "Rest now, within the scarlet.",
+  "dialogue.elder_bosses.malenia.defeated": "Miquella... still I could not... await your return.",
+  "subtitles.elder_bosses.malenia.instant_guard_cue": "Instant guard opportunity",
+  "subtitles.elder_bosses.entity.malenia.hurt": "The Goddess of Rot is hurt",
+  "subtitles.elder_bosses.entity.malenia.stagger": "The Goddess of Rot loses her balance",
+  "subtitles.elder_bosses.entity.malenia.grunt": "The Goddess of Rot grunts",
+  "item.elder_bosses.golden_needle": "Golden Needle",
+  "item.elder_bosses.rot_goddess_remembrance": "Remembrance of the Rot Goddess",
+  "item.elder_bosses.consecrated_prosthetic_blade": "Consecrated Prosthetic Blade",
+  "item.elder_bosses.unalloyed_winged_helm": "Unalloyed Winged Helm",
+  "item.elder_bosses.scarlet_aeonia_core": "Scarlet Aeonia Core",
+  "item.elder_bosses.haligtree_root_fragment": "Haligtree Root Fragment"
+}

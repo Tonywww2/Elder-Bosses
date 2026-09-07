@@ -1,13 +1,14 @@
 # Canonical root section of the only runtime config:
 # config/elder_bosses-common.toml
 #
-# This file contains global client visuals and both server-authoritative boss subtrees.
+# The current runtime registers global client visuals and the Malenia subtree.
+# Promised Consort values below are a future schema and are not registered yet.
 
 [indicators]
 enabled = true
 opacity = 0.60
 occluded_outline_opacity_multiplier = 0.35
-render_distance = 64.0
+render_distance = 96.0
 surface_offset = 0.02
 max_active_indicators = 64
 max_segments_per_shape = 96
@@ -20,45 +21,19 @@ phase_two_start_ratio = 0.80
 attack_damage = 20.0
 movement_speed = 0.34
 follow_range = 56.0
+knockback_resistance = 0.75
 max_active_players = 4
-combat_snapshot_on_start = true
-
-[malenia.damage_routing]
-ordinary_physical = "physical"
-pierce = "physical"
-bleed_trigger = "physical"
-magic = "magic"
-holy = "magic"
-frost_trigger = "magic"
-physical_uses_armor = true
-magic_bypasses_armor = true
 
 [malenia.multiplayer]
 health_per_extra_player = 0.50
-damage_multiplier_per_extra_player = 0.0
 healing_window_cap_per_extra_player = 0.15
 retarget_interval_ticks = 15
 same_target_penalty_after_ticks = 180
 same_target_score_multiplier = 0.78
 
+# Reserved for the future arena integration; current gameplay does not consume these values.
 [malenia.arena]
-generation_mode = "programmatic"
-radius = 26.0
-minimum_clear_height = 18
-validation_radius = 32.0
-validation_height = 24
-clear_radius = 28.0
-clear_height = 20
-foundation_depth = 4
-inner_floor_radius = 8.0
-middle_slope_end_radius = 18.0
-outer_slope_end_radius = 24.0
-middle_height_offset = 1
-outer_height_offset = 3
-rim_height_offset = 5
-height_noise_start_radius = 18.0
-height_noise_amplitude = 1
-visual_water_depth = 0.125
+logical_radius = 26.0
 leash_grace_ticks = 100
 logical_shallow_water = false
 unload_resets_fight = true
@@ -71,35 +46,6 @@ max_blocks_broken_per_tick = 24
 restore_broken_blocks_on_reset = true
 allow_wall_phasing = true
 wall_phase_max_ticks = 20
-
-[malenia.arena.anchors]
-arena_center = [0.0, 1.0, 0.0]
-boss_spawn = [0.0, 1.0, -11.0]
-aeonia_opening = [0.0, 8.0, 0.0]
-player_entry = [0.0, 1.0, 23.0]
-fog_gate = [0.0, 2.0, 26.0]
-exit_gate = [0.0, 2.0, -25.0]
-
-[malenia.arena.materials]
-foundation = [
-  { block = "minecraft:stone", weight = 0.70 },
-  { block = "minecraft:deepslate", weight = 0.30 }
-]
-center_surface = [
-  { block = "minecraft:calcite", weight = 0.45 },
-  { block = "minecraft:smooth_sandstone", weight = 0.35 },
-  { block = "minecraft:light_gray_concrete_powder", weight = 0.20 }
-]
-outer_slope = [
-  { block = "minecraft:dirt", weight = 0.35 },
-  { block = "minecraft:rooted_dirt", weight = 0.35 },
-  { block = "minecraft:tuff", weight = 0.30 }
-]
-root_bank = [
-  { block = "minecraft:stripped_oak_wood", weight = 0.30 },
-  { block = "minecraft:mud_bricks", weight = 0.20 },
-  { block = "elder_bosses:haligtree_root", weight = 0.50 }
-]
 
 [malenia.targeting]
 distance_weight = 0.45
@@ -117,9 +63,6 @@ distance_bands = [
   { max_distance = 16.0, multiplier = 0.40 },
   { max_distance = -1.0, multiplier = 0.20 }
 ]
-uses_actual_health_loss = true
-aggregate_by_hit_id = true
-eligible_sources = "player_and_owned"
 source_dedupe_ticks = 5
 decay_delay_ticks = 120
 decay_per_tick = 1.5
@@ -137,13 +80,13 @@ shield_durability_multiplier = 0.50
 default_cue_lead_ticks = 6
 cue_pulse_count = 3
 red_cue_color = "#FF2020"
-cue_sound = "elder_bosses:malenia.instant_guard_cue"
 eligible_item_tag = "elder_bosses:instant_guard_items"
 
 [malenia.healing]
 enabled = true
 blocked_hit_multiplier = 1.0
 heal_from_players = true
+heal_from_non_hostile_entities = true
 heal_from_tamed_entities = false
 heal_from_summons = false
 heal_from_armor_stands = false
@@ -184,17 +127,7 @@ magic = 1.00
 holy = 0.75
 frost_trigger = 1.00
 
-[malenia.status]
-poison_buildup_multiplier = 0.20
-scarlet_rot_buildup_multiplier = 0.10
-bleed_buildup_multiplier = 0.75
-frost_buildup_multiplier = 0.85
-sleep_buildup_multiplier = 0.35
-sleep_stun_ticks = 40
-madness_immune = true
-
 [malenia.scarlet_rot]
-player_threshold = 100.0
 decay_delay_ticks = 60
 decay_per_20_ticks = 8.0
 duration_ticks = 120
@@ -203,10 +136,15 @@ damage = { flat = 0.0, attack_ratio = 0.10 }
 healing_reduction = 0.30
 movement_speed_reduction = 0.10
 honey_buildup_reduction = 25.0
-cleanse_item = "elder_bosses:golden_needle"
 consume_cleanse_item = true
 cleanse_use_ticks = 32
 milk_clears_rot = false
+
+[malenia.phase_two_rot]
+ordinary_sword_buildup = 4.0
+heavy_thrust_buildup = 8.0
+waterfowl_buildup = 5.0
+kick_buildup = 8.0
 
 [malenia.selector]
 phase_one_idle_min_ticks = 15
@@ -214,12 +152,21 @@ phase_one_idle_max_ticks = 35
 phase_two_idle_min_ticks = 8
 phase_two_idle_max_ticks = 20
 avoid_last_action_count = 2
+waterfowl_retreat_max_range = 4.0
 item_use_punish_min_range = 4.0
 item_use_punish_max_range = 10.0
 item_use_weight_multiplier = 1.70
 shield_kick_after_ticks = 40
 shield_kick_weight_multiplier = 1.80
 shield_grab_weight_multiplier = 1.40
+nearby_player_range = 4.0
+nearby_player_count_threshold = 2
+nearby_player_retreat_weight_multiplier = 1.50
+recent_interrupt_window_ticks = 100
+recent_interrupt_count_threshold = 2
+recent_interrupt_weight_multiplier = 1.40
+long_range_threshold = 12.0
+long_range_running_slash_weight_multiplier = 1.60
 high_threat_group_cooldown_ticks = 140
 
 [malenia.phase_transition]
@@ -227,18 +174,10 @@ duration_ticks = 150
 clear_owned_slash_hazards = true
 preserve_player_rot_buildup = true
 reset_stagger = true
-phase_two_start_ratio = 0.80
 opening_aeonia = true
 
 [malenia.performance]
-max_logical_phantom_hitboxes = 2
-max_visual_phantoms = 6
 max_rot_zones = 3
-waterfowl_samples_per_tick = 24
-normal_particles_per_tick = 36
-burst_particles_per_tick = 150
-burst_particle_max_ticks = 24
-dynamic_lights = false
 
 [malenia.dialogue]
 enabled = true
@@ -255,19 +194,6 @@ volume = 1.0
 pitch = 1.0
 hurt_cooldown_ticks = 20
 grunt_cooldown_ticks = 80
-
-[malenia.rewards.consecrated_prosthetic_blade]
-attack_damage = 9.0
-attack_speed = 1.6
-durability = 2300
-enchantability = 15
-
-[malenia.rewards.unalloyed_winged_helm]
-armor = 3.0
-armor_toughness = 3.5
-knockback_resistance = 0.11
-durability = 450
-rot_buildup_multiplier = 0.85
 
 [malenia.skills.single_slash]
 enabled = true
@@ -397,14 +323,14 @@ minimum_start_range = 6.0
 windup_ticks = 32
 active_ticks = 68
 recovery_ticks = 42
-burst_visual_slashes = [4, 3, 3]
-burst_max_hits_per_target = [2, 2, 2]
-burst_max_travel = [7.0, 6.0, 5.0]
+burst_count = 4
+burst_width = 3.5
+burst_lock_ticks = [22, 46, 62, 78]
+burst_max_hits_per_target = [2, 2, 2, 1]
+burst_max_travel = [7.0, 6.0, 5.0, 4.0]
 slash_damage = { flat = 0.0, attack_ratio = 0.22 }
-final_wind_damage = { flat = 1.0, attack_ratio = 0.30 }
 action_heal_cap = 16.0
 heal_profile = "waterfowl"
-hyper_armor_after_tick = 22
 
 [malenia.skills.scarlet_aeonia]
 enabled = true
@@ -462,7 +388,8 @@ cooldown_ticks = 280
 windup_ticks = 36
 active_ticks = 72
 recovery_ticks = 38
-phantom_count = 6
+phantom_count = 5
+phantom_width = 1.6
 phantom_interval_ticks = 8
 max_early_hits_per_target = 2
 max_late_hits_per_target = 2
@@ -485,12 +412,12 @@ damage = { flat = 2.0, attack_ratio = 0.55 }
 rot_buildup = 10.0
 heal_profile = "standard"
 
-# Promised Consort server-authoritative values.
+# Future Promised Consort schema; the current runtime does not register or consume this subtree.
 [promised_consort.general]
 base_health = 1600.0
 attack_damage = 24.0
 movement_speed = 0.30
-follow_range = 64.0
+follow_range = 96.0
 phase_two_health_ratio = 0.65
 meteor_health_ratio = 0.25
 max_active_players = 4
@@ -514,20 +441,7 @@ same_target_penalty_after_ticks = 200
 same_target_score_multiplier = 0.75
 
 [promised_consort.arena]
-generation_mode = "programmatic"
-radius = 28.0
-minimum_clear_height = 20
-validation_radius = 34.0
-validation_height = 28
-clear_radius = 30.0
-clear_height = 22
-foundation_depth = 5
-flat_radius = 22.0
-floor_height_variation = 1
-gate_distance = 24.0
-gate_width = 11.0
-gate_height = 18.0
-entry_direction = "south"
+logical_radius = 40.0
 leash_grace_ticks = 100
 unload_resets_fight = true
 allow_block_breaking = true
@@ -538,42 +452,6 @@ max_blocks_broken_per_tick = 40
 restore_broken_blocks_on_reset = true
 allow_wall_phasing = true
 wall_phase_max_ticks = 24
-
-[promised_consort.arena.anchors]
-arena_center = [0.0, 1.0, 0.0]
-boss_spawn = [0.0, 12.0, 12.0]
-phase_return = [0.0, 1.0, -18.0]
-meteor_departure = [0.0, 18.0, 0.0]
-meteor_default_impact = [0.0, 1.0, 0.0]
-player_entry = [0.0, 1.0, 24.0]
-fog_gate = [0.0, 2.0, 28.0]
-
-[promised_consort.arena.materials]
-foundation = [
-  { block = "minecraft:stone", weight = 0.40 },
-  { block = "minecraft:deepslate", weight = 0.30 },
-  { block = "minecraft:tuff", weight = 0.30 }
-]
-battle_surface = [
-  { block = "minecraft:calcite", weight = 0.35 },
-  { block = "minecraft:smooth_stone", weight = 0.35 },
-  { block = "minecraft:light_gray_concrete_powder", weight = 0.30 }
-]
-ash_and_cracks = [
-  { block = "minecraft:gray_concrete_powder", weight = 0.35 },
-  { block = "minecraft:andesite", weight = 0.35 },
-  { block = "elder_bosses:ash_crack", weight = 0.30 }
-]
-divine_gate = [
-  { block = "minecraft:bone_block", weight = 0.20 },
-  { block = "minecraft:calcite", weight = 0.30 },
-  { block = "elder_bosses:weathered_gate_stone", weight = 0.50 }
-]
-outer_debris = [
-  { block = "minecraft:tuff_wall", weight = 0.40 },
-  { block = "minecraft:cracked_stone_bricks", weight = 0.30 },
-  { block = "elder_bosses:gate_debris", weight = 0.30 }
-]
 
 [promised_consort.targeting]
 distance_weight = 0.50

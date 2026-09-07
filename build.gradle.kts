@@ -68,6 +68,8 @@ tasks {
             expand(props)
         }
         exclude("META-INF/neoforge.mods.toml")
+        exclude("data/**/loot_table/**")
+        exclude("data/**/tags/item/**")
     }
 
     withType<JavaCompile>().configureEach {

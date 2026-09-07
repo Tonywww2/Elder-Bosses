@@ -1,0 +1,38 @@
+{
+  "malenia.instant_guard_cue": {
+    "subtitle": "subtitles.elder_bosses.malenia.instant_guard_cue",
+    "sounds": [
+      {
+        "name": "minecraft:item.shield.block",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.malenia.hurt": {
+    "subtitle": "subtitles.elder_bosses.entity.malenia.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.hurt",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.malenia.stagger": {
+    "subtitle": "subtitles.elder_bosses.entity.malenia.stagger",
+    "sounds": [
+      {
+        "name": "minecraft:entity.iron_golem.damage",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.malenia.grunt": {
+    "subtitle": "subtitles.elder_bosses.entity.malenia.grunt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.attack.strong",
+        "type": "event"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+package com.tonywww.elder_bosses.boss.malenia.action;
+
+public enum MaleniaActionTag {
+    FLOWING_SWORDPLAY,
+    REVERSING_COMBO,
+    RAPID_CHAIN,
+    DELAYED_FINISHER,
+    RUNNING_ENTRY,
+    LAUNCH_AND_PLUNGE,
+    KICK,
+    DELAYED_THRUST,
+    GRAB_AND_IMPALE,
+    RETREAT_COUNTER,
+    AERIAL,
+    TRACKING,
+    MULTI_BURST,
+    SCARLET_ROT,
+    SCARLET_BLOOM,
+    LINGERING_AREA,
+    WINGED_ATTACK,
+    PHANTOM_ASSAULT
+}

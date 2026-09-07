@@ -48,6 +48,8 @@ tasks {
             expand(props)
         }
         exclude("META-INF/mods.toml")
+        exclude("data/**/loot_tables/**")
+        exclude("data/**/tags/items/**")
     }
 
     withType<JavaCompile>().configureEach {
