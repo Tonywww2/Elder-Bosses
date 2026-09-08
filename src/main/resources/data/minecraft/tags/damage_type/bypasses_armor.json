@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "elder_bosses:malenia_magic",
-    "elder_bosses:scarlet_rot"
+    "elder_bosses:scarlet_rot",
+    "elder_bosses:promised_consort_magic",
+    "elder_bosses:promised_consort_holy",
+    "elder_bosses:promised_consort_incoming_physical_bypass_armor",
+    "elder_bosses:promised_consort_incoming_magic_bypass_armor"
   ]
 }

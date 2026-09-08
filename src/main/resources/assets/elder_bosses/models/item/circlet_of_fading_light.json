@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "elder_bosses:item/circlet_of_fading_light"
+  }
+}

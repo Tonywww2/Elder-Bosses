@@ -1,4 +1,6 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "elder_bosses:promised_consort_holy"
+  ]
 }

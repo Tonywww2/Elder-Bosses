@@ -1,12 +1,12 @@
 package com.tonywww.elder_bosses.platforms.network;
 
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
+import com.tonywww.elder_bosses.network.BossCombatSnapshotPacket;
 import com.tonywww.elder_bosses.network.MaleniaCombatSnapshotPacket;
 import com.tonywww.elder_bosses.network.PlayerRotSnapshotPacket;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import java.util.Objects;
 import java.util.function.Consumer;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 //? if forge {
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,8 +25,10 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 *///?}
 
 public final class PlatformNetwork {
-    private static final String PROTOCOL_VERSION = "1";
+        private static final String PROTOCOL_VERSION = "2";
         private static Consumer<MaleniaCombatSnapshotPacket> combatClientHandler = packet -> {
+        };
+        private static Consumer<BossCombatSnapshotPacket> bossCombatClientHandler = packet -> {
         };
         private static Consumer<PlayerRotSnapshotPacket> rotClientHandler = packet -> {
         };
@@ -75,7 +77,7 @@ public final class PlatformNetwork {
                 .add();
         CHANNEL.messageBuilder(
                         IndicatorSnapshotPacket.class,
-                        messageId,
+                        messageId++,
                         NetworkDirection.PLAY_TO_CLIENT
                 )
                 .encoder(IndicatorSnapshotPacket::write)
@@ -85,6 +87,18 @@ public final class PlatformNetwork {
                     contextSupplier.get().setPacketHandled(true);
                 })
                 .add();
+                CHANNEL.messageBuilder(
+                                                BossCombatSnapshotPacket.class,
+                                                messageId,
+                                                NetworkDirection.PLAY_TO_CLIENT
+                                )
+                                .encoder(BossCombatSnapshotPacket::write)
+                                .decoder(BossCombatSnapshotPacket::read)
+                                .consumerMainThread((packet, contextSupplier) -> {
+                                        handleOnClient(packet);
+                                        contextSupplier.get().setPacketHandled(true);
+                                })
+                                .add();
         //?} else {
         /*modBus.addListener(PlatformNetwork::registerPayloadHandlers);
         *///?}
@@ -99,6 +113,16 @@ public final class PlatformNetwork {
         /*PacketDistributor.sendToPlayer(player, new MaleniaCombatPayload(packet));
         *///?}
     }
+
+        public static void sendTo(ServerPlayer player, BossCombatSnapshotPacket packet) {
+                Objects.requireNonNull(player, "player");
+                Objects.requireNonNull(packet, "packet");
+                //? if forge {
+                CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+                //?} else {
+                /*PacketDistributor.sendToPlayer(player, new BossCombatPayload(packet));
+                *///?}
+        }
 
     public static void sendTo(ServerPlayer player, PlayerRotSnapshotPacket packet) {
         Objects.requireNonNull(player, "player");
@@ -122,10 +146,15 @@ public final class PlatformNetwork {
 
         public static synchronized void installClientHandlers(
                         Consumer<MaleniaCombatSnapshotPacket> combatHandler,
+                        Consumer<BossCombatSnapshotPacket> bossCombatHandler,
                         Consumer<PlayerRotSnapshotPacket> rotHandler,
                         Consumer<IndicatorSnapshotPacket> indicatorHandler
         ) {
                 combatClientHandler = Objects.requireNonNull(combatHandler, "combatHandler");
+                bossCombatClientHandler = Objects.requireNonNull(
+                        bossCombatHandler,
+                        "bossCombatHandler"
+                );
                 rotClientHandler = Objects.requireNonNull(rotHandler, "rotHandler");
                 indicatorClientHandler = Objects.requireNonNull(indicatorHandler, "indicatorHandler");
         }
@@ -133,6 +162,10 @@ public final class PlatformNetwork {
         private static void handleOnClient(MaleniaCombatSnapshotPacket packet) {
                 combatClientHandler.accept(packet);
     }
+
+        private static void handleOnClient(BossCombatSnapshotPacket packet) {
+                bossCombatClientHandler.accept(packet);
+        }
 
     private static void handleOnClient(PlayerRotSnapshotPacket packet) {
                 rotClientHandler.accept(packet);
@@ -148,6 +181,13 @@ public final class PlatformNetwork {
         registrar.playToClient(
                 MaleniaCombatPayload.TYPE,
                 MaleniaCombatPayload.STREAM_CODEC,
+                (payload, context) -> context.enqueueWork(
+                        () -> handleOnClient(payload.packet())
+                )
+        );
+        registrar.playToClient(
+                BossCombatPayload.TYPE,
+                BossCombatPayload.STREAM_CODEC,
                 (payload, context) -> context.enqueueWork(
                         () -> handleOnClient(payload.packet())
                 )
@@ -209,6 +249,27 @@ public final class PlatformNetwork {
             return TYPE;
         }
     }
+
+        private record BossCombatPayload(BossCombatSnapshotPacket packet)
+                        implements CustomPacketPayload {
+                private static final Type<BossCombatPayload> TYPE = new Type<>(
+                                PlatformResourceLocation.id("boss_combat_snapshot")
+                );
+                private static final StreamCodec<RegistryFriendlyByteBuf, BossCombatPayload> STREAM_CODEC =
+                                StreamCodec.of(
+                                                (buffer, payload) -> payload.packet().write(buffer),
+                                                buffer -> new BossCombatPayload(BossCombatSnapshotPacket.read(buffer))
+                                );
+
+                private BossCombatPayload {
+                        Objects.requireNonNull(packet, "packet");
+                }
+
+                @Override
+                public Type<BossCombatPayload> type() {
+                        return TYPE;
+                }
+        }
 
     private record IndicatorPayload(IndicatorSnapshotPacket packet)
             implements CustomPacketPayload {

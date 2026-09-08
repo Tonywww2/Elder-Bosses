@@ -15,6 +15,11 @@ public final class ModDamageTypeTags {
     public static final TagKey<DamageType> PIERCE = create("pierce");
     public static final TagKey<DamageType> BLEED_TRIGGER = create("bleed_trigger");
     public static final TagKey<DamageType> FROST_TRIGGER = create("frost_trigger");
+    public static final TagKey<DamageType> POISON = create("poison");
+    public static final TagKey<DamageType> WITHER = create("wither");
+    public static final TagKey<DamageType> SLEEP = create("sleep");
+        public static final TagKey<DamageType> PROMISED_CONSORT_IMMUNE =
+            create("promised_consort_immune");
 
     private ModDamageTypeTags() {
     }

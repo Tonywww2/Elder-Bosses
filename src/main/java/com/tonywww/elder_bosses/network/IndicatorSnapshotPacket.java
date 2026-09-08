@@ -242,7 +242,8 @@ public record IndicatorSnapshotPacket(
         CIRCLE(2, 1),
         ANNULUS(3, 2),
         PATH(4, 1),
-        ZONE(5, 1);
+        ZONE(5, 1),
+        RECTANGLE(6, 2);
 
         private final int id;
         private final int rangeCount;
@@ -297,7 +298,12 @@ public record IndicatorSnapshotPacket(
     public enum StyleRole {
         PHYSICAL_SILVER(0, 0xC7CDD4, false),
         SCARLET_ROT_DARK_RED(1, 0x741B24, false),
-        MOVEMENT_DASHED(2, 0xAAB5BC, true);
+        MOVEMENT_DASHED(2, 0xAAB5BC, true),
+        PHYSICAL_GOLD(3, 0xC9B98B, false),
+        GRAVITY_PURPLE(4, 0x6F3A91, false),
+        BLOODFLAME_RED(5, 0xA72B32, true),
+        HOLY_IVORY(6, 0xF1D78A, false),
+        CLONE_GOLD(7, 0xD6C58E, true);
 
         private final int id;
         private final int rgb;

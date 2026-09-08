@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:is_fire"
+    "#minecraft:is_fire",
+    "elder_bosses:promised_consort_fire"
   ]
 }

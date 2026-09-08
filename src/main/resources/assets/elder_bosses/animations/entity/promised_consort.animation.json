@@ -1,0 +1,33 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.promised_consort.idle": { "loop": true },
+    "animation.promised_consort.walk": { "loop": true },
+    "animation.promised_consort.hurt": { "loop": false },
+    "animation.promised_consort.stunned": { "loop": false },
+    "animation.promised_consort.death": { "loop": false },
+    "animation.promised_consort.transition": { "loop": false },
+    "animation.promised_consort.gravity_dive": { "loop": false },
+    "animation.promised_consort.left_combo_cross": { "loop": false },
+    "animation.promised_consort.left_combo_bloodflame": { "loop": false },
+    "animation.promised_consort.right_combo_cross": { "loop": false },
+    "animation.promised_consort.right_combo_left_twin": { "loop": false },
+    "animation.promised_consort.right_combo_tempest": { "loop": false },
+    "animation.promised_consort.right_combo_earthheave": { "loop": false },
+    "animation.promised_consort.lion_claw": { "loop": false },
+    "animation.promised_consort.lion_claw_double": { "loop": false },
+    "animation.promised_consort.starcaller_cry": { "loop": false },
+    "animation.promised_consort.gravity_meteor": { "loop": false },
+    "animation.promised_consort.stomp": { "loop": false },
+    "animation.promised_consort.cross_slash": { "loop": false },
+    "animation.promised_consort.spiral_assault": { "loop": false },
+    "animation.promised_consort.light_of_miquella": { "loop": false },
+    "animation.promised_consort.ring_of_light": { "loop": false },
+    "animation.promised_consort.lightspeed_slash": { "loop": false },
+    "animation.promised_consort.lightspeed_dash": { "loop": false },
+    "animation.promised_consort.lightspeed_side_dash": { "loop": false },
+    "animation.promised_consort.promised_consort": { "loop": false },
+    "animation.promised_consort.enhanced_earthheave": { "loop": false },
+    "animation.promised_consort.consort_meteor": { "loop": false }
+  }
+}

@@ -72,6 +72,12 @@ public final class ModItems {
     );
     public static final Supplier<Item> SCARLET_AEONIA_CORE = register("scarlet_aeonia_core");
     public static final Supplier<Item> HALIGTREE_ROOT_FRAGMENT = register("haligtree_root_fragment");
+    public static final Supplier<Item> GOD_AND_LORD_REMEMBRANCE =
+            register("god_and_lord_remembrance");
+    public static final Supplier<Item> YOUNG_LION_GREATSWORD = register("young_lion_greatsword");
+    public static final Supplier<Item> CIRCLET_OF_FADING_LIGHT =
+            register("circlet_of_fading_light");
+    public static final Supplier<Item> GATE_FRAGMENT = register("gate_fragment");
 
     private ModItems() {
     }

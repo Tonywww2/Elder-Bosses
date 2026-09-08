@@ -2,6 +2,9 @@ package com.tonywww.elder_bosses.platforms.registry;
 
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.boss.malenia.MaleniaEntity;
+import com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortCloneEntity;
+import com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity;
+import com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity;
 import java.util.function.Supplier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -32,6 +35,42 @@ public final class ModEntities {
                     .updateInterval(2)
                     .build(ElderBosses.MOD_ID + ":malenia")
     );
+
+    public static final Supplier<EntityType<PromisedConsortEntity>> PROMISED_CONSORT =
+            ENTITIES.register(
+                    "promised_consort",
+                    () -> EntityType.Builder.of(PromisedConsortEntity::new, MobCategory.MONSTER)
+                            .sized(1.9F, 4.6F)
+                            .clientTrackingRange(8)
+                            .updateInterval(2)
+                            .build(ElderBosses.MOD_ID + ":promised_consort")
+            );
+
+    public static final Supplier<EntityType<PromisedConsortGravityRockEntity>>
+            PROMISED_CONSORT_GRAVITY_ROCK = ENTITIES.register(
+                    "promised_consort_gravity_rock",
+                    () -> EntityType.Builder.<PromisedConsortGravityRockEntity>of(
+                                    PromisedConsortGravityRockEntity::new,
+                                    MobCategory.MISC
+                            )
+                            .sized(0.75F, 0.75F)
+                            .clientTrackingRange(8)
+                            .updateInterval(1)
+                            .build(ElderBosses.MOD_ID + ":promised_consort_gravity_rock")
+            );
+
+    public static final Supplier<EntityType<PromisedConsortCloneEntity>> PROMISED_CONSORT_CLONE =
+            ENTITIES.register(
+                    "promised_consort_clone",
+                    () -> EntityType.Builder.<PromisedConsortCloneEntity>of(
+                                    PromisedConsortCloneEntity::new,
+                                    MobCategory.MISC
+                            )
+                            .sized(1.9F, 4.6F)
+                            .clientTrackingRange(8)
+                            .updateInterval(2)
+                            .build(ElderBosses.MOD_ID + ":promised_consort_clone")
+            );
 
     private ModEntities() {
     }

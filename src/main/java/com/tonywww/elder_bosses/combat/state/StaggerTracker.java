@@ -277,6 +277,25 @@ public final class StaggerTracker<S> {
         }
     }
 
+    public void resizePhaseMaximumHealth(double newPhaseMaximumHealth, long gameTick) {
+        advanceTo(gameTick);
+        phaseMaximumHealth = requirePositiveFinite(newPhaseMaximumHealth, "newPhaseMaximumHealth");
+        capacity = calculateCapacity(phaseMaximumHealth);
+        if (pendingStun) {
+            stagger = capacity;
+            return;
+        }
+        if (stagger < capacity) {
+            return;
+        }
+        stagger = capacity;
+        if (!isStunnedAt(gameTick) && !isImmuneAt(gameTick)) {
+            pendingStun = true;
+            firstDecayTick = -1L;
+            lastAcceptedTickBySource.clear();
+        }
+    }
+
     public StaggerSnapshot resetForPhase(double newPhaseMaximumHealth, long gameTick) {
         advanceTo(gameTick);
         phaseMaximumHealth = requirePositiveFinite(newPhaseMaximumHealth, "newPhaseMaximumHealth");

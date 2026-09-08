@@ -2,7 +2,7 @@ package com.tonywww.elder_bosses.combat.geometry;
 
 import java.util.Objects;
 
-public sealed interface HorizontalShape permits Annulus, Capsule, Circle, Sector {
+public sealed interface HorizontalShape permits Annulus, Capsule, Circle, DirectionalRectangle, Sector {
     boolean contains(double x, double z);
 
     default boolean contains(Vec2 point) {

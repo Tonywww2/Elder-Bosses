@@ -24,6 +24,9 @@ follow_range = 56.0
 knockback_resistance = 0.75
 max_active_players = 4
 
+[malenia.debug]
+state_output = false
+
 [malenia.multiplayer]
 health_per_extra_player = 0.50
 healing_window_cap_per_extra_player = 0.15
@@ -412,17 +415,44 @@ damage = { flat = 2.0, attack_ratio = 0.55 }
 rot_buildup = 10.0
 heal_profile = "standard"
 
-# Future Promised Consort schema; the current runtime does not register or consume this subtree.
+# Planned Promised Consort runtime schema. Server-authoritative values are snapshotted
+# when an encounter starts unless a field is explicitly documented as live client state.
 [promised_consort.general]
 base_health = 1600.0
 attack_damage = 24.0
 movement_speed = 0.30
 follow_range = 96.0
+knockback_resistance = 1.0
 phase_two_health_ratio = 0.65
 meteor_health_ratio = 0.25
+# Balanced for 1-4 players; accepted range is 1-16.
 max_active_players = 4
 health_per_extra_player = 0.55
-combat_snapshot_on_start = true
+
+[promised_consort.encounter]
+wake_source_policy = "arena_player_and_owned"
+dormant_damage_policy = "immune"
+join_on_player_hit = true
+join_on_boss_hit = true
+player_first_hit_mode = "register_only"
+boss_first_hit_mode = "register_then_damage"
+boss_hit_at_full_roster = "damage_without_registration"
+overflow_player_policy = "reject_damage"
+roster_slot_policy = "never_reopen"
+scaling_count_mode = "cumulative_unique"
+allow_join_during_disengage = false
+rejoin_after_death = false
+rejoin_after_disconnect = false
+rejoin_after_boundary_exit = false
+rejoin_after_dimension_change = true
+disengage_grace_ticks = 100
+disengage_behavior = "finish_action_then_freeze"
+cooldown_resume_policy = "clear"
+restart_policy = "resume"
+unload_policy = "reset_dormant"
+peaceful_policy = "allow_combat"
+overlap_policy = "allow"
+persist_dormant = true
 
 [promised_consort.damage_routing]
 ordinary_physical = "physical"
@@ -434,6 +464,10 @@ frost_trigger = "magic"
 physical_uses_armor = true
 magic_bypasses_armor = true
 
+[promised_consort.incoming_damage]
+source_policy = "arena_player_and_owned"
+forced_death_bypasses_policy = true
+
 [promised_consort.multiplayer]
 damage_multiplier_per_extra_player = 0.0
 retarget_interval_ticks = 20
@@ -442,22 +476,31 @@ same_target_score_multiplier = 0.75
 
 [promised_consort.arena]
 logical_radius = 40.0
-leash_grace_ticks = 100
-unload_resets_fight = true
-allow_block_breaking = true
+intro_offset = [0.0, 14.0, 18.0]
+phase_return_offset = [0.0, 0.0, -30.0]
+allow_block_breaking = false
 breakable_block_tag = "elder_bosses:boss_breakable"
 protected_block_tag = "elder_bosses:arena_protected"
 block_break_radius = 2.5
 max_blocks_broken_per_tick = 40
-restore_broken_blocks_on_reset = true
 allow_wall_phasing = true
 wall_phase_max_ticks = 24
+wall_phase_failure = "nearest_legal_path_then_center"
 
 [promised_consort.targeting]
 distance_weight = 0.50
 recent_damage_weight = 0.35
 item_use_weight = 0.15
 recent_damage_window_ticks = 160
+target_unregistered_players = true
+target_creative_players = false
+creative_players_can_join = false
+primary_target_policy = "players_only"
+attack_target_policy = "all_living"
+
+[promised_consort.presentation]
+boss_bar_audience = "follow_range"
+stagger_hud_audience = "boss_bar"
 
 [promised_consort.stagger]
 damage_conversion_ratio = 0.75
@@ -468,15 +511,14 @@ distance_bands = [
   { max_distance = 16.0, multiplier = 0.40 },
   { max_distance = -1.0, multiplier = 0.20 }
 ]
-uses_actual_health_loss = true
-aggregate_by_hit_id = true
-eligible_sources = "player_and_owned"
 source_dedupe_ticks = 5
 decay_delay_ticks = 120
 decay_per_tick = 2.0
 stun_ticks = 80
 post_stun_immunity_ticks = 100
 reset_on_phase_change = false
+generated_hazards_on_stun = "persist"
+pending_hazards_on_stun = "cancel"
 
 [promised_consort.instant_guard]
 enabled = true
@@ -490,6 +532,9 @@ cue_pulse_count = 3
 red_cue_color = "#FF2020"
 cue_sound = "elder_bosses:promised_consort.instant_guard_cue"
 eligible_item_tag = "elder_bosses:instant_guard_items"
+cue_volume = 1.0
+cue_pitch = 1.0
+cue_cooldown_ticks = 0
 
 [promised_consort.resistance.phase_one]
 physical = 0.80
@@ -507,25 +552,23 @@ lightning = 0.80
 [promised_consort.source_multiplier.phase_one]
 ordinary_physical = 1.00
 pierce = 1.25
-bleed_trigger = 1.00
+bleed_trigger = 0.50
 magic = 1.00
 holy = 1.25
-frost_trigger = 1.00
+frost_trigger = 0.50
 
 [promised_consort.source_multiplier.phase_two]
 ordinary_physical = 1.00
 pierce = 1.25
-bleed_trigger = 1.00
+bleed_trigger = 0.50
 magic = 1.00
 holy = 0.75
-frost_trigger = 1.00
+frost_trigger = 0.50
 
 [promised_consort.status]
-poison_strength_multiplier = 0.35
-wither_strength_multiplier = 0.35
-bleed_strength_multiplier = 0.50
-frost_strength_multiplier = 0.50
-sleep_immune = true
+poison_damage_multiplier = 0.35
+wither_damage_multiplier = 0.35
+sleep_damage_multiplier = 0.0
 
 [promised_consort.selector]
 avoid_last_action_count = 2
@@ -535,14 +578,35 @@ item_use_weight_multiplier = 1.80
 ranged_weight_multiplier = 2.00
 crowd_weight_multiplier = 1.70
 miss_recovery_weight_multiplier = 1.20
+blocked_branch_chance = 0.70
+# stomp: force STOMP; continue_combo: finish normally and use the regular 6-14 tick interval;
+# weighted: skip the interval and immediately select from the regular eligible weighted pool.
+blocked_branch_mode = "stomp"
+guard_chain_threshold = 3
+# current_action: count within one action; same_target: count per target across actions;
+# encounter: share one count across all targets. Cross-action counters reset after triggering.
+guard_chain_scope = "current_action"
+guard_chain_recovery_ticks = 20
 
 [promised_consort.phase_transition]
 duration_ticks = 140
 forced_recovery_ticks = 10
+damage_gate = true
+damage_gate_mode = "truncate"
 clear_owned_hazards = true
 return_impact_tick = 127
 return_physical_damage = { flat = 4.0, attack_ratio = 0.70 }
 return_holy_damage = { flat = 2.0, attack_ratio = 0.35 }
+
+[promised_consort.meteor]
+damage_gate = true
+damage_gate_mode = "truncate"
+pending_damage_policy = "invulnerable"
+invulnerable_start_tick = 0
+invulnerable_end_tick = 120
+accepts_stagger = false
+clear_owned_hazards = true
+repeat_mode = "cooldown_forced"
 
 [promised_consort.light_echo]
 enabled = true
@@ -554,14 +618,18 @@ height = 8.0
 max_logical_columns = 24
 damage = { flat = 1.0, attack_ratio = 0.25 }
 
+[promised_consort.visuals]
+placeholder_particles_enabled = true
+placeholder_particle_quality = "full"
+gravity_projectile_block = "minecraft:crying_obsidian"
+visual_clones_enabled = true
+clone_render_mode = "empty_geo_entity"
+
 [promised_consort.performance]
 max_logical_projectiles = 16
 max_logical_light_columns = 24
 max_visual_clones = 4
 normal_particles_per_tick = 40
-burst_particles_per_tick = 160
-burst_particle_max_ticks = 20
-dynamic_lights = false
 
 [promised_consort.dialogue]
 enabled = true
@@ -571,7 +639,10 @@ subtitle_duration_ticks = 70
 transition_call_tick = 58
 phase_two_vow_tick = 92
 defeated_tick = 24
+audience = "participants"
 
+# Reserved until original or licensed nonverbal audio assets are delivered.
+# The current runtime only registers the independent instant-guard cue above.
 [promised_consort.nonverbal_audio]
 enabled = true
 volume = 1.0
@@ -580,23 +651,18 @@ intro_roar_tick = 18
 victory_roar_delay_ticks = 12
 hurt_cooldown_ticks = 20
 
-[promised_consort.rewards.young_lion_greatsword]
-attack_damage = 11.0
-attack_speed = 0.90
-durability = 2300
-enchantability = 14
-
-[promised_consort.rewards.circlet_of_fading_light]
-armor = 3.0
-armor_toughness = 3.5
-knockback_resistance = 0.11
-durability = 450
-holy_damage_multiplier = 1.10
+[promised_consort.rewards]
+remembrance_count = 1
+gate_fragment_min = 4
+gate_fragment_max = 8
+affected_by_looting = false
+experience = 500
 
 [promised_consort.skills.gravity_dive]
 enabled = true
 weight = 1.0
 cooldown_ticks = 160
+hyper_armor_active = true
 range = 4.5
 windup_ticks = 24
 active_ticks = 6
@@ -608,6 +674,7 @@ impact_damage = { flat = 3.0, attack_ratio = 0.55 }
 enabled = true
 weight = 1.0
 cooldown_ticks = 50
+hyper_armor_active = false
 range = 3.8
 windup_ticks = [9, 8, 14]
 active_ticks = [3, 3, 4]
@@ -622,6 +689,7 @@ damage = [
 enabled = true
 weight = 0.8
 cooldown_ticks = 100
+hyper_armor_active = false
 thrust_range = 5.0
 sweep_range = 4.0
 windup_ticks = [13, 12]
@@ -637,6 +705,7 @@ burst_tick = 16
 enabled = true
 weight = 1.0
 cooldown_ticks = 55
+hyper_armor_active = false
 range = 3.8
 windup_ticks = [9, 15]
 active_ticks = [3, 4]
@@ -650,6 +719,7 @@ damage = [
 enabled = true
 weight = 1.0
 cooldown_ticks = 50
+hyper_armor_active = false
 range = 3.6
 windup_ticks = [9, 7, 8]
 active_ticks = [3, 3, 3]
@@ -664,6 +734,7 @@ damage = [
 enabled = true
 weight = 0.7
 cooldown_ticks = 110
+hyper_armor_active = false
 range = 4.2
 windup_ticks = [10, 10, 10, 18]
 active_ticks = [3, 3, 3, 8]
@@ -676,6 +747,7 @@ tempest_hits = 2
 enabled = true
 weight = 0.7
 cooldown_ticks = 140
+hyper_armor_active = false
 range = 7.0
 windup_ticks = [10, 10, 10, 20, 10]
 active_ticks = [3, 3, 3, 5, 6]
@@ -688,6 +760,7 @@ fissure_damage = { flat = 4.0, attack_ratio = 0.65 }
 enabled = true
 weight = 0.9
 cooldown_ticks = 100
+hyper_armor_active = true
 range = 3.5
 windup_ticks = 22
 active_ticks = 5
@@ -703,6 +776,7 @@ double_damage = { flat = 5.0, attack_ratio = 0.90 }
 enabled = true
 weight = 0.7
 cooldown_ticks = 180
+hyper_armor_active = true
 pull_radius = 12.0
 impact_radius = 6.0
 windup_ticks = 30
@@ -713,11 +787,13 @@ impact_damage = { flat = 4.0, attack_ratio = 0.70 }
 spike_damage = { flat = 2.0, attack_ratio = 0.40 }
 max_pull_per_tick = 0.35
 jump_avoid_height = 0.60
+clone_damage = { flat = 1.0, attack_ratio = 0.20 }
 
 [promised_consort.skills.gravity_meteor]
 enabled = true
 weight = 0.7
 cooldown_ticks = 220
+hyper_armor_active = true
 windup_ticks = 32
 active_ticks = 50
 recovery_ticks = 36
@@ -725,12 +801,16 @@ projectile_count = 8
 max_hits_per_target = 3
 projectile_lifetime_ticks = 60
 max_turn_degrees_per_tick = 4.0
+projectile_health = 6.0
 damage = { flat = 2.0, attack_ratio = 0.35 }
+clone_radius = 3.5
+clone_damage = { flat = 1.0, attack_ratio = 0.20 }
 
 [promised_consort.skills.stomp]
 enabled = true
 weight = 1.0
 cooldown_ticks = 70
+hyper_armor_active = false
 forward_range = 5.0
 width = 4.0
 windup_ticks = 14
@@ -742,6 +822,7 @@ damage = { flat = 3.0, attack_ratio = 0.55 }
 enabled = true
 weight = 0.9
 cooldown_ticks = 90
+hyper_armor_active = false
 sword_range = 4.0
 debris_range = 7.0
 windup_ticks = 18
@@ -754,6 +835,7 @@ debris_damage = { flat = 2.0, attack_ratio = 0.35 }
 enabled = true
 weight = 0.8
 cooldown_ticks = 150
+hyper_armor_active = true
 range = 12.0
 width = 3.0
 windup_ticks = 26
@@ -766,6 +848,7 @@ slam_damage = { flat = 5.0, attack_ratio = 0.85 }
 enabled = true
 weight = 0.6
 cooldown_ticks = 300
+hyper_armor_active = true
 radius = 8.0
 windup_ticks = 44
 active_ticks = 10
@@ -778,6 +861,7 @@ afterglow_count = 8
 enabled = true
 weight = 0.7
 cooldown_ticks = 140
+hyper_armor_active = false
 inner_radius = 3.0
 outer_radius = 11.0
 windup_ticks = 24
@@ -789,6 +873,7 @@ damage = { flat = 3.0, attack_ratio = 0.55 }
 enabled = true
 weight = 0.8
 cooldown_ticks = 160
+hyper_armor_active = true
 windup_ticks = 28
 active_ticks = 24
 recovery_ticks = 34
@@ -800,6 +885,7 @@ body_damage = { flat = 5.0, attack_ratio = 0.80 }
 enabled = true
 weight = 0.7
 cooldown_ticks = 170
+hyper_armor_active = true
 range = 16.0
 width = 2.5
 windup_ticks = 26
@@ -813,6 +899,7 @@ trail_damage = { flat = 1.0, attack_ratio = 0.20 }
 enabled = true
 weight = 0.8
 cooldown_ticks = 150
+hyper_armor_active = true
 windup_ticks = 18
 active_ticks = 20
 recovery_ticks = 30
@@ -824,6 +911,7 @@ body_damage = { flat = 4.0, attack_ratio = 0.70 }
 enabled = true
 weight = 0.5
 cooldown_ticks = 260
+hyper_armor_active = true
 windup_ticks = 26
 active_ticks = 54
 recovery_ticks = 48
@@ -831,11 +919,13 @@ opening_damage = { flat = 3.0, attack_ratio = 0.55 }
 spin_damage = { flat = 3.0, attack_ratio = 0.50 }
 finisher_damage = { flat = 6.0, attack_ratio = 0.95 }
 holy_ring_damage = { flat = 2.0, attack_ratio = 0.35 }
+clone_damage = { flat = 1.0, attack_ratio = 0.20 }
 
 [promised_consort.skills.enhanced_earthheave]
 enabled = true
 weight = 0.6
 cooldown_ticks = 170
+hyper_armor_active = true
 radius = 6.0
 windup_ticks = 20
 active_ticks = 20
@@ -848,14 +938,10 @@ light_damage = { flat = 1.0, attack_ratio = 0.25 }
 enabled = true
 weight = 0.0
 cooldown_ticks = 3600
+hyper_armor_active = true
 core_radius = 9.0
 outer_radius = 13.0
-windup_ticks = 90
-active_ticks = 12
-recovery_ticks = 48
-lock_target_tick = 91
-telegraph_tick = 110
-impact_tick = 121
+script_ticks = 150
 prediction_sample_ticks = 10
 prediction_lead_ticks = 12
 core_damage = { flat = 8.0, attack_ratio = 1.20 }

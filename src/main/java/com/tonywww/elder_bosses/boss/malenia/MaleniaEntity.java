@@ -90,6 +90,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -145,6 +146,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     private static final int WATERFOWL_PATH_RETENTION_TICKS = 4;
     private static final int DYNAMIC_INDICATOR_SEND_INTERVAL_TICKS = 2;
     private static final int STAGGER_DECAY_SYNC_INTERVAL_TICKS = 5;
+    private static final int DEBUG_STATE_OUTPUT_INTERVAL_TICKS = 20;
     private static final double OBSERVATION_MIN_RANGE = 4.0;
     private static final double OBSERVATION_MAX_RANGE = 7.0;
     private static final double NAVIGATION_SPEED_MODIFIER = 1.0;
@@ -285,6 +287,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 }
             }
             syncNetworkState(Optional.empty(), List.of());
+            outputDebugState();
             return;
         }
 
@@ -329,6 +332,7 @@ public final class MaleniaEntity extends PlatformMonster implements
         processHitOutcomes(outcomes);
         syncCombatComponents(activeAction);
         syncNetworkState(activeAction, result.intents());
+        outputDebugState();
     }
 
     public boolean beginEncounter() {
@@ -942,6 +946,48 @@ public final class MaleniaEntity extends PlatformMonster implements
             return healing.healFromSummons();
         }
         return healing.healFromNonHostileEntities();
+    }
+
+    private void outputDebugState() {
+        if (!MaleniaConfigProvider.debugStateOutputEnabled()
+                || tickCount % DEBUG_STATE_OUTPUT_INTERVAL_TICKS != 0) {
+            return;
+        }
+        String phase = activePhase() == MaleniaPhase.PHASE_ONE ? "P1" : "P2";
+        String action = currentAction().map(snapshot -> String.format(
+                Locale.ROOT,
+                "%s@%dt/%s",
+                snapshot.actionId().serializedName(),
+                snapshot.actionTick(),
+                snapshot.phase().name().toLowerCase(Locale.ROOT)
+        )).orElse("none");
+        LivingEntity target = getTarget();
+        String targetName = target == null || !target.isAlive()
+                ? "none"
+                : target.getScoreboardName();
+        Component message = Component.literal(String.format(
+                Locale.ROOT,
+                "[Malenia #%d] %s/%s %dt | action %s | target %s | HP %.1f/%.1f | stagger %.1f/%.1f | heal %.1f",
+                getId(),
+                phase,
+                combatState().serializedName(),
+                stateTicks,
+                action,
+                targetName,
+                phaseHealth(),
+                phaseMaxHealth(),
+                stagger(),
+                staggerCapacity(),
+                healingBudgetRemaining()
+        ));
+        double range = currentConfig().general().followRange();
+        for (ServerPlayer player : level().getEntitiesOfClass(
+                ServerPlayer.class,
+                getBoundingBox().inflate(range),
+                candidate -> candidate.isAlive() && distanceToSqr(candidate) <= range * range
+        )) {
+            player.displayClientMessage(message, true);
+        }
     }
 
     private void applyControllerTarget(Optional<UUID> targetId) {

@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 public final class MaleniaConfigProvider {
     private static volatile Supplier<MaleniaCombatConfigSnapshot> snapshotSupplier;
     private static volatile Supplier<MaleniaSkillConfigSnapshot> skillSnapshotSupplier;
+    private static volatile Supplier<Boolean> debugStateOutputSupplier;
 
     private MaleniaConfigProvider() {
     }
@@ -26,6 +27,14 @@ public final class MaleniaConfigProvider {
         skillSnapshotSupplier = supplier;
     }
 
+    public static synchronized void installDebugStateOutput(Supplier<Boolean> supplier) {
+        Objects.requireNonNull(supplier, "supplier");
+        if (debugStateOutputSupplier != null) {
+            throw new IllegalStateException("Malenia debug config provider is already installed");
+        }
+        debugStateOutputSupplier = supplier;
+    }
+
     public static MaleniaCombatConfigSnapshot snapshot() {
         Supplier<MaleniaCombatConfigSnapshot> supplier = snapshotSupplier;
         if (supplier == null) {
@@ -40,5 +49,13 @@ public final class MaleniaConfigProvider {
             throw new IllegalStateException("Malenia skill config provider has not been installed");
         }
         return Objects.requireNonNull(supplier.get(), "Malenia skill config snapshot");
+    }
+
+    public static boolean debugStateOutputEnabled() {
+        Supplier<Boolean> supplier = debugStateOutputSupplier;
+        if (supplier == null) {
+            throw new IllegalStateException("Malenia debug config provider has not been installed");
+        }
+        return supplier.get();
     }
 }

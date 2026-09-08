@@ -2,7 +2,6 @@ package com.tonywww.elder_bosses.client.hud;
 
 import com.tonywww.elder_bosses.client.state.ClientBossStateStore;
 import com.tonywww.elder_bosses.client.state.ClientRotStateStore;
-import com.tonywww.elder_bosses.dialogue.DialogueEvent;
 import com.tonywww.elder_bosses.player.PlayerRotSnapshot;
 import java.util.Objects;
 
@@ -11,8 +10,6 @@ public record ElderBossesHudModel(
         StaggerMeter stagger,
         Subtitle subtitle
 ) {
-    private static final String MALENIA_SPEAKER_KEY = "entity.elder_bosses.malenia";
-
     public ElderBossesHudModel {
         Objects.requireNonNull(rot, "rot");
         Objects.requireNonNull(stagger, "stagger");
@@ -45,14 +42,14 @@ public record ElderBossesHudModel(
             ? StaggerMeter.visible(bossSnapshot.stagger() / bossSnapshot.staggerCapacity())
             : StaggerMeter.hidden();
 
-        Subtitle subtitle = DialogueEvent.fromId(bossSnapshot.dialogueEventId())
-            .map(event -> Subtitle.visible(
-                MALENIA_SPEAKER_KEY,
-                event.languageKey(),
+        Subtitle subtitle = bossSnapshot.dialogueTextKey().isEmpty()
+            ? Subtitle.hidden()
+            : Subtitle.visible(
+                bossSnapshot.dialogueSpeakerKey(),
+                bossSnapshot.dialogueTextKey(),
                 gameTime - bossSnapshot.dialogueEventStartTick(),
                 bossSnapshot.subtitleDurationTicks()
-            ))
-            .orElseGet(Subtitle::hidden);
+            );
 
         return new ElderBossesHudModel(rot, stagger, subtitle);
     }

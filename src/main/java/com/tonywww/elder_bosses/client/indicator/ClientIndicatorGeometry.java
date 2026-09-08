@@ -18,6 +18,7 @@ final class ClientIndicatorGeometry {
             case CIRCLE, ZONE -> appendCircle(builder, snapshot, segmentLimit);
             case ANNULUS -> appendAnnulus(builder, snapshot, segmentLimit);
             case PATH -> appendPath(builder, snapshot, segmentLimit);
+            case RECTANGLE -> appendRectangle(builder, snapshot);
         }
         return builder.build();
     }
@@ -145,6 +146,23 @@ final class ClientIndicatorGeometry {
             builder.addAccent(vertex(from), vertex(to));
         }
     }
+
+        private static void appendRectangle(
+            MeshBuilder builder,
+            IndicatorSnapshotPacket snapshot
+        ) {
+        double length = snapshot.ranges().get(0);
+        double width = snapshot.ranges().get(1);
+        double halfWidth = width * 0.5;
+        List<Vertex> polygon = List.of(
+            localPoint(snapshot, -halfWidth, 0.0),
+            localPoint(snapshot, halfWidth, 0.0),
+            localPoint(snapshot, halfWidth, length),
+            localPoint(snapshot, -halfWidth, length)
+        );
+        builder.addFan(polygon);
+        builder.addLoop(polygon);
+        }
 
     private static List<IndicatorSnapshotPacket.Point> sampledPathPoints(
             List<IndicatorSnapshotPacket.Point> points,

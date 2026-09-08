@@ -3,10 +3,13 @@ package com.tonywww.elder_bosses.platforms.client;
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.client.hud.ElderBossesHudRenderer;
 import com.tonywww.elder_bosses.client.render.MaleniaRenderer;
+import com.tonywww.elder_bosses.client.render.PromisedConsortCloneRenderer;
+import com.tonywww.elder_bosses.client.render.PromisedConsortRenderer;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.network.ClientNetworkHandlers;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 //? if forge {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -42,6 +45,18 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.MALENIA.get(), MaleniaRenderer::new);
+        event.registerEntityRenderer(
+                ModEntities.PROMISED_CONSORT.get(),
+                PromisedConsortRenderer::new
+        );
+        event.registerEntityRenderer(
+            ModEntities.PROMISED_CONSORT_GRAVITY_ROCK.get(),
+            context -> new ThrownItemRenderer<>(context)
+        );
+        event.registerEntityRenderer(
+            ModEntities.PROMISED_CONSORT_CLONE.get(),
+            PromisedConsortCloneRenderer::new
+        );
     }
 
     //? if forge {

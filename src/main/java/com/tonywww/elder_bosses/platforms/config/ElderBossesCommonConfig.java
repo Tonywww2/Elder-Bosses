@@ -52,6 +52,7 @@ public final class ElderBossesCommonConfig {
     private final Supplier<Double> followRange;
     private final Supplier<Double> knockbackResistance;
     private final Supplier<Integer> maxActivePlayers;
+    private final Supplier<Boolean> debugStateOutput;
 
     private final Supplier<Double> phaseOnePhysicalResistance;
     private final Supplier<Double> phaseOneFireResistance;
@@ -196,6 +197,7 @@ public final class ElderBossesCommonConfig {
     private final Supplier<Integer> nonverbalAudioHurtCooldownTicks;
     private final Supplier<Integer> nonverbalAudioGruntCooldownTicks;
     private final MaleniaSkillsValues maleniaSkills;
+    private final PromisedConsortConfigValues promisedConsort;
 
     private ElderBossesCommonConfig(
             //? if forge {
@@ -225,6 +227,10 @@ public final class ElderBossesCommonConfig {
         followRange = builder.defineInRange("follow_range", 56.0, 1.0, 2048.0);
         knockbackResistance = builder.defineInRange("knockback_resistance", 0.75, 0.0, 1.0);
         maxActivePlayers = builder.defineInRange("max_active_players", 4, 1, 4);
+        builder.pop();
+
+        builder.push("debug");
+        debugStateOutput = builder.define("state_output", false);
         builder.pop();
 
         builder.push("multiplayer");
@@ -467,6 +473,7 @@ public final class ElderBossesCommonConfig {
         maleniaSkills = new MaleniaSkillsValues(builder);
 
         builder.pop();
+        promisedConsort = new PromisedConsortConfigValues(builder);
     }
 
     public IndicatorValues indicators() {
@@ -492,6 +499,10 @@ public final class ElderBossesCommonConfig {
                 knockbackResistance.get(),
                 maxActivePlayers.get()
         );
+    }
+
+    public boolean maleniaDebugStateOutput() {
+        return debugStateOutput.get();
     }
 
         public MaleniaPhaseResistanceValues maleniaResistance() {
@@ -830,6 +841,16 @@ public final class ElderBossesCommonConfig {
             phaseTwoRotWaterfowlBuildup.get(),
             phaseTwoRotKickBuildup.get()
         ));
+    }
+
+    public com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortCombatConfigSnapshot
+            promisedConsortCombatSnapshot() {
+        return promisedConsort.combatSnapshot();
+    }
+
+    public com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSkillConfigSnapshot
+            promisedConsortSkillSnapshot() {
+        return promisedConsort.skillSnapshot();
     }
 
     public MaleniaPerformanceValues maleniaPerformance() {

@@ -23,6 +23,13 @@ modstitch {
 repositories {
     mavenCentral()
     maven("https://maven.neoforged.net/releases/")
+    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+    maven("https://api.modrinth.com/maven")
+}
+
+dependencies {
+    implementation("software.bernie.geckolib:geckolib-neoforge-1.21.1:4.9.2")
+    implementation("maven.modrinth:attributefix:21.1.3")
 }
 
 tasks {
@@ -49,6 +56,8 @@ tasks {
         }
         exclude("META-INF/mods.toml")
         exclude("data/**/loot_tables/**")
+        exclude("data/**/tags/blocks/**")
+        exclude("data/**/tags/entity_types/**")
         exclude("data/**/tags/items/**")
     }
 

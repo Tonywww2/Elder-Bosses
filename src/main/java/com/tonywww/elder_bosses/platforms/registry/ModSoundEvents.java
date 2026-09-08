@@ -28,6 +28,11 @@ public final class ModSoundEvents {
             () -> SoundEvent.createVariableRangeEvent(
                     PlatformResourceLocation.id("malenia.instant_guard_cue"))
     );
+        public static final Supplier<SoundEvent> PROMISED_CONSORT_INSTANT_GUARD_CUE = SOUNDS.register(
+            "promised_consort.instant_guard_cue",
+            () -> SoundEvent.createVariableRangeEvent(
+                PlatformResourceLocation.id("promised_consort.instant_guard_cue"))
+        );
         public static final Supplier<SoundEvent> MALENIA_HURT = register("entity.malenia.hurt");
         public static final Supplier<SoundEvent> MALENIA_STAGGER = register("entity.malenia.stagger");
         public static final Supplier<SoundEvent> MALENIA_GRUNT = register("entity.malenia.grunt");

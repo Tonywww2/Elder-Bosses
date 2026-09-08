@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:fall",
+    "minecraft:fly_into_wall",
+    "minecraft:in_wall",
+    "minecraft:cramming",
+    "minecraft:outside_border",
+    "minecraft:drown",
+    "minecraft:cactus",
+    "minecraft:sweet_berry_bush",
+    "minecraft:stalagmite",
+    "minecraft:falling_stalactite",
+    "minecraft:in_fire",
+    "minecraft:on_fire",
+    "minecraft:lava",
+    "minecraft:hot_floor",
+    "minecraft:explosion",
+    "minecraft:player_explosion"
+  ]
+}

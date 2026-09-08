@@ -31,12 +31,17 @@ loom {
 repositories {
     mavenCentral()
     maven("https://maven.minecraftforge.net/")
+    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+    maven("https://api.modrinth.com/maven")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.officialMojangMappings())
     forge("net.minecraftforge:forge:$mcVersion-$forgeVersion")
+    modImplementation("software.bernie.geckolib:geckolib-forge-1.20.1:4.8.4")
+    modImplementation("maven.modrinth:attributefix:21.0.5")
+    forgeRuntimeLibrary("com.eliotlash.mclib:mclib:20")
 }
 
 tasks {
@@ -69,6 +74,8 @@ tasks {
         }
         exclude("META-INF/neoforge.mods.toml")
         exclude("data/**/loot_table/**")
+        exclude("data/**/tags/block/**")
+        exclude("data/**/tags/entity_type/**")
         exclude("data/**/tags/item/**")
     }
 

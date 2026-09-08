@@ -25,3 +25,8 @@ The active source view is selected in `stonecutter.gradle.kts`. Cross-version ad
 all Stonecutter-conditioned Java code belong under
 `com.tonywww.elder_bosses.platforms`; shared gameplay code belongs elsewhere under
 `com.tonywww.elder_bosses`.
+
+## Documentation
+
+- [Design documentation](docs/README.md)
+- [Promised Consort implementation plan](docs/implementation/promised-consort-plan.md)

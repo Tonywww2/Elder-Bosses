@@ -2,6 +2,7 @@ package com.tonywww.elder_bosses.combat.hit;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -22,5 +23,27 @@ public final class HitRegistry {
 
     public void clear() {
         targetsByHit.clear();
+    }
+
+    public List<PersistentClaim> persistentClaims() {
+        return targetsByHit.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream()
+                        .map(targetId -> new PersistentClaim(entry.getKey(), targetId)))
+                .toList();
+    }
+
+    public void restoreClaims(List<PersistentClaim> claims) {
+        clear();
+        for (PersistentClaim claim : claims) {
+            targetsByHit.computeIfAbsent(claim.hitId(), ignored -> new HashSet<>())
+                    .add(claim.targetId());
+        }
+    }
+
+    public record PersistentClaim(HitId hitId, UUID targetId) {
+        public PersistentClaim {
+            Objects.requireNonNull(hitId, "hitId");
+            Objects.requireNonNull(targetId, "targetId");
+        }
     }
 }

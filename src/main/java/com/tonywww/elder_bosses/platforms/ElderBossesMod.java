@@ -2,6 +2,7 @@ package com.tonywww.elder_bosses.platforms;
 
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.boss.malenia.config.MaleniaConfigProvider;
+import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortConfigProvider;
 import com.tonywww.elder_bosses.network.PlayerRotSnapshotPacket;
 import com.tonywww.elder_bosses.platforms.combat.PlatformCombatEvents;
 import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig;
@@ -9,6 +10,7 @@ import com.tonywww.elder_bosses.platforms.network.PlatformNetwork;
 import com.tonywww.elder_bosses.platforms.player.PlatformPlayerRotData;
 import com.tonywww.elder_bosses.platforms.player.PlatformPlayerRotEvents;
 import com.tonywww.elder_bosses.platforms.registry.ModAttributes;
+import com.tonywww.elder_bosses.platforms.registry.ModCreativeTabs;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import com.tonywww.elder_bosses.platforms.registry.ModItems;
 import com.tonywww.elder_bosses.platforms.registry.ModSoundEvents;
@@ -46,6 +48,15 @@ public final class ElderBossesMod {
     *///?}
         MaleniaConfigProvider.install(ElderBossesCommonConfig.VALUES::maleniaCombatSnapshot);
         MaleniaConfigProvider.installSkills(ElderBossesCommonConfig.VALUES::maleniaSkillSnapshot);
+        MaleniaConfigProvider.installDebugStateOutput(
+            ElderBossesCommonConfig.VALUES::maleniaDebugStateOutput
+        );
+        PromisedConsortConfigProvider.installCombat(
+            ElderBossesCommonConfig.VALUES::promisedConsortCombatSnapshot
+        );
+        PromisedConsortConfigProvider.installSkills(
+            ElderBossesCommonConfig.VALUES::promisedConsortSkillSnapshot
+        );
         PlatformNetwork.register(modBus);
         PlayerRotService.installSyncSink((player, snapshot, reason) -> PlatformNetwork.sendTo(
             player,
@@ -56,6 +67,7 @@ public final class ElderBossesMod {
         ModAttributes.register(modBus);
         ModEntities.register(modBus);
         ModItems.register(modBus);
+        ModCreativeTabs.register(modBus);
         ModSoundEvents.register(modBus);
         modBus.addListener(ModEntityEvents::registerAttributes);
         modBus.addListener(ModEntityEvents::addLivingEntityAttributes);

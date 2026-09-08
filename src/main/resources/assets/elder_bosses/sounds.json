@@ -8,6 +8,15 @@
       }
     ]
   },
+  "promised_consort.instant_guard_cue": {
+    "subtitle": "subtitles.elder_bosses.promised_consort.instant_guard_cue",
+    "sounds": [
+      {
+        "name": "minecraft:item.shield.block",
+        "type": "event"
+      }
+    ]
+  },
   "entity.malenia.hurt": {
     "subtitle": "subtitles.elder_bosses.entity.malenia.hurt",
     "sounds": [
