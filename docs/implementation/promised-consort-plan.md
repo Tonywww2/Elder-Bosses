@@ -6,13 +6,15 @@
 > 战斗 ID：`elder_bosses:promised_consort`
 > 更新日期：2026-09-08
 
+> 2026-09-11 模型补充：已交付并接入[原创双阶段模型与 43 段动画 v3](../../models/promised_consort/README.md)。v2 动作实机未通过，v3 改为自然关节插值、实际施法速度时间映射、短姿态衔接和着色器优先特效，保留已重做面甲与米凯拉。Forge 用户已确认所见动作和特效改善；其他平台及范围以模型工程验收记录为准。原空模型任务保留为实施历史；本轮不改伤害数值，也不代表完整玩法验收已全部完成。
+
 ## 1. 交付范围
 
 本轮交付完整、可游玩的约定之王战斗逻辑：服务端权威状态机、21 个顶层技能配置对应的 22 个动作 ID、多人参与与生命缩放、目标选择、伤害路由、瞬间防御、硬直、阶段转换、圣光回响、大荒星陨、指示器、HUD、字幕、占位视觉、掉落和持久化。
 
 当前只通过 `/summon elder_bosses:promised_consort` 创建 Boss。首次合格攻击手动开始战斗；不增加刷怪蛋或战斗控制命令。
 
-本轮不交付：
+原玩法轮次不交付的内容如下；其中模型已由上述独立制作轮次补交：
 
 - 最终 Boss 模型、纹理和正式动画。
 - 竞技场 NBT、结构放置、标记解析、雾门、出口、方块快照和恢复链路。
@@ -61,13 +63,13 @@
 
 ### 2.4 当前资产与依赖
 
-- Boss 本体和分身使用 GeckoLib 空 geo、空纹理及完整空 animation clip。
+- Boss 本体和分身已使用正式双阶段 GeckoLib geo、原创像素图集与 43 段动画，保留已有资源 ID。
 - Forge 使用 GeckoLib 4.8.4 和 `mclib:20`，NeoForge 使用 GeckoLib 4.9.2。
 - Forge 使用 AttributeFix 21.0.5，NeoForge 使用 AttributeFix 21.1.3。
 - GeckoLib 与 AttributeFix 在 Forge 节点使用 `modImplementation`，在 NeoForge 节点使用 ModDevGradle 支持的 `implementation`；均不内嵌、不写入模组 metadata。
 - 缺少 GeckoLib 时接受类加载失败；缺少 AttributeFix 时接受原版静默夹断最大生命。
 - 完整指示器必须实现；技能额外使用可配置原版粒子占位，本体不显示持续轮廓。
-- 重力岩块默认渲染为哭泣的黑曜石方块模型；分身为空模型表现实体。
+- 重力岩块默认渲染为哭泣的黑曜石方块模型；分身共享正式骨架，以半透明金白图集及六类独立动作表现。
 - 四件约定之王物品使用原创纯色临时 PNG，并加入统一 Elder Bosses 创造模式标签页。
 - 当前只实装独立瞬防提示音；其他非语言音频配置保留为 reserved。
 

@@ -3,6 +3,10 @@ package com.tonywww.elder_bosses.platforms.client;
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.client.indicator.ClientIndicatorRenderer;
 import com.tonywww.elder_bosses.client.state.ClientIndicatorStateStore;
+import com.tonywww.elder_bosses.client.vfx.ClientBossVfxController;
+import com.tonywww.elder_bosses.client.vfx.ClientConsortEnergyRenderer;
+import com.tonywww.elder_bosses.client.vfx.ClientConsortBladeTrails;
+import com.tonywww.elder_bosses.client.vfx.ClientConsortMeteorRenderer;
 import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig;
 import net.minecraft.client.Minecraft;
 //? if forge {
@@ -33,6 +37,15 @@ public final class ClientIndicatorEvents {
                 || minecraft.level == null) {
             return;
         }
+        ClientBossVfxController.tick(minecraft);
+        //? if forge {
+        float partialTick = event.getPartialTick();
+        //?} else {
+        /*float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(true);
+        *///?}
+        ClientConsortEnergyRenderer.render(event.getPoseStack(), event.getCamera(), minecraft.level.getGameTime(), partialTick);
+        ClientConsortBladeTrails.render(event.getPoseStack(), event.getCamera(), partialTick);
+        ClientConsortMeteorRenderer.render(event.getPoseStack(), event.getCamera(), partialTick);
         ElderBossesCommonConfig.IndicatorValues indicators = ElderBossesCommonConfig.VALUES.indicators();
         if (!indicators.enabled()) {
             ClientIndicatorStateStore.clear();
@@ -42,11 +55,6 @@ public final class ClientIndicatorEvents {
             indicators.maxActiveIndicators(),
             minecraft.level.getGameTime()
         );
-        //? if forge {
-        float partialTick = event.getPartialTick();
-        //?} else {
-        /*float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(true);
-        *///?}
         ClientIndicatorRenderer.render(
                 event.getPoseStack(),
                 event.getCamera(),

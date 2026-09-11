@@ -1,0 +1,36 @@
+{
+  "revision": "reference_lion_v2",
+  "bones": 125,
+  "cubes": 550,
+  "animations": 43,
+  "files": [
+    {
+      "source": "geo/promised_consort.geo.json",
+      "target": "geo/entity/promised_consort.geo.json",
+      "bytes": 1056078,
+      "sha256": "1c16d69dc2e223cea325798ef4bf7cc127f207146760c4c979e204b3089ca4a0"
+    },
+    {
+      "source": "animations/promised_consort.animation.json",
+      "target": "animations/entity/promised_consort.animation.json",
+      "bytes": 13504436,
+      "sha256": "517f65dede4e7e9eb961fd898b05eebcfe7dd3c5a4d8a33c7f6fc58eb44d3ae5"
+    },
+    {
+      "source": "textures/promised_consort.png",
+      "target": "textures/entity/promised_consort/promised_consort.png",
+      "bytes": 29794,
+      "sha256": "5a10ec1631225a8e47d6fcc9aac4a17d99556cc9b3be3b0953b36f40be2a0bce"
+    },
+    {
+      "source": "textures/promised_consort_clone.png",
+      "target": "textures/entity/promised_consort/promised_consort_clone.png",
+      "bytes": 25400,
+      "sha256": "54eebd3f41851d73561c3526161092ed161e4f86fc043d3a153489675593dc4f"
+    }
+  ],
+  "glowmask": "authoring_only; base atlas is the non-emissive runtime fallback",
+  "reference_images_in_runtime": false,
+  "visual_review": "see visual_review.json",
+  "runtime_validation": "pending"
+}

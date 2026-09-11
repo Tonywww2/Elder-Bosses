@@ -1,5 +1,7 @@
 package com.tonywww.elder_bosses.boss.malenia.config;
 
+import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 import com.tonywww.elder_bosses.combat.state.StaggerTracker.DistanceBand;
 import net.minecraft.nbt.CompoundTag;
@@ -9,7 +11,9 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -25,7 +29,8 @@ public final class MaleniaConfigNbt {
     private static final int PERFORMANCE_FIELDS_REMOVED_FORMAT_VERSION = 8;
     private static final int FIXED_RUNTIME_RULES_FORMAT_VERSION = 9;
     private static final int DAMAGE_ROUTING_REMOVED_FORMAT_VERSION = 10;
-    private static final int FORMAT_VERSION = DAMAGE_ROUTING_REMOVED_FORMAT_VERSION;
+    private static final int SKILL_TUNING_FORMAT_VERSION = 11;
+    private static final int FORMAT_VERSION = SKILL_TUNING_FORMAT_VERSION;
 
     private MaleniaConfigNbt() {
     }
@@ -1062,12 +1067,12 @@ public final class MaleniaConfigNbt {
         tag.put("flyingSlash", writeFlyingSlash(skills.flyingSlash()));
         tag.put("scarletPhantoms", writeScarletPhantoms(skills.scarletPhantoms()));
         tag.put("wingedSweep", writeWingedSweep(skills.wingedSweep()));
+        tag.put("tunings", writeTunings(skills.tunings()));
         return tag;
     }
 
     private static MaleniaSkillConfigSnapshot readSkills(CompoundTag tag, int formatVersion) {
-        requireExactFields(
-                tag,
+        List<String> fields = new ArrayList<>(List.of(
                 "phaseTwoRot",
                 "singleSlash",
                 "doubleSlash",
@@ -1084,7 +1089,11 @@ public final class MaleniaConfigNbt {
                 "flyingSlash",
                 "scarletPhantoms",
                 "wingedSweep"
-        );
+            ));
+            if (formatVersion >= SKILL_TUNING_FORMAT_VERSION) {
+                fields.add("tunings");
+            }
+            requireExactFields(tag, fields.toArray(String[]::new));
         return new MaleniaSkillConfigSnapshot(
                 readPhaseTwoRot(readCompound(tag, "phaseTwoRot"), formatVersion),
                 readSingleSlash(readCompound(tag, "singleSlash")),
@@ -1101,8 +1110,39 @@ public final class MaleniaConfigNbt {
                 readScarletPlunge(readCompound(tag, "scarletPlunge")),
                 readFlyingSlash(readCompound(tag, "flyingSlash")),
                 readScarletPhantoms(readCompound(tag, "scarletPhantoms")),
-                readWingedSweep(readCompound(tag, "wingedSweep"))
+                readWingedSweep(readCompound(tag, "wingedSweep")),
+                formatVersion >= SKILL_TUNING_FORMAT_VERSION
+                        ? readTunings(readCompound(tag, "tunings"))
+                        : MaleniaSkillConfigSnapshot.neutralTunings()
         );
+    }
+
+    private static CompoundTag writeTunings(Map<MaleniaActionId, SkillTuning> tunings) {
+        CompoundTag tag = new CompoundTag();
+        for (MaleniaActionId actionId : MaleniaActionId.values()) {
+            SkillTuning tuning = Objects.requireNonNull(tunings.get(actionId), actionId.name());
+            CompoundTag value = new CompoundTag();
+            value.putDouble("castSpeedMultiplier", tuning.castSpeedMultiplier());
+            value.putDouble("rangeMultiplier", tuning.rangeMultiplier());
+            tag.put(actionId.serializedName(), value);
+        }
+        return tag;
+    }
+
+    private static Map<MaleniaActionId, SkillTuning> readTunings(CompoundTag tag) {
+        if (tag.getAllKeys().size() != MaleniaActionId.values().length) {
+            throw new IllegalArgumentException("Unexpected Malenia skill tuning fields");
+        }
+        EnumMap<MaleniaActionId, SkillTuning> tunings = new EnumMap<>(MaleniaActionId.class);
+        for (MaleniaActionId actionId : MaleniaActionId.values()) {
+            CompoundTag value = readCompound(tag, actionId.serializedName());
+            requireExactFields(value, "castSpeedMultiplier", "rangeMultiplier");
+            tunings.put(actionId, new SkillTuning(
+                    readDouble(value, "castSpeedMultiplier"),
+                    readDouble(value, "rangeMultiplier")
+            ));
+        }
+        return tunings;
     }
 
     private static CompoundTag writePhaseTwoRot(MaleniaSkillConfigSnapshot.PhaseTwoRot value) {

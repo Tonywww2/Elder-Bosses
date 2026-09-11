@@ -1,0 +1,507 @@
+{
+  "ticks_per_second": 20,
+  "root_motion": "server_only",
+  "revision": "reference_motion_v7",
+  "figure_scale": 1.2,
+  "interpolation": "bounded_cubic_baked",
+  "grip_rotation": "limited_wrist_pitch_with_forearm_compensation",
+  "grip_balance": {
+    "samples": 3250,
+    "maximum_orientation_error_degrees": 0.0009090953561344809
+  },
+  "clips": {
+    "dormant": {
+      "duration_ticks": 80,
+      "loop": true
+    },
+    "intro": {
+      "duration_ticks": 80,
+      "loop": false,
+      "events": {
+        "subtitle": [
+          20
+        ],
+        "blade_engage": [
+          60
+        ]
+      }
+    },
+    "idle_phase_one": {
+      "duration_ticks": 80,
+      "loop": true
+    },
+    "idle_phase_two": {
+      "duration_ticks": 80,
+      "loop": true
+    },
+    "walk": {
+      "duration_ticks": 32,
+      "loop": true
+    },
+    "walk_back": {
+      "duration_ticks": 36,
+      "loop": true
+    },
+    "strafe_left": {
+      "duration_ticks": 36,
+      "loop": true
+    },
+    "strafe_right": {
+      "duration_ticks": 36,
+      "loop": true
+    },
+    "run": {
+      "duration_ticks": 20,
+      "loop": true
+    },
+    "turn_left": {
+      "duration_ticks": 16,
+      "loop": false
+    },
+    "turn_right": {
+      "duration_ticks": 16,
+      "loop": false
+    },
+    "airborne": {
+      "duration_ticks": 32,
+      "loop": true
+    },
+    "landing": {
+      "duration_ticks": 14,
+      "loop": false
+    },
+    "single_slash": {
+      "duration_ticks": 27,
+      "loop": false,
+      "events": {
+        "hits": [
+          10
+        ],
+        "cue": [
+          4
+        ]
+      },
+      "stages": [
+        [
+          10,
+          3,
+          14
+        ]
+      ]
+    },
+    "double_slash": {
+      "duration_ticks": 50,
+      "loop": false,
+      "events": {
+        "hits": [
+          11,
+          29
+        ],
+        "cue": [
+          5,
+          23
+        ]
+      },
+      "stages": [
+        [
+          11,
+          3,
+          6
+        ],
+        [
+          9,
+          3,
+          18
+        ]
+      ]
+    },
+    "rapid_slashes": {
+      "duration_ticks": 54,
+      "loop": false,
+      "events": {
+        "hits": [
+          14,
+          16,
+          18,
+          26
+        ],
+        "cue": [
+          8,
+          10,
+          12,
+          20
+        ],
+        "mechanical_lock": [
+          10,
+          12
+        ]
+      },
+      "stages": [
+        [
+          14,
+          18,
+          22
+        ]
+      ]
+    },
+    "running_slash": {
+      "duration_ticks": 38,
+      "loop": false,
+      "events": {
+        "hits": [
+          16
+        ],
+        "cue": [
+          10
+        ]
+      },
+      "stages": [
+        [
+          16,
+          4,
+          18
+        ]
+      ]
+    },
+    "upward_combo": {
+      "duration_ticks": 73,
+      "loop": false,
+      "events": {
+        "hits": [
+          18,
+          48
+        ],
+        "cue": [
+          12,
+          42
+        ]
+      },
+      "stages": [
+        [
+          18,
+          4,
+          8
+        ],
+        [
+          14,
+          5,
+          24
+        ]
+      ]
+    },
+    "kick": {
+      "duration_ticks": 31,
+      "loop": false,
+      "events": {
+        "hits": [
+          9
+        ]
+      },
+      "stages": [
+        [
+          9,
+          4,
+          18
+        ]
+      ]
+    },
+    "thrust": {
+      "duration_ticks": 50,
+      "loop": false,
+      "events": {
+        "hits": [
+          22
+        ],
+        "cue": [
+          16
+        ]
+      },
+      "stages": [
+        [
+          22,
+          4,
+          24
+        ]
+      ]
+    },
+    "grab_impale": {
+      "duration_ticks": 67,
+      "loop": false,
+      "events": {
+        "grab": [
+          24
+        ],
+        "impale_after_capture": [
+          20
+        ],
+        "throw_after_capture": [
+          30
+        ]
+      },
+      "stages": [
+        [
+          24,
+          5,
+          38
+        ]
+      ]
+    },
+    "grab_miss": {
+      "duration_ticks": 67,
+      "loop": false,
+      "stages": [
+        [
+          24,
+          5,
+          38
+        ]
+      ]
+    },
+    "grab_cancel": {
+      "duration_ticks": 16,
+      "loop": false
+    },
+    "retreat_slash": {
+      "duration_ticks": 32,
+      "loop": false,
+      "events": {
+        "hits": [
+          8
+        ],
+        "cue": [
+          2
+        ]
+      },
+      "stages": [
+        [
+          8,
+          4,
+          20
+        ]
+      ]
+    },
+    "waterfowl_prepare": {
+      "duration_ticks": 20,
+      "loop": false
+    },
+    "waterfowl_dance": {
+      "duration_ticks": 142,
+      "loop": false,
+      "events": {
+        "lock": [
+          22,
+          46,
+          62,
+          78
+        ],
+        "bursts": [
+          [
+            32,
+            45
+          ],
+          [
+            50,
+            61
+          ],
+          [
+            66,
+            77
+          ],
+          [
+            82,
+            99
+          ]
+        ],
+        "recovery": [
+          100
+        ]
+      },
+      "stages": [
+        [
+          32,
+          68,
+          42
+        ]
+      ]
+    },
+    "transition": {
+      "duration_ticks": 150,
+      "loop": false,
+      "events": {
+        "subtitle": [
+          42
+        ],
+        "phase_layers": [
+          71
+        ],
+        "unfold": [
+          85,
+          120
+        ]
+      }
+    },
+    "scarlet_aeonia": {
+      "duration_ticks": 154,
+      "loop": false,
+      "events": {
+        "lock": [
+          26
+        ],
+        "dive": [
+          43,
+          48
+        ],
+        "impact": [
+          49
+        ],
+        "bloom": [
+          58
+        ],
+        "zone_end": [
+          142
+        ]
+      },
+      "stages": [
+        [
+          42,
+          58,
+          54
+        ]
+      ]
+    },
+    "scarlet_plunge": {
+      "duration_ticks": 66,
+      "loop": false,
+      "events": {
+        "blade": [
+          24,
+          29
+        ],
+        "burst": [
+          30,
+          35
+        ],
+        "cue": [
+          18
+        ]
+      },
+      "stages": [
+        [
+          24,
+          12,
+          30
+        ]
+      ]
+    },
+    "flying_slash": {
+      "duration_ticks": 73,
+      "loop": false,
+      "events": {
+        "hits": [
+          20,
+          45
+        ],
+        "cue": [
+          14,
+          39
+        ]
+      },
+      "stages": [
+        [
+          20,
+          5,
+          8
+        ],
+        [
+          12,
+          4,
+          24
+        ]
+      ]
+    },
+    "scarlet_phantoms": {
+      "duration_ticks": 146,
+      "loop": false,
+      "events": {
+        "phantoms": [
+          36,
+          44,
+          52,
+          60,
+          68
+        ],
+        "boss_dive": [
+          76,
+          107
+        ]
+      },
+      "stages": [
+        [
+          36,
+          72,
+          38
+        ]
+      ]
+    },
+    "winged_sweep": {
+      "duration_ticks": 46,
+      "loop": false,
+      "events": {
+        "hits": [
+          16
+        ],
+        "cue": [
+          10
+        ]
+      },
+      "stages": [
+        [
+          16,
+          8,
+          22
+        ]
+      ]
+    },
+    "stunned": {
+      "duration_ticks": 70,
+      "loop": "hold_on_last_frame"
+    },
+    "stun_recover": {
+      "duration_ticks": 16,
+      "loop": false
+    },
+    "hurt": {
+      "duration_ticks": 10,
+      "loop": false
+    },
+    "defeated": {
+      "duration_ticks": 160,
+      "loop": "hold_on_last_frame",
+      "events": {
+        "subtitle": [
+          28
+        ],
+        "flower": [
+          110,
+          160
+        ]
+      }
+    },
+    "defeated_flower": {
+      "duration_ticks": 80,
+      "loop": true
+    },
+    "phantom_slash": {
+      "duration_ticks": 14,
+      "loop": false
+    },
+    "phantom_thrust": {
+      "duration_ticks": 14,
+      "loop": false
+    },
+    "aeonia_loop": {
+      "duration_ticks": 84,
+      "loop": true
+    }
+  }
+}

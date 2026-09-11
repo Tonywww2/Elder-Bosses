@@ -1,0 +1,18 @@
+{
+  "bvid": "BV1hB4y1U7rd",
+  "url": "https://www.bilibili.com/video/BV1hB4y1U7rd/",
+  "title": "【艾尔登法环】“女武神”全招式拆解分析/全招式应对技巧/神经刀专项对策（翻滚流）",
+  "author": "谜之灭",
+  "cid": 575861359,
+  "video_duration_seconds": 1033,
+  "quality": 16,
+  "start_seconds": 0,
+  "span_seconds": 1033,
+  "sample_interval_seconds": 25,
+  "columns": 6,
+  "rows": 7,
+  "image": "analysis_chapters.jpg",
+  "timestamp_labels": "relative_to_selected_segment_start",
+  "purpose": "internal_motion_analysis_not_runtime_assets",
+  "captured_at": "2026-09-09T19:24:40.978Z"
+}

@@ -5,6 +5,7 @@ import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActio
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase;
 import com.tonywww.elder_bosses.combat.action.ActionStage;
 import com.tonywww.elder_bosses.combat.action.ActionTimeline;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -75,7 +76,7 @@ public final class PromisedConsortActionCatalog {
         PromisedConsortSkillConfigSnapshot.Skill skill = skillConfig.get(actionId);
         target.put(actionId, new PromisedConsortActionDefinition(
                 actionId,
-                timeline(actionId, skill),
+            tunedTimeline(timeline(actionId, skill), skill.tuning()),
                 skill.weight(),
                 skill.cooldownTicks(),
                 phases,
@@ -91,11 +92,11 @@ public final class PromisedConsortActionCatalog {
                 skillConfig.get(PromisedConsortActionId.LION_CLAW);
         target.put(PromisedConsortActionId.LION_CLAW_DOUBLE, new PromisedConsortActionDefinition(
                 PromisedConsortActionId.LION_CLAW_DOUBLE,
-                ActionTimeline.ofStages(new ActionStage(
+            tunedTimeline(ActionTimeline.ofStages(new ActionStage(
                         skill.integer("double_windup_ticks"),
                         skill.integer("double_active_ticks"),
                         skill.integer("double_recovery_ticks")
-                )),
+            )), skill.tuning()),
                 0.0,
                 skill.cooldownTicks(),
                 BOTH_PHASES,
@@ -136,6 +137,17 @@ public final class PromisedConsortActionCatalog {
         for (int index = 0; index < stages.length; index++) {
             stages[index] = new ActionStage(windup.get(index), active.get(index), recovery.get(index));
         }
+        return ActionTimeline.ofStages(stages);
+    }
+
+    private static ActionTimeline tunedTimeline(ActionTimeline timeline, SkillTuning tuning) {
+        ActionStage[] stages = timeline.stages().stream()
+                .map(stage -> new ActionStage(
+                        tuning.scaleTicks(stage.windupTicks()),
+                        tuning.scaleTicks(stage.activeTicks()),
+                        tuning.scaleTicks(stage.recoveryTicks())
+                ))
+                .toArray(ActionStage[]::new);
         return ActionTimeline.ofStages(stages);
     }
 }

@@ -2,6 +2,9 @@ package com.tonywww.elder_bosses.boss.promisedconsort.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonParseException;
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionRuntime;
 import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionExecutor;
@@ -45,13 +48,37 @@ public final class PromisedConsortConfigNbt {
                     tag.getString(COMBAT_KEY),
                     PromisedConsortCombatConfigSnapshot.class
             );
+            JsonElement serializedSkills = JsonParser.parseString(tag.getString(SKILLS_KEY));
+            addMissingSkillTunings(serializedSkills);
             PromisedConsortSkillConfigSnapshot skills = GSON.fromJson(
-                    tag.getString(SKILLS_KEY),
+                    serializedSkills,
                     PromisedConsortSkillConfigSnapshot.class
             );
             return Optional.of(new EncounterConfig(combat, skills));
-        } catch (JsonParseException | IllegalArgumentException exception) {
+        } catch (RuntimeException exception) {
             return Optional.empty();
+        }
+    }
+
+    private static void addMissingSkillTunings(JsonElement serializedSkills) {
+        if (!serializedSkills.isJsonObject()) {
+            return;
+        }
+        JsonElement skills = serializedSkills.getAsJsonObject().get("skills");
+        if (skills == null || !skills.isJsonObject()) {
+            return;
+        }
+        for (JsonElement serializedSkill : skills.getAsJsonObject().asMap().values()) {
+            if (!serializedSkill.isJsonObject()) {
+                continue;
+            }
+            JsonObject skill = serializedSkill.getAsJsonObject();
+            if (!skill.has("castSpeedMultiplier")) {
+                skill.addProperty("castSpeedMultiplier", 1.0);
+            }
+            if (!skill.has("rangeMultiplier")) {
+                skill.addProperty("rangeMultiplier", 1.0);
+            }
         }
     }
 

@@ -1,0 +1,2289 @@
+{
+  "revision": "reference_motion_v7",
+  "generated_at": "2026-09-09T19:58:08.909Z",
+  "inspection_status": "visually_reviewed_before_client_test",
+  "visual_assessment": {
+    "reviewer": "assistant",
+    "reviewed_before_client_launch": true,
+    "sources_actually_frame_reviewed": ["https://www.bilibili.com/video/BV13e4y127eg/", "https://www.bilibili.com/video/BV1hB4y1U7rd/"],
+    "reviewed_material": "phase orbits, grip and empty-hand closeups, isolated crown views, ground/aerial/close-action sequence sheets",
+    "resolved_findings": [
+      "Anatomical left/right had been mirrored despite correct-looking bone names",
+      "Empty fingers moved as one rigid plate and had no independent distal pivots",
+      "Thrust, downward cuts and grab release leaned away from the intended movement",
+      "Waterfowl held the sword at shoulder height instead of overhead",
+      "Generic aerial poses did not distinguish Waterfowl, phantom release and Aeonia",
+      "A rear crown review angle was occluded by the new high wing posture; isolated head views now cover it"
+    ],
+    "observations": [
+      "The weapon is on anatomical right; the left hand remains empty",
+      "The empty hand relaxes, opens before capture, closes after contact and releases",
+      "Thrust, uppercut and downstroke have distinct blade directions and forward weight transfer",
+      "Waterfowl has overhead horizontal preparation and different compact/extended burst silhouettes",
+      "Phase-two wings, hovering release and body-dive poses are differentiated"
+    ],
+    "limitations": [
+      "Video-guided manually authored adaptation, not imported original animation data",
+      "Anonymous reference streams are low resolution and sampled, not full 4K60 or exact joint reconstruction",
+      "Static authoring previews do not include server-owned entity travel or target tracking",
+      "Not every animation frame, branch, viewing angle, terrain or network condition is covered"
+    ]
+  },
+  "geometry_sha256": "92fc23cf90089b761ed8bbdb497ba979208a269b1837428e8dbe06a80e914523",
+  "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
+  "scope": "Sampled 360-degree, high/low-angle, crown and grip views; structural grip checks across all clips. Not exhaustive frame, camera or terrain coverage.",
+  "handedness": {
+    "right_arm_model_x": 7.2,
+    "left_arm_model_x": -7.2,
+    "weapon_parent": "prosthetic_hand_r"
+  },
+  "motion_samples": [
+    {
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "expectation": "relaxed_sword",
+      "blade_direction": [
+        0.3932582313886226,
+        -0.4119365779079626,
+        -0.8219831015456277
+      ],
+      "torso_depth": 0.10471443862370107,
+      "hand_height": 30.498779076394193,
+      "head_pivot_height": 50.39872063931369
+    },
+    {
+      "clip": "single_slash",
+      "tick": 10,
+      "expectation": "forward_weight",
+      "blade_direction": [
+        -0.14710947550021683,
+        0.35762706788856935,
+        -0.9222047942466335
+      ],
+      "torso_depth": -3.4123743952855663,
+      "hand_height": 37.766453788833026,
+      "head_pivot_height": 48.15607452118049
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 24,
+      "expectation": "forward_weight",
+      "blade_direction": [
+        -0.8926131144614785,
+        0.2126947514619404,
+        -0.39749562336197247
+      ],
+      "torso_depth": -4.832415844490757,
+      "hand_height": 30.17463024724957,
+      "head_pivot_height": 48.1263580744336
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 54,
+      "expectation": "forward_weight",
+      "blade_direction": [
+        -0.9849013723684571,
+        0.16092903756825105,
+        -0.06380541962941899
+      ],
+      "torso_depth": -8.932727646438382,
+      "hand_height": 31.585770273740245,
+      "head_pivot_height": 44.24618281582547
+    },
+    {
+      "clip": "thrust",
+      "tick": 22,
+      "expectation": "forward_thrust",
+      "blade_direction": [
+        -0.03277912267798054,
+        0.036267287825517275,
+        -0.9988043917355605
+      ],
+      "torso_depth": -6.13043374124052,
+      "hand_height": 41.709038837891214,
+      "head_pivot_height": 47.216585274935255
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 15,
+      "expectation": "low_load",
+      "blade_direction": [
+        -0.05252524229668504,
+        -0.1789866851523074,
+        -0.9824484034593691
+      ],
+      "torso_depth": -5.097349097650036,
+      "hand_height": 26.371546747723876,
+      "head_pivot_height": 44.67952559463085
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 23,
+      "expectation": "rising_sword",
+      "blade_direction": [
+        -0.2535432588011333,
+        0.9499468510468929,
+        -0.1825288911449194
+      ],
+      "torso_depth": 3.71227048710443,
+      "hand_height": 48.29047563172699,
+      "head_pivot_height": 49.820921090048685
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 48,
+      "expectation": "descending_sword",
+      "blade_direction": [
+        0.008769500037809153,
+        -0.8876024045995617,
+        -0.46052694515974085
+      ],
+      "torso_depth": -8.722735504090725,
+      "hand_height": 29.4873425598682,
+      "head_pivot_height": 45.19130944018424
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 22,
+      "expectation": "overhead_horizontal",
+      "blade_direction": [
+        -0.947328012409238,
+        -0.017377595732640003,
+        0.3197931457541195
+      ],
+      "torso_depth": -3.1628281919880097,
+      "hand_height": 59.879162218623506,
+      "head_pivot_height": 50.047246923596695
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 76,
+      "expectation": "forward_thrust",
+      "blade_direction": [
+        -0.03277912267798054,
+        0.036267287825517275,
+        -0.9988043917355605
+      ],
+      "torso_depth": -6.13043374124052,
+      "hand_height": 43.50903883789122,
+      "head_pivot_height": 49.01658527493526
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 43,
+      "expectation": "body_dive",
+      "blade_direction": [
+        0.20224156130298815,
+        -0.4656584894596905,
+        -0.8615454265886674
+      ],
+      "torso_depth": -15.074504317541008,
+      "hand_height": 23.581432138250303,
+      "head_pivot_height": 40.05251404012263
+    }
+  ],
+  "grip_samples": [
+    {
+      "clip": "dormant",
+      "tick": 0,
+      "maximum_local_drift": 8.758808311222675e-15
+    },
+    {
+      "clip": "dormant",
+      "tick": 20,
+      "maximum_local_drift": 1.4217791915866692e-14
+    },
+    {
+      "clip": "dormant",
+      "tick": 40,
+      "maximum_local_drift": 1.152067043636937e-14
+    },
+    {
+      "clip": "dormant",
+      "tick": 60,
+      "maximum_local_drift": 1.4217791915866692e-14
+    },
+    {
+      "clip": "dormant",
+      "tick": 80,
+      "maximum_local_drift": 8.758808311222675e-15
+    },
+    {
+      "clip": "intro",
+      "tick": 0,
+      "maximum_local_drift": 8.758808311222675e-15
+    },
+    {
+      "clip": "intro",
+      "tick": 20,
+      "maximum_local_drift": 1.2631196225257117e-14
+    },
+    {
+      "clip": "intro",
+      "tick": 40,
+      "maximum_local_drift": 1.6052827739027818e-14
+    },
+    {
+      "clip": "intro",
+      "tick": 60,
+      "maximum_local_drift": 1.179974363160101e-14
+    },
+    {
+      "clip": "intro",
+      "tick": 80,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 20,
+      "maximum_local_drift": 1.0777744118960794e-14
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 40,
+      "maximum_local_drift": 1.2434497875801753e-14
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 60,
+      "maximum_local_drift": 8.367327871569426e-15
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 80,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "maximum_local_drift": 1.0886980803209723e-14
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 40,
+      "maximum_local_drift": 7.444291678311382e-15
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 60,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 80,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 0,
+      "maximum_local_drift": 1.1292153918981439e-14
+    },
+    {
+      "clip": "walk",
+      "tick": 8,
+      "maximum_local_drift": 1.1646895695033627e-14
+    },
+    {
+      "clip": "walk",
+      "tick": 16,
+      "maximum_local_drift": 1.1883536005171406e-14
+    },
+    {
+      "clip": "walk",
+      "tick": 24,
+      "maximum_local_drift": 5.997516851608799e-15
+    },
+    {
+      "clip": "walk",
+      "tick": 32,
+      "maximum_local_drift": 1.1292153918981439e-14
+    },
+    {
+      "clip": "walk_back",
+      "tick": 0,
+      "maximum_local_drift": 1.5587468005037626e-14
+    },
+    {
+      "clip": "walk_back",
+      "tick": 9,
+      "maximum_local_drift": 5.997516851608799e-15
+    },
+    {
+      "clip": "walk_back",
+      "tick": 18,
+      "maximum_local_drift": 8.79251776862914e-15
+    },
+    {
+      "clip": "walk_back",
+      "tick": 27,
+      "maximum_local_drift": 5.997516851608799e-15
+    },
+    {
+      "clip": "walk_back",
+      "tick": 36,
+      "maximum_local_drift": 1.5587468005037626e-14
+    },
+    {
+      "clip": "strafe_left",
+      "tick": 0,
+      "maximum_local_drift": 6.0402662910232525e-15
+    },
+    {
+      "clip": "strafe_left",
+      "tick": 9,
+      "maximum_local_drift": 5.997516851608799e-15
+    },
+    {
+      "clip": "strafe_left",
+      "tick": 18,
+      "maximum_local_drift": 7.317372065289299e-15
+    },
+    {
+      "clip": "strafe_left",
+      "tick": 27,
+      "maximum_local_drift": 1.1901673676157817e-14
+    },
+    {
+      "clip": "strafe_left",
+      "tick": 36,
+      "maximum_local_drift": 6.0402662910232525e-15
+    },
+    {
+      "clip": "strafe_right",
+      "tick": 0,
+      "maximum_local_drift": 7.444291678311382e-15
+    },
+    {
+      "clip": "strafe_right",
+      "tick": 9,
+      "maximum_local_drift": 5.997516851608799e-15
+    },
+    {
+      "clip": "strafe_right",
+      "tick": 18,
+      "maximum_local_drift": 1.1842624679277563e-14
+    },
+    {
+      "clip": "strafe_right",
+      "tick": 27,
+      "maximum_local_drift": 5.997516851608799e-15
+    },
+    {
+      "clip": "strafe_right",
+      "tick": 36,
+      "maximum_local_drift": 7.444291678311382e-15
+    },
+    {
+      "clip": "run",
+      "tick": 0,
+      "maximum_local_drift": 1.434555188974998e-14
+    },
+    {
+      "clip": "run",
+      "tick": 5,
+      "maximum_local_drift": 1.4509982082432137e-14
+    },
+    {
+      "clip": "run",
+      "tick": 10,
+      "maximum_local_drift": 1.5813567179958505e-14
+    },
+    {
+      "clip": "run",
+      "tick": 15,
+      "maximum_local_drift": 1.4509982082432137e-14
+    },
+    {
+      "clip": "run",
+      "tick": 20,
+      "maximum_local_drift": 1.434555188974998e-14
+    },
+    {
+      "clip": "turn_left",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "turn_left",
+      "tick": 4,
+      "maximum_local_drift": 8.568879386697801e-15
+    },
+    {
+      "clip": "turn_left",
+      "tick": 8,
+      "maximum_local_drift": 1.851985453333892e-14
+    },
+    {
+      "clip": "turn_left",
+      "tick": 12,
+      "maximum_local_drift": 8.343678738167853e-15
+    },
+    {
+      "clip": "turn_left",
+      "tick": 16,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "turn_right",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "turn_right",
+      "tick": 4,
+      "maximum_local_drift": 8.140289677804162e-15
+    },
+    {
+      "clip": "turn_right",
+      "tick": 8,
+      "maximum_local_drift": 1.2171128474650332e-14
+    },
+    {
+      "clip": "turn_right",
+      "tick": 12,
+      "maximum_local_drift": 6.818839423932375e-15
+    },
+    {
+      "clip": "turn_right",
+      "tick": 16,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "airborne",
+      "tick": 0,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "airborne",
+      "tick": 8,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "airborne",
+      "tick": 16,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "airborne",
+      "tick": 24,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "airborne",
+      "tick": 32,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "landing",
+      "tick": 0,
+      "maximum_local_drift": 7.105427357601002e-15
+    },
+    {
+      "clip": "landing",
+      "tick": 3.5,
+      "maximum_local_drift": 9.820297636185407e-15
+    },
+    {
+      "clip": "landing",
+      "tick": 7,
+      "maximum_local_drift": 1.4654943925052066e-14
+    },
+    {
+      "clip": "landing",
+      "tick": 10.5,
+      "maximum_local_drift": 1.1618816802663542e-14
+    },
+    {
+      "clip": "landing",
+      "tick": 14,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 4,
+      "maximum_local_drift": 1.3181297901759441e-14
+    },
+    {
+      "clip": "single_slash",
+      "tick": 6.75,
+      "maximum_local_drift": 1.2568587680026249e-14
+    },
+    {
+      "clip": "single_slash",
+      "tick": 10,
+      "maximum_local_drift": 1.449255726278473e-14
+    },
+    {
+      "clip": "single_slash",
+      "tick": 13.5,
+      "maximum_local_drift": 1.700381862156689e-14
+    },
+    {
+      "clip": "single_slash",
+      "tick": 20.25,
+      "maximum_local_drift": 9.940061789492645e-15
+    },
+    {
+      "clip": "single_slash",
+      "tick": 27,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "double_slash",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "double_slash",
+      "tick": 5,
+      "maximum_local_drift": 1.5183695187629416e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 11,
+      "maximum_local_drift": 1.449255726278473e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 12.5,
+      "maximum_local_drift": 1.794624952451161e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 23,
+      "maximum_local_drift": 1.0733192700844744e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 25,
+      "maximum_local_drift": 1.0995132274107486e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 29,
+      "maximum_local_drift": 1.5203165631859585e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 37.5,
+      "maximum_local_drift": 1.838552877290129e-14
+    },
+    {
+      "clip": "double_slash",
+      "tick": 50,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 8,
+      "maximum_local_drift": 2.5062839089412552e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 10,
+      "maximum_local_drift": 1.4875745691095216e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 12,
+      "maximum_local_drift": 1.5212916828839632e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 13.5,
+      "maximum_local_drift": 8.021313332746002e-15
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 14,
+      "maximum_local_drift": 1.4875745691095216e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "maximum_local_drift": 8.356226185527988e-15
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 18,
+      "maximum_local_drift": 1.4875745691095216e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 20,
+      "maximum_local_drift": 1.120830491896282e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 26,
+      "maximum_local_drift": 1.5203165631859585e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 27,
+      "maximum_local_drift": 1.1883017379208074e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 40.5,
+      "maximum_local_drift": 1.3122371201718271e-14
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 54,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "running_slash",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "running_slash",
+      "tick": 9.5,
+      "maximum_local_drift": 1.5587468005037626e-14
+    },
+    {
+      "clip": "running_slash",
+      "tick": 10,
+      "maximum_local_drift": 1.5587468005037626e-14
+    },
+    {
+      "clip": "running_slash",
+      "tick": 16,
+      "maximum_local_drift": 1.449255726278473e-14
+    },
+    {
+      "clip": "running_slash",
+      "tick": 19,
+      "maximum_local_drift": 1.8888173939218696e-14
+    },
+    {
+      "clip": "running_slash",
+      "tick": 28.5,
+      "maximum_local_drift": 8.530675149520015e-15
+    },
+    {
+      "clip": "running_slash",
+      "tick": 38,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 12,
+      "maximum_local_drift": 1.1757885593931518e-14
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 18,
+      "maximum_local_drift": 2.282264546592643e-14
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 18.25,
+      "maximum_local_drift": 2.1505108827574395e-14
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 36.5,
+      "maximum_local_drift": 1.3535617652607509e-14
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 42,
+      "maximum_local_drift": 1.3535617652607509e-14
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 48,
+      "maximum_local_drift": 8.926082647349967e-15
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 54.75,
+      "maximum_local_drift": 1.2560739669470201e-14
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 73,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "kick",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "kick",
+      "tick": 7.75,
+      "maximum_local_drift": 1.554946518212894e-14
+    },
+    {
+      "clip": "kick",
+      "tick": 9,
+      "maximum_local_drift": 8.594732584726608e-15
+    },
+    {
+      "clip": "kick",
+      "tick": 15.5,
+      "maximum_local_drift": 1.9178279303923403e-14
+    },
+    {
+      "clip": "kick",
+      "tick": 23.25,
+      "maximum_local_drift": 7.49708873476879e-15
+    },
+    {
+      "clip": "kick",
+      "tick": 31,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "thrust",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "thrust",
+      "tick": 12.5,
+      "maximum_local_drift": 1.0731900677991188e-14
+    },
+    {
+      "clip": "thrust",
+      "tick": 16,
+      "maximum_local_drift": 1.102200432789045e-14
+    },
+    {
+      "clip": "thrust",
+      "tick": 22,
+      "maximum_local_drift": 1.4499784729196628e-14
+    },
+    {
+      "clip": "thrust",
+      "tick": 25,
+      "maximum_local_drift": 1.7389172700863032e-14
+    },
+    {
+      "clip": "thrust",
+      "tick": 37.5,
+      "maximum_local_drift": 1.3181297901759441e-14
+    },
+    {
+      "clip": "thrust",
+      "tick": 50,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 16.75,
+      "maximum_local_drift": 2.0644178454122402e-14
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 20,
+      "maximum_local_drift": 1.020439314654103e-14
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 24,
+      "maximum_local_drift": 1.551136925266137e-14
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 30,
+      "maximum_local_drift": 8.379058453350832e-15
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 33.5,
+      "maximum_local_drift": 1.1949218545369531e-14
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 50.25,
+      "maximum_local_drift": 1.1269720748118957e-14
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 67,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "grab_miss",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "grab_miss",
+      "tick": 16.75,
+      "maximum_local_drift": 2.1760371282653068e-14
+    },
+    {
+      "clip": "grab_miss",
+      "tick": 33.5,
+      "maximum_local_drift": 1.152067043636937e-14
+    },
+    {
+      "clip": "grab_miss",
+      "tick": 50.25,
+      "maximum_local_drift": 1.855102611454866e-14
+    },
+    {
+      "clip": "grab_miss",
+      "tick": 67,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "grab_cancel",
+      "tick": 0,
+      "maximum_local_drift": 1.2370893888999141e-14
+    },
+    {
+      "clip": "grab_cancel",
+      "tick": 4,
+      "maximum_local_drift": 9.739636741317752e-15
+    },
+    {
+      "clip": "grab_cancel",
+      "tick": 8,
+      "maximum_local_drift": 1.897149936107019e-14
+    },
+    {
+      "clip": "grab_cancel",
+      "tick": 12,
+      "maximum_local_drift": 8.89287949701369e-15
+    },
+    {
+      "clip": "grab_cancel",
+      "tick": 16,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "retreat_slash",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "retreat_slash",
+      "tick": 2,
+      "maximum_local_drift": 1.1315053252151276e-14
+    },
+    {
+      "clip": "retreat_slash",
+      "tick": 8,
+      "maximum_local_drift": 1.5209650241082524e-14
+    },
+    {
+      "clip": "retreat_slash",
+      "tick": 16,
+      "maximum_local_drift": 1.0850690766224794e-14
+    },
+    {
+      "clip": "retreat_slash",
+      "tick": 24,
+      "maximum_local_drift": 1.0805156823142815e-14
+    },
+    {
+      "clip": "retreat_slash",
+      "tick": 32,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "waterfowl_prepare",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "waterfowl_prepare",
+      "tick": 5,
+      "maximum_local_drift": 1.1298155849431921e-14
+    },
+    {
+      "clip": "waterfowl_prepare",
+      "tick": 10,
+      "maximum_local_drift": 1.8018221938950847e-14
+    },
+    {
+      "clip": "waterfowl_prepare",
+      "tick": 15,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "waterfowl_prepare",
+      "tick": 20,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 22,
+      "maximum_local_drift": 1.541571755377705e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 32,
+      "maximum_local_drift": 1.0841599276764049e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 35.5,
+      "maximum_local_drift": 1.0531476362852819e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 45,
+      "maximum_local_drift": 1.2166063818261162e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 46,
+      "maximum_local_drift": 1.449255726278473e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 50,
+      "maximum_local_drift": 2.1614876153176178e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 61,
+      "maximum_local_drift": 1.7769118642034836e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 62,
+      "maximum_local_drift": 1.8033521790747422e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 66,
+      "maximum_local_drift": 1.0764154724930664e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 71,
+      "maximum_local_drift": 1.549228615839163e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 77,
+      "maximum_local_drift": 2.1873647728904014e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 78,
+      "maximum_local_drift": 1.897149936107019e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 82,
+      "maximum_local_drift": 1.4058356594889128e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 99,
+      "maximum_local_drift": 2.860155168367949e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 100,
+      "maximum_local_drift": 1.5794849200804196e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 106.5,
+      "maximum_local_drift": 1.6734931948027253e-14
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 142,
+      "maximum_local_drift": 5.687116766346677e-15
+    },
+    {
+      "clip": "transition",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "transition",
+      "tick": 37.5,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 42,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 71,
+      "maximum_local_drift": 1.4300775841839746e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 75,
+      "maximum_local_drift": 1.4217791915866692e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 85,
+      "maximum_local_drift": 1.0777744118960794e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 112.5,
+      "maximum_local_drift": 1.128775274998693e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 120,
+      "maximum_local_drift": 1.0334172755097793e-14
+    },
+    {
+      "clip": "transition",
+      "tick": 150,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 0,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 26,
+      "maximum_local_drift": 1.0896034427063925e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 38.5,
+      "maximum_local_drift": 8.343678738167853e-15
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 43,
+      "maximum_local_drift": 1.4607767620765455e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 48,
+      "maximum_local_drift": 1.1005356983879463e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 49,
+      "maximum_local_drift": 1.0659441999608839e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 58,
+      "maximum_local_drift": 8.042797661766892e-15
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 77,
+      "maximum_local_drift": 1.152067043636937e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 115.5,
+      "maximum_local_drift": 1.439109867285034e-14
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 142,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 154,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 16.5,
+      "maximum_local_drift": 1.3535617652607509e-14
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 18,
+      "maximum_local_drift": 2.1390168887322673e-14
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 24,
+      "maximum_local_drift": 7.105427357601002e-15
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 29,
+      "maximum_local_drift": 8.926082647349967e-15
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 30,
+      "maximum_local_drift": 1.0668833134754763e-14
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 33,
+      "maximum_local_drift": 8.928887142632965e-15
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 35,
+      "maximum_local_drift": 9.900301382973689e-15
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 49.5,
+      "maximum_local_drift": 1.4567209187227738e-14
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 66,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 14,
+      "maximum_local_drift": 2.002593151550533e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 18.25,
+      "maximum_local_drift": 1.4868700975141997e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 20,
+      "maximum_local_drift": 1.4868700975141997e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 36.5,
+      "maximum_local_drift": 1.0841599276764049e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 39,
+      "maximum_local_drift": 1.0841599276764049e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 45,
+      "maximum_local_drift": 1.1411153958121602e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 54.75,
+      "maximum_local_drift": 1.0814278949565478e-14
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 73,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 36,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 36.5,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 44,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 52,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 60,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 68,
+      "maximum_local_drift": 1.446531558970883e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 73,
+      "maximum_local_drift": 1.0841599276764049e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 76,
+      "maximum_local_drift": 1.1411153958121602e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 107,
+      "maximum_local_drift": 1.6189472992030383e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 109.5,
+      "maximum_local_drift": 1.0518447697129405e-14
+    },
+    {
+      "clip": "scarlet_phantoms",
+      "tick": 146,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 10,
+      "maximum_local_drift": 1.536127561910836e-14
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 11.5,
+      "maximum_local_drift": 1.536127561910836e-14
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 16,
+      "maximum_local_drift": 1.4868700975141997e-14
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 23,
+      "maximum_local_drift": 9.155133597044475e-15
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 34.5,
+      "maximum_local_drift": 1.73876663737821e-14
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 46,
+      "maximum_local_drift": 3.991016288122638e-15
+    },
+    {
+      "clip": "stunned",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "stunned",
+      "tick": 17.5,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "stunned",
+      "tick": 35,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "stunned",
+      "tick": 52.5,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "stunned",
+      "tick": 70,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "stun_recover",
+      "tick": 0,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "stun_recover",
+      "tick": 4,
+      "maximum_local_drift": 1.1715878008431808e-14
+    },
+    {
+      "clip": "stun_recover",
+      "tick": 8,
+      "maximum_local_drift": 1.1626240459274605e-14
+    },
+    {
+      "clip": "stun_recover",
+      "tick": 12,
+      "maximum_local_drift": 5.0242958677880805e-15
+    },
+    {
+      "clip": "stun_recover",
+      "tick": 16,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "hurt",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "hurt",
+      "tick": 2.5,
+      "maximum_local_drift": 9.41008164741723e-15
+    },
+    {
+      "clip": "hurt",
+      "tick": 5,
+      "maximum_local_drift": 1.524294164453788e-14
+    },
+    {
+      "clip": "hurt",
+      "tick": 7.5,
+      "maximum_local_drift": 8.379058453350832e-15
+    },
+    {
+      "clip": "hurt",
+      "tick": 10,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "defeated",
+      "tick": 0,
+      "maximum_local_drift": 0
+    },
+    {
+      "clip": "defeated",
+      "tick": 28,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "defeated",
+      "tick": 40,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "defeated",
+      "tick": 80,
+      "maximum_local_drift": 1.1076109276885607e-14
+    },
+    {
+      "clip": "defeated",
+      "tick": 110,
+      "maximum_local_drift": 1.4655890107312475e-14
+    },
+    {
+      "clip": "defeated",
+      "tick": 120,
+      "maximum_local_drift": 1.1031505816613848e-14
+    },
+    {
+      "clip": "defeated",
+      "tick": 160,
+      "hidden": true
+    },
+    {
+      "clip": "defeated_flower",
+      "tick": 0,
+      "hidden": true
+    },
+    {
+      "clip": "defeated_flower",
+      "tick": 20,
+      "hidden": true
+    },
+    {
+      "clip": "defeated_flower",
+      "tick": 40,
+      "hidden": true
+    },
+    {
+      "clip": "defeated_flower",
+      "tick": 60,
+      "hidden": true
+    },
+    {
+      "clip": "defeated_flower",
+      "tick": 80,
+      "hidden": true
+    },
+    {
+      "clip": "phantom_slash",
+      "tick": 0,
+      "maximum_local_drift": 1.5587468005037626e-14
+    },
+    {
+      "clip": "phantom_slash",
+      "tick": 3.5,
+      "maximum_local_drift": 1.0185653390343063e-14
+    },
+    {
+      "clip": "phantom_slash",
+      "tick": 7,
+      "maximum_local_drift": 2.523334468670678e-14
+    },
+    {
+      "clip": "phantom_slash",
+      "tick": 10.5,
+      "maximum_local_drift": 1.2840246461466052e-14
+    },
+    {
+      "clip": "phantom_slash",
+      "tick": 14,
+      "maximum_local_drift": 1.2840246461466052e-14
+    },
+    {
+      "clip": "phantom_thrust",
+      "tick": 0,
+      "maximum_local_drift": 1.0841599276764049e-14
+    },
+    {
+      "clip": "phantom_thrust",
+      "tick": 3.5,
+      "maximum_local_drift": 1.4383281002407285e-14
+    },
+    {
+      "clip": "phantom_thrust",
+      "tick": 7,
+      "maximum_local_drift": 1.1411153958121602e-14
+    },
+    {
+      "clip": "phantom_thrust",
+      "tick": 10.5,
+      "maximum_local_drift": 1.1411153958121602e-14
+    },
+    {
+      "clip": "phantom_thrust",
+      "tick": 14,
+      "maximum_local_drift": 1.1411153958121602e-14
+    },
+    {
+      "clip": "aeonia_loop",
+      "tick": 0,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "aeonia_loop",
+      "tick": 21,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "aeonia_loop",
+      "tick": 42,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "aeonia_loop",
+      "tick": 63,
+      "maximum_local_drift": 1.2346957922256014e-14
+    },
+    {
+      "clip": "aeonia_loop",
+      "tick": 84,
+      "maximum_local_drift": 1.2346957922256014e-14
+    }
+  ],
+  "forearm_intersections": [],
+  "crown_samples": [
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "covered_rays": 81
+    },
+    {
+      "clip": "transition",
+      "tick": 108,
+      "covered_rays": 81
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 60,
+      "covered_rays": 81
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "covered_rays": 81
+    },
+    {
+      "clip": "stunned",
+      "tick": 24,
+      "covered_rays": 81
+    }
+  ],
+  "images": [
+    {
+      "name": "review_phase_one_orbit_azimuth_0",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 272
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_45",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 275
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_90",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 179
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_135",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 268
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_180",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 228
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_225",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 209
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_270",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 173
+    },
+    {
+      "name": "review_phase_one_orbit_azimuth_315",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 274
+    },
+    {
+      "name": "review_phase_one_orbit_high",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 131
+    },
+    {
+      "name": "review_phase_one_orbit_low",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": null,
+      "colored_pixels": 237
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_0",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 499
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_45",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 440
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_90",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 190
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_135",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 495
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_180",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 705
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_225",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 479
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_270",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 218
+    },
+    {
+      "name": "review_phase_two_orbit_azimuth_315",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 479
+    },
+    {
+      "name": "review_phase_two_orbit_high",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 273
+    },
+    {
+      "name": "review_phase_two_orbit_low",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": null,
+      "colored_pixels": 298
+    },
+    {
+      "name": "review_crown_top",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 455
+    },
+    {
+      "name": "review_crown_front_high",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 533
+    },
+    {
+      "name": "review_crown_back_high",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 681
+    },
+    {
+      "name": "review_crown_left_high",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 540
+    },
+    {
+      "name": "review_crown_right_high",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 537
+    },
+    {
+      "name": "review_crown_front_left",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 763
+    },
+    {
+      "name": "review_crown_front_right",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 759
+    },
+    {
+      "name": "review_crown_back_right",
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "isolated_group": "head",
+      "colored_pixels": 844
+    },
+    {
+      "name": "review_grip_idle_phase_one_front",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 690
+    },
+    {
+      "name": "review_grip_idle_phase_one_back",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 661
+    },
+    {
+      "name": "review_grip_idle_phase_one_outer",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 946
+    },
+    {
+      "name": "review_grip_idle_phase_one_inner",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 946
+    },
+    {
+      "name": "review_grip_idle_phase_one_upper",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1242
+    },
+    {
+      "name": "review_grip_idle_phase_one_lower",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1061
+    },
+    {
+      "name": "review_grip_single_slash_front",
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 665
+    },
+    {
+      "name": "review_grip_single_slash_back",
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 589
+    },
+    {
+      "name": "review_grip_single_slash_outer",
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1516
+    },
+    {
+      "name": "review_grip_single_slash_inner",
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1409
+    },
+    {
+      "name": "review_grip_single_slash_upper",
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 2053
+    },
+    {
+      "name": "review_grip_single_slash_lower",
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1388
+    },
+    {
+      "name": "review_grip_thrust_front",
+      "clip": "thrust",
+      "tick": 22,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 755
+    },
+    {
+      "name": "review_grip_thrust_back",
+      "clip": "thrust",
+      "tick": 22,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1953
+    },
+    {
+      "name": "review_grip_thrust_outer",
+      "clip": "thrust",
+      "tick": 22,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1818
+    },
+    {
+      "name": "review_grip_thrust_inner",
+      "clip": "thrust",
+      "tick": 22,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1795
+    },
+    {
+      "name": "review_grip_thrust_upper",
+      "clip": "thrust",
+      "tick": 22,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1916
+    },
+    {
+      "name": "review_grip_thrust_lower",
+      "clip": "thrust",
+      "tick": 22,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1836
+    },
+    {
+      "name": "review_grip_waterfowl_dance_front",
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 675
+    },
+    {
+      "name": "review_grip_waterfowl_dance_back",
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 672
+    },
+    {
+      "name": "review_grip_waterfowl_dance_outer",
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 885
+    },
+    {
+      "name": "review_grip_waterfowl_dance_inner",
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 821
+    },
+    {
+      "name": "review_grip_waterfowl_dance_upper",
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1488
+    },
+    {
+      "name": "review_grip_waterfowl_dance_lower",
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1041
+    },
+    {
+      "name": "review_grip_rapid_slashes_front",
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 799
+    },
+    {
+      "name": "review_grip_rapid_slashes_back",
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 765
+    },
+    {
+      "name": "review_grip_rapid_slashes_outer",
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1231
+    },
+    {
+      "name": "review_grip_rapid_slashes_inner",
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1166
+    },
+    {
+      "name": "review_grip_rapid_slashes_upper",
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1763
+    },
+    {
+      "name": "review_grip_rapid_slashes_lower",
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1119
+    },
+    {
+      "name": "review_grip_scarlet_plunge_front",
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 490
+    },
+    {
+      "name": "review_grip_scarlet_plunge_back",
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 640
+    },
+    {
+      "name": "review_grip_scarlet_plunge_outer",
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 953
+    },
+    {
+      "name": "review_grip_scarlet_plunge_inner",
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 893
+    },
+    {
+      "name": "review_grip_scarlet_plunge_upper",
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1151
+    },
+    {
+      "name": "review_grip_scarlet_plunge_lower",
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 837
+    },
+    {
+      "name": "review_grip_grab_impale_front",
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 577
+    },
+    {
+      "name": "review_grip_grab_impale_back",
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 618
+    },
+    {
+      "name": "review_grip_grab_impale_outer",
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1668
+    },
+    {
+      "name": "review_grip_grab_impale_inner",
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1631
+    },
+    {
+      "name": "review_grip_grab_impale_upper",
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1750
+    },
+    {
+      "name": "review_grip_grab_impale_lower",
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "isolated_group": "prosthetic_arm_r",
+      "colored_pixels": 1130
+    },
+    {
+      "name": "review_empty_hand_idle_phase_one_0_palm",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 671
+    },
+    {
+      "name": "review_empty_hand_idle_phase_one_0_side",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 558
+    },
+    {
+      "name": "review_empty_hand_idle_phase_one_0_back",
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 699
+    },
+    {
+      "name": "review_empty_hand_single_slash_12_palm",
+      "clip": "single_slash",
+      "tick": 12,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 725
+    },
+    {
+      "name": "review_empty_hand_single_slash_12_side",
+      "clip": "single_slash",
+      "tick": 12,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 595
+    },
+    {
+      "name": "review_empty_hand_single_slash_12_back",
+      "clip": "single_slash",
+      "tick": 12,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 711
+    },
+    {
+      "name": "review_empty_hand_grab_impale_24_palm",
+      "clip": "grab_impale",
+      "tick": 24,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 1215
+    },
+    {
+      "name": "review_empty_hand_grab_impale_24_side",
+      "clip": "grab_impale",
+      "tick": 24,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 901
+    },
+    {
+      "name": "review_empty_hand_grab_impale_24_back",
+      "clip": "grab_impale",
+      "tick": 24,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 1075
+    },
+    {
+      "name": "review_empty_hand_grab_impale_28_palm",
+      "clip": "grab_impale",
+      "tick": 28,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 1148
+    },
+    {
+      "name": "review_empty_hand_grab_impale_28_side",
+      "clip": "grab_impale",
+      "tick": 28,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 905
+    },
+    {
+      "name": "review_empty_hand_grab_impale_28_back",
+      "clip": "grab_impale",
+      "tick": 28,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 989
+    },
+    {
+      "name": "review_empty_hand_grab_impale_54_palm",
+      "clip": "grab_impale",
+      "tick": 54,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 708
+    },
+    {
+      "name": "review_empty_hand_grab_impale_54_side",
+      "clip": "grab_impale",
+      "tick": 54,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 721
+    },
+    {
+      "name": "review_empty_hand_grab_impale_54_back",
+      "clip": "grab_impale",
+      "tick": 54,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 714
+    },
+    {
+      "name": "review_empty_hand_grab_miss_29_palm",
+      "clip": "grab_miss",
+      "tick": 29,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 1215
+    },
+    {
+      "name": "review_empty_hand_grab_miss_29_side",
+      "clip": "grab_miss",
+      "tick": 29,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 901
+    },
+    {
+      "name": "review_empty_hand_grab_miss_29_back",
+      "clip": "grab_miss",
+      "tick": 29,
+      "phase": 1,
+      "isolated_group": "upper_arm_l",
+      "colored_pixels": 1075
+    }
+  ],
+  "sheets": [
+    "review_phase_one_orbit.png",
+    "review_phase_two_orbit.png",
+    "review_crown.png",
+    "review_grip_idle_phase_one.png",
+    "review_grip_single_slash.png",
+    "review_grip_thrust.png",
+    "review_grip_waterfowl_dance.png",
+    "review_grip_rapid_slashes.png",
+    "review_grip_scarlet_plunge.png",
+    "review_grip_grab_impale.png",
+    "review_empty_hand_idle_phase_one_0.png",
+    "review_empty_hand_single_slash_12.png",
+    "review_empty_hand_grab_impale_24.png",
+    "review_empty_hand_grab_impale_28.png",
+    "review_empty_hand_grab_impale_54.png",
+    "review_empty_hand_grab_miss_29.png"
+  ]
+}

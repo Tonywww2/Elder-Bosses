@@ -7,6 +7,7 @@ import com.tonywww.elder_bosses.player.PlayerRotService;
 import com.tonywww.elder_bosses.player.PlayerRotService.SyncReason;
 import com.tonywww.elder_bosses.platforms.registry.ModAttributes;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -35,6 +36,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public final class PlatformPlayerRotEvents {
     //? if forge {
+    private static final String PENDING_CLONE_ROT_TAG = "ElderBossesPendingScarletRot";
     private static final UUID SCARLET_ROT_MOVEMENT_SPEED_ID =
         UUID.fromString("3ddf8f9f-a305-4e8a-9f34-b965be493d19");
     //?} else {
@@ -67,14 +69,16 @@ public final class PlatformPlayerRotEvents {
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
-        if (!entity.level().isClientSide()) {
+        if (!entity.level().isClientSide() && !entity.isRemoved()) {
             tick(entity);
         }
     }
     //?} else {
     /*@SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
-        if (event.getEntity() instanceof LivingEntity entity && !entity.level().isClientSide()) {
+        if (event.getEntity() instanceof LivingEntity entity
+                && !entity.level().isClientSide()
+                && !entity.isRemoved()) {
             tick(entity);
         }
     }
@@ -111,7 +115,9 @@ public final class PlatformPlayerRotEvents {
         if (original instanceof ServerPlayer source && event.getEntity() instanceof ServerPlayer target) {
             original.reviveCaps();
             try {
-                PlayerRotService.copy(source, target);
+            PlatformPlayerRotData.find(source).ifPresent(data ->
+                target.getPersistentData().put(PENDING_CLONE_ROT_TAG, data.save())
+            );
             } finally {
                 original.invalidateCaps();
             }
@@ -134,7 +140,21 @@ public final class PlatformPlayerRotEvents {
     @SubscribeEvent
     public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            PlayerRotService.requestSync(player, SyncReason.RESPAWN);
+            //? if forge {
+            PlatformPlayerRotData.find(player).ifPresent(data -> {
+                CompoundTag persistentData = player.getPersistentData();
+                if (persistentData.contains(
+                        PENDING_CLONE_ROT_TAG,
+                        net.minecraft.nbt.Tag.TAG_COMPOUND
+                )) {
+                    data.load(persistentData.getCompound(PENDING_CLONE_ROT_TAG));
+                    persistentData.remove(PENDING_CLONE_ROT_TAG);
+                }
+                PlayerRotService.requestSync(player, SyncReason.RESPAWN);
+            });
+            //?} else {
+            /*PlayerRotService.requestSync(player, SyncReason.RESPAWN);
+            *///?}
         }
     }
 

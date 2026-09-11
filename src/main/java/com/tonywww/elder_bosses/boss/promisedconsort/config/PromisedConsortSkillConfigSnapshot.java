@@ -1,6 +1,7 @@
 package com.tonywww.elder_bosses.boss.promisedconsort.config;
 
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 
 import java.util.Collections;
@@ -43,6 +44,8 @@ public record PromisedConsortSkillConfigSnapshot(Map<PromisedConsortActionId, Sk
             double weight,
             int cooldownTicks,
             boolean hyperArmorActive,
+            double castSpeedMultiplier,
+            double rangeMultiplier,
             Map<String, Double> numbers,
             Map<String, Integer> integers,
             Map<String, String> strings,
@@ -57,12 +60,17 @@ public record PromisedConsortSkillConfigSnapshot(Map<PromisedConsortActionId, Sk
             if (cooldownTicks < 0) {
                 throw new IllegalArgumentException("cooldownTicks must be non-negative");
             }
+            new SkillTuning(castSpeedMultiplier, rangeMultiplier);
             numbers = immutableMap(numbers);
             integers = immutableMap(integers);
             strings = immutableMap(strings);
             integerLists = immutableListMap(integerLists);
             damage = immutableMap(damage);
             damageLists = immutableListMap(damageLists);
+        }
+
+        public SkillTuning tuning() {
+            return new SkillTuning(castSpeedMultiplier, rangeMultiplier);
         }
 
         public double number(String key) {

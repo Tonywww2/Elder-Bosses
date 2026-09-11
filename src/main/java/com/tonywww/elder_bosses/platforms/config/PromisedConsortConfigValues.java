@@ -2,7 +2,6 @@ package com.tonywww.elder_bosses.platforms.config;
 
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.UnmodifiableConfig;
-import com.mojang.logging.LogUtils;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortCombatConfigSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSkillConfigSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId;
@@ -23,10 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
-import org.slf4j.Logger;
 
 public final class PromisedConsortConfigValues {
-    private static final Logger LOGGER = LogUtils.getLogger();
     private final Map<String, Supplier<Boolean>> booleans = new HashMap<>();
     private final Map<String, Supplier<Integer>> integers = new HashMap<>();
     private final Map<String, Supplier<Double>> numbers = new HashMap<>();
@@ -228,8 +225,6 @@ public final class PromisedConsortConfigValues {
                         formula("light_echo.damage")
                 ),
                 new PromisedConsortCombatConfigSnapshot.Visuals(
-                        bool("visuals.placeholder_particles_enabled"),
-                        string("visuals.placeholder_particle_quality"),
                         string("visuals.gravity_projectile_block"),
                         bool("visuals.visual_clones_enabled"),
                         string("visuals.clone_render_mode")
@@ -237,8 +232,7 @@ public final class PromisedConsortConfigValues {
                 new PromisedConsortCombatConfigSnapshot.Performance(
                         integer("performance.max_logical_projectiles"),
                         integer("performance.max_logical_light_columns"),
-                        integer("performance.max_visual_clones"),
-                        integer("performance.normal_particles_per_tick")
+                    integer("performance.max_visual_clones")
                 ),
                 new PromisedConsortCombatConfigSnapshot.Dialogue(
                         bool("dialogue.enabled"),
@@ -474,8 +468,6 @@ public final class PromisedConsortConfigValues {
 
     private void definePresentation(Builder builder) {
         builder.push("visuals");
-        putBoolean("visuals.placeholder_particles_enabled", builder.bool("placeholder_particles_enabled", true));
-        putString("visuals.placeholder_particle_quality", builder.choice("placeholder_particle_quality", "full", "minimal", "reduced", "full"));
         putString("visuals.gravity_projectile_block", builder.string("gravity_projectile_block", "minecraft:crying_obsidian"));
         putBoolean("visuals.visual_clones_enabled", builder.bool("visual_clones_enabled", true));
         putString("visuals.clone_render_mode", builder.choice("clone_render_mode", "empty_geo_entity", "empty_geo_entity", "paths_only"));
@@ -485,7 +477,6 @@ public final class PromisedConsortConfigValues {
         putInteger("performance.max_logical_projectiles", builder.integer("max_logical_projectiles", 16, 0, 1024));
         putInteger("performance.max_logical_light_columns", builder.integer("max_logical_light_columns", 24, 0, 1024));
         putInteger("performance.max_visual_clones", builder.integer("max_visual_clones", 4, 0, 64));
-        putInteger("performance.normal_particles_per_tick", builder.integer("normal_particles_per_tick", 40, 0, 4096));
         builder.pop();
 
         builder.push("dialogue");
@@ -520,44 +511,53 @@ public final class PromisedConsortConfigValues {
     private void defineSkills(Builder builder) {
         builder.push("skills");
         addSkill(builder, PromisedConsortActionId.GRAVITY_DIVE, 1.0, 160, true)
+            .tuning(1.40, 1.35)
                 .number("range", 4.5).ticks("windup_ticks", 24).ticks("active_ticks", 6)
                 .ticks("recovery_ticks", 24).damage("sword_damage", 4.0, 0.80)
                 .damage("impact_damage", 3.0, 0.55).finish();
         addSkill(builder, PromisedConsortActionId.L_COMBO_CROSS, 1.0, 50, false)
+            .tuning(1.00, 1.25)
                 .number("range", 3.8).integerList("windup_ticks", 9, 8, 14)
                 .integerList("active_ticks", 3, 3, 4).integerList("recovery_ticks", 7, 8, 22)
                 .damageList("damage", new double[][]{{2.0, 0.45}, {2.0, 0.45}, {4.0, 0.70}}).finish();
         addSkill(builder, PromisedConsortActionId.L_COMBO_BLOODFLAME, 0.8, 100, false)
+            .tuning(1.30, 1.30)
                 .number("thrust_range", 5.0).number("sweep_range", 4.0)
                 .integerList("windup_ticks", 13, 12).integerList("active_ticks", 3, 4)
                 .integerList("recovery_ticks", 8, 24).damage("thrust_damage", 3.0, 0.60)
                 .damage("sweep_damage", 2.0, 0.50).damage("burst_damage", 2.0, 0.35)
                 .ticks("fissure_lifetime_ticks", 24).ticks("burst_tick", 16).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_CROSS, 1.0, 55, false)
+            .tuning(1.00, 1.25)
                 .number("range", 3.8).integerList("windup_ticks", 9, 15)
                 .integerList("active_ticks", 3, 4).integerList("recovery_ticks", 8, 22)
                 .damageList("damage", new double[][]{{2.0, 0.45}, {4.0, 0.75}}).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_LEFT_TWIN, 1.0, 50, false)
+            .tuning(1.00, 1.25)
                 .number("range", 3.6).integerList("windup_ticks", 9, 7, 8)
                 .integerList("active_ticks", 3, 3, 3).integerList("recovery_ticks", 7, 7, 20)
                 .damageList("damage", new double[][]{{2.0, 0.45}, {2.0, 0.40}, {2.0, 0.45}}).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_TEMPEST, 0.7, 110, false)
+            .tuning(1.30, 1.35)
                 .number("range", 4.2).integerList("windup_ticks", 10, 10, 10, 18)
                 .integerList("active_ticks", 3, 3, 3, 8).integerList("recovery_ticks", 6, 6, 6, 26)
                 .damage("opening_damage", 2.0, 0.45).damage("tempest_damage", 3.0, 0.55)
                 .integer("tempest_hits", 2).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_EARTHHEAVE, 0.7, 140, false)
+            .tuning(1.40, 1.45)
                 .number("range", 7.0).integerList("windup_ticks", 10, 10, 10, 20, 10)
                 .integerList("active_ticks", 3, 3, 3, 5, 6).integerList("recovery_ticks", 6, 6, 6, 12, 30)
                 .damage("opening_damage", 2.0, 0.45).damage("slam_damage", 5.0, 0.80)
                 .damage("fissure_damage", 4.0, 0.65).finish();
         addSkill(builder, PromisedConsortActionId.LION_CLAW, 0.9, 100, true)
+            .tuning(1.40, 1.35)
                 .number("range", 3.5).ticks("windup_ticks", 22).ticks("active_ticks", 5)
                 .ticks("recovery_ticks", 28).damage("damage", 5.0, 0.85)
                 .number("double_followup_chance", 0.35).ticks("double_windup_ticks", 16)
                 .ticks("double_active_ticks", 5).ticks("double_recovery_ticks", 34)
                 .damage("double_damage", 5.0, 0.90).finish();
         addSkill(builder, PromisedConsortActionId.STARCALLER_CRY, 0.7, 180, true)
+            .tuning(1.50, 1.50)
                 .number("pull_radius", 12.0).number("impact_radius", 6.0)
                 .ticks("windup_ticks", 30).ticks("active_ticks", 10).ticks("recovery_ticks", 34)
                 .damage("pull_damage", 0.0, 0.0).damage("impact_damage", 4.0, 0.70)
@@ -565,54 +565,66 @@ public final class PromisedConsortConfigValues {
             .number("jump_avoid_height", 0.60).damage("clone_damage", 1.0, 0.20)
             .finish();
         addSkill(builder, PromisedConsortActionId.GRAVITY_METEOR, 0.7, 220, true)
+            .tuning(1.50, 1.40)
                 .ticks("windup_ticks", 32).ticks("active_ticks", 50).ticks("recovery_ticks", 36)
                 .integer("projectile_count", 8).integer("max_hits_per_target", 3)
                 .ticks("projectile_lifetime_ticks", 60).number("max_turn_degrees_per_tick", 4.0)
                 .number("projectile_health", 6.0).damage("damage", 2.0, 0.35)
                 .number("clone_radius", 3.5).damage("clone_damage", 1.0, 0.20).finish();
         addSkill(builder, PromisedConsortActionId.STOMP, 1.0, 70, false)
+            .tuning(1.00, 1.30)
                 .number("forward_range", 5.0).number("width", 4.0)
                 .ticks("windup_ticks", 14).ticks("active_ticks", 5).ticks("recovery_ticks", 24)
                 .damage("damage", 3.0, 0.55).finish();
         addSkill(builder, PromisedConsortActionId.CROSS_SLASH, 0.9, 90, false)
+            .tuning(1.35, 1.35)
                 .number("sword_range", 4.0).number("debris_range", 7.0)
                 .ticks("windup_ticks", 18).ticks("active_ticks", 5).ticks("recovery_ticks", 26)
                 .damage("sword_damage", 4.0, 0.75).damage("debris_damage", 2.0, 0.35).finish();
         addSkill(builder, PromisedConsortActionId.SPIRAL_ASSAULT, 0.8, 150, true)
+            .tuning(1.40, 1.40)
                 .number("range", 12.0).number("width", 3.0)
                 .ticks("windup_ticks", 26).ticks("active_ticks", 8).ticks("recovery_ticks", 30)
                 .damage("spin_damage", 3.0, 0.60).damage("slam_damage", 5.0, 0.85).finish();
         addSkill(builder, PromisedConsortActionId.LIGHT_OF_MIQUELLA, 0.6, 300, true)
+            .tuning(1.50, 1.50)
                 .number("radius", 8.0).ticks("windup_ticks", 44).ticks("active_ticks", 10)
                 .ticks("recovery_ticks", 42).damage("main_damage", 5.0, 0.90)
                 .damage("afterglow_damage", 1.0, 0.20).integer("afterglow_count", 8).finish();
         addSkill(builder, PromisedConsortActionId.RING_OF_LIGHT, 0.7, 140, false)
+            .tuning(1.40, 1.50)
                 .number("inner_radius", 3.0).number("outer_radius", 11.0)
                 .ticks("windup_ticks", 24).ticks("active_ticks", 5).ticks("recovery_ticks", 30)
                 .damage("damage", 3.0, 0.55).finish();
         addSkill(builder, PromisedConsortActionId.LIGHTSPEED_SLASH, 0.8, 160, true)
+            .tuning(1.40, 1.35)
                 .ticks("windup_ticks", 28).ticks("active_ticks", 24).ticks("recovery_ticks", 34)
                 .integer("clone_count", 3).damage("clone_damage", 1.0, 0.20)
                 .damage("body_damage", 5.0, 0.80).finish();
         addSkill(builder, PromisedConsortActionId.LIGHTSPEED_DASH, 0.7, 170, true)
+            .tuning(1.35, 1.30)
                 .number("range", 16.0).number("width", 2.5)
                 .ticks("windup_ticks", 26).ticks("active_ticks", 20).ticks("recovery_ticks", 36)
                 .damage("clone_damage", 1.0, 0.20).damage("body_damage", 4.0, 0.75)
                 .damage("trail_damage", 1.0, 0.20).finish();
         addSkill(builder, PromisedConsortActionId.LIGHTSPEED_SIDE_DASH, 0.8, 150, true)
+            .tuning(1.30, 1.30)
                 .ticks("windup_ticks", 18).ticks("active_ticks", 20).ticks("recovery_ticks", 30)
                 .integer("clone_count", 3).damage("clone_damage", 1.0, 0.20)
                 .damage("body_damage", 4.0, 0.70).finish();
         addSkill(builder, PromisedConsortActionId.PROMISED_CONSORT, 0.5, 260, true)
+            .tuning(1.40, 1.45)
                 .ticks("windup_ticks", 26).ticks("active_ticks", 54).ticks("recovery_ticks", 48)
                 .damage("opening_damage", 3.0, 0.55).damage("spin_damage", 3.0, 0.50)
             .damage("finisher_damage", 6.0, 0.95).damage("holy_ring_damage", 2.0, 0.35)
             .damage("clone_damage", 1.0, 0.20).finish();
         addSkill(builder, PromisedConsortActionId.ENHANCED_EARTHHEAVE, 0.6, 170, true)
+            .tuning(1.40, 1.50)
                 .number("radius", 6.0).ticks("windup_ticks", 20).ticks("active_ticks", 20)
                 .ticks("recovery_ticks", 38).damage("slam_damage", 5.0, 0.85)
                 .damage("fissure_damage", 4.0, 0.70).damage("light_damage", 1.0, 0.25).finish();
         addSkill(builder, PromisedConsortActionId.CONSORT_METEOR, 0.0, 3600, true)
+            .tuning(1.50, 1.70)
                 .number("core_radius", 9.0).number("outer_radius", 13.0)
                 .ticks("script_ticks", 150).ticks("prediction_sample_ticks", 10)
                 .ticks("prediction_lead_ticks", 12).damage("core_damage", 8.0, 1.20)
@@ -859,17 +871,6 @@ public final class PromisedConsortConfigValues {
         private final Map<String, Supplier<? extends List<?>>> skillIntegerLists = new LinkedHashMap<>();
         private final Map<String, Supplier<? extends UnmodifiableConfig>> skillDamage = new LinkedHashMap<>();
         private final Map<String, Supplier<? extends List<?>>> skillDamageLists = new LinkedHashMap<>();
-        private final Map<String, Double> defaultNumbers = new LinkedHashMap<>();
-        private final Map<String, Integer> defaultIntegers = new LinkedHashMap<>();
-        private final Map<String, String> defaultStrings = new LinkedHashMap<>();
-        private final Map<String, List<Integer>> defaultIntegerLists = new LinkedHashMap<>();
-        private final Map<String, DamageFormula> defaultDamage = new LinkedHashMap<>();
-        private final Map<String, List<DamageFormula>> defaultDamageLists = new LinkedHashMap<>();
-        private final boolean defaultEnabled = true;
-        private final double defaultWeight;
-        private final int defaultCooldown;
-        private final boolean defaultHyperArmor;
-        private final String name;
 
         private SkillValues(
                 Builder builder,
@@ -879,10 +880,6 @@ public final class PromisedConsortConfigValues {
                 boolean defaultHyperArmor
         ) {
             this.builder = builder;
-            this.name = name;
-            this.defaultWeight = defaultWeight;
-            this.defaultCooldown = defaultCooldown;
-            this.defaultHyperArmor = defaultHyperArmor;
             builder.push(name);
             enabled = builder.bool("enabled", true);
             weight = builder.number("weight", defaultWeight, 0.0, 100.0);
@@ -892,38 +889,44 @@ public final class PromisedConsortConfigValues {
 
         private SkillValues number(String name, double value) {
             skillNumbers.put(name, builder.number(name, value, 0.0, 4096.0));
-            defaultNumbers.put(name, value);
+            return this;
+        }
+
+        private SkillValues tuning(double castSpeedMultiplier, double rangeMultiplier) {
+            skillNumbers.put(
+                "cast_speed_multiplier",
+                builder.number("cast_speed_multiplier", castSpeedMultiplier, 0.1, 5.0)
+            );
+            skillNumbers.put(
+                "range_multiplier",
+                builder.number("range_multiplier", rangeMultiplier, 0.1, 5.0)
+            );
             return this;
         }
 
         private SkillValues integer(String name, int value) {
             skillIntegers.put(name, builder.integer(name, value, 0, 4096));
-            defaultIntegers.put(name, value);
             return this;
         }
 
         private SkillValues ticks(String name, int value) {
             skillIntegers.put(name, builder.integer(name, value, 1, NetworkLimits.MAX_TICKS));
-            defaultIntegers.put(name, value);
             return this;
         }
 
         private SkillValues string(String name, String value) {
             skillStrings.put(name, builder.string(name, value));
-            defaultStrings.put(name, value);
             return this;
         }
 
         private SkillValues integerList(String name, Integer... values) {
             List<Integer> defaults = List.of(values);
             skillIntegerLists.put(name, builder.integerList(name, defaults));
-            defaultIntegerLists.put(name, defaults);
             return this;
         }
 
         private SkillValues damage(String name, double flat, double ratio) {
             skillDamage.put(name, builder.formula(name, flat, ratio));
-            defaultDamage.put(name, new DamageFormula(flat, ratio));
             return this;
         }
 
@@ -933,9 +936,6 @@ public final class PromisedConsortConfigValues {
                 defaults.add(formulaConfig(value[0], value[1]));
             }
             skillDamageLists.put(name, builder.formulaList(name, defaults));
-                defaultDamageLists.put(name, java.util.Arrays.stream(values)
-                    .map(value -> new DamageFormula(value[0], value[1]))
-                    .toList());
             return this;
         }
 
@@ -974,21 +974,13 @@ public final class PromisedConsortConfigValues {
                         );
                     }).toList()
             ));
-                boolean changedMultiStageTiming = defaultIntegerLists.entrySet().stream()
-                    .anyMatch(entry -> isStageTiming(entry.getKey())
-                        && !entry.getValue().equals(resolvedIntegerLists.get(entry.getKey())));
-                if (changedMultiStageTiming) {
-                LOGGER.warn(
-                    "Promised Consort skill '{}' uses fixed multi-stage timing; reverting the whole skill to defaults",
-                    name
-                );
-                return defaultSnapshot();
-                }
                 return new PromisedConsortSkillConfigSnapshot.Skill(
                     enabled.get(),
                     weight.get(),
                     cooldownTicks.get(),
                     hyperArmorActive.get(),
+                    resolvedNumbers.get("cast_speed_multiplier"),
+                    resolvedNumbers.get("range_multiplier"),
                     resolvedNumbers,
                     resolvedIntegers,
                     resolvedStrings,
@@ -996,27 +988,6 @@ public final class PromisedConsortConfigValues {
                     resolvedDamage,
                     resolvedDamageLists
             );
-        }
-
-        private PromisedConsortSkillConfigSnapshot.Skill defaultSnapshot() {
-            return new PromisedConsortSkillConfigSnapshot.Skill(
-                    defaultEnabled,
-                    defaultWeight,
-                    defaultCooldown,
-                    defaultHyperArmor,
-                    defaultNumbers,
-                    defaultIntegers,
-                    defaultStrings,
-                    defaultIntegerLists,
-                    defaultDamage,
-                    defaultDamageLists
-            );
-        }
-
-        private static boolean isStageTiming(String key) {
-            return key.equals("windup_ticks")
-                    || key.equals("active_ticks")
-                    || key.equals("recovery_ticks");
         }
     }
 

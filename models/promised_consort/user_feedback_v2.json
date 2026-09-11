@@ -1,0 +1,20 @@
+{
+  "revision": "reference_lion_v2",
+  "status": "rejected_in_world_by_user",
+  "loader": "Forge 1.20.1",
+  "observed": ["mask and phase-one model", "phase-one combat animations"],
+  "problems": [
+    "Wrist, elbow or torso twisting",
+    "Motion does not align with damage, movement or effects",
+    "Poses feel staged instead of continuous sword swings",
+    "Rhythm and weight worse than before"
+  ],
+  "new_vfx_requirement": "Prefer real shaders for primary effects; particles only when necessary",
+  "log_evidence": {
+    "login": "2026-09-10 23:50:53",
+    "summon": "2026-09-10 23:51:29",
+    "exit": "2026-09-10 23:52:02",
+    "saved": "2026-09-10 23:52:03"
+  },
+  "phase_two_user_acceptance": "not_observed"
+}

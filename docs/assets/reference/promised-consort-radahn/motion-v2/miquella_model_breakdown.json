@@ -1,0 +1,22 @@
+{
+  "bvid": "BV1HJ4m1M7jD",
+  "url": "https://www.bilibili.com/video/BV1HJ4m1M7jD/",
+  "title": "【4K60帧】《艾尔登法环 黄金树幽影》成神米凯拉 建模分解赏析 | 作者：BonfireVN",
+  "author": "KG-Area21",
+  "cid": 1609768103,
+  "part": 1,
+  "part_title": "【4K60帧】《艾尔登法环 黄金树幽影》成神米凯拉 建模分解赏析 | 作者：BonfireVN",
+  "duration_seconds": 175,
+  "published_at": "2024-07-09T07:29:54.000Z",
+  "requested_quality": 32,
+  "quality": 16,
+  "start_seconds": 0,
+  "span_seconds": 175,
+  "sample_interval_seconds": 7,
+  "columns": 4,
+  "rows": 7,
+  "image": "miquella_model_breakdown.jpg",
+  "timestamp_labels": "relative_to_segment_start",
+  "use": "internal_motion_research_only",
+  "captured_at": "2026-09-10T10:33:57.731Z"
+}

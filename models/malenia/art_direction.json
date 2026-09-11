@@ -1,0 +1,14 @@
+{
+  "revision": "reference_motion_v7",
+  "mirror_legacy_x": true,
+  "figure_scale": 1.2,
+  "flower_scale": 1.0,
+  "texture_size": 512,
+  "texels_per_model_unit": 1,
+  "silhouette_mask_density": 3,
+  "minimum_geometry_unit": 0.0625,
+  "precision_decimals": 4,
+  "maximum_cubes": 660,
+  "style": "detailed_geometry_minecraft_pixel_textures",
+  "collision_and_hit_timing": "unchanged"
+}

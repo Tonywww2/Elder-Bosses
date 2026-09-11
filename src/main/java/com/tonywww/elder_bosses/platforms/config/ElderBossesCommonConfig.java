@@ -17,6 +17,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ElderBossesCommonConfig {
@@ -44,6 +45,9 @@ public final class ElderBossesCommonConfig {
     private final Supplier<Double> indicatorSurfaceOffset;
     private final Supplier<Integer> maxActiveIndicators;
     private final Supplier<Integer> maxSegmentsPerShape;
+    private final Supplier<Boolean> skillVfxEnabled;
+    private final Supplier<Integer> skillVfxParticleBudgetPerBossPerTick;
+    private final Supplier<Double> skillVfxRenderDistance;
     private final Supplier<Double> phaseOneHealth;
     private final Supplier<Double> phaseTwoHealth;
     private final Supplier<Double> phaseTwoStartRatio;
@@ -215,6 +219,14 @@ public final class ElderBossesCommonConfig {
         indicatorSurfaceOffset = builder.defineInRange("surface_offset", 0.02, 0.0, 1.0);
         maxActiveIndicators = builder.defineInRange("max_active_indicators", 64, 1, 512);
         maxSegmentsPerShape = builder.defineInRange("max_segments_per_shape", 96, 3, 512);
+        builder.pop();
+
+        builder.push("skill_vfx");
+        skillVfxEnabled = builder.define("enabled", true);
+        skillVfxParticleBudgetPerBossPerTick = builder.defineInRange(
+            "particle_budget_per_boss_per_tick", 18, 1, 128);
+        skillVfxRenderDistance = builder.defineInRange(
+            "render_distance", 96.0, 8.0, 256.0);
         builder.pop();
 
         builder.push("malenia");
@@ -485,6 +497,14 @@ public final class ElderBossesCommonConfig {
                 indicatorSurfaceOffset.get(),
                 maxActiveIndicators.get(),
                 maxSegmentsPerShape.get()
+        );
+    }
+
+    public SkillVfxValues skillVfx() {
+        return new SkillVfxValues(
+                skillVfxEnabled.get(),
+                skillVfxParticleBudgetPerBossPerTick.get(),
+                skillVfxRenderDistance.get()
         );
     }
 
@@ -1038,7 +1058,7 @@ public final class ElderBossesCommonConfig {
                 builder.push("skills");
 
                 builder.push("single_slash");
-                singleSlash = new SkillHeader(builder, 1.0, 28, "standard");
+                singleSlash = new SkillHeader(builder, 1.0, 28, "standard", 1.00, 1.25);
                 singleSlashRange = builder.defineInRange("range", 3.4, 0.01, 2048.0);
                 singleSlashArcDegrees = builder.defineInRange("arc_degrees", 120.0, 0.01, 360.0);
                 singleSlashWindupTicks = builder.defineInRange(
@@ -1052,7 +1072,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("double_slash");
-                doubleSlash = new SkillHeader(builder, 1.0, 42, "standard");
+                doubleSlash = new SkillHeader(builder, 1.0, 42, "standard", 1.00, 1.25);
                 doubleSlashRange = builder.defineInRange("range", 3.5, 0.01, 2048.0);
                 doubleSlashWindupTicks = builder.defineList(
                     "windup_ticks", List.of(11, 9), ElderBossesCommonConfig::isPositiveTick);
@@ -1068,7 +1088,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("rapid_slashes");
-                rapidSlashes = new SkillHeader(builder, 0.9, 70, "standard");
+                rapidSlashes = new SkillHeader(builder, 0.9, 70, "standard", 1.00, 1.25);
                 rapidSlashesRange = builder.defineInRange("range", 3.6, 0.01, 2048.0);
                 rapidSlashesWindupTicks = builder.defineInRange(
                     "windup_ticks", 14, 1, NetworkLimits.MAX_TICKS);
@@ -1086,7 +1106,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("running_slash");
-                runningSlash = new SkillHeader(builder, 0.9, 55, "standard");
+                runningSlash = new SkillHeader(builder, 0.9, 55, "standard", 1.30, 1.30);
                 runningSlashRange = builder.defineInRange("range", 6.0, 0.01, 2048.0);
                 runningSlashWindupTicks = builder.defineInRange(
                     "windup_ticks", 16, 1, NetworkLimits.MAX_TICKS);
@@ -1099,7 +1119,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("upward_combo");
-                upwardCombo = new SkillHeader(builder, 0.75, 90, "heavy");
+                upwardCombo = new SkillHeader(builder, 0.75, 90, "heavy", 1.35, 1.30);
                 upwardComboRange = builder.defineInRange("range", 3.5, 0.01, 2048.0);
                 upwardComboWindupTicks = builder.defineList(
                     "windup_ticks", List.of(18, 14), ElderBossesCommonConfig::isPositiveTick);
@@ -1115,7 +1135,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("kick");
-                kick = new SkillHeader(builder, 0.8, 50, "standard");
+                kick = new SkillHeader(builder, 0.8, 50, "standard", 1.00, 1.20);
                 kickRange = builder.defineInRange("range", 2.3, 0.01, 2048.0);
                 kickArcDegrees = builder.defineInRange("arc_degrees", 100.0, 0.01, 360.0);
                 kickWindupTicks = builder.defineInRange(
@@ -1132,7 +1152,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("thrust");
-                thrust = new SkillHeader(builder, 0.75, 85, "heavy");
+                thrust = new SkillHeader(builder, 0.75, 85, "heavy", 1.40, 1.30);
                 thrustRange = builder.defineInRange("range", 7.0, 0.01, 2048.0);
                 thrustWidth = builder.defineInRange("width", 1.2, 0.01, 2048.0);
                 thrustWindupTicks = builder.defineInRange(
@@ -1146,7 +1166,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("grab_impale");
-                grabImpale = new SkillHeader(builder, 0.45, 180, "grab");
+                grabImpale = new SkillHeader(builder, 0.45, 180, "grab", 1.50, 1.35);
                 grabImpaleRange = builder.defineInRange("range", 5.0, 0.01, 2048.0);
                 grabImpaleWidth = builder.defineInRange("width", 1.2, 0.01, 2048.0);
                 grabImpaleWindupTicks = builder.defineInRange(
@@ -1164,7 +1184,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("retreat_slash");
-                retreatSlash = new SkillHeader(builder, 0.8, 65, "standard");
+                retreatSlash = new SkillHeader(builder, 0.8, 65, "standard", 1.00, 1.25);
                 retreatSlashRange = builder.defineInRange("range", 3.4, 0.01, 2048.0);
                 retreatSlashRetreatDistance = builder.defineInRange("retreat_distance", 3.0, 0.01, 2048.0);
                 retreatSlashWindupTicks = builder.defineInRange(
@@ -1178,7 +1198,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("waterfowl_dance");
-                waterfowlDance = new SkillHeader(builder, 0.40, 320, "waterfowl");
+                waterfowlDance = new SkillHeader(builder, 0.40, 320, "waterfowl", 1.40, 1.35);
                 waterfowlFirstEligibleTicks = builder.defineInRange(
                     "first_eligible_ticks", 260, 0, Integer.MAX_VALUE);
                 waterfowlPhaseOneFirstHealthRatio = builder.defineInRange(
@@ -1207,7 +1227,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("scarlet_aeonia");
-                scarletAeonia = new SkillHeader(builder, 0.35, 360, "none");
+                scarletAeonia = new SkillHeader(builder, 0.35, 360, "none", 1.50, 1.50);
                 scarletAeoniaRadius = builder.defineInRange("radius", 5.5, 0.01, 2048.0);
                 scarletAeoniaWindupTicks = builder.defineInRange(
                     "windup_ticks", 42, 1, NetworkLimits.MAX_TICKS);
@@ -1238,7 +1258,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("scarlet_plunge");
-                scarletPlunge = new SkillHeader(builder, 0.65, 130, "heavy");
+                scarletPlunge = new SkillHeader(builder, 0.65, 130, "heavy", 1.35, 1.35);
                 scarletPlungeRange = builder.defineInRange("range", 4.0, 0.01, 2048.0);
                 scarletPlungeWindupTicks = builder.defineInRange(
                     "windup_ticks", 24, 1, NetworkLimits.MAX_TICKS);
@@ -1257,7 +1277,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("flying_slash");
-                flyingSlash = new SkillHeader(builder, 0.75, 120, "heavy");
+                flyingSlash = new SkillHeader(builder, 0.75, 120, "heavy", 1.35, 1.30);
                 flyingSlashRange = builder.defineInRange("range", 7.0, 0.01, 2048.0);
                 flyingSlashWindupTicks = builder.defineList(
                     "windup_ticks", List.of(20, 12), ElderBossesCommonConfig::isPositiveTick);
@@ -1275,7 +1295,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("scarlet_phantoms");
-                scarletPhantoms = new SkillHeader(builder, 0.35, 280, "none");
+                scarletPhantoms = new SkillHeader(builder, 0.35, 280, "none", 1.50, 1.45);
                 scarletPhantomsWindupTicks = builder.defineInRange(
                     "windup_ticks", 36, 1, NetworkLimits.MAX_TICKS);
                 scarletPhantomsActiveTicks = builder.defineInRange(
@@ -1302,7 +1322,7 @@ public final class ElderBossesCommonConfig {
                 builder.pop();
 
                 builder.push("winged_sweep");
-                wingedSweep = new SkillHeader(builder, 0.70, 85, "standard");
+                wingedSweep = new SkillHeader(builder, 0.70, 85, "standard", 1.30, 1.30);
                 wingedSweepRange = builder.defineInRange("range", 4.0, 0.01, 2048.0);
                 wingedSweepWindupTicks = builder.defineInRange(
                     "windup_ticks", 16, 1, NetworkLimits.MAX_TICKS);
@@ -1539,9 +1559,35 @@ public final class ElderBossesCommonConfig {
                         readDamageFormula(wingedSweepDamage.get()).toDamageFormula(),
                         wingedSweepRotBuildup.get(),
                         wingedSweep.healProfile()
-                    )
+                        ),
+                        tunings()
                 );
             }
+
+                    private Map<com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId,
+                        com.tonywww.elder_bosses.combat.action.SkillTuning> tunings() {
+                    Map<com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId,
+                        com.tonywww.elder_bosses.combat.action.SkillTuning> values =
+                        new java.util.EnumMap<>(
+                            com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.class
+                        );
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.SINGLE_SLASH, singleSlash.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.DOUBLE_SLASH, doubleSlash.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.RAPID_SLASHES, rapidSlashes.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.RUNNING_SLASH, runningSlash.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.UPWARD_COMBO, upwardCombo.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.KICK, kick.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.THRUST, thrust.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.GRAB_IMPALE, grabImpale.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.RETREAT_SLASH, retreatSlash.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.WATERFOWL_DANCE, waterfowlDance.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.SCARLET_AEONIA, scarletAeonia.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.SCARLET_PLUNGE, scarletPlunge.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.FLYING_SLASH, flyingSlash.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.SCARLET_PHANTOMS, scarletPhantoms.tuning());
+                    values.put(com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.WINGED_SWEEP, wingedSweep.tuning());
+                    return values;
+                    }
             }
 
             private static final class SkillHeader {
@@ -1549,6 +1595,8 @@ public final class ElderBossesCommonConfig {
             private final Supplier<Double> weight;
             private final Supplier<Integer> cooldownTicks;
             private final Supplier<String> healProfile;
+            private final Supplier<Double> castSpeedMultiplier;
+            private final Supplier<Double> rangeMultiplier;
 
             private SkillHeader(
                 //? if forge {
@@ -1558,7 +1606,9 @@ public final class ElderBossesCommonConfig {
                 *///?}
                 double defaultWeight,
                 int defaultCooldownTicks,
-                String defaultHealProfile
+                String defaultHealProfile,
+                double defaultCastSpeedMultiplier,
+                double defaultRangeMultiplier
             ) {
                 enabled = builder.define("enabled", true);
                 weight = builder.defineInRange("weight", defaultWeight, 0.0, 100.0);
@@ -1566,6 +1616,10 @@ public final class ElderBossesCommonConfig {
                     "cooldown_ticks", defaultCooldownTicks, 1, Integer.MAX_VALUE);
                 healProfile = builder.define(
                     "heal_profile", defaultHealProfile, ElderBossesCommonConfig::isHealProfile);
+                castSpeedMultiplier = builder.defineInRange(
+                    "cast_speed_multiplier", defaultCastSpeedMultiplier, 0.1, 5.0);
+                rangeMultiplier = builder.defineInRange(
+                    "range_multiplier", defaultRangeMultiplier, 0.1, 5.0);
             }
 
             private boolean enabled() {
@@ -1582,6 +1636,13 @@ public final class ElderBossesCommonConfig {
 
             private HealProfile healProfile() {
                 return readHealProfile(healProfile.get());
+            }
+
+            private com.tonywww.elder_bosses.combat.action.SkillTuning tuning() {
+                return new com.tonywww.elder_bosses.combat.action.SkillTuning(
+                        castSpeedMultiplier.get(),
+                        rangeMultiplier.get()
+                );
             }
             }
 
@@ -1820,6 +1881,13 @@ public final class ElderBossesCommonConfig {
             int maxSegmentsPerShape
     ) {
     }
+
+        public record SkillVfxValues(
+            boolean enabled,
+            int particleBudgetPerBossPerTick,
+            double renderDistance
+        ) {
+        }
 
     public record MaleniaGeneralValues(
             double phaseOneHealth,

@@ -5,6 +5,7 @@ import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId;
 import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaPhase;
 import com.tonywww.elder_bosses.combat.action.ActionStage;
 import com.tonywww.elder_bosses.combat.action.ActionTimeline;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import static com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionEvent.Type;
@@ -243,7 +246,65 @@ public final class MaleniaActionCatalog {
         if (!definitions.keySet().equals(EnumSet.allOf(MaleniaActionId.class))) {
             throw new IllegalStateException("Malenia action catalog must cover every action id");
         }
+        definitions.replaceAll((actionId, definition) -> tunedDefinition(
+                definition,
+                skillConfig.tuning(actionId)
+        ));
         return Collections.unmodifiableMap(definitions);
+    }
+
+    private static MaleniaActionDefinition tunedDefinition(
+            MaleniaActionDefinition definition,
+            SkillTuning tuning
+    ) {
+        ActionStage[] stages = definition.timeline().stages().stream()
+                .map(stage -> new ActionStage(
+                        tuning.scaleTicks(stage.windupTicks()),
+                        tuning.scaleTicks(stage.activeTicks()),
+                        tuning.scaleTicks(stage.recoveryTicks())
+                ))
+                .toArray(ActionStage[]::new);
+        ActionTimeline timeline = ActionTimeline.ofStages(stages);
+        List<MaleniaActionEvent> events = definition.events().stream()
+                .map(event -> tunedEvent(event, tuning, timeline.totalTicks()))
+                .toList();
+        return new MaleniaActionDefinition(
+                definition.id(),
+                timeline,
+                definition.cooldownTicks(),
+                definition.availablePhases(),
+                definition.tags(),
+                events,
+                definition.highThreat()
+        );
+    }
+
+    private static MaleniaActionEvent tunedEvent(
+            MaleniaActionEvent event,
+            SkillTuning tuning,
+            int totalTicks
+    ) {
+        OptionalInt actionTick = event.actionTick().isPresent()
+                ? OptionalInt.of(Math.min(totalTicks - 1, tuning.scaleTicks(event.actionTick().getAsInt())))
+                : OptionalInt.empty();
+        OptionalInt durationTicks = event.durationTicks().isPresent()
+                ? OptionalInt.of(tuning.scaleTicks(event.durationTicks().getAsInt()))
+                : OptionalInt.empty();
+        OptionalInt delayTicks = event.minimumDelayAfterPreviousTicks().isPresent()
+                ? OptionalInt.of(tuning.scaleTicks(event.minimumDelayAfterPreviousTicks().getAsInt()))
+                : OptionalInt.empty();
+        OptionalDouble maxTravel = event.maxTravel().isPresent()
+                ? OptionalDouble.of(tuning.scaleRange(event.maxTravel().getAsDouble()))
+                : OptionalDouble.empty();
+        return new MaleniaActionEvent(
+                event.type(),
+                event.sequence(),
+                actionTick,
+                durationTicks,
+                delayTicks,
+                maxTravel,
+                event.maxHitsPerTarget()
+        );
     }
 
     private static MaleniaActionDefinition definition(

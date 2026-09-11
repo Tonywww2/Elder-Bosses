@@ -81,7 +81,7 @@ public final class MaleniaIndicatorPacketMapper {
         GeometryPacket geometry = geometryPacket(snapshot.geometry());
         long lockTick = instantGuardCue
                 ? Math.max(snapshot.startGameTick(), snapshot.activeGameTick() - cueLeadTicks)
-                : snapshot.lockGameTick();
+            : Math.max(snapshot.startGameTick(), snapshot.lockGameTick());
         return new IndicatorSnapshotPacket(
                 snapshot.bossEntityId(),
                 snapshot.indicatorId(),

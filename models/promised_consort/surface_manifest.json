@@ -1,0 +1,6052 @@
+[
+  {
+    "uuid": "00ad28f0-86f4-961b-322c-90c6e2ee0e10",
+    "bone": "pelvis",
+    "name": "padded_hips",
+    "material": "iron",
+    "dimensions": [
+      20,
+      8.6,
+      12.4
+    ]
+  },
+  {
+    "uuid": "7226309c-70d3-c232-6541-949ef6d51140",
+    "bone": "body",
+    "name": "waist_lamellar_core",
+    "material": "iron",
+    "dimensions": [
+      19,
+      11,
+      12
+    ]
+  },
+  {
+    "uuid": "7cdd76ae-5c1a-cadb-a537-34f95e3632ce",
+    "bone": "chest",
+    "name": "cuirass_mass",
+    "material": "gold",
+    "dimensions": [
+      25,
+      18,
+      14
+    ]
+  },
+  {
+    "uuid": "f6860812-04c9-c405-f8b6-7f9a5d098ac1",
+    "bone": "chest",
+    "name": "upper_cuirass",
+    "material": "gold",
+    "dimensions": [
+      26,
+      6,
+      12.8
+    ]
+  },
+  {
+    "uuid": "b0b5bda9-9e51-3c29-64ec-9796c02ce2d9",
+    "bone": "chest",
+    "name": "rib_chamfer_1",
+    "material": "gold",
+    "dimensions": [
+      5,
+      14.5,
+      12.4
+    ]
+  },
+  {
+    "uuid": "0f39cfc3-43cf-9bce-a7c5-9ba7dff0ab85",
+    "bone": "chest",
+    "name": "breastplate_1",
+    "material": "gold",
+    "dimensions": [
+      11.5,
+      10.5,
+      2.8
+    ]
+  },
+  {
+    "uuid": "62d808f7-9931-08cb-e9b3-bb32b1c7b8c4",
+    "bone": "chest",
+    "name": "collar_leaf_1",
+    "material": "gold_edge",
+    "dimensions": [
+      9.6,
+      2.1,
+      5.2
+    ]
+  },
+  {
+    "uuid": "86a10fc3-f664-55ad-ec08-517f5ffb95f6",
+    "bone": "body",
+    "name": "abdomen_lame_1_0",
+    "material": "gold",
+    "dimensions": [
+      9.7,
+      3.8,
+      2
+    ]
+  },
+  {
+    "uuid": "af66616c-2c73-fe80-200a-b44f7671a74f",
+    "bone": "body",
+    "name": "abdomen_lame_1_1",
+    "material": "gold",
+    "dimensions": [
+      9.7,
+      3.8,
+      2
+    ]
+  },
+  {
+    "uuid": "c79e5ade-1fc4-85a0-4c0b-c7aa58cad4cf",
+    "bone": "body",
+    "name": "abdomen_lame_1_2",
+    "material": "gold",
+    "dimensions": [
+      9.7,
+      3.8,
+      2
+    ]
+  },
+  {
+    "uuid": "70e6b77a-a220-faec-4092-a6148a9e1cb6",
+    "bone": "chest",
+    "name": "clavicle_stud_1_0",
+    "material": "gold_edge",
+    "dimensions": [
+      1.35,
+      1.35,
+      1
+    ]
+  },
+  {
+    "uuid": "b4a85372-4f04-f9da-08c7-6733f3eb56d3",
+    "bone": "chest",
+    "name": "clavicle_stud_1_1",
+    "material": "gold_edge",
+    "dimensions": [
+      1.35,
+      1.35,
+      1
+    ]
+  },
+  {
+    "uuid": "9a4c068c-f8cc-8694-c3ee-9faa5073e6da",
+    "bone": "chest",
+    "name": "rib_chamfer_-1",
+    "material": "gold",
+    "dimensions": [
+      5,
+      14.5,
+      12.4
+    ]
+  },
+  {
+    "uuid": "5fc0e491-75a8-59eb-1191-bc07bbe4190f",
+    "bone": "chest",
+    "name": "breastplate_-1",
+    "material": "gold",
+    "dimensions": [
+      11.5,
+      10.5,
+      2.8
+    ]
+  },
+  {
+    "uuid": "0f8a1e37-9eea-72b6-f7c8-3b8102b81e33",
+    "bone": "chest",
+    "name": "collar_leaf_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      9.6,
+      2.1,
+      5.2
+    ]
+  },
+  {
+    "uuid": "dd0878f8-7dc3-17ce-6d15-a78b0f6a5d1b",
+    "bone": "body",
+    "name": "abdomen_lame_-1_0",
+    "material": "gold",
+    "dimensions": [
+      9.7,
+      3.8,
+      2
+    ]
+  },
+  {
+    "uuid": "fef3e52f-3835-4a0a-77f9-308318b5e0ab",
+    "bone": "body",
+    "name": "abdomen_lame_-1_1",
+    "material": "gold",
+    "dimensions": [
+      9.7,
+      3.8,
+      2
+    ]
+  },
+  {
+    "uuid": "46a859e1-138f-d866-b0b0-8bcab9b269ec",
+    "bone": "body",
+    "name": "abdomen_lame_-1_2",
+    "material": "gold",
+    "dimensions": [
+      9.7,
+      3.8,
+      2
+    ]
+  },
+  {
+    "uuid": "8f4b628a-5c58-ca9d-e57d-239ac11bb407",
+    "bone": "chest",
+    "name": "clavicle_stud_-1_0",
+    "material": "gold_edge",
+    "dimensions": [
+      1.35,
+      1.35,
+      1
+    ]
+  },
+  {
+    "uuid": "491198cb-eeb5-24e5-dae6-24fd600e1ec5",
+    "bone": "chest",
+    "name": "clavicle_stud_-1_1",
+    "material": "gold_edge",
+    "dimensions": [
+      1.35,
+      1.35,
+      1
+    ]
+  },
+  {
+    "uuid": "962de26f-09f0-6d63-ab5f-f75a3de4b57d",
+    "bone": "chest",
+    "name": "lion_crest_brow",
+    "material": "gold_edge",
+    "dimensions": [
+      6.4,
+      4.5,
+      2
+    ]
+  },
+  {
+    "uuid": "5d883795-a166-b505-a088-872c6e8d0432",
+    "bone": "chest",
+    "name": "lion_crest_muzzle",
+    "material": "gold",
+    "dimensions": [
+      3.5,
+      3.6,
+      2
+    ]
+  },
+  {
+    "uuid": "9736cdd3-b1fa-be37-adc6-daed74507a39",
+    "bone": "chest",
+    "name": "lion_crest_nose",
+    "material": "iron",
+    "dimensions": [
+      2.1,
+      1.4,
+      1.3
+    ]
+  },
+  {
+    "uuid": "df2754b2-a393-26ff-63d2-19bf68c2e06c",
+    "bone": "chest",
+    "name": "crest_mane_upper_1",
+    "material": "gold_edge",
+    "dimensions": [
+      3,
+      7.2,
+      1.4
+    ]
+  },
+  {
+    "uuid": "2f933c9a-afa5-9e8c-cb9c-80b148a2ece9",
+    "bone": "chest",
+    "name": "crest_mane_lower_1",
+    "material": "gold",
+    "dimensions": [
+      2.5,
+      5.8,
+      1.3
+    ]
+  },
+  {
+    "uuid": "a32ce68b-625b-f2e9-5333-76ebed61e550",
+    "bone": "chest",
+    "name": "crest_mane_upper_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      3,
+      7.2,
+      1.4
+    ]
+  },
+  {
+    "uuid": "e2c32658-4c70-b7fd-5bb8-87c07f6d1eb6",
+    "bone": "chest",
+    "name": "crest_mane_lower_-1",
+    "material": "gold",
+    "dimensions": [
+      2.5,
+      5.8,
+      1.3
+    ]
+  },
+  {
+    "uuid": "f5f4dc1f-114f-9024-d00f-ea61df884be4",
+    "bone": "pelvis",
+    "name": "girdle",
+    "material": "iron",
+    "dimensions": [
+      22,
+      4,
+      14
+    ]
+  },
+  {
+    "uuid": "f1919527-5960-8894-5533-c89ed6ae8999",
+    "bone": "pelvis",
+    "name": "girdle_gold_band",
+    "material": "gold_edge",
+    "dimensions": [
+      20.7,
+      1.2,
+      0.7
+    ]
+  },
+  {
+    "uuid": "c9a2e4da-8a65-f21b-6d1e-9a94b71732c6",
+    "bone": "pelvis",
+    "name": "belt_seal",
+    "material": "gold_edge",
+    "dimensions": [
+      5.2,
+      5.2,
+      1.6
+    ]
+  },
+  {
+    "uuid": "7987ff53-4971-50a5-dcd6-9fcf53060ac8",
+    "bone": "tabard_front",
+    "name": "front_pleat_0",
+    "material": "cloth",
+    "dimensions": [
+      3.45,
+      25,
+      1.2
+    ]
+  },
+  {
+    "uuid": "5c5a6ab5-32d1-f988-597f-12f5861a0bef",
+    "bone": "tabard_back",
+    "name": "back_pleat_0",
+    "material": "cloth",
+    "dimensions": [
+      3.7,
+      25,
+      1.1
+    ]
+  },
+  {
+    "uuid": "b80eee49-c23e-3a9b-393a-63015633c72b",
+    "bone": "tabard_front",
+    "name": "front_pleat_1",
+    "material": "cloth",
+    "dimensions": [
+      3.45,
+      23,
+      1.2
+    ]
+  },
+  {
+    "uuid": "63bbac67-5caa-455a-fd68-42f3423576c5",
+    "bone": "tabard_back",
+    "name": "back_pleat_1",
+    "material": "cloth",
+    "dimensions": [
+      3.7,
+      25,
+      1.1
+    ]
+  },
+  {
+    "uuid": "b5c438db-d41c-0c9b-8b4a-07f7cabffac5",
+    "bone": "tabard_front",
+    "name": "front_pleat_2",
+    "material": "cloth",
+    "dimensions": [
+      3.45,
+      25,
+      1.2
+    ]
+  },
+  {
+    "uuid": "ba892926-fd88-8bde-6bfc-9d3ecd75009c",
+    "bone": "tabard_back",
+    "name": "back_pleat_2",
+    "material": "cloth",
+    "dimensions": [
+      3.7,
+      25,
+      1.1
+    ]
+  },
+  {
+    "uuid": "56ca1111-7507-6c26-7c3c-9a8656e01f18",
+    "bone": "tabard_front",
+    "name": "front_pleat_3",
+    "material": "cloth",
+    "dimensions": [
+      3.45,
+      23,
+      1.2
+    ]
+  },
+  {
+    "uuid": "9e235a40-704f-0e23-9a11-c8cc8b5974e1",
+    "bone": "tabard_back",
+    "name": "back_pleat_3",
+    "material": "cloth",
+    "dimensions": [
+      3.7,
+      25,
+      1.1
+    ]
+  },
+  {
+    "uuid": "54fe6d4c-cb09-3d4b-8a21-df84ea875c3e",
+    "bone": "tabard_front",
+    "name": "front_pleat_4",
+    "material": "cloth",
+    "dimensions": [
+      3.45,
+      25,
+      1.2
+    ]
+  },
+  {
+    "uuid": "81731c3f-3770-ebd8-2f3b-6fdb9fc4bf81",
+    "bone": "tabard_back",
+    "name": "back_pleat_4",
+    "material": "cloth",
+    "dimensions": [
+      3.7,
+      25,
+      1.1
+    ]
+  },
+  {
+    "uuid": "ee058ea9-88b1-2df8-e7a1-c470aa0ee0ac",
+    "bone": "upper_arm_r",
+    "name": "upper_arm_flesh_r",
+    "material": "skin",
+    "dimensions": [
+      8.2,
+      12.668883985484971,
+      9.2
+    ]
+  },
+  {
+    "uuid": "9e215c5c-540a-8f02-53db-6ed04634e326",
+    "bone": "upper_arm_r",
+    "name": "bicep_front_r",
+    "material": "skin",
+    "dimensions": [
+      6.4,
+      8.9,
+      3.3
+    ]
+  },
+  {
+    "uuid": "0487fabb-9602-5ea4-8a46-70632da29beb",
+    "bone": "upper_arm_r",
+    "name": "shoulder_underplate_r",
+    "material": "iron",
+    "dimensions": [
+      10.5,
+      6.8,
+      12.9
+    ]
+  },
+  {
+    "uuid": "c343a333-3ebd-50a3-af52-5f18f6b93841",
+    "bone": "upper_arm_r",
+    "name": "shoulder_crown_r",
+    "material": "gold",
+    "dimensions": [
+      8.7,
+      2.8,
+      11
+    ]
+  },
+  {
+    "uuid": "bf8d5d15-bed8-251b-0acd-bfc7bd24d316",
+    "bone": "upper_arm_r",
+    "name": "shoulder_crown_ridge_r",
+    "material": "gold_edge",
+    "dimensions": [
+      3.6,
+      1.1,
+      9.1
+    ]
+  },
+  {
+    "uuid": "66ed94b4-5d08-c591-fd2d-61b4e41fe36e",
+    "bone": "upper_arm_r",
+    "name": "shoulder_mantle_r",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      3.1,
+      3.2
+    ]
+  },
+  {
+    "uuid": "dc1b3a0b-11f3-77b5-d3fa-2974e7a47cca",
+    "bone": "upper_arm_r",
+    "name": "pauldron_lame_r_0",
+    "material": "gold",
+    "dimensions": [
+      9.8,
+      3.1,
+      14
+    ]
+  },
+  {
+    "uuid": "34f820b5-425b-9f2e-6b98-80b4faee6bbb",
+    "bone": "upper_arm_r",
+    "name": "pauldron_lame_r_1",
+    "material": "gold",
+    "dimensions": [
+      9.200000000000001,
+      3.1,
+      13.2
+    ]
+  },
+  {
+    "uuid": "b8f7c1b5-9973-0fd0-b830-1b1fa9a137d2",
+    "bone": "upper_arm_r",
+    "name": "pauldron_lame_r_2",
+    "material": "gold",
+    "dimensions": [
+      8.600000000000001,
+      3.1,
+      12.4
+    ]
+  },
+  {
+    "uuid": "699b2f22-4fb5-32a0-6653-961d6fffbec9",
+    "bone": "upper_arm_r",
+    "name": "pauldron_mane_r_0",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "ded17917-0c10-ecf1-3717-e4a6604b219a",
+    "bone": "upper_arm_r",
+    "name": "pauldron_mane_r_1",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "821ac673-d56a-05b2-40a1-1b5b584a51cb",
+    "bone": "upper_arm_r",
+    "name": "pauldron_mane_r_2",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "40c22a50-0181-170d-58e1-9dbd03c45b6c",
+    "bone": "forearm_r",
+    "name": "elbow_hinge_r",
+    "material": "iron",
+    "dimensions": [
+      7.4,
+      5,
+      7.9
+    ]
+  },
+  {
+    "uuid": "f012850b-fc1a-fe32-cfc8-28233efe4348",
+    "bone": "forearm_r",
+    "name": "forearm_flesh_r",
+    "material": "skin",
+    "dimensions": [
+      6.8,
+      11.113131921625884,
+      7.3
+    ]
+  },
+  {
+    "uuid": "45e7c271-70d2-3b94-4427-0f4e8f4fe692",
+    "bone": "forearm_r",
+    "name": "vambrace_r",
+    "material": "gold",
+    "dimensions": [
+      7.1,
+      8.845272385955841,
+      7.6
+    ]
+  },
+  {
+    "uuid": "9891e503-c6fb-3b46-192f-fe02ffa40c98",
+    "bone": "forearm_r",
+    "name": "wrist_cuff_r",
+    "material": "gold_edge",
+    "dimensions": [
+      6,
+      2.9,
+      6.6
+    ]
+  },
+  {
+    "uuid": "b268e3a4-b8c3-863c-7a85-5f93bb1998e1",
+    "bone": "hand_r",
+    "name": "wrist_joint_r",
+    "material": "skin",
+    "dimensions": [
+      4,
+      3,
+      4.3
+    ]
+  },
+  {
+    "uuid": "45184cdb-9a89-3a79-daef-0d6827c66987",
+    "bone": "hand_r",
+    "name": "palm_r",
+    "material": "skin",
+    "dimensions": [
+      2.4,
+      4.8,
+      6.1
+    ]
+  },
+  {
+    "uuid": "561028b4-1b8f-534e-545f-97e3211763cd",
+    "bone": "hand_r",
+    "name": "dorsal_gauntlet_r",
+    "material": "gold",
+    "dimensions": [
+      1.1,
+      3.7,
+      5.1
+    ]
+  },
+  {
+    "uuid": "0a6510d3-b229-8f40-b123-80fa652639a9",
+    "bone": "finger_r_0",
+    "name": "finger_r_0_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "ac856ad6-2a55-dd8d-8547-ccbc1250dba1",
+    "bone": "finger_r_0",
+    "name": "finger_r_0_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "49ab75b7-1326-a0bd-71ab-12d05126b854",
+    "bone": "finger_r_0_tip",
+    "name": "finger_r_0_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "3bb491df-5ec3-b86f-6cd9-d780707f6801",
+    "bone": "finger_r_1",
+    "name": "finger_r_1_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "85e62015-7e41-fafb-2604-20859582838c",
+    "bone": "finger_r_1",
+    "name": "finger_r_1_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "6c83c2fe-f7a0-7f4d-3d30-a49613572e5a",
+    "bone": "finger_r_1_tip",
+    "name": "finger_r_1_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "bcb9f630-69ce-14ad-90a5-ca1c64caccb3",
+    "bone": "finger_r_2",
+    "name": "finger_r_2_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "fcc66762-b24f-6a26-fa5b-24d8d853f7a2",
+    "bone": "finger_r_2",
+    "name": "finger_r_2_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "2a7cda64-4811-e2b7-7543-a5df879ff8d4",
+    "bone": "finger_r_2_tip",
+    "name": "finger_r_2_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "7e776a78-b2d0-02bf-51d5-8692602909d5",
+    "bone": "finger_r_3",
+    "name": "finger_r_3_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "bd94ead4-3780-9a19-fe5b-ac199ff546ad",
+    "bone": "finger_r_3",
+    "name": "finger_r_3_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "d49de3b5-08f4-098a-c298-6cd576c131f1",
+    "bone": "finger_r_3_tip",
+    "name": "finger_r_3_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "3e53398c-da48-0c16-be70-6346d5d5d1c7",
+    "bone": "thumb_r",
+    "name": "thumb_proximal_r",
+    "material": "skin",
+    "dimensions": [
+      1.65,
+      2.649046515733025,
+      1.4
+    ]
+  },
+  {
+    "uuid": "ac893e6f-8e61-4eba-21c3-16380a6d1c83",
+    "bone": "thumb_tip_r",
+    "name": "thumb_distal_r",
+    "material": "skin",
+    "dimensions": [
+      1.4,
+      1.6420499351813287,
+      1.2
+    ]
+  },
+  {
+    "uuid": "793551d2-8611-c8d2-508f-7b795bb977db",
+    "bone": "forearm_r",
+    "name": "omen_forearm_r_root",
+    "material": "horn",
+    "dimensions": [
+      2.6,
+      4.633020975132882,
+      2.21
+    ]
+  },
+  {
+    "uuid": "85b6bc93-633d-6a1c-f876-c91badff2ea8",
+    "bone": "forearm_r",
+    "name": "omen_forearm_r_tip",
+    "material": "horn",
+    "dimensions": [
+      1.248,
+      3.3739338184001233,
+      1.04
+    ]
+  },
+  {
+    "uuid": "dffd18e7-9db5-afbe-1bda-d04f6329379d",
+    "bone": "upper_arm_r",
+    "name": "omen_bicep_r_root",
+    "material": "horn",
+    "dimensions": [
+      2.3,
+      4.384648650006176,
+      1.9549999999999998
+    ]
+  },
+  {
+    "uuid": "584dab3e-9af9-f5ce-dfea-f854573da91e",
+    "bone": "upper_arm_r",
+    "name": "omen_bicep_r_tip",
+    "material": "horn",
+    "dimensions": [
+      1.1039999999999999,
+      3.928376280978773,
+      0.9199999999999999
+    ]
+  },
+  {
+    "uuid": "eb92f175-e147-9d40-03ca-7a3a2a0ffa0b",
+    "bone": "thigh_r",
+    "name": "thigh_core_r",
+    "material": "iron",
+    "dimensions": [
+      9.5,
+      14.128487463068756,
+      11
+    ]
+  },
+  {
+    "uuid": "b5744808-a274-d367-835f-4b056744c80d",
+    "bone": "thigh_r",
+    "name": "cuisses_r",
+    "material": "gold",
+    "dimensions": [
+      8.5,
+      13.2,
+      3.1
+    ]
+  },
+  {
+    "uuid": "11ff33ed-574b-9373-9faf-4d14ca00e2f3",
+    "bone": "thigh_r",
+    "name": "thigh_outside_plate_r",
+    "material": "gold",
+    "dimensions": [
+      2.5,
+      12,
+      8.7
+    ]
+  },
+  {
+    "uuid": "ebf0c628-c0b9-c8ef-03c5-3978fb32a15a",
+    "bone": "shin_r",
+    "name": "knee_joint_r",
+    "material": "iron",
+    "dimensions": [
+      8.3,
+      5.8,
+      9.2
+    ]
+  },
+  {
+    "uuid": "6e093a8e-fdf1-a8c8-edb1-131295929ccf",
+    "bone": "shin_r",
+    "name": "patella_r",
+    "material": "gold_edge",
+    "dimensions": [
+      7,
+      6.8,
+      2.5
+    ]
+  },
+  {
+    "uuid": "af6cf904-dfe4-af3d-608c-6b1ebc932dd6",
+    "bone": "shin_r",
+    "name": "calf_r",
+    "material": "skin",
+    "dimensions": [
+      7.3,
+      13.792403144598687,
+      8.2
+    ]
+  },
+  {
+    "uuid": "73603158-e1c8-095a-0c95-b113f9d8f160",
+    "bone": "shin_r",
+    "name": "greave_r",
+    "material": "gold",
+    "dimensions": [
+      6.8,
+      13.6,
+      3.6
+    ]
+  },
+  {
+    "uuid": "85fdbade-740a-7c3a-b241-c6941c3446ee",
+    "bone": "shin_r",
+    "name": "ankle_cuff_r",
+    "material": "gold_edge",
+    "dimensions": [
+      7,
+      2.5,
+      7.8
+    ]
+  },
+  {
+    "uuid": "8c6330e6-32d9-2515-4ae6-a77c942a78f7",
+    "bone": "foot_r",
+    "name": "ankle_r",
+    "material": "iron",
+    "dimensions": [
+      5.8,
+      4.6,
+      6
+    ]
+  },
+  {
+    "uuid": "5433b844-293e-c507-2508-c25640a435c3",
+    "bone": "foot_r",
+    "name": "heel_r",
+    "material": "iron",
+    "dimensions": [
+      7.6,
+      4.4,
+      5.9
+    ]
+  },
+  {
+    "uuid": "0a40409d-e694-1004-a428-379883bd8b9e",
+    "bone": "foot_r",
+    "name": "foot_arch_r",
+    "material": "iron",
+    "dimensions": [
+      7.4,
+      3.8,
+      6.8
+    ]
+  },
+  {
+    "uuid": "82a3e377-fe76-39d9-9158-e6b91451fbdf",
+    "bone": "foot_r",
+    "name": "instep_r",
+    "material": "gold",
+    "dimensions": [
+      6.8,
+      2.9,
+      7.3
+    ]
+  },
+  {
+    "uuid": "fb38e9e3-5b3e-2b87-b35d-18dbb8d4b277",
+    "bone": "toe_r",
+    "name": "forefoot_r",
+    "material": "iron",
+    "dimensions": [
+      8.3,
+      3.2,
+      6.2
+    ]
+  },
+  {
+    "uuid": "0a28d344-a02b-b87c-6bfb-671657ba3aff",
+    "bone": "toe_r",
+    "name": "toe_cap_r",
+    "material": "gold",
+    "dimensions": [
+      7.8,
+      1.8,
+      5.8
+    ]
+  },
+  {
+    "uuid": "cf5eb925-5074-c735-cd12-916dcc262ecd",
+    "bone": "toe_r",
+    "name": "toe_edge_r",
+    "material": "gold_edge",
+    "dimensions": [
+      6.6,
+      2.5,
+      1.2
+    ]
+  },
+  {
+    "uuid": "345f1c15-b344-fe06-5e03-cb093c0aedc5",
+    "bone": "shin_r",
+    "name": "omen_calf_r_root",
+    "material": "horn",
+    "dimensions": [
+      2.3,
+      3.899685850956856,
+      1.9549999999999998
+    ]
+  },
+  {
+    "uuid": "3bffcc66-110c-dcd6-60cb-c63bb529f6d8",
+    "bone": "shin_r",
+    "name": "omen_calf_r_tip",
+    "material": "horn",
+    "dimensions": [
+      1.1039999999999999,
+      3.938756276314948,
+      0.9199999999999999
+    ]
+  },
+  {
+    "uuid": "f3f14eaf-3af2-62f9-49cf-cee27e4937cd",
+    "bone": "tasset_r",
+    "name": "hip_lame_r_0",
+    "material": "gold",
+    "dimensions": [
+      4.1,
+      4.9,
+      12.6
+    ]
+  },
+  {
+    "uuid": "63f74a5b-3b21-d3c5-c876-4dd145bec637",
+    "bone": "tasset_r",
+    "name": "hip_lame_r_1",
+    "material": "gold",
+    "dimensions": [
+      4.1,
+      4.9,
+      11.6
+    ]
+  },
+  {
+    "uuid": "83e1dcae-197c-7203-468a-e68a956a58c6",
+    "bone": "tasset_r",
+    "name": "hip_lame_r_2",
+    "material": "gold",
+    "dimensions": [
+      4.1,
+      4.9,
+      10.6
+    ]
+  },
+  {
+    "uuid": "897e75dd-30fa-dbb8-24d3-dd65e588b990",
+    "bone": "sword_r",
+    "name": "grip_r",
+    "material": "iron",
+    "dimensions": [
+      1.65,
+      13.08,
+      1.65
+    ]
+  },
+  {
+    "uuid": "42fb0ac5-edd7-bb03-2e59-2a93a1eed62f",
+    "bone": "sword_r",
+    "name": "pommel_r",
+    "material": "gold_edge",
+    "dimensions": [
+      3.2,
+      3.2,
+      2.8
+    ]
+  },
+  {
+    "uuid": "7f0d07cb-d7aa-7ce0-4cb7-eeb96f545c70",
+    "bone": "sword_r",
+    "name": "guard_core_r",
+    "material": "gold",
+    "dimensions": [
+      4.7,
+      11.8,
+      3
+    ]
+  },
+  {
+    "uuid": "0d9999e4-c092-d5b9-0a63-56310b0df87c",
+    "bone": "sword_r",
+    "name": "guard_swept_r_1",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      5.157400909914439,
+      2.1
+    ]
+  },
+  {
+    "uuid": "27bdb13b-22fc-123a-e5a4-0cb9f46ef25c",
+    "bone": "sword_r",
+    "name": "guard_fin_r_1",
+    "material": "gold",
+    "dimensions": [
+      2.4,
+      3.6,
+      3.4
+    ]
+  },
+  {
+    "uuid": "edcf8026-28dd-1877-0dbc-12e0f17c0c97",
+    "bone": "sword_r",
+    "name": "guard_swept_r_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      5.1574009099144416,
+      2.1
+    ]
+  },
+  {
+    "uuid": "6c670678-4d23-966e-8e22-d762b378e94c",
+    "bone": "sword_r",
+    "name": "guard_fin_r_-1",
+    "material": "gold",
+    "dimensions": [
+      2.4,
+      3.6,
+      3.4
+    ]
+  },
+  {
+    "uuid": "4afe58bd-f83d-02ce-c505-3bd6c7ce45d3",
+    "bone": "sword_r",
+    "name": "blade_forged_r_0",
+    "material": "iron",
+    "dimensions": [
+      2.325,
+      8.266666666666667,
+      2.352462049341126
+    ]
+  },
+  {
+    "uuid": "dc652c2c-1979-4442-2d4a-cd3ef2642369",
+    "bone": "sword_r",
+    "name": "blade_edge_r_0",
+    "material": "blade_edge",
+    "dimensions": [
+      1.116,
+      1.1573333333333335,
+      2.392462049341126
+    ]
+  },
+  {
+    "uuid": "051e3c2e-0b8d-f591-7fd6-e14cb4ae3d71",
+    "bone": "sword_r",
+    "name": "blade_forged_r_1",
+    "material": "iron",
+    "dimensions": [
+      2.2750000000000004,
+      8.8,
+      2.352462049341127
+    ]
+  },
+  {
+    "uuid": "1e8a0ece-3639-e6eb-89d5-7bf3e9375c17",
+    "bone": "sword_r",
+    "name": "blade_edge_r_1",
+    "material": "blade_edge",
+    "dimensions": [
+      1.092,
+      1.2320000000000002,
+      2.392462049341127
+    ]
+  },
+  {
+    "uuid": "723739c2-d43c-78d9-af05-949420883890",
+    "bone": "sword_r",
+    "name": "blade_forged_r_2",
+    "material": "iron",
+    "dimensions": [
+      2.225,
+      9.333333333333332,
+      2.34941095300497
+    ]
+  },
+  {
+    "uuid": "0edd620b-71d4-1f35-886d-a7a9cdad7d87",
+    "bone": "sword_r",
+    "name": "blade_edge_r_2",
+    "material": "blade_edge",
+    "dimensions": [
+      1.068,
+      1.3066666666666666,
+      2.38941095300497
+    ]
+  },
+  {
+    "uuid": "d5cba996-a57d-f83d-cc0c-046db35c9826",
+    "bone": "sword_r",
+    "name": "blade_forged_r_3",
+    "material": "iron",
+    "dimensions": [
+      2.166666666666667,
+      9.833333333333334,
+      2.3548639012434625
+    ]
+  },
+  {
+    "uuid": "f23a4212-42f8-5e69-ff2c-21d4a9e1a850",
+    "bone": "sword_r",
+    "name": "blade_edge_r_3",
+    "material": "blade_edge",
+    "dimensions": [
+      1.04,
+      1.376666666666667,
+      2.3948639012434625
+    ]
+  },
+  {
+    "uuid": "b29d2481-108b-9ea2-6b19-decfab67eae6",
+    "bone": "sword_r",
+    "name": "blade_inlay_r_3",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      4.72,
+      0.6
+    ]
+  },
+  {
+    "uuid": "298c218b-c77e-ea2a-147a-ae6324765e7e",
+    "bone": "sword_r",
+    "name": "blade_forged_r_4",
+    "material": "iron",
+    "dimensions": [
+      2.1,
+      10.3,
+      2.3585966146134947
+    ]
+  },
+  {
+    "uuid": "9b6cdf09-97dd-9659-fc9e-c8c3caf7957b",
+    "bone": "sword_r",
+    "name": "blade_edge_r_4",
+    "material": "blade_edge",
+    "dimensions": [
+      1.008,
+      1.4420000000000002,
+      2.3985966146134947
+    ]
+  },
+  {
+    "uuid": "b2fca230-8304-62f4-f47f-7e142912a798",
+    "bone": "sword_r",
+    "name": "blade_forged_r_5",
+    "material": "iron",
+    "dimensions": [
+      2.033333333333333,
+      10.766666666666667,
+      2.3611952419099205
+    ]
+  },
+  {
+    "uuid": "8170e7ee-03e8-c9fb-1651-e6c557aaabe3",
+    "bone": "sword_r",
+    "name": "blade_edge_r_5",
+    "material": "blade_edge",
+    "dimensions": [
+      0.9759999999999999,
+      1.5073333333333336,
+      2.4011952419099205
+    ]
+  },
+  {
+    "uuid": "41aa9781-9136-0f72-6b21-b928ba50b3e2",
+    "bone": "sword_r",
+    "name": "blade_forged_r_6",
+    "material": "iron",
+    "dimensions": [
+      1.9666666666666668,
+      11.083333333333332,
+      2.3936096398903017
+    ]
+  },
+  {
+    "uuid": "c6072d01-6ae2-0796-39d3-fbaec581751a",
+    "bone": "sword_r",
+    "name": "blade_edge_r_6",
+    "material": "blade_edge",
+    "dimensions": [
+      0.9440000000000001,
+      1.5516666666666667,
+      2.4336096398903018
+    ]
+  },
+  {
+    "uuid": "2862a9e0-75be-49c1-05a1-71f13a94a250",
+    "bone": "sword_r",
+    "name": "blade_inlay_r_6",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      5.319999999999999,
+      0.6
+    ]
+  },
+  {
+    "uuid": "b911b822-c410-72a1-4011-aa6c6c803da9",
+    "bone": "sword_r",
+    "name": "blade_forged_r_7",
+    "material": "iron",
+    "dimensions": [
+      1.9,
+      11.25,
+      2.4070862254791967
+    ]
+  },
+  {
+    "uuid": "7ca6de69-6b34-db06-2562-54a1703857e6",
+    "bone": "sword_r",
+    "name": "blade_edge_r_7",
+    "material": "blade_edge",
+    "dimensions": [
+      0.9119999999999999,
+      1.5750000000000002,
+      2.4470862254791967
+    ]
+  },
+  {
+    "uuid": "5284d6e2-911d-bde8-f478-d701f8fcb05d",
+    "bone": "sword_r",
+    "name": "blade_forged_r_8",
+    "material": "iron",
+    "dimensions": [
+      1.8333333333333333,
+      11.416666666666668,
+      2.413386666783138
+    ]
+  },
+  {
+    "uuid": "916b2720-0cf4-66ae-289b-22d78481a66b",
+    "bone": "sword_r",
+    "name": "blade_edge_r_8",
+    "material": "blade_edge",
+    "dimensions": [
+      0.8799999999999999,
+      1.5983333333333336,
+      2.453386666783138
+    ]
+  },
+  {
+    "uuid": "88752359-2d16-5751-7a07-27853529fe87",
+    "bone": "sword_r",
+    "name": "blade_forged_r_9",
+    "material": "iron",
+    "dimensions": [
+      1.7666666666666666,
+      11.350000000000001,
+      2.43890170970746
+    ]
+  },
+  {
+    "uuid": "a63e9250-7c12-2314-afa2-144316b0da9b",
+    "bone": "sword_r",
+    "name": "blade_edge_r_9",
+    "material": "blade_edge",
+    "dimensions": [
+      0.848,
+      1.5890000000000004,
+      2.47890170970746
+    ]
+  },
+  {
+    "uuid": "db95a83d-bc4d-2870-0b3c-fc3350bf36e1",
+    "bone": "sword_r",
+    "name": "blade_inlay_r_9",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      5.448,
+      0.6
+    ]
+  },
+  {
+    "uuid": "2fa71410-8564-82bf-25f0-309ee2462b8a",
+    "bone": "sword_r",
+    "name": "blade_forged_r_10",
+    "material": "iron",
+    "dimensions": [
+      1.7000000000000002,
+      11.05,
+      2.4474898150525144
+    ]
+  },
+  {
+    "uuid": "668f5c02-763d-936c-5716-555d351cda76",
+    "bone": "sword_r",
+    "name": "blade_edge_r_10",
+    "material": "blade_edge",
+    "dimensions": [
+      0.8160000000000001,
+      1.5470000000000002,
+      2.4874898150525144
+    ]
+  },
+  {
+    "uuid": "96401870-58ec-d551-953a-23582680972b",
+    "bone": "sword_r",
+    "name": "blade_forged_r_11",
+    "material": "iron",
+    "dimensions": [
+      1.6333333333333335,
+      10.749999999999998,
+      2.459482133878618
+    ]
+  },
+  {
+    "uuid": "701f5102-8b7c-a09b-e991-d29e6cbcb6a7",
+    "bone": "sword_r",
+    "name": "blade_edge_r_11",
+    "material": "blade_edge",
+    "dimensions": [
+      0.784,
+      1.505,
+      2.499482133878618
+    ]
+  },
+  {
+    "uuid": "27323a96-e9b1-7387-3601-d0ea48e3cf94",
+    "bone": "sword_r",
+    "name": "blade_forged_r_12",
+    "material": "iron",
+    "dimensions": [
+      1.5666666666666669,
+      10.35,
+      2.536988855028172
+    ]
+  },
+  {
+    "uuid": "91ca14bc-4b67-5bc6-a143-745056b75914",
+    "bone": "sword_r",
+    "name": "blade_edge_r_12",
+    "material": "blade_edge",
+    "dimensions": [
+      0.7520000000000001,
+      1.449,
+      2.576988855028172
+    ]
+  },
+  {
+    "uuid": "8d1de1b9-6cbc-825a-5a14-e042c96cd647",
+    "bone": "sword_r",
+    "name": "blade_inlay_r_12",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      4.968,
+      0.6
+    ]
+  },
+  {
+    "uuid": "bf07937e-ca6f-fd82-8abb-c67b0ff63aaa",
+    "bone": "sword_r",
+    "name": "blade_forged_r_13",
+    "material": "iron",
+    "dimensions": [
+      1.5,
+      9.85,
+      2.556277868859963
+    ]
+  },
+  {
+    "uuid": "77a7ddd5-5eb1-978e-165c-c0a90156c591",
+    "bone": "sword_r",
+    "name": "blade_edge_r_13",
+    "material": "blade_edge",
+    "dimensions": [
+      0.72,
+      1.379,
+      2.5962778688599633
+    ]
+  },
+  {
+    "uuid": "5918297e-d4a1-6168-9d17-c3c12f6857e5",
+    "bone": "sword_r",
+    "name": "blade_forged_r_14",
+    "material": "iron",
+    "dimensions": [
+      1.4333333333333331,
+      9.35,
+      2.540141844355584
+    ]
+  },
+  {
+    "uuid": "5aec36fd-71c5-a6ff-1826-f5a609b5b760",
+    "bone": "sword_r",
+    "name": "blade_edge_r_14",
+    "material": "blade_edge",
+    "dimensions": [
+      0.6879999999999998,
+      1.3090000000000002,
+      2.580141844355584
+    ]
+  },
+  {
+    "uuid": "f560f65f-34e6-c745-b28e-69690186d949",
+    "bone": "sword_r",
+    "name": "blade_forged_r_15",
+    "material": "iron",
+    "dimensions": [
+      1.3499999999999996,
+      8.716666666666665,
+      2.4860676236683217
+    ]
+  },
+  {
+    "uuid": "ce221b8a-ebaa-4432-00c7-6c25c1f676d4",
+    "bone": "sword_r",
+    "name": "blade_edge_r_15",
+    "material": "blade_edge",
+    "dimensions": [
+      0.6479999999999998,
+      1.2203333333333333,
+      2.5260676236683217
+    ]
+  },
+  {
+    "uuid": "b50a855d-c54c-fe25-cf4e-da4bf4f26425",
+    "bone": "sword_r",
+    "name": "blade_inlay_r_15",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      4.183999999999999,
+      0.6
+    ]
+  },
+  {
+    "uuid": "74048a2f-f3ed-df2d-549a-77a9a24c2c77",
+    "bone": "sword_r",
+    "name": "blade_forged_r_16",
+    "material": "iron",
+    "dimensions": [
+      1.25,
+      7.949999999999999,
+      2.480289563340317
+    ]
+  },
+  {
+    "uuid": "1dafd38a-5f8a-7748-80af-91a3653d0c46",
+    "bone": "sword_r",
+    "name": "blade_edge_r_16",
+    "material": "blade_edge",
+    "dimensions": [
+      0.6,
+      1.113,
+      2.520289563340317
+    ]
+  },
+  {
+    "uuid": "916ede01-9c6e-8df7-d6fa-fd2b5978b26c",
+    "bone": "sword_r",
+    "name": "blade_forged_r_17",
+    "material": "iron",
+    "dimensions": [
+      1.1500000000000001,
+      7.183333333333334,
+      2.46820664091528
+    ]
+  },
+  {
+    "uuid": "fa865773-bdc5-fab2-44fd-af9e1852efef",
+    "bone": "sword_r",
+    "name": "blade_edge_r_17",
+    "material": "blade_edge",
+    "dimensions": [
+      0.552,
+      1.0056666666666667,
+      2.50820664091528
+    ]
+  },
+  {
+    "uuid": "5ac7dde9-72f8-a3e9-695a-8be8640c5165",
+    "bone": "sword_r",
+    "name": "blade_forged_r_18",
+    "material": "iron",
+    "dimensions": [
+      1.0583333333333333,
+      6.383333333333332,
+      2.4726582727012234
+    ]
+  },
+  {
+    "uuid": "dc22551c-fee4-8fa1-45ef-8cf894283bfb",
+    "bone": "sword_r",
+    "name": "blade_edge_r_18",
+    "material": "blade_edge",
+    "dimensions": [
+      0.508,
+      0.8936666666666666,
+      2.5126582727012234
+    ]
+  },
+  {
+    "uuid": "ae3eaf43-2e0f-f985-f985-169bccf12db3",
+    "bone": "sword_r",
+    "name": "blade_forged_r_19",
+    "material": "iron",
+    "dimensions": [
+      0.9750000000000001,
+      5.55,
+      2.466645639080733
+    ]
+  },
+  {
+    "uuid": "cc59929c-4d01-6838-df5b-6c0f9a568b2b",
+    "bone": "sword_r",
+    "name": "blade_edge_r_19",
+    "material": "blade_edge",
+    "dimensions": [
+      0.468,
+      0.777,
+      2.506645639080733
+    ]
+  },
+  {
+    "uuid": "02856632-9489-2162-03b9-041b125049c1",
+    "bone": "sword_r",
+    "name": "blade_forged_r_20",
+    "material": "iron",
+    "dimensions": [
+      0.8916666666666667,
+      4.716666666666667,
+      2.312496600769482
+    ]
+  },
+  {
+    "uuid": "8e149c64-5c13-3f84-02a5-1bdb4188d6ab",
+    "bone": "sword_r",
+    "name": "blade_edge_r_20",
+    "material": "blade_edge",
+    "dimensions": [
+      0.428,
+      0.6603333333333334,
+      2.352496600769482
+    ]
+  },
+  {
+    "uuid": "84b6c6f5-2b52-79f4-2520-d69ae902fe59",
+    "bone": "sword_r",
+    "name": "blade_forged_r_21",
+    "material": "iron",
+    "dimensions": [
+      0.7999999999999998,
+      3.8499999999999988,
+      1.755261944301974
+    ]
+  },
+  {
+    "uuid": "878592ed-e6a2-ee61-3a74-73b72658bc37",
+    "bone": "sword_r",
+    "name": "blade_edge_r_21",
+    "material": "blade_edge",
+    "dimensions": [
+      0.3839999999999999,
+      0.5389999999999999,
+      1.795261944301974
+    ]
+  },
+  {
+    "uuid": "cd4ecdeb-609f-d23a-4faf-9087e3218197",
+    "bone": "sword_r",
+    "name": "blade_forged_r_22",
+    "material": "iron",
+    "dimensions": [
+      0.7,
+      2.95,
+      1.663518816534984
+    ]
+  },
+  {
+    "uuid": "33ff9925-580e-1d79-f25f-0dfe66341246",
+    "bone": "sword_r",
+    "name": "blade_edge_r_22",
+    "material": "blade_edge",
+    "dimensions": [
+      0.33599999999999997,
+      0.4130000000000001,
+      1.703518816534984
+    ]
+  },
+  {
+    "uuid": "b5d925f2-2d0f-a59f-99d5-5f17e9018248",
+    "bone": "sword_r",
+    "name": "blade_forged_r_23",
+    "material": "iron",
+    "dimensions": [
+      0.6000000000000001,
+      2.0500000000000007,
+      1.6635188165349875
+    ]
+  },
+  {
+    "uuid": "cb82b3ac-ee7f-0f73-2216-a0156b7db6a8",
+    "bone": "sword_r",
+    "name": "blade_edge_r_23",
+    "material": "blade_edge",
+    "dimensions": [
+      0.28800000000000003,
+      0.4,
+      1.7035188165349875
+    ]
+  },
+  {
+    "uuid": "16e2751e-2252-db97-68db-df1f28ef0c91",
+    "bone": "sword_r",
+    "name": "ricasso_mane_r_0",
+    "material": "gold_edge",
+    "dimensions": [
+      0.45,
+      2,
+      7.4
+    ]
+  },
+  {
+    "uuid": "e0a27053-0469-067a-2208-2079e18e319a",
+    "bone": "sword_r",
+    "name": "ricasso_mane_r_1",
+    "material": "gold_edge",
+    "dimensions": [
+      0.45,
+      2,
+      7.4
+    ]
+  },
+  {
+    "uuid": "4809ebf6-9b01-1007-7494-765d4277cd57",
+    "bone": "sword_r",
+    "name": "ricasso_mane_r_2",
+    "material": "gold_edge",
+    "dimensions": [
+      0.45,
+      2,
+      7.4
+    ]
+  },
+  {
+    "uuid": "1f895f60-d257-0d31-1bc8-1a81239038e6",
+    "bone": "upper_arm_l",
+    "name": "upper_arm_flesh_l",
+    "material": "skin",
+    "dimensions": [
+      8.2,
+      12.668883985484971,
+      9.2
+    ]
+  },
+  {
+    "uuid": "a9f0a00d-ab4b-b4b9-0dc4-cf5fa70bf64a",
+    "bone": "upper_arm_l",
+    "name": "bicep_front_l",
+    "material": "skin",
+    "dimensions": [
+      6.4,
+      8.9,
+      3.3
+    ]
+  },
+  {
+    "uuid": "e0f8d8fb-6cc7-e8b9-a250-e36b0f7c0dc5",
+    "bone": "upper_arm_l",
+    "name": "shoulder_underplate_l",
+    "material": "iron",
+    "dimensions": [
+      10.5,
+      6.8,
+      12.9
+    ]
+  },
+  {
+    "uuid": "b0fa771d-3332-6e0c-6f3d-39ae3a22fb72",
+    "bone": "upper_arm_l",
+    "name": "shoulder_crown_l",
+    "material": "gold",
+    "dimensions": [
+      8.7,
+      2.8,
+      11
+    ]
+  },
+  {
+    "uuid": "3d1bc882-354c-7968-403b-cc6c0eaf6dcf",
+    "bone": "upper_arm_l",
+    "name": "shoulder_crown_ridge_l",
+    "material": "gold_edge",
+    "dimensions": [
+      3.6,
+      1.1,
+      9.1
+    ]
+  },
+  {
+    "uuid": "436e515a-b97e-a3c9-907e-83e05508860a",
+    "bone": "upper_arm_l",
+    "name": "shoulder_mantle_l",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      3.1,
+      3.2
+    ]
+  },
+  {
+    "uuid": "a38acfc6-36f8-f01d-1903-ec5477fed437",
+    "bone": "upper_arm_l",
+    "name": "pauldron_lame_l_0",
+    "material": "gold",
+    "dimensions": [
+      9.8,
+      3.1,
+      14
+    ]
+  },
+  {
+    "uuid": "57fedf94-e792-568e-d8be-4fb48b8e7ca5",
+    "bone": "upper_arm_l",
+    "name": "pauldron_lame_l_1",
+    "material": "gold",
+    "dimensions": [
+      9.200000000000001,
+      3.1,
+      13.2
+    ]
+  },
+  {
+    "uuid": "18a71660-57ad-50b7-e62f-60a1d406e001",
+    "bone": "upper_arm_l",
+    "name": "pauldron_lame_l_2",
+    "material": "gold",
+    "dimensions": [
+      8.600000000000001,
+      3.1,
+      12.4
+    ]
+  },
+  {
+    "uuid": "c6188f37-e2b3-ec56-3791-7937f9e93c72",
+    "bone": "upper_arm_l",
+    "name": "pauldron_mane_l_0",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "34bbd1d9-0f8f-cb89-52dd-9553a61a7a76",
+    "bone": "upper_arm_l",
+    "name": "pauldron_mane_l_1",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "1da3270d-646c-d1c4-d119-17af7931fe15",
+    "bone": "upper_arm_l",
+    "name": "pauldron_mane_l_2",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "633d2469-6c19-92f4-ce0e-e64727ea2ff9",
+    "bone": "forearm_l",
+    "name": "elbow_hinge_l",
+    "material": "iron",
+    "dimensions": [
+      7.4,
+      5,
+      7.9
+    ]
+  },
+  {
+    "uuid": "08d4c134-9cbd-9dd7-a5de-d66ca31b1dd4",
+    "bone": "forearm_l",
+    "name": "forearm_flesh_l",
+    "material": "skin",
+    "dimensions": [
+      6.8,
+      11.113131921625884,
+      7.3
+    ]
+  },
+  {
+    "uuid": "0eb4ba8b-6485-673b-ea36-f96f34720603",
+    "bone": "forearm_l",
+    "name": "vambrace_l",
+    "material": "gold",
+    "dimensions": [
+      7.1,
+      8.845272385955841,
+      7.6
+    ]
+  },
+  {
+    "uuid": "4f188e1b-7388-14a8-aa71-b56d6fe6bf3c",
+    "bone": "forearm_l",
+    "name": "wrist_cuff_l",
+    "material": "gold_edge",
+    "dimensions": [
+      6,
+      2.9,
+      6.6
+    ]
+  },
+  {
+    "uuid": "4705e659-69e5-a7aa-f0cf-4e85fbc55075",
+    "bone": "hand_l",
+    "name": "wrist_joint_l",
+    "material": "skin",
+    "dimensions": [
+      4,
+      3,
+      4.3
+    ]
+  },
+  {
+    "uuid": "4125373b-c4b8-df81-24fa-3b4df28841eb",
+    "bone": "hand_l",
+    "name": "palm_l",
+    "material": "skin",
+    "dimensions": [
+      2.4,
+      4.8,
+      6.1
+    ]
+  },
+  {
+    "uuid": "b29e5e49-9cd2-474a-c4c1-72be92fc871b",
+    "bone": "hand_l",
+    "name": "dorsal_gauntlet_l",
+    "material": "gold",
+    "dimensions": [
+      1.1,
+      3.7,
+      5.1
+    ]
+  },
+  {
+    "uuid": "fb9e6716-6355-0bfb-4099-7e0997d3dc97",
+    "bone": "finger_l_0",
+    "name": "finger_l_0_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "a5881c0c-ec76-15ce-41f4-5c3cfaa7af74",
+    "bone": "finger_l_0",
+    "name": "finger_l_0_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "6b3dad21-b6db-0dc5-0a92-ee20789afb34",
+    "bone": "finger_l_0_tip",
+    "name": "finger_l_0_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "49ae6696-c67b-1288-74fc-25433f17dc8e",
+    "bone": "finger_l_1",
+    "name": "finger_l_1_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "1af92c2d-d370-5801-62b2-671ac8f95eac",
+    "bone": "finger_l_1",
+    "name": "finger_l_1_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "c04d7088-9b3c-f11b-e449-c2f44c71643c",
+    "bone": "finger_l_1_tip",
+    "name": "finger_l_1_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "970356aa-06e4-24ea-5eaf-c0c90d9e9d7c",
+    "bone": "finger_l_2",
+    "name": "finger_l_2_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "59e2b356-1359-f628-f039-5f71353a496c",
+    "bone": "finger_l_2",
+    "name": "finger_l_2_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "b92007aa-6b4b-329a-19cb-cf0f03d8491c",
+    "bone": "finger_l_2_tip",
+    "name": "finger_l_2_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "c657777f-33f1-9154-1d25-7b95e51902b2",
+    "bone": "finger_l_3",
+    "name": "finger_l_3_proximal",
+    "material": "skin",
+    "dimensions": [
+      1.25,
+      2.5315301344262546,
+      1.15
+    ]
+  },
+  {
+    "uuid": "1b058db2-b70d-caa0-fca2-e0e27efe9435",
+    "bone": "finger_l_3",
+    "name": "finger_l_3_middle",
+    "material": "skin",
+    "dimensions": [
+      1.15,
+      2.4799999999999986,
+      1.1
+    ]
+  },
+  {
+    "uuid": "6d9e72be-c465-fdb7-a62f-62e39d60b5b2",
+    "bone": "finger_l_3_tip",
+    "name": "finger_l_3_distal",
+    "material": "skin",
+    "dimensions": [
+      1.05,
+      1.948154169226941,
+      1.02
+    ]
+  },
+  {
+    "uuid": "54acbe94-475c-49ae-9a73-4994f3718434",
+    "bone": "thumb_l",
+    "name": "thumb_proximal_l",
+    "material": "skin",
+    "dimensions": [
+      1.65,
+      2.649046515733025,
+      1.4
+    ]
+  },
+  {
+    "uuid": "1af5fb3a-eebd-8b84-de68-d0cdbf295f07",
+    "bone": "thumb_tip_l",
+    "name": "thumb_distal_l",
+    "material": "skin",
+    "dimensions": [
+      1.4,
+      1.6420499351813287,
+      1.2
+    ]
+  },
+  {
+    "uuid": "0caf6370-dad0-ba09-3c7f-25388345cc50",
+    "bone": "forearm_l",
+    "name": "omen_forearm_l_root",
+    "material": "horn",
+    "dimensions": [
+      2.6,
+      4.633020975132882,
+      2.21
+    ]
+  },
+  {
+    "uuid": "0e5f957b-7452-3bb6-e6a7-3ca6f9d45720",
+    "bone": "forearm_l",
+    "name": "omen_forearm_l_tip",
+    "material": "horn",
+    "dimensions": [
+      1.248,
+      3.3739338184001233,
+      1.04
+    ]
+  },
+  {
+    "uuid": "e4ecf01f-1cfc-2574-3ebc-11372bcb8278",
+    "bone": "thigh_l",
+    "name": "thigh_core_l",
+    "material": "iron",
+    "dimensions": [
+      9.5,
+      14.128487463068756,
+      11
+    ]
+  },
+  {
+    "uuid": "8c631c4f-5e70-bb7b-3461-88748a34fb70",
+    "bone": "thigh_l",
+    "name": "cuisses_l",
+    "material": "gold",
+    "dimensions": [
+      8.5,
+      13.2,
+      3.1
+    ]
+  },
+  {
+    "uuid": "3a52e37a-c010-489d-6813-93cec2b5851a",
+    "bone": "thigh_l",
+    "name": "thigh_outside_plate_l",
+    "material": "gold",
+    "dimensions": [
+      2.5,
+      12,
+      8.7
+    ]
+  },
+  {
+    "uuid": "f94687c8-5f29-c6c9-5760-b6452e66bb39",
+    "bone": "shin_l",
+    "name": "knee_joint_l",
+    "material": "iron",
+    "dimensions": [
+      8.3,
+      5.8,
+      9.2
+    ]
+  },
+  {
+    "uuid": "094214db-3b86-0afd-e48d-5fbdff525386",
+    "bone": "shin_l",
+    "name": "patella_l",
+    "material": "gold_edge",
+    "dimensions": [
+      7,
+      6.8,
+      2.5
+    ]
+  },
+  {
+    "uuid": "45b4b9b3-b0e5-8cd9-a583-94cd1b519e47",
+    "bone": "shin_l",
+    "name": "calf_l",
+    "material": "skin",
+    "dimensions": [
+      7.3,
+      13.792403144598687,
+      8.2
+    ]
+  },
+  {
+    "uuid": "e4603807-dfe8-5aa7-8b89-bf3aeccc7519",
+    "bone": "shin_l",
+    "name": "greave_l",
+    "material": "gold",
+    "dimensions": [
+      6.8,
+      13.6,
+      3.6
+    ]
+  },
+  {
+    "uuid": "4f65f18d-23ec-287d-52cb-5ba979afc1d1",
+    "bone": "shin_l",
+    "name": "ankle_cuff_l",
+    "material": "gold_edge",
+    "dimensions": [
+      7,
+      2.5,
+      7.8
+    ]
+  },
+  {
+    "uuid": "64a410aa-5a4b-2f9b-0494-a070fb2ef910",
+    "bone": "foot_l",
+    "name": "ankle_l",
+    "material": "iron",
+    "dimensions": [
+      5.8,
+      4.6,
+      6
+    ]
+  },
+  {
+    "uuid": "d6718b09-c3f3-33c1-ab7c-5f65971bd51c",
+    "bone": "foot_l",
+    "name": "heel_l",
+    "material": "iron",
+    "dimensions": [
+      7.6,
+      4.4,
+      5.9
+    ]
+  },
+  {
+    "uuid": "f301a7d5-9133-4cf1-c2f3-81e641b77643",
+    "bone": "foot_l",
+    "name": "foot_arch_l",
+    "material": "iron",
+    "dimensions": [
+      7.4,
+      3.8,
+      6.8
+    ]
+  },
+  {
+    "uuid": "de103d9d-1f03-89cc-cc41-ded36a409ff1",
+    "bone": "foot_l",
+    "name": "instep_l",
+    "material": "gold",
+    "dimensions": [
+      6.8,
+      2.9,
+      7.3
+    ]
+  },
+  {
+    "uuid": "b994359b-ccb3-7ed9-300d-32687f77eb7d",
+    "bone": "toe_l",
+    "name": "forefoot_l",
+    "material": "iron",
+    "dimensions": [
+      8.3,
+      3.2,
+      6.2
+    ]
+  },
+  {
+    "uuid": "db4b794d-2d55-c55c-a4c6-6cdcc528e356",
+    "bone": "toe_l",
+    "name": "toe_cap_l",
+    "material": "gold",
+    "dimensions": [
+      7.8,
+      1.8,
+      5.8
+    ]
+  },
+  {
+    "uuid": "004e97c7-c32d-05ef-2710-a1fc65f92f5c",
+    "bone": "toe_l",
+    "name": "toe_edge_l",
+    "material": "gold_edge",
+    "dimensions": [
+      6.6,
+      2.5,
+      1.2
+    ]
+  },
+  {
+    "uuid": "e6e1e1af-c056-503d-a843-def83edd4130",
+    "bone": "shin_l",
+    "name": "omen_calf_l_root",
+    "material": "horn",
+    "dimensions": [
+      2.3,
+      3.899685850956856,
+      1.9549999999999998
+    ]
+  },
+  {
+    "uuid": "c0c51743-5819-4b30-e1fa-eef7b4e11ca5",
+    "bone": "shin_l",
+    "name": "omen_calf_l_tip",
+    "material": "horn",
+    "dimensions": [
+      1.1039999999999999,
+      3.938756276314948,
+      0.9199999999999999
+    ]
+  },
+  {
+    "uuid": "78df8013-c0f7-cead-dd9c-14b65e44c6a7",
+    "bone": "tasset_l",
+    "name": "hip_lame_l_0",
+    "material": "gold",
+    "dimensions": [
+      4.1,
+      4.9,
+      12.6
+    ]
+  },
+  {
+    "uuid": "0f4861b9-0657-8d6d-9b44-c90f1d167353",
+    "bone": "tasset_l",
+    "name": "hip_lame_l_1",
+    "material": "gold",
+    "dimensions": [
+      4.1,
+      4.9,
+      11.6
+    ]
+  },
+  {
+    "uuid": "870814c2-5d17-2289-d6d5-b5e6b831bd8f",
+    "bone": "tasset_l",
+    "name": "hip_lame_l_2",
+    "material": "gold",
+    "dimensions": [
+      4.1,
+      4.9,
+      10.6
+    ]
+  },
+  {
+    "uuid": "94f23873-8735-68c1-c5fb-1693de553867",
+    "bone": "sword_l",
+    "name": "grip_l",
+    "material": "iron",
+    "dimensions": [
+      1.65,
+      13.08,
+      1.65
+    ]
+  },
+  {
+    "uuid": "fc857cd1-0017-c167-e97c-b74b8ef9ffa7",
+    "bone": "sword_l",
+    "name": "pommel_l",
+    "material": "gold_edge",
+    "dimensions": [
+      3.2,
+      3.2,
+      2.8
+    ]
+  },
+  {
+    "uuid": "6d8af7ff-f433-2ef5-5020-3ab0f105b6a9",
+    "bone": "sword_l",
+    "name": "guard_core_l",
+    "material": "gold",
+    "dimensions": [
+      4.7,
+      11.8,
+      3
+    ]
+  },
+  {
+    "uuid": "f1e3e609-c96f-8e49-95b6-e53e030e39f2",
+    "bone": "sword_l",
+    "name": "guard_swept_l_1",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      5.157400909914439,
+      2.1
+    ]
+  },
+  {
+    "uuid": "4b5db9a2-8561-5bc9-aab4-9b784db3bbb4",
+    "bone": "sword_l",
+    "name": "guard_fin_l_1",
+    "material": "gold",
+    "dimensions": [
+      2.4,
+      3.6,
+      3.4
+    ]
+  },
+  {
+    "uuid": "8325f250-95b3-dc88-9ee6-1cdf0f8395ed",
+    "bone": "sword_l",
+    "name": "guard_swept_l_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      2.6,
+      5.1574009099144416,
+      2.1
+    ]
+  },
+  {
+    "uuid": "58e7b086-1c86-0431-640c-cc3c904f76d8",
+    "bone": "sword_l",
+    "name": "guard_fin_l_-1",
+    "material": "gold",
+    "dimensions": [
+      2.4,
+      3.6,
+      3.4
+    ]
+  },
+  {
+    "uuid": "0604386b-c97c-0ff5-985a-798dd6728804",
+    "bone": "sword_l",
+    "name": "blade_forged_l_0",
+    "material": "iron",
+    "dimensions": [
+      2.325,
+      8.266666666666667,
+      2.352462049341126
+    ]
+  },
+  {
+    "uuid": "ef64bb1f-d24d-687b-30c8-3d11c5226a96",
+    "bone": "sword_l",
+    "name": "blade_edge_l_0",
+    "material": "blade_edge",
+    "dimensions": [
+      1.116,
+      1.1573333333333335,
+      2.392462049341126
+    ]
+  },
+  {
+    "uuid": "8cff3aba-e85d-e79d-a058-4ff9f853e93a",
+    "bone": "sword_l",
+    "name": "blade_forged_l_1",
+    "material": "iron",
+    "dimensions": [
+      2.2750000000000004,
+      8.8,
+      2.352462049341127
+    ]
+  },
+  {
+    "uuid": "ef23f79c-7b26-bfa4-2ffc-8becdc8e44df",
+    "bone": "sword_l",
+    "name": "blade_edge_l_1",
+    "material": "blade_edge",
+    "dimensions": [
+      1.092,
+      1.2320000000000002,
+      2.392462049341127
+    ]
+  },
+  {
+    "uuid": "c856300c-7831-996e-a2d7-090b93e3cf85",
+    "bone": "sword_l",
+    "name": "blade_forged_l_2",
+    "material": "iron",
+    "dimensions": [
+      2.225,
+      9.333333333333332,
+      2.34941095300497
+    ]
+  },
+  {
+    "uuid": "a3e806eb-9865-d000-b346-07574ba6d790",
+    "bone": "sword_l",
+    "name": "blade_edge_l_2",
+    "material": "blade_edge",
+    "dimensions": [
+      1.068,
+      1.3066666666666666,
+      2.38941095300497
+    ]
+  },
+  {
+    "uuid": "1ff402a1-e914-c210-8832-440aa7bdc3b5",
+    "bone": "sword_l",
+    "name": "blade_forged_l_3",
+    "material": "iron",
+    "dimensions": [
+      2.166666666666667,
+      9.833333333333334,
+      2.3548639012434625
+    ]
+  },
+  {
+    "uuid": "d49a7b92-6874-b51d-260f-021c92007d24",
+    "bone": "sword_l",
+    "name": "blade_edge_l_3",
+    "material": "blade_edge",
+    "dimensions": [
+      1.04,
+      1.376666666666667,
+      2.3948639012434625
+    ]
+  },
+  {
+    "uuid": "293cdc47-6509-3ebe-b6ee-1fdb293b1caf",
+    "bone": "sword_l",
+    "name": "blade_inlay_l_3",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      4.72,
+      0.6
+    ]
+  },
+  {
+    "uuid": "18044cbc-826e-c4db-6073-b96ec905704e",
+    "bone": "sword_l",
+    "name": "blade_forged_l_4",
+    "material": "iron",
+    "dimensions": [
+      2.1,
+      10.3,
+      2.3585966146134947
+    ]
+  },
+  {
+    "uuid": "176376b3-f214-8abf-4a3f-920cbef7669d",
+    "bone": "sword_l",
+    "name": "blade_edge_l_4",
+    "material": "blade_edge",
+    "dimensions": [
+      1.008,
+      1.4420000000000002,
+      2.3985966146134947
+    ]
+  },
+  {
+    "uuid": "a23be619-24f8-8892-d2c8-54426b7e2b0b",
+    "bone": "sword_l",
+    "name": "blade_forged_l_5",
+    "material": "iron",
+    "dimensions": [
+      2.033333333333333,
+      10.766666666666667,
+      2.3611952419099205
+    ]
+  },
+  {
+    "uuid": "ca6ed2c8-8e68-07ea-3288-e49d662b52d9",
+    "bone": "sword_l",
+    "name": "blade_edge_l_5",
+    "material": "blade_edge",
+    "dimensions": [
+      0.9759999999999999,
+      1.5073333333333336,
+      2.4011952419099205
+    ]
+  },
+  {
+    "uuid": "464ff621-4a67-4b05-a807-ee51a247cf4a",
+    "bone": "sword_l",
+    "name": "blade_forged_l_6",
+    "material": "iron",
+    "dimensions": [
+      1.9666666666666668,
+      11.083333333333332,
+      2.3936096398903017
+    ]
+  },
+  {
+    "uuid": "20ed9fb7-8a62-4261-ee12-f98de7479f0e",
+    "bone": "sword_l",
+    "name": "blade_edge_l_6",
+    "material": "blade_edge",
+    "dimensions": [
+      0.9440000000000001,
+      1.5516666666666667,
+      2.4336096398903018
+    ]
+  },
+  {
+    "uuid": "79e3dc43-d09d-8484-cb82-0f8e1ce5a9ea",
+    "bone": "sword_l",
+    "name": "blade_inlay_l_6",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      5.319999999999999,
+      0.6
+    ]
+  },
+  {
+    "uuid": "a85af5a8-bf15-1fd2-1137-045f11a19a2f",
+    "bone": "sword_l",
+    "name": "blade_forged_l_7",
+    "material": "iron",
+    "dimensions": [
+      1.9,
+      11.25,
+      2.4070862254791967
+    ]
+  },
+  {
+    "uuid": "f71cd208-611b-bab7-2a1a-07dca3827f18",
+    "bone": "sword_l",
+    "name": "blade_edge_l_7",
+    "material": "blade_edge",
+    "dimensions": [
+      0.9119999999999999,
+      1.5750000000000002,
+      2.4470862254791967
+    ]
+  },
+  {
+    "uuid": "d956fa15-dbfc-d617-6440-42691dcbe30c",
+    "bone": "sword_l",
+    "name": "blade_forged_l_8",
+    "material": "iron",
+    "dimensions": [
+      1.8333333333333333,
+      11.416666666666668,
+      2.413386666783138
+    ]
+  },
+  {
+    "uuid": "56702668-3356-c1b9-48f3-710adff0d35a",
+    "bone": "sword_l",
+    "name": "blade_edge_l_8",
+    "material": "blade_edge",
+    "dimensions": [
+      0.8799999999999999,
+      1.5983333333333336,
+      2.453386666783138
+    ]
+  },
+  {
+    "uuid": "6f2311fd-8ca6-fb40-ea62-eb3ff37a04e9",
+    "bone": "sword_l",
+    "name": "blade_forged_l_9",
+    "material": "iron",
+    "dimensions": [
+      1.7666666666666666,
+      11.350000000000001,
+      2.43890170970746
+    ]
+  },
+  {
+    "uuid": "cd5c1897-6662-6f99-5720-790b1704734e",
+    "bone": "sword_l",
+    "name": "blade_edge_l_9",
+    "material": "blade_edge",
+    "dimensions": [
+      0.848,
+      1.5890000000000004,
+      2.47890170970746
+    ]
+  },
+  {
+    "uuid": "f5bb2eec-6a64-b46d-0e51-a22b599480d5",
+    "bone": "sword_l",
+    "name": "blade_inlay_l_9",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      5.448,
+      0.6
+    ]
+  },
+  {
+    "uuid": "228ccbae-d876-c651-cf29-66bb37626ae3",
+    "bone": "sword_l",
+    "name": "blade_forged_l_10",
+    "material": "iron",
+    "dimensions": [
+      1.7000000000000002,
+      11.05,
+      2.4474898150525144
+    ]
+  },
+  {
+    "uuid": "631b825b-3681-a2fc-14a4-6dfd4da2d347",
+    "bone": "sword_l",
+    "name": "blade_edge_l_10",
+    "material": "blade_edge",
+    "dimensions": [
+      0.8160000000000001,
+      1.5470000000000002,
+      2.4874898150525144
+    ]
+  },
+  {
+    "uuid": "f2aa1ff3-917e-fb24-e156-d7b113c94cad",
+    "bone": "sword_l",
+    "name": "blade_forged_l_11",
+    "material": "iron",
+    "dimensions": [
+      1.6333333333333335,
+      10.749999999999998,
+      2.459482133878618
+    ]
+  },
+  {
+    "uuid": "47a5cdac-5201-b76b-5798-5b99948a8599",
+    "bone": "sword_l",
+    "name": "blade_edge_l_11",
+    "material": "blade_edge",
+    "dimensions": [
+      0.784,
+      1.505,
+      2.499482133878618
+    ]
+  },
+  {
+    "uuid": "70aadb2e-563b-94a9-8ade-f38ccfb2a39b",
+    "bone": "sword_l",
+    "name": "blade_forged_l_12",
+    "material": "iron",
+    "dimensions": [
+      1.5666666666666669,
+      10.35,
+      2.536988855028172
+    ]
+  },
+  {
+    "uuid": "cd4dc9cd-da32-ef7d-546d-f8536af579ec",
+    "bone": "sword_l",
+    "name": "blade_edge_l_12",
+    "material": "blade_edge",
+    "dimensions": [
+      0.7520000000000001,
+      1.449,
+      2.576988855028172
+    ]
+  },
+  {
+    "uuid": "313e5188-0ab9-b94c-8386-9aa8a2131021",
+    "bone": "sword_l",
+    "name": "blade_inlay_l_12",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      4.968,
+      0.6
+    ]
+  },
+  {
+    "uuid": "8e2e68f1-64e9-0830-61e9-8ed557a6a0ec",
+    "bone": "sword_l",
+    "name": "blade_forged_l_13",
+    "material": "iron",
+    "dimensions": [
+      1.5,
+      9.85,
+      2.556277868859963
+    ]
+  },
+  {
+    "uuid": "ce44fde2-91d1-e916-e097-4665eb7e2aeb",
+    "bone": "sword_l",
+    "name": "blade_edge_l_13",
+    "material": "blade_edge",
+    "dimensions": [
+      0.72,
+      1.379,
+      2.5962778688599633
+    ]
+  },
+  {
+    "uuid": "19d3c69c-7510-ed8b-0b1a-d4d6ac9dedaa",
+    "bone": "sword_l",
+    "name": "blade_forged_l_14",
+    "material": "iron",
+    "dimensions": [
+      1.4333333333333331,
+      9.35,
+      2.540141844355584
+    ]
+  },
+  {
+    "uuid": "47200d59-d7f4-cbd6-a673-a4f472456652",
+    "bone": "sword_l",
+    "name": "blade_edge_l_14",
+    "material": "blade_edge",
+    "dimensions": [
+      0.6879999999999998,
+      1.3090000000000002,
+      2.580141844355584
+    ]
+  },
+  {
+    "uuid": "0cfe856d-ae02-4da6-9eba-d2850c1ba05f",
+    "bone": "sword_l",
+    "name": "blade_forged_l_15",
+    "material": "iron",
+    "dimensions": [
+      1.3499999999999996,
+      8.716666666666665,
+      2.4860676236683217
+    ]
+  },
+  {
+    "uuid": "bd4a109b-8bd4-9695-c8fe-ed753e14d008",
+    "bone": "sword_l",
+    "name": "blade_edge_l_15",
+    "material": "blade_edge",
+    "dimensions": [
+      0.6479999999999998,
+      1.2203333333333333,
+      2.5260676236683217
+    ]
+  },
+  {
+    "uuid": "3f8ffbcd-efc1-1675-e76b-57ad9625e1f4",
+    "bone": "sword_l",
+    "name": "blade_inlay_l_15",
+    "material": "gold",
+    "dimensions": [
+      0.13,
+      4.183999999999999,
+      0.6
+    ]
+  },
+  {
+    "uuid": "150fc330-0be4-70a9-f51b-59031fd01307",
+    "bone": "sword_l",
+    "name": "blade_forged_l_16",
+    "material": "iron",
+    "dimensions": [
+      1.25,
+      7.949999999999999,
+      2.480289563340317
+    ]
+  },
+  {
+    "uuid": "23b2c04e-0c54-9d94-01a0-c32667b28cc7",
+    "bone": "sword_l",
+    "name": "blade_edge_l_16",
+    "material": "blade_edge",
+    "dimensions": [
+      0.6,
+      1.113,
+      2.520289563340317
+    ]
+  },
+  {
+    "uuid": "962e9a83-3770-10e2-1527-b12ee21c3d20",
+    "bone": "sword_l",
+    "name": "blade_forged_l_17",
+    "material": "iron",
+    "dimensions": [
+      1.1500000000000001,
+      7.183333333333334,
+      2.46820664091528
+    ]
+  },
+  {
+    "uuid": "e66fbfbc-6ea3-5750-69d7-0607bbeaf5e7",
+    "bone": "sword_l",
+    "name": "blade_edge_l_17",
+    "material": "blade_edge",
+    "dimensions": [
+      0.552,
+      1.0056666666666667,
+      2.50820664091528
+    ]
+  },
+  {
+    "uuid": "c14f17f7-7774-d31b-7caa-5c0fb1577bf0",
+    "bone": "sword_l",
+    "name": "blade_forged_l_18",
+    "material": "iron",
+    "dimensions": [
+      1.0583333333333333,
+      6.383333333333332,
+      2.4726582727012234
+    ]
+  },
+  {
+    "uuid": "e8aee704-ad0e-9062-6513-5ff509a469ff",
+    "bone": "sword_l",
+    "name": "blade_edge_l_18",
+    "material": "blade_edge",
+    "dimensions": [
+      0.508,
+      0.8936666666666666,
+      2.5126582727012234
+    ]
+  },
+  {
+    "uuid": "bfd5c9e9-422e-18ca-e915-c644c57cab18",
+    "bone": "sword_l",
+    "name": "blade_forged_l_19",
+    "material": "iron",
+    "dimensions": [
+      0.9750000000000001,
+      5.55,
+      2.466645639080733
+    ]
+  },
+  {
+    "uuid": "18f62caa-ab3a-dbd1-9251-3968390c62c9",
+    "bone": "sword_l",
+    "name": "blade_edge_l_19",
+    "material": "blade_edge",
+    "dimensions": [
+      0.468,
+      0.777,
+      2.506645639080733
+    ]
+  },
+  {
+    "uuid": "21967a07-3420-8659-17d3-ac62572fe357",
+    "bone": "sword_l",
+    "name": "blade_forged_l_20",
+    "material": "iron",
+    "dimensions": [
+      0.8916666666666667,
+      4.716666666666667,
+      2.312496600769482
+    ]
+  },
+  {
+    "uuid": "599badb4-8c19-e48b-8b03-371a3d38822e",
+    "bone": "sword_l",
+    "name": "blade_edge_l_20",
+    "material": "blade_edge",
+    "dimensions": [
+      0.428,
+      0.6603333333333334,
+      2.352496600769482
+    ]
+  },
+  {
+    "uuid": "1417ca9e-2510-b077-c542-71e65946ae17",
+    "bone": "sword_l",
+    "name": "blade_forged_l_21",
+    "material": "iron",
+    "dimensions": [
+      0.7999999999999998,
+      3.8499999999999988,
+      1.755261944301974
+    ]
+  },
+  {
+    "uuid": "3cdc3871-c668-f2ee-722e-d0e15f7cf45d",
+    "bone": "sword_l",
+    "name": "blade_edge_l_21",
+    "material": "blade_edge",
+    "dimensions": [
+      0.3839999999999999,
+      0.5389999999999999,
+      1.795261944301974
+    ]
+  },
+  {
+    "uuid": "d02c50a6-0a20-4487-70b8-3d58595d8996",
+    "bone": "sword_l",
+    "name": "blade_forged_l_22",
+    "material": "iron",
+    "dimensions": [
+      0.7,
+      2.95,
+      1.663518816534984
+    ]
+  },
+  {
+    "uuid": "02b2b3c9-7e0c-4431-1586-f0c1458e1e18",
+    "bone": "sword_l",
+    "name": "blade_edge_l_22",
+    "material": "blade_edge",
+    "dimensions": [
+      0.33599999999999997,
+      0.4130000000000001,
+      1.703518816534984
+    ]
+  },
+  {
+    "uuid": "dd3d89ea-1b72-4263-c3a6-aee86ef12271",
+    "bone": "sword_l",
+    "name": "blade_forged_l_23",
+    "material": "iron",
+    "dimensions": [
+      0.6000000000000001,
+      2.0500000000000007,
+      1.6635188165349875
+    ]
+  },
+  {
+    "uuid": "40d4a3e4-1e2e-0e94-746b-94c45614188b",
+    "bone": "sword_l",
+    "name": "blade_edge_l_23",
+    "material": "blade_edge",
+    "dimensions": [
+      0.28800000000000003,
+      0.4,
+      1.7035188165349875
+    ]
+  },
+  {
+    "uuid": "2c2494d2-b04b-6fc1-d2ef-88c61550f47d",
+    "bone": "sword_l",
+    "name": "ricasso_mane_l_0",
+    "material": "gold_edge",
+    "dimensions": [
+      0.45,
+      2,
+      7.4
+    ]
+  },
+  {
+    "uuid": "39044b6a-fab7-4baa-8907-dd480440ffbc",
+    "bone": "sword_l",
+    "name": "ricasso_mane_l_1",
+    "material": "gold_edge",
+    "dimensions": [
+      0.45,
+      2,
+      7.4
+    ]
+  },
+  {
+    "uuid": "2a15dba7-cb4b-4d6c-da9d-35cb1079537b",
+    "bone": "sword_l",
+    "name": "ricasso_mane_l_2",
+    "material": "gold_edge",
+    "dimensions": [
+      0.45,
+      2,
+      7.4
+    ]
+  },
+  {
+    "uuid": "7e37a06d-50e8-05c9-c100-6ea64c56d943",
+    "bone": "neck",
+    "name": "neck_column",
+    "material": "skin",
+    "dimensions": [
+      7.1,
+      5.5,
+      7
+    ]
+  },
+  {
+    "uuid": "158a9a7f-1c27-eb78-dbd2-f0fc99f73848",
+    "bone": "head",
+    "name": "face",
+    "material": "skin",
+    "dimensions": [
+      8.1,
+      10.1,
+      6.9
+    ]
+  },
+  {
+    "uuid": "94295a98-ebab-e186-7c81-b5973412cb69",
+    "bone": "head",
+    "name": "jaw",
+    "material": "skin",
+    "dimensions": [
+      6.1,
+      3.4,
+      4.4
+    ]
+  },
+  {
+    "uuid": "fb801ed5-2d70-2f63-ae96-122014637aca",
+    "bone": "head",
+    "name": "mask_eye_shadow",
+    "material": "iron",
+    "dimensions": [
+      8.3,
+      2.2,
+      0.75
+    ]
+  },
+  {
+    "uuid": "2e1bffb8-24db-66d3-d94a-5693b250a54e",
+    "bone": "head",
+    "name": "helmet_crown",
+    "material": "gold",
+    "dimensions": [
+      10.8,
+      4.9,
+      10.7
+    ]
+  },
+  {
+    "uuid": "7558df67-f4db-ab21-0ef9-bc4ae2af3b87",
+    "bone": "head",
+    "name": "crown_front_ridge",
+    "material": "gold_edge",
+    "dimensions": [
+      3.5,
+      5.8,
+      1.3
+    ]
+  },
+  {
+    "uuid": "9c37e145-f579-63b5-adbf-3855ff17cf24",
+    "bone": "head",
+    "name": "nasal_guard",
+    "material": "gold_edge",
+    "dimensions": [
+      1.9,
+      6.6,
+      1.6
+    ]
+  },
+  {
+    "uuid": "01033053-1f0b-0910-5d3b-54346190797a",
+    "bone": "head",
+    "name": "mask_muzzle",
+    "material": "gold",
+    "dimensions": [
+      4.7,
+      3.5,
+      1.9
+    ]
+  },
+  {
+    "uuid": "9a9f16d8-9dac-3183-5cfc-c05510b3747f",
+    "bone": "head",
+    "name": "mask_chin_guard",
+    "material": "gold",
+    "dimensions": [
+      5.6,
+      1.8,
+      1.8
+    ]
+  },
+  {
+    "uuid": "33a6f83f-eb56-1219-4234-40357ffad0bc",
+    "bone": "head",
+    "name": "helmet_temple_1",
+    "material": "gold",
+    "dimensions": [
+      2.4,
+      9.8,
+      9.6
+    ]
+  },
+  {
+    "uuid": "3883a305-6278-9d9b-e4f2-afe04b6a5119",
+    "bone": "head",
+    "name": "brow_1",
+    "material": "gold_edge",
+    "dimensions": [
+      5.1,
+      2.5,
+      2.1
+    ]
+  },
+  {
+    "uuid": "6d6a0fa6-0e5d-5e38-0382-dc51b3bd1745",
+    "bone": "head",
+    "name": "cheek_guard_1",
+    "material": "gold",
+    "dimensions": [
+      3,
+      6.3,
+      2.4
+    ]
+  },
+  {
+    "uuid": "92c85516-cf33-af35-2f25-84e58792d52e",
+    "bone": "head",
+    "name": "mask_cheek_ridge_1",
+    "material": "gold_edge",
+    "dimensions": [
+      1.4,
+      3.7,
+      1
+    ]
+  },
+  {
+    "uuid": "d5da06db-987c-a19b-b5ba-c9b85602022b",
+    "bone": "head",
+    "name": "mask_jaw_wrap_1",
+    "material": "gold",
+    "dimensions": [
+      1.8,
+      3,
+      5.6
+    ]
+  },
+  {
+    "uuid": "79db616f-4937-d931-6577-4c09114c5d32",
+    "bone": "head",
+    "name": "helm_tusk_1_root",
+    "material": "horn",
+    "dimensions": [
+      3.1,
+      5.711163290120433,
+      2.635
+    ]
+  },
+  {
+    "uuid": "54f47532-adc8-17d6-1fef-6d672d553105",
+    "bone": "head",
+    "name": "helm_tusk_1_tip",
+    "material": "horn",
+    "dimensions": [
+      1.488,
+      4.9276798574163285,
+      1.2400000000000002
+    ]
+  },
+  {
+    "uuid": "8b237a74-d12f-c326-8857-32d66be61c70",
+    "bone": "head",
+    "name": "crown_flute_1_0",
+    "material": "gold_edge",
+    "dimensions": [
+      0.9,
+      4.7,
+      1.3
+    ]
+  },
+  {
+    "uuid": "6163e905-60ea-c543-7c93-5222250806e8",
+    "bone": "head",
+    "name": "crown_flute_1_1",
+    "material": "gold_edge",
+    "dimensions": [
+      0.9,
+      4.7,
+      1.3
+    ]
+  },
+  {
+    "uuid": "5390413e-9adf-2807-160f-dc025c303379",
+    "bone": "head",
+    "name": "crown_flute_1_2",
+    "material": "gold_edge",
+    "dimensions": [
+      0.9,
+      4.7,
+      1.3
+    ]
+  },
+  {
+    "uuid": "7d8f2c1c-820f-2b6e-1267-84134639bc6e",
+    "bone": "head",
+    "name": "helmet_temple_-1",
+    "material": "gold",
+    "dimensions": [
+      2.4,
+      9.8,
+      9.6
+    ]
+  },
+  {
+    "uuid": "7e6c1b0b-ff23-631d-a963-4b05a8763c68",
+    "bone": "head",
+    "name": "brow_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      5.1,
+      2.5,
+      2.1
+    ]
+  },
+  {
+    "uuid": "4bc91c22-ada4-2dc7-048d-65320477619a",
+    "bone": "head",
+    "name": "cheek_guard_-1",
+    "material": "gold",
+    "dimensions": [
+      3,
+      6.3,
+      2.4
+    ]
+  },
+  {
+    "uuid": "8326a67d-580a-4a8e-b98e-5e46c1b5e94a",
+    "bone": "head",
+    "name": "mask_cheek_ridge_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      1.4,
+      3.7,
+      1
+    ]
+  },
+  {
+    "uuid": "a6ead877-86f2-c416-764e-b9b645b46d50",
+    "bone": "head",
+    "name": "mask_jaw_wrap_-1",
+    "material": "gold",
+    "dimensions": [
+      1.8,
+      3,
+      5.6
+    ]
+  },
+  {
+    "uuid": "bfc3ca9d-e5f9-af00-7ccd-bf10982fd898",
+    "bone": "head",
+    "name": "helm_tusk_-1_root",
+    "material": "horn",
+    "dimensions": [
+      3.1,
+      5.711163290120433,
+      2.635
+    ]
+  },
+  {
+    "uuid": "5dfa856f-a01a-412f-2787-0344347cfa5c",
+    "bone": "head",
+    "name": "helm_tusk_-1_tip",
+    "material": "horn",
+    "dimensions": [
+      1.488,
+      4.9276798574163285,
+      1.2400000000000002
+    ]
+  },
+  {
+    "uuid": "ea0a9680-ccb4-1abd-ccbb-ee17af94daf0",
+    "bone": "head",
+    "name": "crown_flute_-1_0",
+    "material": "gold_edge",
+    "dimensions": [
+      0.9,
+      4.7,
+      1.3
+    ]
+  },
+  {
+    "uuid": "70927da1-6f53-18bd-6ea8-48f25380a4e9",
+    "bone": "head",
+    "name": "crown_flute_-1_1",
+    "material": "gold_edge",
+    "dimensions": [
+      0.9,
+      4.7,
+      1.3
+    ]
+  },
+  {
+    "uuid": "95225dfb-03e6-af00-ede4-7e91a66e167b",
+    "bone": "head",
+    "name": "crown_flute_-1_2",
+    "material": "gold_edge",
+    "dimensions": [
+      0.9,
+      4.7,
+      1.3
+    ]
+  },
+  {
+    "uuid": "a2c4fa26-50e5-1c4b-244c-6d51abd349e5",
+    "bone": "mane_lock_01",
+    "name": "mane_lock_01_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      2.7048809496813266,
+      4.1
+    ]
+  },
+  {
+    "uuid": "bf752f46-a836-242f-7814-f75cdab22a2c",
+    "bone": "mane_lock_01",
+    "name": "mane_lock_01_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      3.021088233970546,
+      2.7
+    ]
+  },
+  {
+    "uuid": "e8d56d49-fec1-93f7-ffe6-2f251858bc29",
+    "bone": "mane_lock_02",
+    "name": "mane_lock_02_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      3.1278752389283686,
+      4.1
+    ]
+  },
+  {
+    "uuid": "cc154faa-f5cb-5ac3-057e-a39e36e0de11",
+    "bone": "mane_lock_02",
+    "name": "mane_lock_02_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      3.3687341472336625,
+      2.7
+    ]
+  },
+  {
+    "uuid": "cf5c45d2-7b5e-4c24-7e7f-11ccfcc4691a",
+    "bone": "mane_lock_03",
+    "name": "mane_lock_03_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      4.099950248448356,
+      4.1
+    ]
+  },
+  {
+    "uuid": "18fcaefa-59f6-c666-3bdf-809e97713963",
+    "bone": "mane_lock_03",
+    "name": "mane_lock_03_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      4.131234379790928,
+      2.7
+    ]
+  },
+  {
+    "uuid": "e5ae3bb1-c442-9f93-a2d9-9ad1f5b1255b",
+    "bone": "mane_lock_04",
+    "name": "mane_lock_04_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      5.207377497317711,
+      4.1
+    ]
+  },
+  {
+    "uuid": "aecb0ef4-4372-9d45-663c-7ba74cea47e5",
+    "bone": "mane_lock_04",
+    "name": "mane_lock_04_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      4.907007354458866,
+      2.7
+    ]
+  },
+  {
+    "uuid": "ac2f2ce7-3187-a327-fe56-d3f0ffe10471",
+    "bone": "mane_lock_05",
+    "name": "mane_lock_05_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      6.185735008989496,
+      4.1
+    ]
+  },
+  {
+    "uuid": "0c6c7b7c-7d1c-a1e8-7e35-16d6f3351c43",
+    "bone": "mane_lock_05",
+    "name": "mane_lock_05_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      5.494101956926933,
+      2.7
+    ]
+  },
+  {
+    "uuid": "b02f5c14-b855-0e50-fa32-e316bd0bcc48",
+    "bone": "mane_lock_06",
+    "name": "mane_lock_06_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      6.852773178538279,
+      4.1
+    ]
+  },
+  {
+    "uuid": "c2bf48aa-4fe1-0f9d-67c1-742d41051717",
+    "bone": "mane_lock_06",
+    "name": "mane_lock_06_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      5.838404962211257,
+      2.7
+    ]
+  },
+  {
+    "uuid": "68d1d196-ac5b-6e5c-f2ba-8530ec51603f",
+    "bone": "mane_lock_07",
+    "name": "mane_lock_07_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      7.08927956355002,
+      4.1
+    ]
+  },
+  {
+    "uuid": "207c69f6-7632-faf1-97df-06285bab0413",
+    "bone": "mane_lock_07",
+    "name": "mane_lock_07_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      5.949412236331673,
+      2.7
+    ]
+  },
+  {
+    "uuid": "10b11d29-f66c-c309-af5f-a4651e6c5c9c",
+    "bone": "mane_lock_08",
+    "name": "mane_lock_08_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      6.852773178538266,
+      4.1
+    ]
+  },
+  {
+    "uuid": "ca36f90b-5ce1-668e-114b-d478427d90e9",
+    "bone": "mane_lock_08",
+    "name": "mane_lock_08_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      5.838404962211257,
+      2.7
+    ]
+  },
+  {
+    "uuid": "98c84b13-2438-92cf-68e8-389ec074d97f",
+    "bone": "mane_lock_09",
+    "name": "mane_lock_09_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      6.185735008989505,
+      4.1
+    ]
+  },
+  {
+    "uuid": "0f3346e5-e542-330e-1a14-56b6d6971eb6",
+    "bone": "mane_lock_09",
+    "name": "mane_lock_09_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      5.494101956926926,
+      2.7
+    ]
+  },
+  {
+    "uuid": "060df477-9e16-515d-b9a7-03780aa284d7",
+    "bone": "mane_lock_10",
+    "name": "mane_lock_10_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      5.207377497317711,
+      4.1
+    ]
+  },
+  {
+    "uuid": "72f7731c-471b-edf5-682d-9f7be67b7bbe",
+    "bone": "mane_lock_10",
+    "name": "mane_lock_10_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      4.907007354458866,
+      2.7
+    ]
+  },
+  {
+    "uuid": "6827a0d8-8059-de8f-f88f-ff504f59f7d1",
+    "bone": "mane_lock_11",
+    "name": "mane_lock_11_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      4.099950248448356,
+      4.1
+    ]
+  },
+  {
+    "uuid": "c5352970-8ead-b17a-39a9-db9baf18d50a",
+    "bone": "mane_lock_11",
+    "name": "mane_lock_11_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      4.131234379790928,
+      2.7
+    ]
+  },
+  {
+    "uuid": "192de507-7303-a317-9d4a-29d0f7fa476d",
+    "bone": "mane_lock_12",
+    "name": "mane_lock_12_root",
+    "material": "mane",
+    "dimensions": [
+      4.9,
+      3.127875238928371,
+      4.1
+    ]
+  },
+  {
+    "uuid": "65dcfa8d-d85e-601a-ad4d-2754c1f2cd7a",
+    "bone": "mane_lock_12",
+    "name": "mane_lock_12_tip",
+    "material": "mane",
+    "dimensions": [
+      3,
+      3.368734147233663,
+      2.7
+    ]
+  },
+  {
+    "uuid": "f4fcf0dc-eaf1-6e73-d277-5bc30963dce7",
+    "bone": "hair_lock_01",
+    "name": "hair_lock_01_root",
+    "material": "mane",
+    "dimensions": [
+      4,
+      9.709674189711716,
+      3
+    ]
+  },
+  {
+    "uuid": "e9828f53-0d31-086c-5960-56e04c2967b9",
+    "bone": "hair_lock_01",
+    "name": "hair_lock_01_tip",
+    "material": "mane",
+    "dimensions": [
+      2.3,
+      4.278288341693553,
+      2.1
+    ]
+  },
+  {
+    "uuid": "c8cecde9-1408-2f22-49ef-36963474df2a",
+    "bone": "hair_lock_02",
+    "name": "hair_lock_02_root",
+    "material": "mane",
+    "dimensions": [
+      4,
+      9.47790535172599,
+      3
+    ]
+  },
+  {
+    "uuid": "3b7f172a-503c-8804-b716-78814aa65a5f",
+    "bone": "hair_lock_02",
+    "name": "hair_lock_02_tip",
+    "material": "mane",
+    "dimensions": [
+      2.3,
+      5.357842835856335,
+      2.1
+    ]
+  },
+  {
+    "uuid": "c8e54698-c054-be7b-4a41-ddecbb26bfd3",
+    "bone": "hair_lock_03",
+    "name": "hair_lock_03_root",
+    "material": "mane",
+    "dimensions": [
+      4,
+      9.359850483709316,
+      3
+    ]
+  },
+  {
+    "uuid": "8d8eefeb-947d-9556-bfc3-58072459acf8",
+    "bone": "hair_lock_03",
+    "name": "hair_lock_03_tip",
+    "material": "mane",
+    "dimensions": [
+      2.3,
+      6.5120000777363165,
+      2.1
+    ]
+  },
+  {
+    "uuid": "690bde16-bf0d-d722-ec20-3fb574671619",
+    "bone": "hair_lock_04",
+    "name": "hair_lock_04_root",
+    "material": "mane",
+    "dimensions": [
+      4,
+      9.359850483709316,
+      3
+    ]
+  },
+  {
+    "uuid": "730de959-2f63-a701-fda5-030528a84520",
+    "bone": "hair_lock_04",
+    "name": "hair_lock_04_tip",
+    "material": "mane",
+    "dimensions": [
+      2.3,
+      6.5120000777363165,
+      2.1
+    ]
+  },
+  {
+    "uuid": "ac0f4b23-e301-7e6f-a041-30972d233a92",
+    "bone": "hair_lock_05",
+    "name": "hair_lock_05_root",
+    "material": "mane",
+    "dimensions": [
+      4,
+      9.47790535172599,
+      3
+    ]
+  },
+  {
+    "uuid": "4d0e7e86-333f-bd0e-db9d-b93b493773dc",
+    "bone": "hair_lock_05",
+    "name": "hair_lock_05_tip",
+    "material": "mane",
+    "dimensions": [
+      2.3,
+      5.357842835856335,
+      2.1
+    ]
+  },
+  {
+    "uuid": "72c23471-da40-5764-cdd9-13cfb773b3f2",
+    "bone": "hair_lock_06",
+    "name": "hair_lock_06_root",
+    "material": "mane",
+    "dimensions": [
+      4,
+      9.709674189711716,
+      3
+    ]
+  },
+  {
+    "uuid": "e37492d7-fab8-f307-a83f-41c04161a28f",
+    "bone": "hair_lock_06",
+    "name": "hair_lock_06_tip",
+    "material": "mane",
+    "dimensions": [
+      2.3,
+      4.278288341693553,
+      2.1
+    ]
+  },
+  {
+    "uuid": "cec9f8ec-47b8-eb02-7a83-b743665a35e5",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_0",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "54144869-5dbd-defe-c5b5-dbc7b4e01374",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_0",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "21693c91-efdf-aac3-ec8c-cb28959e6ed9",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_0",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      21,
+      1.3
+    ]
+  },
+  {
+    "uuid": "3950c77c-fcea-17cf-2608-a85efb01b914",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_1",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "0db18f9c-2da5-ce24-6450-faceda1a9565",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_1",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "c1f79bcc-86f8-2e1c-ce23-074a75b4ee53",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_1",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      19,
+      1.3
+    ]
+  },
+  {
+    "uuid": "f5c50614-304c-4475-d41c-206c60ffb13d",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_2",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "ab83dffd-cf4a-5f1a-743e-a5d40c3cfc32",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_2",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "1f023778-59ac-b2e0-34e3-e8a6c9487053",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_2",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      17,
+      1.3
+    ]
+  },
+  {
+    "uuid": "ba868fbb-bcd9-3674-3d2e-8fa9a80ae086",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_3",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "e2f6d683-a00a-a97b-3068-120e65332b0a",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_3",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "d27c9d87-46bd-a799-ffee-11483f57f193",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_3",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      21,
+      1.3
+    ]
+  },
+  {
+    "uuid": "a0258902-cc02-819c-5ad2-a85294d10cf2",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_4",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "ea986bac-b453-9dc8-7635-964333a42aef",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_4",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "936159b6-3342-a20f-8bc7-168378c8edc2",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_4",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      19,
+      1.3
+    ]
+  },
+  {
+    "uuid": "8454fd0c-e216-43e6-8955-09ecc2ccf7fb",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_5",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "b351a5d4-5f22-08a0-f5bb-3e81c4deff65",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_5",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "128178a0-3e4c-3025-8e76-db39bca4c1d4",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_5",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      17,
+      1.3
+    ]
+  },
+  {
+    "uuid": "8529eab1-0427-c73e-9422-67eafa872edf",
+    "bone": "cape",
+    "name": "cape_shoulder_fold_6",
+    "material": "cloth",
+    "dimensions": [
+      4.3,
+      19,
+      1.45
+    ]
+  },
+  {
+    "uuid": "e534d7d2-c34f-beab-68dc-e76a31b61b93",
+    "bone": "cape_middle",
+    "name": "cape_mid_fold_6",
+    "material": "cloth",
+    "dimensions": [
+      5.6,
+      19.7,
+      1.4
+    ]
+  },
+  {
+    "uuid": "68afa800-b701-def9-8f67-70cbf0fc51c5",
+    "bone": "cape_end",
+    "name": "cape_hem_fold_6",
+    "material": "cloth",
+    "dimensions": [
+      6.1,
+      21,
+      1.3
+    ]
+  },
+  {
+    "uuid": "49c4c3c8-6f38-8396-b62a-56902a44a815",
+    "bone": "miquella_body",
+    "name": "miquella_torso",
+    "material": "silk",
+    "dimensions": [
+      7.6,
+      10.911435731240804,
+      5.9
+    ]
+  },
+  {
+    "uuid": "e9124f72-fe30-f90f-6437-99ceb45360ad",
+    "bone": "miquella_body",
+    "name": "miquella_shoulder_drape",
+    "material": "silk",
+    "dimensions": [
+      10.2,
+      4.5,
+      6.4
+    ]
+  },
+  {
+    "uuid": "c98bdf85-b019-85ca-f9db-705bf9708cf4",
+    "bone": "miquella_body",
+    "name": "miquella_sash",
+    "material": "divine_hair",
+    "dimensions": [
+      1.3,
+      12.619138726403818,
+      0.55
+    ]
+  },
+  {
+    "uuid": "8b016a83-f2f9-60dd-87ed-f99a19938ccc",
+    "bone": "miquella_body",
+    "name": "miquella_neck",
+    "material": "ivory_skin",
+    "dimensions": [
+      3,
+      4.88936586256442,
+      3.3
+    ]
+  },
+  {
+    "uuid": "2a44c8ff-e728-312c-9c0f-9a689429580d",
+    "bone": "miquella_head",
+    "name": "miquella_face",
+    "material": "ivory_skin",
+    "dimensions": [
+      5.8,
+      6.8,
+      5.4
+    ]
+  },
+  {
+    "uuid": "785c70cd-153f-844e-03b6-a74ca8e1250e",
+    "bone": "miquella_head",
+    "name": "miquella_chin",
+    "material": "ivory_skin",
+    "dimensions": [
+      4.4,
+      1.2,
+      3.8
+    ]
+  },
+  {
+    "uuid": "fbc10e12-22d2-ac6c-78c1-6a13d747f1e0",
+    "bone": "miquella_head",
+    "name": "miquella_nose",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.65,
+      1.15,
+      0.7
+    ]
+  },
+  {
+    "uuid": "7bda9ef9-47a6-7099-6a65-7f2c14e13b9c",
+    "bone": "miquella_head",
+    "name": "miquella_mouth",
+    "material": "skin",
+    "dimensions": [
+      0.85,
+      0.22,
+      0.16
+    ]
+  },
+  {
+    "uuid": "1169e8ab-fac0-8642-098e-601d375d31a3",
+    "bone": "miquella_head",
+    "name": "miquella_closed_eye_1",
+    "material": "horn",
+    "dimensions": [
+      1.12,
+      0.26,
+      0.18
+    ]
+  },
+  {
+    "uuid": "88577525-3676-1fae-9d22-9a9efc64c67e",
+    "bone": "miquella_head",
+    "name": "miquella_eyebrow_1",
+    "material": "divine_hair",
+    "dimensions": [
+      1.3,
+      0.22,
+      0.2
+    ]
+  },
+  {
+    "uuid": "de109217-7a96-ed58-8d8b-d707fe3de49c",
+    "bone": "miquella_head",
+    "name": "miquella_closed_eye_-1",
+    "material": "horn",
+    "dimensions": [
+      1.12,
+      0.26,
+      0.18
+    ]
+  },
+  {
+    "uuid": "7b9147d5-a021-afc3-9309-0c9dde2fbc7d",
+    "bone": "miquella_head",
+    "name": "miquella_eyebrow_-1",
+    "material": "divine_hair",
+    "dimensions": [
+      1.3,
+      0.22,
+      0.2
+    ]
+  },
+  {
+    "uuid": "54b888b6-0d78-0175-4948-e8bf2043dc56",
+    "bone": "miquella_hair",
+    "name": "miquella_scalp",
+    "material": "divine_hair",
+    "dimensions": [
+      7.5,
+      2.8,
+      7
+    ]
+  },
+  {
+    "uuid": "00bddb9f-714b-9a97-058f-5711291e2c8d",
+    "bone": "miquella_hair",
+    "name": "miquella_temple_lock_1",
+    "material": "divine_hair",
+    "dimensions": [
+      2.1,
+      8.3,
+      4.8
+    ]
+  },
+  {
+    "uuid": "eb6b3238-02be-0cd0-7287-c5fd11111e75",
+    "bone": "miquella_hair",
+    "name": "miquella_parted_fringe_1",
+    "material": "divine_hair",
+    "dimensions": [
+      3.8,
+      2.7,
+      1.7
+    ]
+  },
+  {
+    "uuid": "307ffcdc-2273-0340-4a25-f19125e09ff2",
+    "bone": "miquella_hair",
+    "name": "miquella_face_tress_1",
+    "material": "divine_hair",
+    "dimensions": [
+      1.7,
+      8.041783719745206,
+      1.4
+    ]
+  },
+  {
+    "uuid": "b8e6250c-f27d-dafb-e7e6-1c876cd3d145",
+    "bone": "miquella_robe",
+    "name": "miquella_draped_leg_1",
+    "material": "silk",
+    "dimensions": [
+      4.6,
+      13.475521639712282,
+      4.3
+    ]
+  },
+  {
+    "uuid": "2728ade6-4abf-3e5b-3c1d-630965ab7689",
+    "bone": "miquella_robe",
+    "name": "miquella_small_foot_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.8,
+      2.7,
+      4.8
+    ]
+  },
+  {
+    "uuid": "095bbe00-1690-a700-d211-f1219a8ddec2",
+    "bone": "miquella_hair",
+    "name": "miquella_crown_braid_1",
+    "material": "gold_edge",
+    "dimensions": [
+      0.65,
+      5.426026561849463,
+      0.7
+    ]
+  },
+  {
+    "uuid": "08d0085f-6f4b-3b5a-bc00-3ec45c4f09f7",
+    "bone": "miquella_hair",
+    "name": "miquella_temple_lock_-1",
+    "material": "divine_hair",
+    "dimensions": [
+      2.1,
+      8.3,
+      4.8
+    ]
+  },
+  {
+    "uuid": "cf7d0b9a-69a4-4e7f-175d-8c9957d58b75",
+    "bone": "miquella_hair",
+    "name": "miquella_parted_fringe_-1",
+    "material": "divine_hair",
+    "dimensions": [
+      3.8,
+      2.7,
+      1.7
+    ]
+  },
+  {
+    "uuid": "75bfad81-5fe5-6309-ca61-f5909dbf5eea",
+    "bone": "miquella_hair",
+    "name": "miquella_face_tress_-1",
+    "material": "divine_hair",
+    "dimensions": [
+      1.7,
+      7.966063656856938,
+      1.4
+    ]
+  },
+  {
+    "uuid": "c2431d3b-7fe4-7696-db66-57fc5221dbc9",
+    "bone": "miquella_robe",
+    "name": "miquella_draped_leg_-1",
+    "material": "silk",
+    "dimensions": [
+      4.6,
+      13.475521639712282,
+      4.3
+    ]
+  },
+  {
+    "uuid": "891d98b7-acf2-d37d-8597-2e7552ad0bbe",
+    "bone": "miquella_robe",
+    "name": "miquella_small_foot_-1",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.8,
+      2.7,
+      4.8
+    ]
+  },
+  {
+    "uuid": "f8dd32f3-b0d9-c3fa-dd97-0afb22c02482",
+    "bone": "miquella_hair",
+    "name": "miquella_crown_braid_-1",
+    "material": "gold_edge",
+    "dimensions": [
+      0.65,
+      5.426026561849462,
+      0.7
+    ]
+  },
+  {
+    "uuid": "cfdf3110-81b6-d18e-21a0-7ce1b2a2183e",
+    "bone": "miquella_robe",
+    "name": "ivory_robe_0",
+    "material": "silk",
+    "dimensions": [
+      3.1,
+      21.2,
+      2
+    ]
+  },
+  {
+    "uuid": "7ec0d0e3-7c2b-bd41-e9b7-55d109e99408",
+    "bone": "miquella_robe",
+    "name": "ivory_robe_1",
+    "material": "silk",
+    "dimensions": [
+      3.1,
+      22.6,
+      2
+    ]
+  },
+  {
+    "uuid": "066b2ac0-aace-237d-1f1a-b9987c7090b3",
+    "bone": "miquella_robe",
+    "name": "ivory_robe_2",
+    "material": "silk",
+    "dimensions": [
+      3.1,
+      24,
+      2
+    ]
+  },
+  {
+    "uuid": "9aadf20e-5052-6b03-338a-0667c92693aa",
+    "bone": "miquella_robe",
+    "name": "ivory_robe_3",
+    "material": "silk",
+    "dimensions": [
+      3.1,
+      22.6,
+      2
+    ]
+  },
+  {
+    "uuid": "3326cbbe-850d-fea6-5409-36536df9e2aa",
+    "bone": "miquella_robe",
+    "name": "ivory_robe_4",
+    "material": "silk",
+    "dimensions": [
+      3.1,
+      21.2,
+      2
+    ]
+  },
+  {
+    "uuid": "472b70fc-612e-2eb4-faaa-4a1ed3fced82",
+    "bone": "miquella_upper_arm_r",
+    "name": "miquella_upper_upper_flesh_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.15,
+      9.670620417887475,
+      2.2
+    ]
+  },
+  {
+    "uuid": "8f2cc0d4-2cff-b589-315c-bd87eb697e78",
+    "bone": "miquella_upper_forearm_r",
+    "name": "miquella_upper_elbow_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      2,
+      2.1,
+      2
+    ]
+  },
+  {
+    "uuid": "fcb27407-5771-4803-a5b0-9c0040d41a0a",
+    "bone": "miquella_upper_forearm_r",
+    "name": "miquella_upper_forearm_flesh_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      1.95,
+      11.101342930877344,
+      1.9
+    ]
+  },
+  {
+    "uuid": "9e066ae8-1bec-c6f0-d058-f63d07fa5855",
+    "bone": "miquella_upper_hand_r",
+    "name": "miquella_upper_palm_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.05,
+      0.9,
+      2.3
+    ]
+  },
+  {
+    "uuid": "fe969fed-e013-24a5-e120-aea36e5f847d",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_r_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.2111305185521257,
+      0.45
+    ]
+  },
+  {
+    "uuid": "922624b1-3482-c861-350f-f5abb001e7e2",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_tip_r_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8541487260210386,
+      0.42
+    ]
+  },
+  {
+    "uuid": "5f71e05b-1e1f-9a9f-1b89-323338da85b0",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_r_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.4478290280586972,
+      0.45
+    ]
+  },
+  {
+    "uuid": "9ad1691a-d384-78d0-1969-1ac98895d989",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_tip_r_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9579557221181463,
+      0.42
+    ]
+  },
+  {
+    "uuid": "7cc6c035-aeae-c8f2-60f6-86148439ce66",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_r_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.358006259765577,
+      0.45
+    ]
+  },
+  {
+    "uuid": "a7894b9e-7cb3-6c54-f62a-60b1f5052df3",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_tip_r_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9177947242612583,
+      0.42
+    ]
+  },
+  {
+    "uuid": "215e9263-d4e9-5720-19eb-67ce6fa0a54c",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_r_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.1252272480183436,
+      0.45
+    ]
+  },
+  {
+    "uuid": "5c9a1079-95f7-da65-deca-677de5362845",
+    "bone": "miquella_upper_fingers_r",
+    "name": "miquella_upper_finger_tip_r_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8183088784512869,
+      0.42
+    ]
+  },
+  {
+    "uuid": "7adae093-18d7-c786-47e9-7d5838026c40",
+    "bone": "miquella_upper_hand_r",
+    "name": "miquella_upper_thumb_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.62,
+      1.5932745950421536,
+      0.6
+    ]
+  },
+  {
+    "uuid": "f6a877a5-1608-ac8d-bacb-74cff9b1c5be",
+    "bone": "miquella_upper_arm_l",
+    "name": "miquella_upper_upper_flesh_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.15,
+      8.915157044444658,
+      2.2
+    ]
+  },
+  {
+    "uuid": "5b640de2-71a0-ca03-cc8f-fdfc08e0f172",
+    "bone": "miquella_upper_forearm_l",
+    "name": "miquella_upper_elbow_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      2,
+      2.1,
+      2
+    ]
+  },
+  {
+    "uuid": "7fa062b3-08a6-490a-fae9-42b4e2d032e1",
+    "bone": "miquella_upper_forearm_l",
+    "name": "miquella_upper_forearm_flesh_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      1.95,
+      10.699792841670691,
+      1.9
+    ]
+  },
+  {
+    "uuid": "81752f9a-e1c5-5076-9b5b-7e127c3ceb49",
+    "bone": "miquella_upper_hand_l",
+    "name": "miquella_upper_palm_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.05,
+      0.9,
+      2.3
+    ]
+  },
+  {
+    "uuid": "9e2264b8-9d41-367b-5415-3e284494a824",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_l_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.2111305185521255,
+      0.45
+    ]
+  },
+  {
+    "uuid": "39104875-3ed8-0483-94cb-9b8e71d6d6f4",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_tip_l_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8541487260210388,
+      0.42
+    ]
+  },
+  {
+    "uuid": "02356da2-1e2d-9997-beef-f75c3162f0fe",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_l_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.4478290280586972,
+      0.45
+    ]
+  },
+  {
+    "uuid": "c82f2966-5a6e-974b-7563-d95747d0c30f",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_tip_l_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9579557221181463,
+      0.42
+    ]
+  },
+  {
+    "uuid": "f901e22e-0839-4317-cbd9-d98c374e167c",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_l_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.358006259765577,
+      0.45
+    ]
+  },
+  {
+    "uuid": "e2b8560b-2eab-2329-5087-e2be869f8db5",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_tip_l_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9177947242612583,
+      0.42
+    ]
+  },
+  {
+    "uuid": "906978cd-f1ce-be73-a1dc-24baab5e0a36",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_l_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.1252272480183438,
+      0.45
+    ]
+  },
+  {
+    "uuid": "4fd8d212-3287-6f06-7751-089543f0d889",
+    "bone": "miquella_upper_fingers_l",
+    "name": "miquella_upper_finger_tip_l_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8183088784512867,
+      0.42
+    ]
+  },
+  {
+    "uuid": "b4561252-90a9-7464-bee4-b213b344067f",
+    "bone": "miquella_upper_hand_l",
+    "name": "miquella_upper_thumb_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.62,
+      1.5932745950421536,
+      0.6
+    ]
+  },
+  {
+    "uuid": "85bffb58-364f-b32e-182d-6e025913a7df",
+    "bone": "miquella_lower_arm_r",
+    "name": "miquella_lower_upper_flesh_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      1.8,
+      12.211364309095664,
+      1.8
+    ]
+  },
+  {
+    "uuid": "ba19fc96-2a59-a176-8472-2ba1f743e732",
+    "bone": "miquella_lower_forearm_r",
+    "name": "miquella_lower_elbow_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      2,
+      2.1,
+      2
+    ]
+  },
+  {
+    "uuid": "550fa666-d567-5818-dec6-65e2df023bbb",
+    "bone": "miquella_lower_forearm_r",
+    "name": "miquella_lower_forearm_flesh_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      1.65,
+      9.727279409242795,
+      1.6
+    ]
+  },
+  {
+    "uuid": "818b729f-a3e1-167b-dbbf-a97904d2435a",
+    "bone": "miquella_lower_hand_r",
+    "name": "miquella_lower_palm_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.05,
+      0.9,
+      2.3
+    ]
+  },
+  {
+    "uuid": "005ea267-abeb-ad0a-6bed-deb41af5fa8d",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_r_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.2111305185521255,
+      0.45
+    ]
+  },
+  {
+    "uuid": "6535fc03-3bc9-2cb9-6c49-e0b426648823",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_tip_r_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8541487260210381,
+      0.42
+    ]
+  },
+  {
+    "uuid": "ed962dd4-618c-6987-57e1-6ab0f44b2f9f",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_r_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.4478290280586972,
+      0.45
+    ]
+  },
+  {
+    "uuid": "b1cb3e48-60fd-f001-d29e-675f8fcf26d4",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_tip_r_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9579557221181471,
+      0.42
+    ]
+  },
+  {
+    "uuid": "4b79c9be-acee-decd-6a2d-96249f8f42ca",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_r_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.358006259765577,
+      0.45
+    ]
+  },
+  {
+    "uuid": "acd3f154-0b3f-a8ec-84e2-5033a02699d8",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_tip_r_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9177947242612576,
+      0.42
+    ]
+  },
+  {
+    "uuid": "eaf1c4f7-c64f-9a55-d5f3-fe532367f1e4",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_r_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.1252272480183436,
+      0.45
+    ]
+  },
+  {
+    "uuid": "dfbdefa7-7ff9-d910-41a9-aae196c63187",
+    "bone": "miquella_lower_fingers_r",
+    "name": "miquella_lower_finger_tip_r_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8183088784512869,
+      0.42
+    ]
+  },
+  {
+    "uuid": "e9156e9e-8b22-2edc-77f7-71a1205c66dd",
+    "bone": "miquella_lower_hand_r",
+    "name": "miquella_lower_thumb_r",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.62,
+      1.5932745950421527,
+      0.6
+    ]
+  },
+  {
+    "uuid": "c80dfa50-513a-c76c-6666-d68b68e33cee",
+    "bone": "miquella_lower_arm_l",
+    "name": "miquella_lower_upper_flesh_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      1.8,
+      9.937484466130291,
+      1.8
+    ]
+  },
+  {
+    "uuid": "051f678f-3af6-8c79-ce05-5fa928fb771e",
+    "bone": "miquella_lower_forearm_l",
+    "name": "miquella_lower_elbow_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      2,
+      2.1,
+      2
+    ]
+  },
+  {
+    "uuid": "74ff7274-7518-db49-a256-363320fc0c78",
+    "bone": "miquella_lower_forearm_l",
+    "name": "miquella_lower_forearm_flesh_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      1.65,
+      9.727279409242795,
+      1.6
+    ]
+  },
+  {
+    "uuid": "06b7021b-e2f0-ea9a-7254-88ef1487a4b3",
+    "bone": "miquella_lower_hand_l",
+    "name": "miquella_lower_palm_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      2.05,
+      0.9,
+      2.3
+    ]
+  },
+  {
+    "uuid": "a3b6f9f6-6f88-26d8-642a-2b3967ebc931",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_l_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.2111305185521255,
+      0.45
+    ]
+  },
+  {
+    "uuid": "07686b69-1957-9c1e-6c06-5484c94380ee",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_tip_l_0",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8541487260210381,
+      0.42
+    ]
+  },
+  {
+    "uuid": "305f154c-62d0-f0b1-c1b9-0098d7f2a72e",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_l_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.4478290280586972,
+      0.45
+    ]
+  },
+  {
+    "uuid": "7b6d2ae4-8946-f0a3-1b43-b43d7c7e8929",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_tip_l_1",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9579557221181471,
+      0.42
+    ]
+  },
+  {
+    "uuid": "ab8ce6b0-0763-853a-2757-9b541a6b8ad9",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_l_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.358006259765577,
+      0.45
+    ]
+  },
+  {
+    "uuid": "c75696eb-6aa3-fcd7-dbc3-a73c3f0b4c30",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_tip_l_2",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.9177947242612576,
+      0.42
+    ]
+  },
+  {
+    "uuid": "a91eab1e-5a55-6253-1bb1-19d6617f03a8",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_l_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.44,
+      1.1252272480183436,
+      0.45
+    ]
+  },
+  {
+    "uuid": "d1a29b56-bc2d-6245-5f0b-8fc71a17d186",
+    "bone": "miquella_lower_fingers_l",
+    "name": "miquella_lower_finger_tip_l_3",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.4,
+      0.8183088784512869,
+      0.42
+    ]
+  },
+  {
+    "uuid": "74a6c503-e0d6-3745-27e5-1f1de40f5799",
+    "bone": "miquella_lower_hand_l",
+    "name": "miquella_lower_thumb_l",
+    "material": "ivory_skin",
+    "dimensions": [
+      0.62,
+      1.5932745950421527,
+      0.6
+    ]
+  },
+  {
+    "uuid": "597ba7b5-93a1-e1d6-f922-120c1d259e3d",
+    "bone": "miquella_lock_01",
+    "name": "miquella_lock_01_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      11.337829453318257,
+      2.6
+    ]
+  },
+  {
+    "uuid": "c2a9a3f8-53ee-1107-8561-92c077ae0b7e",
+    "bone": "miquella_lock_01",
+    "name": "miquella_lock_01_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      9.339477523057122,
+      2.2
+    ]
+  },
+  {
+    "uuid": "3b25453c-7d63-1264-83a4-b54022d08e43",
+    "bone": "miquella_lock_01_middle",
+    "name": "miquella_lock_01_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      14.025779155357366,
+      2.2
+    ]
+  },
+  {
+    "uuid": "be14363a-1d04-5523-5e37-ce5a2b30999f",
+    "bone": "miquella_lock_01_middle",
+    "name": "miquella_lock_01_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.633993637484446,
+      1.8
+    ]
+  },
+  {
+    "uuid": "4220f264-8aef-9b16-cb2e-61d8461eba55",
+    "bone": "miquella_lock_01_end",
+    "name": "miquella_lock_01_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      10.331474284218832,
+      1.6
+    ]
+  },
+  {
+    "uuid": "1fd182ea-7362-e702-3c14-81873381078e",
+    "bone": "miquella_lock_01_end",
+    "name": "miquella_lock_01_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      9.978521354222558,
+      1.35
+    ]
+  },
+  {
+    "uuid": "fa126e1b-3966-67c8-4eb4-691452a513f7",
+    "bone": "miquella_lock_01_end",
+    "name": "miquella_lock_01_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "000703bd-4896-09a4-7d34-d7028ab798c0",
+    "bone": "miquella_lock_01_middle",
+    "name": "miquella_lock_01_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      19.842034940764574,
+      1.3
+    ]
+  },
+  {
+    "uuid": "46aad8af-d9c6-b586-9563-aee6e7031150",
+    "bone": "miquella_lock_02",
+    "name": "miquella_lock_02_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      10.86274426005633,
+      2.6
+    ]
+  },
+  {
+    "uuid": "096fe04e-14a8-9b09-e64c-2375ebda7200",
+    "bone": "miquella_lock_02",
+    "name": "miquella_lock_02_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      8.968710467653786,
+      2.2
+    ]
+  },
+  {
+    "uuid": "231863cc-ce43-970c-bd5a-7dca0bc697e8",
+    "bone": "miquella_lock_02_middle",
+    "name": "miquella_lock_02_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      13.583298433926398,
+      2.2
+    ]
+  },
+  {
+    "uuid": "8c90b4ce-b808-9ca9-224a-45d7d1345b34",
+    "bone": "miquella_lock_02_middle",
+    "name": "miquella_lock_02_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.231257901784446,
+      1.8
+    ]
+  },
+  {
+    "uuid": "f0138b56-4b82-1038-f916-a58c629b7945",
+    "bone": "miquella_lock_02_end",
+    "name": "miquella_lock_02_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      11.06758981479886,
+      1.6
+    ]
+  },
+  {
+    "uuid": "ace3312d-93d5-9071-5da7-0b5cca0b8f94",
+    "bone": "miquella_lock_02_end",
+    "name": "miquella_lock_02_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      10.754789456390773,
+      1.35
+    ]
+  },
+  {
+    "uuid": "d1876add-85fb-c22c-727c-01592cb210bb",
+    "bone": "miquella_lock_02_end",
+    "name": "miquella_lock_02_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "3737ee38-d220-79ef-8641-ae9e6dd35cdd",
+    "bone": "miquella_lock_02_middle",
+    "name": "miquella_lock_02_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      18.947489585835335,
+      1.3
+    ]
+  },
+  {
+    "uuid": "45c031ca-bad7-6151-cec2-d2a558aeda54",
+    "bone": "miquella_lock_03",
+    "name": "miquella_lock_03_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      10.057535322468722,
+      2.6
+    ]
+  },
+  {
+    "uuid": "260aa369-687d-a535-686e-f96a71543cf2",
+    "bone": "miquella_lock_03",
+    "name": "miquella_lock_03_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      8.567355955249624,
+      2.2
+    ]
+  },
+  {
+    "uuid": "30e06fbe-6a0d-bf89-9707-87a742d3a054",
+    "bone": "miquella_lock_03_middle",
+    "name": "miquella_lock_03_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      12.85465851117597,
+      2.2
+    ]
+  },
+  {
+    "uuid": "2e6a323a-89c7-764e-b04c-a7d632d07fb4",
+    "bone": "miquella_lock_03_middle",
+    "name": "miquella_lock_03_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      11.823163972165272,
+      1.8
+    ]
+  },
+  {
+    "uuid": "76b63dac-3af4-c8f7-e2ef-205ca381c40c",
+    "bone": "miquella_lock_03_end",
+    "name": "miquella_lock_03_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      11.809501754966105,
+      1.6
+    ]
+  },
+  {
+    "uuid": "a808e355-2fd7-d347-e64c-8cbe035e550d",
+    "bone": "miquella_lock_03_end",
+    "name": "miquella_lock_03_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      11.531690330241782,
+      1.35
+    ]
+  },
+  {
+    "uuid": "365f9e11-b7b9-76be-39b0-738174744193",
+    "bone": "miquella_lock_03_end",
+    "name": "miquella_lock_03_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "78cbeccc-d74e-6a6f-e3b0-9833af3e7a5f",
+    "bone": "miquella_lock_03_middle",
+    "name": "miquella_lock_03_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      17.567720780205175,
+      1.3
+    ]
+  },
+  {
+    "uuid": "225d08ab-b385-76bb-3b55-789f0fdc0705",
+    "bone": "miquella_lock_04",
+    "name": "miquella_lock_04_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      9.826262668325743,
+      2.6
+    ]
+  },
+  {
+    "uuid": "2f1e9042-31d7-c23e-c9d2-3760ecdf2adf",
+    "bone": "miquella_lock_04",
+    "name": "miquella_lock_04_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      8.518959414524995,
+      2.2
+    ]
+  },
+  {
+    "uuid": "a2a1640e-286d-e393-d4e5-511a4a1d4b73",
+    "bone": "miquella_lock_04_middle",
+    "name": "miquella_lock_04_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      13.881929238133505,
+      2.2
+    ]
+  },
+  {
+    "uuid": "bf0de3c8-9525-8267-5926-a1fbd17b0943",
+    "bone": "miquella_lock_04_middle",
+    "name": "miquella_lock_04_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      13.01828623483205,
+      1.8
+    ]
+  },
+  {
+    "uuid": "e36a4d3f-f98b-974f-e1b4-4db37dd645b3",
+    "bone": "miquella_lock_04_end",
+    "name": "miquella_lock_04_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      14.013950245513456,
+      1.6
+    ]
+  },
+  {
+    "uuid": "3f467aa0-c58b-44cc-b241-ebec4784fdf7",
+    "bone": "miquella_lock_04_end",
+    "name": "miquella_lock_04_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      13.79316773923678,
+      1.35
+    ]
+  },
+  {
+    "uuid": "f5eddcff-d60c-eaa9-c346-a9e1f0ee92d0",
+    "bone": "miquella_lock_04_end",
+    "name": "miquella_lock_04_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "9c2820ab-1d34-2ac4-5e94-524086e88bd1",
+    "bone": "miquella_lock_04_middle",
+    "name": "miquella_lock_04_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      19.75365419652497,
+      1.3
+    ]
+  },
+  {
+    "uuid": "d694b55a-0be8-b92b-b125-98fd237534e1",
+    "bone": "miquella_lock_05",
+    "name": "miquella_lock_05_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      9.255121167834483,
+      2.6
+    ]
+  },
+  {
+    "uuid": "b5418fab-c60c-21ae-52c7-4f2d0bfc0392",
+    "bone": "miquella_lock_05",
+    "name": "miquella_lock_05_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      8.455658090230548,
+      2.2
+    ]
+  },
+  {
+    "uuid": "ac579d17-765e-b597-ab5a-dbb56049502e",
+    "bone": "miquella_lock_05_middle",
+    "name": "miquella_lock_05_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      13.2472492868049,
+      2.2
+    ]
+  },
+  {
+    "uuid": "e44f49c5-0cc6-e40a-bb61-05151ad382ae",
+    "bone": "miquella_lock_05_middle",
+    "name": "miquella_lock_05_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.716394018107552,
+      1.8
+    ]
+  },
+  {
+    "uuid": "5e890887-c6da-7249-463a-58ade75eb413",
+    "bone": "miquella_lock_05_end",
+    "name": "miquella_lock_05_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      14.769511133651763,
+      1.6
+    ]
+  },
+  {
+    "uuid": "29af1cdd-73bd-6ef7-9ef6-44f5b851d534",
+    "bone": "miquella_lock_05_end",
+    "name": "miquella_lock_05_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      14.571850721894668,
+      1.35
+    ]
+  },
+  {
+    "uuid": "42d0d2e6-f4ba-f32c-db78-353a385b99a1",
+    "bone": "miquella_lock_05_end",
+    "name": "miquella_lock_05_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.9902429592034316,
+      1
+    ]
+  },
+  {
+    "uuid": "96867a77-7f08-4b91-241a-4b5367174da3",
+    "bone": "miquella_lock_05_middle",
+    "name": "miquella_lock_05_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      18.65450862550642,
+      1.3
+    ]
+  },
+  {
+    "uuid": "20b8beb5-eeae-413c-0168-908760218906",
+    "bone": "miquella_lock_06",
+    "name": "miquella_lock_06_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      9.979093314260878,
+      2.6
+    ]
+  },
+  {
+    "uuid": "7e50f000-1e2a-0955-f724-fc6dbcbbdc1c",
+    "bone": "miquella_lock_06",
+    "name": "miquella_lock_06_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      8.331111952000434,
+      2.2
+    ]
+  },
+  {
+    "uuid": "134cf99b-4e82-3f8a-6651-49185eeabe29",
+    "bone": "miquella_lock_06_middle",
+    "name": "miquella_lock_06_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      13.198289116207942,
+      2.2
+    ]
+  },
+  {
+    "uuid": "86d1e99f-affc-f301-4126-4c35a49d29bd",
+    "bone": "miquella_lock_06_middle",
+    "name": "miquella_lock_06_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.079646217135732,
+      1.8
+    ]
+  },
+  {
+    "uuid": "d39c39db-19db-0da2-93a7-49104b1b7933",
+    "bone": "miquella_lock_06_end",
+    "name": "miquella_lock_06_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      14.367778911873181,
+      1.6
+    ]
+  },
+  {
+    "uuid": "e6ca73cb-4544-1e9d-e4ff-278fd6346ea9",
+    "bone": "miquella_lock_06_end",
+    "name": "miquella_lock_06_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      13.993037994434138,
+      1.35
+    ]
+  },
+  {
+    "uuid": "caf31f3d-b50d-a151-458b-7c6d4b4fdb1d",
+    "bone": "miquella_lock_06_end",
+    "name": "miquella_lock_06_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.9902429592034316,
+      1
+    ]
+  },
+  {
+    "uuid": "582961db-8f89-5119-3c97-d66f192c3c75",
+    "bone": "miquella_lock_06_middle",
+    "name": "miquella_lock_06_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      18.25318334528199,
+      1.3
+    ]
+  },
+  {
+    "uuid": "b589ce33-0783-cc38-3b0f-5dc292168ef2",
+    "bone": "miquella_lock_07",
+    "name": "miquella_lock_07_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      10.333645010434097,
+      2.6
+    ]
+  },
+  {
+    "uuid": "e61f3479-a4f1-f018-1586-7a9815a2685b",
+    "bone": "miquella_lock_07",
+    "name": "miquella_lock_07_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      8.534799583668443,
+      2.2
+    ]
+  },
+  {
+    "uuid": "85ebd767-0201-b2a4-69f1-cdaf3832c1a7",
+    "bone": "miquella_lock_07_middle",
+    "name": "miquella_lock_07_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      14.05196302222578,
+      2.2
+    ]
+  },
+  {
+    "uuid": "d3ea0e76-5ef2-3c43-0dad-76b37e96a293",
+    "bone": "miquella_lock_07_middle",
+    "name": "miquella_lock_07_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.922186367377034,
+      1.8
+    ]
+  },
+  {
+    "uuid": "a63e965a-0e77-58d9-8003-df83932c60f9",
+    "bone": "miquella_lock_07_end",
+    "name": "miquella_lock_07_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      14.107293732022743,
+      1.6
+    ]
+  },
+  {
+    "uuid": "d6165ad8-f641-c065-c217-bb63303a912a",
+    "bone": "miquella_lock_07_end",
+    "name": "miquella_lock_07_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      13.713083636670186,
+      1.35
+    ]
+  },
+  {
+    "uuid": "8524e70a-6067-87af-fac6-65ef8c0d3aba",
+    "bone": "miquella_lock_07_end",
+    "name": "miquella_lock_07_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.9902429592034316,
+      1
+    ]
+  },
+  {
+    "uuid": "a07da261-4aed-222a-a258-35cf37e4762c",
+    "bone": "miquella_lock_07_middle",
+    "name": "miquella_lock_07_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      19.94813200692115,
+      1.3
+    ]
+  },
+  {
+    "uuid": "d33d4d91-2a1e-c545-79b4-62f0eeb70861",
+    "bone": "miquella_lock_08",
+    "name": "miquella_lock_08_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      11.2351428099828,
+      2.6
+    ]
+  },
+  {
+    "uuid": "bcfc3c39-ab87-e64c-6b71-ec14aaf602f5",
+    "bone": "miquella_lock_08",
+    "name": "miquella_lock_08_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      9.082289215033654,
+      2.2
+    ]
+  },
+  {
+    "uuid": "f03dd268-de7c-0bf1-fb51-40cf2a0b6d4c",
+    "bone": "miquella_lock_08_middle",
+    "name": "miquella_lock_08_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      13.896715322368877,
+      2.2
+    ]
+  },
+  {
+    "uuid": "71bc182f-0cf3-310a-be1c-99a4c4b09631",
+    "bone": "miquella_lock_08_middle",
+    "name": "miquella_lock_08_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.376813501854157,
+      1.8
+    ]
+  },
+  {
+    "uuid": "59c8b3e0-78e8-54b6-1e4d-2e1967a3a310",
+    "bone": "miquella_lock_08_end",
+    "name": "miquella_lock_08_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      12.40423494482755,
+      1.6
+    ]
+  },
+  {
+    "uuid": "8127b643-9d29-3c82-1aba-5fe4f3073d10",
+    "bone": "miquella_lock_08_end",
+    "name": "miquella_lock_08_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      11.939458966382432,
+      1.35
+    ]
+  },
+  {
+    "uuid": "22b92f24-1316-d308-d709-304d6ce40299",
+    "bone": "miquella_lock_08_end",
+    "name": "miquella_lock_08_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "f526d971-b325-f81a-bf19-3689be22ec37",
+    "bone": "miquella_lock_08_middle",
+    "name": "miquella_lock_08_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      19.549444444444447,
+      1.3
+    ]
+  },
+  {
+    "uuid": "18c35c62-59db-f9c3-ddaf-b0c42a449a9c",
+    "bone": "miquella_lock_09",
+    "name": "miquella_lock_09_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      11.805697155298603,
+      2.6
+    ]
+  },
+  {
+    "uuid": "7a114297-5b2d-1758-8771-235c3950dc89",
+    "bone": "miquella_lock_09",
+    "name": "miquella_lock_09_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      9.585449688351309,
+      2.2
+    ]
+  },
+  {
+    "uuid": "85b8aca6-b4f3-83dd-124b-d2c5780c302f",
+    "bone": "miquella_lock_09_middle",
+    "name": "miquella_lock_09_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      13.497542900418393,
+      2.2
+    ]
+  },
+  {
+    "uuid": "9c2f352a-075a-c3a1-6635-b4826274cf5c",
+    "bone": "miquella_lock_09_middle",
+    "name": "miquella_lock_09_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      11.833487035112933,
+      1.8
+    ]
+  },
+  {
+    "uuid": "fb99298b-4e4c-fd2e-091b-4eb9547a392a",
+    "bone": "miquella_lock_09_end",
+    "name": "miquella_lock_09_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      10.72609562987736,
+      1.6
+    ]
+  },
+  {
+    "uuid": "e38db6a9-83f5-5e4b-61fa-3fbd8a77f77d",
+    "bone": "miquella_lock_09_end",
+    "name": "miquella_lock_09_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      10.167782321228676,
+      1.35
+    ]
+  },
+  {
+    "uuid": "d6227400-b21b-70cf-be46-f31c0713be85",
+    "bone": "miquella_lock_09_end",
+    "name": "miquella_lock_09_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "5a9ef7c0-c10b-7ef2-8668-f4d4e70ff1b6",
+    "bone": "miquella_lock_09_middle",
+    "name": "miquella_lock_09_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      18.776195303514573,
+      1.3
+    ]
+  },
+  {
+    "uuid": "ea935ae9-448e-e59d-f1a1-7377b416cec7",
+    "bone": "miquella_lock_10",
+    "name": "miquella_lock_10_root_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.835450756441343,
+      2.6
+    ]
+  },
+  {
+    "uuid": "f8f9a8f3-0ff0-4a85-bceb-20c851860044",
+    "bone": "miquella_lock_10",
+    "name": "miquella_lock_10_root_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.6,
+      10.366920044405909,
+      2.2
+    ]
+  },
+  {
+    "uuid": "beb987c6-5041-a2fb-29d5-d26a672538ee",
+    "bone": "miquella_lock_10_middle",
+    "name": "miquella_lock_10_mid_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      4.8,
+      14.744660113688283,
+      2.2
+    ]
+  },
+  {
+    "uuid": "34782ef5-55dd-a224-c554-470034b8cd50",
+    "bone": "miquella_lock_10_middle",
+    "name": "miquella_lock_10_mid_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      4.1,
+      12.877275344775542,
+      1.8
+    ]
+  },
+  {
+    "uuid": "edfe85c0-757a-8fc4-4fb8-59e77b98526e",
+    "bone": "miquella_lock_10_end",
+    "name": "miquella_lock_10_end_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      3.6,
+      10.478207778266407,
+      1.6
+    ]
+  },
+  {
+    "uuid": "2376135c-d853-9fa7-8b0d-c09955b869c2",
+    "bone": "miquella_lock_10_end",
+    "name": "miquella_lock_10_end_taper",
+    "material": "divine_hair",
+    "dimensions": [
+      2.5,
+      9.88870659159504,
+      1.35
+    ]
+  },
+  {
+    "uuid": "4443fde9-9382-1753-f5b1-a7bf256b6dea",
+    "bone": "miquella_lock_10_end",
+    "name": "miquella_lock_10_tip_ribbon",
+    "material": "divine_hair",
+    "dimensions": [
+      1.8,
+      3.990242959203432,
+      1
+    ]
+  },
+  {
+    "uuid": "5bbd7920-1601-594a-c49e-ea7b3c2f7196",
+    "bone": "miquella_lock_10_middle",
+    "name": "miquella_lock_10_outer_wave",
+    "material": "divine_hair",
+    "dimensions": [
+      2.15,
+      21.27452818535954,
+      1.3
+    ]
+  },
+  {
+    "uuid": "b67dd401-0463-11e2-7034-a2a2c44f79a1",
+    "bone": "halo",
+    "name": "halo_arc_0",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724387,
+      0.55
+    ]
+  },
+  {
+    "uuid": "4e7f189d-6647-9e71-a07b-8fc559f9f967",
+    "bone": "halo",
+    "name": "halo_ray_0",
+    "material": "halo",
+    "dimensions": [
+      0.55,
+      1.2800000000000011,
+      0.5
+    ]
+  },
+  {
+    "uuid": "9d01ab9b-a8f1-6e7f-5069-40d393533dd7",
+    "bone": "halo",
+    "name": "halo_arc_1",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.083541728772424,
+      0.55
+    ]
+  },
+  {
+    "uuid": "9252ff40-ee6a-52b5-d6b3-6bb7dd257be5",
+    "bone": "halo",
+    "name": "halo_arc_2",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.083541728772437,
+      0.55
+    ]
+  },
+  {
+    "uuid": "73ffee90-30d7-a214-b3d8-f3335fcf7271",
+    "bone": "halo",
+    "name": "halo_arc_3",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.083541728772429,
+      0.55
+    ]
+  },
+  {
+    "uuid": "9894e2af-3642-35ed-e5e0-4f1a34a1e86f",
+    "bone": "halo",
+    "name": "halo_arc_4",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724325,
+      0.55
+    ]
+  },
+  {
+    "uuid": "17f3d6b0-0d3a-c9c1-eabb-e95f127d9ac0",
+    "bone": "halo",
+    "name": "halo_arc_5",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.083541728772432,
+      0.55
+    ]
+  },
+  {
+    "uuid": "b7c912dc-b641-d0fe-7636-ab26adc17050",
+    "bone": "halo",
+    "name": "halo_ray_5",
+    "material": "halo",
+    "dimensions": [
+      0.55,
+      1.280000000000003,
+      0.5
+    ]
+  },
+  {
+    "uuid": "79c12338-4031-fcd8-ccbe-3582df8a4fac",
+    "bone": "halo",
+    "name": "halo_arc_6",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724303,
+      0.55
+    ]
+  },
+  {
+    "uuid": "8f670ebe-a320-0988-b85e-ccf9219939d6",
+    "bone": "halo",
+    "name": "halo_arc_7",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.083541728772437,
+      0.55
+    ]
+  },
+  {
+    "uuid": "89bea2c0-5168-7c92-3832-642cf0ed3d58",
+    "bone": "halo",
+    "name": "halo_arc_8",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.083541728772424,
+      0.55
+    ]
+  },
+  {
+    "uuid": "afd03fc0-4eda-0a39-64ab-698346540c7b",
+    "bone": "halo",
+    "name": "halo_arc_9",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724387,
+      0.55
+    ]
+  },
+  {
+    "uuid": "31d3113e-13cd-46ec-f206-574a887aa57b",
+    "bone": "halo",
+    "name": "halo_arc_10",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724245,
+      0.55
+    ]
+  },
+  {
+    "uuid": "7611500f-989a-911c-6741-c023ff3e1913",
+    "bone": "halo",
+    "name": "halo_ray_10",
+    "material": "halo",
+    "dimensions": [
+      0.55,
+      1.2800000000000011,
+      0.5
+    ]
+  },
+  {
+    "uuid": "9a5108de-15a2-5fe1-db23-9d36c9c540d0",
+    "bone": "halo",
+    "name": "halo_arc_11",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724374,
+      0.55
+    ]
+  },
+  {
+    "uuid": "e9fcd191-eb83-1fc0-723c-62484f74e800",
+    "bone": "halo",
+    "name": "halo_arc_12",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724383,
+      0.55
+    ]
+  },
+  {
+    "uuid": "02e832f6-9cbc-7eba-c0fa-6e9fd18ecb62",
+    "bone": "halo",
+    "name": "halo_arc_13",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724285,
+      0.55
+    ]
+  },
+  {
+    "uuid": "aee10ecb-df17-3992-d931-6852f96f9877",
+    "bone": "halo",
+    "name": "halo_arc_14",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724316,
+      0.55
+    ]
+  },
+  {
+    "uuid": "4ccdf123-dc30-b722-637a-85d048d89617",
+    "bone": "halo",
+    "name": "halo_arc_15",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724325,
+      0.55
+    ]
+  },
+  {
+    "uuid": "560a784a-579a-fe48-4a6f-2afc472df5fb",
+    "bone": "halo",
+    "name": "halo_ray_15",
+    "material": "halo",
+    "dimensions": [
+      0.55,
+      1.280000000000003,
+      0.5
+    ]
+  },
+  {
+    "uuid": "a44ca16d-2a68-18aa-a244-fc5b1242544a",
+    "bone": "halo",
+    "name": "halo_arc_16",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724285,
+      0.55
+    ]
+  },
+  {
+    "uuid": "74ffd3f1-bdad-3ac6-f991-d9d5193f0894",
+    "bone": "halo",
+    "name": "halo_arc_17",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724383,
+      0.55
+    ]
+  },
+  {
+    "uuid": "7217c6ea-15fe-0f41-159d-a1458cb774a9",
+    "bone": "halo",
+    "name": "halo_arc_18",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724245,
+      0.55
+    ]
+  },
+  {
+    "uuid": "ac7bf461-75ef-f74a-37c6-c889c9bc16e0",
+    "bone": "halo",
+    "name": "halo_arc_19",
+    "material": "halo",
+    "dimensions": [
+      0.58,
+      3.0835417287724387,
+      0.55
+    ]
+  }
+]

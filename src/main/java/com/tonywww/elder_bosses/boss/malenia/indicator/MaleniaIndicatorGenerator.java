@@ -421,9 +421,7 @@ public final class MaleniaIndicatorGenerator {
         if (mapping == ActionMapping.AEONIA) {
             if (action.actionTick() >= segment.activeTick()) {
                 if (segment.persistent() && action.actionTick() > segment.activeTick()) {
-                    throw new IllegalArgumentException(
-                            "persistent segment " + segment.id() + " requires a frozen server origin"
-                    );
+                    return Optional.empty();
                 }
                 return Optional.of(context.bossPosition());
             }

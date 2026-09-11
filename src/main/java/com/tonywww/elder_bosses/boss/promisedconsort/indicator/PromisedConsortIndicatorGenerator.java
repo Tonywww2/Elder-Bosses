@@ -5,11 +5,12 @@ import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortComba
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSkillConfigSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId;
 import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionExecutor.HazardSnapshot;
-import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortHitSpec;
+import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan;
 import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortInstantGuardRules;
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionSnapshot;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
 import com.tonywww.elder_bosses.combat.action.ActionStage;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 import com.tonywww.elder_bosses.combat.geometry.Annulus;
 import com.tonywww.elder_bosses.combat.geometry.Capsule;
 import com.tonywww.elder_bosses.combat.geometry.Circle;
@@ -18,6 +19,7 @@ import com.tonywww.elder_bosses.combat.geometry.HorizontalShape;
 import com.tonywww.elder_bosses.combat.geometry.Sector;
 import com.tonywww.elder_bosses.combat.geometry.Vec2;
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -47,24 +49,48 @@ public final class PromisedConsortIndicatorGenerator {
             List<HazardSnapshot> hazards,
             long gameTick
     ) {
+        Vec2 facing = lockedFacing == null ? new Vec2(-Math.sin(Math.toRadians(bossYaw)), Math.cos(Math.toRadians(bossYaw))) : lockedFacing;
+        List<PromisedConsortAttackPlan.Strike> strikes = action == null ? List.of()
+                : PromisedConsortAttackPlan.create(action, catalog.skillConfig().get(action.actionId()),
+                catalog.get(action.actionId()).timeline(), bossPosition, facing, lockedPoints, config.instantGuard().defaultCueLeadTicks());
+        return createAuthoritative(bossEntityId, action, strikes, hazards, gameTick);
+    }
+
+    public List<IndicatorSnapshotPacket> createAuthoritative(int bossEntityId, PromisedConsortActionSnapshot action,
+            List<PromisedConsortAttackPlan.Strike> strikes, List<HazardSnapshot> hazards, long gameTick) {
         List<IndicatorSnapshotPacket> packets = new ArrayList<>();
-        PromisedConsortActionSnapshot indicatorAction = indicatorAction(action);
-        if (indicatorAction != null) {
-            appendActionPackets(
-                    packets,
-                    bossEntityId,
-                    bossPosition,
-                    bossYaw,
-                indicatorAction,
-                    lockedPoints,
-                    lockedFacing
-            );
+        long next = strikes.stream().filter(strike -> strike.endTick() > gameTick)
+                .mapToLong(PromisedConsortAttackPlan.Strike::activeTick).min().orElse(Long.MAX_VALUE);
+        if (action != null) {
+            for (var strike : strikes) {
+                if (strike.startTick() > gameTick || strike.endTick() <= gameTick || strike.startTick() >= strike.activeTick()) continue;
+                if (hazards.stream().anyMatch(hazard -> hazard.id().equals(action.sequence() + ":" + strike.id()))) continue;
+                Shape shape = shape(strike.shape(), strike.baseY());
+                Timing timing = new Timing(strike.startTick(), strike.lockTick(), strike.activeTick(), strike.endTick());
+                packets.add(packet(bossEntityId, "hazard:" + action.sequence() + ":" + strike.id(),
+                    strike.activeTick() <= Math.max(gameTick, next) ? IndicatorSnapshotPacket.SegmentSlot.CURRENT : IndicatorSnapshotPacket.SegmentSlot.NEXT,
+                        strike.style(), semantic(strike.style()), state(action, timing), shape, shape.yawDegrees(), timing,
+                        strike.instantGuard() && strike.activeTick() - strike.startTick() >= config.instantGuard().defaultCueLeadTicks()));
+            }
         }
-        for (HazardSnapshot hazard : hazards) {
-            packets.add(hazardPacket(bossEntityId, hazard, gameTick));
-        }
+        for (var hazard : hazards) packets.add(hazardPacket(bossEntityId, hazard, gameTick));
         return List.copyOf(packets);
     }
+
+        public List<IndicatorSnapshotPacket> createTransitionImpact(int bossEntityId, AABB bounds,
+            double groundY, long startTick, long activeTick, long gameTick) {
+        if (gameTick < startTick || gameTick >= activeTick + 1 || startTick >= activeTick) return List.of();
+        Shape shape = shape(new DirectionalRectangle(
+            new Vec2((bounds.minX + bounds.maxX) / 2.0, bounds.minZ), new Vec2(0.0, 1.0),
+            bounds.maxZ - bounds.minZ, bounds.maxX - bounds.minX), groundY);
+        var state = gameTick >= activeTick ? IndicatorSnapshotPacket.IndicatorState.ACTIVE
+            : activeTick - gameTick <= 4 ? IndicatorSnapshotPacket.IndicatorState.IMMINENT
+            : IndicatorSnapshotPacket.IndicatorState.LOCKED;
+        return List.of(packet(bossEntityId, "transition:" + startTick,
+            IndicatorSnapshotPacket.SegmentSlot.CURRENT, IndicatorSnapshotPacket.StyleRole.HOLY_IVORY,
+            IndicatorSnapshotPacket.Semantic.HOLY, state, shape, shape.yawDegrees(),
+            new Timing(startTick, startTick, activeTick, activeTick + 1), false));
+        }
 
     private PromisedConsortActionSnapshot indicatorAction(
             PromisedConsortActionSnapshot action
@@ -74,7 +100,10 @@ public final class PromisedConsortIndicatorGenerator {
         }
         if (action.actionId() == PromisedConsortActionId.GRAVITY_METEOR
                 && action.phase() == com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase.PHASE_TWO
-                && action.phaseTick() <= 15) {
+            && action.phaseTick() <= ticks(
+                catalog.skillConfig().get(action.actionId()),
+                15
+            )) {
             return action;
         }
         int nextStage = action.stageIndex() + 1;
@@ -162,7 +191,7 @@ public final class PromisedConsortIndicatorGenerator {
                 style,
                 semantic(style),
                 state(action, timing),
-                shape,
+                tunedShape(shape, skill.tuning()),
                 yaw,
                 timing,
                 instantGuard
@@ -185,9 +214,10 @@ public final class PromisedConsortIndicatorGenerator {
             if (action.phase() != com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase.PHASE_TWO) {
                 yield null;
             }
-            long recoveryStart = stageTiming.activeTick() + skill.integer("active_ticks");
+            int activeTicks = activeTicks(action);
+            long recoveryStart = stageTiming.activeTick() + activeTicks;
             if (action.actionPhase() == ActionPhase.ACTIVE) {
-                int leadStart = Math.max(0, skill.integer("active_ticks") - 5);
+                int leadStart = Math.max(0, activeTicks - ticks(skill, 5));
                 Vec3 point = lockedPoints.get("clone_meteor_0");
                 if (action.phaseTick() < leadStart || point == null) {
                     yield null;
@@ -203,14 +233,15 @@ public final class PromisedConsortIndicatorGenerator {
             if (action.actionPhase() != ActionPhase.RECOVERY) {
                 yield null;
             }
-            int currentClone = Math.min(3, (action.phaseTick() + 4) / 5);
+            int cloneInterval = ticks(skill, 5);
+            int currentClone = Math.min(3, (action.phaseTick() + cloneInterval - 1) / cloneInterval);
             for (int clone = currentClone; clone <= Math.min(3, currentClone + 1); clone++) {
                 Vec3 point = lockedPoints.get("clone_meteor_" + clone);
                 if (point == null) {
                     continue;
                 }
-                long activeTick = recoveryStart + clone * 5L;
-                long lockTick = activeTick - (clone == 0 ? 1L : 5L);
+                long activeTick = recoveryStart + (long) clone * cloneInterval;
+                long lockTick = activeTick - (clone == 0 ? 1L : cloneInterval);
                 appendShapePacket(packets, bossEntityId, action, "clone_meteor_" + clone,
                     clone == currentClone
                         ? IndicatorSnapshotPacket.SegmentSlot.CURRENT
@@ -223,7 +254,7 @@ public final class PromisedConsortIndicatorGenerator {
             }
             case STARCALLER_CRY -> {
             long activeTick = stageTiming.activeTick()
-                + skill.integer("active_ticks") - 1L;
+                + activeTicks(action) - 1L;
             Timing impactTiming = new Timing(
                 stageTiming.startTick(),
                 activeTick,
@@ -263,14 +294,14 @@ public final class PromisedConsortIndicatorGenerator {
                 IndicatorSnapshotPacket.StyleRole.MOVEMENT_DASHED,
                 IndicatorSnapshotPacket.Semantic.MOVEMENT,
                 state(action, stageTiming),
-                        path(bossPosition, yaw + 90.0F, 6.0, 1.6),
+                        tunedShape(path(bossPosition, yaw + 90.0F, 6.0, 1.6), skill.tuning()),
                 yaw + 90.0F,
                 stageTiming,
                 false
             ));
             yield lightspeedSideDashShapes(bossPosition, yaw, skill);
             }
-            case PROMISED_CONSORT -> promisedConsortShapes(bossPosition);
+            case PROMISED_CONSORT -> promisedConsortShapes(bossPosition, skill);
             case ENHANCED_EARTHHEAVE -> List.of(
                 new TimedShape("slam", 0, circle(bossPosition, skill.number("radius")),
                     IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
@@ -281,8 +312,18 @@ public final class PromisedConsortIndicatorGenerator {
             case CONSORT_METEOR -> {
             Vec3 point = lockedPoints.getOrDefault("meteor", bossPosition);
             long start = action.startGameTick();
-            Timing impact = new Timing(start, start + 110, start + 121, start + 122);
-            Timing aftershock = new Timing(start, start + 110, start + 123, start + 124);
+                Timing impact = new Timing(
+                    start,
+                    start + ticks(skill, 110),
+                    start + ticks(skill, 121),
+                    start + ticks(skill, 122)
+                );
+                Timing aftershock = new Timing(
+                    start,
+                    start + ticks(skill, 110),
+                    start + ticks(skill, 123),
+                    start + ticks(skill, 124)
+                );
             appendShapePacket(packets, bossEntityId, action, "core",
                 IndicatorSnapshotPacket.SegmentSlot.CURRENT,
                 IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD,
@@ -315,14 +356,15 @@ public final class PromisedConsortIndicatorGenerator {
             PromisedConsortSkillConfigSnapshot.Skill skill
         ) {
         int cloneCount = skill.integer("clone_count");
-        int interval = Math.max(1, skill.integer("active_ticks") / (cloneCount + 1));
+        int activeTicks = activeTicks(skill);
+        int interval = Math.max(1, activeTicks / (cloneCount + 1));
         List<TimedShape> shapes = new ArrayList<>();
         for (int index = 0; index < cloneCount; index++) {
             shapes.add(new TimedShape("clone_" + index, index * interval,
                 capsule(bossPosition, 10.0, 1.6),
                 IndicatorSnapshotPacket.StyleRole.CLONE_GOLD, false));
         }
-        shapes.add(new TimedShape("body", skill.integer("active_ticks") - 1,
+        shapes.add(new TimedShape("body", activeTicks - 1,
             capsule(bossPosition, 8.0, 2.0),
             IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true));
         return List.copyOf(shapes);
@@ -334,36 +376,40 @@ public final class PromisedConsortIndicatorGenerator {
             PromisedConsortSkillConfigSnapshot.Skill skill
         ) {
         int cloneCount = skill.integer("clone_count");
-        int interval = Math.max(1, skill.integer("active_ticks") / (cloneCount + 1));
+        int activeTicks = activeTicks(skill);
+        int interval = Math.max(1, activeTicks / (cloneCount + 1));
         List<TimedShape> shapes = new ArrayList<>();
         for (int index = 0; index < cloneCount; index++) {
             shapes.add(new TimedShape("clone_" + index, index * interval,
                 capsule(bossPosition, 9.0, 1.6),
                 IndicatorSnapshotPacket.StyleRole.CLONE_GOLD, false));
         }
-        shapes.add(new TimedShape("body", skill.integer("active_ticks") - 1,
+        shapes.add(new TimedShape("body", activeTicks - 1,
             sector(bossPosition, 4.0, 140.0),
             IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true));
         return List.copyOf(shapes);
         }
 
-        private static List<TimedShape> promisedConsortShapes(Vec3 bossPosition) {
+        private static List<TimedShape> promisedConsortShapes(
+            Vec3 bossPosition,
+            PromisedConsortSkillConfigSnapshot.Skill skill
+        ) {
         return List.of(
             new TimedShape("opening_0", 0, sector(bossPosition, 4.2, 140.0),
                 IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
-            new TimedShape("opening_8", 8, sector(bossPosition, 4.2, 140.0),
+            new TimedShape("opening_8", ticks(skill, 8), sector(bossPosition, 4.2, 140.0),
                 IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
-            new TimedShape("spin_18", 18, annulus(bossPosition, 0.9, 4.5),
+            new TimedShape("spin_18", ticks(skill, 18), annulus(bossPosition, 0.9, 4.5),
                 IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
-            new TimedShape("spin_28", 28, annulus(bossPosition, 0.9, 4.5),
+            new TimedShape("spin_28", ticks(skill, 28), annulus(bossPosition, 0.9, 4.5),
                 IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
-                new TimedShape("finisher", 42, circle(bossPosition, 5.0),
+                new TimedShape("finisher", ticks(skill, 42), circle(bossPosition, 5.0),
                 IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
-            new TimedShape("clone_return_0", 44, capsule(bossPosition, 10.0, 1.6),
+            new TimedShape("clone_return_0", ticks(skill, 44), capsule(bossPosition, 10.0, 1.6),
                 IndicatorSnapshotPacket.StyleRole.CLONE_GOLD, false, 45.0F),
-            new TimedShape("clone_return_1", 47, capsule(bossPosition, 10.0, 1.6),
+            new TimedShape("clone_return_1", ticks(skill, 47), capsule(bossPosition, 10.0, 1.6),
                 IndicatorSnapshotPacket.StyleRole.CLONE_GOLD, false, -45.0F),
-            new TimedShape("holy_ring", 50, annulus(bossPosition, 2.0, 7.0),
+            new TimedShape("holy_ring", ticks(skill, 50), annulus(bossPosition, 2.0, 7.0),
                 IndicatorSnapshotPacket.StyleRole.HOLY_IVORY, false)
         );
         }
@@ -427,7 +473,7 @@ public final class PromisedConsortIndicatorGenerator {
             style,
             semantic(style),
             state(action, timing),
-            shape,
+            tunedShape(shape, catalog.skillConfig().get(action.actionId()).tuning()),
             yaw,
             timing,
             instantGuard
@@ -464,7 +510,7 @@ public final class PromisedConsortIndicatorGenerator {
                 state,
                 shape,
                 shape.yawDegrees(),
-                new Timing(hazard.startTick(), hazard.activeTick(), hazard.activeTick(), hazard.endTick()),
+                new Timing(hazard.startTick(), hazard.startTick(), hazard.activeTick(), hazard.endTick()),
                 false
         );
     }
@@ -475,8 +521,12 @@ public final class PromisedConsortIndicatorGenerator {
     ) {
         if (action.actionId() == PromisedConsortActionId.CONSORT_METEOR) {
             long start = action.startGameTick();
-            return new Timing(start, start + 91, start + 121,
-                    start + skill.integer("script_ticks"));
+            return new Timing(
+                start,
+                start + ticks(skill, 91),
+                start + ticks(skill, 121),
+                start + catalog.get(action.actionId()).timeline().totalTicks()
+            );
         }
         List<ActionStage> stages = catalog.get(action.actionId()).timeline().stages();
         int stageStart = 0;
@@ -617,6 +667,45 @@ public final class PromisedConsortIndicatorGenerator {
                 ),
                 yaw
         );
+    }
+
+    private int activeTicks(PromisedConsortActionSnapshot action) {
+        return catalog.get(action.actionId())
+                .timeline()
+                .stages()
+                .get(action.stageIndex())
+                .activeTicks();
+    }
+
+    private static int activeTicks(PromisedConsortSkillConfigSnapshot.Skill skill) {
+        return ticks(skill, skill.integer("active_ticks"));
+    }
+
+    private static int ticks(PromisedConsortSkillConfigSnapshot.Skill skill, int ticks) {
+        return skill.tuning().scaleTicks(ticks);
+    }
+
+    private static Shape tunedShape(Shape shape, SkillTuning tuning) {
+        List<Float> ranges = switch (shape.type()) {
+            case SECTOR -> List.of(
+                    (float) tuning.scaleRange(shape.ranges().get(0)),
+                    shape.ranges().get(1)
+            );
+            case CAPSULE, ANNULUS, RECTANGLE -> shape.ranges().stream()
+                    .map(value -> (float) tuning.scaleRange(value))
+                    .toList();
+            case CIRCLE, ZONE, PATH -> List.of(
+                    (float) tuning.scaleRange(shape.ranges().get(0))
+            );
+        };
+        List<IndicatorSnapshotPacket.Point> pathPoints = shape.pathPoints().stream()
+                .map(point -> new IndicatorSnapshotPacket.Point(
+                        shape.anchor().x + (point.x() - shape.anchor().x) * tuning.rangeMultiplier(),
+                        shape.anchor().y + (point.y() - shape.anchor().y) * tuning.rangeMultiplier(),
+                        shape.anchor().z + (point.z() - shape.anchor().z) * tuning.rangeMultiplier()
+                ))
+                .toList();
+        return new Shape(shape.type(), shape.anchor(), ranges, pathPoints, shape.yawDegrees());
     }
 
     private static IndicatorSnapshotPacket.StyleRole style(PromisedConsortActionId actionId) {

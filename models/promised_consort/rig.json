@@ -1,0 +1,1627 @@
+{
+  "root": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": null
+  },
+  "control": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "root"
+  },
+  "pelvis": {
+    "origin": [
+      0,
+      38,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "control"
+  },
+  "body": {
+    "origin": [
+      0,
+      43,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "chest": {
+    "origin": [
+      0,
+      56,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "body"
+  },
+  "neck": {
+    "origin": [
+      0,
+      67,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "chest"
+  },
+  "head": {
+    "origin": [
+      0,
+      70,
+      -0.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "neck"
+  },
+  "hair_main": {
+    "origin": [
+      0,
+      77,
+      3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "head"
+  },
+  "cape": {
+    "origin": [
+      0,
+      63.5,
+      6.6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "chest"
+  },
+  "cape_middle": {
+    "origin": [
+      0,
+      46,
+      9
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "cape"
+  },
+  "cape_end": {
+    "origin": [
+      0,
+      27,
+      11
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "cape_middle"
+  },
+  "tabard_front": {
+    "origin": [
+      0,
+      39,
+      -6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "tabard_back": {
+    "origin": [
+      0,
+      39,
+      6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "upper_arm_r": {
+    "origin": [
+      16.2,
+      62.5,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "chest"
+  },
+  "forearm_r": {
+    "origin": [
+      20,
+      48.5,
+      -0.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "upper_arm_r"
+  },
+  "hand_r": {
+    "origin": [
+      22,
+      36,
+      -2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "forearm_r"
+  },
+  "sword_r": {
+    "origin": [
+      22,
+      33,
+      -2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_r"
+  },
+  "blade_root_r": {
+    "origin": [
+      22,
+      33,
+      -9
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "sword_r"
+  },
+  "blade_tip_r": {
+    "origin": [
+      22,
+      49.2,
+      -55.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "sword_r"
+  },
+  "thigh_r": {
+    "origin": [
+      8.5,
+      37,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "shin_r": {
+    "origin": [
+      9.5,
+      21.3,
+      -0.6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "thigh_r"
+  },
+  "foot_r": {
+    "origin": [
+      10,
+      5.9,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "shin_r"
+  },
+  "toe_r": {
+    "origin": [
+      10,
+      2.4,
+      -6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "foot_r"
+  },
+  "tasset_r": {
+    "origin": [
+      11,
+      39,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "finger_r_0": {
+    "origin": [
+      24.3,
+      33.2,
+      -4.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_r"
+  },
+  "finger_r_0_tip": {
+    "origin": [
+      22.2,
+      31.3,
+      -4.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_r_0"
+  },
+  "finger_r_1": {
+    "origin": [
+      24.3,
+      33.2,
+      -2.8000000000000003
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_r"
+  },
+  "finger_r_1_tip": {
+    "origin": [
+      22.2,
+      31.3,
+      -2.8000000000000003
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_r_1"
+  },
+  "finger_r_2": {
+    "origin": [
+      24.3,
+      33.2,
+      -1.4000000000000004
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_r"
+  },
+  "finger_r_2_tip": {
+    "origin": [
+      22.2,
+      31.3,
+      -1.4000000000000004
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_r_2"
+  },
+  "finger_r_3": {
+    "origin": [
+      24.3,
+      33.2,
+      -8.881784197001252e-16
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_r"
+  },
+  "finger_r_3_tip": {
+    "origin": [
+      22.2,
+      31.3,
+      -8.881784197001252e-16
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_r_3"
+  },
+  "thumb_r": {
+    "origin": [
+      22.8,
+      35.3,
+      -4.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_r"
+  },
+  "thumb_tip_r": {
+    "origin": [
+      20.8,
+      33.9,
+      -4
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "thumb_r"
+  },
+  "upper_arm_l": {
+    "origin": [
+      -16.2,
+      62.5,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "chest"
+  },
+  "forearm_l": {
+    "origin": [
+      -20,
+      48.5,
+      -0.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "upper_arm_l"
+  },
+  "hand_l": {
+    "origin": [
+      -22,
+      36,
+      -2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "forearm_l"
+  },
+  "sword_l": {
+    "origin": [
+      -22,
+      33,
+      -2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_l"
+  },
+  "blade_root_l": {
+    "origin": [
+      -22,
+      33,
+      -9
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "sword_l"
+  },
+  "blade_tip_l": {
+    "origin": [
+      -22,
+      49.2,
+      -55.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "sword_l"
+  },
+  "thigh_l": {
+    "origin": [
+      -8.5,
+      37,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "shin_l": {
+    "origin": [
+      -9.5,
+      21.3,
+      -0.6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "thigh_l"
+  },
+  "foot_l": {
+    "origin": [
+      -10,
+      5.9,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "shin_l"
+  },
+  "toe_l": {
+    "origin": [
+      -10,
+      2.4,
+      -6
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "foot_l"
+  },
+  "tasset_l": {
+    "origin": [
+      -11,
+      39,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "pelvis"
+  },
+  "finger_l_0": {
+    "origin": [
+      -24.3,
+      33.2,
+      -4.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_l"
+  },
+  "finger_l_0_tip": {
+    "origin": [
+      -22.2,
+      31.3,
+      -4.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_l_0"
+  },
+  "finger_l_1": {
+    "origin": [
+      -24.3,
+      33.2,
+      -2.8000000000000003
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_l"
+  },
+  "finger_l_1_tip": {
+    "origin": [
+      -22.2,
+      31.3,
+      -2.8000000000000003
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_l_1"
+  },
+  "finger_l_2": {
+    "origin": [
+      -24.3,
+      33.2,
+      -1.4000000000000004
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_l"
+  },
+  "finger_l_2_tip": {
+    "origin": [
+      -22.2,
+      31.3,
+      -1.4000000000000004
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_l_2"
+  },
+  "finger_l_3": {
+    "origin": [
+      -24.3,
+      33.2,
+      -8.881784197001252e-16
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_l"
+  },
+  "finger_l_3_tip": {
+    "origin": [
+      -22.2,
+      31.3,
+      -8.881784197001252e-16
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "finger_l_3"
+  },
+  "thumb_l": {
+    "origin": [
+      -22.8,
+      35.3,
+      -4.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hand_l"
+  },
+  "thumb_tip_l": {
+    "origin": [
+      -20.8,
+      33.9,
+      -4
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "thumb_l"
+  },
+  "mane_lock_01": {
+    "origin": [
+      0,
+      80.10000000000001,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_02": {
+    "origin": [
+      2.6499999999999995,
+      79.51051177665153,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_03": {
+    "origin": [
+      4.589934640057525,
+      77.9,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_04": {
+    "origin": [
+      5.3,
+      75.7,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_05": {
+    "origin": [
+      4.589934640057525,
+      73.5,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_06": {
+    "origin": [
+      2.6499999999999995,
+      71.88948822334848,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_07": {
+    "origin": [
+      6.490628035480972e-16,
+      71.3,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_08": {
+    "origin": [
+      -2.6499999999999986,
+      71.88948822334847,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_09": {
+    "origin": [
+      -4.589934640057523,
+      73.5,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_10": {
+    "origin": [
+      -5.3,
+      75.7,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_11": {
+    "origin": [
+      -4.589934640057525,
+      77.9,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "mane_lock_12": {
+    "origin": [
+      -2.650000000000002,
+      79.51051177665153,
+      4.3
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "hair_lock_01": {
+    "origin": [
+      -7.5,
+      71,
+      7.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "hair_lock_02": {
+    "origin": [
+      -4.5,
+      71,
+      7.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "hair_lock_03": {
+    "origin": [
+      -1.5,
+      71,
+      7.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "hair_lock_04": {
+    "origin": [
+      1.5,
+      71,
+      7.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "hair_lock_05": {
+    "origin": [
+      4.5,
+      71,
+      7.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "hair_lock_06": {
+    "origin": [
+      7.5,
+      71,
+      7.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "hair_main"
+  },
+  "miquella_root": {
+    "origin": [
+      0,
+      65,
+      10.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "chest"
+  },
+  "miquella_body": {
+    "origin": [
+      0,
+      70,
+      13
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_root"
+  },
+  "miquella_head": {
+    "origin": [
+      -7,
+      81,
+      7.800000000000001
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_body"
+  },
+  "miquella_hair": {
+    "origin": [
+      -7.8,
+      87.8,
+      8.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_head"
+  },
+  "halo": {
+    "origin": [
+      -7.2,
+      87,
+      12.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_head"
+  },
+  "miquella_robe": {
+    "origin": [
+      0,
+      69,
+      13.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_root"
+  },
+  "miquella_upper_arm_r": {
+    "origin": [
+      2,
+      80.9,
+      9
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_body"
+  },
+  "miquella_upper_forearm_r": {
+    "origin": [
+      7.5,
+      75.6,
+      3.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_upper_arm_r"
+  },
+  "miquella_upper_hand_r": {
+    "origin": [
+      7.4,
+      69.1,
+      -5.7
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_upper_forearm_r"
+  },
+  "miquella_upper_fingers_r": {
+    "origin": [
+      7.4,
+      68.69999999999999,
+      -7.300000000000001
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_upper_hand_r"
+  },
+  "miquella_upper_arm_l": {
+    "origin": [
+      -6.4,
+      80.9,
+      9
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_body"
+  },
+  "miquella_upper_forearm_l": {
+    "origin": [
+      -9.5,
+      75,
+      3.2
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_upper_arm_l"
+  },
+  "miquella_upper_hand_l": {
+    "origin": [
+      -7.4,
+      69.6,
+      -5.7
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_upper_forearm_l"
+  },
+  "miquella_upper_fingers_l": {
+    "origin": [
+      -7.4,
+      69.19999999999999,
+      -7.300000000000001
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_upper_hand_l"
+  },
+  "miquella_lower_arm_r": {
+    "origin": [
+      2,
+      77.2,
+      11
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_body"
+  },
+  "miquella_lower_forearm_r": {
+    "origin": [
+      10.5,
+      70.6,
+      5.4
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lower_arm_r"
+  },
+  "miquella_lower_hand_r": {
+    "origin": [
+      14.4,
+      67.1,
+      -2.7
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lower_forearm_r"
+  },
+  "miquella_lower_fingers_r": {
+    "origin": [
+      14.4,
+      66.69999999999999,
+      -4.300000000000001
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lower_hand_r"
+  },
+  "miquella_lower_arm_l": {
+    "origin": [
+      -6.4,
+      77.2,
+      11
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_body"
+  },
+  "miquella_lower_forearm_l": {
+    "origin": [
+      -10.5,
+      70.2,
+      5.4
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lower_arm_l"
+  },
+  "miquella_lower_hand_l": {
+    "origin": [
+      -14.4,
+      66.7,
+      -2.7
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lower_forearm_l"
+  },
+  "miquella_lower_fingers_l": {
+    "origin": [
+      -14.4,
+      66.3,
+      -4.300000000000001
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lower_hand_l"
+  },
+  "miquella_lock_01": {
+    "origin": [
+      -11.024000000000001,
+      87.7,
+      9.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_01_middle": {
+    "origin": [
+      -19.56,
+      70.3,
+      15.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_01"
+  },
+  "miquella_lock_01_end": {
+    "origin": [
+      -25.305,
+      45.3,
+      20
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_01_middle"
+  },
+  "miquella_lock_02": {
+    "origin": [
+      -10.352,
+      87.92222222222223,
+      10.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_02_middle": {
+    "origin": [
+      -16.48,
+      70.85555555555555,
+      17.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_02"
+  },
+  "miquella_lock_02_end": {
+    "origin": [
+      -20.615,
+      46.63333333333333,
+      23
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_02_middle"
+  },
+  "miquella_lock_03": {
+    "origin": [
+      -9.68,
+      88.14444444444445,
+      9.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_03_middle": {
+    "origin": [
+      -13.400000000000002,
+      71.41111111111111,
+      15.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_03"
+  },
+  "miquella_lock_03_end": {
+    "origin": [
+      -15.925,
+      47.96666666666666,
+      20
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_03_middle"
+  },
+  "miquella_lock_04": {
+    "origin": [
+      -9.008,
+      88.36666666666667,
+      10.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_04_middle": {
+    "origin": [
+      -10.32,
+      71.96666666666667,
+      17.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_04"
+  },
+  "miquella_lock_04_end": {
+    "origin": [
+      -11.235,
+      46.3,
+      23
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_04_middle"
+  },
+  "miquella_lock_05": {
+    "origin": [
+      -8.336,
+      88.58888888888889,
+      9.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_05_middle": {
+    "origin": [
+      -7.24,
+      72.52222222222223,
+      15.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_05"
+  },
+  "miquella_lock_05_end": {
+    "origin": [
+      -6.545,
+      47.63333333333333,
+      20
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_05_middle"
+  },
+  "miquella_lock_06": {
+    "origin": [
+      -7.664,
+      88.58888888888889,
+      10.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_06_middle": {
+    "origin": [
+      -4.16,
+      72.52222222222223,
+      17.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_06"
+  },
+  "miquella_lock_06_end": {
+    "origin": [
+      -1.8550000000000004,
+      48.63333333333333,
+      23
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_06_middle"
+  },
+  "miquella_lock_07": {
+    "origin": [
+      -6.992,
+      88.36666666666667,
+      9.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_07_middle": {
+    "origin": [
+      -1.080000000000001,
+      71.96666666666667,
+      15.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_07"
+  },
+  "miquella_lock_07_end": {
+    "origin": [
+      2.834999999999999,
+      46.3,
+      20
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_07_middle"
+  },
+  "miquella_lock_08": {
+    "origin": [
+      -6.32,
+      88.14444444444445,
+      10.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_08_middle": {
+    "origin": [
+      2.000000000000001,
+      71.41111111111111,
+      17.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_08"
+  },
+  "miquella_lock_08_end": {
+    "origin": [
+      7.5249999999999995,
+      46.96666666666666,
+      23
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_08_middle"
+  },
+  "miquella_lock_09": {
+    "origin": [
+      -5.648,
+      87.92222222222223,
+      9.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_09_middle": {
+    "origin": [
+      5.079999999999999,
+      70.85555555555555,
+      15.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_09"
+  },
+  "miquella_lock_09_end": {
+    "origin": [
+      12.215,
+      47.63333333333333,
+      20
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_09_middle"
+  },
+  "miquella_lock_10": {
+    "origin": [
+      -4.976,
+      87.7,
+      10.8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_hair"
+  },
+  "miquella_lock_10_middle": {
+    "origin": [
+      8.16,
+      70.3,
+      17.5
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_10"
+  },
+  "miquella_lock_10_end": {
+    "origin": [
+      16.905,
+      45.3,
+      23
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "parent": "miquella_lock_10_middle"
+  }
+}

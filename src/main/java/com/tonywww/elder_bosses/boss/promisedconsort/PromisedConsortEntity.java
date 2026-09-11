@@ -21,6 +21,7 @@ import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActi
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortCooldowns;
 import com.tonywww.elder_bosses.boss.promisedconsort.selection.PromisedConsortSkillSelector;
+import com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 import com.tonywww.elder_bosses.combat.damage.DamageSourceOwnership;
@@ -33,6 +34,7 @@ import com.tonywww.elder_bosses.combat.state.StaggerTracker;
 import com.tonywww.elder_bosses.network.BossCombatSnapshotPacket;
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
+import com.tonywww.elder_bosses.platforms.client.PlatformPromisedConsortAnimationController;
 import com.tonywww.elder_bosses.platforms.combat.PlatformShieldDurability;
 import com.tonywww.elder_bosses.platforms.combat.PlatformEnchantmentLevels;
 import com.tonywww.elder_bosses.platforms.entity.PlatformMonster;
@@ -41,8 +43,6 @@ import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import com.tonywww.elder_bosses.platforms.registry.ModItems;
 import com.tonywww.elder_bosses.platforms.registry.ModSoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -82,14 +82,10 @@ import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 //? if forge {
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.RawAnimation;
 //?} else {
 /*import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.RawAnimation;
 *///?}
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -117,7 +113,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     private static final int NETWORK_SYNC_INTERVAL_TICKS = 2;
     private static final int TARGET_HISTORY_PRUNE_INTERVAL_TICKS = 20;
     private static final int MIQUELLA_VISIBLE_TICK = 56;
-    private static final int METEOR_IMPACT_TICK = 121;
     private static final String ENCOUNTER_CONFIG_TAG = "EncounterConfig";
     private static final String ACTION_RUNTIME_TAG = "ActionRuntime";
     private static final String ACTION_EXECUTOR_TAG = "ActionExecutor";
@@ -138,6 +133,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTION_TICK =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.INT);
+        private static final EntityDataAccessor<Float> ANIMATION_TICK =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
+        private static final EntityDataAccessor<Float> ANIMATION_NEXT_TICK =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Long> ACTION_SEED =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.LONG);
         private static final EntityDataAccessor<Long> STATE_START_GAME_TIME =
@@ -153,6 +152,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         private static final EntityDataAccessor<Float> STAGGER_CAPACITY =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> MIQUELLA_VISIBLE =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
+        private static final EntityDataAccessor<Boolean> METEOR_LANDED =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
         private static final EntityDataAccessor<Integer> DIALOGUE_EVENT_ID =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.INT);
@@ -247,6 +248,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         registrar.define(ACTIVE_PHASE, PromisedConsortPhase.PHASE_ONE.id());
         registrar.define(ACTION_ID, -1);
         registrar.define(ACTION_TICK, -1);
+        registrar.define(ANIMATION_TICK, 0.0F);
+        registrar.define(ANIMATION_NEXT_TICK, 0.0F);
         registrar.define(ACTION_SEED, 0L);
         registrar.define(STATE_START_GAME_TIME, 0L);
         registrar.define(ACTION_SEQUENCE, -1L);
@@ -255,6 +258,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         registrar.define(STAGGER, 0.0F);
         registrar.define(STAGGER_CAPACITY, 0.0F);
         registrar.define(MIQUELLA_VISIBLE, false);
+        registrar.define(METEOR_LANDED, false);
         registrar.define(DIALOGUE_EVENT_ID, -1);
         registrar.define(DIALOGUE_START_GAME_TIME, 0L);
     }
@@ -319,7 +323,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             }
         }
         tickStaggerDisplay();
-        emitPlaceholderParticles();
         syncNetworkState();
     }
 
@@ -361,22 +364,25 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private void tickMeteorScript() {
+        int ascentEndTick = meteorTick(50);
+        int impactTick = meteorTick(121);
         Optional<PromisedConsortActionSnapshot> snapshot = actionRuntime.snapshot(level().getGameTime());
         currentAction = snapshot.orElse(null);
         syncAction(currentAction);
+        int scriptTick = currentAction == null ? stateTicks : currentAction.actionTick();
+        if (scriptTick <= ascentEndTick) {
+            moveControlled(new Vec3(0.0, 0.28, 0.0));
+        } else if (scriptTick >= impactTick && !meteorLanded()) {
+            setPosition(actionExecutor.lockedPoints().getOrDefault("meteor", combatCenter()));
+            entityData.set(METEOR_LANDED, true);
+        }
         List<PromisedConsortHitOutcome> outcomes = snapshot
                 .map(actionExecutor::tick)
                 .orElseGet(actionExecutor::tickPersistentHazards);
         processOutcomes(outcomes);
-        if (stateTicks <= 50) {
-            moveControlled(new Vec3(0.0, 0.28, 0.0));
-        } else if (stateTicks == METEOR_IMPACT_TICK) {
-            Optional.ofNullable(actionExecutor.lockedPoints().get("meteor"))
-                    .ifPresent(this::setPosition);
-        }
         Optional<PromisedConsortActionRuntime.ActionEnd> ended = actionRuntime.advance(level().getGameTime());
-        if (ended.isPresent() || stateTicks >= skillConfig.get(
-                PromisedConsortActionId.CONSORT_METEOR).integer("script_ticks")) {
+        if (ended.isPresent() || stateTicks >= meteorTick(skillConfig.get(
+            PromisedConsortActionId.CONSORT_METEOR).integer("script_ticks"))) {
             currentAction = null;
             nextMeteorReadyTick = "once".equals(combatConfig.meteor().repeatMode())
                 ? Long.MAX_VALUE
@@ -468,6 +474,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         meteorPending = false;
         combatController.cancel();
         actionExecutor.clearAll();
+        entityData.set(METEOR_LANDED, false);
         setCombatState(PromisedConsortCombatState.METEOR_SCRIPT);
         currentAction = actionRuntime.start(
                 PromisedConsortActionId.CONSORT_METEOR,
@@ -608,13 +615,15 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private double scaledMaximumHealth() {
+        PromisedConsortCombatConfigSnapshot snapshotConfig = currentConfig();
         int participants = scalingParticipantCount();
-        return combatConfig.general().baseHealth()
-                * (1.0 + combatConfig.general().healthPerExtraPlayer() * (participants - 1));
+        return snapshotConfig.general().baseHealth()
+                * (1.0 + snapshotConfig.general().healthPerExtraPlayer() * (participants - 1));
     }
 
     private int scalingParticipantCount() {
-        return Math.max(1, switch (combatConfig.encounter().scalingCountMode()) {
+        PromisedConsortCombatConfigSnapshot snapshotConfig = currentConfig();
+        return Math.max(1, switch (snapshotConfig.encounter().scalingCountMode()) {
             case "current_active" -> activeParticipants().size();
             case "high_water_mark" -> highWaterParticipantCount;
             default -> uniqueParticipantCount();
@@ -838,8 +847,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             return false;
         }
         return state != PromisedConsortCombatState.METEOR_SCRIPT
-            || stateTicks < combatConfig.meteor().invulnerableStartTick()
-            || stateTicks > combatConfig.meteor().invulnerableEndTick();
+            || meteorLanded() && (stateTicks < meteorTick(combatConfig.meteor().invulnerableStartTick())
+            || stateTicks > meteorTick(combatConfig.meteor().invulnerableEndTick()));
     }
 
     private void applyThresholdGates() {
@@ -1004,6 +1013,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public void die(DamageSource source) {
+        if (level().isClientSide) {
+            super.die(source);
+            return;
+        }
         if (finalizingDefeat) {
             super.die(source);
             return;
@@ -1014,11 +1027,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public void kill() {
-        if (finalizingDefeat) {
-            super.kill();
-            return;
-        }
-        enterDefeated();
+        finalizingDefeat = true;
+        super.kill();
     }
 
     private void enterDefeated() {
@@ -1339,10 +1349,14 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         entityData.set(DIALOGUE_START_GAME_TIME, dialogueStartTick);
     }
 
+    private AABB transitionImpactBounds() {
+        return getBoundingBox().move(anchor(combatConfig.arena().phaseReturnOffset()).subtract(position())).inflate(6.0);
+    }
+
     private void applyTransitionImpact() {
         List<LivingEntity> targets = level().getEntitiesOfClass(
                 LivingEntity.class,
-                getBoundingBox().inflate(6.0),
+                transitionImpactBounds(),
                 target -> target != this && !isAttackImmune(target) && insideArena(target)
         );
         prepareBossHitTargets(targets);
@@ -1428,52 +1442,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         entityData.set(STAGGER_CAPACITY, (float) snapshot.capacity());
     }
 
-    private void emitPlaceholderParticles() {
-        if (combatConfig == null
-                || currentAction == null
-                || !combatConfig.visuals().placeholderParticlesEnabled()
-                || !(level() instanceof ServerLevel serverLevel)) {
-            return;
-        }
-        int interval;
-        int count;
-        switch (combatConfig.visuals().placeholderParticleQuality()) {
-            case "minimal" -> {
-                interval = 4;
-                count = 2;
-            }
-            case "reduced" -> {
-                interval = 2;
-                count = 4;
-            }
-            default -> {
-                interval = 1;
-                count = 6;
-            }
-        }
-        if (tickCount % interval != 0) {
-            return;
-        }
-        count = Math.min(count, combatConfig.performance().normalParticlesPerTick());
-        ParticleOptions particle = switch (currentAction.actionId()) {
-            case GRAVITY_DIVE, STARCALLER_CRY, GRAVITY_METEOR -> ParticleTypes.PORTAL;
-            case L_COMBO_BLOODFLAME -> ParticleTypes.FLAME;
-            case LIGHT_OF_MIQUELLA, RING_OF_LIGHT, LIGHTSPEED_SLASH,
-                    LIGHTSPEED_DASH, LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT,
-                    ENHANCED_EARTHHEAVE, CONSORT_METEOR -> ParticleTypes.END_ROD;
-            default -> ParticleTypes.CRIT;
-        };
-        if (count > 0) {
-            serverLevel.sendParticles(
-                    particle,
-                    getX(), getY() + getBbHeight() * 0.55, getZ(),
-                    count,
-                    getBbWidth() * 0.4, getBbHeight() * 0.25, getBbWidth() * 0.4,
-                    0.01
-            );
-        }
-    }
-
     private void syncAction(PromisedConsortActionSnapshot snapshot) {
         if (snapshot == null) {
             clearSyncedAction();
@@ -1484,6 +1452,12 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         entityData.set(ACTION_ID, snapshot.actionId().ordinal());
         entityData.set(ACTION_TICK, snapshot.actionTick());
+        var timeline = actionCatalog.get(snapshot.actionId()).timeline();
+        var tuning = skillConfig.get(snapshot.actionId()).tuning();
+        entityData.set(ANIMATION_TICK, (float) PromisedConsortAnimationTimeline.sample(
+            snapshot.actionTick(), snapshot.actionId(), timeline, tuning));
+        entityData.set(ANIMATION_NEXT_TICK, (float) PromisedConsortAnimationTimeline.sample(
+            snapshot.actionTick() + 1.0, snapshot.actionId(), timeline, tuning));
         entityData.set(ACTION_SEED, snapshot.seed());
         entityData.set(ACTION_SEQUENCE, snapshot.sequence());
         entityData.set(ACTION_START_GAME_TIME, snapshot.startGameTick());
@@ -1492,34 +1466,37 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     private void clearSyncedAction() {
         entityData.set(ACTION_ID, -1);
         entityData.set(ACTION_TICK, -1);
+        entityData.set(ANIMATION_TICK, 0.0F);
+        entityData.set(ANIMATION_NEXT_TICK, 0.0F);
         entityData.set(ACTION_SEED, 0L);
         entityData.set(ACTION_SEQUENCE, -1L);
         entityData.set(ACTION_START_GAME_TIME, 0L);
     }
 
     private void syncNetworkState() {
-        if (level().isClientSide || tickCount % NETWORK_SYNC_INTERVAL_TICKS != 0) {
+        if (level().isClientSide) {
             return;
         }
-        List<IndicatorSnapshotPacket> indicators = indicatorGenerator == null
+        PromisedConsortCombatConfigSnapshot snapshotConfig = currentConfig();
+        List<IndicatorSnapshotPacket> indicators = new ArrayList<>(indicatorGenerator == null
             ? List.of()
-            : indicatorGenerator.create(
-                getId(),
-                position(),
-                getYRot(),
-                currentAction,
-                actionExecutor.lockedPoints(),
-                actionExecutor.lockedFacing(),
-                actionExecutor.hazardSnapshots(),
-                level().getGameTime()
-            );
+            : indicatorGenerator.createAuthoritative(getId(), currentAction,
+                currentAction == null ? List.of() : actionExecutor.telegraphs(),
+            actionExecutor.hazardSnapshots(), level().getGameTime()));
+        if (indicatorGenerator != null && combatState() == PromisedConsortCombatState.TRANSITION) {
+            long startTick = entityData.get(STATE_START_GAME_TIME);
+            indicators.addAll(indicatorGenerator.createTransitionImpact(getId(), transitionImpactBounds(),
+                anchor(combatConfig.arena().phaseReturnOffset()).y, startTick,
+                startTick + combatConfig.phaseTransition().returnImpactTick(), level().getGameTime()));
+        }
         Map<String, IndicatorSnapshotPacket> currentIndicators = new HashMap<>();
         indicators.forEach(packet -> currentIndicators.put(packet.indicatorId(), packet));
+        if (tickCount % NETWORK_SYNC_INTERVAL_TICKS != 0 && currentIndicators.equals(previousIndicators)) return;
         List<IndicatorSnapshotPacket> expired = previousIndicators.entrySet().stream()
             .filter(entry -> !currentIndicators.containsKey(entry.getKey()))
             .map(entry -> expired(entry.getValue(), level().getGameTime()))
             .toList();
-        double range = currentConfig().general().followRange();
+        double range = snapshotConfig.general().followRange();
             List<ServerPlayer> recipients = eligiblePlayers(range);
             Set<UUID> currentRecipients = recipients.stream()
                 .map(ServerPlayer::getUUID)
@@ -1540,11 +1517,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             for (ServerPlayer player : recipients) {
             boolean receivesDialogue = audienceContains(
                 player,
-                combatConfig.dialogue().audience()
+                snapshotConfig.dialogue().audience()
             );
             boolean hudVisible = audienceContains(
                 player,
-                combatConfig.presentation().staggerHudAudience()
+                snapshotConfig.presentation().staggerHudAudience()
             );
             PlatformNetwork.sendTo(player, snapshotFor(player, receivesDialogue, hudVisible));
             indicators.forEach(packet -> PlatformNetwork.sendTo(player, packet));
@@ -1599,6 +1576,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 action == null ? -1 : action.actionTick(),
                 action == null ? 0L : action.startGameTick(),
                 action == null ? 0L : action.seed(),
+                action == null ? 1.0 : skillConfig.get(action.actionId()).rangeMultiplier(),
                 getTarget() == null ? -1 : getTarget().getId(),
                 Math.max(0.0F, getHealth()),
                 Math.max(0.0F, getMaxHealth()),
@@ -1674,8 +1652,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 || meteorPending && phase() == PromisedConsortPhase.PHASE_TWO
                 && "invulnerable".equals(currentConfig().meteor().pendingDamagePolicy())
                 || state == PromisedConsortCombatState.METEOR_SCRIPT
-                && stateTicks >= currentConfig().meteor().invulnerableStartTick()
-                && stateTicks <= currentConfig().meteor().invulnerableEndTick()
+                && (!meteorLanded() || stateTicks >= meteorTick(currentConfig().meteor().invulnerableStartTick())
+                && stateTicks <= meteorTick(currentConfig().meteor().invulnerableEndTick()))
                 || super.isInvulnerableTo(source);
     }
 
@@ -1703,6 +1681,95 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     public boolean miquellaVisible() {
         return entityData.get(MIQUELLA_VISIBLE);
+    }
+
+    public boolean meteorLanded() {
+        return entityData.get(METEOR_LANDED);
+    }
+
+    private String sampledAnimationClip = "";
+    private long sampledAnimationSequence = Long.MIN_VALUE;
+    private float sampledAnimationTick = -1.0F;
+    private float sampledAnimationNextTick;
+    private double animationReceivedAt;
+    private double animationTime;
+    private double animationFrameTime = -1.0;
+    private double gaitPhase;
+    private double gaitX;
+    private double gaitZ;
+    private boolean gaitActive;
+
+    public String animationClip() {
+        PromisedConsortCombatState state = combatState();
+        if (state == PromisedConsortCombatState.TRANSITION) return "transition";
+        if (state == PromisedConsortCombatState.STUNNED) return "stunned";
+        if (state == PromisedConsortCombatState.DEFEATED) return "death";
+        if (state == PromisedConsortCombatState.INTRO) return "intro";
+        if (actionId().isPresent()) return actionId().orElseThrow().serializedName();
+        String suffix = miquellaVisible() ? "_phase_two" : "";
+        if (state == PromisedConsortCombatState.DORMANT) return "idle" + suffix;
+        double speed = Math.hypot(getX() - xo, getZ() - zo);
+        if (speed > 0.17) return "run" + suffix;
+        if (speed > 0.005) return "walk" + suffix;
+        return "idle" + suffix;
+    }
+
+    public boolean hasSynchronizedAnimation() {
+        return actionId().isPresent() || switch (combatState()) {
+            case INTRO, TRANSITION, STUNNED, DEFEATED, METEOR_SCRIPT -> true;
+            default -> false;
+        };
+    }
+
+    public void prepareAnimationFrame(float partialTick) {
+        double frameTime = tickCount + partialTick;
+        if (frameTime == animationFrameTime) return;
+        String clip = animationClip();
+        boolean action = actionId().isPresent()
+                && combatState() != PromisedConsortCombatState.INTRO
+                && combatState() != PromisedConsortCombatState.TRANSITION
+                && combatState() != PromisedConsortCombatState.STUNNED
+                && combatState() != PromisedConsortCombatState.DEFEATED;
+        long sequence = action ? entityData.get(ACTION_SEQUENCE) : entityData.get(STATE_START_GAME_TIME);
+        float current = action ? entityData.get(ANIMATION_TICK)
+            : Math.max(0L, level().getGameTime() - entityData.get(STATE_START_GAME_TIME));
+        float next = action ? entityData.get(ANIMATION_NEXT_TICK) : current + 1.0F;
+        boolean restarted = !clip.equals(sampledAnimationClip) || sequence != sampledAnimationSequence
+                || current < sampledAnimationTick;
+        if (restarted || current != sampledAnimationTick || next != sampledAnimationNextTick) {
+            sampledAnimationClip = clip;
+            sampledAnimationSequence = sequence;
+            sampledAnimationTick = current;
+            sampledAnimationNextTick = next;
+            animationReceivedAt = frameTime;
+        }
+        if (restarted) animationTime = current;
+        double interpolated = current + Math.max(0.0, Math.min(1.0, frameTime - animationReceivedAt)) * (next - current);
+        animationTime = Math.min(next, Math.max(animationTime, interpolated));
+        boolean moving = clip.startsWith("walk") || clip.startsWith("run");
+        double horizontal = Mth.lerp(partialTick, xo, getX());
+        double depth = Mth.lerp(partialTick, zo, getZ());
+        double distance = Math.hypot(horizontal - gaitX, depth - gaitZ);
+        if (moving && gaitActive && animationFrameTime >= 0.0 && frameTime - animationFrameTime <= 5.0 && distance <= 2.0) {
+            gaitPhase = (gaitPhase + distance / (clip.startsWith("run") ? 2.25 : 1.15)) % 1.0;
+        }
+        gaitActive = moving;
+        gaitX = horizontal;
+        gaitZ = depth;
+        animationFrameTime = frameTime;
+    }
+
+    public double animationTime() {
+        return animationTime;
+    }
+
+    public double animationFrameTime() {
+        return animationFrameTime;
+    }
+
+    public double locomotionAnimationTime() {
+        String clip = animationClip();
+        return clip.startsWith("walk") ? gaitPhase * 40.0 : clip.startsWith("run") ? gaitPhase * 24.0 : -1.0;
     }
 
     @Override
@@ -2262,16 +2329,17 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
 
         private boolean audienceContains(ServerPlayer player, String policy) {
+        PromisedConsortCombatConfigSnapshot snapshotConfig = currentConfig();
         return switch (policy) {
             case "participants" -> roster.contains(player.getUUID())
                 && !exitedParticipants.contains(player.getUUID());
             case "arena" -> insideArena(player);
             case "boss_bar" -> audienceContains(
                 player,
-                combatConfig.presentation().bossBarAudience()
+                snapshotConfig.presentation().bossBarAudience()
             );
             case "tracking", "follow_range" -> {
-                double range = combatConfig.general().followRange();
+                double range = snapshotConfig.general().followRange();
                 yield player.distanceToSqr(this) <= range * range;
             }
             default -> false;
@@ -2387,12 +2455,22 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         return combatConfig == null ? PromisedConsortConfigProvider.combatSnapshot() : combatConfig;
     }
 
+    private int meteorTick(int ticks) {
+        PromisedConsortSkillConfigSnapshot snapshot = skillConfig == null
+                ? PromisedConsortConfigProvider.skillSnapshot()
+                : skillConfig;
+        return snapshot.get(PromisedConsortActionId.CONSORT_METEOR)
+                .tuning()
+                .scaleTicks(ticks);
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("CombatState", combatState().id());
         tag.putInt("Phase", phase().id());
         tag.putInt("StateTicks", stateTicks);
+        tag.putBoolean("MeteorLanded", meteorLanded());
         tag.putBoolean("TransitionTriggered", transitionTriggered);
         tag.putBoolean("MeteorTriggered", meteorTriggered);
         tag.putBoolean("MeteorPending", meteorPending);
@@ -2496,6 +2574,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         entityData.set(COMBAT_STATE, restored.id());
         entityData.set(ACTIVE_PHASE, PromisedConsortPhase.fromId(tag.getInt("Phase")).id());
         stateTicks = Math.max(0, tag.getInt("StateTicks"));
+        entityData.set(METEOR_LANDED, tag.getBoolean("MeteorLanded"));
         transitionTriggered = tag.getBoolean("TransitionTriggered");
         meteorTriggered = tag.getBoolean("MeteorTriggered");
         meteorPending = tag.getBoolean("MeteorPending");
@@ -2667,29 +2746,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(
-                this,
-                "main",
-                0,
-                state -> state.setAndContinue(currentAnimation())
-        ));
-    }
-
-    private RawAnimation currentAnimation() {
-        String clip;
-        if (actionId().isPresent()) {
-            clip = actionId().orElseThrow().serializedName();
-        } else {
-            clip = switch (combatState()) {
-                case TRANSITION -> "transition";
-                case STUNNED -> "stunned";
-                case DEFEATED -> "death";
-                default -> getDeltaMovement().horizontalDistanceSqr() > 1.0E-4
-                        ? "walk"
-                        : "idle";
-            };
-        }
-        return RawAnimation.begin().thenLoop("animation.promised_consort." + clip);
+        controllers.add(new PlatformPromisedConsortAnimationController(this));
     }
 
     @Override

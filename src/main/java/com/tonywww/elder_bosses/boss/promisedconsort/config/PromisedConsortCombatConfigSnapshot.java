@@ -273,8 +273,6 @@ public record PromisedConsortCombatConfigSnapshot(
     }
 
     public record Visuals(
-            boolean placeholderParticlesEnabled,
-            String placeholderParticleQuality,
             String gravityProjectileBlock,
             boolean visualClonesEnabled,
             String cloneRenderMode
@@ -284,8 +282,7 @@ public record PromisedConsortCombatConfigSnapshot(
     public record Performance(
             int maxLogicalProjectiles,
             int maxLogicalLightColumns,
-            int maxVisualClones,
-            int normalParticlesPerTick
+            int maxVisualClones
     ) {
     }
 

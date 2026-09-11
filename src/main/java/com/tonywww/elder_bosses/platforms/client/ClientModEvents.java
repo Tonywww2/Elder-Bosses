@@ -5,6 +5,9 @@ import com.tonywww.elder_bosses.client.hud.ElderBossesHudRenderer;
 import com.tonywww.elder_bosses.client.render.MaleniaRenderer;
 import com.tonywww.elder_bosses.client.render.PromisedConsortCloneRenderer;
 import com.tonywww.elder_bosses.client.render.PromisedConsortRenderer;
+import com.tonywww.elder_bosses.client.vfx.ConsortEnergyShader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.client.renderer.ShaderInstance;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.network.ClientNetworkHandlers;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
@@ -14,6 +17,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +29,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 *///?}
 
@@ -40,6 +45,13 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         ClientNetworkHandlers.install();
+    }
+
+    @SubscribeEvent
+    public static void registerShaders(RegisterShadersEvent event) throws java.io.IOException {
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                PlatformResourceLocation.id("consort_energy"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                ConsortEnergyShader::install);
     }
 
     @SubscribeEvent

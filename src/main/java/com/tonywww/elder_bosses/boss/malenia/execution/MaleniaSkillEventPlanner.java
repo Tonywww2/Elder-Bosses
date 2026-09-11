@@ -2,7 +2,9 @@ package com.tonywww.elder_bosses.boss.malenia.execution;
 
 import com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot;
 import com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.HealProfile;
+import com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog;
 import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 import com.tonywww.elder_bosses.combat.damage.DamageChannel;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 
@@ -65,7 +67,7 @@ public final class MaleniaSkillEventPlanner {
     ) {
         Objects.requireNonNull(snapshot, "snapshot");
         Objects.requireNonNull(actionId, "actionId");
-        return switch (actionId) {
+        MaleniaActionPlan plan = switch (actionId) {
             case SINGLE_SLASH -> singleSlash(snapshot.singleSlash());
             case DOUBLE_SLASH -> doubleSlash(snapshot.doubleSlash());
             case RAPID_SLASHES -> rapidSlashes(snapshot.rapidSlashes());
@@ -82,7 +84,122 @@ public final class MaleniaSkillEventPlanner {
             case SCARLET_PHANTOMS -> scarletPhantoms(snapshot.scarletPhantoms());
             case WINGED_SWEEP -> wingedSweep(snapshot.wingedSweep());
         };
+            int tunedTotalTicks = new MaleniaActionCatalog(snapshot)
+                .get(actionId)
+                .timeline()
+                .totalTicks();
+            return tunedPlan(plan, snapshot.tuning(actionId), tunedTotalTicks);
     }
+
+            private static MaleniaActionPlan tunedPlan(
+                MaleniaActionPlan plan,
+                SkillTuning tuning,
+                int totalTicks
+            ) {
+            List<ScheduledIntent> intents = plan.intents().stream()
+                .map(scheduled -> new ScheduledIntent(
+                    Math.min(totalTicks - 1, tuning.scaleTicks(scheduled.actionTick())),
+                    tunedIntent(scheduled.intent(), tuning)
+                ))
+                .sorted(Comparator.comparingInt(ScheduledIntent::actionTick))
+                .toList();
+            return new MaleniaActionPlan(plan.actionId(), plan.enabled(), totalTicks, intents);
+            }
+
+            private static MaleniaServerIntent tunedIntent(
+                MaleniaServerIntent intent,
+                SkillTuning tuning
+            ) {
+            if (intent instanceof MoveToward value) {
+                return new MoveToward(
+                    value.pointId(),
+                    tuning.scaleRange(value.maxTravel()),
+                    Math.max(2, tuning.scaleTicks(value.travelTicks())),
+                    value.includeVertical()
+                );
+            }
+            if (intent instanceof MoveVertical value) {
+                return new MoveVertical(
+                    tuning.scaleRange(value.maxTravel()),
+                    Math.max(2, tuning.scaleTicks(value.travelTicks()))
+                );
+            }
+            if (intent instanceof MoveAway value) {
+                return new MoveAway(
+                    tuning.scaleRange(value.maxTravel()),
+                    Math.max(2, tuning.scaleTicks(value.travelTicks()))
+                );
+            }
+            if (intent instanceof HitSector value) {
+                return new HitSector(tuning.scaleRange(value.range()), value.arcDegrees(), value.hit());
+            }
+            if (intent instanceof HitCapsule value) {
+                return new HitCapsule(
+                    tuning.scaleRange(value.length()),
+                    value.width().isPresent()
+                        ? OptionalDouble.of(tuning.scaleRange(value.width().getAsDouble()))
+                        : OptionalDouble.empty(),
+                    value.endPointId(),
+                    value.hit()
+                );
+            }
+            if (intent instanceof HitCircle value) {
+                return new HitCircle(tuning.scaleRange(value.radius()), value.centerPointId(), value.hit());
+            }
+            if (intent instanceof HitAnnulus value) {
+                return new HitAnnulus(
+                    tuning.scaleRange(value.innerRadius()),
+                    tuning.scaleRange(value.outerRadius()),
+                    value.hit()
+                );
+            }
+            if (intent instanceof RotZone value) {
+                return new RotZone(
+                    tuning.scaleRange(value.radius()),
+                    value.centerPointId(),
+                    value.durationTicks(),
+                    value.intervalTicks(),
+                    value.hit()
+                );
+            }
+            if (intent instanceof IndicatorOnlyZone value) {
+                return new IndicatorOnlyZone(
+                    value.zoneId(),
+                    tuning.scaleRange(value.radius()),
+                    tuning.scaleTicks(value.durationTicks())
+                );
+            }
+            if (intent instanceof Grab value) {
+                int impaleDelay = tuning.scaleTicks(value.impaleDelayTicks());
+                int throwDelay = Math.max(impaleDelay + 1, tuning.scaleTicks(value.throwDelayTicks()));
+                return new Grab(
+                    tuning.scaleRange(value.length()),
+                    tuning.scaleRange(value.width()),
+                    value.grabHit(),
+                    value.impaleHit(),
+                    value.throwHit(),
+                    impaleDelay,
+                    throwDelay
+                );
+            }
+            if (intent instanceof WaterfowlBurst value) {
+                return new WaterfowlBurst(
+                    value.burstIndex(),
+                    tuning.scaleRange(value.width()),
+                    value.hit()
+                );
+            }
+            if (intent instanceof PhantomStrike value) {
+                return new PhantomStrike(
+                    value.strikeIndex(),
+                    value.phantomCount(),
+                    value.attackKind(),
+                    tuning.scaleRange(value.width()),
+                    value.hit()
+                );
+            }
+            return intent;
+            }
 
     private static MaleniaActionPlan singleSlash(MaleniaSkillConfigSnapshot.SingleSlash config) {
         StageLayout layout = singleStage(

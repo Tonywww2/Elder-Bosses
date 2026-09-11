@@ -1,0 +1,440 @@
+{
+  "revision": "reference_motion_v7",
+  "geometry_sha256": "92fc23cf90089b761ed8bbdb497ba979208a269b1837428e8dbe06a80e914523",
+  "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
+  "tolerance_model_units": 0.006,
+  "scope": "Same-facing near-coplanar opaque surface intersections in sampled poses; outward-ray exposure filter. Not a proof for every viewing angle or arbitrary animation frame.",
+  "frames": [
+    {
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 7,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 10,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 12,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "double_slash",
+      "tick": 29,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "rapid_slashes",
+      "tick": 16,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "thrust",
+      "tick": 24,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "kick",
+      "tick": 10,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 24,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "grab_impale",
+      "tick": 44,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 26,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 38,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "waterfowl_dance",
+      "tick": 60,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "upward_combo",
+      "tick": 28,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "scarlet_plunge",
+      "tick": 26,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "flying_slash",
+      "tick": 22,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "winged_sweep",
+      "tick": 20,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "scarlet_aeonia",
+      "tick": 74,
+      "phase": 2,
+      "faces": 1118,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "transition",
+      "tick": 108,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "stunned",
+      "tick": 24,
+      "phase": 2,
+      "faces": 1058,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 0,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 8,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 16,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 24,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 31,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk_back",
+      "tick": 9,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "walk_back",
+      "tick": 27,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "strafe_left",
+      "tick": 9,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "strafe_right",
+      "tick": 9,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "run",
+      "tick": 5,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    },
+    {
+      "clip": "run",
+      "tick": 15,
+      "phase": 1,
+      "faces": 983,
+      "exposed_conflicts": 0
+    }
+  ],
+  "exposed_pairs": [],
+  "internal_pairs": [
+    {
+      "faces": [
+        "rootwoven_torso/east",
+        "woven_cuirass/east"
+      ],
+      "samples": [
+        "idle_phase_one@0",
+        "single_slash@7",
+        "single_slash@10",
+        "single_slash@12",
+        "double_slash@29",
+        "rapid_slashes@16",
+        "thrust@24",
+        "kick@10",
+        "grab_impale@24",
+        "grab_impale@44",
+        "waterfowl_dance@26",
+        "waterfowl_dance@38",
+        "upward_combo@28",
+        "walk@0",
+        "walk@8",
+        "walk@16",
+        "walk@24",
+        "walk@31",
+        "walk_back@9",
+        "walk_back@27",
+        "strafe_left@9",
+        "strafe_right@9",
+        "run@5",
+        "run@15"
+      ],
+      "exposed_samples": [],
+      "minimum_separation": 2.3418762955219952e-17
+    },
+    {
+      "faces": [
+        "rootwoven_torso/west",
+        "woven_cuirass/west"
+      ],
+      "samples": [
+        "idle_phase_one@0",
+        "single_slash@7",
+        "single_slash@10",
+        "single_slash@12",
+        "double_slash@29",
+        "rapid_slashes@16",
+        "thrust@24",
+        "kick@10",
+        "grab_impale@24",
+        "grab_impale@44",
+        "waterfowl_dance@26",
+        "waterfowl_dance@38",
+        "upward_combo@28",
+        "walk@0",
+        "walk@8",
+        "walk@16",
+        "walk@24",
+        "walk@31",
+        "walk_back@9",
+        "walk_back@27",
+        "strafe_left@9",
+        "strafe_right@9",
+        "run@5",
+        "run@15"
+      ],
+      "exposed_samples": [],
+      "minimum_separation": 2.6541265211978212e-17
+    },
+    {
+      "faces": [
+        "lamellar_coronet/up",
+        "rootwoven_torso/up"
+      ],
+      "samples": [
+        "idle_phase_one@0",
+        "single_slash@7",
+        "single_slash@10",
+        "single_slash@12",
+        "double_slash@29",
+        "rapid_slashes@16",
+        "thrust@24",
+        "kick@10",
+        "grab_impale@24",
+        "grab_impale@44",
+        "waterfowl_dance@26",
+        "waterfowl_dance@38",
+        "upward_combo@28",
+        "walk@0",
+        "walk@8",
+        "walk@16",
+        "walk@24",
+        "walk@31",
+        "walk_back@9",
+        "walk_back@27",
+        "strafe_left@9",
+        "strafe_right@9",
+        "run@5",
+        "run@15"
+      ],
+      "exposed_samples": [],
+      "minimum_separation": 2.8610228435151097e-7
+    },
+    {
+      "faces": [
+        "face/south",
+        "hair_temple_-1/south"
+      ],
+      "samples": [
+        "idle_phase_one@0",
+        "idle_phase_two@20",
+        "single_slash@7",
+        "single_slash@10",
+        "single_slash@12",
+        "double_slash@29",
+        "rapid_slashes@16",
+        "thrust@24",
+        "kick@10",
+        "grab_impale@24",
+        "grab_impale@44",
+        "waterfowl_dance@26",
+        "waterfowl_dance@38",
+        "waterfowl_dance@60",
+        "upward_combo@28",
+        "scarlet_plunge@26",
+        "flying_slash@22",
+        "winged_sweep@20",
+        "scarlet_aeonia@74",
+        "transition@108",
+        "stunned@24",
+        "walk@0",
+        "walk@8",
+        "walk@16",
+        "walk@24",
+        "walk@31",
+        "walk_back@9",
+        "walk_back@27",
+        "strafe_left@9",
+        "strafe_right@9",
+        "run@5",
+        "run@15"
+      ],
+      "exposed_samples": [],
+      "minimum_separation": 6.675720098936466e-8
+    },
+    {
+      "faces": [
+        "face/south",
+        "hair_temple_1/south"
+      ],
+      "samples": [
+        "idle_phase_one@0",
+        "idle_phase_two@20",
+        "single_slash@7",
+        "single_slash@10",
+        "single_slash@12",
+        "double_slash@29",
+        "rapid_slashes@16",
+        "thrust@24",
+        "kick@10",
+        "grab_impale@24",
+        "grab_impale@44",
+        "waterfowl_dance@26",
+        "waterfowl_dance@38",
+        "waterfowl_dance@60",
+        "upward_combo@28",
+        "scarlet_plunge@26",
+        "flying_slash@22",
+        "winged_sweep@20",
+        "scarlet_aeonia@74",
+        "transition@108",
+        "stunned@24",
+        "walk@0",
+        "walk@8",
+        "walk@16",
+        "walk@24",
+        "walk@31",
+        "walk_back@9",
+        "walk_back@27",
+        "strafe_left@9",
+        "strafe_right@9",
+        "run@5",
+        "run@15"
+      ],
+      "exposed_samples": [],
+      "minimum_separation": 6.675720087834236e-8
+    },
+    {
+      "faces": [
+        "lamellar_coronet/south",
+        "left_shoulder_drape/south"
+      ],
+      "samples": [
+        "walk@8",
+        "walk@24",
+        "walk_back@9",
+        "walk_back@27",
+        "strafe_left@9",
+        "strafe_right@9",
+        "run@5",
+        "run@15"
+      ],
+      "exposed_samples": [],
+      "minimum_separation": 3.885780586188048e-16
+    }
+  ]
+}

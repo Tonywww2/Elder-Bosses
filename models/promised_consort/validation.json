@@ -1,0 +1,12 @@
+{
+  "checks": 279370,
+  "bones": 125,
+  "cubes": 550,
+  "faces": 3208,
+  "animations": 43,
+  "embedded_texture_matches": true,
+  "runtime_files_match": true,
+  "rendered_gait_samples": 72,
+  "status": "asset_contracts_passed",
+  "runtime_acceptance": "client_world_required"
+}

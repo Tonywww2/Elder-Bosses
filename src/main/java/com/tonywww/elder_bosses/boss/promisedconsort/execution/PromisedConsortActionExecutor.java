@@ -7,6 +7,7 @@ import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActio
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase;
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionSnapshot;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 import com.tonywww.elder_bosses.combat.geometry.Annulus;
 import com.tonywww.elder_bosses.combat.geometry.Capsule;
@@ -49,10 +50,13 @@ public final class PromisedConsortActionExecutor {
     private final Map<String, Integer> hitIndices = new HashMap<>();
     private final Map<String, Vec3> lockedPoints = new HashMap<>();
     private final Map<String, Hazard> hazards = new LinkedHashMap<>();
+    private final Map<String, PromisedConsortAttackPlan.Strike> telegraphs = new LinkedHashMap<>();
     private final Set<String> processedEvents = new java.util.HashSet<>();
 
     private long activeSequence = -1L;
     private Vec2 lockedFacing;
+    private SkillTuning activeTuning = SkillTuning.NEUTRAL;
+    private PromisedConsortActionSnapshot executingAction;
 
     public PromisedConsortActionExecutor(
             Host host,
@@ -67,8 +71,13 @@ public final class PromisedConsortActionExecutor {
     public List<PromisedConsortHitOutcome> tick(PromisedConsortActionSnapshot action) {
         Objects.requireNonNull(action, "action");
         prepareAction(action);
+        executingAction = action;
+        activeTuning = catalog.skillConfig().get(action.actionId()).tuning();
+        Vec3 predictionOrigin = host.boss().position();
+        updateTelegraphs(action, predictionOrigin);
         List<PromisedConsortHitOutcome> outcomes = new ArrayList<>();
         executeAction(action, outcomes);
+        updateTelegraphs(action, predictionOrigin);
         tickHazards(outcomes);
         return List.copyOf(outcomes);
     }
@@ -81,6 +90,7 @@ public final class PromisedConsortActionExecutor {
 
     public void cancelPendingHazards() {
         hazards.values().removeIf(hazard -> host.gameTime() < hazard.activeTick());
+        telegraphs.clear();
     }
 
     public void clearAll() {
@@ -90,6 +100,47 @@ public final class PromisedConsortActionExecutor {
 
     public List<HazardSnapshot> hazardSnapshots() {
         return hazards.values().stream().map(Hazard::snapshot).toList();
+    }
+
+    public List<PromisedConsortAttackPlan.Strike> telegraphs() {
+        return List.copyOf(telegraphs.values());
+    }
+
+    private void updateTelegraphs(PromisedConsortActionSnapshot action, Vec3 predictionOrigin) {
+        long now = host.gameTime();
+        for (var candidate : PromisedConsortAttackPlan.create(action, catalog.skillConfig().get(action.actionId()),
+                catalog.get(action.actionId()).timeline(), predictionOrigin, facing(), lockedPoints,
+                config.instantGuard().defaultCueLeadTicks())) {
+            if (candidate.endTick() <= now) continue;
+            var previous = telegraphs.get(candidate.id());
+            Vec3 frozen = lockedPoints.get("attack_origin:" + candidate.id());
+            Vec3 direction = lockedPoints.get("attack_direction:" + candidate.id());
+            if (frozen != null && direction != null) {
+                candidate = PromisedConsortAttackPlan.relocate(candidate, frozen, new Vec2(direction.x, direction.z));
+                if (previous == null) previous = candidate;
+            }
+            if (previous == null) {
+                candidate = candidate.observedAt(now);
+            } else if (now >= previous.lockTick()) {
+                candidate = previous;
+            } else {
+                candidate = candidate.observedAt(previous.startTick());
+            }
+            telegraphs.put(candidate.id(), candidate);
+            if (now >= candidate.lockTick() && frozen == null) {
+                ShapeData data = ShapeData.from(candidate.shape());
+                lockedPoints.put("attack_origin:" + candidate.id(), new Vec3(data.origin().x(), candidate.baseY(), data.origin().z()));
+                lockedPoints.put("attack_direction:" + candidate.id(), new Vec3(data.direction().x(), 0, data.direction().z()));
+            }
+        }
+        telegraphs.values().removeIf(strike -> now >= strike.endTick() + 3);
+    }
+
+    private PromisedConsortAttackPlan.Strike announced(String occurrence) {
+        if (executingAction != null && executingAction.actionId() == PromisedConsortActionId.RING_OF_LIGHT && occurrence.equals("ring")) {
+            return telegraphs.get("ring_" + executingAction.phaseTick());
+        }
+        return telegraphs.get(occurrence);
     }
 
     public List<PersistentHazard> persistentHazards() {
@@ -120,6 +171,7 @@ public final class PromisedConsortActionExecutor {
         public void restoreState(PersistentState state) {
         Objects.requireNonNull(state, "state");
         activeSequence = state.activeSequence();
+        telegraphs.clear();
         lockedFacing = state.lockedFacing();
         lockedPoints.clear();
         state.lockedPoints().forEach((key, value) -> lockedPoints.put(
@@ -186,6 +238,8 @@ public final class PromisedConsortActionExecutor {
             hitCounter.clearAction(activeSequence);
         }
         activeSequence = -1L;
+        telegraphs.clear();
+        executingAction = null;
         lockedFacing = null;
         hitRegistry.clear();
         hitIndices.clear();
@@ -198,6 +252,7 @@ public final class PromisedConsortActionExecutor {
             List<PromisedConsortHitOutcome> outcomes
     ) {
         PromisedConsortSkillConfigSnapshot.Skill skill = catalog.skillConfig().get(action.actionId());
+        activeTuning = skill.tuning();
         if (action.actionTick() == 0) {
             lockTarget("target");
         }
@@ -227,6 +282,14 @@ public final class PromisedConsortActionExecutor {
         }
     }
 
+    private int activeTicks(PromisedConsortActionSnapshot action) {
+        return catalog.get(action.actionId()).timeline().stages().get(action.stageIndex()).activeTicks();
+    }
+
+    private static int ticks(PromisedConsortSkillConfigSnapshot.Skill skill, int ticks) {
+        return skill.tuning().scaleTicks(ticks);
+    }
+
     private void gravityDive(
             PromisedConsortActionSnapshot action,
             PromisedConsortSkillConfigSnapshot.Skill skill,
@@ -238,7 +301,7 @@ public final class PromisedConsortActionExecutor {
                     hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
                 scheduleSwordEcho(action, "sword", skill.number("range"));
         }
-        if (activeTick(action, 2)) {
+        if (activeTick(action, ticks(skill, 2))) {
             hitCircle(action, "impact", skill.number("range"),
                     hit(skill.damage("impact_damage"), Kind.PHYSICAL, false), outcomes);
         }
@@ -278,7 +341,7 @@ public final class PromisedConsortActionExecutor {
                 action,
                 "bloodflame",
                 rectangle(skill.number("sweep_range"), 1.5),
-                skill.integer("burst_tick"),
+                ticks(skill, skill.integer("burst_tick")),
                 skill.integer("fissure_lifetime_ticks"),
                 hit(skill.damage("burst_damage"), Kind.FIRE, false)
         );
@@ -294,7 +357,7 @@ public final class PromisedConsortActionExecutor {
                     DEFAULT_SECTOR_DEGREES,
                     hit(skill.damage("opening_damage"), Kind.PHYSICAL, true), outcomes);
         } else if (action.stageIndex() == 3 && action.actionPhase() == ActionPhase.ACTIVE) {
-            int activeTicks = skill.integerList("active_ticks").get(action.stageIndex());
+            int activeTicks = activeTicks(action);
             int tempestHits = Math.min(activeTicks, Math.max(1, skill.integer("tempest_hits")));
             for (int index = 0; index < tempestHits; index++) {
                 if (action.phaseTick() != index * activeTicks / tempestHits) {
@@ -353,7 +416,7 @@ public final class PromisedConsortActionExecutor {
             return;
         }
         pullTargets(skill.number("pull_radius"), skill.number("max_pull_per_tick"));
-        if (action.phaseTick() == skill.integer("active_ticks") - 1) {
+        if (action.phaseTick() == activeTicks(action) - 1) {
             if (action.phase() == PromisedConsortPhase.PHASE_TWO) {
                 host.spawnVisualClone(action, 0, 2);
                 host.spawnVisualClone(action, 1, 2);
@@ -386,14 +449,14 @@ public final class PromisedConsortActionExecutor {
         boolean cloneSequence = action.phase() == PromisedConsortPhase.PHASE_TWO;
         if (cloneSequence
                 && action.actionPhase() == ActionPhase.ACTIVE
-                && action.phaseTick() == Math.max(0, skill.integer("active_ticks") - 5)) {
+                && action.phaseTick() == Math.max(0, activeTicks(action) - ticks(skill, 5))) {
             lockTarget("clone_meteor_0");
         }
         if (cloneSequence
                 && action.actionPhase() == ActionPhase.RECOVERY
-                && action.phaseTick() % 5 == 0
-                && action.phaseTick() <= 15) {
-            int clone = action.phaseTick() / 5;
+                && action.phaseTick() % ticks(skill, 5) == 0
+                && action.phaseTick() <= ticks(skill, 15)) {
+            int clone = action.phaseTick() / ticks(skill, 5);
             String pointId = "clone_meteor_" + clone;
             Vec3 point = lockedPoints.getOrDefault(pointId, host.boss().position());
             host.spawnVisualClone(action, clone, 4);
@@ -407,7 +470,7 @@ public final class PromisedConsortActionExecutor {
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
-        int interval = Math.max(1, skill.integer("active_ticks") / skill.integer("projectile_count"));
+        int interval = Math.max(1, activeTicks(action) / skill.integer("projectile_count"));
         if (action.phaseTick() % interval == 0
                 && action.phaseTick() / interval < skill.integer("projectile_count")) {
             host.spawnGravityRock(
@@ -443,7 +506,7 @@ public final class PromisedConsortActionExecutor {
             hitSector(action, "sword", skill.number("sword_range"), 140.0,
                     hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
         }
-        if (activeTick(action, 2)) {
+        if (activeTick(action, ticks(skill, 2))) {
             hitCapsule(action, "debris", skill.number("debris_range"), 2.0,
                     hit(skill.damage("debris_damage"), Kind.PHYSICAL, false), outcomes);
         }
@@ -456,12 +519,12 @@ public final class PromisedConsortActionExecutor {
     ) {
         if (action.actionPhase() == ActionPhase.ACTIVE) {
             moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK,
-                    skill.number("range") / skill.integer("active_ticks")));
+                    skill.number("range") / activeTicks(action)));
             if (action.phaseTick() == 0) {
                 hitCapsule(action, "spin", skill.number("range"), skill.number("width"),
                         hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
             }
-            if (action.phaseTick() == skill.integer("active_ticks") - 1) {
+            if (action.phaseTick() == activeTicks(action) - 1) {
                 hitCircle(action, "slam", 3.5,
                         hit(skill.damage("slam_damage"), Kind.PHYSICAL, true), outcomes);
                 scheduleSwordEcho(action, "slam", 3.5);
@@ -486,13 +549,13 @@ public final class PromisedConsortActionExecutor {
         for (int index = 0; index < skill.integer("afterglow_count"); index++) {
             double angle = randomUnit(action.seed(), index) * Math.PI * 2.0;
             double radius = randomUnit(action.seed() ^ 0x9E3779B97F4A7C15L, index)
-                    * skill.number("radius");
+                    * activeTuning.scaleRange(skill.number("radius"));
             Vec3 point = center.add(Math.cos(angle) * radius, 0.0, Math.sin(angle) * radius);
-            int activeDelay = skill.integer("active_ticks") + index + 4;
+            int activeDelay = activeTicks(action) + ticks(skill, index + 4);
             scheduleHazardAt(
                     action,
                     "afterglow_" + index,
-                    new Circle(point.x, point.z, 1.0),
+                    new Circle(point.x, point.z, activeTuning.scaleRange(1.0)),
                     point.y,
                     2.5,
                     activeDelay,
@@ -510,7 +573,7 @@ public final class PromisedConsortActionExecutor {
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
-        double progress = (action.phaseTick() + 1.0) / skill.integer("active_ticks");
+        double progress = (action.phaseTick() + 1.0) / activeTicks(action);
         double outer = skill.number("inner_radius")
                 + (skill.number("outer_radius") - skill.number("inner_radius")) * progress;
         double inner = Math.max(0.0, outer - 1.5);
@@ -527,14 +590,14 @@ public final class PromisedConsortActionExecutor {
             return;
         }
         int cloneCount = skill.integer("clone_count");
-        int interval = Math.max(1, skill.integer("active_ticks") / (cloneCount + 1));
+        int interval = Math.max(1, activeTicks(action) / (cloneCount + 1));
         if (action.phaseTick() % interval == 0 && action.phaseTick() / interval < cloneCount) {
             int clone = action.phaseTick() / interval;
             host.spawnVisualClone(action, clone, cloneCount);
             hitCapsule(action, "clone_" + clone, 10.0, 1.6,
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
         }
-        if (action.phaseTick() == skill.integer("active_ticks") - 1) {
+        if (action.phaseTick() == activeTicks(action) - 1) {
             hitCapsule(action, "body", 8.0, 2.0,
                     hit(skill.damage("body_damage"), Kind.PHYSICAL, true), outcomes);
         }
@@ -549,18 +612,21 @@ public final class PromisedConsortActionExecutor {
             return;
         }
         moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK,
-                skill.number("range") / skill.integer("active_ticks")));
-        if (action.phaseTick() % 4 == 0 && action.phaseTick() < 16) {
-            int clone = action.phaseTick() / 4;
+                skill.number("range") / activeTicks(action)));
+        int cloneInterval = ticks(skill, 4);
+        if (action.phaseTick() % cloneInterval == 0
+                && action.phaseTick() < ticks(skill, 16)) {
+            int clone = action.phaseTick() / cloneInterval;
             host.spawnVisualClone(action, clone, 4);
             hitCapsule(action, "clone_" + clone, skill.number("range"), skill.number("width"),
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
         }
-        if (action.phaseTick() == skill.integer("active_ticks") - 1) {
+        if (action.phaseTick() == activeTicks(action) - 1) {
             hitCapsule(action, "body", skill.number("range"), skill.number("width"),
                     hit(skill.damage("body_damage"), Kind.PHYSICAL, true), outcomes);
             scheduleHazard(action, "trail", rectangle(skill.number("range"), skill.number("width")),
-                    2, 3, hit(skill.damage("trail_damage"), Kind.HOLY, false));
+                    ticks(skill, 2), ticks(skill, 3),
+                    hit(skill.damage("trail_damage"), Kind.HOLY, false));
         }
     }
 
@@ -572,16 +638,16 @@ public final class PromisedConsortActionExecutor {
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
-        moveSide(6.0 / skill.integer("active_ticks"));
+        moveSide(6.0 / activeTicks(action));
         int cloneCount = skill.integer("clone_count");
-        int interval = Math.max(1, skill.integer("active_ticks") / (cloneCount + 1));
+        int interval = Math.max(1, activeTicks(action) / (cloneCount + 1));
         if (action.phaseTick() % interval == 0 && action.phaseTick() / interval < cloneCount) {
             int clone = action.phaseTick() / interval;
             host.spawnVisualClone(action, clone, cloneCount);
             hitCapsule(action, "clone_" + clone, 9.0, 1.6,
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
         }
-        if (action.phaseTick() == skill.integer("active_ticks") - 1) {
+        if (action.phaseTick() == activeTicks(action) - 1) {
             hitSector(action, "body", 4.0, 140.0,
                     hit(skill.damage("body_damage"), Kind.PHYSICAL, true), outcomes);
         }
@@ -596,27 +662,29 @@ public final class PromisedConsortActionExecutor {
             return;
         }
         int tick = action.phaseTick();
-        if (tick == 0 || tick == 8) {
+        if (tick == 0 || tick == ticks(skill, 8)) {
             hitSector(action, "opening_" + tick, 4.2, 140.0,
                     hit(skill.damage("opening_damage"), Kind.PHYSICAL, true), outcomes);
-        } else if (tick == 18 || tick == 28) {
+        } else if (tick == ticks(skill, 18) || tick == ticks(skill, 28)) {
             hitAnnulus(action, "spin_" + tick, 0.9, 4.5,
                     hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
             scheduleSwordEcho(action, "spin_" + tick, 4.5);
-        } else if (tick == 42) {
+        } else if (tick == ticks(skill, 42)) {
             hitCircle(action, "finisher", 5.0,
                     hit(skill.damage("finisher_damage"), Kind.PHYSICAL, true), outcomes);
             scheduleSwordEcho(action, "finisher", 5.0);
-        } else if (tick == 44 || tick == 47) {
-            int clone = tick == 44 ? 0 : 1;
+        } else if (tick == ticks(skill, 44) || tick == ticks(skill, 47)) {
+            int clone = tick == ticks(skill, 44) ? 0 : 1;
             host.spawnVisualClone(action, clone, 2);
-            Vec2 diagonal = rotate(facing(), tick == 44 ? 45.0 : -45.0);
+            Vec2 diagonal = rotate(facing(), tick == ticks(skill, 44) ? 45.0 : -45.0);
             hitCapsuleFacing(action, "clone_return_" + clone, host.boss().position(),
                 diagonal, 10.0, 1.6,
                 hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
-        } else if (tick == 50) {
+        } else if (tick == ticks(skill, 50)) {
             scheduleHazard(action, "holy_ring", new Annulus(
-                    new Vec2(host.boss().getX(), host.boss().getZ()), 2.0, 7.0),
+                    new Vec2(host.boss().getX(), host.boss().getZ()),
+                    activeTuning.scaleRange(2.0),
+                    activeTuning.scaleRange(7.0)),
                 0, 1, hit(skill.damage("holy_ring_damage"), Kind.HOLY, false));
         }
     }
@@ -637,7 +705,7 @@ public final class PromisedConsortActionExecutor {
         for (int index = 0; index < 4; index++) {
             scheduleHazard(action, "light_" + index,
                     rectangle(skill.number("radius") + 2.0 + index * 1.5, 0.8),
-                    3 + index * 2, 4 + index * 2,
+                    ticks(skill, 3 + index * 2), ticks(skill, 4 + index * 2),
                     hit(skill.damage("light_damage"), Kind.HOLY, false));
         }
     }
@@ -647,12 +715,13 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
-        if (action.actionTick() == 91) {
+        if (action.actionTick() == ticks(skill, 91)) {
             lockPredictedPoint("meteor", skill.integer("prediction_sample_ticks"),
                     skill.integer("prediction_lead_ticks"),
-                    config.arena().logicalRadius() - skill.number("outer_radius"));
+                config.arena().logicalRadius()
+                    - activeTuning.scaleRange(skill.number("outer_radius")));
         }
-        if (action.actionTick() == 121 && once(action, "impact")) {
+        if (action.actionTick() == ticks(skill, 121) && once(action, "impact")) {
             Vec3 point = lockedPoints.getOrDefault("meteor", host.combatCenter());
             hitRadialBands(
                 action,
@@ -664,9 +733,12 @@ public final class PromisedConsortActionExecutor {
                 outcomes
             );
             scheduleHazardAt(action, "aftershock",
-                    new Annulus(new Vec2(point.x, point.z), skill.number("outer_radius"),
-                            skill.number("outer_radius") + 2.0),
-                    point.y, 3.0, 2, 3,
+                    new Annulus(
+                        new Vec2(point.x, point.z),
+                        activeTuning.scaleRange(skill.number("outer_radius")),
+                        activeTuning.scaleRange(skill.number("outer_radius") + 2.0)
+                    ),
+                    point.y, 3.0, ticks(skill, 2), ticks(skill, 3),
                     hit(skill.damage("aftershock_damage"), Kind.HOLY, false));
         }
     }
@@ -741,15 +813,32 @@ public final class PromisedConsortActionExecutor {
             return;
         }
         long now = host.gameTime();
+        var announced = announced(id);
+        long startTick = now;
+        long activeTick = now + Math.max(1, activeDelay);
+        long endTick = activeTick + Math.max(1, expiryDelay - activeDelay);
+        if (announced != null) {
+            shape = announced.shape();
+            baseY = announced.baseY();
+            startTick = announced.startTick();
+            activeTick = announced.activeTick();
+            endTick = announced.endTick();
+        }
+        if (startTick >= activeTick) {
+            long duration = Math.max(1, endTick - activeTick);
+            startTick = now;
+            activeTick = now + Math.max(1, config.instantGuard().defaultCueLeadTicks());
+            endTick = activeTick + duration;
+        }
         hazards.put(hazardId, new Hazard(
                 hazardId,
                 action.sequence(),
                 shape,
                 baseY,
                 height,
-                now,
-                now + activeDelay,
-                now + Math.max(activeDelay + 1L, expiryDelay),
+                startTick,
+                activeTick,
+                Math.max(activeTick + 1, endTick),
                 hit,
                 new java.util.HashSet<>()
         ));
@@ -789,6 +878,14 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec outerHit,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        var core = announced("core");
+        var outer = announced("outer");
+        if (core == null || outer == null || core.startTick() >= core.activeTick()) return;
+        Circle coreShape = (Circle) core.shape();
+        Annulus outerShape = (Annulus) outer.shape();
+        center = new Vec3(coreShape.center().x(), core.baseY(), coreShape.center().z());
+        coreRadius = coreShape.radius();
+        outerRadius = outerShape.outerRadius();
         StrikeVolume volume = volume(
                 new Circle(center.x, center.z, outerRadius),
                 center.y,
@@ -817,13 +914,15 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec hit,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        double echoRange = range;
+        range = activeTuning.scaleRange(range);
         Sector shape = new Sector(
                 host.boss().getX(), host.boss().getZ(),
                 facing().x(), facing().z(), range, Math.toRadians(degrees * 0.5)
         );
         hit(action.sequence(), id, volume(shape, host.boss().getY(), host.boss().getBbHeight()),
                 hit, outcomes);
-        scheduleSwordEcho(action, id, range);
+        scheduleSwordEcho(action, id, echoRange);
     }
 
     private void hitCapsule(
@@ -834,12 +933,15 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec hit,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        double echoRange = length;
+        length = activeTuning.scaleRange(length);
+        width = activeTuning.scaleRange(width);
         Vec2 start = new Vec2(host.boss().getX(), host.boss().getZ());
         Vec2 end = start.add(facing().scale(length));
         hit(action.sequence(), id, volume(new Capsule(start, end, width * 0.5),
                 host.boss().getY(), host.boss().getBbHeight()), hit, outcomes);
         if (hit.instantGuardEligible()) {
-            scheduleSwordEcho(action, id, length);
+            scheduleSwordEcho(action, id, echoRange);
         }
     }
 
@@ -861,6 +963,7 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec hit,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        radius = activeTuning.scaleRange(radius);
         hit(action.sequence(), id, volume(new Circle(center.x, center.z, radius),
                 center.y, host.boss().getBbHeight()), hit, outcomes);
     }
@@ -873,6 +976,7 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec hit,
             List<PromisedConsortHitOutcome> outcomes
         ) {
+        radius = activeTuning.scaleRange(radius);
         StrikeVolume volume = volume(
             new Circle(host.boss().getX(), host.boss().getZ(), radius),
             host.boss().getY(),
@@ -912,6 +1016,8 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec hit,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        inner = activeTuning.scaleRange(inner);
+        outer = activeTuning.scaleRange(outer);
         hit(action.sequence(), id, volume(new Annulus(new Vec2(center.x, center.z), inner, outer),
                 center.y, host.boss().getBbHeight()), hit, outcomes);
     }
@@ -938,6 +1044,8 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortHitSpec hit,
             List<PromisedConsortHitOutcome> outcomes
         ) {
+        length = activeTuning.scaleRange(length);
+        width = activeTuning.scaleRange(width);
         Vec2 half = direction.normalizedOr(new Vec2(0.0, 1.0)).scale(length * 0.5);
         Vec2 origin = new Vec2(center.x, center.z);
         hit(action.sequence(), id, volume(
@@ -965,6 +1073,11 @@ public final class PromisedConsortActionExecutor {
             Predicate<LivingEntity> targetFilter,
             List<PromisedConsortHitOutcome> outcomes
         ) {
+            var announced = announced(occurrence);
+            if (announced == null || announced.startTick() >= announced.activeTick()
+                || host.gameTime() < announced.activeTick() || host.gameTime() >= announced.endTick()) return;
+            double height = volume.maximumY() - volume.minimumY() - DEFAULT_HEIGHT_MARGIN * 2;
+            volume = volume(announced.shape(), announced.baseY(), height);
         PromisedConsortHitSpec resolvedSpec = new PromisedConsortHitSpec(
             occurrence,
             spec.damage(),
@@ -1008,6 +1121,7 @@ public final class PromisedConsortActionExecutor {
     }
 
     private void pullTargets(double radius, double maximumStep) {
+        radius = activeTuning.scaleRange(radius);
         StrikeVolume volume = volume(
                 new Circle(host.boss().getX(), host.boss().getZ(), radius),
                 host.boss().getY(),
@@ -1031,6 +1145,7 @@ public final class PromisedConsortActionExecutor {
     }
 
     private void moveTowardLocked(String pointId, double maximumTravel) {
+        maximumTravel = activeTuning.scaleRange(maximumTravel);
         Vec3 target = lockedPoints.get(pointId);
         if (target == null) {
             return;
@@ -1047,10 +1162,15 @@ public final class PromisedConsortActionExecutor {
     }
 
     private void moveForward(double distance) {
+        distance = Math.min(
+                MAX_CONTROLLED_MOVEMENT_PER_TICK,
+                activeTuning.scaleRange(distance)
+        );
         host.moveControlled(new Vec3(facing().x() * distance, 0.0, facing().z() * distance));
     }
 
     private void moveSide(double distance) {
+        distance = activeTuning.scaleRange(distance);
         Vec2 facing = facing();
         double checked = Math.min(Math.abs(distance), MAX_CONTROLLED_MOVEMENT_PER_TICK);
         host.moveControlled(new Vec3(-facing.z() * checked, 0.0, facing.x() * checked));
@@ -1082,8 +1202,8 @@ public final class PromisedConsortActionExecutor {
         return new DirectionalRectangle(
                 new Vec2(host.boss().getX(), host.boss().getZ()),
                 facing(),
-                length,
-                width
+            activeTuning.scaleRange(length),
+            activeTuning.scaleRange(width)
         );
     }
 

@@ -1,0 +1,18 @@
+{
+  "bvid": "BV13e4y127eg",
+  "url": "https://www.bilibili.com/video/BV13e4y127eg/",
+  "title": "全BOSS招式展示：半神篇 - 7.“女武神”玛莲尼亚【艾尔登法环】",
+  "author": "苍星化羽",
+  "cid": 872933521,
+  "video_duration_seconds": 278,
+  "quality": 16,
+  "start_seconds": 92,
+  "span_seconds": 11,
+  "sample_interval_seconds": 0.125,
+  "columns": 6,
+  "rows": 15,
+  "image": "waterfowl_detail.jpg",
+  "timestamp_labels": "relative_to_selected_segment_start",
+  "purpose": "internal_motion_analysis_not_runtime_assets",
+  "captured_at": "2026-09-09T19:26:30.266Z"
+}

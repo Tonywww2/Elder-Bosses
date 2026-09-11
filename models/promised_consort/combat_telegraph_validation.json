@@ -1,0 +1,52 @@
+{
+  "revision": "telegraph_blade_meteor_v1",
+  "model_revision": "reference_lion_v3_unchanged",
+  "status": "compiled_and_geometry_checked_awaiting_in_world_acceptance",
+  "scope": [
+    "Server-announced locked shapes shared with area damage queries",
+    "Advance warnings for composite attacks, persistent hazards and transition impact",
+    "Brighter weapon-following blade core and three-tick trail",
+    "Meteor prelanding shader effects and actual-landing damage gate"
+  ],
+  "user_confirmed_exception": {
+    "gravity_rocks": "Keep homing, destructible projectiles and entity collision; announce launch only",
+    "launch_direction_is_damage_boundary": false
+  },
+  "compilation": {
+    "forge_1_20_1_compile_and_resources": "passed",
+    "neoforge_1_21_1_compile_and_resources": "passed",
+    "warnings": "Existing loader API deprecation warnings"
+  },
+  "focused_checks": {
+    "runner": "tests/run_attack_plan_check.js",
+    "assertions": 242892,
+    "strikes": 1932,
+    "actions": 22,
+    "phases": 2,
+    "cast_speeds": [1.0, 1.35, 1.5, 2.0],
+    "range_scales": [0.5, 1.0, 1.8],
+    "covers": [
+      "Advance warning and ordered timing",
+      "Indicator projection roundtrip and sampled horizontal containment",
+      "Frozen geometry relocation",
+      "Centered clone capsules and gravity spikes",
+      "Actual spiral movement steps, excluding windup",
+      "Scaled clone event counts",
+      "Meteor core/outer bands and aftershock rounding"
+    ],
+    "limitations": "Synthetic configuration and isolated geometry; not an in-world damage, packet-latency or shader rendering test"
+  },
+  "in_world": {
+    "forge_1_20_1": "pending",
+    "neoforge_1_21_1": "pending"
+  },
+  "remaining_verification": [
+    "Actual in-world advance warning and hit boundaries",
+    "Blade visibility and weapon tracking",
+    "Meteor prelanding visuals and ordinary damage rejection",
+    "Repeat and save/resume behavior in world",
+    "Multiplayer, low TPS and third-party shader packs"
+  ],
+  "historical_model_acceptance": "runtime_validation.json; does not certify this revision",
+  "video_recording": "Previously cancelled by user; not retried"
+}

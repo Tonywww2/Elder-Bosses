@@ -1,0 +1,41 @@
+{
+  "revision": "reference_lion_v3",
+  "geometry_sha256": "1c16d69dc2e223cea325798ef4bf7cc127f207146760c4c979e204b3089ca4a0",
+  "animations_sha256": "587cbad39b4c7dcffc99dc0034baee89ee17f3367afab6150848b9169bae2700",
+  "status": "representative_views_reviewed; user_in_world_confirmation_recorded_separately",
+  "historical_review": "visual_review.json.pre-v2",
+  "generated_stills": 25,
+  "generated_sequences": 43,
+  "inspected": [
+    "left_combo_cross_sequence",
+    "miquella_four_arms",
+    "live_Blockbench_contact_pose"
+  ],
+  "repairs": [
+    "More complete brow, cheek, muzzle and jaw mask coverage",
+    "Forward-inclined off-center Miquella with compact shoulder embrace",
+    "Curved tapered hair and continuous black-metal blade surfaces",
+    "Natural two-bone arm solutions at key poses instead of wrist error transferred to forearm",
+    "Quaternion interpolation without per-sample IK branch changes",
+    "Retimed abbreviated raises and recoveries while preserving authored hit times",
+    "Server maps cast-speed-adjusted stage and event times to authored animation",
+    "Short pose transitions finish before active attacks",
+    "Shader blade trails use actual rendered blade-root and blade-tip matrices"
+  ],
+  "rendered_checks": {
+    "gait_samples": 72,
+    "forward_strike_samples": 3,
+    "face_rays": 765,
+    "miquella_hand_samples": 1176,
+    "grip_samples": 596,
+    "elbow_samples": 596
+  },
+  "numeric_angle_increase_is_not_acceptance": true,
+  "in_world_acceptance": "runtime_validation.json",
+  "recording": "cancelled_by_user; not retried",
+  "not_exhaustive": [
+    "Every intermediate animation frame",
+    "All terrain and camera configurations",
+    "Every attack hit volume versus the complete swept blade mesh"
+  ]
+}

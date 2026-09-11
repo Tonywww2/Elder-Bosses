@@ -18,6 +18,7 @@ public record MaleniaCombatSnapshotPacket(
         int actionTick,
         long actionStartGameTime,
         long seed,
+        double actionRangeMultiplier,
         int targetEntityId,
         float phaseHealth,
         float phaseMaxHealth,
@@ -60,6 +61,9 @@ public record MaleniaCombatSnapshotPacket(
         if (!hasAction && (actionStartGameTime != 0L || seed != 0L)) {
             throw new IllegalArgumentException("an empty action must use zero time and seed");
         }
+        if (!Double.isFinite(actionRangeMultiplier) || actionRangeMultiplier <= 0.0) {
+            throw new IllegalArgumentException("actionRangeMultiplier must be finite and positive");
+        }
         if (targetEntityId < -1) {
             throw new IllegalArgumentException("targetEntityId must be -1 or non-negative");
         }
@@ -88,6 +92,7 @@ public record MaleniaCombatSnapshotPacket(
         buffer.writeVarInt(actionTick + 1);
         buffer.writeLong(actionStartGameTime);
         buffer.writeLong(seed);
+        buffer.writeDouble(actionRangeMultiplier);
         buffer.writeInt(targetEntityId);
         buffer.writeFloat(phaseHealth);
         buffer.writeFloat(phaseMaxHealth);
@@ -111,6 +116,7 @@ public record MaleniaCombatSnapshotPacket(
         int actionTick = buffer.readVarInt() - 1;
         long actionStartGameTime = buffer.readLong();
         long seed = buffer.readLong();
+        double actionRangeMultiplier = buffer.readDouble();
         int targetEntityId = buffer.readInt();
         float phaseHealth = buffer.readFloat();
         float phaseMaxHealth = buffer.readFloat();
@@ -131,6 +137,7 @@ public record MaleniaCombatSnapshotPacket(
                 actionTick,
                 actionStartGameTime,
                 seed,
+                actionRangeMultiplier,
                 targetEntityId,
                 phaseHealth,
                 phaseMaxHealth,

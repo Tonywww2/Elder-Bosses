@@ -15,6 +15,7 @@ public record BossCombatSnapshotPacket(
         int actionTick,
         long actionStartGameTime,
         long actionSeed,
+        double actionRangeMultiplier,
         int targetEntityId,
         float health,
         float maximumHealth,
@@ -35,6 +36,9 @@ public record BossCombatSnapshotPacket(
                 || actionStartGameTime < 0L || dialogueStartTick < 0L
                 || subtitleDurationTicks < 0 || subtitleDurationTicks > NetworkLimits.MAX_TICKS) {
             throw new IllegalArgumentException("invalid boss snapshot counters");
+        }
+        if (!Double.isFinite(actionRangeMultiplier) || actionRangeMultiplier <= 0.0) {
+            throw new IllegalArgumentException("actionRangeMultiplier must be finite and positive");
         }
         requireText(bossId, "bossId");
         requireText(phase, "phase");
@@ -63,6 +67,7 @@ public record BossCombatSnapshotPacket(
         buffer.writeVarInt(actionTick + 1);
         buffer.writeLong(actionStartGameTime);
         buffer.writeLong(actionSeed);
+        buffer.writeDouble(actionRangeMultiplier);
         buffer.writeInt(targetEntityId);
         buffer.writeFloat(health);
         buffer.writeFloat(maximumHealth);
@@ -88,6 +93,7 @@ public record BossCombatSnapshotPacket(
                 buffer.readVarInt() - 1,
                 buffer.readLong(),
                 buffer.readLong(),
+                buffer.readDouble(),
                 buffer.readInt(),
                 buffer.readFloat(),
                 buffer.readFloat(),

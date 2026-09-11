@@ -1,9 +1,14 @@
 package com.tonywww.elder_bosses.boss.malenia.config;
 
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
+import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId;
+import com.tonywww.elder_bosses.combat.action.SkillTuning;
 import com.tonywww.elder_bosses.network.NetworkLimits;
 
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public record MaleniaSkillConfigSnapshot(
@@ -22,7 +27,8 @@ public record MaleniaSkillConfigSnapshot(
         ScarletPlunge scarletPlunge,
         FlyingSlash flyingSlash,
         ScarletPhantoms scarletPhantoms,
-        WingedSweep wingedSweep
+        WingedSweep wingedSweep,
+        Map<MaleniaActionId, SkillTuning> tunings
 ) {
     public MaleniaSkillConfigSnapshot {
         Objects.requireNonNull(phaseTwoRot, "phaseTwoRot");
@@ -41,6 +47,26 @@ public record MaleniaSkillConfigSnapshot(
         Objects.requireNonNull(flyingSlash, "flyingSlash");
         Objects.requireNonNull(scarletPhantoms, "scarletPhantoms");
         Objects.requireNonNull(wingedSweep, "wingedSweep");
+        Objects.requireNonNull(tunings, "tunings");
+        EnumMap<MaleniaActionId, SkillTuning> tuningCopy =
+                new EnumMap<>(MaleniaActionId.class);
+        tuningCopy.putAll(tunings);
+        for (MaleniaActionId actionId : MaleniaActionId.values()) {
+            Objects.requireNonNull(tuningCopy.get(actionId), "missing tuning for " + actionId);
+        }
+        tunings = Collections.unmodifiableMap(tuningCopy);
+    }
+
+    public SkillTuning tuning(MaleniaActionId actionId) {
+        return tunings.get(Objects.requireNonNull(actionId, "actionId"));
+    }
+
+    public static Map<MaleniaActionId, SkillTuning> neutralTunings() {
+        EnumMap<MaleniaActionId, SkillTuning> result = new EnumMap<>(MaleniaActionId.class);
+        for (MaleniaActionId actionId : MaleniaActionId.values()) {
+            result.put(actionId, SkillTuning.NEUTRAL);
+        }
+        return result;
     }
 
     public enum HealProfile {

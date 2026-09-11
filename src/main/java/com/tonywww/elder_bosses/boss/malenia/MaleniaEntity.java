@@ -25,6 +25,7 @@ import com.tonywww.elder_bosses.boss.malenia.runtime.MaleniaCooldowns;
 import com.tonywww.elder_bosses.boss.malenia.selection.MaleniaSkillSelector;
 import com.tonywww.elder_bosses.boss.malenia.server.HitOutcome;
 import com.tonywww.elder_bosses.boss.malenia.server.MaleniaIntentExecutor;
+import com.tonywww.elder_bosses.boss.malenia.sync.MaleniaAnimationTimeline;
 import com.tonywww.elder_bosses.boss.malenia.sync.MaleniaIndicatorPacketMapper;
 import com.tonywww.elder_bosses.boss.malenia.sync.MaleniaSnapshotChangeDetector;
 import com.tonywww.elder_bosses.boss.malenia.sync.MaleniaSyncSnapshotFactory;
@@ -35,6 +36,7 @@ import com.tonywww.elder_bosses.combat.guard.InstantGuardTracker;
 import com.tonywww.elder_bosses.combat.state.HealingBudget;
 import com.tonywww.elder_bosses.combat.state.PhaseHealthPool;
 import com.tonywww.elder_bosses.combat.state.StaggerTracker;
+import com.tonywww.elder_bosses.client.render.MaleniaAnimationClock;
 import com.tonywww.elder_bosses.dialogue.DialogueEvent;
 import com.tonywww.elder_bosses.dialogue.MaleniaDialogueController;
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
@@ -43,6 +45,7 @@ import com.tonywww.elder_bosses.player.PlayerRotService;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.combat.PlatformShieldDurability;
 import com.tonywww.elder_bosses.platforms.entity.PlatformMonster;
+import com.tonywww.elder_bosses.platforms.client.PlatformMaleniaAnimationController;
 import com.tonywww.elder_bosses.platforms.network.PlatformNetwork;
 import com.tonywww.elder_bosses.platforms.registry.ModAttributes;
 import com.tonywww.elder_bosses.platforms.registry.ModSoundEvents;
@@ -78,6 +81,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.util.GeckoLibUtil;
+//? if forge {
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+//?} else {
+/*import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+*///?}
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -99,6 +111,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class MaleniaEntity extends PlatformMonster implements
+    GeoEntity,
     MaleniaCombatController.Host,
     MaleniaSyncSnapshotFactory.Host {
     private static final String ENCOUNTER_CONFIG_TAG = "EncounterConfig";
@@ -164,6 +177,12 @@ public final class MaleniaEntity extends PlatformMonster implements
             SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTION_TICK =
             SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.INT);
+        private static final EntityDataAccessor<String> ANIMATION_CLIP =
+            SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.STRING);
+        private static final EntityDataAccessor<Float> ANIMATION_TICK =
+            SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.FLOAT);
+        private static final EntityDataAccessor<Float> ANIMATION_NEXT_TICK =
+            SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Long> ACTION_SEED =
             SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<Integer> TARGET_ENTITY_ID =
@@ -182,6 +201,11 @@ public final class MaleniaEntity extends PlatformMonster implements
             SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.LONG);
 
     private final ServerBossEvent bossEvent;
+    private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
+    private final MaleniaAnimationClock presentationClock = new MaleniaAnimationClock();
+    private float animationPartialTick;
+    private int animationGrabCaptureTick = -1;
+    private int animationGrabReleaseTick = -1;
     private final MaleniaSnapshotChangeDetector snapshotChangeDetector =
             new MaleniaSnapshotChangeDetector();
     private final Map<UUID, GuardState> guardStates = new HashMap<>();
@@ -257,6 +281,9 @@ public final class MaleniaEntity extends PlatformMonster implements
         registrar.define(PHASE_MAX_HEALTH, 0.0F);
         registrar.define(ACTION_ID, -1);
         registrar.define(ACTION_TICK, -1);
+        registrar.define(ANIMATION_CLIP, "");
+        registrar.define(ANIMATION_TICK, 0.0F);
+        registrar.define(ANIMATION_NEXT_TICK, 0.0F);
         registrar.define(ACTION_SEED, 0L);
         registrar.define(TARGET_ENTITY_ID, -1);
         registrar.define(STAGGER, 0.0F);
@@ -463,6 +490,72 @@ public final class MaleniaEntity extends PlatformMonster implements
         return entityData.get(ACTION_TICK);
     }
 
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new PlatformMaleniaAnimationController(this));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return animationCache;
+    }
+
+    public String animationClip() {
+        String synchronizedClip = entityData.get(ANIMATION_CLIP);
+        if (!synchronizedClip.isEmpty()) {
+            return synchronizedClip;
+        }
+        if (combatState() == MaleniaCombatState.DORMANT) {
+            return "dormant";
+        }
+        return presentationClock.locomotion(locomotionCandidate(), tickCount);
+    }
+
+    private String locomotionCandidate() {
+        Vec3 movement = new Vec3(getX() - xo, 0.0, getZ() - zo);
+        double horizontalSpeed = movement.horizontalDistanceSqr();
+        if (horizontalSpeed > 0.0025 && onGround()) {
+            Vec3 forward = Vec3.directionFromRotation(0.0F, getYRot());
+            double ahead = movement.dot(forward);
+            double across = movement.x * forward.z - movement.z * forward.x;
+            if (Math.abs(across) > Math.abs(ahead) * 1.4) {
+                return across > 0 ? "strafe_left" : "strafe_right";
+            }
+            return ahead < -0.01 ? "walk_back" : horizontalSpeed > 0.05 ? "run" : "walk";
+        }
+        if (Math.abs(Mth.wrapDegrees(yBodyRot - yBodyRotO)) > 2.0F && onGround()) {
+            return Mth.wrapDegrees(yBodyRot - yBodyRotO) > 0 ? "turn_left" : "turn_right";
+        }
+        return activePhase() == MaleniaPhase.PHASE_TWO ? "idle_phase_two" : "idle_phase_one";
+    }
+
+    public boolean hasSynchronizedAnimation() {
+        return !entityData.get(ANIMATION_CLIP).isEmpty();
+    }
+
+    public double animationTime(float partialTick) {
+        return presentationClock.sample(entityData.get(ANIMATION_CLIP), actionSeed(),
+                entityData.get(ANIMATION_TICK), entityData.get(ANIMATION_NEXT_TICK), tickCount + partialTick);
+    }
+
+    public void prepareAnimationFrame(float partialTick) {
+        animationPartialTick = partialTick;
+        presentationClock.advanceGait(animationClip(), animationFrameTime(),
+                Mth.lerp(partialTick, xo, getX()), Mth.lerp(partialTick, zo, getZ()));
+    }
+
+    public double locomotionTime() {
+        return presentationClock.gaitTime(animationClip());
+    }
+
+    public double animationTime() {
+        return animationTime(animationPartialTick);
+    }
+
+    public double animationFrameTime() {
+        return tickCount + animationPartialTick;
+    }
+
     public long actionSeed() {
         return entityData.get(ACTION_SEED);
     }
@@ -541,6 +634,14 @@ public final class MaleniaEntity extends PlatformMonster implements
     @Override
     public Optional<MaleniaActionSnapshot> currentActionSnapshot() {
         return currentAction();
+    }
+
+    @Override
+    public double actionRangeMultiplier() {
+        return currentAction()
+                .filter(ignored -> skillSnapshot != null)
+                .map(action -> skillSnapshot.tuning(action.actionId()).rangeMultiplier())
+                .orElse(1.0);
     }
 
     @Override
@@ -1451,6 +1552,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     }
 
     private void syncAction(Optional<MaleniaActionSnapshot> action) {
+        syncAnimation(action);
         if (action.isEmpty()) {
             if (syncedActionSequence >= 0L) {
                 entityData.set(ACTION_ID, -1);
@@ -1471,6 +1573,96 @@ public final class MaleniaEntity extends PlatformMonster implements
         entityData.set(ACTION_SEED, snapshot.seed());
         syncedActionSequence = snapshot.sequence();
         syncedActionPhase = phase;
+    }
+
+    private void syncAnimation(Optional<MaleniaActionSnapshot> action) {
+        if (action.isEmpty()) {
+            String clip = switch (combatState()) {
+                case INTRO -> "intro";
+                case TRANSITION -> "transition";
+                case STUNNED -> "stunned";
+                case DEFEATED -> "defeated";
+                default -> "";
+            };
+            double speed = combatState() == MaleniaCombatState.STUNNED
+                    ? 70.0 / Math.max(1, currentConfig().stagger().stunTicks()) : 1.0;
+            setAnimationSample(clip, stateTicks * speed, (stateTicks + 1) * speed);
+            return;
+        }
+        MaleniaActionSnapshot snapshot = action.orElseThrow();
+        if (snapshot.sequence() != syncedActionSequence) {
+            animationGrabCaptureTick = -1;
+            animationGrabReleaseTick = -1;
+        }
+        MaleniaActionId id = snapshot.actionId();
+        var timeline = actionCatalog.get(id).timeline();
+        int windup = timeline.stages().get(0).windupTicks();
+        int activeEnd = windup + timeline.stages().get(0).activeTicks();
+        Map<Integer, Integer> landmarks = new HashMap<>();
+        String clip = id.serializedName();
+        switch (id) {
+            case RAPID_SLASHES -> {
+                landmarks.put(windup + 2, 16);
+                landmarks.put(windup + 4, 18);
+                landmarks.put(windup + 4 + Math.max(8, skillSnapshot.rapidSlashes().finisherDelayTicks()), 26);
+            }
+            case WATERFOWL_DANCE -> {
+                List<Integer> locks = skillSnapshot.waterfowlDance().burstLockTicks();
+                int[] authoredLocks = {22, 46, 62, 78};
+                for (int index = 0; index < 4; index++) {
+                    landmarks.put(locks.get(index), authoredLocks[index]);
+                    if (index > 0) {
+                        landmarks.put(locks.get(index) + 4, authoredLocks[index] + 4);
+                    }
+                }
+            }
+            case SCARLET_AEONIA -> {
+                landmarks.put(skillSnapshot.scarletAeonia().targetLockTick(), 26);
+                landmarks.put(windup + 1, 43);
+                landmarks.put(windup + 7, 49);
+                landmarks.put(windup + 16, 58);
+            }
+            case SCARLET_PLUNGE -> landmarks.put(windup + (activeEnd - windup) / 2, 30);
+            case SCARLET_PHANTOMS -> landmarks.put(
+                    windup + skillSnapshot.scarletPhantoms().phantomCount()
+                            * skillSnapshot.scarletPhantoms().phantomIntervalTicks(), 76);
+            case UPWARD_COMBO -> landmarks.put(
+                    timeline.totalTicks() - timeline.stages().get(1).recoveryTicks() - 1, 48);
+            case GRAB_IMPALE -> {
+                boolean holding = intentExecutor != null && intentExecutor.grabbedPlayerId().isPresent();
+                if (holding && animationGrabCaptureTick < 0) {
+                    animationGrabCaptureTick = snapshot.actionTick();
+                }
+                if (!holding && animationGrabCaptureTick >= 0
+                        && snapshot.actionTick() < animationGrabCaptureTick + 30
+                        && animationGrabReleaseTick < 0) {
+                    animationGrabReleaseTick = snapshot.actionTick();
+                }
+                if (animationGrabReleaseTick >= 0) {
+                    setAnimationSample("grab_cancel", snapshot.actionTick() - animationGrabReleaseTick,
+                            snapshot.actionTick() - animationGrabReleaseTick + 1);
+                    return;
+                }
+                if (animationGrabCaptureTick < 0 && snapshot.actionTick() >= activeEnd) {
+                    clip = "grab_miss";
+                } else if (animationGrabCaptureTick >= 0) {
+                    landmarks.put(animationGrabCaptureTick, 24);
+                    landmarks.put(animationGrabCaptureTick + 20, 44);
+                    landmarks.put(animationGrabCaptureTick + 30, 54);
+                }
+            }
+            default -> {
+            }
+        }
+        double current = MaleniaAnimationTimeline.sample(snapshot.actionTick(), id, timeline, landmarks);
+        double next = MaleniaAnimationTimeline.sample(snapshot.actionTick() + 1, id, timeline, landmarks);
+        setAnimationSample(clip, current, next);
+    }
+
+    private void setAnimationSample(String clip, double current, double next) {
+        entityData.set(ANIMATION_CLIP, clip);
+        entityData.set(ANIMATION_TICK, (float) current);
+        entityData.set(ANIMATION_NEXT_TICK, (float) next);
     }
 
     private void syncStagger() {
@@ -1820,6 +2012,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 snapshot.actionTick(),
                 snapshot.actionStartGameTime(),
                 snapshot.seed(),
+                snapshot.actionRangeMultiplier(),
                 snapshot.targetEntityId(),
                 snapshot.phaseHealth(),
                 snapshot.phaseMaxHealth(),

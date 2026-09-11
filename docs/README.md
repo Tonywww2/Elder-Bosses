@@ -13,6 +13,7 @@
 
 ### 约定之王
 
+- [GeckoLib 模型与动画工程](../models/promised_consort/README.md)
 - [现阶段实装计划](implementation/promised-consort-plan.md)
 - [可实现战斗规格](bosses/promised-consort-radahn.md)
 - [美术制作规范](art/promised-consort-radahn-art-bible.md)
@@ -21,6 +22,7 @@
 
 ### 腐败女神（马莲尼亚）
 
+- [GeckoLib 模型与动画工程](../models/malenia/README.md)
 - [可实现战斗规格](bosses/malenia-blade-of-miquella.md)
 - [美术制作规范](art/malenia-art-bible.md)
 - [竞技场 NBT 结构规范](arenas/malenia-arena.md)
@@ -31,7 +33,7 @@
 - 平衡目标：两位 Boss 的默认数值面向原版终局装备的 1-4 名玩家；约定之王允许将参与上限配置到 16，并继续线性外推耐久，但 5 人以上不属于默认平衡保证。
 - 目标平台：Minecraft 1.20.1 Forge 与 Minecraft 1.21.1 NeoForge。
 - 伤害格式：任何伤害分量都必须表示为「固定值 + Boss 攻击力百分比」。
-- 当前资产范围：Boss 最终模型暂缓；约定之王当前接入 GeckoLib 空骨架、完整空动画 ID、服务端指示器和原版粒子占位，不持续显示本体轮廓。竞技场建筑暂缓，当前实装不创建竞技场 NBT、不实现建筑放置链路，也不生成临时替代建筑；40 格逻辑边界和相对锚点仍可在普通世界运行。模型与建筑设计完整保留在 `art/` 与 `arenas/` 文档中。
+- 当前资产范围：腐败女神已制作原创双阶段 GeckoLib 精细模型、纹理和 40 段动画，工程位于 [models/malenia](../models/malenia/README.md)，并接入实体渲染与服务端表现时序；v7 纠正了角色自身左右反置，确保右手持刀、左手空手，并新增空手独立指节。完成前两项后，使用 B 站原版展示与拆解视频取帧，按[动作优化计划](../models/malenia/MOTION_PLAN.md)重做常规剑术、突刺、上挑、近身动作、水鸟及二阶段姿态；这是视频指导的人工适配，不是解包动作逐帧重建。保留精细几何、Minecraft 像素贴图和玩法时序，先完成多角度审查再进游戏，用户确认本轮左右手、空手正常，主要动作更接近参考。逐招和完整战斗验收仍独立记录。约定之王当前为 [reference_lion_v3](../models/promised_consort/README.md)，含 125 根骨骼、550 个 cube、原创大像素图集与 43 段动画，重做面甲遮挡和米凯拉前倾环抱姿势。v2 动作实机被否定后，v3 修复自然关节、短动作衔接与施法速度动画映射，并将主特效改为骨骼剑光和范围 GLSL，粒子只保留少量辅助。用户在 Forge 入世界确认所见动作和特效改善，NeoForge 入世界确认与 Forge 一致；具体观察类别和未验内容见[实机记录](../models/promised_consort/runtime_validation.json)，不宣称完整逐招或战斗平衡已验收。竞技场建筑暂缓，当前实装不创建竞技场 NBT、不实现建筑放置链路，也不生成临时替代建筑；40 格逻辑边界和相对锚点仍可在普通世界运行。模型与建筑设计完整保留在 `art/` 与 `arenas/` 文档中。
 - 最终程序边界：招式、阶段、时间轴、位移与判定由 Java 程序控制；后续提供的 Boss 建筑使用原版数据包 NBT 结构模板，Java 只负责模板放置、标记解析、战斗边界、破坏记录与恢复。
 - 配置策略：项目只注册 `config/elder_bosses-common.toml`；生命、多人缩放、参与者与生命周期策略、抗性、选招权重、时序、判定、伤害、硬直、瞬间防御、逻辑场地规则、破坏预算、奖励数值与占位表现预算均位于该 common 配置。互斥策略使用可校验枚举字符串。建筑几何、方块、材料和正式锚点属于 NBT 资源合同，不可由 TOML 改写；伤害与实体免疫集合由数据包标签控制。
 - 指示器：技能范围由服务端权威状态驱动；地面填充受遮挡，低透明边框可透视；全局透明度由 common 配置中的 `indicators.opacity` 控制。

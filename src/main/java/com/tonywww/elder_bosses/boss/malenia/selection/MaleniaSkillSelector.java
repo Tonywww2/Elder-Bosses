@@ -118,29 +118,33 @@ public final class MaleniaSkillSelector {
     private boolean isWithinActionRange(MaleniaActionId actionId, Context context) {
         double distance = context.distance();
         return switch (actionId) {
-                case SINGLE_SLASH -> distance <= config.singleSlash().range()
+                case SINGLE_SLASH -> distance <= range(actionId, config.singleSlash().range())
                     + BASIC_MELEE_RANGE_TOLERANCE;
-                case DOUBLE_SLASH -> distance <= config.doubleSlash().range()
+                case DOUBLE_SLASH -> distance <= range(actionId, config.doubleSlash().range())
                     + BASIC_MELEE_RANGE_TOLERANCE;
-                case RAPID_SLASHES -> distance <= config.rapidSlashes().range()
+                case RAPID_SLASHES -> distance <= range(actionId, config.rapidSlashes().range())
                     + BASIC_MELEE_RANGE_TOLERANCE;
-                case UPWARD_COMBO -> distance <= config.upwardCombo().range()
+                case UPWARD_COMBO -> distance <= range(actionId, config.upwardCombo().range())
                     + BASIC_MELEE_RANGE_TOLERANCE;
-                case RETREAT_SLASH -> distance <= config.retreatSlash().range()
+                case RETREAT_SLASH -> distance <= range(actionId, config.retreatSlash().range())
                     + BASIC_MELEE_RANGE_TOLERANCE;
-                case RUNNING_SLASH -> distance <= config.runningSlash().range();
-                case KICK -> distance <= config.kick().range();
-                case THRUST -> distance <= config.thrust().range();
-                case GRAB_IMPALE -> distance <= config.grabImpale().range();
+                case RUNNING_SLASH -> distance <= range(actionId, config.runningSlash().range());
+                case KICK -> distance <= range(actionId, config.kick().range());
+                case THRUST -> distance <= range(actionId, config.thrust().range());
+                case GRAB_IMPALE -> distance <= range(actionId, config.grabImpale().range());
                 case WATERFOWL_DANCE -> distance >= config.waterfowlDance().minimumStartRange()
                     && distance <= context.followRange();
                 case SCARLET_AEONIA, SCARLET_PHANTOMS -> distance >= MEDIUM_RANGE_MINIMUM
                     && distance <= context.followRange();
-                case SCARLET_PLUNGE -> distance <= config.scarletPlunge().range();
-                case FLYING_SLASH -> distance <= config.flyingSlash().range();
-                case WINGED_SWEEP -> distance <= config.wingedSweep().range();
+                case SCARLET_PLUNGE -> distance <= range(actionId, config.scarletPlunge().range());
+                case FLYING_SLASH -> distance <= range(actionId, config.flyingSlash().range());
+                case WINGED_SWEEP -> distance <= range(actionId, config.wingedSweep().range());
             };
             }
+
+    private double range(MaleniaActionId actionId, double value) {
+        return config.tuning(actionId).scaleRange(value);
+    }
 
     private boolean isWithinPhaseHealthGate(MaleniaActionId actionId, Context context) {
         return actionId != MaleniaActionId.WATERFOWL_DANCE

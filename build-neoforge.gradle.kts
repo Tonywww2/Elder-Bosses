@@ -30,6 +30,8 @@ repositories {
 dependencies {
     implementation("software.bernie.geckolib:geckolib-neoforge-1.21.1:4.9.2")
     implementation("maven.modrinth:attributefix:21.1.3")
+    runtimeOnly("maven.modrinth:uy4Cnpcm:1sdJl7J1")
+    runtimeOnly("maven.modrinth:aaRl8GiW:EE1FHDyD")
 }
 
 tasks {

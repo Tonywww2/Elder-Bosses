@@ -4,6 +4,7 @@ import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.client.state.ClientBossStateStore;
 import com.tonywww.elder_bosses.client.state.ClientIndicatorStateStore;
 import com.tonywww.elder_bosses.client.state.ClientRotStateStore;
+import com.tonywww.elder_bosses.client.vfx.ClientBossVfxController;
 //? if forge {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
@@ -39,6 +40,7 @@ public final class ClientGameEvents {
         ClientBossStateStore.onTrackingEnd(entityId);
         ClientIndicatorStateStore.onTrackingEnd(entityId);
         ClientRotStateStore.onTrackingEnd(entityId);
+        ClientBossVfxController.onTrackingEnd(entityId);
     }
 
     @SubscribeEvent
@@ -50,6 +52,7 @@ public final class ClientGameEvents {
         ClientBossStateStore.onDimensionChanged();
         ClientIndicatorStateStore.onDimensionChanged();
         ClientRotStateStore.onDimensionChanged();
+        ClientBossVfxController.clear();
     }
 
     @SubscribeEvent
@@ -57,5 +60,6 @@ public final class ClientGameEvents {
         ClientBossStateStore.onDisconnect();
         ClientIndicatorStateStore.onDisconnect();
         ClientRotStateStore.onDisconnect();
+        ClientBossVfxController.clear();
     }
 }

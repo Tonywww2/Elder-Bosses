@@ -1,0 +1,18 @@
+{
+  "clips": 43,
+  "raw_keys": 449726,
+  "keys": 135354,
+  "wrist": {
+    "samples": 38,
+    "maximum_hand_position_error": 5.202980369627924e-13,
+    "maximum_blade_direction_error_degrees": 34.95282615900718,
+    "minimum_elbow_flex_degrees": 12.000000000000048,
+    "maximum_elbow_flex_degrees": 138.09707233834206,
+    "maximum_forearm_twist_degrees": 85
+  },
+  "gait": {
+    "samples": 6794,
+    "maximum_ankle_error": 1.1546319456101628e-14
+  },
+  "status": "curves_valid_not_visually_accepted"
+}

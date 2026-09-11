@@ -1,0 +1,915 @@
+{
+  "revision": "reference_motion_v7",
+  "figure_scale": 1.2,
+  "gait_contact_samples": [
+    {
+      "clip": "walk",
+      "phase": 0,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.6000143747767144,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.8041124150158799e-16
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600014374776711,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "clip": "walk",
+      "phase": 0.25,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.599998759735671,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 2.775557561562892e-17
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 6.47996717543019,
+          "expected_height": 6.48,
+          "sole_tilt": 0.0000174532925188986
+        }
+      ]
+    },
+    {
+      "clip": "walk",
+      "phase": 0.5,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600014374776711,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.6653345369377348e-16
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.6000143747767144,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.8041124150158799e-16
+        }
+      ]
+    },
+    {
+      "clip": "walk",
+      "phase": 0.75,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 6.47996717543019,
+          "expected_height": 6.48,
+          "sole_tilt": 0.0000174532925188986
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.599998759735671,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 2.775557561562892e-17
+        }
+      ]
+    },
+    {
+      "clip": "walk",
+      "phase": 1,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.6000143747767144,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.8041124150158799e-16
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600014374776711,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "clip": "walk_back",
+      "phase": 0,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.599946688603513,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 5.551115123125783e-17
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999466886035147,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 4.857225732735061e-17
+        }
+      ]
+    },
+    {
+      "clip": "walk_back",
+      "phase": 0.25,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.599998759735671,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 2.775557561562892e-17
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 6.47996717543019,
+          "expected_height": 6.48,
+          "sole_tilt": 0.0000174532925188986
+        }
+      ]
+    },
+    {
+      "clip": "walk_back",
+      "phase": 0.5,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.5999466886035147,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 4.857225732735061e-17
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.599946688603513,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "clip": "walk_back",
+      "phase": 0.75,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 6.47996717543019,
+          "expected_height": 6.48,
+          "sole_tilt": 0.0000174532925188986
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.599998759735671,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 2.775557561562892e-17
+        }
+      ]
+    },
+    {
+      "clip": "walk_back",
+      "phase": 1,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.599946688603513,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 5.551115123125783e-17
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999466886035147,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 4.857225732735061e-17
+        }
+      ]
+    },
+    {
+      "clip": "strafe_left",
+      "phase": 0,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.5999383590299896,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000010706243853942719
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999383590299896,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000010706243853942719
+        }
+      ]
+    },
+    {
+      "clip": "strafe_left",
+      "phase": 0.25,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.5999953100813027,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000011165791940273732
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 6.4800573000642565,
+          "expected_height": 6.48,
+          "sole_tilt": 0.000010692129226469012
+        }
+      ]
+    },
+    {
+      "clip": "strafe_left",
+      "phase": 0.5,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600016707391287,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000005485418522953913
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600016707391287,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000005485418522953913
+        }
+      ]
+    },
+    {
+      "clip": "strafe_left",
+      "phase": 0.75,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 6.4800573000642565,
+          "expected_height": 6.48,
+          "sole_tilt": 0.000010692129226469012
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999953100813027,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000011165791940273732
+        }
+      ]
+    },
+    {
+      "clip": "strafe_left",
+      "phase": 1,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.5999383590299896,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000010706243853942719
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999383590299896,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000010706243853942719
+        }
+      ]
+    },
+    {
+      "clip": "strafe_right",
+      "phase": 0,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600016707391287,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000005485418522953913
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600016707391287,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000005485418522953913
+        }
+      ]
+    },
+    {
+      "clip": "strafe_right",
+      "phase": 0.25,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.5999953100813027,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000011165791940273732
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 6.4800573000642565,
+          "expected_height": 6.48,
+          "sole_tilt": 0.000010692129226469012
+        }
+      ]
+    },
+    {
+      "clip": "strafe_right",
+      "phase": 0.5,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.5999383590299896,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000010706243853942719
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999383590299896,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000010706243853942719
+        }
+      ]
+    },
+    {
+      "clip": "strafe_right",
+      "phase": 0.75,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 6.4800573000642565,
+          "expected_height": 6.48,
+          "sole_tilt": 0.000010692129226469012
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.5999953100813027,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000011165791940273732
+        }
+      ]
+    },
+    {
+      "clip": "strafe_right",
+      "phase": 1,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600016707391287,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000005485418522953913
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600016707391287,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000005485418522953913
+        }
+      ]
+    },
+    {
+      "clip": "run",
+      "phase": 0,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600103308786748,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000017453292518870848
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.599914811888194,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000017453292519009626
+        }
+      ]
+    },
+    {
+      "clip": "run",
+      "phase": 0.25,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600018590078946,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.6653345369377348e-16
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 9.359945622859174,
+          "expected_height": 9.36,
+          "sole_tilt": 1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "clip": "run",
+      "phase": 0.5,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.599914811888194,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000017453292519009626
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600103308786748,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000017453292518870848
+        }
+      ]
+    },
+    {
+      "clip": "run",
+      "phase": 0.75,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 9.359945622859174,
+          "expected_height": 9.36,
+          "sole_tilt": 1.6653345369377348e-16
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.600018590078946,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "clip": "run",
+      "phase": 1,
+      "feet": [
+        {
+          "bone": "foot_l",
+          "height": 3.600103308786748,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000017453292518870848
+        },
+        {
+          "bone": "prosthetic_foot_r",
+          "height": 3.599914811888194,
+          "expected_height": 3.5999999999999996,
+          "sole_tilt": 0.000017453292519009626
+        }
+      ]
+    }
+  ],
+  "stills": [
+    {
+      "name": "phase_one_front",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 321,
+      "bytes": 127302
+    },
+    {
+      "name": "phase_one_back",
+      "animation": "idle_phase_one",
+      "tick": 24,
+      "coloredPixels": 173,
+      "bytes": 105302
+    },
+    {
+      "name": "phase_two_front",
+      "animation": "idle_phase_two",
+      "tick": 20,
+      "coloredPixels": 433,
+      "bytes": 157546
+    },
+    {
+      "name": "phase_two_back",
+      "animation": "idle_phase_two",
+      "tick": 20,
+      "coloredPixels": 598,
+      "bytes": 184398
+    },
+    {
+      "name": "waterfowl_windup",
+      "animation": "waterfowl_dance",
+      "tick": 26,
+      "coloredPixels": 258,
+      "bytes": 134294
+    },
+    {
+      "name": "waterfowl_burst",
+      "animation": "waterfowl_dance",
+      "tick": 38,
+      "coloredPixels": 119,
+      "bytes": 127822
+    },
+    {
+      "name": "thrust",
+      "animation": "thrust",
+      "tick": 24,
+      "coloredPixels": 198,
+      "bytes": 129898
+    },
+    {
+      "name": "kick",
+      "animation": "kick",
+      "tick": 10,
+      "coloredPixels": 337,
+      "bytes": 141926
+    },
+    {
+      "name": "aeonia_bloom",
+      "animation": "scarlet_aeonia",
+      "tick": 74,
+      "coloredPixels": 216,
+      "bytes": 161534
+    },
+    {
+      "name": "transition_unfold",
+      "animation": "transition",
+      "tick": 108,
+      "coloredPixels": 429,
+      "bytes": 169078
+    },
+    {
+      "name": "hands_closeup",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 978,
+      "bytes": 137314
+    },
+    {
+      "name": "feet_closeup",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 768,
+      "bytes": 147006
+    },
+    {
+      "name": "feet_profile",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 655,
+      "bytes": 131958
+    },
+    {
+      "name": "slash_windup",
+      "animation": "single_slash",
+      "tick": 7,
+      "coloredPixels": 218,
+      "bytes": 141046
+    },
+    {
+      "name": "slash_followthrough",
+      "animation": "single_slash",
+      "tick": 12,
+      "coloredPixels": 270,
+      "bytes": 141290
+    },
+    {
+      "name": "upward_apex",
+      "animation": "upward_combo",
+      "tick": 28,
+      "coloredPixels": 178,
+      "bytes": 126330
+    },
+    {
+      "name": "grab_reach",
+      "animation": "grab_impale",
+      "tick": 24,
+      "coloredPixels": 268,
+      "bytes": 144610
+    },
+    {
+      "name": "helm_closeup",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 1074,
+      "bytes": 103278
+    },
+    {
+      "name": "cuirass_closeup",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 1140,
+      "bytes": 138254
+    },
+    {
+      "name": "prosthetic_profile",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 738,
+      "bytes": 145074
+    },
+    {
+      "name": "thrust_low_angle",
+      "animation": "thrust",
+      "tick": 24,
+      "coloredPixels": 287,
+      "bytes": 137250
+    },
+    {
+      "name": "wing_detail",
+      "animation": "idle_phase_two",
+      "tick": 20,
+      "coloredPixels": 1429,
+      "bytes": 212974
+    },
+    {
+      "name": "elbow_flex",
+      "animation": "grab_impale",
+      "tick": 36,
+      "coloredPixels": 948,
+      "bytes": 157206
+    },
+    {
+      "name": "knee_flex",
+      "animation": "waterfowl_dance",
+      "tick": 26,
+      "coloredPixels": 622,
+      "bytes": 170898
+    },
+    {
+      "name": "cape_profile",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 449,
+      "bytes": 147438
+    },
+    {
+      "name": "blade_detail",
+      "animation": "idle_phase_one",
+      "tick": 0,
+      "coloredPixels": 542,
+      "bytes": 159390
+    },
+    {
+      "name": "phase_two_hair_closeup",
+      "animation": "idle_phase_two",
+      "tick": 20,
+      "coloredPixels": 2276,
+      "bytes": 202718
+    }
+  ],
+  "sequences": [
+    {
+      "name": "single_slash_sequence",
+      "clip": "single_slash",
+      "ticks": [
+        0,
+        3,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        19,
+        24,
+        27
+      ],
+      "phase": 1
+    },
+    {
+      "name": "double_slash_sequence",
+      "clip": "double_slash",
+      "ticks": [
+        0,
+        5,
+        8,
+        11,
+        13,
+        20,
+        25,
+        29,
+        31,
+        37,
+        45,
+        50
+      ],
+      "phase": 1
+    },
+    {
+      "name": "waterfowl_sequence",
+      "clip": "waterfowl_dance",
+      "ticks": [
+        18,
+        28,
+        36,
+        43,
+        48,
+        55,
+        60,
+        64,
+        70,
+        76,
+        80,
+        90
+      ],
+      "phase": 1
+    },
+    {
+      "name": "rapid_sequence",
+      "clip": "rapid_slashes",
+      "ticks": [
+        0,
+        6,
+        11,
+        14,
+        16,
+        18,
+        22,
+        24,
+        26,
+        29,
+        35,
+        54
+      ],
+      "phase": 1
+    },
+    {
+      "name": "walk_sequence",
+      "clip": "walk",
+      "ticks": [
+        0,
+        2,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        30,
+        31,
+        32
+      ],
+      "phase": 1
+    },
+    {
+      "name": "thrust_sequence",
+      "clip": "thrust",
+      "ticks": [
+        0,
+        4,
+        8,
+        17,
+        20,
+        21,
+        22,
+        24,
+        27,
+        36,
+        44,
+        50
+      ],
+      "phase": 1
+    },
+    {
+      "name": "upward_sequence",
+      "clip": "upward_combo",
+      "ticks": [
+        0,
+        9,
+        15,
+        18,
+        23,
+        35,
+        42,
+        45,
+        48,
+        54,
+        66,
+        73
+      ],
+      "phase": 1
+    },
+    {
+      "name": "kick_sequence",
+      "clip": "kick",
+      "ticks": [
+        0,
+        3,
+        5,
+        7,
+        9,
+        10,
+        12,
+        15,
+        17,
+        21,
+        24,
+        31
+      ],
+      "phase": 1
+    },
+    {
+      "name": "grab_sequence",
+      "clip": "grab_impale",
+      "ticks": [
+        0,
+        8,
+        18,
+        24,
+        28,
+        36,
+        40,
+        44,
+        50,
+        54,
+        58,
+        67
+      ],
+      "phase": 1
+    },
+    {
+      "name": "flying_sequence",
+      "clip": "flying_slash",
+      "ticks": [
+        0,
+        10,
+        16,
+        20,
+        24,
+        33,
+        39,
+        42,
+        45,
+        48,
+        57,
+        73
+      ],
+      "phase": 2
+    },
+    {
+      "name": "plunge_sequence",
+      "clip": "scarlet_plunge",
+      "ticks": [
+        0,
+        10,
+        17,
+        21,
+        24,
+        27,
+        29,
+        34,
+        43,
+        50,
+        55,
+        66
+      ],
+      "phase": 2
+    },
+    {
+      "name": "phantoms_sequence",
+      "clip": "scarlet_phantoms",
+      "ticks": [
+        0,
+        14,
+        29,
+        36,
+        52,
+        68,
+        73,
+        76,
+        103,
+        110,
+        126,
+        146
+      ],
+      "phase": 2
+    },
+    {
+      "name": "aeonia_sequence",
+      "clip": "scarlet_aeonia",
+      "ticks": [
+        0,
+        14,
+        26,
+        39,
+        43,
+        49,
+        54,
+        62,
+        74,
+        106,
+        132,
+        154
+      ],
+      "phase": 2
+    },
+    {
+      "name": "winged_sweep_sequence",
+      "clip": "winged_sweep",
+      "ticks": [
+        0,
+        9,
+        13,
+        16,
+        18,
+        20,
+        23,
+        26,
+        30,
+        35,
+        39,
+        46
+      ],
+      "phase": 2
+    }
+  ]
+}

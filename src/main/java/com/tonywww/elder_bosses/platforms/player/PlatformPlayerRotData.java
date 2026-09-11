@@ -2,6 +2,7 @@ package com.tonywww.elder_bosses.platforms.player;
 
 import com.tonywww.elder_bosses.combat.status.ScarletRotData;
 import net.minecraft.world.entity.LivingEntity;
+import java.util.Optional;
 //? if forge {
 import net.minecraftforge.eventbus.api.IEventBus;
 //?} else {
@@ -13,11 +14,16 @@ public final class PlatformPlayerRotData {
     }
 
     public static ScarletRotData get(LivingEntity entity) {
+        return find(entity).orElseThrow(
+                () -> new IllegalStateException("Living entity scarlet rot capability is missing")
+        );
+    }
+
+    public static Optional<ScarletRotData> find(LivingEntity entity) {
         //? if forge {
-        return entity.getCapability(ForgePlayerRotCapability.CAPABILITY)
-                .orElseThrow(() -> new IllegalStateException("Living entity scarlet rot capability is missing"));
+        return entity.getCapability(ForgePlayerRotCapability.CAPABILITY).resolve();
         //?} else {
-        /*return entity.getData(NeoForgePlayerRotAttachments.SCARLET_ROT.get());
+        /*return Optional.of(entity.getData(NeoForgePlayerRotAttachments.SCARLET_ROT.get()));
         *///?}
     }
 

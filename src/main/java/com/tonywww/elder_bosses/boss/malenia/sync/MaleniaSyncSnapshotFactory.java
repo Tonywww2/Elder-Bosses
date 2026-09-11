@@ -38,6 +38,7 @@ public final class MaleniaSyncSnapshotFactory {
                 currentAction == null ? -1 : currentAction.actionTick(),
                 currentAction == null ? 0L : currentAction.startGameTick(),
                 currentAction == null ? 0L : currentAction.seed(),
+                currentAction == null ? 1.0 : host.actionRangeMultiplier(),
                 host.targetEntityId(),
                 host.phaseHealth(),
                 host.phaseMaxHealth(),
@@ -81,6 +82,8 @@ public final class MaleniaSyncSnapshotFactory {
         long stateStartGameTime();
 
         Optional<MaleniaActionSnapshot> currentActionSnapshot();
+
+        double actionRangeMultiplier();
 
         int targetEntityId();
 

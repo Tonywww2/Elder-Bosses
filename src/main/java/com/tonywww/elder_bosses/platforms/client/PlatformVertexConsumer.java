@@ -7,6 +7,18 @@ public final class PlatformVertexConsumer {
     private PlatformVertexConsumer() {
     }
 
+    public static void addPositionColorUv(VertexConsumer consumer, PoseStack.Pose pose,
+                                         float horizontal, float height, float depth,
+                                         int red, int green, int blue, int alpha, float textureX, float textureY) {
+        //? if forge {
+        consumer.vertex(pose.pose(), horizontal, height, depth).uv(textureX, textureY)
+                .color(red, green, blue, alpha).endVertex();
+        //?} else {
+        /*consumer.addVertex(pose, horizontal, height, depth).setColor(red, green, blue, alpha)
+                .setUv(textureX, textureY);
+        *///?}
+    }
+
     public static void addPositionColor(
             VertexConsumer consumer,
             PoseStack.Pose pose,
