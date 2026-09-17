@@ -43,6 +43,7 @@ public final class ClientIndicatorEvents {
         //?} else {
         /*float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(true);
         *///?}
+        com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.render(event.getPoseStack(), event.getCamera(), minecraft.level.getGameTime(), partialTick);
         ClientConsortEnergyRenderer.render(event.getPoseStack(), event.getCamera(), minecraft.level.getGameTime(), partialTick);
         ClientConsortBladeTrails.render(event.getPoseStack(), event.getCamera(), partialTick);
         ClientConsortMeteorRenderer.render(event.getPoseStack(), event.getCamera(), partialTick);

@@ -43,6 +43,31 @@ public final class ActionTimeline {
         return totalTicks;
     }
 
+    public int stageStartTick(int stageIndex) {
+        if (stageIndex < 0 || stageIndex >= stages.size()) throw new IndexOutOfBoundsException("stageIndex outside timeline");
+        int start = 0;
+        for (int index = 0; index < stageIndex; index++) start += stages.get(index).totalTicks();
+        return start;
+    }
+
+    public int activeStartTick(int stageIndex) {
+        return stageStartTick(stageIndex) + stages.get(stageIndex).windupTicks();
+    }
+
+    public int activeEndTick(int stageIndex) {
+        return activeStartTick(stageIndex) + stages.get(stageIndex).activeTicks();
+    }
+
+    public int activeTicksBetween(int firstTick, int endTickExclusive) {
+        int ticks = 0;
+        for (ActionWindow window : windows) {
+            if (window.phase() == ActionPhase.ACTIVE) {
+                ticks += Math.max(0, Math.min(endTickExclusive, window.endTickExclusive()) - Math.max(firstTick, window.startTickInclusive()));
+            }
+        }
+        return ticks;
+    }
+
     public ActionPhase phaseAt(int actionTick) {
         return windowAt(actionTick).phase();
     }

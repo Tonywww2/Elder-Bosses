@@ -57,6 +57,8 @@ tasks {
             expand(props)
         }
         exclude("META-INF/mods.toml")
+        exclude("data/*/structures/**")
+        exclude("data/*/recipes/**")
         exclude("data/**/loot_tables/**")
         exclude("data/**/tags/blocks/**")
         exclude("data/**/tags/entity_types/**")

@@ -50,7 +50,7 @@ public final class PromisedConsortSkillSelector {
     }
 
     private double weight(PromisedConsortActionId actionId, Context context) {
-        double weight = catalog.get(actionId).weight();
+        double weight = catalog.get(actionId).weight() * context.rangedWeights().getOrDefault(actionId, 1.0);
         if (context.usingItem()
                 && context.distance() >= config.itemUsePunishMinRange()
                 && context.distance() <= config.itemUsePunishMaxRange()
@@ -97,8 +97,13 @@ public final class PromisedConsortSkillSelector {
             int nearbyPlayers,
             int rightRearTicks,
             boolean previousActionHit,
-            Set<PromisedConsortActionId> eligibleActions
+            Set<PromisedConsortActionId> eligibleActions,
+            java.util.Map<PromisedConsortActionId, Double> rangedWeights
     ) {
+        public Context(PromisedConsortPhase phase, double distance, boolean usingItem, int nearbyPlayers,
+                int rightRearTicks, boolean previousActionHit, Set<PromisedConsortActionId> eligibleActions) {
+            this(phase,distance,usingItem,nearbyPlayers,rightRearTicks,previousActionHit,eligibleActions,java.util.Map.of());
+        }
         public Context {
             Objects.requireNonNull(phase, "phase");
             if (!Double.isFinite(distance) || distance < 0.0 || nearbyPlayers < 0
@@ -106,6 +111,7 @@ public final class PromisedConsortSkillSelector {
                 throw new IllegalArgumentException("invalid selector context");
             }
             eligibleActions = Set.copyOf(eligibleActions);
+            rangedWeights = java.util.Map.copyOf(rangedWeights);
         }
     }
 

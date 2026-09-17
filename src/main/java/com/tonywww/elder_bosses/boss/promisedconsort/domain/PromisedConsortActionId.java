@@ -25,7 +25,11 @@ public enum PromisedConsortActionId {
     LIGHTSPEED_SIDE_DASH("lightspeed_side_dash"),
     PROMISED_CONSORT("promised_consort"),
     ENHANCED_EARTHHEAVE("enhanced_earthheave"),
-    CONSORT_METEOR("consort_meteor");
+    CONSORT_METEOR("consort_meteor"),
+    GRAVITY_BULWARK("gravity_bulwark"),
+    GRAVITY_REFLECTION("gravity_reflection"),
+    GRAVITY_REPRISAL("gravity_reprisal"),
+    CROSS_LEAP_COMBO("cross_leap_combo");
 
     private final String serializedName;
 
@@ -35,6 +39,10 @@ public enum PromisedConsortActionId {
 
     public String serializedName() {
         return serializedName;
+    }
+
+    public boolean rangedDefense() {
+        return this == GRAVITY_BULWARK || this == GRAVITY_REFLECTION || this == GRAVITY_REPRISAL;
     }
 
     public static Optional<PromisedConsortActionId> fromSerializedName(String name) {

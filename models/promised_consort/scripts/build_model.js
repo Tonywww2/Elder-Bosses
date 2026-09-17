@@ -5,6 +5,11 @@
     let fs = require("fs");
     let workspace = "C:/Users/12044/Documents/EX/IDEA_PROJECT/ElderBosses/models/promised_consort";
     let direction = JSON.parse(fs.readFileSync(workspace + "/art_direction.json", "utf8"));
+    if ((direction.radahn_scale || 1) !== 1) throw new Error("Use the saved refined project and repaint_textures.js; the legacy builder would discard the proportional refinement.");
+    let patternPath = workspace + "/scripts/texture_pattern.js";
+    let textureModule = {exports: {}};
+    new Function("module", fs.readFileSync(patternPath, "utf8"))(textureModule);
+    let texturePattern = textureModule.exports;
     let groups = {};
     let surfaces = [];
     let palette = direction.palette;
@@ -20,6 +25,7 @@
     let patches = new Map();
     let census = {radahn: 0, miquella: 0};
 
+    Modes.options.edit.select();
     Undo.initEdit({elements: [], outliner: true, textures: []});
     for (let element of [...Outliner.root]) element.remove();
     for (let texture of [...Texture.all]) texture.remove();
@@ -46,70 +52,10 @@
         }
         if (cursor[1] + height + 2 > size) throw new Error("Pixel atlas capacity exceeded.");
         let left = cursor[0], top = cursor[1];
-        let colors = palette[material];
+        let pattern = texturePattern(width, height, material, face, motif, palette);
         for (let vertical = 0; vertical < height; vertical++) {
             for (let horizontal = 0; horizontal < width; horizontal++) {
-                let tone = face === "up" ? 3 : face === "down" ? 1 : 2;
-                let broad = ["north", "south", "east", "west"].includes(face);
-                if (material === "iron") {
-                    if (horizontal === 0 || horizontal === width - 1) tone = 3;
-                    if (vertical === height - 1) tone = 0;
-                    if (horizontal === Math.floor(width * 0.7) && vertical % 11 < 4) tone = 1;
-                    if (motif === "blade_surface" && (face === "east" || face === "west")) {
-                        tone = vertical === 0 ? 3 : vertical >= height - 2 ? 1 : 2;
-                    }
-                }
-                if (material.startsWith("gold")) {
-                    if (vertical === 0) tone = 3;
-                    if (vertical === height - 1) tone = 1;
-                    if (width > 5 && horizontal === 1 && vertical > 1 && vertical < height - 2) tone = 4;
-                    if (width > 5 && horizontal === width - 2 && vertical > 2) tone = 1;
-                }
-                if (["cloth", "mane", "divine_hair", "silk"].includes(material)) {
-                    if (horizontal === 0 || horizontal === width - 1) tone = 1;
-                    if (horizontal === Math.floor(width * 0.6)) tone = 3;
-                    if (vertical > height * 0.8) tone = Math.max(1, tone - 1);
-                    if (material === "divine_hair" && horizontal === Math.floor(width * 0.6) && vertical < height * 0.5) tone = 4;
-                }
-                if (material === "horn") {
-                    tone = Math.min(4, 1 + Math.floor(4 * vertical / Math.max(1, height)));
-                    if (vertical % 5 === 0) tone = Math.max(0, tone - 1);
-                    if (horizontal === width - 1) tone = Math.max(0, tone - 1);
-                }
-                if (material.endsWith("skin")) {
-                    if (face === "south" || face === "down") tone = 1;
-                    if (width > 3 && horizontal === 0) tone = 1;
-                    if (height > 5 && vertical === 1) tone = 3;
-                }
-                let color = colors[tone];
-                if (motif === "plate" && broad && width > 5 && height > 5) {
-                    let center = (width - 1) / 2;
-                    let chevron = Math.floor(height * 0.22 + Math.abs(horizontal - center) * 0.45);
-                    if (vertical === chevron || vertical === chevron + Math.floor(height * 0.45)) color = palette.gold_edge[3];
-                    if (vertical === chevron + 1) color = palette.gold[1];
-                }
-                if (motif === "engraved" && broad && width >= 4 && height >= 6) {
-                    let spine = Math.floor(width / 2);
-                    let branch = Math.floor(vertical / 4) % 2 === 0 ? 1 : -1;
-                    if (horizontal === spine && vertical > 1 && vertical < height - 1) color = palette.gold[2];
-                    if (horizontal === spine + branch && vertical % 4 === 1) color = palette.gold_edge[3];
-                }
-                if (motif === "cloth_border" && broad) {
-                    if (vertical === height - 2 || width > 5 && horizontal === 1) color = palette.gold[2];
-                    if (width > 6 && vertical === height - 4 && horizontal % 5 === 2) color = palette.gold_edge[3];
-                }
-                if (motif === "scale" && broad && height > 4) {
-                    if (vertical % 4 === 3 && (horizontal + Math.floor(vertical / 4) * 2) % 5 < 4) color = palette.gold[1];
-                    if (vertical % 4 === 0 && horizontal % 5 === 2) color = palette.gold_edge[3];
-                }
-                if (motif === "face" && face === "north" && width >= 6) {
-                    if (vertical === Math.floor(height * 0.43) && (horizontal === 1 || horizontal === width - 2)) color = palette.iron[0];
-                    if (vertical === Math.floor(height * 0.72) && horizontal > 1 && horizontal < width - 2) color = palette.skin[0];
-                }
-                if (motif === "gentle_face" && face === "north" && width >= 5) {
-                    if (vertical === Math.floor(height * 0.45) && (horizontal === 1 || horizontal === width - 2)) color = palette.divine_hair[0];
-                    if (vertical === Math.floor(height * 0.75) && horizontal === Math.floor(width / 2)) color = palette.ivory_skin[1];
-                }
+                let color = pattern.pixels[vertical * width + horizontal];
                 paint.fillStyle = color;
                 paint.fillRect(left + horizontal, top + vertical, 1, 1);
                 if (material === "halo") {
@@ -180,14 +126,22 @@
 
     cube("pelvis", "padded_hips", [0, 37.6, 0], [20, 8.6, 12.4], "iron");
     cube("body", "waist_lamellar_core", [0, 45, 0.5], [19, 11, 12], "iron", [0, 0, 0], undefined, "scale");
-    cube("chest", "cuirass_mass", [0, 56.8, 0], [25, 18, 14], "gold", [0, 0, 0], undefined, "plate");
-    cube("chest", "upper_cuirass", [0, 63, -0.4], [26, 6, 12.8], "gold", [0, 0, 0], undefined, "plate");
+    cube("chest", "cuirass_mass", [0, 56.8, 0.3], [22.4, 16.4, 12.2], "iron", [0, 0, 0], undefined, "scale");
+    cube("chest", "upper_cuirass", [0, 63, -0.4], [23.4, 5.6, 12.0], "gold", [-5, 0, 0], undefined, "plate");
     for (let side of [1, -1]) {
-        cube("chest", "rib_chamfer_" + side, [side * 11.7, 55.7, -0.2], [5, 14.5, 12.4], "gold", [0, 0, side * -9], undefined, "engraved");
-        cube("chest", "breastplate_" + side, [side * 6.1, 59.6, -7.4], [11.5, 10.5, 2.8], "gold", [0, side * -9, side * -8], undefined, "plate");
+        cube("chest", "rib_chamfer_" + side, [side * 10.9, 55.7, -0.2], [4.4, 13.5, 11.4], "gold", [0, side * 8, side * -12], undefined, "engraved");
+        cube("chest", "breastplate_" + side, [side * 5.8, 59.8, -6.9], [10.3, 9.3, 3.2], "gold", [-6, side * -14, side * -10], undefined, "plate");
+        beam("chest", "pectoral_ridge_" + side, [side * 1.8, 64.1, -8.9], [side * 10.1, 60.9, -8.3], 1.35, 1.0, "gold_edge");
+        beam("chest", "lower_cuirass_bevel_" + side, [side * 2.0, 52.0, -7.9], [side * 10.5, 54.0, -7.2], 1.9, 1.5, "gold");
+        for (let flute = 0; flute < 3; flute++) {
+            beam("chest", "forged_chest_flute_" + side + "_" + flute,
+                [side * (3.8 + flute * 2.3), 61.7 - flute * 0.7, -9.0 + flute * 0.25],
+                [side * (3.0 + flute * 2.4), 54.2 + flute * 0.4, -9.1 + flute * 0.5], 0.85, 0.65, "gold_edge");
+        }
         cube("chest", "collar_leaf_" + side, [side * 5.9, 66, -3.7], [9.6, 2.1, 5.2], "gold_edge", [0, side * -16, side * -16]);
         for (let row = 0; row < 3; row++) {
-            cube("body", "abdomen_lame_" + side + "_" + row, [side * 4.8, 49.4 - row * 3.1, -6.55], [9.7, 3.8, 2], "gold", [0, side * 5, side * 8], undefined, "plate");
+            cube("body", "abdomen_lame_" + side + "_" + row, [side * 4.5, 49.4 - row * 3.1, -7.0 + row * 0.4], [8.5 - row * 0.45, 3.3, 2.1], "gold", [-8, side * 9, side * 10], undefined, "plate");
+            cube("body", "abdomen_lip_" + side + "_" + row, [side * 4.5, 48.25 - row * 3.1, -8.2 + row * 0.4], [8.0 - row * 0.45, 0.85, 0.9], "gold_edge", [-8, side * 9, side * 10]);
         }
         for (let row = 0; row < 2; row++) {
             cube("chest", "clavicle_stud_" + side + "_" + row, [side * (8.5 + row * 2.8), 64.1, -6.65], [1.35, 1.35, 1.0], "gold_edge", [0, 0, 45]);
@@ -233,6 +187,9 @@
             cube("upper_arm_" + side, "pauldron_lame_" + side + "_" + row,
                 [sign * (17 + row * 1.15), 64.5 - row * 2.3, 0], [9.8 - row * 0.6, 3.1, 14.0 - row * 0.8], "gold",
                 [0, 0, sign * (8 + row * 7)], undefined, "plate");
+            cube("upper_arm_" + side, "pauldron_raised_lip_" + side + "_" + row,
+                [sign * (17.3 + row * 1.15), 63.6 - row * 2.3, -6.7 + row * 0.4], [8.9 - row * 0.6, 1.15, 1.1], "gold_edge",
+                [0, 0, sign * (8 + row * 7)]);
         }
         for (let index = 0; index < 3; index++) {
             cube("upper_arm_" + side, "pauldron_mane_" + side + "_" + index, [sign * (17.4 + index * 1.8), 61 - index * 1.6, -6.2],
@@ -241,33 +198,42 @@
         cube("forearm_" + side, "elbow_hinge_" + side, [elbow, 48.5, -0.2], [7.4, 5, 7.9], "iron");
         beam("forearm_" + side, "forearm_flesh_" + side, [elbow, 47.7, -0.2], [wrist, 37, -2], 6.8, 7.3, "skin");
         beam("forearm_" + side, "vambrace_" + side, [elbow + sign * 0.5, 46.7, -0.5], [wrist + sign * 0.2, 38.2, -1.8], 7.1, 7.6, "gold", "engraved");
+        beam("forearm_" + side, "vambrace_center_ridge_" + side, [elbow + sign * 0.5, 46.4, -4.5], [wrist + sign * 0.2, 39.3, -5.8], 2.1, 1.5, "gold_edge");
+        for (let facet of [-1, 1]) {
+            beam("forearm_" + side, "vambrace_flank_" + side + "_" + facet, [elbow + facet * 2.5, 46.1, -3.8],
+                [wrist + facet * 2.0, 39.0, -4.9], 1.6, 1.0, "gold");
+        }
         cube("forearm_" + side, "wrist_cuff_" + side, [wrist, 37.0, -2], [6.0, 2.9, 6.6], "gold_edge");
         cube("hand_" + side, "wrist_joint_" + side, [wrist, 35.9, -2], [4.0, 3.0, 4.3], "skin");
-        cube("hand_" + side, "palm_" + side, [wrist + sign * 1.45, 34.4, -2.0], [2.4, 4.8, 6.1], "skin");
+        cube("hand_" + side, "palm_" + side, [wrist + sign * 1.4, 34.0, -2.0], [3.2, 4.6, 6.3], "skin");
+        cube("hand_" + side, "grasp_block_" + side, [wrist, 31.65, -2.0], [4.9, 2.3, 6.3], "skin");
+        cube("hand_" + side, "grip_return_" + side, [wrist - sign * 1.55, 33.1, -2.0], [1.7, 3.8, 6.1], "skin");
         cube("hand_" + side, "dorsal_gauntlet_" + side, [wrist + sign * 2.6, 34.8, -2.0], [1.1, 3.7, 5.1], "gold", [0, 0, sign * -8], undefined, "engraved");
         for (let index = 0; index < 4; index++) {
             let depth = -4.2 + index * 1.4;
             let finger = "finger_" + side + "_" + index;
             group(finger, "hand_" + side, [wrist + sign * 2.3, 33.2, depth]);
             group(finger + "_tip", finger, [wrist + sign * 0.2, 31.3, depth]);
-            beam(finger, finger + "_proximal", [wrist + sign * 2.3, 33.6, depth], [wrist + sign * 1.8, 31.2, depth], 1.25, 1.15, "skin");
-            beam(finger, finger + "_middle", [wrist + sign * 1.9, 31.3, depth], [wrist - sign * 0.5, 31.3, depth], 1.15, 1.1, "skin");
-            beam(finger + "_tip", finger + "_distal", [wrist - sign * 0.5, 31.3, depth], [wrist - sign * 1.0, 33.1, depth], 1.05, 1.02, "skin");
         }
         group("thumb_" + side, "hand_" + side, [wrist + sign * 0.8, 35.3, -4.8]);
         group("thumb_tip_" + side, "thumb_" + side, [wrist - sign * 1.2, 33.9, -4.0]);
-        beam("thumb_" + side, "thumb_proximal_" + side, [wrist + sign * 0.8, 35.3, -4.8], [wrist - sign * 1.2, 33.9, -4], 1.65, 1.4, "skin");
-        beam("thumb_tip_" + side, "thumb_distal_" + side, [wrist - sign * 1.2, 33.9, -4], [wrist - sign * 0.6, 33.1, -2.8], 1.4, 1.2, "skin");
         horn("forearm_" + side, "omen_forearm_" + side, [elbow + sign * 3.1, 46.7, 1.2], [elbow + sign * 6.6, 49.5, 2.0], [elbow + sign * 6.1, 52.7, 2.6], 2.6);
         if (side === "r") horn("upper_arm_r", "omen_bicep_r", [18.6, 55.9, 3.6], [22, 58, 5.2], [23.3, 61.6, 4.8], 2.3);
 
         beam("thigh_" + side, "thigh_core_" + side, [sign * 8.5, 36, 0], [sign * 9.5, 22, -0.6], 9.5, 11, "iron");
         cube("thigh_" + side, "cuisses_" + side, [sign * 9.1, 29.4, -4.5], [8.5, 13.2, 3.1], "gold", [-3, 0, sign * -3], undefined, "engraved");
+        cube("thigh_" + side, "cuisses_keel_" + side, [sign * 9.1, 29.5, -6.35], [2.25, 11.4, 1.3], "gold_edge", [-3, 0, sign * -3]);
+        for (let facet of [-1, 1]) cube("thigh_" + side, "cuisses_bevel_" + side + "_" + facet,
+            [sign * 9.1 + facet * 3.2, 29.4, -5.5], [1.9, 11.5, 1.6], "gold", [-3, facet * 24, sign * -3]);
         cube("thigh_" + side, "thigh_outside_plate_" + side, [sign * 12.9, 29.8, 0], [2.5, 12, 8.7], "gold", [0, 0, sign * 4]);
         cube("shin_" + side, "knee_joint_" + side, [sign * 9.5, 21.3, -0.6], [8.3, 5.8, 9.2], "iron");
         cube("shin_" + side, "patella_" + side, [sign * 9.5, 21.7, -5.7], [7, 6.8, 2.5], "gold_edge", [8, 0, 0], undefined, "plate");
+        cube("shin_" + side, "patella_boss_" + side, [sign * 9.5, 21.9, -7.2], [3.6, 4.4, 1.55], "gold", [8, 0, 0], undefined, "engraved");
         beam("shin_" + side, "calf_" + side, [sign * 9.5, 20.7, 0.1], [sign * 10, 7.0, 0.4], 7.3, 8.2, "skin");
         cube("shin_" + side, "greave_" + side, [sign * 10, 13.1, -3.4], [6.8, 13.6, 3.6], "gold", [-4, 0, 0], undefined, "engraved");
+        cube("shin_" + side, "greave_keel_" + side, [sign * 10, 13.3, -5.55], [1.7, 11.8, 1.45], "gold_edge", [-4, 0, 0]);
+        for (let facet of [-1, 1]) cube("shin_" + side, "greave_bevel_" + side + "_" + facet,
+            [sign * 10 + facet * 2.6, 13.1, -4.7], [1.8, 11.8, 1.6], "gold", [-4, facet * 27, 0]);
         cube("shin_" + side, "ankle_cuff_" + side, [sign * 10, 6.4, 0], [7.0, 2.5, 7.8], "gold_edge");
         cube("foot_" + side, "ankle_" + side, [sign * 10, 5.4, 0.2], [5.8, 4.6, 6.0], "iron");
         cube("foot_" + side, "heel_" + side, [sign * 10, 2.2, 2.0], [7.6, 4.4, 5.9], "iron");
@@ -326,6 +292,9 @@
     cube("head", "jaw", [0, 69.7, -2.4], [6.1, 3.4, 4.4], "skin");
     cube("head", "mask_eye_shadow", [0, 74.4, -5.3], [8.3, 2.2, 0.75], "iron");
     cube("head", "helmet_crown", [0, 78.6, -0.6], [10.8, 4.9, 10.7], "gold", [0, 0, 0], undefined, "plate");
+    for (let side of [1, -1]) {
+        cube("head", "crown_beveled_face_" + side, [side * 3.4, 78.5, -5.9], [3.8, 5.0, 1.2], "gold", [-8, side * -18, side * -6], undefined, "engraved");
+    }
     cube("head", "crown_front_ridge", [0, 80.3, -5.7], [3.5, 5.8, 1.3], "gold_edge", [0, 0, 0], undefined, "engraved");
     cube("head", "nasal_guard", [0, 74.0, -6.6], [1.9, 6.6, 1.6], "gold_edge");
     cube("head", "mask_muzzle", [0, 71.6, -6.7], [4.7, 3.5, 1.9], "gold", [-8, 0, 0], undefined, "plate");
@@ -416,19 +385,11 @@
             beam(prefix + "arm_" + side, prefix + "upper_flesh_" + side, shoulder, elbow, upper ? 2.15 : 1.8, upper ? 2.2 : 1.8, "ivory_skin");
             cube(prefix + "forearm_" + side, prefix + "elbow_" + side, elbow, [2.0, 2.1, 2.0], "ivory_skin");
             beam(prefix + "forearm_" + side, prefix + "forearm_flesh_" + side, elbow, wrist, upper ? 1.95 : 1.65, upper ? 1.9 : 1.6, "ivory_skin");
-            cube(prefix + "hand_" + side, prefix + "palm_" + side, [wrist[0], wrist[1] - 0.4, wrist[2] - 0.9], [2.05, 0.9, 2.3], "ivory_skin", [upper ? -14 : -5, sign * 10, sign * 4]);
+            cube(prefix + "hand_" + side, prefix + "palm_" + side, [wrist[0], wrist[1] - 0.4, wrist[2] - 1.2], [2.3, 1.1, 2.9], "ivory_skin", [upper ? -14 : -5, sign * 10, sign * 4]);
+            cube(prefix + "hand_" + side, prefix + "resting_hand_block_" + side,
+                [wrist[0] + sign * 0.05, wrist[1] - 0.98, wrist[2] - 2.9], [2.15, 1.15, 1.75], "ivory_skin",
+                [upper ? -18 : -11, sign * 10, sign * 4]);
             group(prefix + "fingers_" + side, prefix + "hand_" + side, [wrist[0], wrist[1] - 0.4, wrist[2] - 1.6]);
-            for (let index = 0; index < 4; index++) {
-                let horizontal = wrist[0] + (index - 1.5) * 0.51;
-                let length = [1.55, 1.95, 1.8, 1.4][index];
-                beam(prefix + "fingers_" + side, prefix + "finger_" + side + "_" + index,
-                    [horizontal, wrist[1] - 0.4, wrist[2] - 1.6], [horizontal + sign * 0.12, wrist[1] - 0.9, wrist[2] - 1.6 - length * 0.65], 0.44, 0.45, "ivory_skin");
-                beam(prefix + "fingers_" + side, prefix + "finger_tip_" + side + "_" + index,
-                    [horizontal + sign * 0.12, wrist[1] - 0.9, wrist[2] - 1.6 - length * 0.65],
-                    [horizontal + sign * 0.17, wrist[1] - 1.45, wrist[2] - 1.6 - length], 0.4, 0.42, "ivory_skin");
-            }
-            beam(prefix + "hand_" + side, prefix + "thumb_" + side, [wrist[0] - sign * 0.8, wrist[1] - 0.2, wrist[2] - 0.6],
-                [wrist[0] - sign * 1.5, wrist[1] - 0.8, wrist[2] - 1.8], 0.62, 0.6, "ivory_skin");
         }
     }
     for (let index = 0; index < 10; index++) {
@@ -498,6 +459,26 @@
     }
     Canvas.updateAll();
     for (let folder of ["textures", "geo", "animations", "previews"]) fs.mkdirSync(workspace + "/" + folder, {recursive: true});
+    let swatches = document.createElement("canvas");
+    swatches.width = 880;
+    swatches.height = 714;
+    let samplePaint = swatches.getContext("2d");
+    samplePaint.fillStyle = "#24272A";
+    samplePaint.fillRect(0, 0, swatches.width, swatches.height);
+    for (let [index, material] of Object.keys(palette).entries()) {
+        let pattern = texturePattern(16, 16, material, "north", "", palette);
+        let left = index % 4 * 220 + 14, top = Math.floor(index / 4) * 238 + 10;
+        for (let vertical = 0; vertical < 16; vertical++) {
+            for (let horizontal = 0; horizontal < 16; horizontal++) {
+                samplePaint.fillStyle = pattern.pixels[vertical * 16 + horizontal];
+                samplePaint.fillRect(left + horizontal * 12, top + vertical * 12, 12, 12);
+            }
+        }
+        samplePaint.fillStyle = "#E7E9EB";
+        samplePaint.font = "16px monospace";
+        samplePaint.fillText(material, left, top + 215);
+    }
+    fs.writeFileSync(workspace + "/previews/material_swatches.png", Buffer.from(swatches.toDataURL("image/png").split(",")[1], "base64"));
     fs.writeFileSync(workspace + "/textures/promised_consort.png", Buffer.from(canvas.toDataURL("image/png").split(",")[1], "base64"));
     fs.writeFileSync(workspace + "/textures/promised_consort_glowmask.png", Buffer.from(emissive.toDataURL("image/png").split(",")[1], "base64"));
     let geometry = JSON.parse(Codecs.bedrock.compile());

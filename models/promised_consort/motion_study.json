@@ -1,0 +1,488 @@
+{
+  "revision": "native_frame_study_v10",
+  "status": "six_previously_rebuilt_skills_plus_16_batch_versions; batch_16_user_accepted_in_forge_with_eight_log_corroborated; continuous_reference_review_incomplete",
+  "motion_revision": "video_motion_v12",
+  "batch_candidates": {
+    "source_profiles": "scripts/motion_batch.js",
+    "integrated_records": "motion_refinement.json/fullbody_rebuilds",
+    "skill_ids": ["left_combo_bloodflame", "lion_claw", "lion_claw_double", "stomp", "gravity_dive", "spiral_assault", "starcaller_cry", "gravity_meteor", "enhanced_earthheave", "light_of_miquella", "ring_of_light", "lightspeed_slash", "lightspeed_dash", "lightspeed_side_dash", "promised_consort", "consort_meteor"],
+    "authorization": "All remaining skills first, consolidated verification afterward",
+    "source_samples_extracted": 2438,
+    "source_pages_generated": 161,
+    "source_pages_reviewed": 0,
+    "full_continuous_frame_review_complete": false,
+    "runtime_acceptance": "All 16 batch skills user accepted in Forge; eight logged and eight explicitly reaffirmed without matching log entries; see runtime_validation.json/batch_rebuild_v13/forge_world_run",
+    "basis": "Existing native-frame review notes guided candidate full-body poses; new full-sequence pages await consolidated review",
+    "source_naming": "<skill>_full_native_batch_v13/study.json under sampling.reference_root",
+    "shared_motifs": ["spiral_assault", "enhanced_earthheave"],
+    "scope": "Candidate implementation coverage is complete; original-game calibration is not certified by generation or numeric checks"
+  },
+  "fullbody_rebuilds": {
+    "left_combo_cross": {
+      "study": "left_cross_full_native_v12/study.json",
+      "source_samples": 126,
+      "source_step_frames": 1,
+      "reviewed_pages": 8,
+      "duration_ticks": 84,
+      "contact_ticks": [11, 21, 44],
+      "stage_ticks": [[11, 3, 1], [6, 3, 9], [11, 4, 36]],
+      "default_cast_speed": 1.0,
+      "prototype_feedback": "User confirmed the motion and rhythm direction and requested integration of this skill",
+      "changes": "Reconstructed torso turn, both arm paths, crossed chest load, raised right knee, supported footfall and held open recovery",
+      "runtime_acceptance": "User accepted left cross motion, rhythm and visible contacts after Forge world test; phase-one and phase-two completions logged; not acceptance of other skills",
+      "remaining_skills": "Retain the rejected v11 data pending subsequent per-skill rebuild; not accepted"
+    },
+    "right_combo_cross": {
+      "study": "right_cross_full_native_v12/study.json",
+      "source_samples": 113,
+      "source_step_frames": 1,
+      "reviewed_pages": 8,
+      "duration_ticks": 75,
+      "contact_ticks": [11, 41],
+      "stage_ticks": [[11, 3, 6], [21, 4, 30]],
+      "default_cast_speed": 1.0,
+      "prototype_feedback": "User confirmed the real-time motion and rhythm direction and requested integration",
+      "changes": "Right descending cut, high paired side load with a pause, torso-driven diagonal release and low open recovery; no left-cross knee lift",
+      "post_review_repair": "Less than one degree wrist interpolation clamp; all contact poses and non-wrist channels unchanged",
+      "runtime_acceptance": "pending"
+    },
+    "right_combo_left_twin": {
+      "study": "right_left_twin_full_native_v12/study.json",
+      "source_samples": 111,
+      "source_step_frames": 1,
+      "reviewed_pages": 7,
+      "duration_ticks": 75,
+      "contact_ticks": [18, 40, 55],
+      "stage_ticks": [[18, 3, 5], [14, 3, 3], [9, 3, 17]],
+      "default_cast_speed": 1.0,
+      "prototype_feedback": "User confirmed the right overhead cut, left reversal and real-time rhythm; integrate both right combos",
+      "changes": "Long held overhead right cut, left sweep followed by raised recovery into the same-left reverse cut; right blade remains in its low follow-through",
+      "post_review_repair": "Less than one degree wrist interpolation clamp; all contact poses and non-wrist channels unchanged",
+      "runtime_acceptance": "pending"
+    },
+    "right_combo_tempest": {
+      "study": "tempest_full_native_v13/study.json",
+      "source_step_frames": 1,
+      "duration_ticks": 149,
+      "contact_ticks": [12, 33, 56, 82, 112],
+      "stage_ticks": [[12, 3, 5], [13, 3, 6], [14, 3, 8], [15, 4, 8], [18, 4, 33]],
+      "timing_mode": "absolute_stage_ticks",
+      "changes": "Three alternating cuts, two torso-led rotating sweeps separated by a high reload, then a low recovery; the preceding side approach is excluded",
+      "runtime_acceptance": "pending"
+    },
+    "right_combo_earthheave": {
+      "study": "earthheave_full_native_v13/study.json",
+      "source_samples": 234,
+      "source_step_frames": 1,
+      "reviewed_pages": 15,
+      "duration_ticks": 156,
+      "contact_ticks": [16, 42, 54, 87, 105],
+      "stage_ticks": [[16, 3, 5], [18, 3, 3], [6, 3, 9], [21, 5, 7], [6, 6, 45]],
+      "timing_mode": "absolute_stage_ticks",
+      "changes": "Right descending cut, left sweep and right return, asymmetric raised load, planted blades held low, then upward withdrawal and raised follow-through; blade tips checked against the ground during the hold",
+      "runtime_acceptance": "Opening pose consistency with Blockbench confirmed after serialization repair; full skill acceptance pending; see runtime_validation.json"
+    },
+    "cross_slash": {
+      "study": "cross_slash_full_native_v14/study.json",
+      "source_samples": 64,
+      "source_frames": [3698, 3761],
+      "source_step_frames": 1,
+      "source_pages_generated": 4,
+      "reviewed_pages": 0,
+      "reviewed_montages": 1,
+      "montage": "../../build/ai-previews/cross-slash-native-3698-3761.jpg",
+      "review_scope": "All 64 consecutive source frames on one compact montage; not four separately inspected pages; distant feet and flare-occluded details remain uncertain",
+      "duration_ticks": 43,
+      "contact_ticks": [17, 19],
+      "stage_ticks": [[17, 1, 0], [1, 1, 23]],
+      "timing_mode": "absolute_stage_ticks",
+      "prototype_feedback": "User confirmed real-time motion and rhythm; proceed with integration",
+      "changes": "Wide raised start, held high crossed load, forward paired downward opening, low spread hold and gradual raised recovery; original two hit events retained",
+      "runtime_acceptance": "Forge phase one and phase two: user accepted motion, rhythm and visible contacts; two complete 43-tick test casts per phase logged; not numeric damage or NeoForge acceptance"
+    }
+  },
+  "review": {
+    "skill_count": 22,
+    "native_frame_windows": 66,
+    "samples_including_overlaps": 988,
+    "unique_source_frames": 886,
+    "reviewed_sheets": 78,
+    "scope": "All listed native-frame sheets visually reviewed, including partial final pages; full-action surveys use every second source frame.",
+    "frame_bounds_meaning": "Inclusive reviewed source-frame window, not an exact inferred contact or internal damage activation frame.",
+    "contact_candidates_are_historical_search_windows": true,
+    "limitations": [
+      "Source frames are 30 fps; dense sampling cannot recover sub-frame events, hidden limbs, calibrated world distances or original hitboxes.",
+      "Overlapping windows and the two shared project motifs must not be counted as independent original attacks.",
+      "Original footage has edits, replay and flare occlusion; visual sequence confidence does not certify runtime animation or damage."
+    ]
+  },
+  "implemented_runtime_changes": [
+    "Normal three combo families use their configured active windows with unchanged per-target hit IDs",
+    "Visual clones spawn after the authoritative position locks and before impact; their authored contact tick 4 maps to the original server hit tick",
+    "A full visual budget replaces the oldest completed clone contact rather than dropping a new pending one; pending and same-tick contacts stay protected",
+    "Pending clone contacts are cancelled when their persisted parent action sequence ends or changes; completed contacts retain their fade",
+    "Shared blade windows use the left sword for both bloodflame sword events, the right sword for ring release, and both swords for earthheave withdrawal",
+    "Suspended bloodflame tear spans the frozen shape width before its existing explosion; ground telegraph and damage geometry remain unchanged"
+  ],
+  "policy": {
+    "preserve_damage": true,
+    "preserve_ranges": true,
+    "preserve_hit_counts": true,
+    "preserve_total_durations": false,
+    "timing_mode": "absolute_stage_ticks",
+    "absolute_tick_authorization": {"date": "2026-09-15", "user_approved": true, "scope": "All skills use explicit windup, release and recovery ticks for each component; remove percentage speed configuration, calibrate defaults against observed original-game rhythm, prioritize unfinished motion work", "supersedes_speed_multiplier_configuration": true},
+    "timing_authorization": {"date": "2026-09-14", "user_approved": true, "scope": "Rebuild total duration, windup, hit intervals, recovery and default cast speed using observable reference rhythm; keep damage, ranges and hit counts unchanged", "supersedes_initial_fixed_duration_policy": true},
+    "allowed_changes": ["full_body_pose", "event_alignment", "trajectory", "telegraph_hit_vfx_consistency", "total_duration", "absolute_stage_timing"],
+    "unverified_original_numbers_require_user_decision": true,
+    "video_contact_is_not_internal_hitbox_activation": true
+  },
+  "sources": {
+    "primary": {
+      "bvid": "BV1W3YLe4Eek",
+      "author": "苍星化羽",
+      "published": "2024-08-10",
+      "quality": 64,
+      "resolution": [1280, 720],
+      "fps": [30, 1],
+      "sha256": "902664f3ab2bfe2821d22cb9fba172e18b17ac4cde768e57b6192b3277b5cbd9",
+      "limitation": "Pre-1.14 edited showcase; crossfades separate attacks. Do not import exact original timing as current-patch facts."
+    },
+    "secondary": {
+      "bvid": "BV1sdFFevEXe",
+      "author": "NaNa_娜娜米",
+      "published": "2025-01-25",
+      "quality": 64,
+      "resolution": [1278, 720],
+      "fps": [30, 1],
+      "sha256": "27f47ad5a28ca84cf849f1fb94bb0550cd54c62e66afcca9cee7eca01f9feea7",
+      "limitation": "Edited commentary with repeats and pauses; publication date does not prove capture patch."
+    }
+  },
+  "sampling": {
+    "survey_every_source_frames": 2,
+    "contact_every_source_frames": 1,
+    "frame_index_source": "decoder_showinfo_before_frame_selection",
+    "reference_root": "../../docs/assets/reference/promised-consort-radahn/motion-v10",
+    "spatial_measurement": "No calibrated world distance or 3D joint angles can be inferred from moving-camera footage alone."
+  },
+  "skills": {
+    "stomp": {
+      "source": "primary",
+      "seconds": [78.933, 80.533],
+      "survey": "p1_opening_074_088/study.json",
+      "contact_candidates_seconds": [[79.867, 80.0]],
+      "native_frame_review": [
+        {"window": "contact_stomp_0", "source_frames": [2393, 2404], "pages": 1, "role": "foot_plant_and_debris", "observation": "右脚落下、躯干前压，随后扬石；后接高位剑劈排除。"}
+      ],
+      "observed": "身体先向承重左腿偏移，右膝抬高，双剑向两侧保持平衡；右脚快速落下，躯干前压，脚掌接地后前方碎石与尘土才扬起。紧接的高位剑劈是后续动作，不属于踩地本身。",
+      "animation_target": "抬右膝与左腿承重明确，脚掌接地对齐原始14tick事件，地面碎石稍后展开；不添加后接剑击。",
+      "confidence": "native-frame footfall window reviewed; visible right-foot plant and following debris, not internal hitbox timing"
+    },
+    "promised_consort": {
+      "source": "secondary",
+      "seconds": [196.533, 204.067],
+      "survey": "p2_consort_193_219/study.json",
+      "contact_candidates_seconds": [[197.8, 198.0], [198.533, 198.733], [199.867, 200.067], [200.667, 200.867], [201.867, 202.033], [202.033, 202.2]],
+      "native_frame_review": [
+        {"window": "contact_promised_consort_0", "source_frames": [5931, 5944], "pages": 1, "role": "first_entry_slash", "observation": "蓄光后第一次向前切入，刀弧先于后出的光效。"},
+        {"window": "contact_promised_consort_1", "source_frames": [5952, 5965], "pages": 1, "role": "second_entry_slash", "observation": "交替第二刀，身体随剑切向另一侧，为旋扫收剑。"},
+        {"window": "contact_promised_consort_first_spin", "source_frames": [5967, 5987], "pages": 2, "role": "first_rotating_sweep", "observation": "补查窗口：约199.2秒双剑横扫身前，随后向侧面回带；不是下一次起跳。"},
+        {"window": "contact_promised_consort_2", "source_frames": [5993, 6007], "pages": 1, "role": "second_rotating_sweep", "observation": "约200.0秒第二次腰部横扫，挥过后收剑。原候选序号不代表第几次旋扫。"},
+        {"window": "contact_promised_consort_3", "source_frames": [6017, 6031], "pages": 1, "role": "jump_transition_not_a_contact", "observation": "此窗已经收腿起跳，撤销此前第二次旋扫接触的标签；不增加命中。"},
+        {"window": "contact_promised_consort_4", "source_frames": [6053, 6064], "pages": 1, "role": "body_landing", "observation": "跳跃落斩向前下压，落地强光和碎石遮住部分剑身。"},
+        {"window": "contact_promised_consort_5", "source_frames": [6057, 6070], "pages": 1, "role": "post_landing_columns", "observation": "与落地窗部分重叠，密集光柱随后出现，不作为额外本体刀击。"}
+      ],
+      "observed": "先在远处高位蓄剑聚光，再向玩家切入，两次交替斩击后把双剑带到身体一侧，转腰旋扫并换侧回带；最后双脚离地，跳起后持剑下压张开，落地时出现强光和碎石，紧随其后是密集竖直光柱。约204.1秒开始淡入重放。",
+      "animation_target": "保持两次开路、两次旋扫和一次跳跃落斩的五次本体合同；旋扫间加入清楚回带，减少匀速空转。原项目的两次分身回切与光环作为改编保留，不从光柱画面推断新增次数。",
+      "confidence": "native-frame windows and supplemental first spin reviewed; second spin and jump relabeled; full-body turns partly obscured by hair"
+    },
+    "consort_meteor": {
+      "source": "secondary",
+      "seconds": [238.267, 252.267],
+      "survey": "p2_meteor_237_256/study.json",
+      "contact_candidates_seconds": [[238.6, 238.8], [240.333, 240.533], [247.733, 247.933], [248.733, 248.933], [249.2, 249.4]],
+      "native_frame_review": [
+        {"window": "contact_consort_meteor_0", "source_frames": [7155, 7168], "pages": 1, "role": "raised_sword_charge", "observation": "双剑高举聚光，随后进入俯身压缩；不是伤害窗口。"},
+        {"window": "contact_consort_meteor_1", "source_frames": [7206, 7219], "pages": 1, "role": "departure", "observation": "下压后爆发起跳离开画面，光迹残留；不据此增加离场伤害。"},
+        {"window": "contact_consort_meteor_2", "source_frames": [7428, 7441], "pages": 1, "role": "reentry_light_trace", "observation": "可确认斜向细光迹；不能将整个窗口统一标为地面开始变亮或精确锁点。"},
+        {"window": "contact_consort_meteor_3", "source_frames": [7458, 7471], "pages": 1, "role": "reentry_flare", "observation": "再入强光先出现，本体关节被遮住，不能重建精确落地姿势。"},
+        {"window": "contact_consort_meteor_4", "source_frames": [7473, 7486], "pages": 1, "role": "ground_burst", "observation": "闪光后的地面爆发与飞石；无法由画面测出Minecraft伤害半径。"}
+      ],
+      "alternate_seconds": [252.467, 255.933],
+      "observed": "双剑从两侧高举，在头顶聚起白金光，随后俯身下压、双剑向外展开，爆发式起跳离场；镜头里只剩跑位和余光。回归先可辨斜向细光迹，然后强光与地面爆发。252.3秒之后换成抬头看星点的重放：小光点突然出现十字星芒，再沿斜向光迹落下。",
+      "animation_target": "改清楚举剑聚光、俯身压缩和离场起跳，保留低光停顿、星芒再入及落地缓冲。121原始tick落地、21.6/31.2/36格半径和落地前免伤不变。",
+      "confidence": "native-frame departure and reentry windows reviewed; return pose obscured by flare, replay is not a second cast"
+    },
+    "enhanced_earthheave": {
+      "source": "primary",
+      "seconds": [92.0, 95.333],
+      "survey": "phase_one_086_094/study.json",
+      "following_survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[92.667, 93.067], [93.467, 93.867]],
+      "native_frame_review": [
+        {"window": "contact_enhanced_earthheave_0", "source_frames": [2777, 2797], "pages": 2, "role": "shared_ground_plant", "observation": "共用掀地连段的双剑入地和低位停留，不是另一套独立原作短招。"},
+        {"window": "contact_enhanced_earthheave_1", "source_frames": [2801, 2821], "pages": 2, "role": "shared_upward_withdrawal", "observation": "双剑自低处向上拔起，随后飞石；四列圣光属于项目保留的强化结构。"}
+      ],
+      "secondary_context": "p2_consort_193_219/study.json",
+      "observed": "此ID是项目独立拆出的强化掀地。可核实的原作动作依据是掀地连段末尾双剑入地、低位停留与向上拔剑；二阶段光柱顺序另以连舞落地片段核对。没有证据声称这两段视频含完全对应的独立短招。",
+      "animation_target": "保留20tick入地及既有裂地、四列圣光的数值合同，修正其后从低位拔起的手臂路径。原作入地到拔剑的独立伤害分配不擅自迁入本技能。",
+      "confidence": "native-frame shared motif reviewed; project adaptation, independent original move identity unverified"
+    },
+    "light_of_miquella": {
+      "source": "secondary",
+      "seconds": [29.267, 36.467],
+      "survey": "p2_light_028_040/study.json",
+      "contact_candidates_seconds": [[30.6, 30.8], [34.667, 34.8], [35.467, 35.667]],
+      "native_frame_review": [
+        {"window": "contact_light_of_miquella_0", "source_frames": [915, 928], "pages": 1, "role": "ascent", "observation": "张臂升空和地面蓄光，非连续挥剑。"},
+        {"window": "contact_light_of_miquella_1", "source_frames": [1037, 1048], "pages": 1, "role": "main_flash", "observation": "蓄光后的主闪，晚于地面开始变亮；亮帧不能替代内部判定。"},
+        {"window": "contact_light_of_miquella_2", "source_frames": [1061, 1075], "pages": 1, "role": "delayed_columns", "observation": "主闪后竖直光柱陆续出现，和主爆分开记录。"}
+      ],
+      "observed": "本体先直立张开双臂，双剑向两侧保持接近水平，双脚渐渐离地；米凯拉发幕下垂，地面先出现光圈与细光丝，蓄光后一次主闪爆发，再分批出现细长光柱。约36.5秒是剪辑重放，不是连续第二次施法。",
+      "animation_target": "以胸腔展开、缓慢升空和稳定悬停为主，不连续挥剑；主闪和后续落柱分别按权威main/afterglow事件播放，保持原次数。",
+      "confidence": "native-frame ascent, flash and columns reviewed; apex partly off camera, hidden joints not reconstructed"
+    },
+    "lightspeed_side_dash": {
+      "source": "secondary",
+      "seconds": [47.333, 51.4],
+      "survey": "p2_side_044_055/study.json",
+      "contact_candidates_seconds": [[48.067, 48.267], [49.133, 49.333], [50.467, 50.733], [51.267, 51.4]],
+      "native_frame_review": [
+        {"window": "contact_lightspeed_side_dash_0", "source_frames": [1439, 1453], "pages": 1, "role": "side_step", "observation": "侧移聚光的前置动作，不是本体最终横扫。"},
+        {"window": "contact_lightspeed_side_dash_1", "source_frames": [1470, 1483], "pages": 1, "role": "leading_images", "observation": "侧移后亮影向前先行，重叠光带不能用于额外计数。"},
+        {"window": "contact_lightspeed_side_dash_2", "source_frames": [1511, 1525], "pages": 1, "role": "body_sweep", "observation": "本体低姿态横扫抵达，和侧跳起手分开。"},
+        {"window": "contact_lightspeed_side_dash_3", "source_frames": [1535, 1546], "pages": 1, "role": "delayed_columns", "observation": "本体扫击后的近身落柱；窗口末尾保留为挥后上下文。"}
+      ],
+      "observed": "屈身聚光后快速横向跳开，身后留下条带状亮迹；前向幻影沿侧移后的方向接近玩家，最后本体以低姿态横扫抵达，再出现延迟的近身光柱。本体落点处并不是再次侧移开头的动作。",
+      "animation_target": "侧跳准备、幻影先行和本体扫击三段清楚分离；分身必须提前生成且沿冻结攻击线摆放，保留当前三分身和一次本体命中。",
+      "confidence": "native-frame side step, leading images, body sweep and columns reviewed; overlapping images not used for extra hit counts"
+    },
+    "lightspeed_dash": {
+      "source": "secondary",
+      "seconds": [86.0, 91.133],
+      "survey": "p2_dash_088_100/study.json",
+      "preceding_survey": "p2_dash_086_088/study.json",
+      "contact_candidates_seconds": [[88.267, 88.533], [89.533, 89.867], [89.933, 90.133]],
+      "native_frame_review": [
+        {"window": "contact_lightspeed_dash_0", "source_frames": [2645, 2659], "pages": 1, "role": "leading_dash_images", "observation": "亮影沿前方轴线突进；近景发幕遮挡，不可靠重数残像。"},
+        {"window": "contact_lightspeed_dash_1", "source_frames": [2682, 2701], "pages": 2, "role": "body_pass_and_followthrough", "observation": "本体低位贯穿后停住，刀路与身体部分被发幕遮住。"},
+        {"window": "contact_lightspeed_dash_2", "source_frames": [2694, 2707], "pages": 1, "role": "delayed_light_path", "observation": "与本体挥后窗重叠，沿路光柱后出，不重复认作本体接触。"}
+      ],
+      "observed": "双剑向身体一侧收拢，屈膝压低躯干并聚光；亮影先向前冲过，本体随后沿同一轴线快速突进并在终点低姿态停住，落柱沿冲刺经过的地面稍后出现。近距离镜头一度被发幕覆盖，无法逐个可靠计数残像。",
+      "animation_target": "保持前倾与剑刃朝前的低位架势，不在冲刺中反复回到站姿；轨迹、分身和延迟光路使用同一锁定方向，保留当前四分身合同。",
+      "confidence": "native-frame pass and trailing-light windows reviewed; body and image count remain partly occluded"
+    },
+    "lightspeed_slash": {
+      "source": "secondary",
+      "seconds": [103.267, 108.2],
+      "survey": "p2_slash_100_114/study.json",
+      "contact_candidates_seconds": [[103.667, 103.867], [104.867, 105.067], [105.533, 105.733], [106.2, 106.4], [106.6, 106.8], [107.4, 107.6]],
+      "native_frame_review": [
+        {"window": "contact_lightspeed_slash_0", "source_frames": [3107, 3121], "pages": 1, "role": "vertical_takeoff", "observation": "压膝起跳并举剑，分身开始前本体有空中停留。"},
+        {"window": "contact_lightspeed_slash_1", "source_frames": [3143, 3157], "pages": 1, "role": "first_descending_image", "observation": "先行纵向落影，可见刀弧，本体仍在上方。"},
+        {"window": "contact_lightspeed_slash_2", "source_frames": [3162, 3175], "pages": 1, "role": "second_descending_image", "observation": "第二个先行落影，和本体落地分别记录。"},
+        {"window": "contact_lightspeed_slash_3", "source_frames": [3183, 3196], "pages": 1, "role": "third_descending_image", "observation": "第三个落影及其挥后，不把高亮残迹算成追加命中。"},
+        {"window": "contact_lightspeed_slash_4", "source_frames": [3195, 3208], "pages": 1, "role": "body_landing", "observation": "实剑落向前下方并扬石，接低位缓冲。"},
+        {"window": "contact_lightspeed_slash_5", "source_frames": [3219, 3232], "pages": 1, "role": "delayed_columns", "observation": "本体落地后光柱补出，后续普通横扫不纳入本技能。"}
+      ],
+      "observed": "本体原地压膝聚光，垂直起跳，在高处保持举剑；三个明亮的纵向幻影依次下劈，本体随后落地，实剑与扬起石块同时出现在前下方。落地后光柱补出，之后还会接普通横扫，那两刀属于后续连段而非当前项目独立技能。",
+      "animation_target": "本体在分身攻击期间保持空中蓄剑，直到自身事件才下降；三个分身的自身第4tick落刃对齐各自命中，本体落地后有低位缓冲。",
+      "confidence": "native-frame takeoff, three images, body landing and columns reviewed; follow-up slashes excluded"
+    },
+    "ring_of_light": {
+      "source": "secondary",
+      "seconds": [116.067, 118.467],
+      "survey": "p2_ring_115_126/study.json",
+      "contact_candidates_seconds": [[117.267, 117.467]],
+      "native_frame_review": [
+        {"window": "contact_ring_of_light_0", "source_frames": [3515, 3529], "pages": 1, "role": "right_sword_release", "observation": "右剑从高位向前下挥，光环展开；左剑仍低持，后接横扫排除。"}
+      ],
+      "observed": "右剑高举至头侧附着金色光芒，左剑低持；聚光短暂停留后，右剑向前下方挥出近水平光环，本体随之下沉，再起身准备后续横扫。后续横扫与光柱不能计作光环本身的第二次命中。",
+      "animation_target": "使用右剑举起和释放，左剑保持低位，替代旧双剑交叉起手；光环只沿当前配置内外半径扩展，范围和命中上限保持。",
+      "confidence": "native-frame release and native-resolution raised pose reviewed; anatomical right confirmed, world distance not calibrated"
+    },
+    "right_combo_earthheave": {
+      "source": "primary",
+      "seconds": [88.333, 96.133],
+      "survey": "phase_one_086_094/study.json",
+      "following_survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[89.067, 89.267], [90.333, 90.533], [90.933, 91.133], [92.667, 93.067], [93.467, 93.867]],
+      "native_frame_review": [
+        {"window": "contact_right_combo_earthheave_0", "source_frames": [2669, 2683], "pages": 1, "role": "right_opening", "observation": "高位右剑落劈并挥过。"},
+        {"window": "contact_right_combo_earthheave_1", "source_frames": [2706, 2719], "pages": 1, "role": "left_followup", "observation": "左剑接反向横切，肩腰随刀路换侧。"},
+        {"window": "contact_right_combo_earthheave_2", "source_frames": [2724, 2737], "pages": 1, "role": "right_followup", "observation": "第三刀回切，之后提双剑而非直接连续砸地。"},
+        {"window": "contact_right_combo_earthheave_3", "source_frames": [2777, 2797], "pages": 2, "role": "ground_plant_and_hold", "observation": "双剑砸入地面，躯干俯低，入地后保留低位停顿。"},
+        {"window": "contact_right_combo_earthheave_4", "source_frames": [2801, 2821], "pages": 2, "role": "upward_withdrawal", "observation": "从低位向上拔剑掀石；末页仍是飞石，不是再次下砸。"}
+      ],
+      "observed": "右剑高位下劈后接反向横切，再第三刀回切；双手拉高，剑向地面砸入，重心降至前腿，随后仍保持低位，向上拔剑并掀起前方地面。下砸与掀起之间可见独立的停顿。",
+      "animation_target": "保留三次开路斩、入地与拔起的五段结构；末段要由低处向上发力，不能连续使用两个下砸姿势。",
+      "confidence": "all five native-frame windows reviewed; ground plant, low hold and upward withdrawal distinguished"
+    },
+    "lion_claw": {
+      "source": "primary",
+      "seconds": [137.267, 140.133],
+      "survey": "phase_one_124_154/study.json",
+      "contact_candidates_seconds": [[138.8, 139.0]],
+      "native_frame_review": [
+        {"window": "contact_lion_claw_0", "source_frames": [4161, 4174], "pages": 1, "role": "somersault_landing", "observation": "纵向翻身结束后双剑落向地面，胸腹前俯，低位缓冲再起身。"}
+      ],
+      "observed": "双剑抬高，屈膝下压后纵向前空翻；空中躯干卷起，最后伸展双臂将两剑向下落地，胸腹随之俯低，双剑停在前下方，低位缓冲后才站起。",
+      "animation_target": "纵向翻身而不是水平转圈；落地前收腿，落地时双剑与重心一起下沉，保持明显的恢复停顿。",
+      "confidence": "native-frame landing reviewed; longitudinal flip established by full-action survey"
+    },
+    "lion_claw_double": {
+      "source": "primary",
+      "seconds": [142.6, 145.667],
+      "survey": "phase_one_124_154/study.json",
+      "preceding_action_seconds": [140.467, 142.6],
+      "contact_candidates_seconds": [[143.8, 144.0]],
+      "native_frame_review": [
+        {"window": "contact_lion_claw_double_0", "source_frames": [4311, 4324], "pages": 1, "role": "followup_landing", "observation": "追击前翻后的第二次落剑和更深低位恢复；独立项目动作仍只结算一次。"}
+      ],
+      "observed": "第一次落地后不完全站起，低位压缩腿部，再次从前方插剑位置起跳前翻；第二次双剑砸地后停顿更深。第一击与追击之间没有编辑切换。",
+      "animation_target": "追击起点衔接前一次低位，不能再从普通站立待机蓄势；维持本项目独立追击技能的一次伤害。",
+      "confidence": "native-frame follow-up landing reviewed; continuous double-chain survey supports the low starting pose"
+    },
+    "left_combo_bloodflame": {
+      "source": "primary",
+      "seconds": [146.067, 149.333],
+      "survey": "phase_one_124_154/study.json",
+      "contact_candidates_seconds": [[146.733, 146.933], [147.733, 147.933], [148.733, 148.933]],
+      "native_frame_review": [
+        {"window": "contact_left_combo_bloodflame_0", "source_frames": [4398, 4411], "pages": 1, "role": "left_thrust", "observation": "左剑前刺，前端红色亮点形成；右剑不是第二个前刺。"},
+        {"window": "contact_left_combo_bloodflame_1", "source_frames": [4428, 4441], "pages": 1, "role": "same_left_sword_tear", "observation": "同一把左剑由刺出位置横带，裂痕横跨胸前；撤销第二刀可能为右剑的旧疑问。"},
+        {"window": "contact_left_combo_bloodflame_2", "source_frames": [4458, 4471], "pages": 1, "role": "delayed_bloodflame_burst", "observation": "悬空横向裂痕停留后爆开，本体已经收剑，非第三次挥剑。"}
+      ],
+      "observed": "左剑后收再刺向前方，刺点先形成红色亮点；同一把左剑由刺出的前端横向带过，留下胸前高度的红色裂痕，右剑保持低持。裂痕停留一小段时间才爆开，本体在裂痕形成后已有撤剑收势。",
+      "animation_target": "同左剑刺、横划和延迟爆燃分开，右臂全程低持；悬空裂痕横跨冻结形状的宽度，不从起手沿地面喷射，裂痕与爆燃共用公告位置。",
+      "confidence": "all three native-frame windows reviewed; same anatomical left sword confirmed, flare is not internal hitbox evidence"
+    },
+    "gravity_meteor": {
+      "source": "primary",
+      "seconds": [149.333, 156.933],
+      "survey": "phase_one_124_154/study.json",
+      "following_survey": "phase_one_154_184/study.json",
+      "contact_candidates_seconds": [[150.267, 150.4], [150.933, 151.133], [153.733, 154.0]],
+      "native_frame_review": [
+        {"window": "contact_gravity_meteor_0", "source_frames": [4505, 4516], "pages": 1, "role": "sword_plant", "observation": "紫电附刃后压剑入地，低位停留。"},
+        {"window": "contact_gravity_meteor_1", "source_frames": [4524, 4537], "pages": 1, "role": "rock_lift", "observation": "拔剑时岩石上升，本体随之升空。"},
+        {"window": "contact_gravity_meteor_2", "source_frames": [4608, 4624], "pages": 2, "role": "airborne_release", "observation": "空中停留后旋身发令，岩块出发；齐射观感不用于改写项目八枚发射规则。"}
+      ],
+      "observed": "双剑先附着紫色重力电弧，向地面压下后在低位停留，拔剑同时举起多块岩石并升空；岩石围绕本体短暂停留，本体旋身发出指令后岩石才向目标射出。",
+      "animation_target": "插地、拔剑举岩、悬停和发射分相；保留现有八枚逐次发射与可击碎追踪规则，齐射的原作观感只能由准备阶段群岩表现补足。",
+      "confidence": "native-frame plant, lift and release reviewed; exact original rock count occluded and not adopted as a balance change"
+    },
+    "gravity_dive": {
+      "source": "primary",
+      "seconds": [157.067, 161.0],
+      "survey": "phase_one_154_184/study.json",
+      "contact_candidates_seconds": [[158.867, 159.067], [159.133, 159.333]],
+      "native_frame_review": [
+        {"window": "contact_gravity_dive_0", "source_frames": [4763, 4777], "pages": 1, "role": "low_arrival", "observation": "螺旋推进结束后压低抵达地面，近景被披风和紫光部分遮住。"},
+        {"window": "contact_gravity_dive_1", "source_frames": [4770, 4783], "pages": 1, "role": "following_gravity_spikes", "observation": "尖刺和冲击随后上涌，与抵达窗重叠，不把亮帧当精确剑击判定。"}
+      ],
+      "observed": "双剑聚起紫光，跃起后身体连同双刃卷成向前推进的螺旋，靠近目标时降低高度，落地压剑，外围重力尖刺随后上涌，再低位收势。",
+      "animation_target": "身体前倾与卷转要集中于飞行阶段；剑击、落地冲击和碎石余效必须按顺序出现。",
+      "confidence": "native-frame low arrival and following spikes reviewed; cloak/flare occlusion and moving camera limit contact and distance inference"
+    },
+    "spiral_assault": {
+      "source": "primary",
+      "seconds": [157.067, 161.0],
+      "survey": "phase_one_154_184/study.json",
+      "contact_candidates_seconds": [[158.867, 159.067], [159.133, 159.333]],
+      "native_frame_review": [
+        {"window": "contact_spiral_assault_0", "source_frames": [4763, 4777], "pages": 1, "role": "shared_spiral_arrival", "observation": "共用重力旋坠的前进轴卷转与低位抵达依据。"},
+        {"window": "contact_spiral_assault_1", "source_frames": [4770, 4783], "pages": 1, "role": "shared_landing_followthrough", "observation": "落地后展开和余效；不据此声称存在另一个原作无重力技能。"}
+      ],
+      "observed": "现有项目把螺旋突进单列为技能；视频中可核实的相近动作是同一组重力螺旋跃进与落地。没有证据将其说成另一套独立原作无重力招式。",
+      "animation_target": "沿用证据中的前进轴卷转和最终展开姿态，保留项目原有独立动作ID、次数、范围与伤害，不擅自合并或增删技能。",
+      "confidence": "native-frame shared motif reviewed; independent original move identity unverified"
+    },
+    "starcaller_cry": {
+      "source": "primary",
+      "seconds": [161.267, 166.733],
+      "survey": "phase_one_154_184/study.json",
+      "contact_candidates_seconds": [[162.067, 162.267], [164.0, 164.2], [164.333, 164.533]],
+      "native_frame_review": [
+        {"window": "contact_starcaller_cry_0", "source_frames": [4859, 4873], "pages": 1, "role": "pull_effect", "observation": "合剑聚力时紫色波纹与玩家可见位移，不当作下一次剑击。"},
+        {"window": "contact_starcaller_cry_1", "source_frames": [4917, 4930], "pages": 1, "role": "raised_sword_slam", "observation": "张臂高举后向前下砸，低位压缩清楚。"},
+        {"window": "contact_starcaller_cry_2", "source_frames": [4926, 4939], "pages": 1, "role": "following_spikes", "observation": "砸落后尖刺成片升起，和合剑拉扯分开。"}
+      ],
+      "observed": "屈膝交叉双剑聚力，紫色冲击向外放出同时将玩家拉近；随后本体张臂伸展，双剑举到头顶交叉，短暂停顿后砸落，身周尖刺成片升起，最后渐渐散落。",
+      "animation_target": "拉扯与下砸分成不同姿态峰值；范围提示不能因为吸引仍持续而误提示为下一次伤害，尖刺保留低亮前兆再生效。",
+      "confidence": "native-frame pull, slam and spikes reviewed; attraction activation inferred only from visible displacement"
+    },
+    "right_combo_cross": {
+      "source": "primary",
+      "seconds": [96.6, 100.333],
+      "survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[97.067, 97.2], [98.533, 98.8]],
+      "native_frame_review": [
+        {"window": "contact_right_combo_cross_0", "source_frames": [2909, 2920], "pages": 1, "role": "right_sweep", "observation": "右剑斜扫先经过身前，挥过后仍有停留。"},
+        {"window": "contact_right_combo_cross_1", "source_frames": [2952, 2968], "pages": 2, "role": "crossed_press_and_open", "observation": "双剑高位合拢后下压张开，尘土在后；末页是挥后，不是追加一击。"}
+      ],
+      "observed": "右剑起手带转腰斜扫；第一刀挥过后暂留在身体另一侧，双剑重新高位合拢，再向两侧交叉展开。第二段重心明显下沉，结束后双剑低持并逐渐复位。",
+      "animation_target": "区分单剑斜扫与双剑展开；保留两段之间的提剑停顿，不把它们做成连续匀速摆臂。",
+      "confidence": "both native-frame windows reviewed; blade passage distinguished from following debris"
+    },
+    "left_combo_cross": {
+      "source": "primary",
+      "seconds": [100.533, 104.733],
+      "survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[100.933, 101.133], [101.533, 101.667], [102.667, 102.867]],
+      "native_frame_review": [
+        {"window": "contact_left_combo_cross_0", "source_frames": [3024, 3037], "pages": 1, "role": "left_entry", "observation": "左剑独立切入，肩腰随刀路带动。"},
+        {"window": "contact_left_combo_cross_1", "source_frames": [3042, 3055], "pages": 1, "role": "right_entry", "observation": "右剑接反向横扫，没有双剑同高齐摆。"},
+        {"window": "contact_left_combo_cross_2", "source_frames": [3077, 3091], "pages": 1, "role": "crossed_downward_press", "observation": "交叉双剑前下压切，重心随落脚降低；尘土晚于刀刃通过。"}
+      ],
+      "observed": "左剑先斜向横切，右剑接反向横扫；双剑随后在胸前交叉升起，抬腿前压后交叉向下劈落并张开。末击后有低姿态停顿，尘土晚于刀路到达身体前方出现。",
+      "animation_target": "v12 单招全身重建：左11、右21、交叉压切44，总长84tick、默认1倍。肩腰反向带刀，双剑在胸前竖起交叉而非高过头顶，抬右膝后落脚下压，展开收势保持后再回低持；伤害、范围、次数不变。",
+      "confidence": "all three native-frame windows reviewed; final downward press confirmed instead of a third level sweep"
+    },
+    "right_combo_left_twin": {
+      "source": "primary",
+      "seconds": [104.933, 108.667],
+      "survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[105.733, 105.933], [106.8, 107.067], [107.6, 107.8]],
+      "native_frame_review": [
+        {"window": "contact_right_combo_left_twin_0", "source_frames": [3168, 3181], "pages": 1, "role": "right_downward_cut", "observation": "右剑高位向前下方落劈。"},
+        {"window": "contact_right_combo_left_twin_1", "source_frames": [3201, 3217], "pages": 2, "role": "left_outward_sweep", "observation": "左剑扫出，末页仍是同一刀的挥后，不应回待机。"},
+        {"window": "contact_right_combo_left_twin_2", "source_frames": [3225, 3238], "pages": 1, "role": "left_reverse_cut", "observation": "同一把左剑由上一刀末端反向回切，之后才恢复低持。"}
+      ],
+      "observed": "右剑从高位向前下方劈落；左剑接横扫，挥过后不退回待机，顺势反向扫回。躯干随刀路左右转动，末击后肩臂才重新向外打开。",
+      "animation_target": "右手下劈与左手两次反向扫击分开，左手第二刀由上一刀末端直接回带。",
+      "confidence": "all three native-frame windows reviewed; continuous left-sword reversal confirmed"
+    },
+    "right_combo_tempest": {
+      "source": "primary",
+      "seconds": [108.867, 117.2],
+      "survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[110.2, 110.4], [111.267, 111.467], [112.4, 112.667], [113.667, 114.0], [115.2, 115.467]],
+      "native_frame_review": [
+        {"window": "contact_right_combo_tempest_0", "source_frames": [3303, 3316], "pages": 1, "role": "right_opening", "observation": "右剑第一刀有独立挥过。"},
+        {"window": "contact_right_combo_tempest_1", "source_frames": [3335, 3349], "pages": 1, "role": "left_followup", "observation": "左剑切向另一侧，为下一次回切带腰。"},
+        {"window": "contact_right_combo_tempest_2", "source_frames": [3369, 3385], "pages": 2, "role": "right_followup", "observation": "右剑第三刀结束后才把双剑蓄向侧上方。"},
+        {"window": "contact_right_combo_tempest_3", "source_frames": [3407, 3424], "pages": 2, "role": "first_rotating_sweep", "observation": "双剑带腰斜向旋扫，末页已是挥过与回带，不是匀速持续空转。"},
+        {"window": "contact_right_combo_tempest_4", "source_frames": [3453, 3469], "pages": 2, "role": "second_rotating_sweep", "observation": "另一次蓄势后双剑再扫，随后的低位收势没有额外一击。"}
+      ],
+      "observed": "先侧移接近，右、左、右三次刀击后，双剑举至侧上方蓄力，再展开双剑转腰旋扫；收至另一侧高位后再作第二次旋扫。两次旋扫之间有清楚的回带停顿，末段不是持续匀速旋转。",
+      "animation_target": "保留三次单剑开路、两次双剑旋扫及其停顿；侧移是此段的前接行为，不擅自增加本技能连击次数。",
+      "alternate_seconds": [117.467, 122.867],
+      "confidence": "all five native-frame windows reviewed; visible reload between sweeps, original interval not imported into retained project timing"
+    },
+    "cross_slash": {
+      "source": "primary",
+      "seconds": [123.267, 125.4],
+      "fullbody_study": "cross_slash_full_native_v14/study.json",
+      "survey": "phase_one_124_154/study.json",
+      "preceding_survey": "phase_one_094_124/study.json",
+      "contact_candidates_seconds": [[124.067, 124.267]],
+      "native_frame_review": [
+        {"window": "contact_cross_slash_0", "source_frames": [3719, 3733], "pages": 1, "role": "crossed_cut_and_dust", "observation": "双刃先压切向外打开，随后尘浪向前，不在起手交叉时结算地面效果。"}
+      ],
+      "observed": "双剑由外侧收至胸前交叉高位，身体小幅后蓄后向前压，双刃向下外侧打开；地面尘土沿玩家方向先后扬起，双剑最后停在身体两侧再缓慢抬回。",
+      "animation_target": "先合刃再压切张开，刀刃挥落与随后地面效果分开，不能在起手交叉时先结算地面命中。",
+      "confidence": "64 consecutive source frames reviewed on one montage; real-time full-body prototype approved; visible effects are not calibrated original-game damage boundaries"
+    }
+  }
+}

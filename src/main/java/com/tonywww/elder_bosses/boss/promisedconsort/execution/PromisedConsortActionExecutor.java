@@ -57,6 +57,7 @@ public final class PromisedConsortActionExecutor {
     private Vec2 lockedFacing;
     private SkillTuning activeTuning = SkillTuning.NEUTRAL;
     private PromisedConsortActionSnapshot executingAction;
+    private List<PromisedConsortActionSoundPlan.TimedCue> soundPlan;
 
     public PromisedConsortActionExecutor(
             Host host,
@@ -72,12 +73,26 @@ public final class PromisedConsortActionExecutor {
         Objects.requireNonNull(action, "action");
         prepareAction(action);
         executingAction = action;
-        activeTuning = catalog.skillConfig().get(action.actionId()).tuning();
+        activeTuning = catalog.skill(action).tuning();
+        if(action.rangedCounter() || action.actionId()==PromisedConsortActionId.GRAVITY_REPRISAL) {
+            if(!prepareRangedPath(action)) return tickPersistentHazards();
+        } else repositionForNextStrike(action);
+        if (action.actionId() == PromisedConsortActionId.LIGHT_OF_MIQUELLA) moveHolyFlight(action);
+        if (isLion(action) && catalog.timeline(action).activeStartTick(0) >= 4 && !moveLionClaw(action)) return tickPersistentHazards();
+        if (action.actionId() == PromisedConsortActionId.GRAVITY_METEOR && catalog.timeline(action).stages().size() > 4
+            && !moveMeteorSummon(action)) return tickPersistentHazards();
+        if (!action.rangedCounter() && action.actionId() == PromisedConsortActionId.LIGHTSPEED_DASH
+            && catalog.timeline(action).stages().size() > 2 && !moveLightspeedBody(action)) return tickPersistentHazards();
+        if (action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO && !moveCrossLeap(action)) return tickPersistentHazards();
         Vec3 predictionOrigin = host.boss().position();
         updateTelegraphs(action, predictionOrigin);
+        spawnAnnouncedClones(action);
         List<PromisedConsortHitOutcome> outcomes = new ArrayList<>();
         executeAction(action, outcomes);
+        if(lockedPoints.containsKey("ranged_cancelled")) return List.copyOf(outcomes);
+        tickActionSounds(action);
         updateTelegraphs(action, predictionOrigin);
+        spawnAnnouncedClones(action);
         tickHazards(outcomes);
         return List.copyOf(outcomes);
     }
@@ -86,6 +101,262 @@ public final class PromisedConsortActionExecutor {
         List<PromisedConsortHitOutcome> outcomes = new ArrayList<>();
         tickHazards(outcomes);
         return List.copyOf(outcomes);
+    }
+
+    private static boolean isLion(PromisedConsortActionSnapshot action) {
+        return action.actionId() == PromisedConsortActionId.LION_CLAW || action.actionId() == PromisedConsortActionId.LION_CLAW_DOUBLE;
+    }
+
+    public void prepareOpeningLion(PromisedConsortActionSnapshot action) {
+        prepareAction(action);
+        lockedPoints.put("lion_opening", Vec3.ZERO);
+    }
+
+    public boolean openingLion() {
+        return lockedPoints.containsKey("lion_opening") && !lockedPoints.containsKey("lion_cancelled");
+    }
+
+    private boolean moveLionClaw(PromisedConsortActionSnapshot action) {
+        if (lockedPoints.containsKey("lion_cancelled")) return false;
+        if (!once(action, "lion_move:" + action.actionTick())) return true;
+        int impact = catalog.timeline(action).activeStartTick(0);
+        var path = openingLion() ? PromisedConsortLionClawPath.opening(impact, config.instantGuard().defaultCueLeadTicks())
+                : PromisedConsortLionClawPath.create(impact, config.instantGuard().defaultCueLeadTicks(), 4, MAX_CONTROLLED_MOVEMENT_PER_TICK);
+        Vec3 origin = lockedPoints.computeIfAbsent("lion_origin", unused -> host.boss().position());
+        lockedPoints.putIfAbsent("lion_lock", new Vec3(path.lockTick(), 0, 0));
+        if (!lockedPoints.containsKey("lion_frozen")) {
+            LivingEntity target = host.currentTarget().orElse(null);
+            if (target == null || !target.isAlive() || !host.insideArena(target)) return cancelLionClaw();
+            Vec3 destination = path.destination(origin, target.position(), openingLion() ? 64 : 12,
+                    preferredSeparation(host.boss().getBbWidth(), target.getBbWidth()));
+            var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(destination.add(0, 2, 0), destination.add(0, -3, 0),
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, host.boss()));
+            if (support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK || support.getDirection() != net.minecraft.core.Direction.UP
+                    || !host.serverLevel().getBlockState(support.getBlockPos()).getFluidState().isEmpty()) return cancelLionClaw();
+            destination = new Vec3(destination.x, support.getLocation().y, destination.z);
+            if (destination.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()
+                    || !host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(destination.subtract(host.boss().position())).deflate(0.001))) return cancelLionClaw();
+            lockedPoints.put("lion_end", destination);
+            lockedFacing = direction(origin, destination).normalizedOr(facing());
+            host.faceControlled(lockedFacing);
+            if (action.actionTick() >= path.lockTick()) lockedPoints.put("lion_frozen", destination);
+        }
+        if (action.actionTick() < path.takeoffTick() || action.actionTick() > impact) return true;
+        lockedPoints.putIfAbsent("lion_flight_gravity", new Vec3(host.boss().isNoGravity() ? 1 : 0, 0, 0));
+        host.boss().setNoGravity(true);
+        host.boss().setDeltaMovement(Vec3.ZERO);
+        Vec3 destination = path.at(origin, lockedPoints.get("lion_end"), action.actionTick());
+        Vec3 remaining = destination.subtract(host.boss().position());
+        if (remaining.length() > path.maximumStep() + 0.01) return cancelLionClaw();
+        int steps = Math.max(1, (int) Math.ceil(remaining.length() / 0.25));
+        for (int index = 0; index < steps; index++) {
+            Vec3 step = remaining.scale(1.0 / steps);
+            if (!host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(step).deflate(0.001))) return cancelLionClaw();
+            host.moveControlled(step);
+        }
+        if (host.boss().position().distanceTo(destination) > 0.02) return cancelLionClaw();
+        if (action.actionTick() == impact) {
+            lockedPoints.put("lion_landed", destination);
+            releaseFlight();
+        }
+        return true;
+    }
+
+    private boolean cancelLionClaw() {
+        lockedPoints.put("lion_cancelled", Vec3.ZERO);
+        releaseFlight();
+        cancelPendingHazards();
+        if (host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.cancelRangedAction();
+        return false;
+    }
+
+    private boolean moveCrossLeap(PromisedConsortActionSnapshot action) {
+        if (lockedPoints.containsKey("cross_cancelled")) return false;
+        if (!once(action, "cross_move:" + action.actionTick())) return true;
+        var timeline = catalog.timeline(action);
+        var skill = catalog.skill(action);
+        boolean opening = action.actionTick() <= timeline.activeStartTick(0);
+        if (!opening && (action.actionTick() < timeline.stageStartTick(4) || action.actionTick() > timeline.activeStartTick(4))) return true;
+        var path = opening ? PromisedConsortCrossLeapPath.opening(timeline, skill.number("leap_height"))
+                : PromisedConsortCrossLeapPath.finisher(timeline, skill.number("leap_height"));
+        String prefix = opening ? "cross_opening" : "cross_finisher";
+        var boss = host.boss();
+        Vec3 origin = lockedPoints.computeIfAbsent(prefix + "_origin", unused -> boss.position());
+        Vec3 end = lockedPoints.getOrDefault(prefix + "_end", origin);
+        if (!lockedPoints.containsKey(prefix + "_frozen")) {
+            if (opening) {
+                var target = host.currentTarget().orElse(null);
+                if (target == null || !target.isAlive() || !host.insideArena(target)) return cancelCrossLeap();
+                end = path.destination(origin, target.position(), skill.number("leap_distance"), preferredSeparation(boss.getBbWidth(), target.getBbWidth()));
+                lockedFacing = direction(origin, target.position()).normalizedOr(facing());
+                host.faceControlled(lockedFacing);
+            }
+            if (!host.serverLevel().hasChunkAt(net.minecraft.core.BlockPos.containing(end))) return cancelCrossLeap();
+            var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(end.add(0, 1, 0), end.add(0, -2, 0),
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, boss));
+            if (support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK || support.getDirection() != net.minecraft.core.Direction.UP
+                    || !host.serverLevel().getBlockState(support.getBlockPos()).getFluidState().isEmpty()) return cancelCrossLeap();
+            end = new Vec3(end.x, support.getLocation().y, end.z);
+            if (!path.supports(origin, end) || Math.abs(end.y - origin.y) > 1) return cancelCrossLeap();
+            lockedPoints.put(prefix + "_end", end);
+            if (action.actionTick() >= path.takeoffTick()) {
+                Vec3 previous = origin;
+                for (int tick = path.takeoffTick() + 1; tick <= path.landingTick(); tick++) {
+                    Vec3 point = path.at(origin, end, tick);
+                    int segments = Math.max(1, (int) Math.ceil(previous.distanceTo(point) / 0.25));
+                    for (int index = 1; index <= segments; index++) {
+                        if (!crossLeapClear(previous.lerp(point, (double) index / segments))) return cancelCrossLeap();
+                    }
+                    previous = point;
+                }
+                lockedPoints.put(prefix + "_frozen", end);
+            }
+        }
+        if (action.actionTick() < path.takeoffTick()) return true;
+        lockedPoints.putIfAbsent("cross_flight_gravity", new Vec3(boss.isNoGravity() ? 1 : 0, 0, 0));
+        boss.setNoGravity(true);
+        boss.setDeltaMovement(Vec3.ZERO);
+        Vec3 destination = path.at(origin, end, action.actionTick());
+        Vec3 movement = destination.subtract(boss.position());
+        if (movement.length() > 2.01) return cancelCrossLeap();
+        int segments = Math.max(1, (int) Math.ceil(movement.length() / 0.25));
+        for (int index = 0; index < segments; index++) {
+            Vec3 step = movement.scale(1.0 / segments);
+            if (!crossLeapClear(boss.position().add(step))) return cancelCrossLeap();
+            host.moveControlled(step);
+        }
+        if (boss.position().distanceTo(destination) > 0.02) return cancelCrossLeap();
+        if (action.actionTick() == path.landingTick()) {
+            lockedPoints.put(prefix + "_landed", destination);
+            releaseFlight();
+        }
+        return true;
+    }
+
+    private boolean crossLeapClear(Vec3 point) {
+        return point.subtract(host.combatCenter()).horizontalDistance() <= config.arena().logicalRadius()
+                && host.serverLevel().hasChunkAt(net.minecraft.core.BlockPos.containing(point))
+                && host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(point.subtract(host.boss().position())).deflate(0.001));
+    }
+
+    private boolean cancelCrossLeap() {
+        lockedPoints.put("cross_cancelled", Vec3.ZERO);
+        releaseFlight();
+        cancelPendingHazards();
+        if (host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.cancelRangedAction();
+        return false;
+    }
+
+    private void moveHolyFlight(PromisedConsortActionSnapshot action) {
+        if (!once(action, "holy_flight:" + action.actionTick())) return;
+        var skill = catalog.skill(action);
+        Vec3 origin = lockedPoints.computeIfAbsent("holy_flight_origin", unused -> host.boss().position());
+        lockedPoints.putIfAbsent("holy_flight_gravity", new Vec3(host.boss().isNoGravity() ? 1 : 0, 0, 0));
+        host.boss().setNoGravity(true);
+        host.boss().setDeltaMovement(Vec3.ZERO);
+        int total = catalog.timeline(action).totalTicks();
+        double height = holyFlightHeight(action.actionTick(), total,
+                skill.numbers().getOrDefault("flight_height", 12.0), skill.integers().getOrDefault("flight_ascent_ticks", 16),
+                skill.integers().getOrDefault("flight_descent_ticks", 20));
+        Vec3 movement = holyFlightStep(host.boss().getY(), origin.y + height,
+                step -> host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(step)));
+        if (movement.lengthSqr() > 0) host.moveControlled(movement);
+    }
+
+    private boolean moveMeteorSummon(PromisedConsortActionSnapshot action) {
+        var sequence = PromisedConsortMeteorSequence.from(catalog.timeline(action));
+        if (!sequence.usable()) return true;
+        if (lockedPoints.containsKey("meteor_cast_cancelled")) return false;
+        if (!once(action, "meteor_cast_move:" + action.actionTick())) return true;
+        Vec3 origin = lockedPoints.computeIfAbsent("meteor_cast_origin", unused -> host.boss().position());
+        if (action.actionTick() >= sequence.landingLockTick() && !lockedPoints.containsKey("meteor_cast_end")) {
+            LivingEntity target = host.currentTarget().orElse(null);
+            Vec3 end = action.phase() == PromisedConsortPhase.PHASE_TWO && target != null && target.isAlive() && host.insideArena(target)
+                    ? sequence.landing(origin, target.position(), preferredSeparation(host.boss().getBbWidth(), target.getBbWidth())) : origin;
+            var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(end.add(0, 2, 0), end.add(0, -3, 0),
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, host.boss()));
+            if (support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK || support.getDirection() != net.minecraft.core.Direction.UP
+                    || !host.serverLevel().getBlockState(support.getBlockPos()).getFluidState().isEmpty()) return cancelMeteorSummon();
+            end = new Vec3(end.x, support.getLocation().y, end.z);
+            if (end.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()
+                    || !host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(end.subtract(host.boss().position())).deflate(0.001))) return cancelMeteorSummon();
+            lockedPoints.put("meteor_cast_end", end);
+            lockedFacing = direction(origin, end).normalizedOr(facing());
+            host.faceControlled(lockedFacing);
+        }
+        if (action.actionTick() < sequence.riseTick() || action.actionTick() > sequence.landingTick()) return true;
+        lockedPoints.putIfAbsent("meteor_cast_gravity", new Vec3(host.boss().isNoGravity() ? 1 : 0, 0, 0));
+        host.boss().setNoGravity(true);
+        host.boss().setDeltaMovement(Vec3.ZERO);
+        Vec3 destination = sequence.at(origin, lockedPoints.getOrDefault("meteor_cast_end", origin), action.actionTick());
+        Vec3 remaining = destination.subtract(host.boss().position());
+        if (remaining.length() > 1.26) return cancelMeteorSummon();
+        int steps = Math.max(1, (int) Math.ceil(remaining.length() / 0.25));
+        for (int index = 0; index < steps; index++) {
+            Vec3 step = remaining.scale(1.0 / steps);
+            if (!host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(step).deflate(0.001))) return cancelMeteorSummon();
+            host.moveControlled(step);
+        }
+        if (host.boss().position().distanceTo(destination) > 0.02) return cancelMeteorSummon();
+        if (action.actionTick() == sequence.landingTick()) {
+            lockedPoints.put("meteor_cast_landed", destination);
+            releaseFlight();
+        }
+        return true;
+    }
+
+    private boolean cancelMeteorSummon() {
+        lockedPoints.put("meteor_cast_cancelled", Vec3.ZERO);
+        releaseFlight();
+        cancelPendingHazards();
+        if (host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.cancelRangedAction();
+        return false;
+    }
+
+    public static Vec3 holyFlightStep(double currentY, double desiredY, Predicate<Vec3> clear) {
+        Vec3 movement = new Vec3(0, Math.max(-1.25, Math.min(1.25, desiredY - currentY)), 0);
+        return clear.test(movement) ? movement : Vec3.ZERO;
+    }
+
+    public static double holyFlightHeight(double tick, int totalTicks, double configuredHeight, int ascentTicks, int descentTicks) {
+        if (!Double.isFinite(configuredHeight) || configuredHeight < 0 || configuredHeight > 32 || ascentTicks < 1 || descentTicks < 1 || totalTicks < 1) {
+            throw new IllegalArgumentException("Invalid holy flight curve");
+        }
+        double end = Math.max(1, totalTicks - 1);
+        double rise = Math.min(ascentTicks, end * 0.5), fall = Math.min(descentTicks, end * 0.5);
+        double height = Math.min(configuredHeight, Math.min(rise, fall) * 0.75);
+        double progress = Math.min(Math.max(0, tick / rise), Math.max(0, (end - tick) / fall));
+        progress = Math.min(1, progress);
+        return height * progress * progress * (3 - 2 * progress);
+    }
+
+    public void releaseFlight() {
+        for (String key : List.of("holy_flight_gravity", "lion_flight_gravity", "meteor_cast_gravity", "cross_flight_gravity")) {
+            Vec3 previous = lockedPoints.remove(key);
+            if (previous != null) {
+                host.boss().setNoGravity(previous.x != 0);
+                host.boss().setDeltaMovement(Vec3.ZERO);
+            }
+        }
+    }
+
+    private void tickActionSounds(PromisedConsortActionSnapshot action) {
+        if (host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss
+                && boss.activeActionSequence() != action.sequence()) return;
+        if (soundPlan == null) soundPlan = PromisedConsortActionSoundPlan.schedule(action, catalog.timeline(action), catalog.skill(action));
+        for (var event : soundPlan) {
+            PromisedConsortActionSoundPlan.dispatch(List.of(event.cue()), processedEvents, "sound:" + action.sequence() + ":",
+                    action.actionTick(), event.tick(), event.tick() + 1L,
+                    cue -> host.playActionSound(cue, host.boss().position(), facing()));
+        }
+    }
+
+    private void playImpactSounds(PromisedConsortActionSnapshot action, String occurrence, PromisedConsortAttackPlan.Strike strike) {
+        if (action == null) return;
+        ShapeData shape = ShapeData.from(strike.shape());
+        PromisedConsortActionSoundPlan.dispatch(PromisedConsortActionSoundPlan.impact(action.actionId(), occurrence), processedEvents,
+                "sound:" + action.sequence() + ":", host.gameTime(), strike.activeTick(), strike.endTick(),
+                cue -> host.playActionSound(cue, new Vec3(shape.origin().x(), strike.baseY(), shape.origin().z()), shape.direction()));
     }
 
     public void cancelPendingHazards() {
@@ -108,8 +379,8 @@ public final class PromisedConsortActionExecutor {
 
     private void updateTelegraphs(PromisedConsortActionSnapshot action, Vec3 predictionOrigin) {
         long now = host.gameTime();
-        for (var candidate : PromisedConsortAttackPlan.create(action, catalog.skillConfig().get(action.actionId()),
-                catalog.get(action.actionId()).timeline(), predictionOrigin, facing(), lockedPoints,
+        for (var candidate : PromisedConsortAttackPlan.create(action, catalog.skill(action),
+            catalog.timeline(action), predictionOrigin, facing(), lockedPoints,
                 config.instantGuard().defaultCueLeadTicks())) {
             if (candidate.endTick() <= now) continue;
             var previous = telegraphs.get(candidate.id());
@@ -119,13 +390,7 @@ public final class PromisedConsortActionExecutor {
                 candidate = PromisedConsortAttackPlan.relocate(candidate, frozen, new Vec2(direction.x, direction.z));
                 if (previous == null) previous = candidate;
             }
-            if (previous == null) {
-                candidate = candidate.observedAt(now);
-            } else if (now >= previous.lockTick()) {
-                candidate = previous;
-            } else {
-                candidate = candidate.observedAt(previous.startTick());
-            }
+            candidate = candidate.trackFrom(previous, now);
             telegraphs.put(candidate.id(), candidate);
             if (now >= candidate.lockTick() && frozen == null) {
                 ShapeData data = ShapeData.from(candidate.shape());
@@ -141,6 +406,18 @@ public final class PromisedConsortActionExecutor {
             return telegraphs.get("ring_" + executingAction.phaseTick());
         }
         return telegraphs.get(occurrence);
+    }
+
+    private void spawnAnnouncedClones(PromisedConsortActionSnapshot action) {
+        long now = host.gameTime();
+        for (var cue : PromisedConsortAttackPlan.cloneCues(List.copyOf(telegraphs.values()))) {
+            if (now >= cue.appearTick() && now < cue.strike().activeTick() && once(action, "visual:" + cue.strike().id())) {
+                ShapeData shape = ShapeData.from(cue.strike().shape());
+                host.spawnVisualClone(action, cue.index(), cue.count(),
+                        new Vec3(shape.origin().x(), cue.strike().baseY(), shape.origin().z()),
+                        cue.strike().shape() instanceof Circle ? facing() : shape.direction(), cue.strike().activeTick());
+            }
+        }
     }
 
     public List<PersistentHazard> persistentHazards() {
@@ -170,6 +447,7 @@ public final class PromisedConsortActionExecutor {
 
         public void restoreState(PersistentState state) {
         Objects.requireNonNull(state, "state");
+        soundPlan = null;
         activeSequence = state.activeSequence();
         telegraphs.clear();
         lockedFacing = state.lockedFacing();
@@ -202,9 +480,15 @@ public final class PromisedConsortActionExecutor {
                     now + state.remainingToActiveTicks(),
                     now + state.remainingToEndTicks(),
                         state.hit(),
-                        new java.util.HashSet<>(state.hitTargets())
+                        new java.util.HashSet<>(state.hitTargets()),
+                        restoredSoundEvents(state.activationSoundPlayed(), state.remainingToActiveTicks())
             ));
         }
+    }
+
+    public static Set<String> restoredSoundEvents(Boolean played, long remainingToActiveTicks) {
+        boolean alreadyPlayed = played == null ? remainingToActiveTicks == 0 : played;
+        return new java.util.HashSet<>(alreadyPlayed ? Set.of("activation") : Set.of());
     }
 
     public Map<String, Vec3> lockedPoints() {
@@ -213,6 +497,54 @@ public final class PromisedConsortActionExecutor {
 
     public Vec2 lockedFacing() {
         return facing();
+    }
+
+    private void repositionForNextStrike(PromisedConsortActionSnapshot action) {
+        int stage = PromisedConsortAttackPlan.repositionStage(action.actionId(), catalog.get(action.actionId()).timeline(),
+                action.actionTick(), config.instantGuard().defaultCueLeadTicks());
+        LivingEntity target = host.currentTarget().orElse(null);
+        if (stage < 0 || target == null || !target.isAlive() || !host.insideArena(target)
+                || !once(action, "reposition:" + action.actionTick())) return;
+        String budgetKey = "reposition_budget:" + stage;
+        double spent = lockedPoints.getOrDefault(budgetKey, Vec3.ZERO).x;
+        boolean rangedTarget = host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss
+            && boss.isRangedTarget(target);
+        double maximum = config.targeting().rangedCounter().segmentAdjustmentBudget(
+            config.targeting().maxSegmentPursuitDistance(), rangedTarget);
+        double separation = preferredSeparation(host.boss().getBbWidth(), target.getBbWidth());
+        Vec3 before = host.boss().position();
+        RepositionStep step = repositionStep(before, target.position(), facing(), separation, maximum - spent);
+        lockedFacing = step.facing();
+        lockedPoints.put("target", target.position());
+        host.faceControlled(lockedFacing);
+        if (step.movement().lengthSqr() > 0) host.moveControlled(step.movement());
+        Vec3 travelled = host.boss().position().subtract(before);
+        host.setPursuing(Math.hypot(travelled.x, travelled.z) > 0.0001);
+        lockedPoints.put(budgetKey, new Vec3(spent + Math.hypot(travelled.x, travelled.z), 0, 0));
+    }
+
+    public static double preferredSeparation(double bossWidth, double targetWidth) {
+        return Math.max(4.0, (bossWidth + targetWidth) * 0.5 + 1.5);
+    }
+
+    public static boolean shouldApproach(double distance, double separation, boolean approaching) {
+        return distance > separation + (approaching ? 0.0 : 1.0);
+    }
+
+    public static RepositionStep repositionStep(Vec3 position, Vec3 target, Vec2 facing, double separation, double remaining) {
+        Vec2 offset = new Vec2(target.x - position.x, target.z - position.z);
+        Vec2 forward = facing.normalizedOr(new Vec2(0, 1));
+        if (offset.isZero()) return new RepositionStep(forward, Vec3.ZERO);
+        Vec2 desired = offset.normalized();
+        double turn = Math.atan2(forward.x() * desired.z() - forward.z() * desired.x(),
+                forward.x() * desired.x() + forward.z() * desired.z());
+        forward = rotate(forward, Math.max(-20, Math.min(20, Math.toDegrees(turn))));
+        double distance = Math.max(0, Math.min(0.25, Math.min(remaining, offset.length() - separation)));
+        if (forward.x() * desired.x() + forward.z() * desired.z() < 0.5) distance = 0;
+        return new RepositionStep(forward, new Vec3(forward.x() * distance, 0, forward.z() * distance));
+    }
+
+    public record RepositionStep(Vec2 facing, Vec3 movement) {
     }
 
     private void prepareAction(PromisedConsortActionSnapshot action) {
@@ -234,12 +566,14 @@ public final class PromisedConsortActionExecutor {
     }
 
     private void clearAction() {
+        releaseFlight();
         if (activeSequence >= 0L) {
             hitCounter.clearAction(activeSequence);
         }
         activeSequence = -1L;
         telegraphs.clear();
         executingAction = null;
+        soundPlan = null;
         lockedFacing = null;
         hitRegistry.clear();
         hitIndices.clear();
@@ -251,8 +585,10 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortActionSnapshot action,
             List<PromisedConsortHitOutcome> outcomes
     ) {
-        PromisedConsortSkillConfigSnapshot.Skill skill = catalog.skillConfig().get(action.actionId());
+        PromisedConsortSkillConfigSnapshot.Skill skill = catalog.skill(action);
         activeTuning = skill.tuning();
+        if(host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.tickRangedDefense(action);
+        if(action.rangedCounter()) { executeRangedDash(action,skill,outcomes); return; }
         if (action.actionTick() == 0) {
             lockTarget("target");
         }
@@ -276,10 +612,132 @@ public final class PromisedConsortActionExecutor {
             case LIGHTSPEED_SLASH -> lightspeedSlash(action, skill, outcomes);
             case LIGHTSPEED_DASH -> lightspeedDash(action, skill, outcomes);
             case LIGHTSPEED_SIDE_DASH -> lightspeedSideDash(action, skill, outcomes);
-            case PROMISED_CONSORT -> promisedConsort(action, skill, outcomes);
+            case PROMISED_CONSORT, CROSS_LEAP_COMBO -> promisedConsort(action, skill, outcomes);
             case ENHANCED_EARTHHEAVE -> enhancedEarthheave(action, skill, outcomes);
             case CONSORT_METEOR -> consortMeteor(action, skill, outcomes);
+            case GRAVITY_BULWARK, GRAVITY_REFLECTION -> { }
+            case GRAVITY_REPRISAL -> executeReprisal(action,skill,outcomes);
         }
+    }
+
+    private boolean prepareRangedPath(PromisedConsortActionSnapshot action) {
+        var skill=catalog.skill(action);
+        var timeline=catalog.timeline(action);
+        int lock=action.rangedCounter()?Math.max(0,timeline.activeStartTick(0)-skill.integer("ranged_counter.target_lock_lead_ticks"))
+                :timeline.activeStartTick(1);
+        if(lockedPoints.containsKey("ranged_cancelled")) return false;
+        if(lockedPoints.containsKey("ranged_frozen")) return true;
+        LivingEntity target=action.targetId()==null?null:host.serverLevel().getPlayerByUUID(action.targetId());
+        if(target==null || !target.isAlive() || !host.insideArena(target)) {
+            cancelRangedPath();
+            return false;
+        }
+        Vec3 origin=host.boss().position();
+        Vec2 desired=direction(origin,target.position());
+        if(action.rangedCounter()) {
+            double turn=Math.toDegrees(Math.atan2(facing().x()*desired.z()-facing().z()*desired.x(),facing().x()*desired.x()+facing().z()*desired.z()));
+            double maximum=skill.number("ranged_counter.turn_rate_degrees_per_tick");
+            lockedFacing=rotate(facing(),Math.max(-maximum,Math.min(maximum,turn)));
+        } else lockedFacing=desired;
+        host.faceControlled(facing());
+        Vec3 forward=new Vec3(facing().x(),0,facing().z());
+        var bounds=host.boss().getBoundingBox();
+        java.util.function.Predicate<Vec3> clear=point->point.subtract(host.combatCenter()).horizontalDistance()<=config.arena().logicalRadius()
+                && host.serverLevel().noCollision(host.boss(),bounds.move(point.subtract(origin)));
+        if(action.rangedCounter()) {
+            var path=com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedPath.create(action.actionId(),skill,timeline,
+                    origin,origin.add(forward.scale(target.position().subtract(origin).horizontalDistance())),forward,clear);
+            lockedPoints.put("ranged_origin",path.origin()); lockedPoints.put("ranged_corner",path.corner()); lockedPoints.put("ranged_end",path.end());
+        } else {
+            double width=activeTuning.scaleRange(skill.number("counterattack.width"));
+            double height=activeTuning.scaleRange(skill.number("counterattack.height"));
+            Vec3 end=com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedPath.clip(origin,
+                    origin.add(forward.scale(activeTuning.scaleRange(skill.number("counterattack.length")))),point->
+                        point.subtract(host.combatCenter()).horizontalDistance()<=config.arena().logicalRadius()
+                        && host.serverLevel().noCollision(new net.minecraft.world.phys.AABB(point.x-width/2,point.y+0.05,point.z-width/2,
+                            point.x+width/2,point.y+height,point.z+width/2)));
+            lockedPoints.put("ranged_origin",origin); lockedPoints.put("ranged_end",end);
+        }
+        lockedPoints.put("target",target.position());
+        if(action.actionTick()>=lock) lockedPoints.put("ranged_frozen",origin);
+        return true;
+    }
+
+    private void cancelRangedPath() {
+        lockedPoints.put("ranged_cancelled",Vec3.ZERO);
+        cancelPendingHazards();
+        if(host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.cancelRangedAction();
+    }
+
+    private void executeRangedDash(PromisedConsortActionSnapshot action,PromisedConsortSkillConfigSnapshot.Skill skill,List<PromisedConsortHitOutcome> outcomes) {
+        if(action.actionPhase()!=ActionPhase.ACTIVE || !lockedPoints.containsKey("ranged_frozen")) return;
+        var timeline=catalog.timeline(action);
+        var path=new com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedPath(
+                lockedPoints.get("ranged_origin"),lockedPoints.get("ranged_corner"),lockedPoints.get("ranged_end"));
+        Vec3 before=host.boss().position();
+        if(once(action,"ranged_move:"+action.actionTick())) {
+            Vec3 destination=path.at(action.actionId(),timeline,action.actionTick());
+            Vec3 remaining=destination.subtract(before).multiply(1,0,1);
+            double maximum=action.actionId()==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH && action.stageIndex()<3
+                    ?skill.number("ranged_counter.max_lateral_per_tick"):skill.number("ranged_counter.max_forward_per_tick");
+            if(remaining.length()>maximum+0.001) { cancelRangedPath(); return; }
+            int steps=Math.max(1,(int)Math.ceil(remaining.length()/0.25));
+            for(int step=0;step<steps;step++) {
+                Vec3 movement=remaining.scale(1.0/steps);
+                if(!host.serverLevel().noCollision(host.boss(),host.boss().getBoundingBox().move(movement))) { cancelRangedPath(); return; }
+                host.moveControlled(movement);
+            }
+            if(destination.subtract(host.boss().position()).horizontalDistance()>0.01) { cancelRangedPath(); return; }
+            if(action.actionId()==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH && action.stageIndex()==3) {
+                lockedFacing=direction(path.corner(),path.end());
+                host.faceControlled(lockedFacing);
+            }
+        }
+        int index=action.stageIndex();
+        int offset=skill.integerList("ranged_counter.attack_event_offsets").get(index);
+        String occurrence; String damage; Kind kind=Kind.PHYSICAL; boolean sweep=false;
+        switch(action.actionId()) {
+            case GRAVITY_DIVE -> { occurrence=index==0?"sword":"impact"; damage=index==0?"sword_damage":"impact_damage"; }
+            case SPIRAL_ASSAULT -> { occurrence=index==0?"spin":"slam"; damage=index==0?"spin_damage":"slam_damage"; sweep=index==0; }
+            case LIGHTSPEED_DASH -> {
+                occurrence=index<4?"clone_"+index:index==4?"body":"trail";
+                damage=index<4?"clone_damage":index==4?"body_damage":"trail_damage";
+                kind=index==4?Kind.PHYSICAL:Kind.HOLY; sweep=index==4;
+            }
+            case LIGHTSPEED_SIDE_DASH -> { occurrence=index<3?"clone_"+index:"body"; damage=index<3?"clone_damage":"body_damage"; kind=index<3?Kind.HOLY:Kind.PHYSICAL; }
+            default -> throw new IllegalStateException("Unsupported ranged dash");
+        }
+        if(action.phaseTick()<offset || !sweep && action.phaseTick()!=offset) return;
+        var strike=announced(occurrence);
+        if(strike==null) return;
+        var travelled=host.boss().getBoundingBox().minmax(host.boss().getBoundingBox().move(before.subtract(host.boss().position()))).inflate(
+                activeTuning.scaleRange(skill.numbers().getOrDefault("width",3.0))*0.65,0.5,activeTuning.scaleRange(skill.numbers().getOrDefault("width",3.0))*0.65);
+        boolean movingSweep=sweep;
+        hit(action.sequence(),occurrence,volume(strike.shape(),strike.baseY(),host.boss().getBbHeight()),hit(skill.damage(damage),kind,kind==Kind.PHYSICAL),
+                target->!movingSweep || target.getBoundingBox().intersects(travelled),outcomes);
+        if(kind==Kind.PHYSICAL && !(action.actionId()==PromisedConsortActionId.SPIRAL_ASSAULT && index==0)
+            && !(action.actionId()==PromisedConsortActionId.GRAVITY_DIVE && index==1)
+            && once(action,"ranged_echo:"+occurrence)) {
+            double echoRange=action.actionId()==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH?4
+                :action.actionId()==PromisedConsortActionId.SPIRAL_ASSAULT?3.5:skill.number("range");
+            scheduleSwordEcho(action,occurrence,echoRange);
+        }
+    }
+
+    private void executeReprisal(PromisedConsortActionSnapshot action,PromisedConsortSkillConfigSnapshot.Skill skill,List<PromisedConsortHitOutcome> outcomes) {
+        if(action.stageIndex()!=2 || action.actionPhase()!=ActionPhase.ACTIVE) return;
+        var strike=announced("reprisal");
+        if(strike==null) return;
+        Vec3 origin=lockedPoints.getOrDefault("ranged_origin",host.boss().position()),end=lockedPoints.getOrDefault("ranged_end",origin);
+        int active=catalog.timeline(action).stages().get(2).activeTicks();
+        double from=(double)action.phaseTick()/active,to=(double)(action.phaseTick()+1)/active;
+        Vec3 start=origin.lerp(end,from),finish=origin.lerp(end,to);
+        var wave=new DirectionalRectangle(new Vec2(start.x,start.z),facing(),Math.max(0.001,start.distanceTo(finish)),activeTuning.scaleRange(skill.number("counterattack.width")));
+        double multiplier=host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss?boss.rangedReturnMultiplier():1;
+        var base=skill.damage("counterattack.damage");
+        hit(action.sequence(),"reprisal",volume(strike.shape(),strike.baseY(),activeTuning.scaleRange(skill.number("counterattack.height"))),
+                hit(new DamageFormula(base.flat()*multiplier,base.attackRatio()*multiplier),Kind.PHYSICAL,true,skill.integer("counterattack.max_hits_per_target")),
+                target->wave.contains(target.getX(),target.getZ()),outcomes);
     }
 
     private int activeTicks(PromisedConsortActionSnapshot action) {
@@ -295,6 +753,15 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
+            if (!activeStart(action)) return;
+            if (action.stageIndex() == 0) {
+                moveTowardLocked("target", skill.number("range"));
+                hitCircle(action, "sword", skill.number("range") * 0.65, hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
+                scheduleSwordEcho(action, "sword", skill.number("range"));
+            } else hitCircle(action, "impact", skill.number("range"), hit(skill.damage("impact_damage"), Kind.PHYSICAL, false), outcomes);
+            return;
+        }
         if (activeStart(action)) {
             moveTowardLocked("target", skill.number("range"));
             hitCircle(action, "sword", skill.number("range") * 0.65,
@@ -313,7 +780,7 @@ public final class PromisedConsortActionExecutor {
             String prefix,
             List<PromisedConsortHitOutcome> outcomes
     ) {
-        if (!activeStart(action)) {
+        if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
         DamageFormula damage = skill.damageList("damage").get(action.stageIndex());
@@ -327,6 +794,8 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        var timeline = catalog.get(action.actionId()).timeline();
+        if (timeline.stages().size() > 2 && action.stageIndex() > 1) return;
         if (!activeStart(action)) {
             return;
         }
@@ -341,8 +810,8 @@ public final class PromisedConsortActionExecutor {
                 action,
                 "bloodflame",
                 rectangle(skill.number("sweep_range"), 1.5),
-                ticks(skill, skill.integer("burst_tick")),
-                skill.integer("fissure_lifetime_ticks"),
+                timeline.stages().size() > 2 ? timeline.activeStartTick(2) - action.actionTick() : ticks(skill, skill.integer("burst_tick")),
+                timeline.stages().size() > 2 ? timeline.activeEndTick(2) - action.actionTick() : skill.integer("fissure_lifetime_ticks"),
                 hit(skill.damage("burst_damage"), Kind.FIRE, false)
         );
     }
@@ -356,7 +825,16 @@ public final class PromisedConsortActionExecutor {
             hitSector(action, "opening_" + action.stageIndex(), skill.number("range"),
                     DEFAULT_SECTOR_DEGREES,
                     hit(skill.damage("opening_damage"), Kind.PHYSICAL, true), outcomes);
-        } else if (action.stageIndex() == 3 && action.actionPhase() == ActionPhase.ACTIVE) {
+        } else if (action.stageIndex() >= 3 && action.actionPhase() == ActionPhase.ACTIVE) {
+            if (catalog.get(action.actionId()).timeline().stages().size() > 4) {
+                if (activeStart(action)) {
+                    String occurrence = "tempest_" + (action.stageIndex() - 3);
+                    hitAnnulus(action, occurrence, 0.9, skill.number("range"),
+                            hit(skill.damage("tempest_damage"), Kind.PHYSICAL, true), outcomes);
+                    scheduleSwordEcho(action, occurrence, skill.number("range"));
+                }
+                return;
+            }
             int activeTicks = activeTicks(action);
             int tempestHits = Math.min(activeTicks, Math.max(1, skill.integer("tempest_hits")));
             for (int index = 0; index < tempestHits; index++) {
@@ -400,7 +878,9 @@ public final class PromisedConsortActionExecutor {
         if (!activeStart(action)) {
             return;
         }
-        moveTowardLocked("target", 6.0);
+        if (lockedPoints.containsKey("lion_origin")) {
+            if (!lockedPoints.containsKey("lion_landed") || host.boss().position().distanceTo(lockedPoints.get("lion_end")) > 0.05) return;
+        } else moveTowardLocked("target", 6.0);
         hitCircle(action, followup ? "double" : "slam", skill.number("range"),
                 hit(skill.damage(followup ? "double_damage" : "damage"), Kind.PHYSICAL, true),
                 outcomes);
@@ -415,11 +895,10 @@ public final class PromisedConsortActionExecutor {
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
-        pullTargets(skill.number("pull_radius"), skill.number("max_pull_per_tick"));
-        if (action.phaseTick() == activeTicks(action) - 1) {
+        boolean components = catalog.get(action.actionId()).timeline().stages().size() > 1;
+        if (!components || action.stageIndex() == 0 || activeStart(action)) pullTargets(skill.number("pull_radius"), skill.number("max_pull_per_tick"));
+        if (components ? action.stageIndex() == 1 && activeStart(action) : action.phaseTick() == activeTicks(action) - 1) {
             if (action.phase() == PromisedConsortPhase.PHASE_TWO) {
-                host.spawnVisualClone(action, 0, 2);
-                host.spawnVisualClone(action, 1, 2);
                 hitCapsuleFacing(action, "clone_cross_0", host.boss().position(), facing(),
                         skill.number("impact_radius") * 2.0, 1.6,
                         hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
@@ -446,6 +925,43 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        var timeline = catalog.get(action.actionId()).timeline();
+        if (timeline.stages().size() > 1) {
+            var sequence = PromisedConsortMeteorSequence.from(timeline);
+            if (sequence.usable()) {
+                if (action.actionTick() == sequence.riseTick() && once(action, "meteor_held_rocks")) {
+                    host.prepareGravityRocks(action, sequence.riseTick(), timeline);
+                    lockedPoints.put("meteor_rocks_prepared", Vec3.ZERO);
+                }
+                if (action.actionTick() == sequence.groundTick()) {
+                    hitSector(action, "meteor_ground", skill.numbers().getOrDefault("sword_range", 4.5), 140,
+                            hit(skill.damage().getOrDefault("sword_damage", new DamageFormula(4, 0.8)), Kind.PHYSICAL, true), outcomes);
+                }
+                if (action.phase() == PromisedConsortPhase.PHASE_TWO && action.actionTick() == sequence.landingTick()
+                        && lockedPoints.containsKey("meteor_cast_landed")) {
+                    hitCircleAt(action, "meteor_body", lockedPoints.get("meteor_cast_landed"), skill.numbers().getOrDefault("body_range", 4.5),
+                            hit(skill.damage().getOrDefault("body_damage", new DamageFormula(5, 0.8)), Kind.PHYSICAL, true), outcomes);
+                    scheduleSwordEcho(action, "meteor_body", skill.numbers().getOrDefault("body_range", 4.5));
+                }
+            }
+            int rocks = timeline.stages().size() - 4;
+            if (action.phase() == PromisedConsortPhase.PHASE_TWO
+                    && action.actionTick() == Math.max(0, timeline.activeStartTick(rocks) - 5)) lockTarget("clone_meteor_0");
+            if (!activeStart(action)) return;
+            if (action.stageIndex() < rocks) {
+                if (!lockedPoints.containsKey("meteor_rocks_prepared")) host.spawnGravityRock(action, action.stageIndex(), skill.number("projectile_health"),
+                    skill.integer("projectile_lifetime_ticks"), skill.number("max_turn_degrees_per_tick"), skill.damage("damage"),
+                    skill.integer("max_hits_per_target"), rocks);
+            }
+            else if (action.phase() == PromisedConsortPhase.PHASE_TWO) {
+                int clone = action.stageIndex() - rocks;
+                String pointId = "clone_meteor_" + clone;
+                hitCircleAt(action, pointId, lockedPoints.getOrDefault(pointId, host.boss().position()), skill.number("clone_radius"),
+                    hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
+                if (clone < 3) lockTarget("clone_meteor_" + (clone + 1));
+            }
+            return;
+        }
         boolean cloneSequence = action.phase() == PromisedConsortPhase.PHASE_TWO;
         if (cloneSequence
                 && action.actionPhase() == ActionPhase.ACTIVE
@@ -459,7 +975,6 @@ public final class PromisedConsortActionExecutor {
             int clone = action.phaseTick() / ticks(skill, 5);
             String pointId = "clone_meteor_" + clone;
             Vec3 point = lockedPoints.getOrDefault(pointId, host.boss().position());
-            host.spawnVisualClone(action, clone, 4);
             hitCircleAt(action, pointId, point, skill.number("clone_radius"),
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
             if (clone < 3) {
@@ -502,6 +1017,13 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
+            if (!activeStart(action)) return;
+            if (action.stageIndex() == 0) hitSector(action, "sword", skill.number("sword_range"), 140.0,
+                hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
+            else hitCapsule(action, "debris", skill.number("debris_range"), 2.0, hit(skill.damage("debris_damage"), Kind.PHYSICAL, false), outcomes);
+            return;
+        }
         if (activeStart(action)) {
             hitSector(action, "sword", skill.number("sword_range"), 140.0,
                     hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
@@ -517,6 +1039,20 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        var timeline = catalog.get(action.actionId()).timeline();
+        if (timeline.stages().size() > 1) {
+            if (action.actionPhase() != ActionPhase.ACTIVE) return;
+            moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK, skill.number("range") / timeline.activeTicksBetween(0, timeline.totalTicks())));
+            if (activeStart(action)) {
+                if (action.stageIndex() == 0) hitCapsule(action, "spin", skill.number("range"), skill.number("width"),
+                    hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
+                else {
+                    hitCircle(action, "slam", 3.5, hit(skill.damage("slam_damage"), Kind.PHYSICAL, true), outcomes);
+                    scheduleSwordEcho(action, "slam", 3.5);
+                }
+            }
+            return;
+        }
         if (action.actionPhase() == ActionPhase.ACTIVE) {
             moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK,
                     skill.number("range") / activeTicks(action)));
@@ -537,6 +1073,8 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        var timeline = catalog.get(action.actionId()).timeline();
+        if (timeline.stages().size() > 1 && action.stageIndex() != 0) return;
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
@@ -546,12 +1084,14 @@ public final class PromisedConsortActionExecutor {
         if (!activeStart(action)) {
             return;
         }
-        for (int index = 0; index < skill.integer("afterglow_count"); index++) {
+        int afterglows = timeline.stages().size() > 1 ? timeline.stages().size() - 1 : skill.integer("afterglow_count");
+        for (int index = 0; index < afterglows; index++) {
             double angle = randomUnit(action.seed(), index) * Math.PI * 2.0;
             double radius = randomUnit(action.seed() ^ 0x9E3779B97F4A7C15L, index)
                     * activeTuning.scaleRange(skill.number("radius"));
             Vec3 point = center.add(Math.cos(angle) * radius, 0.0, Math.sin(angle) * radius);
-            int activeDelay = activeTicks(action) + ticks(skill, index + 4);
+            int activeDelay = timeline.stages().size() > 1 ? timeline.activeStartTick(index + 1) - action.actionTick()
+                : activeTicks(action) + ticks(skill, index + 4);
             scheduleHazardAt(
                     action,
                     "afterglow_" + index,
@@ -559,7 +1099,7 @@ public final class PromisedConsortActionExecutor {
                     point.y,
                     2.5,
                     activeDelay,
-                    activeDelay + 1,
+                    activeDelay + (timeline.stages().size() > 1 ? timeline.stages().get(index + 1).activeTicks() : 1),
                     hit(skill.damage("afterglow_damage"), Kind.HOLY, false)
             );
         }
@@ -586,6 +1126,10 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
+            stagedLightspeed(action, skill, outcomes);
+            return;
+        }
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
@@ -593,7 +1137,6 @@ public final class PromisedConsortActionExecutor {
         int interval = Math.max(1, activeTicks(action) / (cloneCount + 1));
         if (action.phaseTick() % interval == 0 && action.phaseTick() / interval < cloneCount) {
             int clone = action.phaseTick() / interval;
-            host.spawnVisualClone(action, clone, cloneCount);
             hitCapsule(action, "clone_" + clone, 10.0, 1.6,
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
         }
@@ -608,6 +1151,10 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
+            stagedLightspeed(action, skill, outcomes);
+            return;
+        }
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
@@ -617,7 +1164,6 @@ public final class PromisedConsortActionExecutor {
         if (action.phaseTick() % cloneInterval == 0
                 && action.phaseTick() < ticks(skill, 16)) {
             int clone = action.phaseTick() / cloneInterval;
-            host.spawnVisualClone(action, clone, 4);
             hitCapsule(action, "clone_" + clone, skill.number("range"), skill.number("width"),
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
         }
@@ -635,6 +1181,10 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
+            stagedLightspeed(action, skill, outcomes);
+            return;
+        }
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
@@ -643,7 +1193,6 @@ public final class PromisedConsortActionExecutor {
         int interval = Math.max(1, activeTicks(action) / (cloneCount + 1));
         if (action.phaseTick() % interval == 0 && action.phaseTick() / interval < cloneCount) {
             int clone = action.phaseTick() / interval;
-            host.spawnVisualClone(action, clone, cloneCount);
             hitCapsule(action, "clone_" + clone, 9.0, 1.6,
                     hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
         }
@@ -653,11 +1202,120 @@ public final class PromisedConsortActionExecutor {
         }
     }
 
+    private boolean moveLightspeedBody(PromisedConsortActionSnapshot action) {
+        if (lockedPoints.containsKey("lightspeed_cancelled")) return false;
+        var path = PromisedConsortLightspeedPath.from(catalog.timeline(action), config.instantGuard().defaultCueLeadTicks());
+        if (!path.usable()) return true;
+        if (!once(action, "lightspeed_move:" + action.actionTick())) return true;
+        var boss = host.boss();
+        Vec3 origin = lockedPoints.computeIfAbsent("lightspeed_origin", unused -> boss.position());
+        if (!lockedPoints.containsKey("lightspeed_frozen")) {
+            var target = host.currentTarget().orElse(null);
+            if (target == null || !target.isAlive() || !host.insideArena(target)) return cancelLightspeedBody();
+            lockedFacing = direction(origin, target.position()).normalizedOr(facing());
+            host.faceControlled(lockedFacing);
+            Vec3 end = origin.add(lockedFacing.x() * catalog.skill(action).number("range"), 0,
+                    lockedFacing.z() * catalog.skill(action).number("range"));
+            lockedPoints.put("lightspeed_end", end);
+            if (action.actionTick() >= path.lockTick()) {
+                if (!path.supports(origin.distanceTo(end))) return cancelLightspeedBody();
+                int segments = Math.max(1, (int) Math.ceil(origin.distanceTo(end) / 0.25));
+                if (segments > 1024) return cancelLightspeedBody();
+                for (int index = 0; index <= segments; index++) {
+                    Vec3 point = origin.lerp(end, (double) index / segments);
+                    if (point.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()
+                        || !host.serverLevel().hasChunkAt(net.minecraft.core.BlockPos.containing(point))) return cancelLightspeedBody();
+                    var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(point.add(0, 0.5, 0), point.add(0, -0.6, 0),
+                            net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, boss));
+                    if (!host.serverLevel().noCollision(boss, boss.getBoundingBox().move(point.subtract(boss.position())).deflate(0.001))
+                            || support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK
+                            || support.getDirection() != net.minecraft.core.Direction.UP
+                            || Math.abs(support.getLocation().y - point.y) > 0.1
+                            || !host.serverLevel().getBlockState(support.getBlockPos()).getFluidState().isEmpty()) return cancelLightspeedBody();
+                }
+                lockedPoints.put("lightspeed_frozen", end);
+            }
+        }
+        if (action.actionTick() <= path.departureTick() || action.actionTick() > path.impactTick()) return true;
+        Vec3 destination = path.at(origin, lockedPoints.get("lightspeed_end"), action.actionTick());
+        Vec3 movement = destination.subtract(boss.position());
+        if (movement.length() > 8) return cancelLightspeedBody();
+        int segments = Math.max(1, (int) Math.ceil(movement.length() / 0.25));
+        for (int index = 0; index < segments; index++) {
+            Vec3 step = movement.scale(1.0 / segments);
+            if (!host.serverLevel().noCollision(boss, boss.getBoundingBox().move(step).deflate(0.001))) return cancelLightspeedBody();
+            host.moveControlled(step);
+        }
+        boss.setDeltaMovement(Vec3.ZERO);
+        if (boss.position().distanceTo(destination) > 0.02) return cancelLightspeedBody();
+        if (action.actionTick() == path.impactTick()) lockedPoints.put("lightspeed_arrived", destination);
+        return true;
+    }
+
+    private boolean cancelLightspeedBody() {
+        lockedPoints.put("lightspeed_cancelled", Vec3.ZERO);
+        cancelPendingHazards();
+        if (host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.cancelRangedAction();
+        return false;
+    }
+
+    private void stagedLightspeed(PromisedConsortActionSnapshot action, PromisedConsortSkillConfigSnapshot.Skill skill,
+                                  List<PromisedConsortHitOutcome> outcomes) {
+        if (action.actionPhase() != ActionPhase.ACTIVE) return;
+        var timeline = catalog.get(action.actionId()).timeline();
+        boolean dash = action.actionId() == PromisedConsortActionId.LIGHTSPEED_DASH;
+        boolean side = action.actionId() == PromisedConsortActionId.LIGHTSPEED_SIDE_DASH;
+        int clones = timeline.stages().size() - (dash ? 2 : 1);
+        int index = action.stageIndex();
+        if (index <= clones) {
+            int movementTicks = timeline.activeTicksBetween(0, timeline.activeEndTick(clones));
+            if (dash && !lockedPoints.containsKey("lightspeed_origin")) moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK, skill.number("range") / movementTicks));
+            else if (side) moveSide(6.0 / movementTicks);
+        }
+        if (!activeStart(action)) return;
+        if (index < clones) hitCapsule(action, "clone_" + index, dash ? skill.number("range") : side ? 9.0 : 10.0,
+            dash ? skill.number("width") : 1.6, hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
+        else if (index == clones) {
+            if (dash && lockedPoints.containsKey("lightspeed_origin") && !lockedPoints.containsKey("lightspeed_arrived")) return;
+            if (side) hitSector(action, "body", 4.0, 140.0, hit(skill.damage("body_damage"), Kind.PHYSICAL, true), outcomes);
+            else hitCapsule(action, "body", dash ? skill.number("range") : 8.0, dash ? skill.number("width") : 2.0,
+                hit(skill.damage("body_damage"), Kind.PHYSICAL, true), outcomes);
+            if (dash) {
+                int delay = timeline.activeStartTick(clones + 1) - action.actionTick();
+                scheduleHazard(action, "trail", rectangle(skill.number("range"), skill.number("width")), delay,
+                    delay + timeline.stages().get(clones + 1).activeTicks(), hit(skill.damage("trail_damage"), Kind.HOLY, false));
+            }
+        }
+    }
+
     private void promisedConsort(
             PromisedConsortActionSnapshot action,
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
+            if (!activeStart(action)) return;
+            int index = action.stageIndex();
+                if (action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO
+                    && (index == 0 && !lockedPoints.containsKey("cross_opening_landed")
+                    || index == 4 && !lockedPoints.containsKey("cross_finisher_landed"))) return;
+            double openingRange = skill.numbers().getOrDefault("opening_range", 4.2);
+            double spinRange = skill.numbers().getOrDefault("spin_range", 4.5);
+            double finisherRange = skill.numbers().getOrDefault("finisher_range", 5.0);
+            if (index < 2) hitSector(action, "opening_" + index, openingRange, 140.0, hit(skill.damage("opening_damage"), Kind.PHYSICAL, true), outcomes);
+            else if (index < 4) {
+                String occurrence = "spin_" + (index - 2);
+                hitAnnulus(action, occurrence, 0.9, spinRange, hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
+                scheduleSwordEcho(action, occurrence, spinRange);
+            } else if (index == 4) {
+                hitCircle(action, "finisher", finisherRange, hit(skill.damage("finisher_damage"), Kind.PHYSICAL, true), outcomes);
+                scheduleSwordEcho(action, "finisher", finisherRange);
+            } else if (index < 7) hitCapsuleFacing(action, "clone_return_" + (index - 5), host.boss().position(), rotate(facing(), index == 5 ? 45 : -45),
+                10.0, 1.6, hit(skill.damage("clone_damage"), Kind.HOLY, false), outcomes);
+            else scheduleHazard(action, "holy_ring", new Annulus(new Vec2(host.boss().getX(), host.boss().getZ()),
+                activeTuning.scaleRange(2.0), activeTuning.scaleRange(7.0)), 0, 1, hit(skill.damage("holy_ring_damage"), Kind.HOLY, false));
+            return;
+        }
         if (action.actionPhase() != ActionPhase.ACTIVE) {
             return;
         }
@@ -675,7 +1333,6 @@ public final class PromisedConsortActionExecutor {
             scheduleSwordEcho(action, "finisher", 5.0);
         } else if (tick == ticks(skill, 44) || tick == ticks(skill, 47)) {
             int clone = tick == ticks(skill, 44) ? 0 : 1;
-            host.spawnVisualClone(action, clone, 2);
             Vec2 diagonal = rotate(facing(), tick == ticks(skill, 44) ? 45.0 : -45.0);
             hitCapsuleFacing(action, "clone_return_" + clone, host.boss().position(),
                 diagonal, 10.0, 1.6,
@@ -694,6 +1351,8 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
+        var timeline = catalog.get(action.actionId()).timeline();
+        if (timeline.stages().size() > 1 && action.stageIndex() != 0) return;
         if (!activeStart(action)) {
             return;
         }
@@ -705,7 +1364,8 @@ public final class PromisedConsortActionExecutor {
         for (int index = 0; index < 4; index++) {
             scheduleHazard(action, "light_" + index,
                     rectangle(skill.number("radius") + 2.0 + index * 1.5, 0.8),
-                    ticks(skill, 3 + index * 2), ticks(skill, 4 + index * 2),
+                    timeline.stages().size() > 1 ? timeline.activeStartTick(index + 1) - action.actionTick() : ticks(skill, 3 + index * 2),
+                    timeline.stages().size() > 1 ? timeline.activeEndTick(index + 1) - action.actionTick() : ticks(skill, 4 + index * 2),
                     hit(skill.damage("light_damage"), Kind.HOLY, false));
         }
     }
@@ -715,13 +1375,17 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
-        if (action.actionTick() == ticks(skill, 91)) {
+        var timeline = catalog.get(action.actionId()).timeline();
+        boolean components = timeline.stages().size() > 1;
+        int lockTick = components ? timeline.activeStartTick(2) : ticks(skill, 91);
+        int impactTick = components ? timeline.activeStartTick(3) : ticks(skill, 121);
+        if (action.actionTick() == lockTick) {
             lockPredictedPoint("meteor", skill.integer("prediction_sample_ticks"),
                     skill.integer("prediction_lead_ticks"),
-                config.arena().logicalRadius()
-                    - activeTuning.scaleRange(skill.number("outer_radius")));
+                Math.max(0.0, config.arena().logicalRadius()
+                    - activeTuning.scaleRange(skill.number("outer_radius") + 2.0)));
         }
-        if (action.actionTick() == ticks(skill, 121) && once(action, "impact")) {
+        if (action.actionTick() == impactTick && once(action, "impact")) {
             Vec3 point = lockedPoints.getOrDefault("meteor", host.combatCenter());
             hitRadialBands(
                 action,
@@ -738,7 +1402,8 @@ public final class PromisedConsortActionExecutor {
                         activeTuning.scaleRange(skill.number("outer_radius")),
                         activeTuning.scaleRange(skill.number("outer_radius") + 2.0)
                     ),
-                    point.y, 3.0, ticks(skill, 2), ticks(skill, 3),
+                    point.y, 3.0, components ? timeline.activeStartTick(4) - impactTick : ticks(skill, 2),
+                    components ? timeline.activeEndTick(4) - impactTick : ticks(skill, 3),
                     hit(skill.damage("aftershock_damage"), Kind.HOLY, false));
         }
     }
@@ -768,12 +1433,13 @@ public final class PromisedConsortActionExecutor {
                 }
             }
         }
-        int activeTicks = catalog.get(action.actionId()).timeline()
+        int activeTicks = catalog.timeline(action)
             .stages().get(action.stageIndex()).activeTicks();
         long delay = activeTicks - action.phaseTick()
             + config.lightEcho().delayTicks()
             + config.lightEcho().telegraphTicks();
-        DirectionalRectangle echo = rectangle(Math.max(1.0, range), config.lightEcho().width());
+        DirectionalRectangle echo = rectangle(Math.max(1.0, range) * PromisedConsortAttackPlan.MELEE_REACH_MULTIPLIER
+            * PromisedConsortAttackPlan.closeImpactMultiplier(action.actionId()), config.lightEcho().width());
         scheduleHazardAt(
                 action,
                 "echo_" + hitId,
@@ -840,6 +1506,7 @@ public final class PromisedConsortActionExecutor {
                 activeTick,
                 Math.max(activeTick + 1, endTick),
                 hit,
+                new java.util.HashSet<>(),
                 new java.util.HashSet<>()
         ));
     }
@@ -850,6 +1517,14 @@ public final class PromisedConsortActionExecutor {
         while (iterator.hasNext()) {
             Hazard hazard = iterator.next();
             if (gameTick >= hazard.activeTick() && gameTick < hazard.endTick()) {
+                if (PromisedConsortActionSoundPlan.claim(hazard.soundEvents(), "activation", gameTick, hazard.activeTick(), hazard.endTick())) {
+                    String occurrence = hazard.id().substring(hazard.id().indexOf(':') + 1);
+                    var cue = PromisedConsortActionSoundPlan.effect(occurrence);
+                    if (cue != null) {
+                        ShapeData shape = ShapeData.from(hazard.shape());
+                        host.playActionSound(cue, new Vec3(shape.origin().x(), hazard.baseY(), shape.origin().z()), shape.direction());
+                    }
+                }
                 hitHazard(hazard, outcomes);
             }
             if (gameTick >= hazard.endTick()) {
@@ -1076,6 +1751,7 @@ public final class PromisedConsortActionExecutor {
             var announced = announced(occurrence);
             if (announced == null || announced.startTick() >= announced.activeTick()
                 || host.gameTime() < announced.activeTick() || host.gameTime() >= announced.endTick()) return;
+            playImpactSounds(executingAction, occurrence, announced);
             double height = volume.maximumY() - volume.minimumY() - DEFAULT_HEIGHT_MARGIN * 2;
             volume = volume(announced.shape(), announced.baseY(), height);
         PromisedConsortHitSpec resolvedSpec = new PromisedConsortHitSpec(
@@ -1200,9 +1876,9 @@ public final class PromisedConsortActionExecutor {
 
     private DirectionalRectangle rectangle(double length, double width) {
         return new DirectionalRectangle(
-                new Vec2(host.boss().getX(), host.boss().getZ()),
+                new Vec2(host.boss().getX(), host.boss().getZ()).subtract(facing().scale(PromisedConsortAttackPlan.REAR_REACH)),
                 facing(),
-            activeTuning.scaleRange(length),
+            activeTuning.scaleRange(length) + PromisedConsortAttackPlan.REAR_REACH,
             activeTuning.scaleRange(width)
         );
     }
@@ -1331,6 +2007,19 @@ public final class PromisedConsortActionExecutor {
 
         void moveControlled(Vec3 movement);
 
+        default void playActionSound(PromisedConsortActionSoundPlan.Cue cue, Vec3 position, Vec2 direction) {
+        }
+
+        default void setPursuing(boolean pursuing) {
+        }
+
+        default void faceControlled(Vec2 direction) {
+            float yaw = (float) Math.toDegrees(Math.atan2(-direction.x(), direction.z()));
+            boss().setYRot(yaw);
+            boss().setYHeadRot(yaw);
+            boss().setYBodyRot(yaw);
+        }
+
         void spawnGravityRock(
                 PromisedConsortActionSnapshot action,
                 int projectileIndex,
@@ -1342,11 +2031,19 @@ public final class PromisedConsortActionExecutor {
                 int projectileCount
         );
 
+        default void prepareGravityRocks(PromisedConsortActionSnapshot action, int riseTick, com.tonywww.elder_bosses.combat.action.ActionTimeline timeline) {
+        }
+
         void spawnVisualClone(
                 PromisedConsortActionSnapshot action,
                 int cloneIndex,
                 int cloneCount
         );
+
+        default void spawnVisualClone(PromisedConsortActionSnapshot action, int cloneIndex, int cloneCount,
+                          Vec3 origin, Vec2 direction, long impactTick) {
+            spawnVisualClone(action, cloneIndex, cloneCount);
+        }
     }
 
     public record HazardSnapshot(
@@ -1401,8 +2098,16 @@ public final class PromisedConsortActionExecutor {
             long remainingToActiveTicks,
             long remainingToEndTicks,
                 PromisedConsortHitSpec hit,
-                Set<UUID> hitTargets
+                Set<UUID> hitTargets,
+                Boolean activationSoundPlayed
     ) {
+            public PersistentHazard(String id, long actionSequence, ShapeKind shapeKind, double originX, double originZ,
+                        double directionX, double directionZ, List<Double> dimensions, double baseY, double height,
+                        long remainingToActiveTicks, long remainingToEndTicks, PromisedConsortHitSpec hit, Set<UUID> hitTargets) {
+                this(id, actionSequence, shapeKind, originX, originZ, directionX, directionZ, dimensions, baseY, height,
+                    remainingToActiveTicks, remainingToEndTicks, hit, hitTargets, null);
+            }
+
         public PersistentHazard {
             Objects.requireNonNull(id, "id");
             Objects.requireNonNull(shapeKind, "shapeKind");
@@ -1432,7 +2137,8 @@ public final class PromisedConsortActionExecutor {
                     Math.max(0L, hazard.activeTick() - now),
                     Math.max(1L, hazard.endTick() - now),
                         hazard.hit(),
-                        hazard.hitTargets()
+                        hazard.hitTargets(),
+                        hazard.soundEvents().contains("activation")
             );
         }
 
@@ -1515,10 +2221,12 @@ public final class PromisedConsortActionExecutor {
             long activeTick,
             long endTick,
             PromisedConsortHitSpec hit,
-            Set<UUID> hitTargets
+            Set<UUID> hitTargets,
+            Set<String> soundEvents
     ) {
         private Hazard {
             hitTargets = Objects.requireNonNull(hitTargets, "hitTargets");
+            soundEvents = Objects.requireNonNull(soundEvents, "soundEvents");
         }
 
         private StrikeVolume volume() {

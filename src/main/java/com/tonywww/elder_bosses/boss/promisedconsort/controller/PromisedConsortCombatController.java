@@ -2,6 +2,7 @@ package com.tonywww.elder_bosses.boss.promisedconsort.controller;
 
 import com.tonywww.elder_bosses.boss.promisedconsort.action.PromisedConsortActionCatalog;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortCombatConfigSnapshot;
+import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortRangedConfig;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortCombatState;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase;
@@ -35,6 +36,7 @@ public final class PromisedConsortCombatController {
     private final PromisedConsortCooldowns cooldowns;
     private final PromisedConsortSkillSelector selector;
     private final Deque<PromisedConsortActionId> history = new ArrayDeque<>();
+    private final PromisedConsortBurstCadence burst;
 
     private UUID targetId;
     private long targetSinceTick = -1L;
@@ -56,6 +58,7 @@ public final class PromisedConsortCombatController {
         this.runtime = Objects.requireNonNull(runtime, "runtime");
         this.cooldowns = Objects.requireNonNull(cooldowns, "cooldowns");
         this.selector = Objects.requireNonNull(selector, "selector");
+        this.burst = new PromisedConsortBurstCadence(config.selector().burst());
     }
 
     public TickResult tick() {
@@ -63,32 +66,51 @@ public final class PromisedConsortCombatController {
         if (gameTick < lastTick) {
             throw new IllegalStateException("game time moved backwards");
         }
+        if (gameTick == lastTick) return new TickResult(Optional.ofNullable(targetId), runtime.snapshot(gameTick), Optional.empty());
+        if (runtime.isActive() && burst.remaining() == 0) burst.start(stableSeed(gameTick, null, targetId));
         Optional<PromisedConsortActionRuntime.ActionEnd> ended = runtime.advance(gameTick);
+        if (ended.isEmpty() && isCombatState(host.combatState()) && burst.mayShortenRecovery()
+            && !host.hasForcedRecovery() && currentTarget().isPresent() && runtime.snapshot(gameTick).map(action -> chainable(action.actionId())).orElse(false)) {
+            ended = runtime.finishRecovery(gameTick, config.selector().burst().chainRecoveryTicks());
+        }
         ended.filter(PromisedConsortActionRuntime.ActionEnd::completed).ifPresent(this::recordCompleted);
 
         if (!isCombatState(host.combatState())) {
             runtime.cancel(gameTick);
+            burst.reset();
             clearTarget();
             lastTick = gameTick;
             return new TickResult(Optional.empty(), Optional.empty(), ended);
         }
 
-        if (gameTick >= nextRetargetTick || currentTarget().isEmpty()) {
+        boolean lionActive = runtime.snapshot(gameTick).map(action -> action.actionId() == PromisedConsortActionId.LION_CLAW
+            || action.actionId() == PromisedConsortActionId.LION_CLAW_DOUBLE).orElse(false);
+        if (!lionActive && (gameTick >= nextRetargetTick || currentTarget().isEmpty())) {
             selectTarget(gameTick);
             nextRetargetTick = saturatedAdd(gameTick, config.multiplayer().retargetIntervalTicks());
         }
 
         if (ended.isPresent()) {
-            Optional<PromisedConsortActionSnapshot> branch = branchAfter(ended.get(), gameTick);
-            if (branch.isPresent()) {
-                lastTick = gameTick;
-                return new TickResult(Optional.ofNullable(targetId), branch, ended);
-            }
             int recovery = host.consumeForcedRecoveryTicks();
-            nextSelectionTick = saturatedAdd(
-                    gameTick,
-                    recovery > 0 ? recovery : idleTicks(gameTick)
-            );
+            if (recovery <= 0) {
+                Optional<PromisedConsortActionSnapshot> branch = branchAfter(ended.get(), gameTick, true);
+                if (branch.isPresent()) {
+                    lastTick = gameTick;
+                    return new TickResult(Optional.ofNullable(targetId), branch, ended);
+                }
+            }
+            var delay = burst.complete(stableSeed(gameTick, ended.get().actionId(), targetId));
+            if (recovery > 0) burst.reset();
+            if (recovery <= 0 && !delay.breathing()) {
+                Optional<PromisedConsortActionSnapshot> branch = branchAfter(ended.get(), gameTick, false);
+                if (branch.isPresent()) {
+                    lastTick = gameTick;
+                    return new TickResult(Optional.ofNullable(targetId), branch, ended);
+                }
+            }
+            var ranged = config.targeting().rangedCounter();
+            boolean pursuing = ranged.enabled() && currentTarget().map(host::isRangedTarget).orElse(false);
+            nextSelectionTick = saturatedAdd(gameTick, recovery > 0 ? recovery : delay.scaled(ranged.pursuitIdleMultiplier(), pursuing));
         }
 
         if (!runtime.isActive() && gameTick >= nextSelectionTick) {
@@ -102,6 +124,7 @@ public final class PromisedConsortCombatController {
 
     public void cancel() {
         runtime.cancel(host.gameTime());
+        burst.reset();
     }
 
     public Optional<PromisedConsortActionSnapshot> force(
@@ -123,7 +146,18 @@ public final class PromisedConsortCombatController {
 
     public void clearCooldowns() {
         cooldowns.clear();
+        burst.reset();
         nextSelectionTick = host.gameTime();
+    }
+
+    public PromisedConsortActionSnapshot forceOpeningLion(UUID participant) {
+        runtime.cancel(host.gameTime());
+        targetId = Objects.requireNonNull(participant);
+        targetSinceTick = host.gameTime();
+        var action = PromisedConsortActionId.LION_CLAW;
+        var snapshot = runtime.start(action, host.phase(), host.gameTime(), stableSeed(host.gameTime(), action, targetId), targetId);
+        cooldowns.recordStarted(action, host.gameTime());
+        return snapshot;
     }
 
     public PromisedConsortCooldowns cooldowns() {
@@ -143,6 +177,7 @@ public final class PromisedConsortCombatController {
                     || !cooldowns.isEligible(actionId, host.phase(), gameTick)) {
                 continue;
             }
+            if (host.rangedActionWeight(actionId, target.orElseThrow()) <= 0) continue;
             eligible.add(actionId);
         }
         if (!history.isEmpty() && eligible.size() > history.size()) {
@@ -156,7 +191,9 @@ public final class PromisedConsortCombatController {
                 host.nearbyPlayers(4.0),
                 host.rightRearTicks(selected),
                 host.previousActionHit(),
-                eligible
+                eligible,
+                eligible.stream().collect(java.util.stream.Collectors.toMap(action -> action,
+                    action -> host.rangedActionWeight(action, selected)))
         );
         Optional<PromisedConsortActionId> selectedAction = selector.select(
             context,
@@ -166,12 +203,14 @@ public final class PromisedConsortCombatController {
             return Optional.empty();
         }
         PromisedConsortActionId actionId = selectedAction.get();
+        burst.start(stableSeed(gameTick, actionId, targetId));
         PromisedConsortActionSnapshot snapshot = runtime.start(
             actionId,
             host.phase(),
             gameTick,
             stableSeed(gameTick, actionId, targetId),
-            targetId
+            targetId,
+            host.useRangedVariant(actionId, selected)
         );
         cooldowns.recordStarted(actionId, gameTick);
         return Optional.of(snapshot);
@@ -179,15 +218,17 @@ public final class PromisedConsortCombatController {
 
     private Optional<PromisedConsortActionSnapshot> branchAfter(
             PromisedConsortActionRuntime.ActionEnd end,
-            long gameTick
+            long gameTick,
+            boolean lionFollowupOnly
     ) {
-        if (end.actionId() == PromisedConsortActionId.LION_CLAW
+        if (lionFollowupOnly && end.actionId() == PromisedConsortActionId.LION_CLAW
                 && (!host.actionHit(end.sequence()) || host.actionBlocked(end.sequence()))
                 && chance(gameTick, end.sequence())
                 < catalog.skillConfig().get(PromisedConsortActionId.LION_CLAW)
                 .number("double_followup_chance")) {
             return force(PromisedConsortActionId.LION_CLAW_DOUBLE, host.phase());
         }
+        if (lionFollowupOnly) return Optional.empty();
         if (!host.actionBlocked(end.sequence())
                 || chance(gameTick ^ 0x9E3779B97F4A7C15L, end.sequence())
                 >= config.selector().blockedBranchChance()) {
@@ -241,6 +282,8 @@ public final class PromisedConsortCombatController {
         if (targetId == null) {
             return Optional.empty();
         }
+        if (runtime.snapshot(host.gameTime()).map(action -> action.actionId() == PromisedConsortActionId.LION_CLAW
+                || action.actionId() == PromisedConsortActionId.LION_CLAW_DOUBLE).orElse(false)) return host.lockedActionTarget(targetId);
         return host.visibleEligibleTargets().stream()
                 .filter(target -> target != null && target.isAlive() && !target.isRemoved())
                 .filter(target -> target.getUUID().equals(targetId))
@@ -287,9 +330,31 @@ public final class PromisedConsortCombatController {
                 || state == PromisedConsortCombatState.PHASE_2;
     }
 
-    private static int idleTicks(long gameTick) {
-        return MINIMUM_IDLE_TICKS
+    public static boolean chainable(PromisedConsortActionId action) {
+        return switch (action) {
+            case L_COMBO_CROSS, L_COMBO_BLOODFLAME, R_COMBO_CROSS, R_COMBO_LEFT_TWIN, R_COMBO_TEMPEST,
+                    R_COMBO_EARTHHEAVE, CROSS_SLASH, STOMP -> true;
+            default -> false;
+        };
+    }
+
+    public net.minecraft.nbt.CompoundTag saveCadence() {
+        var tag = new net.minecraft.nbt.CompoundTag();
+        tag.putInt("RemainingSkills", burst.remaining());
+        tag.putLong("WaitTicks", Math.max(0, nextSelectionTick - host.gameTime()));
+        return tag;
+    }
+
+    public void restoreCadence(net.minecraft.nbt.CompoundTag tag) {
+        burst.restore(Math.max(0, Math.min(config.selector().burst().maximumSkills(), tag.getInt("RemainingSkills"))));
+        nextSelectionTick = saturatedAdd(host.gameTime(), (int) Math.max(0, Math.min(Integer.MAX_VALUE, tag.getLong("WaitTicks"))));
+    }
+
+    public static int selectionDelay(long gameTick, int forcedRecoveryTicks, boolean rangedTarget, PromisedConsortRangedConfig rangedConfig) {
+        if (forcedRecoveryTicks > 0) return forcedRecoveryTicks;
+        int baseTicks = MINIMUM_IDLE_TICKS
                 + (int) Math.floorMod(gameTick, MAXIMUM_IDLE_TICKS - MINIMUM_IDLE_TICKS + 1L);
+        return rangedConfig.idleTicks(baseTicks, rangedTarget);
     }
 
     private static double chance(long gameTick, long sequence) {
@@ -316,6 +381,21 @@ public final class PromisedConsortCombatController {
     }
 
     public interface Host {
+        default Optional<LivingEntity> lockedActionTarget(UUID targetId) {
+            return visibleEligibleTargets().stream().filter(target -> target != null && target.isAlive() && !target.isRemoved()
+                    && target.getUUID().equals(targetId)).map(target -> (LivingEntity) target).findFirst();
+        }
+
+        default boolean hasForcedRecovery() { return false; }
+
+        default boolean isRangedTarget(LivingEntity target) { return false; }
+
+        default double rangedActionWeight(PromisedConsortActionId action, LivingEntity target) {
+            return action.rangedDefense() ? 0 : 1;
+        }
+
+        default boolean useRangedVariant(PromisedConsortActionId action, LivingEntity target) { return false; }
+
         long gameTime();
 
         PromisedConsortCombatState combatState();

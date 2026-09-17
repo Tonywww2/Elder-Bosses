@@ -30,3 +30,23 @@ Desktop.ini
 
 # Java build artifacts
 *.class
+
+# Local Python environment and caches
+.venv/
+**/__pycache__/
+*.py[cod]
+
+# Private conversation archives and raw research media
+chats/
+docs/assets/reference/
+
+# Superseded authoring snapshots and disposable captures
+*.pre-*
+*.rejected-*
+*.bak
+*.tmp
+*.temp
+models/*/previews/*.bbmodel
+models/*/previews/*.mp4
+models/*/previews/
+models/promised_consort/arena/previews/

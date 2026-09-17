@@ -1,0 +1,4 @@
+{
+  "type": "minecraft:block",
+  "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "elder_bosses:pale_sediment"}], "conditions": [{"condition": "minecraft:survives_explosion"}]}]
+}

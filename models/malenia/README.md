@@ -3,7 +3,13 @@
 Original detailed GeckoLib interpretation for `elder_bosses:malenia`.
 Authoring format: **GeckoLib Animated Model** in Blockbench.
 
-![Model and animation contact sheet](previews/contact_sheet.png)
+The current single-version contract is [current_assets.json](current_assets.json).
+Old snapshots and generated previews were removed on 2026-09-18; capture fresh
+images when needed. Use [the current maintenance workflow](../README.md), not
+the historical reconstruction commands below. Existing animation values are
+unchanged; JSON time keys were normalized into chronological order.
+
+Model and animation contact sheet (historical artifact removed)
 
 ## Deliverables
 
@@ -20,11 +26,14 @@ Authoring format: **GeckoLib Animated Model** in Blockbench.
 | [surface_audit.json](surface_audit.json) | Geometry/animation-hashed near-coplanar surface checks in 32 poses |
 | [angular_review.json](angular_review.json) | Pre-client visual review, 88 angles, anatomical sides, crown and posed-motion checks |
 | [preview_validation.json](preview_validation.json) | Visible-pixel checks and rendered foot-contact samples |
-| [runtime_validation.json](runtime_validation.json) | Platform runs and user-confirmed in-world acceptance |
+| [texture_validation.json](texture_validation.json) | Texture-only changes, protected pixels, alpha and current PNG hash |
+| [relief_validation.json](relief_validation.json) | Added decoration geometry, preserved baseline, review and runtime status |
+| [secondary_motion_validation.json](secondary_motion_validation.json) | Sampled protected transforms under bounded secondary offsets |
+| [runtime_validation.json](runtime_validation.json) | Platform runs, user feedback and evidence limitations |
 | [MOTION_PLAN.md](MOTION_PLAN.md) | Bilibili reference evidence, optimization plan and execution record |
 | [SOURCES.md](SOURCES.md) | Research, authorship and distribution boundaries |
 
-The current `reference_motion_v7` model has **91 bones, 378 cubes and 1,379 textured faces**.
+The current `sculpted_relief_v9` model has **91 bones, 465 cubes and 1,814 textured faces**.
 Minecraft pixel styling remains a texture requirement only. Fractional
 geometry, refined joints, the cape, hair and physical blade remain detailed.
 It preserves the **1.2 authoring scale** without separately rounding joints and geometry.
@@ -36,6 +45,45 @@ There are no arbitrary meshes, skinned vertices or imported game assets. The pro
 embeds its texture and remains a cube-and-bone GeckoLib asset.
 
 ## Current Refinement
+
+V9 addresses flat-looking decoration with real raised centers, sloped edges and
+different surface normals on the chest leaves and keel, brow, crest, shoulder armor,
+clasps and belt ornaments. Seventy added cubes form these relief surfaces. Seventeen
+more extrude the winged helmet's existing opaque mask into feather sections with
+visible side thickness; transparent gaps are retained and duplicate rear faces are
+disabled. The existing atlas is reused with cropped, integer-aligned UV regions,
+not repainted or compressed into repeated miniature motifs.
+
+All 378 original cubes, their UVs, bone transforms, body proportions and authored
+animation data remain unchanged relative to the v8 snapshot (historical artifact removed).
+The full PNG and animation library remain byte-identical. New decoration follows
+its source bone; hands, blade, collision and gameplay timing are not changed.
+See the matching chest before (historical artifact removed) and
+after (historical artifact removed), helmet side (historical artifact removed)
+and shoulder (historical artifact removed). This is a targeted decoration pass,
+not a new body sculpt or an increase to the existing geometry budget.
+
+The v8 style pass refines 18 outer hair cubes while preserving all bone transforms,
+the v7 handedness, grip, proportions and all 40 authored animation clips. Hair,
+fabric, skin and selected gold surfaces use continuous structural shading and
+material-specific highlights. The user-provided reference models informed these
+techniques; their pixels, geometry and YSM controllers were not imported.
+
+The latest texture revision is `clustered_transition_v1`. Fixed-seed, multiscale
+color clusters and four intermediate colors between five palette anchors produce
+nine discrete tones without blurring pixel edges. Hair follows complete root-to-tip
+paths; fabric uses irregular low-contrast patches, gold keeps directional highlights,
+and skin stays restrained. This follow-up repaints 304 faces and changes 4,917 pixels.
+All 27,443 protected pixels and every alpha value remained unchanged in that v8
+texture pass. Its geometry, UVs, rig and animation data matched
+the pre-mottle project (historical artifact removed); v9's later relief additions
+are tracked separately. See hair (historical artifact removed),
+cape (historical artifact removed) and gold armor (historical artifact removed).
+
+Small critically damped client offsets add movement-dependent lag only to lower cape
+and hair-end bones. Repeated frames do not accumulate offsets; long gaps and teleports
+reset the response. Hands, blades and the main pose are excluded. This is a bounded
+presentation layer, not cloth collision, terrain IK or imported YSM physics.
 
 - The figure is approximately four blocks tall, depending on pose and helmet silhouette.
   Joint pivots, blade and local animation position keys scale together. Flower geometry,
@@ -102,6 +150,10 @@ The v7 review corrected anatomical mirroring, rigid empty fingers, backwards tor
 lean and shoulder-height Waterfowl preparation. It retains the earlier wrist and
 surface-separation repairs. The final 88 views and 16 review sheets, plus the updated
 action-sequence sheets, were reviewed before the v7 client launch.
+For v8, the review and standard preview scripts explicitly select perspective
+projection so editor orthographic zoom cannot invalidate the intended closeups.
+Representative hair, cape, armor and orbit views were inspected again for the latest
+texture hash before the client launch; this is not a claim of exhaustive visual review.
 Across 270 animation samples, 264 visible grip poses
 retained their local handle relationship; six hidden poses were excluded.
 Finger/handle centers did not enter the tested forearm interior. All 405 crown rays
@@ -109,12 +161,12 @@ in five poses met the scalp cap before the head. Eleven actual posed-motion chec
 verify blade direction, forward weight transfer and overhead preparation. These checks are sampled, not a
 proof of every possible surface intersection or viewing configuration.
 
-Review entries: [phase one](previews/review_phase_one_orbit.png),
-[phase two](previews/review_phase_two_orbit.png), [crown](previews/review_crown.png),
-[idle grip](previews/review_grip_idle_phase_one.png),
-[plunge grip](previews/review_grip_scarlet_plunge.png),
-[relaxed empty hand](previews/review_empty_hand_idle_phase_one_0.png),
-[open capture hand](previews/review_empty_hand_grab_impale_24.png).
+Review entries: phase one (historical artifact removed),
+phase two (historical artifact removed), crown (historical artifact removed),
+idle grip (historical artifact removed),
+plunge grip (historical artifact removed),
+relaxed empty hand (historical artifact removed),
+open capture hand (historical artifact removed).
 
 ## Motion Contract
 
@@ -163,23 +215,23 @@ Review entries: [phase one](previews/review_phase_one_orbit.png),
   walk, 1.6 backward, 1.4 strafing and 2.7 running. These are presentation parameters,
   not movement-speed changes or terrain-aware foot IK.
 
-Useful previews: [hands](previews/hands_closeup.png),
-[feet](previews/feet_closeup.png), [foot profile](previews/feet_profile.png),
-[walk sequence](previews/walk_sequence.png),
-[helmet](previews/helm_closeup.png), [cuirass](previews/cuirass_closeup.png),
-[prosthetic profile](previews/prosthetic_profile.png),
-[bent elbow](previews/elbow_flex.png), [bent knee](previews/knee_flex.png),
-[cape profile](previews/cape_profile.png), [blade](previews/blade_detail.png),
-[second-phase hair](previews/phase_two_hair_closeup.png),
-[low-angle thrust](previews/thrust_low_angle.png),
-[double-slash sequence](previews/double_slash_sequence.png),
-[Waterfowl sequence](previews/waterfowl_sequence.png),
-[rapid-slash sequence](previews/rapid_sequence.png),
-[thrust sequence](previews/thrust_sequence.png), [uppercut sequence](previews/upward_sequence.png),
-[grab sequence](previews/grab_sequence.png), [phantom sequence](previews/phantoms_sequence.png),
-[Aeonia sequence](previews/aeonia_sequence.png).
-The existing [double-slash GIF](previews/double_slash.gif) and
-[Waterfowl GIF](previews/waterfowl_dance.gif) are retained **v2** motion references.
+Useful previews: hands (historical artifact removed),
+feet (historical artifact removed), foot profile (historical artifact removed),
+walk sequence (historical artifact removed),
+helmet (historical artifact removed), cuirass (historical artifact removed),
+prosthetic profile (historical artifact removed),
+bent elbow (historical artifact removed), bent knee (historical artifact removed),
+cape profile (historical artifact removed), blade (historical artifact removed),
+second-phase hair (historical artifact removed),
+low-angle thrust (historical artifact removed),
+double-slash sequence (historical artifact removed),
+Waterfowl sequence (historical artifact removed),
+rapid-slash sequence (historical artifact removed),
+thrust sequence (historical artifact removed), uppercut sequence (historical artifact removed),
+grab sequence (historical artifact removed), phantom sequence (historical artifact removed),
+Aeonia sequence (historical artifact removed).
+The existing double-slash GIF (historical artifact removed) and
+Waterfowl GIF (historical artifact removed) are retained **v2** motion references.
 They do not show the current geometry, textures or motion fixes and are not Minecraft client footage.
 
 ## Rig Contract
@@ -202,7 +254,8 @@ They do not show the current geometry, textures or motion fixes and are not Mine
   membrane bones per side. Opaque root-woven body coverage is retained.
 - `aeonia_core` owns eight independently posed, three-fold petals. The same rig
   contains bloom and defeated-flower poses; it does not spawn a persistent entity.
-- Hair and cloth secondary motion is authored keyframes, not a physics simulation.
+- Authored hair and cloth keyframes remain the base motion. V8 adds bounded client
+  spring offsets to selected end bones only, without collision simulation.
   `hair_end_01..06` are children of the corresponding `hair_01..06` bones.
 
 ## Animation Coverage
@@ -247,11 +300,44 @@ Open [malenia.bbmodel](malenia.bbmodel) with the GeckoLib Blockbench plugin inst
 The two idle clips provide convenient stage visibility previews. Combat clips are
 shared by both phases; Java applies the appropriate stage layers after animation.
 
+The v9 decoration is generated by refine_relief.js (historical artifact removed) using
+[relief_geometry.js](../shared/relief_geometry.js). In Blockbench, evaluate the former
+with `let reliefOptions = {model: "malenia"}` to prepare a dedicated project from the
+preserved baseline. On a subsequent call, `reuseProject: true` updates the generated
+decoration and captures chest, head and shoulder comparisons after the editor renders.
+Add `saveAuthoring: true` only when ready to write the project and authoring geometry.
+This replaces generated `relief_` parts rather than merging manual edits to them.
+
+After saving, refresh the surface audit, angular review and standard previews,
+inspect representative views, and perform a complete export. Do not use
+`texturesOnly` for changed geometry. Run
+`node models/shared/relief_geometry.test.js --assets` and the asset validator.
+The original builders below do not by themselves reproduce the v9 decoration;
+do not run them over the current project as an incremental editing shortcut.
+
+For texture edits, use [repaint_textures.js](scripts/repaint_textures.js) in the saved
+project instead of either builder. It uses the palette in [art_direction.json](art_direction.json)
+and [shared surface shading](../shared/surface_style.js), preserves the existing UVs,
+and checks geometry, rig, animation, protected pixels and alpha before saving.
+After inspecting refreshed previews, use the texture-only exporter in Blockbench:
+
+```javascript
+(() => {
+  let exportOptions = {texturesOnly: true};
+  return eval(require("fs").readFileSync("C:/Users/12044/Documents/EX/IDEA_PROJECT/ElderBosses/models/malenia/scripts/export_assets.js", "utf8"));
+})()
+```
+
+This copies only the base PNG after verifying the unchanged geometry and animation
+exports. Repainting and regenerating reviews reset their inspection status; inspect
+the new images before recording the current texture hash as reviewed. Run
+`node models/shared/surface_style.test.js --assets` and the asset validator afterwards.
+
 The scripts are the reproducible authoring source and currently target this workspace
 path. Running the builders replaces this project's authored geometry or animations;
 preserve manual Blockbench edits in a separately named project before rebuilding.
-Previous editor states were preserved in [malenia.pre-v6.bbmodel](malenia.pre-v6.bbmodel)
-and [malenia.pre-v7.bbmodel](malenia.pre-v7.bbmodel).
+Previous editor states were preserved in malenia.pre-v6.bbmodel (historical artifact removed)
+and malenia.pre-v7.bbmodel (historical artifact removed).
 
 1. Run `scripts/build_model.js` through Blockbench MCP `risky_eval` in the dedicated
    `malenia` project, using `eval(require('fs').readFileSync(absolutePath, 'utf8'))`.
@@ -269,6 +355,8 @@ and [malenia.pre-v7.bbmodel](malenia.pre-v7.bbmodel).
   moving poses and rejects untextured or blank views using canvas-pixel checks.
 6. Run `scripts/export_assets.js` in Blockbench. It saves the project and copies only
    the geo, animation and base atlas into the matching runtime asset directories.
+  Repeat the texture-only workflow above to reproduce the final clustered finish
+  and refresh its previews after a full rebuild; do not retain a stale texture report.
 7. After actual image inspection, record the findings in `angular_review.json` and
   set `inspection_status` to `visually_reviewed_before_client_test`. Run
   `node models/malenia/tests/hand_pose.test.js`,
@@ -276,7 +364,7 @@ and [malenia.pre-v7.bbmodel](malenia.pre-v7.bbmodel).
   `node models/malenia/scripts/validate_assets.js`, then perform the in-world test.
 
 The optional GIF recorder uses the older v2 camera framing. Existing GIFs were not
-re-recorded for v7; use the updated stills, sequences or direct Blockbench playback.
+re-recorded for v8; use the updated stills, sequences or direct Blockbench playback.
 
 The builders use Blockbench's Group, Cube, Texture and animation codec APIs, with
 deterministic pixel painting. PNGs and JSONs are generated from authored code,
@@ -284,6 +372,15 @@ not edited inside any JAR. Normal resource processing is sufficient to run the m
 
 ## Verification
 
+- [Relief checks](../shared/relief_geometry.test.js) cover actual forward depth,
+  sloped normals, rotation composition, integer UV bounds, transparent mask gaps,
+  source attachments, geometry budgets and preservation of the original assets.
+  The v9 surface audit found zero exposed near-coplanar pairs in 32 sampled poses.
+  Crown, grip, gait and representative action views were refreshed before launch.
+- Both loaders processed the v9 resources. Forge loaded them at 21:33:39 on
+  2026-09-13 and exited normally at 00:14:37 on 2026-09-14. No world-entry events
+  were recorded and the appearance question was skipped. V9 in-world appearance
+  remains **unconfirmed**; NeoForge was not launched for this revision.
 - Structural validation: all 40 clips, all 15 action IDs, bone parents, finite
   keyframes, loop closure, valid fractional dimensions, concentric joint construction,
   physical blade sections, second-phase hair and articulated ends, cape idle angle,
@@ -295,7 +392,8 @@ not edited inside any JAR. Normal resource processing is sufficient to run the m
   across all actions, doubled stage durations, Waterfowl landmarks, angular wraps,
   delayed samples, same-action restarts, candidate stability, phase-preserving direction
   changes, stops, repeated frames, long intervals and teleports. These unchanged
-  Java checks last ran for v5; this revision does not modify Java presentation code.
+  clock and gait checks last ran for v5. V8 adds a separately tested secondary spring;
+  the historical assertion count is not presented as a new run of that code.
 - [Gait tests](tests/gait.test.js): **1,790 checks** of support height, foot sliding,
   sole alignment, natural knee bend, swing clearance and loop closure/velocity.
   Blockbench additionally verified both rendered foot transforms in 25 sampled poses.
@@ -306,8 +404,19 @@ not edited inside any JAR. Normal resource processing is sufficient to run the m
 - Wrist compensation: **3,250 baked samples** checked their combined orientation;
   maximum rounding error was below 0.001 degrees. The v6 before/after comparison
   remains historical evidence, not proof that v7 preserves the old choreography.
-- Both Forge 1.20.1 and NeoForge 1.21.1 compiled and processed the v7 resources.
-- Current v7 NeoForge run: world entry at 04:09:12 and normal shutdown and completed
+- [Shared surface tests](../shared/surface_style.test.js) pass for deterministic
+  clusters, transition tones, material response and both texture-only asset contracts.
+  The latest texture and review hashes match the editable and runtime assets.
+- [Secondary spring tests](../shared/SecondaryMotionTest.java) pass for bounded motion,
+  repeated frames, resets and time-step independence. Twelve static offset samples
+  retain protected main-pose, hand and blade transforms; in-world motion is not separately accepted.
+- Historical v8: both Forge 1.20.1 and NeoForge 1.21.1 compiled its runtime code and processed
+  the latest textures. The user confirmed both models' textures can be retained.
+  The Forge run on 2026-09-13 loaded resources at 04:09:50 and exited normally at
+  15:46:38, but contains no world-entry or save events. The observation-source
+  clarification was skipped, so world entry is not independently corroborated.
+  NeoForge was not rerun in-world for v8. See the historical record (historical artifact removed).
+- Historical v7 NeoForge run: world entry at 04:09:12 and normal shutdown and completed
   world saving at 04:10:12 on 2026-09-10 are confirmed by the log, with
   no model/animation error observed. The user separately confirmed that the inspected
   hand sides and empty-hand motion were normal, and the major motions looked closer

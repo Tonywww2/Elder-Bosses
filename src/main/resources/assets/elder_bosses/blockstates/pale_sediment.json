@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "elder_bosses:block/pale_sediment"},
+    "facing=east": {"model": "elder_bosses:block/pale_sediment", "y": 90},
+    "facing=south": {"model": "elder_bosses:block/pale_sediment", "y": 180},
+    "facing=west": {"model": "elder_bosses:block/pale_sediment", "y": 270}
+  }
+}

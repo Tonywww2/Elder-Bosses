@@ -51,23 +51,60 @@ void main() {
         core = band(effectUv.y - 0.90, 0.13) * bladeLength;
         opacity = bladeLength * (0.38 + wake * 0.42) + core * 0.2;
     } else if (EffectMode == 7) {
-        float corona = exp(-radius * radius * 4.5);
-        float rays = pow(abs(cos(angle * 4.0 + EffectTime * 0.7)), 18.0)
-            * (1.0 - smoothstep(0.18, 1.0, radius));
-        core = 1.0 - smoothstep(0.06, 0.32, radius);
-        opacity = corona * 0.40 + rays * 0.48 + core * 0.75;
+        float corona = exp(-radius * radius * 5.5) * (1.0 - smoothstep(0.72, 1.0, radius));
+        float rays = pow(abs(cos(angle * 2.0)), 30.0) * (1.0 - smoothstep(0.18, 1.0, radius));
+        float filaments = pow(abs(cos(angle * 6.0 + EffectTime * 0.22)), 28.0)
+            * (1.0 - smoothstep(0.22, 0.82, radius)) * Progress;
+        core = 1.0 - smoothstep(0.06, mix(0.22, 0.40, Progress), radius);
+        opacity = corona * 0.70 + rays * 0.85 + filaments * 0.22 + core;
     } else if (EffectMode == 8) {
         float streak = centered.x + sin(effectUv.y * 17.0 - EffectTime * 14.0) * 0.025;
         core = band(streak, 0.05);
         opacity = (band(streak, 0.95) * 0.32 + band(streak, 0.32) * 0.4 + core * 0.7)
             * pow(clamp(1.0 - effectUv.y, 0.0, 1.0), 0.65);
+    } else if (EffectMode == 9) {
+        float tear = centered.y + sin(effectUv.x * 23.0 + EffectTime * 3.0) * 0.10;
+        float ends = smoothstep(0.0, 0.06, effectUv.x) * (1.0 - smoothstep(0.94, 1.0, effectUv.x));
+        core = band(tear, 0.09);
+        opacity = (core * 0.75 + band(tear, 0.8) * 0.32) * ends;
+    } else if (EffectMode == 10) {
+        float spokes = pow(abs(cos(angle * 8.0 + EffectTime * 0.3)), 22.0);
+        float rings = band(radius - 0.82, 0.045) + band(radius - 0.63, 0.022);
+        float lattice = band(sin(angle * 6.0 + radius * 16.0), 0.14);
+        core = rings * 0.65 + spokes * band(radius - 0.73, 0.20);
+        opacity = (core + lattice * 0.22) * (1.0 - smoothstep(0.94, 1.0, radius))
+            * smoothstep(max(0.0, InnerRatio - 0.05), max(0.04, InnerRatio), radius);
+    } else if (EffectMode == 11) {
+        float vertical = effectUv.y;
+        float sway = sin(vertical * 9.0 - EffectTime * 8.0) * (0.08 + vertical * 0.17);
+        float flicker = sin(vertical * 23.0 - EffectTime * 13.0 + centered.x * 6.0) * 0.07;
+        float taper = mix(0.82, 0.025, pow(vertical, 0.75));
+        core = band(centered.x + sway, taper * 0.28) * (1.0 - vertical);
+        opacity = band(centered.x + sway + flicker, taper) * (0.72 + core * 0.5)
+            * smoothstep(0.0, 0.05, vertical) * (1.0 - smoothstep(0.78, 1.0, vertical));
+    } else if (EffectMode == 12) {
+        float cracks = sin(centered.x * 14.0 + sin(effectUv.y * 28.0) * 1.4);
+        float front = clamp(Progress * 2.5, 0.0, 1.0);
+        core = band(cracks, 0.09) * (1.0 - smoothstep(front, front + 0.1, effectUv.y));
+        opacity = core * 0.7 + band(effectUv.y - front, 0.08) * 0.75;
+        opacity *= (1.0 - smoothstep(0.90, 1.0, abs(centered.x))) * (1.0 - Progress);
+    } else if (EffectMode == 13) {
+        float strands = pow(abs(sin(effectUv.x * 18.84956 + EffectTime * 2.0)), 12.0);
+        core = band(effectUv.y - 0.16, 0.08) + strands * 0.35;
+        opacity = (0.2 + core) * (1.0 - smoothstep(0.12, 1.0, effectUv.y));
+    } else if (EffectMode == 14) {
+        float sweep = fract(effectUv.x * 0.65 + effectUv.y * 0.35 - Progress);
+        float strands = sin(effectUv.x * 27.0 + effectUv.y * 19.0 - EffectTime * 12.0);
+        core = band(sweep - 0.5, 0.16);
+        opacity = 0.32 + core * 0.55 + band(strands, 0.13) * 0.13;
     } else {
         float wave = mix(max(0.12, InnerRatio), 0.98, clamp(Progress, 0.0, 1.0));
         core = band(radius - wave, 0.022);
         opacity = band(radius - wave, 0.16) * 0.34 + core * 0.45;
     }
-    vec3 tint = mix(vertexColor.rgb, vec3(1.0, 0.98, 0.90), core * (EffectMode >= 6 ? 0.88 : 0.42));
-    float alpha = opacity * vertexColor.a * ColorModulator.a;
+    vec3 tint = mix(vertexColor.rgb, EffectMode == 11 ? vec3(1.0, 0.48, 0.12) : vec3(1.0, 0.98, 0.90),
+        clamp(core * (EffectMode >= 6 ? 0.88 : 0.42), 0.0, 1.0));
+    float alpha = min(1.0, opacity * vertexColor.a * ColorModulator.a);
     if (alpha < 0.004) discard;
     fragColor = vec4(tint * ColorModulator.rgb, alpha);
 }

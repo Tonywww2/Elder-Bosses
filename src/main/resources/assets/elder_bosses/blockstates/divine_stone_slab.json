@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "elder_bosses:block/divine_stone_slab"
+    },
+    "type=top": {
+      "model": "elder_bosses:block/divine_stone_slab_top"
+    },
+    "type=double": {
+      "model": "elder_bosses:block/divine_stone_slab_double"
+    }
+  }
+}

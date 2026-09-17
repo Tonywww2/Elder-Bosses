@@ -32,6 +32,7 @@ public final class PromisedConsortConfigValues {
     private final Map<String, Supplier<? extends UnmodifiableConfig>> formulas = new HashMap<>();
     private final Map<PromisedConsortActionId, SkillValues> skills =
             new EnumMap<>(PromisedConsortActionId.class);
+    private final Supplier<Boolean> debugActionBroadcast;
 
     public PromisedConsortConfigValues(
             //? if forge {
@@ -46,10 +47,18 @@ public final class PromisedConsortConfigValues {
         defineEncounter(builder);
         defineDamage(builder);
         defineArenaAndTargeting(builder);
+        defineRangedCounter(builder);
         defineCombatSystems(builder);
         definePresentation(builder);
         defineSkills(builder);
+        builder.push("debug");
+        debugActionBroadcast = builder.bool("action_broadcast", false);
         builder.pop();
+        builder.pop();
+    }
+
+    public boolean debugActionBroadcast() {
+        return debugActionBroadcast.get();
     }
 
     public PromisedConsortCombatConfigSnapshot combatSnapshot() {
@@ -132,7 +141,9 @@ public final class PromisedConsortConfigValues {
                         bool("targeting.target_creative_players"),
                         bool("targeting.creative_players_can_join"),
                         string("targeting.primary_target_policy"),
-                        string("targeting.attack_target_policy")
+                        string("targeting.attack_target_policy"),
+                        number("targeting.max_segment_pursuit_distance"),
+                        rangedCounterSnapshot()
                 ),
                 new PromisedConsortCombatConfigSnapshot.Presentation(
                         string("presentation.boss_bar_audience"),
@@ -192,7 +203,12 @@ public final class PromisedConsortConfigValues {
                         string("selector.blocked_branch_mode"),
                         integer("selector.guard_chain_threshold"),
                         string("selector.guard_chain_scope"),
-                        integer("selector.guard_chain_recovery_ticks")
+                        integer("selector.guard_chain_recovery_ticks"),
+                        new com.tonywww.elder_bosses.boss.promisedconsort.controller.PromisedConsortBurstCadence.Settings(
+                            integer("selector.burst.minimum_skills"), integer("selector.burst.maximum_skills"),
+                            integer("selector.burst.minimum_link_ticks"), integer("selector.burst.maximum_link_ticks"),
+                            integer("selector.burst.minimum_rest_ticks"), integer("selector.burst.maximum_rest_ticks"),
+                            integer("selector.burst.chain_recovery_ticks"))
                 ),
                 new PromisedConsortCombatConfigSnapshot.PhaseTransition(
                         integer("phase_transition.duration_ticks"),
@@ -368,6 +384,7 @@ public final class PromisedConsortConfigValues {
         builder.pop();
 
         builder.push("targeting");
+        putNumber("targeting.max_segment_pursuit_distance", builder.number("max_segment_pursuit_distance", 3.0, 0.0, 16.0));
         putNumber("targeting.distance_weight", builder.number("distance_weight", 0.50, 0.0, 100.0));
         putNumber("targeting.recent_damage_weight", builder.number("recent_damage_weight", 0.35, 0.0, 100.0));
         putNumber("targeting.item_use_weight", builder.number("item_use_weight", 0.15, 0.0, 100.0));
@@ -430,6 +447,15 @@ public final class PromisedConsortConfigValues {
         putInteger("selector.guard_chain_threshold", builder.integer("guard_chain_threshold", 3, 1, 64));
         putString("selector.guard_chain_scope", builder.choice("guard_chain_scope", "current_action", "current_action", "same_target", "encounter"));
         putInteger("selector.guard_chain_recovery_ticks", builder.integer("guard_chain_recovery_ticks", 20, 0, NetworkLimits.MAX_TICKS));
+        builder.push("burst");
+        putInteger("selector.burst.minimum_skills", builder.integer("minimum_skills", 2, 2, 16));
+        putInteger("selector.burst.maximum_skills", builder.integer("maximum_skills", 4, 2, 16));
+        putInteger("selector.burst.minimum_link_ticks", builder.integer("minimum_link_ticks", 0, 0, 200));
+        putInteger("selector.burst.maximum_link_ticks", builder.integer("maximum_link_ticks", 2, 0, 200));
+        putInteger("selector.burst.minimum_rest_ticks", builder.integer("minimum_rest_ticks", 24, 1, 1200));
+        putInteger("selector.burst.maximum_rest_ticks", builder.integer("maximum_rest_ticks", 36, 1, 1200));
+        putInteger("selector.burst.chain_recovery_ticks", builder.integer("chain_recovery_ticks", 6, 1, 200));
+        builder.pop();
         builder.pop();
 
         builder.push("phase_transition");
@@ -508,129 +534,253 @@ public final class PromisedConsortConfigValues {
         builder.pop();
     }
 
+    private void defineRangedCounter(Builder builder) {
+        builder.push("ranged_counter");
+        putBoolean("ranged_counter.enabled", builder.bool("enabled", true));
+        putNumber("ranged_counter.enter_distance", builder.number("enter_distance", 9, 0.01, 256));
+        putNumber("ranged_counter.exit_distance", builder.number("exit_distance", 5, 0, 256));
+        putNumber("ranged_counter.segment_adjustment_budget_multiplier", builder.number("segment_adjustment_budget_multiplier", 2, 0, 16));
+        putNumber("ranged_counter.pursuit_selection_weight_multiplier", builder.number("pursuit_selection_weight_multiplier", 2, 0, 16));
+        putNumber("ranged_counter.melee_suppression_distance", builder.number("melee_suppression_distance", 9, 0, 256));
+        putNumber("ranged_counter.melee_zero_weight_distance", builder.number("melee_zero_weight_distance", 16, 0, 256));
+        putNumber("ranged_counter.distant_melee_weight_multiplier", builder.number("distant_melee_weight_multiplier", 0.1, 0, 1));
+        putNumber("ranged_counter.pursuit_idle_multiplier", builder.number("pursuit_idle_multiplier", 0.5, 0, 16));
+        putNumber("ranged_counter.far_damage_threshold", builder.number("far_damage_threshold", 1, 0.01, 1000000));
+        for (var entry : Map.of("far_dwell_ticks", 100, "far_damage_window_ticks", 80, "threat_window_ticks", 80,
+                "global_cooldown_ticks", 60, "defense_shared_cooldown_ticks", 100, "max_consecutive_defenses", 1).entrySet()) {
+            putInteger("ranged_counter." + entry.getKey(), builder.integer(entry.getKey(), entry.getValue(),
+                    entry.getKey().contains("cooldown") ? 0 : 1, NetworkLimits.MAX_TICKS));
+        }
+        builder.push("classification");
+        putBoolean("ranged_counter.classification.accept_owned_projectile_entity", builder.bool("accept_owned_projectile_entity", true));
+        for (String key : List.of("damage_type_tags", "additional_damage_type_ids", "additional_damage_type_tags", "excluded_damage_type_ids", "excluded_damage_type_tags")) {
+                putList("ranged_counter.classification." + key, builder.idList(key,
+                    key.equals("damage_type_tags") ? List.of("minecraft:is_projectile") : List.of()));
+        }
+        builder.pop();
+        builder.pop();
+    }
+
+    private com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortRangedConfig rangedCounterSnapshot() {
+        String prefix = "ranged_counter.";
+        return new com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortRangedConfig(
+                bool(prefix + "enabled"), number(prefix + "enter_distance"), number(prefix + "exit_distance"),
+                integer(prefix + "far_dwell_ticks"), integer(prefix + "far_damage_window_ticks"), number(prefix + "far_damage_threshold"),
+                integer(prefix + "threat_window_ticks"), integer(prefix + "global_cooldown_ticks"), integer(prefix + "defense_shared_cooldown_ticks"),
+                integer(prefix + "max_consecutive_defenses"), bool(prefix + "classification.accept_owned_projectile_entity"),
+                list(prefix + "classification.damage_type_tags").stream().map(Object::toString).toList(),
+                list(prefix + "classification.additional_damage_type_ids").stream().map(Object::toString).toList(),
+                list(prefix + "classification.excluded_damage_type_ids").stream().map(Object::toString).toList(),
+                list(prefix + "classification.excluded_damage_type_tags").stream().map(Object::toString).toList(),
+                list(prefix + "classification.additional_damage_type_tags").stream().map(Object::toString).toList(),
+                number(prefix + "segment_adjustment_budget_multiplier"), number(prefix + "pursuit_selection_weight_multiplier"),
+                number(prefix + "melee_suppression_distance"), number(prefix + "melee_zero_weight_distance"),
+                number(prefix + "distant_melee_weight_multiplier"), number(prefix + "pursuit_idle_multiplier"));
+    }
+
     private void defineSkills(Builder builder) {
         builder.push("skills");
         addSkill(builder, PromisedConsortActionId.GRAVITY_DIVE, 1.0, 160, true)
             .tuning(1.40, 1.35)
-                .number("range", 4.5).ticks("windup_ticks", 24).ticks("active_ticks", 6)
-                .ticks("recovery_ticks", 24).damage("sword_damage", 4.0, 0.80)
+                .number("range", 4.5).integerList("windup_ticks", 36, 3).integerList("active_ticks", 1, 1)
+                .integerList("recovery_ticks", 1, 26).damage("sword_damage", 4.0, 0.80)
                 .damage("impact_damage", 3.0, 0.55).finish();
         addSkill(builder, PromisedConsortActionId.L_COMBO_CROSS, 1.0, 50, false)
             .tuning(1.00, 1.25)
-                .number("range", 3.8).integerList("windup_ticks", 9, 8, 14)
-                .integerList("active_ticks", 3, 3, 4).integerList("recovery_ticks", 7, 8, 22)
+                .number("range", 3.8).integerList("windup_ticks", 11, 6, 11)
+                .integerList("active_ticks", 2, 2, 3).integerList("recovery_ticks", 1, 7, 28)
                 .damageList("damage", new double[][]{{2.0, 0.45}, {2.0, 0.45}, {4.0, 0.70}}).finish();
         addSkill(builder, PromisedConsortActionId.L_COMBO_BLOODFLAME, 0.8, 100, false)
             .tuning(1.30, 1.30)
                 .number("thrust_range", 5.0).number("sweep_range", 4.0)
-                .integerList("windup_ticks", 13, 12).integerList("active_ticks", 3, 4)
-                .integerList("recovery_ticks", 8, 24).damage("thrust_damage", 3.0, 0.60)
+                .integerList("windup_ticks", 15, 11, 10).integerList("active_ticks", 2, 3, 8)
+                .integerList("recovery_ticks", 4, 3, 3).damage("thrust_damage", 3.0, 0.60)
                 .damage("sweep_damage", 2.0, 0.50).damage("burst_damage", 2.0, 0.35)
-                .ticks("fissure_lifetime_ticks", 24).ticks("burst_tick", 16).finish();
+                .finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_CROSS, 1.0, 55, false)
             .tuning(1.00, 1.25)
-                .number("range", 3.8).integerList("windup_ticks", 9, 15)
-                .integerList("active_ticks", 3, 4).integerList("recovery_ticks", 8, 22)
+                .number("range", 3.8).integerList("windup_ticks", 11, 19)
+                .integerList("active_ticks", 2, 3).integerList("recovery_ticks", 4, 24)
                 .damageList("damage", new double[][]{{2.0, 0.45}, {4.0, 0.75}}).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_LEFT_TWIN, 1.0, 50, false)
             .tuning(1.00, 1.25)
-                .number("range", 3.6).integerList("windup_ticks", 9, 7, 8)
-                .integerList("active_ticks", 3, 3, 3).integerList("recovery_ticks", 7, 7, 20)
+                .number("range", 3.6).integerList("windup_ticks", 18, 13, 9)
+                .integerList("active_ticks", 2, 2, 2).integerList("recovery_ticks", 4, 2, 13)
                 .damageList("damage", new double[][]{{2.0, 0.45}, {2.0, 0.40}, {2.0, 0.45}}).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_TEMPEST, 0.7, 110, false)
             .tuning(1.30, 1.35)
-                .number("range", 4.2).integerList("windup_ticks", 10, 10, 10, 18)
-                .integerList("active_ticks", 3, 3, 3, 8).integerList("recovery_ticks", 6, 6, 6, 26)
+                .number("range", 4.2).integerList("windup_ticks", 12, 12, 13, 14, 17)
+                .integerList("active_ticks", 2, 2, 2, 3, 3).integerList("recovery_ticks", 4, 4, 6, 6, 25)
                 .damage("opening_damage", 2.0, 0.45).damage("tempest_damage", 3.0, 0.55)
                 .integer("tempest_hits", 2).finish();
         addSkill(builder, PromisedConsortActionId.R_COMBO_EARTHHEAVE, 0.7, 140, false)
             .tuning(1.40, 1.45)
-                .number("range", 7.0).integerList("windup_ticks", 10, 10, 10, 20, 10)
-                .integerList("active_ticks", 3, 3, 3, 5, 6).integerList("recovery_ticks", 6, 6, 6, 12, 30)
+                .number("range", 7.0).integerList("windup_ticks", 16, 17, 6, 20, 6)
+                .integerList("active_ticks", 2, 2, 2, 5, 5).integerList("recovery_ticks", 4, 2, 7, 6, 34)
                 .damage("opening_damage", 2.0, 0.45).damage("slam_damage", 5.0, 0.80)
                 .damage("fissure_damage", 4.0, 0.65).finish();
         addSkill(builder, PromisedConsortActionId.LION_CLAW, 0.9, 100, true)
             .tuning(1.40, 1.35)
-                .number("range", 3.5).ticks("windup_ticks", 22).ticks("active_ticks", 5)
-                .ticks("recovery_ticks", 28).damage("damage", 5.0, 0.85)
-                .number("double_followup_chance", 0.35).ticks("double_windup_ticks", 16)
-                .ticks("double_active_ticks", 5).ticks("double_recovery_ticks", 34)
+                .number("range", 3.5).ticks("windup_ticks", 30).ticks("active_ticks", 4)
+                .ticks("recovery_ticks", 16).damage("damage", 5.0, 0.85)
+                .number("double_followup_chance", 0.35).ticks("double_windup_ticks", 25)
+                .ticks("double_active_ticks", 4).ticks("double_recovery_ticks", 22)
                 .damage("double_damage", 5.0, 0.90).finish();
         addSkill(builder, PromisedConsortActionId.STARCALLER_CRY, 0.7, 180, true)
             .tuning(1.50, 1.50)
                 .number("pull_radius", 12.0).number("impact_radius", 6.0)
-                .ticks("windup_ticks", 30).ticks("active_ticks", 10).ticks("recovery_ticks", 34)
+                .integerList("windup_ticks", 18, 19).integerList("active_ticks", 8, 1).integerList("recovery_ticks", 9, 36)
                 .damage("pull_damage", 0.0, 0.0).damage("impact_damage", 4.0, 0.70)
                 .damage("spike_damage", 2.0, 0.40).number("max_pull_per_tick", 0.35)
             .number("jump_avoid_height", 0.60).damage("clone_damage", 1.0, 0.20)
             .finish();
         addSkill(builder, PromisedConsortActionId.GRAVITY_METEOR, 0.7, 220, true)
             .tuning(1.50, 1.40)
-                .ticks("windup_ticks", 32).ticks("active_ticks", 50).ticks("recovery_ticks", 36)
+                .integerList("windup_ticks", 86, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                .integerList("active_ticks", 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 5, 1)
+                .integerList("recovery_ticks", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11)
                 .integer("projectile_count", 8).integer("max_hits_per_target", 3)
                 .ticks("projectile_lifetime_ticks", 60).number("max_turn_degrees_per_tick", 4.0)
                 .number("projectile_health", 6.0).damage("damage", 2.0, 0.35)
+                .number("sword_range", 4.5).damage("sword_damage", 4.0, 0.8)
+                .number("body_range", 4.5).damage("body_damage", 5.0, 0.8)
                 .number("clone_radius", 3.5).damage("clone_damage", 1.0, 0.20).finish();
         addSkill(builder, PromisedConsortActionId.STOMP, 1.0, 70, false)
             .tuning(1.00, 1.30)
                 .number("forward_range", 5.0).number("width", 4.0)
-                .ticks("windup_ticks", 14).ticks("active_ticks", 5).ticks("recovery_ticks", 24)
+                .ticks("windup_ticks", 20).ticks("active_ticks", 2).ticks("recovery_ticks", 7)
                 .damage("damage", 3.0, 0.55).finish();
         addSkill(builder, PromisedConsortActionId.CROSS_SLASH, 0.9, 90, false)
             .tuning(1.35, 1.35)
                 .number("sword_range", 4.0).number("debris_range", 7.0)
-                .ticks("windup_ticks", 18).ticks("active_ticks", 5).ticks("recovery_ticks", 26)
+                .integerList("windup_ticks", 17, 1).integerList("active_ticks", 1, 1).integerList("recovery_ticks", 0, 17)
                 .damage("sword_damage", 4.0, 0.75).damage("debris_damage", 2.0, 0.35).finish();
         addSkill(builder, PromisedConsortActionId.SPIRAL_ASSAULT, 0.8, 150, true)
             .tuning(1.40, 1.40)
                 .number("range", 12.0).number("width", 3.0)
-                .ticks("windup_ticks", 26).ticks("active_ticks", 8).ticks("recovery_ticks", 30)
+                .integerList("windup_ticks", 34, 0).integerList("active_ticks", 8, 1).integerList("recovery_ticks", 0, 26)
                 .damage("spin_damage", 3.0, 0.60).damage("slam_damage", 5.0, 0.85).finish();
         addSkill(builder, PromisedConsortActionId.LIGHT_OF_MIQUELLA, 0.6, 300, true)
             .tuning(1.50, 1.50)
-                .number("radius", 8.0).ticks("windup_ticks", 44).ticks("active_ticks", 10)
-                .ticks("recovery_ticks", 42).damage("main_damage", 5.0, 0.90)
+                .number("radius", 8.0).number("flight_height", 12.0).integer("flight_ascent_ticks", 16).integer("flight_descent_ticks", 20)
+                .integerList("windup_ticks", 105, 8, 0, 0, 0, 0, 0, 0, 0)
+                .integerList("active_ticks", 4, 1, 1, 1, 1, 1, 1, 1, 1)
+                .integerList("recovery_ticks", 0, 0, 0, 0, 0, 0, 0, 0, 10).damage("main_damage", 5.0, 0.90)
                 .damage("afterglow_damage", 1.0, 0.20).integer("afterglow_count", 8).finish();
         addSkill(builder, PromisedConsortActionId.RING_OF_LIGHT, 0.7, 140, false)
             .tuning(1.40, 1.50)
                 .number("inner_radius", 3.0).number("outer_radius", 11.0)
-                .ticks("windup_ticks", 24).ticks("active_ticks", 5).ticks("recovery_ticks", 30)
+                .ticks("windup_ticks", 25).ticks("active_ticks", 5).ticks("recovery_ticks", 13)
                 .damage("damage", 3.0, 0.55).finish();
         addSkill(builder, PromisedConsortActionId.LIGHTSPEED_SLASH, 0.8, 160, true)
             .tuning(1.40, 1.35)
-                .ticks("windup_ticks", 28).ticks("active_ticks", 24).ticks("recovery_ticks", 34)
+                .integerList("windup_ticks", 33, 5, 5, 4).integerList("active_ticks", 3, 3, 3, 1).integerList("recovery_ticks", 3, 3, 1, 22)
                 .integer("clone_count", 3).damage("clone_damage", 1.0, 0.20)
                 .damage("body_damage", 5.0, 0.80).finish();
         addSkill(builder, PromisedConsortActionId.LIGHTSPEED_DASH, 0.7, 170, true)
             .tuning(1.35, 1.30)
                 .number("range", 16.0).number("width", 2.5)
-                .ticks("windup_ticks", 26).ticks("active_ticks", 20).ticks("recovery_ticks", 36)
+                .integerList("windup_ticks", 44, 1, 1, 1, 4, 3).integerList("active_ticks", 2, 2, 2, 2, 1, 1).integerList("recovery_ticks", 2, 2, 2, 3, 2, 17)
                 .damage("clone_damage", 1.0, 0.20).damage("body_damage", 4.0, 0.75)
                 .damage("trail_damage", 1.0, 0.20).finish();
         addSkill(builder, PromisedConsortActionId.LIGHTSPEED_SIDE_DASH, 0.8, 150, true)
             .tuning(1.30, 1.30)
-                .ticks("windup_ticks", 18).ticks("active_ticks", 20).ticks("recovery_ticks", 30)
+                .integerList("windup_ticks", 34, 3, 3, 6).integerList("active_ticks", 2, 2, 2, 1).integerList("recovery_ticks", 2, 2, 4, 12)
                 .integer("clone_count", 3).damage("clone_damage", 1.0, 0.20)
                 .damage("body_damage", 4.0, 0.70).finish();
         addSkill(builder, PromisedConsortActionId.PROMISED_CONSORT, 0.5, 260, true)
             .tuning(1.40, 1.45)
-                .ticks("windup_ticks", 26).ticks("active_ticks", 54).ticks("recovery_ticks", 48)
+                .integerList("windup_ticks", 26, 7, 6, 8, 27, 2, 2, 4).integerList("active_ticks", 2, 2, 3, 3, 1, 1, 1, 1)
+                .integerList("recovery_ticks", 3, 3, 3, 7, 1, 2, 2, 18)
                 .damage("opening_damage", 3.0, 0.55).damage("spin_damage", 3.0, 0.50)
             .damage("finisher_damage", 6.0, 0.95).damage("holy_ring_damage", 2.0, 0.35)
             .damage("clone_damage", 1.0, 0.20).finish();
+        addSkill(builder, PromisedConsortActionId.CROSS_LEAP_COMBO, 0.5, 260, true)
+            .tuning(1, 1.45)
+                .number("leap_distance", 16).number("leap_height", 1.2)
+                .number("opening_range", 4.2).number("spin_range", 4.5).number("finisher_range", 5)
+                .integerList("windup_ticks", 27, 7, 6, 8, 28, 2, 2, 4)
+                .integerList("active_ticks", 3, 3, 4, 4, 1, 1, 1, 1)
+                .integerList("recovery_ticks", 4, 4, 4, 9, 1, 2, 2, 23)
+                .damage("opening_damage", 3, 0.55).damage("spin_damage", 3, 0.50)
+                .damage("finisher_damage", 6, 0.95).damage("holy_ring_damage", 2, 0.35)
+                .damage("clone_damage", 1, 0.20).finish();
         addSkill(builder, PromisedConsortActionId.ENHANCED_EARTHHEAVE, 0.6, 170, true)
             .tuning(1.40, 1.50)
-                .number("radius", 6.0).ticks("windup_ticks", 20).ticks("active_ticks", 20)
-                .ticks("recovery_ticks", 38).damage("slam_damage", 5.0, 0.85)
+                .number("radius", 6.0).integerList("windup_ticks", 27, 7, 0, 0, 0).integerList("active_ticks", 5, 1, 1, 1, 1)
+                .integerList("recovery_ticks", 6, 2, 2, 2, 17).damage("slam_damage", 5.0, 0.85)
                 .damage("fissure_damage", 4.0, 0.70).damage("light_damage", 1.0, 0.25).finish();
         addSkill(builder, PromisedConsortActionId.CONSORT_METEOR, 0.0, 3600, true)
-            .tuning(1.50, 1.70)
+            .tuning(1.50, 2.40)
                 .number("core_radius", 9.0).number("outer_radius", 13.0)
-                .ticks("script_ticks", 150).ticks("prediction_sample_ticks", 10)
+                .integerList("windup_ticks", 0, 0, 0, 0, 1).integerList("active_ticks", 43, 120, 25, 1, 1)
+                .integerList("recovery_ticks", 0, 0, 0, 0, 52).ticks("prediction_sample_ticks", 10)
                 .ticks("prediction_lead_ticks", 12).damage("core_damage", 8.0, 1.20)
                 .damage("outer_damage", 4.0, 0.65).damage("aftershock_damage", 2.0, 0.30).finish();
+            addSkill(builder, PromisedConsortActionId.GRAVITY_BULWARK, 1, 180, false).tuning(1, 1)
+                .phaseTicks("windup_ticks", 10).phaseTicks("active_ticks", 36).phaseTicks("recovery_ticks", 18)
+                .integerList("phases", 1, 2).number("defense_arc_degrees", 360).number("ranged_damage_reduction", 0.8)
+                .number("min_target_distance", 9).number("max_target_distance", 40).number("melee_damage_multiplier", 1)
+                .integer("trigger.threat_window_ticks", 60).integer("trigger.minimum_attack_attempts", 3)
+                .number("trigger.minimum_threat_damage", 12).number("trigger.condition_weight_multiplier", 1.5).finish();
+            addSkill(builder, PromisedConsortActionId.GRAVITY_REFLECTION, 1.2, 220, false).tuning(1, 1)
+                .phaseTicks("windup_ticks", 8).phaseTicks("active_ticks", 16).phaseTicks("recovery_ticks", 20)
+                .integerList("phases", 1, 2).number("defense_arc_degrees", 360).number("intercept_radius", 4)
+                .number("min_target_distance", 9).number("max_target_distance", 40)
+                .number("speed_multiplier", 1).number("max_projectile_speed", 3).integer("remaining_lifetime_cap_ticks", 60)
+                .integer("max_reflections_per_cast", 8).integer("max_reflections_per_tick", 2).integer("max_scanned_projectiles_per_tick", 64)
+                .number("trigger.scan_radius", 24).integer("trigger.incoming_prediction_ticks", 20)
+                .integer("trigger.minimum_incoming_projectiles", 1).number("trigger.condition_weight_multiplier", 2)
+                .idList("supported_entity_ids", List.of("minecraft:arrow", "minecraft:spectral_arrow"))
+                .idList("excluded_entity_ids", List.of()).finish();
+            addSkill(builder, PromisedConsortActionId.GRAVITY_REPRISAL, 0.8, 300, false).tuning(1, 1)
+                .integerList("phases", 1, 2).number("defense_arc_degrees", 360).number("melee_damage_multiplier", 1)
+                .number("min_target_distance", 9).number("max_target_distance", 40)
+                .integerList("components.windup_ticks", 12, 10, 2).integerList("components.active_ticks", 30, 1, 6)
+                .integerList("components.recovery_ticks", 0, 0, 26)
+                .number("absorption.full_charge_damage", 40).number("absorption.minimum_return_multiplier", 1)
+                .number("absorption.maximum_return_multiplier", 2)
+                .number("counterattack.length", 32).number("counterattack.width", 4).number("counterattack.height", 4)
+                .integer("counterattack.minimum_warning_ticks", 10).integer("counterattack.max_hits_per_target", 1)
+                .damage("counterattack.damage", 4, 0.8).integer("trigger.threat_window_ticks", 80)
+                .number("trigger.minimum_threat_damage", 20).number("trigger.condition_weight_multiplier", 2).finish();
+            rangedVariant(builder, PromisedConsortActionId.SPIRAL_ASSAULT, new int[]{22,0}, new int[]{12,1}, new int[]{0,26},
+                new int[]{0,0}, 24,2,32,2);
+            rangedVariant(builder, PromisedConsortActionId.GRAVITY_DIVE, new int[]{24,3}, new int[]{8,1}, new int[]{1,26},
+                new int[]{7,0},24,3,32,2);
+            rangedVariant(builder, PromisedConsortActionId.LIGHTSPEED_DASH, new int[]{28,1,1,1,4,3}, new int[]{2,2,2,2,4,1},
+                new int[]{2,2,2,3,2,17},new int[]{0,0,0,0,0,0},30,2.5,38,2);
+            rangedVariant(builder, PromisedConsortActionId.LIGHTSPEED_SIDE_DASH, new int[]{22,3,3,6}, new int[]{2,2,2,8},
+                new int[]{2,2,4,12},new int[]{0,0,0,7},20,2.5,30,1.5);
         builder.pop();
     }
+
+            private void rangedVariant(Builder builder, PromisedConsortActionId action, int[] windup, int[] active, int[] recovery,
+                           int[] offsets, double distance, double step, double maxRange, double weight) {
+            SkillValues skill = skills.get(action);
+            builder.push(action.serializedName());
+            builder.push("ranged_counter");
+            var enabled = builder.bool("enabled", true);
+            skill.skillIntegers.put("ranged_counter.enabled", () -> enabled.get() ? 1 : 0);
+            String[] fields = {"windup_ticks", "active_ticks", "recovery_ticks", "attack_event_offsets"};
+            int[][] values = {windup,active,recovery,offsets};
+            for (int index=0;index<fields.length;index++) skill.skillIntegerLists.put("ranged_counter."+fields[index],
+                builder.integerList(fields[index], java.util.Arrays.stream(values[index]).boxed().toList()));
+            for (var entry : Map.of("max_forward_distance", distance, "max_forward_per_tick", step, "stop_distance",4.0,
+                "min_target_distance",9.0,"max_target_distance",maxRange,"selection_weight_multiplier",weight,
+                "turn_rate_degrees_per_tick",action==PromisedConsortActionId.GRAVITY_DIVE||action==PromisedConsortActionId.SPIRAL_ASSAULT?12.0:16.0).entrySet()) {
+                skill.skillNumbers.put("ranged_counter."+entry.getKey(),builder.number(entry.getKey(),entry.getValue(),0,256));
+            }
+            for (var entry : Map.of("target_lock_lead_ticks",4,"minimum_warning_ticks",6).entrySet()) {
+                skill.skillIntegers.put("ranged_counter."+entry.getKey(),builder.integer(entry.getKey(),entry.getValue(),0,NetworkLimits.MAX_TICKS));
+            }
+            if (action==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH) {
+                skill.skillNumbers.put("ranged_counter.max_lateral_distance",builder.number("max_lateral_distance",8,0,256));
+                skill.skillNumbers.put("ranged_counter.max_lateral_per_tick",builder.number("max_lateral_per_tick",2,0.01,8));
+            }
+            builder.pop();
+            builder.pop();
+            }
 
     private SkillValues addSkill(
             Builder builder,
@@ -868,6 +1018,7 @@ public final class PromisedConsortConfigValues {
         private final Map<String, Supplier<Double>> skillNumbers = new LinkedHashMap<>();
         private final Map<String, Supplier<Integer>> skillIntegers = new LinkedHashMap<>();
         private final Map<String, Supplier<String>> skillStrings = new LinkedHashMap<>();
+        private final Map<String, Supplier<? extends List<?>>> skillIdLists = new LinkedHashMap<>();
         private final Map<String, Supplier<? extends List<?>>> skillIntegerLists = new LinkedHashMap<>();
         private final Map<String, Supplier<? extends UnmodifiableConfig>> skillDamage = new LinkedHashMap<>();
         private final Map<String, Supplier<? extends List<?>>> skillDamageLists = new LinkedHashMap<>();
@@ -894,10 +1045,6 @@ public final class PromisedConsortConfigValues {
 
         private SkillValues tuning(double castSpeedMultiplier, double rangeMultiplier) {
             skillNumbers.put(
-                "cast_speed_multiplier",
-                builder.number("cast_speed_multiplier", castSpeedMultiplier, 0.1, 5.0)
-            );
-            skillNumbers.put(
                 "range_multiplier",
                 builder.number("range_multiplier", rangeMultiplier, 0.1, 5.0)
             );
@@ -914,6 +1061,11 @@ public final class PromisedConsortConfigValues {
             return this;
         }
 
+        private SkillValues phaseTicks(String name, int value) {
+            skillIntegers.put(name, builder.integer(name, value, name.equals("active_ticks")?1:0, NetworkLimits.MAX_TICKS));
+            return this;
+        }
+
         private SkillValues string(String name, String value) {
             skillStrings.put(name, builder.string(name, value));
             return this;
@@ -927,6 +1079,11 @@ public final class PromisedConsortConfigValues {
 
         private SkillValues damage(String name, double flat, double ratio) {
             skillDamage.put(name, builder.formula(name, flat, ratio));
+            return this;
+        }
+
+        private SkillValues idList(String name, List<String> values) {
+            skillIdLists.put(name, builder.idList(name, values));
             return this;
         }
 
@@ -948,6 +1105,8 @@ public final class PromisedConsortConfigValues {
             skillNumbers.forEach((key, value) -> resolvedNumbers.put(key, value.get()));
             Map<String, String> resolvedStrings = new LinkedHashMap<>();
             skillStrings.forEach((key, value) -> resolvedStrings.put(key, value.get()));
+            Map<String, List<String>> resolvedIdLists = new LinkedHashMap<>();
+            skillIdLists.forEach((key, value) -> resolvedIdLists.put(key, value.get().stream().map(Object::toString).toList()));
             Map<String, Integer> resolvedIntegers = new LinkedHashMap<>();
             skillIntegers.forEach((key, value) -> resolvedIntegers.put(key, value.get()));
             Map<String, List<Integer>> resolvedIntegerLists = new LinkedHashMap<>();
@@ -979,14 +1138,15 @@ public final class PromisedConsortConfigValues {
                     weight.get(),
                     cooldownTicks.get(),
                     hyperArmorActive.get(),
-                    resolvedNumbers.get("cast_speed_multiplier"),
+                    1.0,
                     resolvedNumbers.get("range_multiplier"),
                     resolvedNumbers,
                     resolvedIntegers,
                     resolvedStrings,
                     resolvedIntegerLists,
                     resolvedDamage,
-                    resolvedDamageLists
+                    resolvedDamageLists,
+                    resolvedIdLists
             );
         }
     }
@@ -1039,9 +1199,15 @@ public final class PromisedConsortConfigValues {
                     && Double.isFinite(number.doubleValue()));
         }
 
+        private Supplier<? extends List<?>> idList(String key, List<String> defaults) {
+            return delegate.defineListAllowEmpty(java.util.List.of(key), () -> defaults,
+                value -> value instanceof String text && text.matches("[a-z0-9_.-]+:[a-z0-9_./-]+"));
+        }
+
         private Supplier<? extends List<?>> integerList(String key, List<Integer> defaults) {
+            int minimum = key.endsWith("windup_ticks") || key.endsWith("recovery_ticks") || key.equals("attack_event_offsets") ? 0 : 1;
             return delegate.defineList(key, defaults, value -> value instanceof Number number
-                    && number.doubleValue() >= 1.0
+                && number.doubleValue() >= minimum && number.doubleValue() <= NetworkLimits.MAX_TICKS
                     && number.doubleValue() == Math.rint(number.doubleValue()));
         }
 

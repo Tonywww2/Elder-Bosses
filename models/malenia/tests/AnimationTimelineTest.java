@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public final class AnimationTimelineTest {
-    public static void main(String[] arguments) {
-        int assertions = 0;
+    public static void main(String[] arguments) throws Exception {
+        int assertions = checkComponentConfiguration();
         for (MaleniaActionId action : MaleniaActionId.values()) {
             int[] durations = MaleniaAnimationTimeline.durations(action);
             List<ActionStage> stages = new ArrayList<>();
@@ -86,6 +86,68 @@ public final class AnimationTimelineTest {
         clock.advanceGait("run", 16, 21.385, 0);
         equal(13.5, clock.gaitTime("run"));
         System.out.println("Animation timeline, transition, network-clock and gait assertions passed: " + (assertions + 39));
+    }
+
+    private static int checkComponentConfiguration() throws Exception {
+        var spec = com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig.SPEC;
+        var config = com.electronwill.nightconfig.core.CommentedConfig.inMemory();
+        spec.correct(config);
+        spec.setConfig(config);
+        var defaults = com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig.VALUES.maleniaSkillSnapshot();
+        var catalog = new com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog(defaults);
+        int checks = 0;
+        for (MaleniaActionId action : MaleniaActionId.values()) {
+            var plan = com.tonywww.elder_bosses.boss.malenia.execution.MaleniaSkillEventPlanner.createPlan(defaults, action);
+            equal(catalog.get(action).timeline().totalTicks(), plan.totalTicks());
+            if (config.contains("malenia.skills." + action.serializedName() + ".cast_speed_multiplier")) throw new AssertionError("Obsolete Malenia speed field");
+            var components = defaults.tuning(action).componentStages();
+            if (!components.isEmpty()) {
+                String prefix = "malenia.skills." + action.serializedName() + ".components.";
+                List<Integer> windup = new ArrayList<>(), active = new ArrayList<>(), recovery = new ArrayList<>();
+                for (int index = 0; index < components.size(); index++) {
+                    windup.add(components.get(index).windupTicks() + 3 + index);
+                    active.add(components.get(index).activeTicks() + 2 + index);
+                    recovery.add(components.get(index).recoveryTicks() + 4);
+                }
+                config.set(prefix + "windup_ticks", windup);
+                config.set(prefix + "active_ticks", active);
+                config.set(prefix + "recovery_ticks", recovery);
+            }
+            checks += 2;
+        }
+        spec.afterReload();
+        var custom = com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig.VALUES.maleniaSkillSnapshot();
+        var customCatalog = new com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog(custom);
+        for (MaleniaActionId action : MaleniaActionId.values()) {
+            var components = custom.tuning(action).componentStages();
+            if (components.isEmpty()) continue;
+            var timeline = customCatalog.get(action).timeline();
+            if (!timeline.stages().equals(components)) throw new AssertionError("Configured components are not the runtime timeline: " + action);
+            var plan = com.tonywww.elder_bosses.boss.malenia.execution.MaleniaSkillEventPlanner.createPlan(custom, action);
+            equal(timeline.totalTicks(), plan.totalTicks());
+            if (!plan.intents().stream().allMatch(intent -> intent.actionTick() >= 0 && intent.actionTick() < timeline.totalTicks()))
+                throw new AssertionError("An intent lies outside its configured action: " + action);
+            var reference = ActionTimeline.ofStages(com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.defaultComponentStages(action).toArray(ActionStage[]::new));
+            for (int stage = 0; stage < components.size(); stage++) {
+                equal(reference.activeStartTick(stage), MaleniaAnimationTimeline.sample(timeline.activeStartTick(stage), action, timeline, Map.of()));
+                checks++;
+            }
+            double previous = -1;
+            for (double tick = 0; tick <= timeline.totalTicks(); tick += 0.25) {
+                double sample = MaleniaAnimationTimeline.sample(tick, action, timeline, Map.of());
+                if (sample < previous) throw new AssertionError("Component animation moved backwards: " + action);
+                previous = sample;
+                checks++;
+            }
+        }
+        Class<?> nbt = com.tonywww.elder_bosses.boss.malenia.config.MaleniaConfigNbt.class;
+        var write = nbt.getDeclaredMethod("writeTunings", Map.class);
+        var read = nbt.getDeclaredMethod("readTunings", net.minecraft.nbt.CompoundTag.class, int.class);
+        write.setAccessible(true);
+        read.setAccessible(true);
+        Object encoded = write.invoke(null, custom.tunings());
+        if (!custom.tunings().equals(read.invoke(null, encoded, 12))) throw new AssertionError("Component timing lost in NBT roundtrip");
+        return checks + 1;
     }
 
     private static void check(String expected, String actual) {

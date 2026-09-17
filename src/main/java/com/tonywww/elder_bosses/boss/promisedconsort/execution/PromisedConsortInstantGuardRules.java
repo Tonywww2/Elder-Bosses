@@ -13,7 +13,7 @@ public final class PromisedConsortInstantGuardRules {
                     SPIRAL_ASSAULT -> true;
             case R_COMBO_EARTHHEAVE -> stageIndex <= 3;
             case CROSS_SLASH, LIGHTSPEED_SLASH, LIGHTSPEED_DASH,
-                    LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT, ENHANCED_EARTHHEAVE -> true;
+                    LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT, CROSS_LEAP_COMBO, ENHANCED_EARTHHEAVE -> true;
             default -> false;
         };
     }

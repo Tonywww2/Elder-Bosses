@@ -35,6 +35,30 @@
       }
     ]
   },
+  "entity.promised_consort.heavy_slash": {
+    "subtitle": "subtitles.elder_bosses.entity.promised_consort.heavy_slash",
+    "sounds": [{"name": "elder_bosses:entity/promised_consort/heavy_slash", "attenuation_distance": 48}]
+  },
+  "entity.promised_consort.stomp": {
+    "subtitle": "subtitles.elder_bosses.entity.promised_consort.stomp",
+    "sounds": [{"name": "elder_bosses:entity/promised_consort/stomp", "attenuation_distance": 48}]
+  },
+  "entity.promised_consort.gravity_dash": {
+    "subtitle": "subtitles.elder_bosses.entity.promised_consort.gravity_dash",
+    "sounds": [{"name": "elder_bosses:entity/promised_consort/gravity_dash", "attenuation_distance": 48}]
+  },
+  "entity.promised_consort.holy_echo": {
+    "subtitle": "subtitles.elder_bosses.entity.promised_consort.holy_echo",
+    "sounds": [{"name": "elder_bosses:entity/promised_consort/holy_echo", "attenuation_distance": 48}]
+  },
+  "entity.promised_consort.reflection": {
+    "subtitle": "subtitles.elder_bosses.entity.promised_consort.reflection",
+    "sounds": [{"name": "elder_bosses:entity/promised_consort/reflection", "attenuation_distance": 24}]
+  },
+  "entity.promised_consort.meteor_impact": {
+    "subtitle": "subtitles.elder_bosses.entity.promised_consort.meteor_impact",
+    "sounds": [{"name": "elder_bosses:entity/promised_consort/meteor_impact", "attenuation_distance": 64}]
+  },
   "entity.malenia.grunt": {
     "subtitle": "subtitles.elder_bosses.entity.malenia.grunt",
     "sounds": [

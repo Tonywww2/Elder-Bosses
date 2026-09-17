@@ -1,0 +1,3710 @@
+{
+  "revision": "sculpted_flow_v8",
+  "texture_revision": "clustered_transition_v1",
+  "baseline": "malenia.bbmodel.pre-mottle-v1",
+  "geometry_sha256": "fee92a445695b7bbd8ba12e327aa40d6cc160d85f6630a18a4817fb46043d48d",
+  "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
+  "texture_sha256": "1924af0ad3349834581b00f5bc9ea851ae9f16bbcb8454ef6a71aced80cc24d2",
+  "structure_and_uv_unchanged": true,
+  "repainted_faces": 304,
+  "changed_pixels": 4917,
+  "protected_unique_pixels": 27443,
+  "protected_pixel_errors": 0,
+  "alpha_errors": 0,
+  "material_shades": {
+    "skin": [
+      "#AD9986",
+      "#b8a491",
+      "#9c8877"
+    ],
+    "gold": [
+      "#9A7B49",
+      "#a78955",
+      "#806840",
+      "#665437",
+      "#B39760"
+    ],
+    "robe": [
+      "#414035",
+      "#4e4d3e",
+      "#5B5947",
+      "#696651",
+      "#77725A"
+    ],
+    "cloak": [
+      "#442329",
+      "#54282d",
+      "#632C31",
+      "#703437",
+      "#7D3C3D",
+      "#361d23"
+    ],
+    "silk": [
+      "#827363",
+      "#917f6b",
+      "#A08B73",
+      "#6e6256"
+    ],
+    "hair": [
+      "#A74335",
+      "#b34a38",
+      "#8f3a2f",
+      "#763028",
+      "#BE513B",
+      "#c95e43",
+      "#5d2725"
+    ]
+  },
+  "skipped_shared_faces": [],
+  "samples": [
+    {
+      "element": "neck",
+      "face": "north",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        402,
+        92,
+        397,
+        97
+      ]
+    },
+    {
+      "element": "neck",
+      "face": "east",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        423,
+        92,
+        418,
+        97
+      ]
+    },
+    {
+      "element": "neck",
+      "face": "south",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        409,
+        92,
+        404,
+        97
+      ]
+    },
+    {
+      "element": "neck",
+      "face": "west",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        416,
+        92,
+        411,
+        97
+      ]
+    },
+    {
+      "element": "neck",
+      "face": "up",
+      "material": "skin",
+      "shades": 1,
+      "uv": [
+        430,
+        92,
+        425,
+        97
+      ]
+    },
+    {
+      "element": "neck",
+      "face": "down",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        437,
+        92,
+        432,
+        97
+      ]
+    },
+    {
+      "element": "left_upper_arm",
+      "face": "north",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        98,
+        113,
+        95,
+        121
+      ]
+    },
+    {
+      "element": "left_upper_arm",
+      "face": "east",
+      "material": "skin",
+      "shades": 1,
+      "uv": [
+        113,
+        113,
+        110,
+        121
+      ]
+    },
+    {
+      "element": "left_upper_arm",
+      "face": "south",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        103,
+        113,
+        100,
+        121
+      ]
+    },
+    {
+      "element": "left_upper_arm",
+      "face": "west",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        108,
+        113,
+        105,
+        121
+      ]
+    },
+    {
+      "element": "left_forearm",
+      "face": "north",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        171,
+        113,
+        168,
+        120
+      ]
+    },
+    {
+      "element": "left_forearm",
+      "face": "east",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        186,
+        113,
+        183,
+        120
+      ]
+    },
+    {
+      "element": "left_forearm",
+      "face": "south",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        176,
+        113,
+        173,
+        120
+      ]
+    },
+    {
+      "element": "left_forearm",
+      "face": "west",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        181,
+        113,
+        178,
+        120
+      ]
+    },
+    {
+      "element": "right_thigh",
+      "face": "north",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        502,
+        113,
+        498,
+        126
+      ]
+    },
+    {
+      "element": "right_thigh",
+      "face": "east",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        10,
+        130,
+        6,
+        143
+      ]
+    },
+    {
+      "element": "right_thigh",
+      "face": "south",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        508,
+        113,
+        504,
+        126
+      ]
+    },
+    {
+      "element": "right_thigh",
+      "face": "west",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        4,
+        130,
+        0,
+        143
+      ]
+    },
+    {
+      "element": "right_shin",
+      "face": "north",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        79,
+        130,
+        76,
+        143
+      ]
+    },
+    {
+      "element": "right_shin",
+      "face": "east",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        94,
+        130,
+        91,
+        143
+      ]
+    },
+    {
+      "element": "right_shin",
+      "face": "south",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        84,
+        130,
+        81,
+        143
+      ]
+    },
+    {
+      "element": "right_shin",
+      "face": "west",
+      "material": "skin",
+      "shades": 2,
+      "uv": [
+        89,
+        130,
+        86,
+        143
+      ]
+    },
+    {
+      "element": "left_thigh_main",
+      "face": "north",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        330,
+        130,
+        326,
+        142
+      ]
+    },
+    {
+      "element": "left_thigh_main",
+      "face": "east",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        348,
+        130,
+        344,
+        142
+      ]
+    },
+    {
+      "element": "left_thigh_main",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        336,
+        130,
+        332,
+        142
+      ]
+    },
+    {
+      "element": "left_thigh_main",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        342,
+        130,
+        338,
+        142
+      ]
+    },
+    {
+      "element": "left_shin_spindle",
+      "face": "north",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        421,
+        130,
+        418,
+        143
+      ]
+    },
+    {
+      "element": "left_shin_spindle",
+      "face": "east",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        436,
+        130,
+        433,
+        143
+      ]
+    },
+    {
+      "element": "left_shin_spindle",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        426,
+        130,
+        423,
+        143
+      ]
+    },
+    {
+      "element": "left_shin_spindle",
+      "face": "west",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        431,
+        130,
+        428,
+        143
+      ]
+    },
+    {
+      "element": "right_bicep_casing",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        119,
+        147,
+        116,
+        155
+      ]
+    },
+    {
+      "element": "right_bicep_casing",
+      "face": "east",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        134,
+        147,
+        131,
+        155
+      ]
+    },
+    {
+      "element": "right_bicep_casing",
+      "face": "south",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        124,
+        147,
+        121,
+        155
+      ]
+    },
+    {
+      "element": "right_bicep_casing",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        129,
+        147,
+        126,
+        155
+      ]
+    },
+    {
+      "element": "right_vambrace",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        185,
+        147,
+        182,
+        154
+      ]
+    },
+    {
+      "element": "right_vambrace",
+      "face": "east",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        200,
+        147,
+        197,
+        154
+      ]
+    },
+    {
+      "element": "right_vambrace",
+      "face": "south",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        190,
+        147,
+        187,
+        154
+      ]
+    },
+    {
+      "element": "right_vambrace",
+      "face": "west",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        195,
+        147,
+        192,
+        154
+      ]
+    },
+    {
+      "element": "lamellar_coronet",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        32,
+        163,
+        20,
+        168
+      ]
+    },
+    {
+      "element": "lamellar_coronet",
+      "face": "east",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        64,
+        163,
+        57,
+        168
+      ]
+    },
+    {
+      "element": "lamellar_coronet",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        46,
+        163,
+        34,
+        168
+      ]
+    },
+    {
+      "element": "lamellar_coronet",
+      "face": "west",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        55,
+        163,
+        48,
+        168
+      ]
+    },
+    {
+      "element": "lamellar_coronet",
+      "face": "up",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        78,
+        163,
+        66,
+        170
+      ]
+    },
+    {
+      "element": "lamellar_coronet",
+      "face": "down",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        92,
+        163,
+        80,
+        170
+      ]
+    },
+    {
+      "element": "woven_cuirass",
+      "face": "north",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        104,
+        163,
+        94,
+        171
+      ]
+    },
+    {
+      "element": "woven_cuirass",
+      "face": "east",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        134,
+        163,
+        127,
+        171
+      ]
+    },
+    {
+      "element": "woven_cuirass",
+      "face": "south",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        116,
+        163,
+        106,
+        171
+      ]
+    },
+    {
+      "element": "woven_cuirass",
+      "face": "west",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        125,
+        163,
+        118,
+        171
+      ]
+    },
+    {
+      "element": "woven_cuirass",
+      "face": "up",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        146,
+        163,
+        136,
+        170
+      ]
+    },
+    {
+      "element": "woven_cuirass",
+      "face": "down",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        158,
+        163,
+        148,
+        170
+      ]
+    },
+    {
+      "element": "cuirass_leaf_-1",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        180,
+        163,
+        178,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_-1",
+      "face": "east",
+      "material": "gold",
+      "shades": 1,
+      "uv": [
+        186,
+        163,
+        185,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_-1",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        183,
+        163,
+        182,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_-1",
+      "face": "up",
+      "material": "gold",
+      "shades": 1,
+      "uv": [
+        190,
+        163,
+        188,
+        164
+      ]
+    },
+    {
+      "element": "cuirass_leaf_-1",
+      "face": "down",
+      "material": "gold",
+      "shades": 1,
+      "uv": [
+        194,
+        163,
+        192,
+        164
+      ]
+    },
+    {
+      "element": "cuirass_side_border_-1",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        197,
+        163,
+        196,
+        170
+      ]
+    },
+    {
+      "element": "cuirass_side_border_-1",
+      "face": "east",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        214,
+        163,
+        209,
+        170
+      ]
+    },
+    {
+      "element": "cuirass_side_border_-1",
+      "face": "south",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        200,
+        163,
+        199,
+        170
+      ]
+    },
+    {
+      "element": "cuirass_side_border_-1",
+      "face": "west",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        207,
+        163,
+        202,
+        170
+      ]
+    },
+    {
+      "element": "cuirass_side_border_-1",
+      "face": "up",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        217,
+        163,
+        216,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_side_border_-1",
+      "face": "down",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        220,
+        163,
+        219,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_1",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        224,
+        163,
+        222,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_1",
+      "face": "east",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        230,
+        163,
+        229,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_1",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        227,
+        163,
+        226,
+        168
+      ]
+    },
+    {
+      "element": "cuirass_leaf_1",
+      "face": "up",
+      "material": "gold",
+      "shades": 1,
+      "uv": [
+        234,
+        163,
+        232,
+        164
+      ]
+    },
+    {
+      "element": "cuirass_leaf_1",
+      "face": "down",
+      "material": "gold",
+      "shades": 1,
+      "uv": [
+        238,
+        163,
+        236,
+        164
+      ]
+    },
+    {
+      "element": "right_pauldron_0",
+      "face": "north",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        12,
+        175,
+        6,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_0",
+      "face": "east",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        44,
+        175,
+        34,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_0",
+      "face": "south",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        20,
+        175,
+        14,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_0",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        32,
+        175,
+        22,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_0",
+      "face": "up",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        52,
+        175,
+        46,
+        185
+      ]
+    },
+    {
+      "element": "right_pauldron_0",
+      "face": "down",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        60,
+        175,
+        54,
+        185
+      ]
+    },
+    {
+      "element": "right_pauldron_1",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        69,
+        175,
+        62,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_1",
+      "face": "east",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        102,
+        175,
+        92,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_1",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        78,
+        175,
+        71,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_1",
+      "face": "west",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        90,
+        175,
+        80,
+        179
+      ]
+    },
+    {
+      "element": "right_pauldron_1",
+      "face": "up",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        111,
+        175,
+        104,
+        185
+      ]
+    },
+    {
+      "element": "right_pauldron_1",
+      "face": "down",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        120,
+        175,
+        113,
+        185
+      ]
+    },
+    {
+      "element": "right_pauldron_tip",
+      "face": "north",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        128,
+        175,
+        122,
+        177
+      ]
+    },
+    {
+      "element": "right_pauldron_tip",
+      "face": "east",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        156,
+        175,
+        148,
+        177
+      ]
+    },
+    {
+      "element": "right_pauldron_tip",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        136,
+        175,
+        130,
+        177
+      ]
+    },
+    {
+      "element": "right_pauldron_tip",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        146,
+        175,
+        138,
+        177
+      ]
+    },
+    {
+      "element": "right_pauldron_tip",
+      "face": "up",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        164,
+        175,
+        158,
+        183
+      ]
+    },
+    {
+      "element": "right_pauldron_tip",
+      "face": "down",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        172,
+        175,
+        166,
+        183
+      ]
+    },
+    {
+      "element": "left_shoulder_drape",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        180,
+        175,
+        174,
+        180
+      ]
+    },
+    {
+      "element": "left_shoulder_drape",
+      "face": "east",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        206,
+        175,
+        199,
+        180
+      ]
+    },
+    {
+      "element": "left_shoulder_drape",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        188,
+        175,
+        182,
+        180
+      ]
+    },
+    {
+      "element": "left_shoulder_drape",
+      "face": "west",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        197,
+        175,
+        190,
+        180
+      ]
+    },
+    {
+      "element": "left_shoulder_drape",
+      "face": "up",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        214,
+        175,
+        208,
+        182
+      ]
+    },
+    {
+      "element": "left_shoulder_drape",
+      "face": "down",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        222,
+        175,
+        216,
+        182
+      ]
+    },
+    {
+      "element": "scarf_front",
+      "face": "north",
+      "material": "cloak",
+      "shades": 2,
+      "uv": [
+        258,
+        175,
+        246,
+        177
+      ]
+    },
+    {
+      "element": "scarf_front",
+      "face": "east",
+      "material": "cloak",
+      "shades": 1,
+      "uv": [
+        278,
+        175,
+        277,
+        177
+      ]
+    },
+    {
+      "element": "scarf_front",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        272,
+        175,
+        260,
+        177
+      ]
+    },
+    {
+      "element": "scarf_front",
+      "face": "west",
+      "material": "cloak",
+      "shades": 1,
+      "uv": [
+        275,
+        175,
+        274,
+        177
+      ]
+    },
+    {
+      "element": "scarf_front",
+      "face": "up",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        292,
+        175,
+        280,
+        176
+      ]
+    },
+    {
+      "element": "scarf_front",
+      "face": "down",
+      "material": "cloak",
+      "shades": 2,
+      "uv": [
+        306,
+        175,
+        294,
+        176
+      ]
+    },
+    {
+      "element": "skirt_front_panel_0",
+      "face": "north",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        383,
+        175,
+        378,
+        192
+      ]
+    },
+    {
+      "element": "skirt_front_panel_0",
+      "face": "south",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        390,
+        175,
+        385,
+        192
+      ]
+    },
+    {
+      "element": "skirt_front_panel_1",
+      "face": "north",
+      "material": "robe",
+      "shades": 5,
+      "uv": [
+        397,
+        175,
+        392,
+        192
+      ]
+    },
+    {
+      "element": "skirt_front_panel_1",
+      "face": "south",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        404,
+        175,
+        399,
+        192
+      ]
+    },
+    {
+      "element": "skirt_back_panel_0",
+      "face": "north",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        411,
+        175,
+        406,
+        197
+      ]
+    },
+    {
+      "element": "skirt_back_panel_0",
+      "face": "south",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        418,
+        175,
+        413,
+        197
+      ]
+    },
+    {
+      "element": "skirt_back_panel_1",
+      "face": "north",
+      "material": "robe",
+      "shades": 5,
+      "uv": [
+        425,
+        175,
+        420,
+        197
+      ]
+    },
+    {
+      "element": "skirt_back_panel_1",
+      "face": "south",
+      "material": "robe",
+      "shades": 4,
+      "uv": [
+        432,
+        175,
+        427,
+        197
+      ]
+    },
+    {
+      "element": "skirt_center_tabard",
+      "face": "north",
+      "material": "silk",
+      "shades": 3,
+      "uv": [
+        436,
+        175,
+        434,
+        194
+      ]
+    },
+    {
+      "element": "skirt_center_tabard",
+      "face": "south",
+      "material": "silk",
+      "shades": 3,
+      "uv": [
+        440,
+        175,
+        438,
+        194
+      ]
+    },
+    {
+      "element": "skirt_r_tasset",
+      "face": "east",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        460,
+        175,
+        452,
+        188
+      ]
+    },
+    {
+      "element": "skirt_r_tasset",
+      "face": "west",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        450,
+        175,
+        442,
+        188
+      ]
+    },
+    {
+      "element": "skirt_l_tasset",
+      "face": "east",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        480,
+        175,
+        472,
+        188
+      ]
+    },
+    {
+      "element": "skirt_l_tasset",
+      "face": "west",
+      "material": "robe",
+      "shades": 3,
+      "uv": [
+        470,
+        175,
+        462,
+        188
+      ]
+    },
+    {
+      "element": "cape_1_fold_0",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        487,
+        175,
+        482,
+        186
+      ]
+    },
+    {
+      "element": "cape_1_fold_0",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        494,
+        175,
+        489,
+        186
+      ]
+    },
+    {
+      "element": "cape_1_fold_1",
+      "face": "north",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        501,
+        175,
+        496,
+        186
+      ]
+    },
+    {
+      "element": "cape_1_fold_1",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        508,
+        175,
+        503,
+        186
+      ]
+    },
+    {
+      "element": "cape_1_fold_2",
+      "face": "north",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        5,
+        199,
+        0,
+        210
+      ]
+    },
+    {
+      "element": "cape_1_fold_2",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        12,
+        199,
+        7,
+        210
+      ]
+    },
+    {
+      "element": "cape_1_fold_3",
+      "face": "north",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        19,
+        199,
+        14,
+        210
+      ]
+    },
+    {
+      "element": "cape_1_fold_3",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        26,
+        199,
+        21,
+        210
+      ]
+    },
+    {
+      "element": "cape_2_fold_0",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        33,
+        199,
+        28,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_0",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        40,
+        199,
+        35,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_1",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        47,
+        199,
+        42,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_1",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        54,
+        199,
+        49,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_2",
+      "face": "north",
+      "material": "cloak",
+      "shades": 2,
+      "uv": [
+        61,
+        199,
+        56,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_2",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        68,
+        199,
+        63,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_3",
+      "face": "north",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        75,
+        199,
+        70,
+        211
+      ]
+    },
+    {
+      "element": "cape_2_fold_3",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        82,
+        199,
+        77,
+        211
+      ]
+    },
+    {
+      "element": "cape_3_fold_0",
+      "face": "north",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        89,
+        199,
+        84,
+        217
+      ]
+    },
+    {
+      "element": "cape_3_fold_0",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        96,
+        199,
+        91,
+        217
+      ]
+    },
+    {
+      "element": "cape_3_fold_1",
+      "face": "north",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        103,
+        199,
+        98,
+        217
+      ]
+    },
+    {
+      "element": "cape_3_fold_1",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        110,
+        199,
+        105,
+        217
+      ]
+    },
+    {
+      "element": "cape_3_fold_2",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        117,
+        199,
+        112,
+        215
+      ]
+    },
+    {
+      "element": "cape_3_fold_2",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        124,
+        199,
+        119,
+        215
+      ]
+    },
+    {
+      "element": "cape_3_fold_3",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        131,
+        199,
+        126,
+        213
+      ]
+    },
+    {
+      "element": "cape_3_fold_3",
+      "face": "south",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        138,
+        199,
+        133,
+        213
+      ]
+    },
+    {
+      "element": "cape_shoulder_wrap",
+      "face": "north",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        156,
+        199,
+        140,
+        202
+      ]
+    },
+    {
+      "element": "cape_shoulder_wrap",
+      "face": "east",
+      "material": "cloak",
+      "shades": 1,
+      "uv": [
+        180,
+        199,
+        179,
+        202
+      ]
+    },
+    {
+      "element": "cape_shoulder_wrap",
+      "face": "south",
+      "material": "cloak",
+      "shades": 3,
+      "uv": [
+        174,
+        199,
+        158,
+        202
+      ]
+    },
+    {
+      "element": "cape_shoulder_wrap",
+      "face": "west",
+      "material": "cloak",
+      "shades": 1,
+      "uv": [
+        177,
+        199,
+        176,
+        202
+      ]
+    },
+    {
+      "element": "cape_shoulder_wrap",
+      "face": "up",
+      "material": "cloak",
+      "shades": 2,
+      "uv": [
+        198,
+        199,
+        182,
+        200
+      ]
+    },
+    {
+      "element": "cape_shoulder_wrap",
+      "face": "down",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        216,
+        199,
+        200,
+        200
+      ]
+    },
+    {
+      "element": "cape_left_return",
+      "face": "east",
+      "material": "cloak",
+      "shades": 4,
+      "uv": [
+        226,
+        199,
+        223,
+        208
+      ]
+    },
+    {
+      "element": "cape_left_return",
+      "face": "west",
+      "material": "cloak",
+      "shades": 5,
+      "uv": [
+        221,
+        199,
+        218,
+        208
+      ]
+    },
+    {
+      "element": "hair_scalp_top",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        236,
+        199,
+        228,
+        202
+      ]
+    },
+    {
+      "element": "hair_scalp_top",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        264,
+        199,
+        257,
+        202
+      ]
+    },
+    {
+      "element": "hair_scalp_top",
+      "face": "south",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        246,
+        199,
+        238,
+        202
+      ]
+    },
+    {
+      "element": "hair_scalp_top",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        255,
+        199,
+        248,
+        202
+      ]
+    },
+    {
+      "element": "hair_scalp_top",
+      "face": "up",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        274,
+        199,
+        266,
+        206
+      ]
+    },
+    {
+      "element": "hair_scalp_top",
+      "face": "down",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        284,
+        199,
+        276,
+        206
+      ]
+    },
+    {
+      "element": "hairline_bridge",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        293,
+        199,
+        286,
+        202
+      ]
+    },
+    {
+      "element": "hairline_bridge",
+      "face": "east",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        308,
+        199,
+        307,
+        202
+      ]
+    },
+    {
+      "element": "hairline_bridge",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        302,
+        199,
+        295,
+        202
+      ]
+    },
+    {
+      "element": "hairline_bridge",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        305,
+        199,
+        304,
+        202
+      ]
+    },
+    {
+      "element": "hairline_bridge",
+      "face": "up",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        317,
+        199,
+        310,
+        200
+      ]
+    },
+    {
+      "element": "hairline_bridge",
+      "face": "down",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        326,
+        199,
+        319,
+        200
+      ]
+    },
+    {
+      "element": "hair_scalp_back",
+      "face": "north",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        337,
+        199,
+        328,
+        204
+      ]
+    },
+    {
+      "element": "hair_scalp_back",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        356,
+        199,
+        354,
+        204
+      ]
+    },
+    {
+      "element": "hair_scalp_back",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        348,
+        199,
+        339,
+        204
+      ]
+    },
+    {
+      "element": "hair_scalp_back",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        352,
+        199,
+        350,
+        204
+      ]
+    },
+    {
+      "element": "hair_scalp_back",
+      "face": "up",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        367,
+        199,
+        358,
+        201
+      ]
+    },
+    {
+      "element": "hair_scalp_back",
+      "face": "down",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        378,
+        199,
+        369,
+        201
+      ]
+    },
+    {
+      "element": "hair_temple_-1",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        382,
+        199,
+        380,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_-1",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        400,
+        199,
+        395,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_-1",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        386,
+        199,
+        384,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_-1",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        393,
+        199,
+        388,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_-1",
+      "face": "up",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        404,
+        199,
+        402,
+        204
+      ]
+    },
+    {
+      "element": "hair_temple_-1",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        408,
+        199,
+        406,
+        204
+      ]
+    },
+    {
+      "element": "exposed_crown_-1",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        414,
+        199,
+        410,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_-1",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        436,
+        199,
+        430,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_-1",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        420,
+        199,
+        416,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_-1",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        428,
+        199,
+        422,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_-1",
+      "face": "up",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        442,
+        199,
+        438,
+        205
+      ]
+    },
+    {
+      "element": "exposed_crown_-1",
+      "face": "down",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        448,
+        199,
+        444,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_1",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        452,
+        199,
+        450,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_1",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        470,
+        199,
+        465,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_1",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        456,
+        199,
+        454,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_1",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        463,
+        199,
+        458,
+        205
+      ]
+    },
+    {
+      "element": "hair_temple_1",
+      "face": "up",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        474,
+        199,
+        472,
+        204
+      ]
+    },
+    {
+      "element": "hair_temple_1",
+      "face": "down",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        478,
+        199,
+        476,
+        204
+      ]
+    },
+    {
+      "element": "exposed_crown_1",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        484,
+        199,
+        480,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_1",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        506,
+        199,
+        500,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_1",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        490,
+        199,
+        486,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_1",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        498,
+        199,
+        492,
+        201
+      ]
+    },
+    {
+      "element": "exposed_crown_1",
+      "face": "up",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        4,
+        219,
+        0,
+        225
+      ]
+    },
+    {
+      "element": "exposed_crown_1",
+      "face": "down",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        10,
+        219,
+        6,
+        225
+      ]
+    },
+    {
+      "element": "hair_lock_1",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        15,
+        219,
+        12,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_1",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        28,
+        219,
+        26,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_1",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        20,
+        219,
+        17,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_1",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        24,
+        219,
+        22,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_1",
+      "face": "down",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        33,
+        219,
+        30,
+        221
+      ]
+    },
+    {
+      "element": "hair_taper_1",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        37,
+        219,
+        35,
+        224
+      ]
+    },
+    {
+      "element": "hair_taper_1",
+      "face": "east",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        47,
+        219,
+        46,
+        224
+      ]
+    },
+    {
+      "element": "hair_taper_1",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        41,
+        219,
+        39,
+        224
+      ]
+    },
+    {
+      "element": "hair_taper_1",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        44,
+        219,
+        43,
+        224
+      ]
+    },
+    {
+      "element": "hair_taper_1",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        51,
+        219,
+        49,
+        220
+      ]
+    },
+    {
+      "element": "hair_tip_1",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        54,
+        219,
+        53,
+        222
+      ]
+    },
+    {
+      "element": "hair_tip_1",
+      "face": "east",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        63,
+        219,
+        62,
+        222
+      ]
+    },
+    {
+      "element": "hair_tip_1",
+      "face": "south",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        57,
+        219,
+        56,
+        222
+      ]
+    },
+    {
+      "element": "hair_tip_1",
+      "face": "west",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        60,
+        219,
+        59,
+        222
+      ]
+    },
+    {
+      "element": "hair_tip_1",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        66,
+        219,
+        65,
+        220
+      ]
+    },
+    {
+      "element": "hair_lock_2",
+      "face": "north",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        70,
+        219,
+        68,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_2",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        82,
+        219,
+        80,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_2",
+      "face": "south",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        74,
+        219,
+        72,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_2",
+      "face": "west",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        78,
+        219,
+        76,
+        229
+      ]
+    },
+    {
+      "element": "hair_lock_2",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        86,
+        219,
+        84,
+        221
+      ]
+    },
+    {
+      "element": "hair_taper_2",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        90,
+        219,
+        88,
+        225
+      ]
+    },
+    {
+      "element": "hair_taper_2",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        100,
+        219,
+        99,
+        225
+      ]
+    },
+    {
+      "element": "hair_taper_2",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        94,
+        219,
+        92,
+        225
+      ]
+    },
+    {
+      "element": "hair_taper_2",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        97,
+        219,
+        96,
+        225
+      ]
+    },
+    {
+      "element": "hair_taper_2",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        104,
+        219,
+        102,
+        220
+      ]
+    },
+    {
+      "element": "hair_tip_2",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        107,
+        219,
+        106,
+        223
+      ]
+    },
+    {
+      "element": "hair_tip_2",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        116,
+        219,
+        115,
+        223
+      ]
+    },
+    {
+      "element": "hair_tip_2",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        110,
+        219,
+        109,
+        223
+      ]
+    },
+    {
+      "element": "hair_tip_2",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        113,
+        219,
+        112,
+        223
+      ]
+    },
+    {
+      "element": "hair_tip_2",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        119,
+        219,
+        118,
+        220
+      ]
+    },
+    {
+      "element": "hair_lock_3",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        124,
+        219,
+        121,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_3",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        137,
+        219,
+        135,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_3",
+      "face": "south",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        129,
+        219,
+        126,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_3",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        133,
+        219,
+        131,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_3",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        142,
+        219,
+        139,
+        221
+      ]
+    },
+    {
+      "element": "hair_taper_3",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        146,
+        219,
+        144,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_3",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        156,
+        219,
+        155,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_3",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        150,
+        219,
+        148,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_3",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        153,
+        219,
+        152,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_3",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        160,
+        219,
+        158,
+        220
+      ]
+    },
+    {
+      "element": "hair_tip_3",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        163,
+        219,
+        162,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_3",
+      "face": "east",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        172,
+        219,
+        171,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_3",
+      "face": "south",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        166,
+        219,
+        165,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_3",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        169,
+        219,
+        168,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_3",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        175,
+        219,
+        174,
+        220
+      ]
+    },
+    {
+      "element": "hair_lock_4",
+      "face": "north",
+      "material": "hair",
+      "shades": 5,
+      "uv": [
+        180,
+        219,
+        177,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_4",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        193,
+        219,
+        191,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_4",
+      "face": "south",
+      "material": "hair",
+      "shades": 5,
+      "uv": [
+        185,
+        219,
+        182,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_4",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        189,
+        219,
+        187,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_4",
+      "face": "down",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        198,
+        219,
+        195,
+        221
+      ]
+    },
+    {
+      "element": "hair_taper_4",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        202,
+        219,
+        200,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_4",
+      "face": "east",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        212,
+        219,
+        211,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_4",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        206,
+        219,
+        204,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_4",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        209,
+        219,
+        208,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_4",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        216,
+        219,
+        214,
+        220
+      ]
+    },
+    {
+      "element": "hair_tip_4",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        219,
+        219,
+        218,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_4",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        228,
+        219,
+        227,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_4",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        222,
+        219,
+        221,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_4",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        225,
+        219,
+        224,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_4",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        231,
+        219,
+        230,
+        220
+      ]
+    },
+    {
+      "element": "hair_lock_5",
+      "face": "north",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        236,
+        219,
+        233,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_5",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        249,
+        219,
+        247,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_5",
+      "face": "south",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        241,
+        219,
+        238,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_5",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        245,
+        219,
+        243,
+        233
+      ]
+    },
+    {
+      "element": "hair_lock_5",
+      "face": "down",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        254,
+        219,
+        251,
+        221
+      ]
+    },
+    {
+      "element": "hair_taper_5",
+      "face": "north",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        258,
+        219,
+        256,
+        228
+      ]
+    },
+    {
+      "element": "hair_taper_5",
+      "face": "east",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        268,
+        219,
+        267,
+        228
+      ]
+    },
+    {
+      "element": "hair_taper_5",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        262,
+        219,
+        260,
+        228
+      ]
+    },
+    {
+      "element": "hair_taper_5",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        265,
+        219,
+        264,
+        228
+      ]
+    },
+    {
+      "element": "hair_taper_5",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        272,
+        219,
+        270,
+        220
+      ]
+    },
+    {
+      "element": "hair_tip_5",
+      "face": "north",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        275,
+        219,
+        274,
+        225
+      ]
+    },
+    {
+      "element": "hair_tip_5",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        284,
+        219,
+        283,
+        225
+      ]
+    },
+    {
+      "element": "hair_tip_5",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        278,
+        219,
+        277,
+        225
+      ]
+    },
+    {
+      "element": "hair_tip_5",
+      "face": "west",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        281,
+        219,
+        280,
+        225
+      ]
+    },
+    {
+      "element": "hair_tip_5",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        287,
+        219,
+        286,
+        220
+      ]
+    },
+    {
+      "element": "hair_lock_6",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        292,
+        219,
+        289,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_6",
+      "face": "east",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        305,
+        219,
+        303,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_6",
+      "face": "south",
+      "material": "hair",
+      "shades": 4,
+      "uv": [
+        297,
+        219,
+        294,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_6",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        301,
+        219,
+        299,
+        232
+      ]
+    },
+    {
+      "element": "hair_lock_6",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        310,
+        219,
+        307,
+        221
+      ]
+    },
+    {
+      "element": "hair_taper_6",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        314,
+        219,
+        312,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_6",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        324,
+        219,
+        323,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_6",
+      "face": "south",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        318,
+        219,
+        316,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_6",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        321,
+        219,
+        320,
+        227
+      ]
+    },
+    {
+      "element": "hair_taper_6",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        328,
+        219,
+        326,
+        220
+      ]
+    },
+    {
+      "element": "hair_tip_6",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        331,
+        219,
+        330,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_6",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        340,
+        219,
+        339,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_6",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        334,
+        219,
+        333,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_6",
+      "face": "west",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        337,
+        219,
+        336,
+        224
+      ]
+    },
+    {
+      "element": "hair_tip_6",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        343,
+        219,
+        342,
+        220
+      ]
+    },
+    {
+      "element": "fringe_l",
+      "face": "north",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        349,
+        219,
+        345,
+        225
+      ]
+    },
+    {
+      "element": "fringe_l",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        361,
+        219,
+        360,
+        225
+      ]
+    },
+    {
+      "element": "fringe_l",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        355,
+        219,
+        351,
+        225
+      ]
+    },
+    {
+      "element": "fringe_l",
+      "face": "west",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        358,
+        219,
+        357,
+        225
+      ]
+    },
+    {
+      "element": "fringe_l",
+      "face": "up",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        367,
+        219,
+        363,
+        220
+      ]
+    },
+    {
+      "element": "fringe_l",
+      "face": "down",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        373,
+        219,
+        369,
+        220
+      ]
+    },
+    {
+      "element": "fringe_r",
+      "face": "north",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        379,
+        219,
+        375,
+        224
+      ]
+    },
+    {
+      "element": "fringe_r",
+      "face": "east",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        391,
+        219,
+        390,
+        224
+      ]
+    },
+    {
+      "element": "fringe_r",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        385,
+        219,
+        381,
+        224
+      ]
+    },
+    {
+      "element": "fringe_r",
+      "face": "west",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        388,
+        219,
+        387,
+        224
+      ]
+    },
+    {
+      "element": "fringe_r",
+      "face": "up",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        397,
+        219,
+        393,
+        220
+      ]
+    },
+    {
+      "element": "fringe_r",
+      "face": "down",
+      "material": "hair",
+      "shades": 3,
+      "uv": [
+        403,
+        219,
+        399,
+        220
+      ]
+    },
+    {
+      "element": "loose_fringe_center",
+      "face": "north",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        406,
+        219,
+        405,
+        225
+      ]
+    },
+    {
+      "element": "loose_fringe_center",
+      "face": "east",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        415,
+        219,
+        414,
+        225
+      ]
+    },
+    {
+      "element": "loose_fringe_center",
+      "face": "south",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        409,
+        219,
+        408,
+        225
+      ]
+    },
+    {
+      "element": "loose_fringe_center",
+      "face": "west",
+      "material": "hair",
+      "shades": 2,
+      "uv": [
+        412,
+        219,
+        411,
+        225
+      ]
+    },
+    {
+      "element": "loose_fringe_center",
+      "face": "up",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        418,
+        219,
+        417,
+        220
+      ]
+    },
+    {
+      "element": "loose_fringe_center",
+      "face": "down",
+      "material": "hair",
+      "shades": 1,
+      "uv": [
+        421,
+        219,
+        420,
+        220
+      ]
+    },
+    {
+      "element": "helm_shell",
+      "face": "north",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        437,
+        219,
+        423,
+        225
+      ]
+    },
+    {
+      "element": "helm_shell",
+      "face": "east",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        479,
+        219,
+        468,
+        225
+      ]
+    },
+    {
+      "element": "helm_shell",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        453,
+        219,
+        439,
+        225
+      ]
+    },
+    {
+      "element": "helm_shell",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        466,
+        219,
+        455,
+        225
+      ]
+    },
+    {
+      "element": "helm_shell",
+      "face": "up",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        495,
+        219,
+        481,
+        230
+      ]
+    },
+    {
+      "element": "helm_shell",
+      "face": "down",
+      "material": "gold",
+      "shades": 4,
+      "uv": [
+        14,
+        235,
+        0,
+        246
+      ]
+    },
+    {
+      "element": "helm_forehead",
+      "face": "north",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        28,
+        235,
+        16,
+        241
+      ]
+    },
+    {
+      "element": "helm_forehead",
+      "face": "east",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        48,
+        235,
+        47,
+        241
+      ]
+    },
+    {
+      "element": "helm_forehead",
+      "face": "south",
+      "material": "gold",
+      "shades": 3,
+      "uv": [
+        42,
+        235,
+        30,
+        241
+      ]
+    },
+    {
+      "element": "helm_forehead",
+      "face": "west",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        45,
+        235,
+        44,
+        241
+      ]
+    },
+    {
+      "element": "helm_forehead",
+      "face": "up",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        62,
+        235,
+        50,
+        236
+      ]
+    },
+    {
+      "element": "helm_forehead",
+      "face": "down",
+      "material": "gold",
+      "shades": 2,
+      "uv": [
+        76,
+        235,
+        64,
+        236
+      ]
+    }
+  ],
+  "status": "repainted_and_visually_reviewed_before_client"
+}

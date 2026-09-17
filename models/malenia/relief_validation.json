@@ -1,0 +1,775 @@
+{
+  "revision": "sculpted_relief_v9",
+  "baseline": "malenia.bbmodel.pre-relief-v9",
+  "baseline_suffix": ".pre-relief-v9",
+  "geometry_sha256": "c747377bf4e738c0e53c79b07cdf30c75fa4f00e7572ad73b35488b242dfb4ae",
+  "baseline_geometry_sha256": "fee92a445695b7bbd8ba12e327aa40d6cc160d85f6630a18a4817fb46043d48d",
+  "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
+  "texture_sha256": "1924af0ad3349834581b00f5bc9ea851ae9f16bbcb8454ef6a71aced80cc24d2",
+  "source_cubes": 378,
+  "added_cubes": 87,
+  "cubes": 465,
+  "bones": 91,
+  "texture_revision": "clustered_transition_v1",
+  "original_geometry_uv_rig_texture_animation_preserved": true,
+  "additions": [
+    {
+      "name": "relief_cuirass_center_keel_crown",
+      "source": "cuirass_center_keel",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_center_keel_left_bevel",
+      "source": "cuirass_center_keel",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_center_keel_lower_bevel",
+      "source": "cuirass_center_keel",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_center_keel_right_bevel",
+      "source": "cuirass_center_keel",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_center_keel_upper_bevel",
+      "source": "cuirass_center_keel",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_-1_crown",
+      "source": "cuirass_leaf_-1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_-1_left_bevel",
+      "source": "cuirass_leaf_-1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_-1_lower_bevel",
+      "source": "cuirass_leaf_-1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_-1_right_bevel",
+      "source": "cuirass_leaf_-1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_-1_upper_bevel",
+      "source": "cuirass_leaf_-1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_1_crown",
+      "source": "cuirass_leaf_1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_1_left_bevel",
+      "source": "cuirass_leaf_1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_1_lower_bevel",
+      "source": "cuirass_leaf_1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_1_right_bevel",
+      "source": "cuirass_leaf_1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_cuirass_leaf_1_upper_bevel",
+      "source": "cuirass_leaf_1",
+      "face": "north",
+      "bone": "armor_torso",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_brow_central_leaf_crown",
+      "source": "brow_central_leaf",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_brow_central_leaf_left_bevel",
+      "source": "brow_central_leaf",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_brow_central_leaf_lower_bevel",
+      "source": "brow_central_leaf",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_brow_central_leaf_right_bevel",
+      "source": "brow_central_leaf",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_brow_central_leaf_upper_bevel",
+      "source": "brow_central_leaf",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.72,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_crest_up_crown",
+      "source": "helm_crest",
+      "face": "up",
+      "bone": "helm",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_crest_up_left_bevel",
+      "source": "helm_crest",
+      "face": "up",
+      "bone": "helm",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_crest_up_lower_bevel",
+      "source": "helm_crest",
+      "face": "up",
+      "bone": "helm",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_crest_up_right_bevel",
+      "source": "helm_crest",
+      "face": "up",
+      "bone": "helm",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_crest_up_upper_bevel",
+      "source": "helm_crest",
+      "face": "up",
+      "bone": "helm",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_-1_crown",
+      "source": "helm_wing_root_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_-1_left_bevel",
+      "source": "helm_wing_root_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_-1_lower_bevel",
+      "source": "helm_wing_root_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_-1_right_bevel",
+      "source": "helm_wing_root_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_-1_upper_bevel",
+      "source": "helm_wing_root_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_1_crown",
+      "source": "helm_wing_root_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_1_left_bevel",
+      "source": "helm_wing_root_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_1_lower_bevel",
+      "source": "helm_wing_root_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_1_right_bevel",
+      "source": "helm_wing_root_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_root_1_upper_bevel",
+      "source": "helm_wing_root_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_crown",
+      "source": "right_pauldron_0",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.75,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_left_bevel",
+      "source": "right_pauldron_0",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.75,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_lower_bevel",
+      "source": "right_pauldron_0",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.75,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_right_bevel",
+      "source": "right_pauldron_0",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.75,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_upper_bevel",
+      "source": "right_pauldron_0",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.75,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_crown",
+      "source": "right_pauldron_1",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_left_bevel",
+      "source": "right_pauldron_1",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_lower_bevel",
+      "source": "right_pauldron_1",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_right_bevel",
+      "source": "right_pauldron_1",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_upper_bevel",
+      "source": "right_pauldron_1",
+      "face": "north",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_east_crown",
+      "source": "right_pauldron_0",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_east_left_bevel",
+      "source": "right_pauldron_0",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_east_lower_bevel",
+      "source": "right_pauldron_0",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_east_right_bevel",
+      "source": "right_pauldron_0",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_0_east_upper_bevel",
+      "source": "right_pauldron_0",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_east_crown",
+      "source": "right_pauldron_1",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_east_left_bevel",
+      "source": "right_pauldron_1",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_east_lower_bevel",
+      "source": "right_pauldron_1",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_east_right_bevel",
+      "source": "right_pauldron_1",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_right_pauldron_1_east_upper_bevel",
+      "source": "right_pauldron_1",
+      "face": "east",
+      "bone": "armor_shoulder_r",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_left_shoulder_clasp_crown",
+      "source": "left_shoulder_clasp",
+      "face": "north",
+      "bone": "armor_shoulder_l",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_left_shoulder_clasp_left_bevel",
+      "source": "left_shoulder_clasp",
+      "face": "north",
+      "bone": "armor_shoulder_l",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_left_shoulder_clasp_lower_bevel",
+      "source": "left_shoulder_clasp",
+      "face": "north",
+      "bone": "armor_shoulder_l",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_left_shoulder_clasp_right_bevel",
+      "source": "left_shoulder_clasp",
+      "face": "north",
+      "bone": "armor_shoulder_l",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_left_shoulder_clasp_upper_bevel",
+      "source": "left_shoulder_clasp",
+      "face": "north",
+      "bone": "armor_shoulder_l",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_belt_knot_crown",
+      "source": "belt_knot",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_belt_knot_left_bevel",
+      "source": "belt_knot",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_belt_knot_lower_bevel",
+      "source": "belt_knot",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_belt_knot_right_bevel",
+      "source": "belt_knot",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_belt_knot_upper_bevel",
+      "source": "belt_knot",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.6,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_girdle_pendant_crown",
+      "source": "girdle_pendant",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_girdle_pendant_left_bevel",
+      "source": "girdle_pendant",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_girdle_pendant_lower_bevel",
+      "source": "girdle_pendant",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_girdle_pendant_right_bevel",
+      "source": "girdle_pendant",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_girdle_pendant_upper_bevel",
+      "source": "girdle_pendant",
+      "face": "north",
+      "bone": "armor_waist",
+      "depth": 0.5,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_0_2",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_1_2",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_2_1",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_3_0",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_4_0",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_5_0",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_-1_feather_6_2",
+      "source": "helm_wing_-1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_0_0",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_1_0",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_2_3",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_3_3",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_4_2",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_5_2",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_6_3",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_7_5",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_8_5",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    },
+    {
+      "name": "relief_helm_wing_1_feather_9_5",
+      "source": "helm_wing_1",
+      "face": "north",
+      "bone": "helm",
+      "depth": [
+        0.45,
+        1
+      ],
+      "kind": "opaque_mask_extrusion"
+    }
+  ],
+  "inspection_status": "visually_reviewed_before_client_test",
+  "checks": {
+    "asset_contract": "passed",
+    "surface_audit_poses": 32,
+    "exposed_near_coplanar_pairs": 0,
+    "crown_rays": 405,
+    "grip_samples": 270,
+    "review_record": "angular_review.json",
+    "runtime_scope": "client_world_required; no inherited acceptance of the new relief"
+  },
+  "runtime_acceptance": "client_loaded_and_exited; world_entry_not_confirmed; appearance_question_skipped; see runtime_validation.json"
+}

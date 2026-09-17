@@ -5,11 +5,11 @@ import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
 import java.util.ArrayList;
 import java.util.List;
 
-final class ClientIndicatorGeometry {
+public final class ClientIndicatorGeometry {
     private ClientIndicatorGeometry() {
     }
 
-    static Mesh create(IndicatorSnapshotPacket snapshot, int maxSegmentsPerShape) {
+    public static Mesh create(IndicatorSnapshotPacket snapshot, int maxSegmentsPerShape) {
         int segmentLimit = Math.max(3, maxSegmentsPerShape);
         MeshBuilder builder = new MeshBuilder();
         switch (snapshot.shapeType()) {
@@ -231,17 +231,17 @@ final class ClientIndicatorGeometry {
         return new Vertex(point.x(), point.y(), point.z());
     }
 
-    record Vertex(double x, double y, double z) {
+    public record Vertex(double x, double y, double z) {
     }
 
-    record Quad(Vertex first, Vertex second, Vertex third, Vertex fourth) {
+    public record Quad(Vertex first, Vertex second, Vertex third, Vertex fourth) {
     }
 
-    record Line(Vertex from, Vertex to) {
+    public record Line(Vertex from, Vertex to) {
     }
 
-    record Mesh(List<Quad> fills, List<Line> borders, List<Line> accents) {
-        Mesh {
+    public record Mesh(List<Quad> fills, List<Line> borders, List<Line> accents) {
+        public Mesh {
             fills = List.copyOf(fills);
             borders = List.copyOf(borders);
             accents = List.copyOf(accents);

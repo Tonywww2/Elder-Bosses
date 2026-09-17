@@ -1,13 +1,253 @@
 {
-  "revision": "telegraph_blade_meteor_v1",
-  "model_revision": "reference_lion_v3_unchanged",
-  "status": "compiled_and_geometry_checked_awaiting_in_world_acceptance",
+  "ranged_followup_2026_09_17": {
+    "status": "implemented_and_offline_verified; world_review_pending",
+    "runtime_record": "runtime_validation.json/pending_ranged_followup_2026_09_17",
+    "enter_distance": 9,
+    "exit_distance": 5,
+    "default_segment_budget_blocks": 6,
+    "additional_pursuit_weight_multiplier": 2,
+    "multipliers_configurable": true,
+    "scope": "Qualified current target; ordinary combo segment budget and four ranged pursuit variant weights; explicit skill minima default to 9",
+    "unchanged": ["per-tick movement", "stop distance", "lock windows", "collision constraints", "dash travel", "attack volumes", "damage", "cooldowns", "animations"],
+    "verification": "RangedCounterCheck and config migration protection passed; AttackPlanCheck 731917 checks/3936 strikes; Forge and NeoForge compile passed",
+    "client_operations": "none; user elected personal retest",
+    "world_acceptance": false
+  },
+  "ranged_counter_2026_09_17": {
+    "status": "implemented_and_offline_verified; world_review_pending",
+    "runtime_record": "runtime_validation.json/ranged_counter_v1_2026_09_17",
+    "ranged_variants": ["spiral_assault", "gravity_dive", "lightspeed_dash", "lightspeed_side_dash"],
+    "defense_skills": ["gravity_bulwark", "gravity_reflection", "gravity_reprisal"],
+    "geometry": "Dash planning and execution share a frozen collision-checked path; reprisal uses a frozen corridor with a per-tick advancing damage slice; defenses do not announce fake damage areas",
+    "visual_state": "Server-synchronized defense active state, radius, arc and charge; new independent defense animation resource; reflection shield sphere and configurable arc checked with actual mesh vertices",
+    "default_reflection_radius": 4.0,
+    "default_reprisal_dimensions": [32, 4, 4],
+    "excluded_damage_tag": "elder_bosses:non_ranged",
+    "tag_default_values": [],
+    "original_skill_animation_and_damage_values_preserved": true,
+    "limits": ["Offline mesh and DamageSource tests are not world acceptance", "Shield interception and reflected arrow gameplay still require real entities in world", "New defense animation visual review unavailable because Blockbench MCP was disconnected", "Current client belongs to another session and was not operated"],
+    "historical_acceptance_below_does_not_cover_this_revision": true
+  },
+  "rhythm_coverage_2026_09_16": {
+    "status": "implemented_and_dual_loader_compiled; world_review_pending",
+    "runtime_record": "runtime_validation.json/rhythm_v1_2026_09_16",
+    "range_policy": "Default configured skill ranges are the acceptance target; no damage ranges or model proportions changed",
+    "root_findings": ["Physical sectors previously skipped ground energy rendering", "Path energy half-width was capped at 0.4 blocks", "Rectangular capsule effects did not cover end caps"],
+    "implementation": "Attack-volume top and side surfaces reuse the exact ClientIndicatorGeometry mesh, including rear reach, sector arcs, annular holes, capsule caps and path width; original weapon trails and layered effects retained",
+    "active_window": "Additional volume only during snapshot activeTick <= time < endTick; existing afterglows remain separate",
+    "shader": "Mode 14 retains nonzero opacity across the mesh; animated bands provide movement; depth tested, not fullscreen",
+    "verification": {
+      "attack_and_geometry_assertions": 731917,
+      "strikes": 3936,
+      "scope": "22 actual configured skills in both phases; new/old attack IDs and dimensions; each generated packet mesh at three progress samples",
+      "gpu_modes": [10, 11, 12, 13, 14],
+      "gpu_frames": 10,
+      "gpu_scope": "Actual project GLSL; all pixels visible for mode14 test plane, other modes remain masked and changing",
+      "forge_compile": "passed",
+      "neoforge_compile": "passed",
+      "both_resource_tasks": "passed"
+    },
+    "limits": ["Mesh footprint equality is not physical blade sweep coverage", "Supplemental volume visual coherence is not user accepted", "No latest in-world coverage or terrain-occlusion test yet", "No multiplayer, low-FPS or shader-pack certification"],
+    "historical_acceptance_below_does_not_cover_this_revision": true
+  },
+  "close_impacts_layered_vfx_2026_09_15": {
+    "status": "implemented_and_dual_loader_resources_synced; current_world_review_pending",
+    "requested_scope": ["Lion claw and followup range", "Stomp length and width", "Both gravity dive impacts", "All phase-two holy effect shapes", "Stomp effects", "Meteor effects", "All existing sword-trail windows", "Bloodflame"],
+    "range": {
+      "additional_multiplier": 1.5,
+      "actions": ["lion_claw", "lion_claw_double", "stomp", "gravity_dive"],
+      "physical_melee_multiplier_retained": 1.3,
+      "gravity_impact_receives_additional_multiplier": true,
+      "rear_extension_blocks": 0.8,
+      "current_config_examples_blocks": {"lion_claw_radius": 9.21375, "stomp_forward_length": 12.675, "stomp_width": 10.14, "gravity_dive_sword_radius": 7.7000625, "gravity_dive_impact_radius": 9.1125},
+      "custom_config_files_not_modified": true,
+      "landing_movement_damage_count_and_ticks_unchanged": true,
+      "authoritative_indicators_match_hit_shapes": true,
+      "meteor_radial_damage_bands_unchanged": true
+    },
+    "layers": {
+      "holy": ["double circular seals and radial marks", "crossed pillar arrays", "path-aligned light columns", "vertical expanding ring wall", "rising star fragments"],
+      "clones": ["golden path seal", "crossed light-column sequence", "impact star fragments"],
+      "stomp": ["advancing fracture shader", "four rows of raised shard planes"],
+      "bloodflame": ["existing suspended tear", "swaying tapered red flames", "orange inner flame layer", "rising embers"],
+      "swords": ["physical blade core", "38 percent extended outer sweep", "bright outer arc", "wide blade aura", "bloodflame red-gold tint"],
+      "meteor": ["three descending airborne rings", "curved hemisphere shell", "two expanding vertical shock rings", "twenty ballistic light fragments", "existing flash and pillar aftermath"]
+    },
+    "visual_lifetimes_ticks": {"holy_after_damage_end": 16, "clone_after_damage_end": 10, "stomp_after_damage_end": 20, "bloodflame_after_damage_end": 22, "sword_trail": 4, "meteor_after_impact": 40},
+    "limits": {"cached_afterglows": 256, "effects_per_boss_per_frame": 32, "sword_samples": 24, "cache_requires_observed_activation": true, "clear_on_world_change_disable_expiry_or_owner_removal": true},
+    "verification": {
+      "forge_compile_and_resources": "passed",
+      "neoforge_compile_and_resources": "passed",
+      "attack_plan_and_geometry_assertions": 573265,
+      "strikes": 3936,
+      "geometry": "Actual generated shell, ring-wall and crossed-pillar vertices checked for count, height, finite attributes and bounds",
+      "shader": "tests/VfxRenderCheck.java; actual project GLSL linked and rendered in OpenGL; modes 10 through 13, 8 frames, visible masked changing pixels",
+      "shader_report": "vfx_render_validation.json",
+      "limits": "Offline geometry and GPU pixel checks do not certify in-world visual quality, every effect combination or multiplayer performance"
+    },
+    "historical_acceptance_below_does_not_cover_this_revision": true
+  },
+  "spacing_gait_meteor_2026_09_15": {
+    "status": "spacing_melee_range_and_meteor_visuals_user_accepted_in_forge; gait_unconfirmed; configurable_pursuit_and_entity_collision_followup_offline_verified",
+    "requested_changes": ["Hold combat distance", "Expand small physical skill ranges", "Match feet to short pursuit", "Stronger prelanding, landing and aftermath meteor visuals"],
+    "spacing": {
+      "minimum_center_distance_blocks": 4,
+      "large_entity_clearance": "max(4, combined_half_widths + 1.5)",
+      "approach_resume_margin_blocks": 1,
+      "shared_by_navigation_and_combo_pursuit": true,
+      "no_forced_retreat_or_player_displacement": true
+    },
+    "pursuit_configuration_followup": {
+      "path": "promised_consort.targeting.max_segment_pursuit_distance",
+      "default_blocks": 3.0,
+      "range_blocks": [0.0, 16.0],
+      "meaning": "Per-segment horizontal travel budget, not combat spacing or guaranteed travel",
+      "zero": "Disables segment forward pursuit, retaining allowed pre-lock turning",
+      "limits_preserved": "4-block spacing, 0.25-block per tick movement, existing lock tick and terrain policy",
+      "snapshot_policy": "Applied to new encounters; persisted custom values including zero retained; legacy missing field defaults to 3",
+      "files_updated": ["docs/config/elder-bosses-common.example.toml", "run/config/elder_bosses-common.toml", "versions/1.21.1-neoforge/run/config/elder_bosses-common.toml"],
+      "world_review": "not_repeated_after_followup"
+    },
+    "entity_collision_followup": {
+      "pushable": false,
+      "collidable_with_entities": false,
+      "entity_push_response": "disabled",
+      "attack_hitbox_and_terrain_collision_preserved": true,
+      "no_zero_dimensions_or_global_no_physics": true,
+      "world_review": "not_repeated_after_followup"
+    },
+    "melee_range": {
+      "physical_shape_multiplier": 1.3,
+      "rear_extension_blocks": 0.8,
+      "rear_extension_multiplied_again": false,
+      "sword_echo_length_matches": true,
+      "excluded": ["consort_meteor radial damage bands", "remote holy and gravity areas", "clone ranges"],
+      "travel_damage_count_and_absolute_ticks_unchanged": true,
+      "indicator_and_hit_geometry_shared": true
+    },
+    "pursuit_gait": {
+      "state": "Server-synchronized actual pursuit movement",
+      "source": "Existing walk rotation curves, sorted and cached from current animation resource",
+      "stride_blocks": 1.38,
+      "affected_bones": ["thigh", "shin", "foot", "tasset"],
+      "upper_body_and_sword_animation_preserved": true,
+      "sole_orientation_and_support_height_compensated": true,
+      "guards": ["same-frame reuse", "stationary phase hold", "teleport", "vertical jump", "long frame gap", "outside pursuit"]
+    },
+    "meteor_visuals": {
+      "prelanding_ticks": 29,
+      "aftermath_ticks": 40,
+      "layers": ["converging ground ring", "descent column", "larger comet corona", "landing flash", "expanding shockwave", "fading central and radial columns"],
+      "anchor_and_scale": "Cached authoritative core and outer indicator snapshots",
+      "damage_windows_unchanged": true,
+      "rendering": "Existing depth-tested energy shader; no new asset dependencies"
+    },
+    "verification": {
+      "forge_compile_and_resources": "passed",
+      "neoforge_compile_and_resources": "passed",
+      "attack_plan_assertions": 561611,
+      "actual_asset_pursuit_support_samples": 8480,
+      "geckolib_transform_value_checks": 639624,
+      "strikes": 3936,
+      "includes": ["spacing hysteresis", "melee growth", "rear and front geometry", "gait state and support math", "meteor envelope and timing", "all configured release indicators"],
+      "limits": "Spacing, range and meteor visual acceptance are scoped to the recorded Forge run; pursuit gait remains unconfirmed. Configurable budget and entity-collision changes compiled on both loaders and passed config/persistence tests, but were not retested in world"
+    },
+    "forge_world_run": {
+      "started_local_time": "2026-09-15T22:05:41",
+      "resource_reload_local_time": "2026-09-15T22:05:54",
+      "login_local_time": "2026-09-15T22:07:18",
+      "normal_exit_local_time": "2026-09-15T22:11:14",
+      "all_dimensions_saved_local_time": "2026-09-15T22:11:15",
+      "entered_world": true,
+      "client_running": false,
+      "gradle_result": "BUILD SUCCESSFUL",
+      "regular_entity_id": 304,
+      "observed_phases_in_log": [1, 2],
+      "user_accepted_features": ["Hold distance instead of continuous face-to-face pursuit", "Expanded melee ranges", "More visible prelanding, landing and aftermath meteor effects"],
+      "gait_user_acceptance": "not_selected; unconfirmed",
+      "new_requests": ["Configurable segment pursuit distance defaulting to 3 blocks", "Remove entity collision and pushing"],
+      "meteor_evidence": "Sequence 16 completed at 22:10:07 with meteor_landed=true; sequence 26 ended at 22:11:09 with meteor_landed=false and elevated Y, so not all meteor landings are verified",
+      "limits": "Not every skill or phase verified; feature acceptance does not certify exact damage boundaries, all-terrain gait, repeat meteor landing or NeoForge world behavior",
+      "log": "run/logs/latest.log"
+    }
+  },
+  "segment_pursuit_2026_09_15": {
+    "status": "implemented_and_offline_verified; world_review_pending",
+    "scope": "Radahn only; segment recovery pursuit, per-release indicators and close rear coverage",
+    "movement": {
+      "maximum_per_segment_blocks": 1.5,
+      "maximum_per_tick_blocks": 0.25,
+      "maximum_turn_degrees_per_tick": 20,
+      "clearance": "boss_half_width + target_half_width + 0.5 blocks",
+      "budget_persistence": "existing lockedPoints persistent state; per-tick processing deduplicated",
+      "eligible_segments": "Cross combos; first two bloodflame segments; tempest; earthheave through ground slam; starcaller follow-up; first five promised-consort body segments",
+      "constraints": "After previous active window only, through next strike lock tick; no invented time for back-to-back active stages; existing controlled collision and arena movement policy"
+    },
+    "indicators": {
+      "each_release_has_independent_id": true,
+      "zero_windup_followups_warn_in_preceding_segment": true,
+      "action_start_bounds_warning": true,
+      "contact_ticks_unchanged": true,
+      "lock_tick_uses_final_pursuit_pose": true,
+      "tracking_until_authoritative_lock": true,
+      "no_retarget_after_lock": true,
+      "instant_guard_sound_timing_unchanged": true,
+      "ground_cue_pulses_start_at_actual_lock": true
+    },
+    "rear_coverage": {
+      "extension_blocks": 0.8,
+      "shapes": ["forward sector", "forward rectangle including sword echo", "non-centered capsule"],
+      "forward_tip_distance_unchanged": true,
+      "body_spin_center_holes_removed": true,
+      "first_expanding_light_ring_covers_center": true,
+      "circle_centered_path_meteor_radial_bands_preserved": true,
+      "remote_hazards_do_not_gain_extra_boss_centered_damage": true,
+      "authoritative_indicator_and_hit_shape_shared": true
+    },
+    "verification": {
+      "forge_compile_and_resources": "passed",
+      "neoforge_compile_and_resources": "passed",
+      "attack_plan_assertions": 561569,
+      "strikes": 3936,
+      "timeline_assertions": 66222,
+      "damage_and_occurrence_counts_unchanged": true,
+      "tests": "Pursuit limits and overlap guard; zero-gap stages; final lock update and post-lock freeze; rear containment and forward reach; every actual configured release emits an advance indicator; packet lock and tracking state; projection footprint roundtrip",
+      "limits": "No new in-world movement, terrain, multiplayer latency or damage-boundary test"
+    },
+    "animation_scope": "User subsequently requested in-game deployment: impact_motion_v2 audit completed after checking the actual Blockbench state; animation-only export and both loader resources now match f9ea8aad5a8b74698a5dc7ba0acbc710058222994fb9c7a0e797b52b67cee950; current world review pending",
+    "historical_records_below": true
+  },
+  "revision": "sculpted_lion_v5",
+  "model_revision": "sculpted_lion_v5; original_animation_rotations_and_timing_preserved_with_scaled_position_tracks",
+  "texture_revision": "structural_body_blades_v2",
+  "status": "v5_assets_and_dual_compile_passed; in_world_pending",
   "scope": [
+    "20 percent larger Radahn and equipment, with unscaled Miquella body and refitted shoulder embrace",
+    "Structural skin shading and continuous whole-blade texture coordinates",
+    "Connected block hands on both characters; no visible individual fingers",
+    "Recessed armor base, raised ridges and overlapping beveled plates",
+    "Higher-contrast ordered pixel palettes with material separation",
     "Server-announced locked shapes shared with area damage queries",
     "Advance warnings for composite attacks, persistent hazards and transition impact",
     "Brighter weapon-following blade core and three-tick trail",
-    "Meteor prelanding shader effects and actual-landing damage gate"
+    "High-contrast through-wall indicator borders; depth-tested fills",
+    "Meteor airborne pause, progressive starburst and shared body/comet return path",
+    "Meteor final aftershock radius 36 blocks with actual-landing damage gate",
+    "All Consort hits bypass hurt cooldown, preserving blocking and genuine invulnerability"
   ],
+  "confirmed_settings": {
+    "radahn_model_scale": 1.2,
+    "miquella_body_scale": 1.0,
+    "collision_and_skill_ranges_changed_by_model_scale": false,
+    "superseded_request": "Threefold meteor radius",
+    "final_core_radius_blocks": 21.6,
+    "final_outer_radius_blocks": 31.2,
+    "final_aftershock_radius_blocks": 36.0,
+    "arena_radius_blocks": 40.0,
+    "meteor_range_multiplier": 2.4,
+    "new_encounter_required_for_config": true,
+    "i_frames": "Minecraft hurt cooldown only; shields, instant guard and genuine invulnerability preserved"
+  },
   "user_confirmed_exception": {
     "gravity_rocks": "Keep homing, destructible projectiles and entity collision; announce launch only",
     "launch_direction_is_damage_boundary": false
@@ -19,12 +259,19 @@
   },
   "focused_checks": {
     "runner": "tests/run_attack_plan_check.js",
-    "assertions": 242892,
-    "strikes": 1932,
+    "attack_plan_check_scope": "Prior v4 checks retained; v5 does not change the attack plan, damage or indicator configuration",
+    "assertions": 324895,
+    "strikes": 2576,
     "actions": 22,
     "phases": 2,
     "cast_speeds": [1.0, 1.35, 1.5, 2.0],
-    "range_scales": [0.5, 1.0, 1.8],
+    "range_scales": [0.5, 1.0, 1.8, 2.4],
+    "asset_assertions": 291933,
+    "texture_sha256": "e6803b6736740f60f9a42b6e14de7144428aef5ae1d0bdb5dcb41d37d33eebd2",
+    "original_rotation_tracks_and_timing_unchanged": true,
+    "geometry_sha256": "f408954dc1b6354a73b2f6f751808bbf6980e9cd6080bf0203bbf8ea1feb414d",
+    "animation_sha256": "985258e0d17ad2b74efc1f02d587c5f723e60387cea267fbd34c028fdc20ceb6",
+    "visible_finger_cubes": 0,
     "covers": [
       "Advance warning and ordered timing",
       "Indicator projection roundtrip and sampled horizontal containment",
@@ -32,7 +279,10 @@
       "Centered clone capsules and gravity spikes",
       "Actual spiral movement steps, excluding windup",
       "Scaled clone event counts",
-      "Meteor core/outer bands and aftershock rounding"
+      "Meteor core/outer bands and aftershock rounding",
+      "Final 36-block radius and monotonic late-airborne charge/return",
+      "Block hand and armor relief presence, ordered palette steps, embedded and runtime assets",
+      "Deterministic clustered pixels and rejection of straight-column texture patterns"
     ],
     "limitations": "Synthetic configuration and isolated geometry; not an in-world damage, packet-latency or shader rendering test"
   },
@@ -40,7 +290,39 @@
     "forge_1_20_1": "pending",
     "neoforge_1_21_1": "pending"
   },
+  "previous_v4_in_world": {
+    "forge_1_20_1": {
+      "date": "2026-09-11",
+      "loader": "47.4.10",
+      "geckolib": "4.8.4",
+      "client_started": true,
+      "entered_world": true,
+      "world": "\u65b0\u7684\u4e16\u754c",
+      "login_local_time": "23:17:43",
+      "normal_exit_local_time": "23:20:10",
+      "all_dimensions_saved_local_time": "23:20:11",
+      "user_confirmation": "Entered the world; textures meet requirements and may be retained",
+      "confirmed_scope": "Overall clustered texture appearance",
+      "individual_checklist": "Skipped by user; do not infer separate material, pose, meteor, indicator or damage acceptance",
+      "texture_sha256": "4795d32aa84ff764ad2dfdbcde16af5e9d8f90b1bcdea95f9b0a9bdd18947c99",
+      "new_texture_or_model_errors_in_supplied_log": false,
+      "log": "run/logs/latest.log",
+      "client_still_running": false
+    },
+    "neoforge_1_21_1": "Resources processed successfully; client world test not repeated for this texture revision"
+  },
+  "previous_texture_attempt": {
+    "forge_started_local_time": "2026-09-11 16:30:37",
+    "forge_exited_local_time": "2026-09-11 19:14:40",
+    "entered_world_evidenced": false,
+    "result": "Client loaded and exited; no world login in supplied log. User requested replacing striped textures; not an acceptance result"
+  },
   "remaining_verification": [
+    "V5 skin, both blade surfaces, relative proportions and gait in world",
+    "Individual block-hand poses and every armor part in world beyond overall texture acceptance",
+    "NeoForge in-world verification of this texture revision",
+    "Through-wall border readability without expanded hit geometry",
+    "Independent close-spaced attack damage with defensive mechanics preserved",
     "Actual in-world advance warning and hit boundaries",
     "Blade visibility and weapon tracking",
     "Meteor prelanding visuals and ordinary damage rejection",

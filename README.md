@@ -30,3 +30,67 @@ all Stonecutter-conditioned Java code belong under
 
 - [Design documentation](docs/README.md)
 - [Promised Consort implementation plan](docs/implementation/promised-consort-plan.md)
+- [Promised Consort arena contract and progress](docs/arenas/promised-consort-arena.md)
+
+## Arena Development
+
+The arena now uses twelve custom building blocks and the Rune Fragment offering.
+It includes flagstones, masonry, foundation stone, slabs, stairs, balustrades and
+pillars. Construction uses only mod block IDs; template air/metadata remain vanilla.
+Root relief is non-occluding without losing collision, and all architectural
+textures are native 16x16 with the shared clustered/transition-color material style.
+One nether star and one gold ingot craft one Rune Fragment. The offering tag is
+`elder_bosses:consort_offerings`. Block items are available in the creative tab;
+they have no crafting recipes. Current original material generation uses
+[custom_resources.js](models/promised_consort/arena/custom_resources.js) and
+[ArenaTextureAuthoring.java](models/promised_consort/arena/ArenaTextureAuthoring.java).
+
+The fixed-template surface structure type is registered, with biome tag
+`elder_bosses:has_structure/promised_consort_arena` (desert by default) and
+random-spread spacing/separation of 96/32. Manual test NBT is available under
+separate preflight namespaces and has been imported in the Forge test world.
+The accepted v7 architecture is included with the approved v8 fixed foundation:
+one metadata root and 26 fixed pieces per target. The original building and air
+mask are unchanged; eight fixed masonry layers extend the foundation to local
+Y=-20. No replacement building or procedural foundations are generated.
+Worldgen allows a 12-block site span and 1-block entry span, requires the structure
+center in the biome tag, and still checks sampled surface fluids and foundation
+contact. It tries the seeded rotation first, then the other three in fixed order.
+It affects only newly generated chunks; previously rejected structure starts are
+not retried automatically. Natural-site discovery still needs in-world acceptance.
+
+The Consort Compass and its search, target tracking, needle rendering and resources
+have been removed. It is no longer available in the creative tab or through `/give`.
+Arena generation and altar summoning are unchanged. Back up existing worlds before
+updating: saved compass stacks no longer have a registered item and are not migrated.
+
+Sneak-use a real arena's designated altar with an offering in the main hand to
+summon its unique dormant boss. Required chunks and anchor spaces must be ready;
+failed attempts retain the offering. Success consumes one offering except in
+creative mode. Copied altars and command-pasted buildings without a real structure
+start cannot summon. Natural generation itself never spawns the boss.
+
+The boss waits on the ground before the Gate of Divinity at the saved
+`phase_return` anchor, facing the arena center. Its first eligible attack moves
+it to the separate `boss_spawn` intro anchor and starts the existing opening
+sequence. Combat center and phase return use the saved structure anchors;
+disengagement and dormant reload return it to the gate-front waiting position.
+Binding and occupancy persist through unload/restart, and defeat removal releases
+the slot for another offering.
+Existing unbound summons and single-skill tests retain their temporary arenas.
+Position protection and battle terrain restoration are not implemented yet.
+
+After compiling and processing resources for both targets, run the focused check:
+
+```powershell
+node models/promised_consort/tests/run_attack_plan_check.js ArenaContractCheck.java
+```
+
+This checks resources, layout metadata and terrain rules, not in-world behavior.
+
+Temporary arena resource and site-check commands have been removed, along with
+their diagnostic-only runtime code and translations. Normal template validation,
+terrain screening and fixed structure generation remain in place.
+The existing boss skill-test commands are unchanged. In-world acceptance still
+requires entering a world; clients use the project's original run directories
+without arena isolation.

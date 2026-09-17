@@ -1,0 +1,269 @@
+{
+  "revision": "structured_flow_v10",
+  "geometry_sha256": "487040f32141aa49c11f18e5a591bde0e6fa8b032ebf42e4bd05510af4e39982",
+  "animation_sha256": "bbc6d4135bceae1281fb067299ed64fc9392386e19073b78cdf5fb418f542217",
+  "bounded_bones": [
+    [
+      "cape_middle",
+      0.2,
+      0.12
+    ],
+    [
+      "cape_end",
+      0.35,
+      0.2
+    ],
+    [
+      "miquella_lock_01_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_01_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_02_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_02_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_03_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_03_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_04_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_04_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_05_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_05_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_06_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_06_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_07_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_07_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_08_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_08_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_09_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_09_end",
+      0.22,
+      0.18
+    ],
+    [
+      "miquella_lock_10_middle",
+      0.1,
+      0.08
+    ],
+    [
+      "miquella_lock_10_end",
+      0.22,
+      0.18
+    ],
+    [
+      "mane_lock_01",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_02",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_03",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_04",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_05",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_06",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_07",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_08",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_09",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_10",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_11",
+      0.1,
+      0.1
+    ],
+    [
+      "mane_lock_12",
+      0.1,
+      0.1
+    ]
+  ],
+  "protected_bones": [
+    "root",
+    "pelvis",
+    "head",
+    "hand_l",
+    "hand_r",
+    "blade_root_l",
+    "blade_tip_l",
+    "blade_root_r",
+    "blade_tip_r",
+    "miquella_upper_hand_l",
+    "miquella_upper_hand_r",
+    "miquella_lower_hand_l",
+    "miquella_lower_hand_r"
+  ],
+  "samples": [
+    {
+      "clip": "idle",
+      "tick": 0,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle",
+      "tick": 0,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle",
+      "tick": 0,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "run",
+      "tick": 6,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "run",
+      "tick": 6,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "run",
+      "tick": 6,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "left_combo_cross",
+      "tick": 12,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "left_combo_cross",
+      "tick": 12,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "left_combo_cross",
+      "tick": 12,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    }
+  ],
+  "preview": "previews/style_secondary_bounds.png",
+  "status": "protected_transforms_passed_visually_reviewed_before_client",
+  "scope": "Static extrema of the runtime additive layer, not a recorded physics simulation or exhaustive collision test"
+}

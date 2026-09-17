@@ -148,8 +148,31 @@ public record PromisedConsortCombatConfigSnapshot(
             boolean targetCreativePlayers,
             boolean creativePlayersCanJoin,
             String primaryTargetPolicy,
-            String attackTargetPolicy
+                        String attackTargetPolicy,
+                        double maxSegmentPursuitDistance,
+                        PromisedConsortRangedConfig rangedCounter
     ) {
+                public Targeting {
+                        if (rangedCounter == null) rangedCounter = PromisedConsortRangedConfig.defaults();
+                        if (!Double.isFinite(maxSegmentPursuitDistance) || maxSegmentPursuitDistance < 0 || maxSegmentPursuitDistance > 16) {
+                                throw new IllegalArgumentException("maxSegmentPursuitDistance must be between 0 and 16 blocks");
+                        }
+                }
+
+                public Targeting(double distanceWeight, double recentDamageWeight, double itemUseWeight, int recentDamageWindowTicks,
+                                 boolean targetUnregisteredPlayers, boolean targetCreativePlayers, boolean creativePlayersCanJoin,
+                                 String primaryTargetPolicy, String attackTargetPolicy, double maxSegmentPursuitDistance) {
+                        this(distanceWeight, recentDamageWeight, itemUseWeight, recentDamageWindowTicks, targetUnregisteredPlayers,
+                                targetCreativePlayers, creativePlayersCanJoin, primaryTargetPolicy, attackTargetPolicy, maxSegmentPursuitDistance,
+                                PromisedConsortRangedConfig.defaults());
+                }
+
+                public Targeting(double distanceWeight, double recentDamageWeight, double itemUseWeight, int recentDamageWindowTicks,
+                                                 boolean targetUnregisteredPlayers, boolean targetCreativePlayers, boolean creativePlayersCanJoin,
+                                                 String primaryTargetPolicy, String attackTargetPolicy) {
+                        this(distanceWeight, recentDamageWeight, itemUseWeight, recentDamageWindowTicks, targetUnregisteredPlayers,
+                                        targetCreativePlayers, creativePlayersCanJoin, primaryTargetPolicy, attackTargetPolicy, 3.0);
+                }
     }
 
     public record Presentation(String bossBarAudience, String staggerHudAudience) {
@@ -232,8 +255,21 @@ public record PromisedConsortCombatConfigSnapshot(
             String blockedBranchMode,
             int guardChainThreshold,
             String guardChainScope,
-            int guardChainRecoveryTicks
+                        int guardChainRecoveryTicks,
+                        com.tonywww.elder_bosses.boss.promisedconsort.controller.PromisedConsortBurstCadence.Settings burst
     ) {
+                public Selector {
+                        if (burst == null) burst = com.tonywww.elder_bosses.boss.promisedconsort.controller.PromisedConsortBurstCadence.Settings.defaults();
+                }
+
+                public Selector(int avoidLastActionCount, double itemUsePunishMinRange, double itemUsePunishMaxRange,
+                                                double itemUseWeightMultiplier, double rangedWeightMultiplier, double crowdWeightMultiplier,
+                                                double missRecoveryWeightMultiplier, double blockedBranchChance, String blockedBranchMode,
+                                                int guardChainThreshold, String guardChainScope, int guardChainRecoveryTicks) {
+                        this(avoidLastActionCount, itemUsePunishMinRange, itemUsePunishMaxRange, itemUseWeightMultiplier,
+                                        rangedWeightMultiplier, crowdWeightMultiplier, missRecoveryWeightMultiplier, blockedBranchChance,
+                                        blockedBranchMode, guardChainThreshold, guardChainScope, guardChainRecoveryTicks, null);
+                }
     }
 
     public record PhaseTransition(

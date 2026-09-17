@@ -197,6 +197,7 @@ public final class ClientBossVfxController {
             case LIGHTSPEED -> lightspeedTrail(center, targetCenter, profile.radius(), actionTick, emitter);
             case EARTH -> earthImpact(center, forward, profile.radius(), actionTick, emitter);
             case METEOR -> meteorDescent(targetCenter, profile.radius(), profile.height(), actionTick, emitter);
+            case SHADER_ONLY -> { }
         }
     }
 
@@ -471,8 +472,12 @@ public final class ClientBossVfxController {
         profiles.put(PromisedConsortActionId.LIGHTSPEED_DASH, profile(Style.LIGHTSPEED, 16.0, 3.0));
         profiles.put(PromisedConsortActionId.LIGHTSPEED_SIDE_DASH, profile(Style.LIGHTSPEED, 9.0, 3.0));
         profiles.put(PromisedConsortActionId.PROMISED_CONSORT, profile(Style.HOLY, 10.0, 7.0));
+        profiles.put(PromisedConsortActionId.CROSS_LEAP_COMBO, profile(Style.HOLY, 10.0, 7.0));
         profiles.put(PromisedConsortActionId.ENHANCED_EARTHHEAVE, profile(Style.HOLY, 8.0, 5.0));
         profiles.put(PromisedConsortActionId.CONSORT_METEOR, profile(Style.METEOR, 13.0, 14.0));
+        profiles.put(PromisedConsortActionId.GRAVITY_BULWARK, profile(Style.SHADER_ONLY, 0.0, 0.0));
+        profiles.put(PromisedConsortActionId.GRAVITY_REFLECTION, profile(Style.SHADER_ONLY, 0.0, 0.0));
+        profiles.put(PromisedConsortActionId.GRAVITY_REPRISAL, profile(Style.SHADER_ONLY, 0.0, 0.0));
         requireComplete(profiles, PromisedConsortActionId.values().length, "Promised Consort");
         return Map.copyOf(profiles);
     }
@@ -499,7 +504,8 @@ public final class ClientBossVfxController {
         HOLY,
         LIGHTSPEED,
         EARTH,
-        METEOR
+        METEOR,
+        SHADER_ONLY
     }
 
     private record Profile(Style style, double radius, double height) {

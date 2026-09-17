@@ -1,0 +1,768 @@
+{
+  "revision": "audio_prototype_v1",
+  "status": "runtime_integrated_offline_verified; world_listening_pending",
+  "scope": "Six selected +3dB sounds integrated across 25 actions and 4 ranged variants; local audition mixes are not runtime resources",
+  "style": "Original layered sound design: weighty steel and stone, low gravity pressure, clear holy overtones",
+  "sources": [
+    {
+      "id": "kenney_impact",
+      "archive": "kenney_impact-sounds.zip",
+      "page": "https://kenney.nl/assets/impact-sounds",
+      "download": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "sha256": "029d734af1582474edf3a694d1b0cebc97c1c152f2f39fa34d4c2bafc5de77f8",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "archive_license_verified": true,
+      "archive_path": "models/promised_consort/audio/kenney_impact-sounds.zip",
+      "license_path": "models/promised_consort/audio/sources/kenney_impact/License.txt",
+      "license_sha256": "b49aa9c56b04528b95913de13e506a0f7c5e807b9925db9bfef86af1f91120db",
+      "license_text": "\t\r\n\r\n\tImpact Sounds (1.0)\r\n\r\n\tCreated/distributed by Kenney (www.kenney.nl)\r\n\tCreation date: 19-12-2019\r\n\r\n\t\t\t------------------------------\r\n\r\n\tLicense: (Creative Commons Zero, CC0)\r\n\thttp://creativecommons.org/publicdomain/zero/1.0/\r\n\r\n\tThis content is free to use in personal, educational and commercial projects.\r\r\n\tSupport us by crediting Kenney or www.kenney.nl (this is not mandatory)\r\n\r\n\t\t\t------------------------------\r\n\r\n\tDonate:   http://support.kenney.nl\r\n\tRequest:  http://request.kenney.nl\r\n\tPatreon:  http://patreon.com/kenney/\r\n\r\n\tFollow on Twitter for updates:\r\n\thttp://twitter.com/KenneyNL",
+      "acquired_on": "2026-09-17"
+    },
+    {
+      "id": "kenney_rpg",
+      "archive": "kenney_rpg-audio.zip",
+      "page": "https://kenney.nl/assets/rpg-audio",
+      "download": "https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip",
+      "sha256": "6dbeaf8544da958d8f2adcb4a4a4b76c1ade34a05f8ab9edccd327da7375f38b",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "archive_license_verified": true,
+      "archive_path": "models/promised_consort/audio/kenney_rpg-audio.zip",
+      "license_path": "models/promised_consort/audio/sources/kenney_rpg/License.txt",
+      "license_sha256": "5735dfd72cb64cbbceda4ebc00c380c41ca680edb82ff153aa7c9ab97614c539",
+      "license_text": "\t\r\n\r\n\tRPG Audio\r\n\r\n\tby  Kenney Vleugels (Kenney.nl)\r\n\r\n\t\t\t------------------------------\r\n\r\n\tLicense (Creative Commons Zero, CC0)\r\n\thttp://creativecommons.org/publicdomain/zero/1.0/\r\n\r\n\tYou may use these assets in personal and commercial projects.\r\n\tCredit (Kenney or www.kenney.nl) would be nice but is not mandatory.\r\n\r\n\t\t\t------------------------------\r\n\r\n\tDonate:   http://support.kenney.nl\r\n\tRequest:  http://request.kenney.nl\r\n\r\n\tFollow on Twitter for updates:\r\n\t@KenneyNL",
+      "acquired_on": "2026-09-17"
+    }
+  ],
+  "audition_targets": [
+    "heavy_slash",
+    "stomp",
+    "gravity_dash",
+    "holy_echo",
+    "reflection",
+    "meteor_impact",
+    "dense_combo"
+  ],
+  "user_listening_accepted": false,
+  "world_tested": false,
+  "runtime_deployed": true,
+  "created_at": "2026-09-16T19:23:58.444Z",
+  "builder": {
+    "file": "models/promised_consort/scripts/build_audio.js",
+    "sha256": "e5c02c0e688df5d56552ca3af30a25ec9068ef2ba7b18b7d72a958ec4eef9673",
+    "executable": "models/malenia/.tools/node_modules/@ffmpeg-installer/win32-x64/ffmpeg.exe",
+    "version": "ffmpeg version N-92722-gf22fcd4483 Copyright (c) 2000-2018 the FFmpeg developers"
+  },
+  "used_sources": [
+    {
+      "file": "models/promised_consort/audio/sources/kenney_rpg/Audio/knifeSlice.ogg",
+      "pack": "kenney_rpg",
+      "sha256": "4cd96dc630bed9840c15f1dd2306da2cc56a4da26a5d3f1a03c5a7265ac5e54f"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_rpg/Audio/drawKnife2.ogg",
+      "pack": "kenney_rpg",
+      "sha256": "d5df6a4130cbb016f97b4883769a418917b9629cb4c21717030b186e0c73281a"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_impact/Audio/impactMetal_heavy_002.ogg",
+      "pack": "kenney_impact",
+      "sha256": "b914c8f1eb7c0f34bb165d7c77f4be0351f6be0660c13c53e65424e262e2c093"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_impact/Audio/footstep_concrete_002.ogg",
+      "pack": "kenney_impact",
+      "sha256": "b21fa546d74941196b25da8a20b7010abd8c05c4fcf93545d1f344e66a664e13"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_impact/Audio/impactMining_002.ogg",
+      "pack": "kenney_impact",
+      "sha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_impact/Audio/impactMining_004.ogg",
+      "pack": "kenney_impact",
+      "sha256": "8ca3a99d85d845751ad8ce7b40509da58263a62e48cde70e5a30b5ccef4c9a3b"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_rpg/Audio/knifeSlice2.ogg",
+      "pack": "kenney_rpg",
+      "sha256": "6c2064d0ef988d1ec3d56868e823ea8823a5cac00f2742560052633529407def"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_impact/Audio/impactGlass_light_001.ogg",
+      "pack": "kenney_impact",
+      "sha256": "05e513fbd42829060eb37855f8c3866722ec5c39a8937c9bfde518cc609effa2"
+    },
+    {
+      "file": "models/promised_consort/audio/sources/kenney_impact/Audio/impactMetal_light_002.ogg",
+      "pack": "kenney_impact",
+      "sha256": "25a96f90a9a1f88a531e824e126f0519504625e5635e65a72e4f31611428db29"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "heavy_slash",
+      "wav": "models/promised_consort/audio/prototypes/v1/heavy_slash.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/heavy_slash.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/heavy_slash.png",
+      "sha256": "99a491cc9ba786f3910e5fb978f3ef34b0ab3c42c2b43cfb9f5acdec2204a22d",
+      "wav_sha256": "15bf24307e896f920159b6c99518bb7c7f6f81dc8e9fe9a945809c944df909da",
+      "gain_db": 10.233103169102556,
+      "measurement": {
+        "samples": 39488,
+        "duration": 0.8226666666666667,
+        "peak_dbfs": -3.899733442231735,
+        "rms_dbfs": -22.37527866670776,
+        "dc_offset": 0.00002250669609246745,
+        "leading_quiet_seconds": 0,
+        "trailing_quiet_seconds": 0.281625,
+        "pcm_sha256": "6a9c8e4c48ca3d9a17a1a8521a2526a8249ab3d1d80f656c757a84351968e891",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -3.8246964157687167,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "heavy_slash",
+        "duration": 0.82,
+        "peakDb": -7,
+        "purpose": "Weighty empty-air sword release, not a target hit",
+        "layers": [
+          {
+            "pack": "kenney_rpg",
+            "filename": "knifeSlice.ogg",
+            "filter": "asetrate=34560,aresample=48000,highpass=f=180,lowpass=f=4700",
+            "gain": 1,
+            "delay": 0
+          },
+          {
+            "pack": "kenney_rpg",
+            "filename": "drawKnife2.ogg",
+            "filter": "atrim=duration=0.32,asetrate=36000,aresample=48000,highpass=f=600,lowpass=f=3200",
+            "gain": 0.15,
+            "delay": 0.025
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMetal_heavy_002.ogg",
+            "filter": "atrim=start=0.016:duration=0.3,asetrate=28800,aresample=48000,highpass=f=140,lowpass=f=1400",
+            "gain": 0.18,
+            "delay": 0.07
+          },
+          {
+            "role": "filtered_air",
+            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.44:seed=1701",
+            "filter": "highpass=f=140,lowpass=f=2400,afade=t=in:d=0.075:curve=qsin,afade=t=out:st=0.075:d=0.365:curve=exp",
+            "gain": 0.7,
+            "delay": 0
+          },
+          {
+            "role": "gravity_pressure",
+            "generator": "aevalsrc=0.4*sin(2*PI*(44*t+12*(1-exp(-7*t))))*exp(-8*t):s=48000:d=0.28",
+            "filter": "highpass=f=32,lowpass=f=210,afade=t=in:d=0.006,afade=t=out:st=0.2:d=0.08",
+            "gain": 0.12,
+            "delay": 0.04
+          }
+        ]
+      }
+    },
+    {
+      "id": "stomp",
+      "wav": "models/promised_consort/audio/prototypes/v1/stomp.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/stomp.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/stomp.png",
+      "sha256": "4a2b8445ac1c1804a7928d048b42282e18543f1318c7d1dbb00bddc5bc02f9b4",
+      "wav_sha256": "325b3502245a5ad538d54165c786106c4eed3c1f16c3ddb00fd1a731df3e0ab6",
+      "gain_db": 15.523510328870266,
+      "measurement": {
+        "samples": 51008,
+        "duration": 1.0626666666666666,
+        "peak_dbfs": -3.4245990333965413,
+        "rms_dbfs": -23.4751869385516,
+        "dc_offset": -0.00014934229491403358,
+        "leading_quiet_seconds": 0.00010416666666666667,
+        "trailing_quiet_seconds": 0.23766666666666666,
+        "pcm_sha256": "32131495456c560dfb2b7a8963d27d0b30d230e4574c2bbf277084594aba3d42",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -3.4243747993221274,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "stomp",
+        "duration": 1.05,
+        "peakDb": -6.5,
+        "purpose": "Stone footfall, compressed ground and short debris",
+        "layers": [
+          {
+            "pack": "kenney_impact",
+            "filename": "footstep_concrete_002.ogg",
+            "filter": "asetrate=31200,aresample=48000,lowpass=f=3400",
+            "gain": 0.8,
+            "delay": 0
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMining_002.ogg",
+            "filter": "asetrate=31200,aresample=48000,highpass=f=160,lowpass=f=4200",
+            "gain": 0.5,
+            "delay": 0.025
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMining_004.ogg",
+            "filter": "asetrate=40800,aresample=48000,highpass=f=900,lowpass=f=5000",
+            "gain": 0.12,
+            "delay": 0.15
+          },
+          {
+            "role": "gravity_pressure",
+            "generator": "aevalsrc=0.4*sin(2*PI*(44*t+12*(1-exp(-7*t))))*exp(-8*t):s=48000:d=0.48",
+            "filter": "highpass=f=32,lowpass=f=210,afade=t=in:d=0.006,afade=t=out:st=0.39999999999999997:d=0.08",
+            "gain": 0.6,
+            "delay": 0
+          },
+          {
+            "role": "filtered_air",
+            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.55:seed=1702",
+            "filter": "highpass=f=140,lowpass=f=650,afade=t=in:d=0.008:curve=qsin,afade=t=out:st=0.008:d=0.542:curve=exp",
+            "gain": 0.5,
+            "delay": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "gravity_dash",
+      "wav": "models/promised_consort/audio/prototypes/v1/gravity_dash.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/gravity_dash.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/gravity_dash.png",
+      "sha256": "d89de3db125fec198f65d9206a723e1bec56f26327cf6163a2d742058546d854",
+      "wav_sha256": "e8bd82a6a6913b7ff92b476832c877366972327b8b8fc3e12a2af9cd22c7fd5e",
+      "gain_db": 14.120441534352942,
+      "measurement": {
+        "samples": 53952,
+        "duration": 1.124,
+        "peak_dbfs": -4.698151518172436,
+        "rms_dbfs": -24.957612852367287,
+        "dc_offset": 0.00000776624543158757,
+        "leading_quiet_seconds": 0.0012083333333333334,
+        "trailing_quiet_seconds": 0.4146666666666667,
+        "pcm_sha256": "d011b2daafe808c9edb5edc18e00783c84f7db8923644c11d021e2fd074f5ef0",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -4.591526050362596,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "gravity_dash",
+        "duration": 1.12,
+        "peakDb": -8,
+        "purpose": "Compressed gravity launch and passing air; no landing explosion",
+        "layers": [
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMetal_heavy_002.ogg",
+            "filter": "atrim=duration=0.2,areverse,asetrate=26400,aresample=48000,lowpass=f=850",
+            "gain": 0.23,
+            "delay": 0
+          },
+          {
+            "role": "filtered_air",
+            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.58:seed=1703",
+            "filter": "highpass=f=140,lowpass=f=2800,afade=t=in:d=0.09:curve=qsin,afade=t=out:st=0.09:d=0.49:curve=exp",
+            "gain": 1.4,
+            "delay": 0.015
+          },
+          {
+            "pack": "kenney_rpg",
+            "filename": "knifeSlice2.ogg",
+            "filter": "asetrate=40800,aresample=48000,highpass=f=350,lowpass=f=3800",
+            "gain": 0.35,
+            "delay": 0.09
+          },
+          {
+            "role": "gravity_pressure",
+            "generator": "aevalsrc=0.4*sin(2*PI*(44*t+12*(1-exp(-7*t))))*exp(-8*t):s=48000:d=0.4",
+            "filter": "highpass=f=32,lowpass=f=210,afade=t=in:d=0.006,afade=t=out:st=0.32:d=0.08",
+            "gain": 0.45,
+            "delay": 0.08
+          },
+          {
+            "role": "gravity_tail",
+            "generator": "aevalsrc=0.12*(sin(2*PI*87*t)+0.25*sin(2*PI*179*t))*exp(-10*t):s=48000:d=0.48",
+            "filter": "afade=t=in:d=0.012,afade=t=out:st=0.3:d=0.18",
+            "gain": 0.35,
+            "delay": 0.35
+          }
+        ]
+      }
+    },
+    {
+      "id": "holy_echo",
+      "wav": "models/promised_consort/audio/prototypes/v1/holy_echo.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/holy_echo.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/holy_echo.png",
+      "sha256": "b048e7af13f2c46916b962ed934fccb0d3a617b67d8ca0fc54a343ab3b65d06b",
+      "wav_sha256": "e226773929f47e53049b3771c8e485bfb9fb87dde45d41cfacaefbaab0795617",
+      "gain_db": 9.626406470478873,
+      "measurement": {
+        "samples": 39872,
+        "duration": 0.8306666666666667,
+        "peak_dbfs": -10.098126916191193,
+        "rms_dbfs": -30.572855976231846,
+        "dc_offset": -1.458029476299457e-7,
+        "leading_quiet_seconds": 0.0002916666666666667,
+        "trailing_quiet_seconds": 0.2821666666666667,
+        "pcm_sha256": "17e7545df5a075055f11e2be7d4f709c8ed96173545d846b7c68fe33954fcc4f",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -10.098126916191193,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "holy_echo",
+        "duration": 0.82,
+        "peakDb": -13,
+        "purpose": "Lightweight delayed holy echo beneath the physical blade",
+        "layers": [
+          {
+            "pack": "kenney_impact",
+            "filename": "impactGlass_light_001.ogg",
+            "filter": "asetrate=52800,aresample=48000,highpass=f=900,lowpass=f=6400",
+            "gain": 0.28,
+            "delay": 0
+          },
+          {
+            "role": "holy_overtones",
+            "generator": "aevalsrc=0.2*(sin(2*PI*622*t)*exp(-8*t)+0.55*sin(2*PI*1244*t)*exp(-11*t)+0.3*sin(2*PI*1866*t)*exp(-15*t)):s=48000:d=0.6",
+            "filter": "highpass=f=400,lowpass=f=6200,afade=t=in:d=0.01,afade=t=out:st=0.5:d=0.1",
+            "gain": 0.8,
+            "delay": 0
+          },
+          {
+            "role": "filtered_air",
+            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.32:seed=1704",
+            "filter": "highpass=f=140,lowpass=f=4500,afade=t=in:d=0.02:curve=qsin,afade=t=out:st=0.02:d=0.3:curve=exp",
+            "gain": 0.16,
+            "delay": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "reflection",
+      "wav": "models/promised_consort/audio/prototypes/v1/reflection.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/reflection.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/reflection.png",
+      "sha256": "21bb111a254093662a48777e8763a8cc1b3e92119721edeed1db94efd6f6e4fe",
+      "wav_sha256": "47fba954ff20edc42d785bafdfe63a05d851d851ae387a604a3f235c318fa65e",
+      "gain_db": 6.811881756208404,
+      "measurement": {
+        "samples": 30400,
+        "duration": 0.6333333333333333,
+        "peak_dbfs": -7.665061708125263,
+        "rms_dbfs": -33.064408358283586,
+        "dc_offset": 0.000004955305768581059,
+        "leading_quiet_seconds": 0.000041666666666666665,
+        "trailing_quiet_seconds": 0.34689583333333335,
+        "pcm_sha256": "501ba009d1fd38a9d9e3f28d48301eaf5e66717a702a4074a90cd3bf654bf41c",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -7.665061708125263,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "reflection",
+        "duration": 0.62,
+        "peakDb": -10.5,
+        "purpose": "One successful shield reflection; thin crystal and steel",
+        "layers": [
+          {
+            "pack": "kenney_impact",
+            "filename": "impactGlass_light_001.ogg",
+            "filter": "asetrate=57600,aresample=48000,highpass=f=850,lowpass=f=6000",
+            "gain": 0.4,
+            "delay": 0
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMetal_light_002.ogg",
+            "filter": "atrim=duration=0.24,asetrate=55200,aresample=48000,highpass=f=1300,lowpass=f=5200",
+            "gain": 0.6,
+            "delay": 0
+          },
+          {
+            "role": "holy_overtones",
+            "generator": "aevalsrc=0.2*(sin(2*PI*622*t)*exp(-8*t)+0.55*sin(2*PI*1244*t)*exp(-11*t)+0.3*sin(2*PI*1866*t)*exp(-15*t)):s=48000:d=0.34",
+            "filter": "highpass=f=400,lowpass=f=6200,afade=t=in:d=0.01,afade=t=out:st=0.24000000000000002:d=0.1",
+            "gain": 0.12,
+            "delay": 0
+          },
+          {
+            "role": "gravity_pressure",
+            "generator": "aevalsrc=0.4*sin(2*PI*(44*t+12*(1-exp(-7*t))))*exp(-8*t):s=48000:d=0.18",
+            "filter": "highpass=f=32,lowpass=f=210,afade=t=in:d=0.006,afade=t=out:st=0.09999999999999999:d=0.08",
+            "gain": 0.12,
+            "delay": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "meteor_impact",
+      "wav": "models/promised_consort/audio/prototypes/v1/meteor_impact.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/meteor_impact.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/meteor_impact.png",
+      "sha256": "de7a05c82db691c9424cca4ebde83ecd9bd5c8e50217ebd82ef6733ef09415d7",
+      "wav_sha256": "f9c54d11231fc350aa11db80408c9f9b813afe612ca8eb54b6efbf6051c9fea5",
+      "gain_db": 9.640620303967783,
+      "measurement": {
+        "samples": 64960,
+        "duration": 1.3533333333333333,
+        "peak_dbfs": -2.106394336348141,
+        "rms_dbfs": -24.30383816620738,
+        "dc_offset": 0.000013658682412081672,
+        "leading_quiet_seconds": 0,
+        "trailing_quiet_seconds": 0.14658333333333334,
+        "pcm_sha256": "9b2289a05cfa2f38554c93306557713d2ec27681ad36320c45c0b30beafdc70a",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -2.106394336348141,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "meteor_impact",
+        "duration": 1.35,
+        "peakDb": -5,
+        "purpose": "One actual meteor landing; core and outer bands share this impact",
+        "layers": [
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMining_002.ogg",
+            "filter": "asetrate=24000,aresample=48000,lowpass=f=3600",
+            "gain": 0.8,
+            "delay": 0
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "footstep_concrete_002.ogg",
+            "filter": "asetrate=24000,aresample=48000,lowpass=f=650",
+            "gain": 0.45,
+            "delay": 0
+          },
+          {
+            "role": "gravity_pressure",
+            "generator": "aevalsrc=0.4*sin(2*PI*(44*t+12*(1-exp(-7*t))))*exp(-8*t):s=48000:d=0.7",
+            "filter": "highpass=f=32,lowpass=f=210,afade=t=in:d=0.006,afade=t=out:st=0.62:d=0.08",
+            "gain": 0.8,
+            "delay": 0
+          },
+          {
+            "role": "filtered_air",
+            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.85:seed=1705",
+            "filter": "highpass=f=140,lowpass=f=800,afade=t=in:d=0.009:curve=qsin,afade=t=out:st=0.009:d=0.841:curve=exp",
+            "gain": 0.9,
+            "delay": 0
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMining_004.ogg",
+            "filter": "asetrate=28800,aresample=48000,highpass=f=800,lowpass=f=4400",
+            "gain": 0.2,
+            "delay": 0.12
+          },
+          {
+            "pack": "kenney_impact",
+            "filename": "impactMining_002.ogg",
+            "filter": "asetrate=38400,aresample=48000,highpass=f=1100,lowpass=f=4700",
+            "gain": 0.08,
+            "delay": 0.27
+          },
+          {
+            "role": "holy_overtones",
+            "generator": "aevalsrc=0.2*(sin(2*PI*622*t)*exp(-8*t)+0.55*sin(2*PI*1244*t)*exp(-11*t)+0.3*sin(2*PI*1866*t)*exp(-15*t)):s=48000:d=0.55",
+            "filter": "highpass=f=400,lowpass=f=6200,afade=t=in:d=0.01,afade=t=out:st=0.45000000000000007:d=0.1",
+            "gain": 0.16,
+            "delay": 0.035
+          }
+        ]
+      }
+    }
+  ],
+  "local_auditions": [
+    {
+      "id": "dense_combo",
+      "wav": "build/audio-prototype-v1-local/dense_combo.wav",
+      "ogg": "build/audio-prototype-v1-local/dense_combo.ogg",
+      "waveform": "build/audio-prototype-v1-local/dense_combo.png",
+      "sha256": "bfaa0612a898c4425dc93aa74ad4e799a0156bf245639b878a6a7a3086a182f9",
+      "wav_sha256": "e1afc6d35139a3d3686ca3dd70c13402b37e1d3ff555ca642612601f597b5f08",
+      "gain_db": -0.8856666303027891,
+      "measurement": {
+        "samples": 508864,
+        "duration": 10.601333333333333,
+        "peak_dbfs": -7.363716346562816,
+        "rms_dbfs": -29.48044269641749,
+        "dc_offset": -0.0000107805275940128,
+        "leading_quiet_seconds": 0.949875,
+        "trailing_quiet_seconds": 0.7428125,
+        "pcm_sha256": "7567783d4bd6dd5e08193c6b1c6f26dc7668bce1e1b6b21c954fe0aef3ff5988",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -7.363716346562816,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      }
+    },
+    {
+      "id": "dense_combo_with_cue",
+      "wav": "build/audio-prototype-v1-local/dense_combo_with_cue.wav",
+      "ogg": "build/audio-prototype-v1-local/dense_combo_with_cue.ogg",
+      "waveform": "build/audio-prototype-v1-local/dense_combo_with_cue.png",
+      "sha256": "a02b1bdad95b40a8183f074ebac4ce116110130c280711e91abd03a397534605",
+      "wav_sha256": "45795828443a6ca43e78007ff3a661a13d2b7d65a11ca1b9c41415a08e88ec94",
+      "gain_db": -0.8856666303027891,
+      "measurement": {
+        "samples": 508864,
+        "duration": 10.601333333333333,
+        "peak_dbfs": -2.1084723037804256,
+        "rms_dbfs": -21.91832933066636,
+        "dc_offset": 0.00009272092064702391,
+        "leading_quiet_seconds": 0.6561458333333333,
+        "trailing_quiet_seconds": 0.7428125,
+        "pcm_sha256": "9ffe3ee96fa10914a97a60dec535e0c0f0828d74e86525bd076f94e3e30d2259",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -2.1084723037804256,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      }
+    }
+  ],
+  "demo": {
+    "duration_seconds": 10.6,
+    "events": [
+      {
+        "id": "heavy_slash",
+        "at_seconds": 0.9500000000000001,
+        "gain": 0.75
+      },
+      {
+        "id": "holy_echo",
+        "at_seconds": 1.1,
+        "gain": 0.7
+      },
+      {
+        "id": "heavy_slash",
+        "at_seconds": 1.4,
+        "gain": 0.75
+      },
+      {
+        "id": "holy_echo",
+        "at_seconds": 1.5499999999999998,
+        "gain": 0.7
+      },
+      {
+        "id": "heavy_slash",
+        "at_seconds": 2.4,
+        "gain": 1
+      },
+      {
+        "id": "holy_echo",
+        "at_seconds": 2.55,
+        "gain": 0.7
+      },
+      {
+        "id": "heavy_slash",
+        "at_seconds": 4.6499999999999995,
+        "gain": 0.75
+      },
+      {
+        "id": "holy_echo",
+        "at_seconds": 4.8,
+        "gain": 0.7
+      },
+      {
+        "id": "heavy_slash",
+        "at_seconds": 5.1,
+        "gain": 0.75
+      },
+      {
+        "id": "holy_echo",
+        "at_seconds": 5.25,
+        "gain": 0.7
+      },
+      {
+        "id": "heavy_slash",
+        "at_seconds": 6.1,
+        "gain": 1
+      },
+      {
+        "id": "holy_echo",
+        "at_seconds": 6.25,
+        "gain": 0.7
+      },
+      {
+        "id": "gravity_dash",
+        "at_seconds": 8,
+        "gain": 0.8
+      },
+      {
+        "id": "reflection",
+        "at_seconds": 8.65,
+        "gain": 0.65
+      },
+      {
+        "id": "stomp",
+        "at_seconds": 9.05,
+        "gain": 1
+      }
+    ],
+    "cue_times_seconds": [
+      0.6500000000000001,
+      1.0999999999999999,
+      2.1,
+      4.35,
+      4.8,
+      5.8
+    ],
+    "shared_gain_db": -0.8856666303027891,
+    "cue": {
+      "asset": "minecraft/sounds/item/shield/block1.ogg",
+      "sha1": "d9a379040a1b2f288664f303e99147dabb1afdf6",
+      "event": "minecraft:item.shield.block",
+      "author": "Mojang/Microsoft",
+      "usage": "Local installed-game listening reference only; never redistribute this comparison audio"
+    },
+    "timing_source": "models/promised_consort/previews/left_combo_cross_rhythm_v1.json",
+    "timing_sha256": "dc66c446dceabb2b8666ceb3952b00868e0cf67c56c7582ba6def3df1ccb18fe",
+    "limitations": "Mono offline arrangement, not game spatialization or runtime event verification. Holy delay 0.15s and cue gain 0.7 are audition choices, not claimed runtime values."
+  },
+  "checks": {
+    "all_ogg_decode": true,
+    "mono_48000": true,
+    "headroom_over_1db": true,
+    "listening": "Not audited by the assistant; user listening required",
+    "world": "Not run",
+    "resources_deployed": true
+  },
+  "master_gain_db": 3,
+  "loudness_reference": {
+    "master_gain_db": 0,
+    "measurements": [
+      {
+        "id": "heavy_slash",
+        "rms_dbfs": -25.344844973628575,
+        "duration": 0.8226666666666667,
+        "sha256": "54d3d4d7ded12bb02d99e90432e3de9d3b94766295a0b24069a41d5e12c9c3e7"
+      },
+      {
+        "id": "stomp",
+        "rms_dbfs": -26.479802361577363,
+        "duration": 1.06,
+        "sha256": "0d1949ce5b50f5d21b58ef4dfbf7adedbd6c83759d46ca7306ce8017c1fe30b4"
+      },
+      {
+        "id": "gravity_dash",
+        "rms_dbfs": -27.984191820784186,
+        "duration": 1.124,
+        "sha256": "b301c85bd8414e58411cc9cfe2ad187e1de6eeec8d6d19f41f0c7e73c03f0e6e"
+      },
+      {
+        "id": "holy_echo",
+        "rms_dbfs": -33.53032612735245,
+        "duration": 0.8306666666666667,
+        "sha256": "28a9f8f4390aaea3f998bcfd450183c33d195f2fc9e534b8eb7c29d004362211"
+      },
+      {
+        "id": "reflection",
+        "rms_dbfs": -36.00727186439024,
+        "duration": 0.6333333333333333,
+        "sha256": "1efa01b80fdbc586de6319c0508dc6324c4a029591dce2ff687f2ed468e6a5dc"
+      },
+      {
+        "id": "meteor_impact",
+        "rms_dbfs": -27.291284800317857,
+        "duration": 1.3533333333333333,
+        "sha256": "7ac57c70b54535fc25a2b8bbeff414896d7b660477f2d534b8e439c6fc118fc8"
+      },
+      {
+        "id": "dense_combo",
+        "rms_dbfs": -32.47794504794925,
+        "duration": 10.601333333333333,
+        "sha256": "80954139dfefb6e83134454380a82db999a9178dab19acb25bec68e760799894"
+      },
+      {
+        "id": "dense_combo_with_cue",
+        "rms_dbfs": -24.940853535410575,
+        "duration": 10.601333333333333,
+        "sha256": "bb89fea207f7f696f3ff3e89f9b9043e7231d5ac319ad695ee043a7b26b3b7dd"
+      }
+    ]
+  },
+  "deployment_authorized": true,
+  "integration": {
+    "body_contacts": 48,
+    "individual_body_blades": 76,
+    "current_motion_revision": "force_chain_integration_v2",
+    "current_source_animation_sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598",
+    "current_revision_checks": "Right-cross body motion refined with original timing retained;48contacts/76blades;49legal phase/variant cases;all angles remeasured;both-loader processed hashes matched;OGG samples unchanged",
+    "tests_below_are_initial_integration_revision": true,
+    "clone_profiles": 6,
+    "legal_phase_variant_cases_tested": 49,
+    "angle_semantics": "Authored sword swing direction and angular travel, not listener bearing; source hierarchy sampled every 0.25 authored tick",
+    "rate_semantics": "Minecraft pitch changes audio playback rate and pitch only; gameplay and animation clocks unchanged",
+    "dual_blades": "Independent side-specific keys and left/right source offsets; both at the actual contact tick; each volume divided by blade count",
+    "persistence": "Current-action sound keys reuse processedEvents; hazard activation state survives action changes and saves; old active hazards do not replay",
+    "config": "Existing promised_consort.nonverbal_audio enabled/volume/pitch; instant_guard cue remains independent",
+    "tests": [
+      "ActionSoundPlanCheck: passed",
+      "TimelineCheck: 74398",
+      "AttackPlanCheck: 731917 / 3936 strikes",
+      "ActionDebugCheck: 7471",
+      "RangedCounterCheck: passed",
+      "Forge and NeoForge compile/resources: passed",
+      "Both-loader processed resource hashes: passed"
+    ],
+    "limits": "Offline dispatch and persistence tests are not a full entity tick/world audio simulation; no in-world listening or performance acceptance; six shared timbres, not unique new audio for every skill"
+  },
+  "deployment_authorization": "User requested integration of this version with every slash, two sounds for dual blades, and swing-dependent volume/pitch",
+  "runtime_exports": [
+    {
+      "id": "heavy_slash",
+      "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/heavy_slash.ogg",
+      "sha256": "99a491cc9ba786f3910e5fb978f3ef34b0ab3c42c2b43cfb9f5acdec2204a22d"
+    },
+    {
+      "id": "stomp",
+      "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/stomp.ogg",
+      "sha256": "4a2b8445ac1c1804a7928d048b42282e18543f1318c7d1dbb00bddc5bc02f9b4"
+    },
+    {
+      "id": "gravity_dash",
+      "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/gravity_dash.ogg",
+      "sha256": "d89de3db125fec198f65d9206a723e1bec56f26327cf6163a2d742058546d854"
+    },
+    {
+      "id": "holy_echo",
+      "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/holy_echo.ogg",
+      "sha256": "b048e7af13f2c46916b962ed934fccb0d3a617b67d8ca0fc54a343ab3b65d06b"
+    },
+    {
+      "id": "reflection",
+      "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/reflection.ogg",
+      "sha256": "21bb111a254093662a48777e8763a8cc1b3e92119721edeed1db94efd6f6e4fe"
+    },
+    {
+      "id": "meteor_impact",
+      "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/meteor_impact.ogg",
+      "sha256": "de7a05c82db691c9424cca4ebde83ecd9bd5c8e50217ebd82ef6733ef09415d7"
+    }
+  ],
+  "sword_profiles": {
+    "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/sword_profiles.json",
+    "sha256": "bfc308cfe4ce51d96f390d6b36a4ca3d2ed710502a3c154736d64b287c631920"
+  },
+  "prototype_builder_sha256_at_creation": "8bdb96f17ad9b2d928c9b674ad321b18f30d9495959f4f80a571cf20aec36931"
+}

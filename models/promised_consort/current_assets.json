@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "model": "promised_consort",
+  "consolidation_date": "2026-09-18",
+  "source_revision": "sculpted_relief_v11",
+  "policy": "One current authoring/runtime version; historical candidate media and snapshots removed by user request. Source history is in Git, not duplicated resources.",
+  "bones": 125,
+  "cubes": 620,
+  "faces": 3481,
+  "animations": 44,
+  "texture_size": 512,
+  "files": [
+    {
+      "source": "promised_consort.bbmodel",
+      "sha256": "9622d7761c470feb238d08c0c665f5c08ab404771f5c9b7fc997592e242289d0"
+    },
+    {
+      "source": "geo/promised_consort.geo.json",
+      "runtime": "../../src/main/resources/assets/elder_bosses/geo/entity/promised_consort.geo.json",
+      "sha256": "2ba7aa4f976936ed2584052de8f15b89b4b3339f1c8e52c29d05ba1f994601e2"
+    },
+    {
+      "source": "animations/promised_consort.animation.json",
+      "runtime": "../../src/main/resources/assets/elder_bosses/animations/entity/promised_consort.animation.json",
+      "sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598"
+    },
+    {
+      "source": "textures/promised_consort.png",
+      "runtime": "../../src/main/resources/assets/elder_bosses/textures/entity/promised_consort/promised_consort.png",
+      "sha256": "bf7462fee714f49edfcf2b9c8c3ad06464791178694396298156eb503e639224"
+    },
+    {
+      "source": "textures/promised_consort_clone.png",
+      "runtime": "../../src/main/resources/assets/elder_bosses/textures/entity/promised_consort/promised_consort_clone.png",
+      "sha256": "8501c4f40faf2bacb758e96f97a2d050cf477d339d11147efceda229bb2c0450"
+    },
+    {
+      "source": "rig.json",
+      "sha256": "540771ea19f5f71302511df149fff2818a4157dc75b1e9f3a3f1ed1d54b1e454"
+    },
+    {
+      "source": "surface_manifest.json",
+      "sha256": "493f792d34d699f8cadca8860d218a8b9f17a38862b4c68c116a0bb4ad0d3dde"
+    }
+  ],
+  "acceptance": "Consolidation preserves current bytes and prior acceptance boundaries; not new visual or world acceptance"
+}

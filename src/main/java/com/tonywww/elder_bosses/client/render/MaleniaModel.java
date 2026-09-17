@@ -6,6 +6,7 @@ import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaPhase;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.client.PlatformMaleniaGeoModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import software.bernie.geckolib.cache.object.GeoBone;
 
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
     @Override
     protected void afterAnimations(MaleniaEntity entity) {
         blendTransition(entity);
+        applySecondaryMotion(entity);
         boolean transitioning = entity.combatState() == MaleniaCombatState.TRANSITION;
         boolean secondPhase = entity.activePhase() == MaleniaPhase.PHASE_TWO;
         boolean scriptedLayers = transitioning || entity.combatState() == MaleniaCombatState.DEFEATED;
@@ -59,6 +61,29 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
                 bone.setScaleZ(1.0F);
             });
         }
+    }
+
+    private void applySecondaryMotion(MaleniaEntity entity) {
+        PoseHistory history = poseHistory.get(entity);
+        double speed = Math.hypot(entity.getX() - entity.xo, entity.getZ() - entity.zo);
+        double vertical = entity.getY() - entity.yo;
+        boolean inactive = entity.combatState() == MaleniaCombatState.DORMANT
+                || entity.combatState() == MaleniaCombatState.DEFEATED || entity.combatState() == MaleniaCombatState.STUNNED;
+        double strength = inactive || speed > 2 || Math.abs(vertical) > 2 ? 0 : entity.hasSynchronizedAnimation() ? 0.4 : 1;
+        SecondaryMotionSpring.Offset offset = history.secondary.sample(entity.animationFrameTime(), speed,
+                Mth.wrapDegrees(entity.yBodyRot - entity.yBodyRotO), vertical, strength);
+        secondaryBone("cape_02", offset, 0.25, 0.18);
+        secondaryBone("cape_03", offset, 0.45, 0.28);
+        for (int index = 1; index <= 6; index++) {
+            secondaryBone("hair_end_0" + index, offset, 0.32 + index * 0.02, 0.25);
+        }
+    }
+
+    private void secondaryBone(String name, SecondaryMotionSpring.Offset offset, double pitchWeight, double rollWeight) {
+        getBone(name).ifPresent(bone -> {
+            bone.setRotX(bone.getRotX() + (float) Math.toRadians(offset.pitchDegrees() * pitchWeight));
+            bone.setRotZ(bone.getRotZ() + (float) Math.toRadians(offset.rollDegrees() * rollWeight));
+        });
     }
 
     private void blendTransition(MaleniaEntity entity) {
@@ -118,6 +143,7 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
     }
 
     private static final class PoseHistory {
+        private final SecondaryMotionSpring secondary = new SecondaryMotionSpring();
         private final Map<String, BonePose> previous = new HashMap<>();
         private Map<String, BonePose> source = Map.of();
         private String clip = "";

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity;
 import com.tonywww.elder_bosses.client.state.ClientIndicatorStateStore;
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
 import com.tonywww.elder_bosses.platforms.client.PlatformVertexConsumer;
@@ -16,12 +17,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 public final class ClientIndicatorRenderer {
     private static final double FILL_OPACITY_MULTIPLIER = 0.45;
     private static final RenderType TRANSLUCENT_FILLS = IndicatorRenderType.createTranslucentFills();
     private static final RenderType VISIBLE_LINES = IndicatorRenderType.createVisibleLines();
     private static final RenderType OCCLUDED_LINES = IndicatorRenderType.createOccludedLines();
+    private static final RenderType CONSORT_BACKDROP = IndicatorRenderType.createConsortLines("backdrop", 5.0);
+    private static final RenderType CONSORT_OUTLINE = IndicatorRenderType.createConsortLines("outline", 2.75);
 
     private ClientIndicatorRenderer() {
     }
@@ -42,18 +46,22 @@ public final class ClientIndicatorRenderer {
         if (snapshots.isEmpty()) {
             return;
         }
+        List<IndicatorSnapshotPacket> consort = snapshots.stream().filter(ClientIndicatorRenderer::isConsort).toList();
+        List<IndicatorSnapshotPacket> regular = snapshots.stream().filter(snapshot -> !isConsort(snapshot)).toList();
 
         MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
         poseStack.pushPose();
         poseStack.translate(-cameraPosition.x, -cameraPosition.y, -cameraPosition.z);
         try {
-            drawFills(poseStack.last(), buffers, snapshots, gameTick, config);
+            drawFills(poseStack.last(), buffers, regular, gameTick, config, false);
+            drawFills(poseStack.last(), buffers, consort, gameTick, config, true);
             buffers.endBatch(TRANSLUCENT_FILLS);
-            drawBorders(poseStack.last(), buffers, snapshots, VISIBLE_LINES, false, gameTick, config);
+            drawBorders(poseStack.last(), buffers, regular, VISIBLE_LINES, false, gameTick, config);
             buffers.endBatch(VISIBLE_LINES);
 
-            drawBorders(poseStack.last(), buffers, snapshots, OCCLUDED_LINES, true, gameTick, config);
+            drawBorders(poseStack.last(), buffers, regular, OCCLUDED_LINES, true, gameTick, config);
             buffers.endBatch(OCCLUDED_LINES);
+            drawConsortBorders(poseStack.last(), buffers, consort, gameTick, config);
         } finally {
             RenderSystem.enableDepthTest();
             RenderSystem.depthMask(true);
@@ -62,13 +70,58 @@ public final class ClientIndicatorRenderer {
         }
     }
 
+    private static boolean isConsort(IndicatorSnapshotPacket snapshot) {
+        var level = Minecraft.getInstance().level;
+        return level != null && level.getEntity(snapshot.bossEntityId()) instanceof PromisedConsortEntity;
+    }
+
+    private static void drawConsortBorders(PoseStack.Pose pose, MultiBufferSource.BufferSource buffers,
+                                          List<IndicatorSnapshotPacket> snapshots, long gameTick,
+                                          ElderBossesCommonConfig.IndicatorValues config) {
+        if (snapshots.isEmpty()) return;
+        for (boolean backdrop : new boolean[]{true, false}) {
+            RenderType type = backdrop ? CONSORT_BACKDROP : CONSORT_OUTLINE;
+            VertexConsumer consumer = buffers.getBuffer(type);
+            for (var snapshot : snapshots) {
+                drawConsortBorder(consumer, pose, snapshot, backdrop, gameTick, config);
+            }
+            RenderSystem.disableDepthTest();
+            buffers.endBatch(type);
+        }
+        RenderSystem.enableDepthTest();
+    }
+
+    private static void drawConsortBorder(VertexConsumer consumer, PoseStack.Pose pose, IndicatorSnapshotPacket snapshot,
+                                          boolean backdrop, long gameTick, ElderBossesCommonConfig.IndicatorValues config) {
+        float visibility = visibility(snapshot, gameTick);
+        int alpha = alpha(visibility, config.opacity() * (backdrop ? 1.2 : 1.65));
+        int color = backdrop ? 0x15131B : highlighted(snapshot.styleRole().rgb());
+        boolean dashed = snapshot.styleRole().dashed() || snapshot.state() == IndicatorSnapshotPacket.IndicatorState.TRACKING
+                || snapshot.slot() == IndicatorSnapshotPacket.SegmentSlot.NEXT;
+        if (config.rangeEnabled(true)) {
+            var mesh = ClientIndicatorGeometry.create(snapshot, config.maxSegmentsPerShape());
+            drawLines(consumer, pose, mesh.borders(), color, alpha, dashed, config.surfaceOffset());
+            if (!backdrop) drawLines(consumer, pose, mesh.accents(), color, alpha, true, config.surfaceOffset());
+        }
+        if (!backdrop && snapshot.instantGuardCue()) drawInstantGuardCue(consumer, pose, snapshot, gameTick, alpha, config.surfaceOffset());
+    }
+
+    private static int highlighted(int color) {
+        int red = (int) ((color >> 16 & 255) * 0.72 + 255 * 0.28);
+        int green = (int) ((color >> 8 & 255) * 0.72 + 250 * 0.28);
+        int blue = (int) ((color & 255) * 0.72 + 231 * 0.28);
+        return red << 16 | green << 8 | blue;
+    }
+
     private static void drawFills(
             PoseStack.Pose pose,
             MultiBufferSource.BufferSource buffers,
             List<IndicatorSnapshotPacket> snapshots,
             long gameTick,
-            ElderBossesCommonConfig.IndicatorValues config
+            ElderBossesCommonConfig.IndicatorValues config,
+            boolean promisedConsort
     ) {
+        if (!config.rangeEnabled(promisedConsort)) return;
         VertexConsumer consumer = buffers.getBuffer(TRANSLUCENT_FILLS);
         for (IndicatorSnapshotPacket snapshot : snapshots) {
             ClientIndicatorGeometry.Mesh mesh = ClientIndicatorGeometry.create(
@@ -100,26 +153,17 @@ public final class ClientIndicatorRenderer {
     ) {
         VertexConsumer consumer = buffers.getBuffer(renderType);
         for (IndicatorSnapshotPacket snapshot : snapshots) {
-            ClientIndicatorGeometry.Mesh mesh = ClientIndicatorGeometry.create(
-                    snapshot,
-                    config.maxSegmentsPerShape()
-            );
             float visibility = visibility(snapshot, gameTick);
                 double layerMultiplier = occluded
                     ? config.occludedOutlineOpacityMultiplier()
                     : 1.0 - config.occludedOutlineOpacityMultiplier();
                 int alpha = alpha(visibility, config.opacity() * layerMultiplier);
             int rgb = snapshot.styleRole().rgb();
-            drawLines(
-                    consumer,
-                    pose,
-                    mesh.borders(),
-                    rgb,
-                    alpha,
-                    snapshot.styleRole().dashed(),
-                    config.surfaceOffset()
-            );
-            drawLines(consumer, pose, mesh.accents(), rgb, alpha, true, config.surfaceOffset());
+            if (config.rangeEnabled(false)) {
+                ClientIndicatorGeometry.Mesh mesh = ClientIndicatorGeometry.create(snapshot, config.maxSegmentsPerShape());
+                drawLines(consumer, pose, mesh.borders(), rgb, alpha, snapshot.styleRole().dashed(), config.surfaceOffset());
+                drawLines(consumer, pose, mesh.accents(), rgb, alpha, true, config.surfaceOffset());
+            }
             if (occluded && snapshot.instantGuardCue()) {
                 drawInstantGuardCue(consumer, pose, snapshot, gameTick, alpha, config.surfaceOffset());
             }
@@ -381,7 +425,16 @@ public final class ClientIndicatorRenderer {
             return createLines("elder_bosses_indicator_occluded_lines", NO_DEPTH_TEST);
         }
 
+        private static RenderType createConsortLines(String layer, double width) {
+            return createLines("elder_bosses_consort_indicator_" + layer, NO_DEPTH_TEST,
+                    new LineStateShard(OptionalDouble.of(width)));
+        }
+
         private static RenderType createLines(String name, DepthTestStateShard depthTestState) {
+            return createLines(name, depthTestState, DEFAULT_LINE);
+        }
+
+        private static RenderType createLines(String name, DepthTestStateShard depthTestState, LineStateShard lineState) {
             return RenderType.create(
                     name,
                     DefaultVertexFormat.POSITION_COLOR_NORMAL,
@@ -395,7 +448,7 @@ public final class ClientIndicatorRenderer {
                             .setDepthTestState(depthTestState)
                             .setCullState(NO_CULL)
                             .setWriteMaskState(COLOR_WRITE)
-                            .setLineState(DEFAULT_LINE)
+                            .setLineState(lineState)
                             .createCompositeState(false)
             );
         }

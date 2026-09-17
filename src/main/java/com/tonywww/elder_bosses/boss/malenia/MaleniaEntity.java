@@ -1,6 +1,8 @@
 package com.tonywww.elder_bosses.boss.malenia;
 
 import com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog;
+import com.tonywww.elder_bosses.combat.action.ActionLifecycleEvent;
+import com.tonywww.elder_bosses.combat.action.BossActionDebug;
 import com.tonywww.elder_bosses.boss.malenia.config.MaleniaCombatConfigSnapshot;
 import com.tonywww.elder_bosses.boss.malenia.config.MaleniaConfigNbt;
 import com.tonywww.elder_bosses.boss.malenia.config.MaleniaConfigProvider;
@@ -766,6 +768,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     private void initializeCombatComponents(CompoundTag savedData) {
         actionCatalog = new MaleniaActionCatalog(Objects.requireNonNull(skillSnapshot));
         actionRuntime = new MaleniaActionRuntime(actionCatalog);
+        actionRuntime.setLifecycleListener(this::broadcastActionDebug);
         cooldowns = savedData == null
             ? new MaleniaCooldowns(actionCatalog, combatSnapshot.selector())
                 : readCooldowns(savedData, actionCatalog);
@@ -1047,6 +1050,15 @@ public final class MaleniaEntity extends PlatformMonster implements
             return healing.healFromSummons();
         }
         return healing.healFromNonHostileEntities();
+    }
+
+    private void broadcastActionDebug(ActionLifecycleEvent event) {
+        if (level().isClientSide || !MaleniaConfigProvider.debugActionBroadcastEnabled()) return;
+        MaleniaActionId actionId = MaleniaActionId.valueOf(event.actionId().toUpperCase(Locale.ROOT));
+        BossActionDebug.broadcast(this, "malenia", event, new BossActionDebug.State(
+                activePhase() == MaleniaPhase.PHASE_ONE ? "P1" : "P2", combatState().serializedName(), stateTicks,
+                phaseHealth(), phaseMaxHealth(), stagger(), staggerCapacity(), skillSnapshot.tuning(actionId),
+                String.format(Locale.ROOT, "heal_budget=%.2f", healingBudgetRemaining())));
     }
 
     private void outputDebugState() {
@@ -1596,35 +1608,37 @@ public final class MaleniaEntity extends PlatformMonster implements
         }
         MaleniaActionId id = snapshot.actionId();
         var timeline = actionCatalog.get(id).timeline();
+        boolean components = !skillSnapshot.tuning(id).componentStages().isEmpty();
         int windup = timeline.stages().get(0).windupTicks();
         int activeEnd = windup + timeline.stages().get(0).activeTicks();
         Map<Integer, Integer> landmarks = new HashMap<>();
         String clip = id.serializedName();
         switch (id) {
             case RAPID_SLASHES -> {
-                landmarks.put(windup + 2, 16);
-                landmarks.put(windup + 4, 18);
-                landmarks.put(windup + 4 + Math.max(8, skillSnapshot.rapidSlashes().finisherDelayTicks()), 26);
+                landmarks.put(components ? timeline.activeStartTick(1) : windup + 2, 16);
+                landmarks.put(components ? timeline.activeStartTick(2) : windup + 4, 18);
+                landmarks.put(components ? timeline.activeStartTick(3) : windup + 4 + Math.max(8, skillSnapshot.rapidSlashes().finisherDelayTicks()), 26);
             }
             case WATERFOWL_DANCE -> {
                 List<Integer> locks = skillSnapshot.waterfowlDance().burstLockTicks();
                 int[] authoredLocks = {22, 46, 62, 78};
                 for (int index = 0; index < 4; index++) {
-                    landmarks.put(locks.get(index), authoredLocks[index]);
+                    int lock = components ? Math.max(timeline.stageStartTick(index), timeline.activeStartTick(index) - (index == 0 ? 10 : 4)) : locks.get(index);
+                    landmarks.put(lock, authoredLocks[index]);
                     if (index > 0) {
-                        landmarks.put(locks.get(index) + 4, authoredLocks[index] + 4);
+                        landmarks.put(components ? timeline.activeStartTick(index) : locks.get(index) + 4, authoredLocks[index] + 4);
                     }
                 }
             }
             case SCARLET_AEONIA -> {
-                landmarks.put(skillSnapshot.scarletAeonia().targetLockTick(), 26);
-                landmarks.put(windup + 1, 43);
-                landmarks.put(windup + 7, 49);
-                landmarks.put(windup + 16, 58);
+                landmarks.put(components ? timeline.activeStartTick(1) : skillSnapshot.scarletAeonia().targetLockTick(), 26);
+                landmarks.put(components ? timeline.activeStartTick(2) : windup + 1, 43);
+                landmarks.put(components ? timeline.activeStartTick(3) : windup + 7, 49);
+                landmarks.put(components ? timeline.activeStartTick(4) : windup + 16, 58);
             }
-            case SCARLET_PLUNGE -> landmarks.put(windup + (activeEnd - windup) / 2, 30);
+            case SCARLET_PLUNGE -> landmarks.put(components ? timeline.activeStartTick(1) : windup + (activeEnd - windup) / 2, 30);
             case SCARLET_PHANTOMS -> landmarks.put(
-                    windup + skillSnapshot.scarletPhantoms().phantomCount()
+                    components ? timeline.activeStartTick(timeline.stages().size() - 1) : windup + skillSnapshot.scarletPhantoms().phantomCount()
                             * skillSnapshot.scarletPhantoms().phantomIntervalTicks(), 76);
             case UPWARD_COMBO -> landmarks.put(
                     timeline.totalTicks() - timeline.stages().get(1).recoveryTicks() - 1, 48);
@@ -1634,7 +1648,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                     animationGrabCaptureTick = snapshot.actionTick();
                 }
                 if (!holding && animationGrabCaptureTick >= 0
-                        && snapshot.actionTick() < animationGrabCaptureTick + 30
+                    && snapshot.actionTick() < (components ? timeline.activeStartTick(2) : animationGrabCaptureTick + 30)
                         && animationGrabReleaseTick < 0) {
                     animationGrabReleaseTick = snapshot.actionTick();
                 }
@@ -1647,8 +1661,8 @@ public final class MaleniaEntity extends PlatformMonster implements
                     clip = "grab_miss";
                 } else if (animationGrabCaptureTick >= 0) {
                     landmarks.put(animationGrabCaptureTick, 24);
-                    landmarks.put(animationGrabCaptureTick + 20, 44);
-                    landmarks.put(animationGrabCaptureTick + 30, 54);
+                    landmarks.put(components ? timeline.activeStartTick(1) : animationGrabCaptureTick + 20, 44);
+                    landmarks.put(components ? timeline.activeStartTick(2) : animationGrabCaptureTick + 30, 54);
                 }
             }
             default -> {

@@ -8,6 +8,9 @@
         throw new Error("Run preview capture after the atlas image has finished loading.");
     }
     let preview = Preview.selected;
+    preview.setProjectionMode(false);
+    preview.camera.zoom = 1;
+    preview.camera.updateProjectionMatrix();
     function camera(position, target) {
         let scale = artDirection.figure_scale;
         let convert = (value, axis) => value * scale * (axis === 0 && artDirection.mirror_legacy_x ? -1 : 1);

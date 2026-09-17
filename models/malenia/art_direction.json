@@ -1,8 +1,10 @@
 {
-  "revision": "reference_motion_v7",
+  "revision": "sculpted_relief_v9",
+  "surface_style": "continuous_structure_shading",
+  "texture_revision": "clustered_transition_v1",
   "mirror_legacy_x": true,
   "figure_scale": 1.2,
-  "flower_scale": 1.0,
+  "flower_scale": 1,
   "texture_size": 512,
   "texels_per_model_unit": 1,
   "silhouette_mask_density": 3,
@@ -10,5 +12,212 @@
   "precision_decimals": 4,
   "maximum_cubes": 660,
   "style": "detailed_geometry_minecraft_pixel_textures",
-  "collision_and_hit_timing": "unchanged"
+  "collision_and_hit_timing": "unchanged",
+  "palette": {
+    "gold": [
+      "#433626",
+      "#665437",
+      "#9A7B49",
+      "#B39760",
+      "#D2B978"
+    ],
+    "gold_edge": [
+      "#59452F",
+      "#8F713E",
+      "#BDA066",
+      "#D2B978",
+      "#E5D7A3"
+    ],
+    "joint": [
+      "#242528",
+      "#393834",
+      "#62533A",
+      "#9B804C",
+      "#CAB075"
+    ],
+    "steel": [
+      "#37383A",
+      "#656A68",
+      "#A7A397",
+      "#C3C2B1",
+      "#E0D7B9"
+    ],
+    "robe": [
+      "#2D2C29",
+      "#414035",
+      "#5B5947",
+      "#77725A",
+      "#9B9070"
+    ],
+    "cloak": [
+      "#27171C",
+      "#442329",
+      "#632C31",
+      "#7D3C3D",
+      "#98504A"
+    ],
+    "hair": [
+      "#431E22",
+      "#763028",
+      "#A74335",
+      "#BE513B",
+      "#D46B4B"
+    ],
+    "skin": [
+      "#675852",
+      "#8A7768",
+      "#AD9986",
+      "#C2AF9B",
+      "#D6C4AA"
+    ],
+    "rot": [
+      "#302B2D",
+      "#544445",
+      "#80695E",
+      "#A08E7B",
+      "#C4AC8D"
+    ],
+    "branch": [
+      "#1A1517",
+      "#37272A",
+      "#4A352F",
+      "#684632",
+      "#866044"
+    ],
+    "petal": [
+      "#3A151A",
+      "#732728",
+      "#9D2D2C",
+      "#BD4736",
+      "#E16343"
+    ],
+    "ivory": [
+      "#524B40",
+      "#82745D",
+      "#B1A58B",
+      "#D1C7AA",
+      "#E1D7BC"
+    ],
+    "silk": [
+      "#34302E",
+      "#595048",
+      "#827363",
+      "#A08B73",
+      "#C3AA86"
+    ],
+    "lichen": [
+      "#4F5549",
+      "#80816A",
+      "#ADAA83",
+      "#CCBE8C",
+      "#E0D4A9"
+    ],
+    "red_vein": [
+      "#3B2225",
+      "#652A29",
+      "#8F3930",
+      "#B45239",
+      "#D17C49"
+    ],
+    "dark": [
+      "#16171A",
+      "#202329",
+      "#31353B",
+      "#4A4E52",
+      "#747771"
+    ]
+  },
+  "relief_revision": "raised_details_v1",
+  "geometry_revision": "sculpted_relief_v9",
+  "relief_targets": [
+    {
+      "source": "cuirass_center_keel",
+      "depth": 0.85,
+      "insetX": 0.36,
+      "insetY": 0.11
+    },
+    {
+      "source": "cuirass_leaf_-1",
+      "depth": 0.72,
+      "insetX": 0.3,
+      "insetY": 0.25
+    },
+    {
+      "source": "cuirass_leaf_1",
+      "depth": 0.72,
+      "insetX": 0.3,
+      "insetY": 0.25
+    },
+    {
+      "source": "brow_central_leaf",
+      "depth": 0.72,
+      "insetX": 0.35,
+      "insetY": 0.23
+    },
+    {
+      "source": "helm_crest",
+      "depth": 0.5,
+      "face": "up",
+      "insetX": 0.34,
+      "insetY": 0.2
+    },
+    {
+      "source": "helm_wing_root_-1",
+      "depth": 0.6,
+      "insetX": 0.35,
+      "insetY": 0.22
+    },
+    {
+      "source": "helm_wing_root_1",
+      "depth": 0.6,
+      "insetX": 0.35,
+      "insetY": 0.22
+    },
+    {
+      "source": "right_pauldron_0",
+      "depth": 0.75,
+      "insetX": 0.23,
+      "insetY": 0.28
+    },
+    {
+      "source": "right_pauldron_1",
+      "depth": 0.65,
+      "insetX": 0.23,
+      "insetY": 0.3
+    },
+    {
+      "source": "right_pauldron_0",
+      "depth": 0.8,
+      "face": "east",
+      "insetX": 0.24,
+      "insetY": 0.3
+    },
+    {
+      "source": "right_pauldron_1",
+      "depth": 0.65,
+      "face": "east",
+      "insetX": 0.24,
+      "insetY": 0.3
+    },
+    {
+      "source": "left_shoulder_clasp",
+      "depth": 0.6,
+      "insetX": 0.3,
+      "insetY": 0.3
+    },
+    {
+      "source": "belt_knot",
+      "depth": 0.6,
+      "insetX": 0.32,
+      "insetY": 0.25
+    },
+    {
+      "source": "girdle_pendant",
+      "depth": 0.5,
+      "insetX": 0.35,
+      "insetY": 0.3
+    }
+  ],
+  "consolidated": true,
+  "current_assets": "current_assets.json"
 }

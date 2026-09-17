@@ -13,6 +13,22 @@ public abstract class PlatformMonster extends Monster {
 
     protected abstract void definePlatformSynchedData(SynchedDataRegistrar registrar);
 
+    protected boolean canUseDimensionTravel() {
+        return true;
+    }
+
+    //? if forge {
+    @Override
+    public boolean canChangeDimensions() {
+        return canUseDimensionTravel() && super.canChangeDimensions();
+    }
+    //?} else {
+    /*@Override
+    public boolean canChangeDimensions(Level from, Level to) {
+        return canUseDimensionTravel() && super.canChangeDimensions(from, to);
+    }
+    *///?}
+
     //? if forge {
     @Override
     protected final void defineSynchedData() {

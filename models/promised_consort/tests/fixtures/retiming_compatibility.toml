@@ -1,0 +1,1279 @@
+
+[promised_consort]
+
+	[promised_consort.debug]
+		action_broadcast = false
+
+	[promised_consort.light_echo]
+		active_ticks = 3
+		telegraph_ticks = 8
+		delay_ticks = 8
+		width = 0.8
+		enabled = true
+		max_logical_columns = 24
+		height = 8.0
+
+		[promised_consort.light_echo.damage]
+			attack_ratio = 0.25
+			flat = 1.0
+
+	[promised_consort.visuals]
+		gravity_projectile_block = "minecraft:crying_obsidian"
+		clone_render_mode = "empty_geo_entity"
+		visual_clones_enabled = true
+
+	[promised_consort.source_multiplier]
+
+		# Source tags modify damage after routing without becoming damage types.
+		[promised_consort.source_multiplier.phase_one]
+			ordinary_physical = 1.0
+			magic = 1.0
+			frost_trigger = 0.5
+			holy = 1.25
+			pierce = 1.25
+			bleed_trigger = 0.5
+
+		[promised_consort.source_multiplier.phase_two]
+			ordinary_physical = 1.0
+			magic = 1.0
+			frost_trigger = 0.5
+			holy = 0.75
+			pierce = 1.25
+			bleed_trigger = 0.5
+
+	[promised_consort.meteor]
+		invulnerable_end_tick = 120
+		repeat_mode = "cooldown_forced"
+		clear_owned_hazards = true
+		accepts_stagger = false
+		damage_gate_mode = "truncate"
+		invulnerable_start_tick = 0
+		damage_gate = true
+		pending_damage_policy = "invulnerable"
+
+	[promised_consort.encounter]
+		cooldown_resume_policy = "clear"
+		overflow_player_policy = "reject_damage"
+		overlap_policy = "allow"
+		persist_dormant = true
+		rejoin_after_death = false
+		allow_join_during_disengage = false
+		disengage_behavior = "finish_action_then_freeze"
+		rejoin_after_dimension_change = true
+		join_on_player_hit = true
+		rejoin_after_disconnect = false
+		wake_source_policy = "arena_player_and_owned"
+		join_on_boss_hit = true
+		boss_hit_at_full_roster = "damage_without_registration"
+		restart_policy = "resume"
+		boss_first_hit_mode = "register_then_damage"
+		dormant_damage_policy = "immune"
+		unload_policy = "reset_dormant"
+		peaceful_policy = "allow_combat"
+		disengage_grace_ticks = 100
+		scaling_count_mode = "cumulative_unique"
+		player_first_hit_mode = "register_only"
+		roster_slot_policy = "never_reopen"
+		rejoin_after_boundary_exit = false
+
+	[promised_consort.arena]
+		allow_wall_phasing = true
+		logical_radius = 40.0
+		allow_block_breaking = false
+		breakable_block_tag = "elder_bosses:boss_breakable"
+		wall_phase_failure = "nearest_legal_path_then_center"
+		max_blocks_broken_per_tick = 40
+		intro_offset = [0.0, 14.0, 18.0]
+		phase_return_offset = [0.0, 0.0, -30.0]
+		wall_phase_max_ticks = 24
+		block_break_radius = 2.5
+		protected_block_tag = "elder_bosses:arena_protected"
+
+	[promised_consort.stagger]
+		decay_delay_ticks = 120
+		capacity_health_ratio = 0.1
+		generated_hazards_on_stun = "persist"
+		stun_ticks = 80
+		source_dedupe_ticks = 5
+		decay_per_tick = 2.0
+		pending_hazards_on_stun = "cancel"
+		damage_conversion_ratio = 0.75
+		reset_on_phase_change = false
+		post_stun_immunity_ticks = 100
+
+		[[promised_consort.stagger.distance_bands]]
+			multiplier = 1.0
+			max_distance = 4.0
+
+		[[promised_consort.stagger.distance_bands]]
+			multiplier = 0.7
+			max_distance = 8.0
+
+		[[promised_consort.stagger.distance_bands]]
+			multiplier = 0.4
+			max_distance = 16.0
+
+		[[promised_consort.stagger.distance_bands]]
+			multiplier = 0.2
+			max_distance = -1.0
+
+	[promised_consort.resistance]
+
+		[promised_consort.resistance.phase_one]
+			magic = 0.8
+			lightning = 0.8
+			fire = 0.8
+			physical = 0.8
+
+		[promised_consort.resistance.phase_two]
+			magic = 0.8
+			lightning = 0.8
+			fire = 0.8
+			physical = 0.8
+
+	[promised_consort.damage_routing]
+		ordinary_physical = "physical"
+		magic = "magic"
+		frost_trigger = "magic"
+		holy = "magic"
+		physical_uses_armor = true
+		pierce = "physical"
+		bleed_trigger = "physical"
+		magic_bypasses_armor = true
+
+	[promised_consort.presentation]
+		boss_bar_audience = "follow_range"
+		stagger_hud_audience = "boss_bar"
+
+	[promised_consort.phase_transition]
+		forced_recovery_ticks = 10
+		clear_owned_hazards = true
+		duration_ticks = 140
+		damage_gate_mode = "truncate"
+		damage_gate = true
+		return_impact_tick = 127
+
+		[promised_consort.phase_transition.return_physical_damage]
+			attack_ratio = 0.7
+			flat = 4.0
+
+		[promised_consort.phase_transition.return_holy_damage]
+			attack_ratio = 0.35
+			flat = 2.0
+
+	[promised_consort.skills]
+
+		[promised_consort.skills.starcaller_cry]
+			windup_ticks = [18, 20]
+			hyper_armor_active = true
+			weight = 0.7
+			impact_radius = 6.0
+			max_pull_per_tick = 0.35
+			enabled = true
+			active_ticks = [8, 1]
+			pull_radius = 12.0
+			jump_avoid_height = 0.6
+			recovery_ticks = [12, 50]
+			range_multiplier = 1.5
+			cooldown_ticks = 180
+
+			[promised_consort.skills.starcaller_cry.spike_damage]
+				attack_ratio = 0.4
+				flat = 2.0
+
+			[promised_consort.skills.starcaller_cry.impact_damage]
+				attack_ratio = 0.7
+				flat = 4.0
+
+			[promised_consort.skills.starcaller_cry.pull_damage]
+				attack_ratio = 0.0
+				flat = 0.0
+
+			[promised_consort.skills.starcaller_cry.clone_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+		[promised_consort.skills.enhanced_earthheave]
+			windup_ticks = [28, 7, 0, 0, 0]
+			active_ticks = [5, 1, 1, 1, 1]
+			hyper_armor_active = true
+			recovery_ticks = [7, 3, 3, 3, 23]
+			weight = 0.6
+			range_multiplier = 1.5
+			radius = 6.0
+			enabled = true
+			cooldown_ticks = 170
+
+			[promised_consort.skills.enhanced_earthheave.light_damage]
+				attack_ratio = 0.25
+				flat = 1.0
+
+			[promised_consort.skills.enhanced_earthheave.slam_damage]
+				attack_ratio = 0.85
+				flat = 5.0
+
+			[promised_consort.skills.enhanced_earthheave.fissure_damage]
+				attack_ratio = 0.7
+				flat = 4.0
+
+		[promised_consort.skills.light_of_miquella]
+			windup_ticks = [110, 10, 0, 0, 0, 0, 0, 0, 0]
+			active_ticks = [4, 1, 1, 1, 1, 1, 1, 1, 1]
+			hyper_armor_active = true
+			recovery_ticks = [0, 0, 0, 0, 0, 0, 0, 0, 12]
+			weight = 0.6
+			range_multiplier = 1.5
+			radius = 8.0
+			afterglow_count = 8
+			enabled = true
+			cooldown_ticks = 300
+
+			[promised_consort.skills.light_of_miquella.main_damage]
+				attack_ratio = 0.9
+				flat = 5.0
+
+			[promised_consort.skills.light_of_miquella.afterglow_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+		[promised_consort.skills.promised_consort]
+			windup_ticks = [27, 7, 6, 8, 28, 2, 2, 4]
+			hyper_armor_active = true
+			weight = 0.5
+			enabled = true
+			active_ticks = [3, 3, 4, 4, 1, 1, 1, 1]
+			recovery_ticks = [4, 4, 4, 9, 1, 2, 2, 23]
+			range_multiplier = 1.45
+			cooldown_ticks = 260
+
+			[promised_consort.skills.promised_consort.opening_damage]
+				attack_ratio = 0.55
+				flat = 3.0
+
+			[promised_consort.skills.promised_consort.spin_damage]
+				attack_ratio = 0.5
+				flat = 3.0
+
+			[promised_consort.skills.promised_consort.finisher_damage]
+				attack_ratio = 0.95
+				flat = 6.0
+
+			[promised_consort.skills.promised_consort.clone_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+			[promised_consort.skills.promised_consort.holy_ring_damage]
+				attack_ratio = 0.35
+				flat = 2.0
+
+		[promised_consort.skills.gravity_dive]
+			windup_ticks = [38, 3]
+			active_ticks = [1, 1]
+			hyper_armor_active = true
+			recovery_ticks = [1, 35]
+			weight = 1.0
+			range = 4.5
+			range_multiplier = 1.35
+			enabled = true
+			cooldown_ticks = 160
+
+			[promised_consort.skills.gravity_dive.sword_damage]
+				attack_ratio = 0.8
+				flat = 4.0
+
+			[promised_consort.skills.gravity_dive.impact_damage]
+				attack_ratio = 0.55
+				flat = 3.0
+
+		[promised_consort.skills.spiral_assault]
+			windup_ticks = [35, 0]
+			active_ticks = [8, 1]
+			hyper_armor_active = true
+			width = 3.0
+			recovery_ticks = [0, 35]
+			weight = 0.8
+			range = 12.0
+			range_multiplier = 1.4
+			enabled = true
+			cooldown_ticks = 150
+
+			[promised_consort.skills.spiral_assault.spin_damage]
+				attack_ratio = 0.6
+				flat = 3.0
+
+			[promised_consort.skills.spiral_assault.slam_damage]
+				attack_ratio = 0.85
+				flat = 5.0
+
+		[promised_consort.skills.gravity_meteor]
+			windup_ticks = [90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			hyper_armor_active = true
+			weight = 0.7
+			projectile_lifetime_ticks = 60
+			enabled = true
+			projectile_health = 6.0
+			projectile_count = 8
+			max_turn_degrees_per_tick = 4.0
+			active_ticks = [4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 1]
+			clone_radius = 3.5
+			recovery_ticks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14]
+			max_hits_per_target = 3
+			range_multiplier = 1.4
+			cooldown_ticks = 220
+
+			[promised_consort.skills.gravity_meteor.damage]
+				attack_ratio = 0.35
+				flat = 2.0
+
+			[promised_consort.skills.gravity_meteor.clone_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+		[promised_consort.skills.left_combo_cross]
+			windup_ticks = [11, 6, 11]
+			active_ticks = [3, 3, 4]
+			hyper_armor_active = false
+			recovery_ticks = [1, 9, 36]
+			weight = 1.0
+			range = 3.8
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 50
+
+			[[promised_consort.skills.left_combo_cross.damage]]
+				attack_ratio = 0.45
+				flat = 2.0
+
+			[[promised_consort.skills.left_combo_cross.damage]]
+				attack_ratio = 0.45
+				flat = 2.0
+
+			[[promised_consort.skills.left_combo_cross.damage]]
+				attack_ratio = 0.7
+				flat = 4.0
+
+		[promised_consort.skills.right_combo_tempest]
+			windup_ticks = [12, 13, 14, 15, 18]
+			active_ticks = [3, 3, 3, 4, 4]
+			hyper_armor_active = false
+			recovery_ticks = [5, 6, 8, 8, 33]
+			weight = 0.7
+			range = 4.2
+			range_multiplier = 1.35
+			tempest_hits = 2
+			enabled = true
+			cooldown_ticks = 110
+
+			[promised_consort.skills.right_combo_tempest.opening_damage]
+				attack_ratio = 0.45
+				flat = 2.0
+
+			[promised_consort.skills.right_combo_tempest.tempest_damage]
+				attack_ratio = 0.55
+				flat = 3.0
+
+		[promised_consort.skills.lightspeed_slash]
+			windup_ticks = [35, 6, 6, 4]
+			active_ticks = [3, 3, 3, 1]
+			hyper_armor_active = true
+			recovery_ticks = [4, 4, 1, 29]
+			weight = 0.8
+			range_multiplier = 1.35
+			enabled = true
+			cooldown_ticks = 160
+			clone_count = 3
+
+			[promised_consort.skills.lightspeed_slash.body_damage]
+				attack_ratio = 0.8
+				flat = 5.0
+
+			[promised_consort.skills.lightspeed_slash.clone_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+		[promised_consort.skills.lion_claw]
+			double_recovery_ticks = 30
+			windup_ticks = 32
+			double_followup_chance = 0.35
+			hyper_armor_active = true
+			double_active_ticks = 5
+			weight = 0.9
+			range = 3.5
+			enabled = true
+			double_windup_ticks = 26
+			active_ticks = 5
+			recovery_ticks = 20
+			range_multiplier = 1.35
+			cooldown_ticks = 100
+
+			[promised_consort.skills.lion_claw.damage]
+				attack_ratio = 0.85
+				flat = 5.0
+
+			[promised_consort.skills.lion_claw.double_damage]
+				attack_ratio = 0.9
+				flat = 5.0
+
+		[promised_consort.skills.right_combo_earthheave]
+			windup_ticks = [16, 18, 6, 21, 6]
+			active_ticks = [3, 3, 3, 5, 6]
+			hyper_armor_active = false
+			recovery_ticks = [5, 3, 9, 7, 45]
+			weight = 0.7
+			range = 7.0
+			range_multiplier = 1.45
+			enabled = true
+			cooldown_ticks = 140
+
+			[promised_consort.skills.right_combo_earthheave.opening_damage]
+				attack_ratio = 0.45
+				flat = 2.0
+
+			[promised_consort.skills.right_combo_earthheave.slam_damage]
+				attack_ratio = 0.8
+				flat = 5.0
+
+			[promised_consort.skills.right_combo_earthheave.fissure_damage]
+				attack_ratio = 0.65
+				flat = 4.0
+
+		[promised_consort.skills.right_combo_cross]
+			windup_ticks = [11, 21]
+			active_ticks = [3, 4]
+			hyper_armor_active = false
+			recovery_ticks = [6, 30]
+			weight = 1.0
+			range = 3.8
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 55
+
+			[[promised_consort.skills.right_combo_cross.damage]]
+				attack_ratio = 0.45
+				flat = 2.0
+
+			[[promised_consort.skills.right_combo_cross.damage]]
+				attack_ratio = 0.75
+				flat = 4.0
+
+		[promised_consort.skills.ring_of_light]
+			outer_radius = 11.0
+			windup_ticks = 26
+			active_ticks = 5
+			hyper_armor_active = false
+			recovery_ticks = 17
+			weight = 0.7
+			range_multiplier = 1.5
+			enabled = true
+			cooldown_ticks = 140
+			inner_radius = 3.0
+
+			[promised_consort.skills.ring_of_light.damage]
+				attack_ratio = 0.55
+				flat = 3.0
+
+		[promised_consort.skills.lightspeed_side_dash]
+			windup_ticks = [36, 4, 4, 6]
+			active_ticks = [2, 2, 2, 1]
+			hyper_armor_active = true
+			recovery_ticks = [2, 2, 5, 16]
+			weight = 0.8
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 150
+			clone_count = 3
+
+			[promised_consort.skills.lightspeed_side_dash.body_damage]
+				attack_ratio = 0.7
+				flat = 4.0
+
+			[promised_consort.skills.lightspeed_side_dash.clone_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+		[promised_consort.skills.left_combo_bloodflame]
+			windup_ticks = [15, 12, 12]
+			hyper_armor_active = false
+			weight = 0.8
+			sweep_range = 4.0
+			enabled = true
+			active_ticks = [3, 4, 8]
+			recovery_ticks = [5, 4, 3]
+			range_multiplier = 1.3
+			thrust_range = 5.0
+			cooldown_ticks = 100
+
+			[promised_consort.skills.left_combo_bloodflame.thrust_damage]
+				attack_ratio = 0.6
+				flat = 3.0
+
+			[promised_consort.skills.left_combo_bloodflame.burst_damage]
+				attack_ratio = 0.35
+				flat = 2.0
+
+			[promised_consort.skills.left_combo_bloodflame.sweep_damage]
+				attack_ratio = 0.5
+				flat = 2.0
+
+		[promised_consort.skills.lightspeed_dash]
+			windup_ticks = [46, 2, 2, 2, 4, 3]
+			hyper_armor_active = true
+			weight = 0.7
+			range = 16.0
+			enabled = true
+			active_ticks = [2, 2, 2, 2, 1, 1]
+			width = 2.5
+			recovery_ticks = [2, 2, 2, 3, 3, 22]
+			range_multiplier = 1.3
+			cooldown_ticks = 170
+
+			[promised_consort.skills.lightspeed_dash.body_damage]
+				attack_ratio = 0.75
+				flat = 4.0
+
+			[promised_consort.skills.lightspeed_dash.trail_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+			[promised_consort.skills.lightspeed_dash.clone_damage]
+				attack_ratio = 0.2
+				flat = 1.0
+
+		[promised_consort.skills.cross_slash]
+			windup_ticks = [17, 1]
+			active_ticks = [1, 1]
+			debris_range = 7.0
+			hyper_armor_active = false
+			recovery_ticks = [0, 23]
+			weight = 0.9
+			sword_range = 4.0
+			range_multiplier = 1.35
+			enabled = true
+			cooldown_ticks = 90
+
+			[promised_consort.skills.cross_slash.sword_damage]
+				attack_ratio = 0.75
+				flat = 4.0
+
+			[promised_consort.skills.cross_slash.debris_damage]
+				attack_ratio = 0.35
+				flat = 2.0
+
+		[promised_consort.skills.right_combo_left_twin]
+			windup_ticks = [18, 14, 9]
+			active_ticks = [3, 3, 3]
+			hyper_armor_active = false
+			recovery_ticks = [5, 3, 17]
+			weight = 1.0
+			range = 3.6
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 50
+
+			[[promised_consort.skills.right_combo_left_twin.damage]]
+				attack_ratio = 0.45
+				flat = 2.0
+
+			[[promised_consort.skills.right_combo_left_twin.damage]]
+				attack_ratio = 0.4
+				flat = 2.0
+
+			[[promised_consort.skills.right_combo_left_twin.damage]]
+				attack_ratio = 0.45
+				flat = 2.0
+
+		[promised_consort.skills.stomp]
+			windup_ticks = 20
+			active_ticks = 3
+			hyper_armor_active = false
+			width = 4.0
+			recovery_ticks = 9
+			weight = 1.0
+			forward_range = 5.0
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 70
+
+			[promised_consort.skills.stomp.damage]
+				attack_ratio = 0.55
+				flat = 3.0
+
+		[promised_consort.skills.consort_meteor]
+			outer_radius = 13.0
+			windup_ticks = [0, 0, 0, 0, 1]
+			core_radius = 9.0
+			hyper_armor_active = true
+			weight = 0.0
+			enabled = true
+			active_ticks = [43, 140, 29, 1, 1]
+			recovery_ticks = [0, 0, 0, 0, 65]
+			prediction_sample_ticks = 10
+			prediction_lead_ticks = 12
+			range_multiplier = 2.4
+			cooldown_ticks = 3600
+
+			[promised_consort.skills.consort_meteor.outer_damage]
+				attack_ratio = 0.65
+				flat = 4.0
+
+			[promised_consort.skills.consort_meteor.aftershock_damage]
+				attack_ratio = 0.3
+				flat = 2.0
+
+			[promised_consort.skills.consort_meteor.core_damage]
+				attack_ratio = 1.2
+				flat = 8.0
+
+	# Promised Consort server-authoritative values are snapshotted when an encounter
+	# starts unless a field is explicitly documented as live client state.
+	[promised_consort.general]
+		knockback_resistance = 1.0
+		# Balanced for 1-4 players; accepted range is 1-16.
+		max_active_players = 4
+		base_health = 1600.0
+		health_per_extra_player = 0.55
+		meteor_health_ratio = 0.25
+		attack_damage = 24.0
+		follow_range = 96.0
+		phase_two_health_ratio = 0.65
+		movement_speed = 0.3
+
+	[promised_consort.instant_guard]
+		eligible_item_tag = "elder_bosses:instant_guard_items"
+		start_tick = 3
+		shield_durability_multiplier = 0.5
+		cue_cooldown_ticks = 0
+		enabled = true
+		cue_pulse_count = 3
+		red_cue_color = "#FF2020"
+		end_tick = 6
+		cue_sound = "elder_bosses:promised_consort.instant_guard_cue"
+		cue_volume = 1.0
+		cue_pitch = 1.0
+		rearm_ticks = 4
+		blocked_damage_multiplier = 0.0
+		default_cue_lead_ticks = 6
+
+	# Reserved until original or licensed nonverbal audio assets are delivered.
+	# The current runtime only registers the independent instant-guard cue above.
+	[promised_consort.nonverbal_audio]
+		volume = 1.0
+		victory_roar_delay_ticks = 12
+		hurt_cooldown_ticks = 20
+		intro_roar_tick = 18
+		pitch = 1.0
+		enabled = true
+
+	[promised_consort.targeting]
+		max_segment_pursuit_distance = 3.0
+		recent_damage_weight = 0.35
+		target_creative_players = false
+		primary_target_policy = "players_only"
+		item_use_weight = 0.15
+		attack_target_policy = "all_living"
+		creative_players_can_join = false
+		recent_damage_window_ticks = 160
+		target_unregistered_players = true
+		distance_weight = 0.5
+
+	[promised_consort.performance]
+		max_visual_clones = 4
+		max_logical_projectiles = 16
+		max_logical_light_columns = 24
+
+	[promised_consort.incoming_damage]
+		source_policy = "arena_player_and_owned"
+		forced_death_bypasses_policy = true
+
+	[promised_consort.dialogue]
+		audience = "participants"
+		phase_two_vow_tick = 92
+		max_queued_lines = 1
+		defeated_tick = 24
+		transition_call_tick = 58
+		player_defeat_delay_ticks = 12
+		subtitle_duration_ticks = 70
+		enabled = true
+
+	[promised_consort.selector]
+		crowd_weight_multiplier = 1.7
+		item_use_punish_max_range = 12.0
+		item_use_weight_multiplier = 1.8
+		item_use_punish_min_range = 4.0
+		guard_chain_threshold = 3
+		ranged_weight_multiplier = 2.0
+		miss_recovery_weight_multiplier = 1.2
+		# stomp: force STOMP; continue_combo: finish normally and use the regular 6-14 tick interval;
+		# weighted: skip the interval and immediately select from the regular eligible weighted pool.
+		blocked_branch_mode = "stomp"
+		avoid_last_action_count = 2
+		guard_chain_recovery_ticks = 20
+		# current_action: count within one action; same_target: count per target across actions;
+		# encounter: share one count across all targets. Cross-action counters reset after triggering.
+		guard_chain_scope = "current_action"
+		blocked_branch_chance = 0.7
+
+	[promised_consort.multiplayer]
+		retarget_interval_ticks = 20
+		same_target_penalty_after_ticks = 200
+		same_target_score_multiplier = 0.75
+		damage_multiplier_per_extra_player = 0.0
+
+	[promised_consort.rewards]
+		gate_fragment_max = 8
+		affected_by_looting = false
+		remembrance_count = 1
+		gate_fragment_min = 4
+		experience = 500
+
+	[promised_consort.status]
+		sleep_damage_multiplier = 0.0
+		poison_damage_multiplier = 0.35
+		wither_damage_multiplier = 0.35
+
+[malenia]
+
+	[malenia.debug]
+		action_broadcast = false
+		state_output = false
+
+	[malenia.source_multiplier]
+
+		# Source tags modify damage after routing without becoming damage types.
+		[malenia.source_multiplier.phase_one]
+			ordinary_physical = 1.0
+			magic = 1.0
+			frost_trigger = 1.0
+			holy = 0.75
+			pierce = 1.0
+			bleed_trigger = 1.0
+
+		[malenia.source_multiplier.phase_two]
+			ordinary_physical = 1.0
+			magic = 1.0
+			frost_trigger = 1.0
+			holy = 0.75
+			pierce = 1.0
+			bleed_trigger = 1.0
+
+	# Reserved for the future arena integration; current gameplay does not consume these values.
+	[malenia.arena]
+		allow_wall_phasing = true
+		logical_shallow_water = false
+		block_break_radius = 1.5
+		leash_grace_ticks = 100
+		boss_ignores_arena_height_variation = true
+		logical_radius = 26.0
+		allow_block_breaking = true
+		breakable_block_tag = "elder_bosses:boss_breakable"
+		restore_broken_blocks_on_reset = true
+		max_blocks_broken_per_tick = 24
+		unload_resets_fight = true
+		wall_phase_max_ticks = 20
+		protected_block_tag = "elder_bosses:arena_protected"
+
+	[malenia.stagger]
+		decay_delay_ticks = 120
+		capacity_health_ratio = 0.1
+		stun_ticks = 70
+		source_dedupe_ticks = 5
+		decay_per_tick = 1.5
+		damage_conversion_ratio = 0.75
+		reset_on_phase_change = true
+		post_stun_immunity_ticks = 80
+
+		[[malenia.stagger.distance_bands]]
+			multiplier = 1.0
+			max_distance = 4.0
+
+		[[malenia.stagger.distance_bands]]
+			multiplier = 0.7
+			max_distance = 8.0
+
+		[[malenia.stagger.distance_bands]]
+			multiplier = 0.4
+			max_distance = 16.0
+
+		[[malenia.stagger.distance_bands]]
+			multiplier = 0.2
+			max_distance = -1.0
+
+	[malenia.resistance]
+
+		[malenia.resistance.phase_one]
+			magic = 0.8
+			lightning = 0.8
+			fire = 1.0
+			physical = 0.9
+
+		[malenia.resistance.phase_two]
+			magic = 0.8
+			lightning = 0.8
+			fire = 1.0
+			physical = 0.9
+
+	[malenia.phase_transition]
+		reset_stagger = true
+		clear_owned_slash_hazards = true
+		preserve_player_rot_buildup = true
+		opening_aeonia = true
+		duration_ticks = 150
+
+	[malenia.skills]
+
+		[malenia.skills.double_slash]
+			windup_ticks = [11, 9]
+			active_ticks = [3, 3]
+			heal_profile = "standard"
+			recovery_ticks = [6, 18]
+			weight = 1.0
+			range = 3.5
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 42
+
+			[[malenia.skills.double_slash.damage]]
+				attack_ratio = 0.42
+				flat = 1.0
+
+			[[malenia.skills.double_slash.damage]]
+				attack_ratio = 0.42
+				flat = 1.0
+
+		[malenia.skills.running_slash]
+			windup_ticks = 16
+			active_ticks = 4
+			heal_profile = "standard"
+			recovery_ticks = 18
+			weight = 0.9
+			range = 6.0
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 55
+
+			[malenia.skills.running_slash.damage]
+				attack_ratio = 0.55
+				flat = 2.0
+
+		[malenia.skills.retreat_slash]
+			retreat_distance = 3.0
+			windup_ticks = 8
+			active_ticks = 4
+			heal_profile = "standard"
+			recovery_ticks = 20
+			weight = 0.8
+			range = 3.4
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 65
+
+			[malenia.skills.retreat_slash.damage]
+				attack_ratio = 0.45
+				flat = 1.0
+
+		[malenia.skills.grab_impale]
+			heal_profile = "grab"
+			width = 1.2
+			weight = 0.45
+			range = 5.0
+			range_multiplier = 1.35
+			enabled = true
+			cooldown_ticks = 180
+
+			[malenia.skills.grab_impale.components]
+				windup_ticks = [24, 15, 9]
+				active_ticks = [5, 1, 1]
+				recovery_ticks = [0, 0, 12]
+
+			[malenia.skills.grab_impale.impale_damage]
+				attack_ratio = 0.95
+				flat = 6.0
+
+			[malenia.skills.grab_impale.grab_damage]
+				attack_ratio = 0.0
+				flat = 0.0
+
+			[malenia.skills.grab_impale.throw_damage]
+				attack_ratio = 0.35
+				flat = 2.0
+
+		[malenia.skills.rapid_slashes]
+			heal_profile = "standard"
+			weight = 0.9
+			range = 3.6
+			opening_hits = 3
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 70
+
+			[malenia.skills.rapid_slashes.opening_damage]
+				attack_ratio = 0.34
+				flat = 0.0
+
+			[malenia.skills.rapid_slashes.components]
+				windup_ticks = [14, 0, 0, 7]
+				active_ticks = [1, 1, 1, 6]
+				recovery_ticks = [1, 1, 0, 22]
+
+			[malenia.skills.rapid_slashes.finisher_damage]
+				attack_ratio = 0.5
+				flat = 2.0
+
+		[malenia.skills.single_slash]
+			windup_ticks = 10
+			active_ticks = 3
+			heal_profile = "standard"
+			arc_degrees = 120.0
+			recovery_ticks = 14
+			weight = 1.0
+			range = 3.4
+			range_multiplier = 1.25
+			enabled = true
+			cooldown_ticks = 28
+
+			[malenia.skills.single_slash.damage]
+				attack_ratio = 0.45
+				flat = 1.0
+
+		[malenia.skills.upward_combo]
+			windup_ticks = [18, 14]
+			active_ticks = [4, 5]
+			heal_profile = "heavy"
+			recovery_ticks = [8, 24]
+			weight = 0.75
+			range = 3.5
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 90
+
+			[[malenia.skills.upward_combo.damage]]
+				attack_ratio = 0.5
+				flat = 2.0
+
+			[[malenia.skills.upward_combo.damage]]
+				attack_ratio = 0.65
+				flat = 3.0
+
+		[malenia.skills.scarlet_aeonia]
+			dive_rot_buildup = 15.0
+			heal_profile = "none"
+			zone_interval_ticks = 20
+			weight = 0.35
+			enabled = true
+			zone_duration_ticks = 84
+			explosion_rot_buildup = 45.0
+			zone_rot_buildup = 12.0
+			range_multiplier = 1.5
+			radius = 5.5
+			cooldown_ticks = 360
+
+			[malenia.skills.scarlet_aeonia.components]
+				windup_ticks = [0, 0, 0, 0, 8]
+				active_ticks = [26, 17, 6, 1, 42]
+				recovery_ticks = [0, 0, 0, 0, 54]
+
+			[malenia.skills.scarlet_aeonia.dive_damage]
+				attack_ratio = 0.6
+				flat = 3.0
+
+			[malenia.skills.scarlet_aeonia.zone_damage]
+				attack_ratio = 0.15
+				flat = 0.0
+
+			[malenia.skills.scarlet_aeonia.explosion_damage]
+				attack_ratio = 0.9
+				flat = 5.0
+
+		[malenia.skills.winged_sweep]
+			windup_ticks = 16
+			active_ticks = 8
+			rot_buildup = 10.0
+			heal_profile = "standard"
+			recovery_ticks = 22
+			weight = 0.7
+			range = 4.0
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 85
+
+			[malenia.skills.winged_sweep.damage]
+				attack_ratio = 0.55
+				flat = 2.0
+
+		[malenia.skills.waterfowl_dance]
+			minimum_start_range = 6.0
+			burst_count = 4
+			heal_profile = "waterfowl"
+			burst_max_travel = [7.0, 6.0, 5.0, 4.0]
+			phase_two_opening_delay_ticks = 180
+			weight = 0.4
+			burst_width = 3.5
+			enabled = true
+			phase_one_first_health_ratio = 0.7
+			burst_max_hits_per_target = [2, 2, 2, 1]
+			action_heal_cap = 16.0
+			range_multiplier = 1.35
+			first_eligible_ticks = 260
+			cooldown_ticks = 320
+
+			[malenia.skills.waterfowl_dance.slash_damage]
+				attack_ratio = 0.22
+				flat = 0.0
+
+			[malenia.skills.waterfowl_dance.components]
+				windup_ticks = [32, 4, 4, 4]
+				active_ticks = [14, 12, 12, 18]
+				recovery_ticks = [0, 0, 0, 42]
+
+		[malenia.skills.kick]
+			windup_ticks = 9
+			heal_profile = "standard"
+			weight = 0.8
+			range = 2.3
+			enabled = true
+			shield_stamina_multiplier = 1.8
+			active_ticks = 4
+			arc_degrees = 100.0
+			recovery_ticks = 18
+			hyper_armor = true
+			range_multiplier = 1.2
+			cooldown_ticks = 50
+
+			[malenia.skills.kick.damage]
+				attack_ratio = 0.42
+				flat = 2.0
+
+		[malenia.skills.scarlet_plunge]
+			blade_rot_buildup = 8.0
+			heal_profile = "heavy"
+			weight = 0.65
+			range = 4.0
+			range_multiplier = 1.35
+			burst_rot_buildup = 24.0
+			enabled = true
+			cooldown_ticks = 130
+
+			[malenia.skills.scarlet_plunge.components]
+				windup_ticks = [24, 0]
+				active_ticks = [6, 6]
+				recovery_ticks = [0, 30]
+
+			[malenia.skills.scarlet_plunge.blade_damage]
+				attack_ratio = 0.65
+				flat = 3.0
+
+			[malenia.skills.scarlet_plunge.burst_damage]
+				attack_ratio = 0.45
+				flat = 2.0
+
+		[malenia.skills.thrust]
+			windup_ticks = 22
+			active_ticks = 4
+			heal_profile = "heavy"
+			width = 1.2
+			recovery_ticks = 24
+			weight = 0.75
+			range = 7.0
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 85
+
+			[malenia.skills.thrust.damage]
+				attack_ratio = 0.7
+				flat = 3.0
+
+		[malenia.skills.scarlet_phantoms]
+			dive_rot_buildup = 12.0
+			phantom_rot_buildup = 8.0
+			heal_profile = "none"
+			weight = 0.35
+			max_late_hits_per_target = 2
+			enabled = true
+			phantom_width = 1.6
+			phantom_count = 5
+			hyper_armor = true
+			range_multiplier = 1.45
+			cooldown_ticks = 280
+			max_early_hits_per_target = 2
+
+			[malenia.skills.scarlet_phantoms.components]
+				windup_ticks = [36, 0, 0, 0, 0, 0]
+				active_ticks = [8, 8, 8, 8, 8, 32]
+				recovery_ticks = [0, 0, 0, 0, 0, 38]
+
+			[malenia.skills.scarlet_phantoms.phantom_damage]
+				attack_ratio = 0.28
+				flat = 1.0
+
+			[malenia.skills.scarlet_phantoms.dive_damage]
+				attack_ratio = 0.75
+				flat = 4.0
+
+		[malenia.skills.flying_slash]
+			windup_ticks = [20, 12]
+			active_ticks = [5, 4]
+			rot_buildup = [6.0, 9.0]
+			heal_profile = "heavy"
+			recovery_ticks = [8, 24]
+			weight = 0.75
+			range = 7.0
+			range_multiplier = 1.3
+			enabled = true
+			cooldown_ticks = 120
+
+			[[malenia.skills.flying_slash.damage]]
+				attack_ratio = 0.5
+				flat = 2.0
+
+			[[malenia.skills.flying_slash.damage]]
+				attack_ratio = 0.65
+				flat = 3.0
+
+	# Corruption Goddess (Malenia) server-authoritative values.
+	[malenia.general]
+		phase_one_health = 900.0
+		knockback_resistance = 0.75
+		max_active_players = 4
+		phase_two_start_ratio = 0.8
+		attack_damage = 20.0
+		follow_range = 56.0
+		movement_speed = 0.34
+		phase_two_health = 900.0
+
+	[malenia.instant_guard]
+		eligible_item_tag = "elder_bosses:instant_guard_items"
+		start_tick = 3
+		red_cue_color = "#FF2020"
+		end_tick = 6
+		shield_durability_multiplier = 0.5
+		rearm_ticks = 4
+		enabled = true
+		blocked_damage_multiplier = 0.0
+		default_cue_lead_ticks = 6
+		cue_pulse_count = 3
+
+	[malenia.healing]
+		window_ticks = 100
+		heal_from_non_hostile_entities = true
+		heal_from_summons = false
+		heal_from_armor_stands = false
+		blocked_hit_multiplier = 1.0
+		window_cap = 36.0
+		enabled = true
+		action_cap = 16.0
+		heal_from_players = true
+		heal_from_tamed_entities = false
+
+		[malenia.healing.grab_heal]
+			attack_ratio = 0.1
+			flat = 3.0
+
+		[malenia.healing.heavy_heal]
+			attack_ratio = 0.08
+			flat = 2.0
+
+		[malenia.healing.waterfowl_heal]
+			attack_ratio = 0.04
+			flat = 0.0
+
+		[malenia.healing.standard_heal]
+			attack_ratio = 0.06
+			flat = 1.0
+
+	[malenia.nonverbal_audio]
+		volume = 1.0
+		hurt_cooldown_ticks = 20
+		grunt_cooldown_ticks = 80
+		pitch = 1.0
+		enabled = true
+
+	[malenia.targeting]
+		recent_damage_weight = 0.35
+		item_use_weight = 0.1
+		interrupt_weight = 0.1
+		recent_damage_window_ticks = 160
+		distance_weight = 0.45
+
+	[malenia.scarlet_rot]
+		decay_delay_ticks = 60
+		movement_speed_reduction = 0.1
+		healing_reduction = 0.3
+		honey_buildup_reduction = 25.0
+		cleanse_use_ticks = 32
+		milk_clears_rot = false
+		duration_ticks = 120
+		damage_interval_ticks = 20
+		consume_cleanse_item = true
+		decay_per_20_ticks = 8.0
+
+		[malenia.scarlet_rot.damage]
+			attack_ratio = 0.1
+			flat = 0.0
+
+	[malenia.performance]
+		max_rot_zones = 3
+
+	[malenia.dialogue]
+		max_queued_lines = 1
+		transition_release_tick = 42
+		defeated_tick = 28
+		player_defeat_delay_ticks = 12
+		subtitle_duration_ticks = 70
+		intro_warning_tick = 20
+		enabled = true
+
+	[malenia.selector]
+		recent_interrupt_weight_multiplier = 1.4
+		phase_two_idle_min_ticks = 8
+		nearby_player_range = 4.0
+		phase_one_idle_min_ticks = 15
+		phase_one_idle_max_ticks = 35
+		phase_two_idle_max_ticks = 20
+		shield_grab_weight_multiplier = 1.4
+		waterfowl_retreat_max_range = 4.0
+		shield_kick_after_ticks = 40
+		recent_interrupt_window_ticks = 100
+		high_threat_group_cooldown_ticks = 140
+		item_use_punish_max_range = 10.0
+		item_use_weight_multiplier = 1.7
+		item_use_punish_min_range = 4.0
+		long_range_threshold = 12.0
+		recent_interrupt_count_threshold = 2
+		avoid_last_action_count = 2
+		shield_kick_weight_multiplier = 1.8
+		nearby_player_retreat_weight_multiplier = 1.5
+		long_range_running_slash_weight_multiplier = 1.6
+		nearby_player_count_threshold = 2
+
+	[malenia.multiplayer]
+		retarget_interval_ticks = 15
+		health_per_extra_player = 0.5
+		same_target_penalty_after_ticks = 180
+		same_target_score_multiplier = 0.78
+		healing_window_cap_per_extra_player = 0.15
+
+	[malenia.phase_two_rot]
+		heavy_thrust_buildup = 8.0
+		kick_buildup = 8.0
+		waterfowl_buildup = 5.0
+		ordinary_sword_buildup = 4.0
+
+# Canonical root section of the only runtime config:
+# config/elder_bosses-common.toml
+#
+# Both boss subtrees are registered runtime configuration.
+# Per-skill cast_speed_multiplier values above 1.0 cast faster; range_multiplier
+# values above 1.0 expand hit geometry, controlled movement, and telegraphs.
+[indicators]
+	render_distance = 96.0
+	surface_offset = 0.02
+	max_segments_per_shape = 96
+	occluded_outline_opacity_multiplier = 0.35
+	opacity = 0.6
+	max_active_indicators = 64
+	enabled = true
+
+[skill_vfx]
+	render_distance = 96.0
+	particle_budget_per_boss_per_tick = 18
+	enabled = true

@@ -6,8 +6,22 @@ import java.util.function.Supplier;
 public final class PromisedConsortConfigProvider {
     private static volatile Supplier<PromisedConsortCombatConfigSnapshot> combatSupplier;
     private static volatile Supplier<PromisedConsortSkillConfigSnapshot> skillSupplier;
+    private static volatile Supplier<Boolean> debugActionBroadcastSupplier;
 
     private PromisedConsortConfigProvider() {
+    }
+
+    public static synchronized void installDebugActionBroadcast(Supplier<Boolean> supplier) {
+        Objects.requireNonNull(supplier, "supplier");
+        if (debugActionBroadcastSupplier != null) {
+            throw new IllegalStateException("Promised Consort action debug config is already installed");
+        }
+        debugActionBroadcastSupplier = supplier;
+    }
+
+    public static boolean debugActionBroadcastEnabled() {
+        Supplier<Boolean> supplier = debugActionBroadcastSupplier;
+        return supplier != null && supplier.get();
     }
 
     public static synchronized void installCombat(

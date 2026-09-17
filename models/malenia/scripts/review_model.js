@@ -8,6 +8,9 @@
     let art = JSON.parse(fs.readFileSync(workspace + "/art_direction.json", "utf8"));
     let manifest = JSON.parse(fs.readFileSync(workspace + "/animation_manifest.json", "utf8"));
     let preview = Preview.selected;
+    preview.setProjectionMode(false);
+    preview.camera.zoom = 1;
+    preview.camera.updateProjectionMatrix();
     let armor = ["helm", "armor_torso", "armor_shoulder_l", "armor_shoulder_r", "armor_waist", "cape_01", "skirt_front", "skirt_back", "skirt_l", "skirt_r"];
     let stage = ["wing_root_l", "wing_root_r", "phase_two_body", "phase_two_hair"];
     fs.mkdirSync(output, {recursive: true});

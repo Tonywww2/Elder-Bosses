@@ -5,6 +5,8 @@ import com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.H
 import com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog;
 import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId;
 import com.tonywww.elder_bosses.combat.action.SkillTuning;
+import com.tonywww.elder_bosses.combat.action.ActionStage;
+import com.tonywww.elder_bosses.combat.action.ActionTimeline;
 import com.tonywww.elder_bosses.combat.damage.DamageChannel;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 
@@ -67,21 +69,23 @@ public final class MaleniaSkillEventPlanner {
     ) {
         Objects.requireNonNull(snapshot, "snapshot");
         Objects.requireNonNull(actionId, "actionId");
+        var configuredStages = snapshot.tuning(actionId).componentStages();
+        ActionTimeline components = configuredStages.isEmpty() ? null : ActionTimeline.ofStages(configuredStages.toArray(ActionStage[]::new));
         MaleniaActionPlan plan = switch (actionId) {
             case SINGLE_SLASH -> singleSlash(snapshot.singleSlash());
             case DOUBLE_SLASH -> doubleSlash(snapshot.doubleSlash());
-            case RAPID_SLASHES -> rapidSlashes(snapshot.rapidSlashes());
+            case RAPID_SLASHES -> rapidSlashes(snapshot.rapidSlashes(), components);
             case RUNNING_SLASH -> runningSlash(snapshot.runningSlash());
             case UPWARD_COMBO -> upwardCombo(snapshot.upwardCombo());
             case KICK -> kick(snapshot.kick());
             case THRUST -> thrust(snapshot.thrust());
-            case GRAB_IMPALE -> grabImpale(snapshot.grabImpale());
+            case GRAB_IMPALE -> grabImpale(snapshot.grabImpale(), components);
             case RETREAT_SLASH -> retreatSlash(snapshot.retreatSlash());
-            case WATERFOWL_DANCE -> waterfowlDance(snapshot.waterfowlDance());
-            case SCARLET_AEONIA -> scarletAeonia(snapshot.scarletAeonia());
-            case SCARLET_PLUNGE -> scarletPlunge(snapshot.scarletPlunge());
+            case WATERFOWL_DANCE -> waterfowlDance(snapshot.waterfowlDance(), components);
+            case SCARLET_AEONIA -> scarletAeonia(snapshot.scarletAeonia(), components);
+            case SCARLET_PLUNGE -> scarletPlunge(snapshot.scarletPlunge(), components);
             case FLYING_SLASH -> flyingSlash(snapshot.flyingSlash());
-            case SCARLET_PHANTOMS -> scarletPhantoms(snapshot.scarletPhantoms());
+            case SCARLET_PHANTOMS -> scarletPhantoms(snapshot.scarletPhantoms(), components);
             case WINGED_SWEEP -> wingedSweep(snapshot.wingedSweep());
         };
             int tunedTotalTicks = new MaleniaActionCatalog(snapshot)
@@ -241,14 +245,15 @@ public final class MaleniaSkillEventPlanner {
         return builder.build();
     }
 
-    private static MaleniaActionPlan rapidSlashes(MaleniaSkillConfigSnapshot.RapidSlashes config) {
-        StageLayout layout = singleStage(
+    private static MaleniaActionPlan rapidSlashes(MaleniaSkillConfigSnapshot.RapidSlashes config, ActionTimeline components) {
+        StageLayout layout = components != null ? componentLayout(components) : singleStage(
                 config.windupTicks(),
                 config.activeTicks(),
                 config.recoveryTicks()
         );
         PlanBuilder builder = builder(MaleniaActionId.RAPID_SLASHES, config.enabled(), layout);
-        RapidTiming timing = minecraftTimingForRapidSlashes(layout.window(0), config);
+        RapidTiming timing = components == null ? minecraftTimingForRapidSlashes(layout.window(0), config)
+            : new RapidTiming(java.util.stream.IntStream.range(0, 3).map(components::activeStartTick).boxed().toList(), components.activeStartTick(3));
         for (int index = 0; index < timing.openingHitTicks().size(); index++) {
             int actionTick = timing.openingHitTicks().get(index);
             builder.at(actionTick, new LockFacing());
@@ -372,19 +377,27 @@ public final class MaleniaSkillEventPlanner {
         return builder.build();
     }
 
-    private static MaleniaActionPlan grabImpale(MaleniaSkillConfigSnapshot.GrabImpale config) {
-        StageLayout layout = singleStage(
+    private static MaleniaActionPlan grabImpale(MaleniaSkillConfigSnapshot.GrabImpale config, ActionTimeline components) {
+        StageLayout layout = components != null ? componentLayout(components) : singleStage(
                 config.windupTicks(),
                 config.activeTicks(),
                 config.recoveryTicks()
         );
         ActiveWindow active = layout.window(0);
         PlanBuilder builder = builder(MaleniaActionId.GRAB_IMPALE, config.enabled(), layout);
-        builder.window(new ActiveWindow(0, config.windupTicks()), new MoveAway(
+        if (active.startTickInclusive() > 0) builder.window(new ActiveWindow(0, active.startTickInclusive()), new MoveAway(
             GRAB_OPENING_RETREAT,
-            config.windupTicks()
+            active.startTickInclusive()
         ));
         builder.at(active.startTickInclusive(), new LockFacing());
+        if (components != null) {
+            for (int tick = active.startTickInclusive(); tick < active.endTickExclusive(); tick++) builder.at(tick, new Grab(config.range(), config.width(),
+                hit("grab", config.grabDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, false, 1),
+                hit("impale", config.impaleDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, false, 1),
+                hit("throw", config.throwDamage(), DamageChannel.PHYSICAL, 0.0, config.healProfile(), false, 1),
+                components.activeStartTick(1) - tick, components.activeStartTick(2) - tick));
+            return builder.build();
+        }
         validateGrabTiming(active, layout.totalTicks());
         builder.window(active, new Grab(
                 config.range(),
@@ -419,24 +432,25 @@ public final class MaleniaSkillEventPlanner {
     }
 
     private static MaleniaActionPlan waterfowlDance(
-            MaleniaSkillConfigSnapshot.WaterfowlDance config
+            MaleniaSkillConfigSnapshot.WaterfowlDance config, ActionTimeline components
     ) {
-        StageLayout layout = singleStage(
+        StageLayout layout = components != null ? componentLayout(components) : singleStage(
                 config.windupTicks(),
                 config.activeTicks(),
                 config.recoveryTicks()
         );
         PlanBuilder builder = builder(MaleniaActionId.WATERFOWL_DANCE, config.enabled(), layout);
-        ActiveWindow ascent = new ActiveWindow(0, layout.window(0).startTickInclusive());
-        builder.window(ascent, new MoveVertical(
+        int ascentTicks = layout.window(0).startTickInclusive();
+        if (ascentTicks > 0) builder.window(new ActiveWindow(0, ascentTicks), new MoveVertical(
             WATERFOWL_ASCENT_DISTANCE,
-            ascent.durationTicks()
+            ascentTicks
         ));
-        List<ActiveWindow> bursts = minecraftTimingForWaterfowl(layout.window(0), config);
+        List<ActiveWindow> bursts = components != null ? layout.windows() : minecraftTimingForWaterfowl(layout.window(0), config);
         for (int index = 0; index < bursts.size(); index++) {
             String pointId = "waterfowl_burst_" + (index + 1);
-            int lockTick = config.burstLockTicks().get(index);
             ActiveWindow burst = bursts.get(index);
+            int lockTick = components == null ? config.burstLockTicks().get(index)
+                : Math.max(components.stageStartTick(index), burst.startTickInclusive() - (index == 0 ? 10 : 4));
             builder.at(lockTick, new LockPoint(pointId));
             builder.window(burst, new MoveToward(
                 pointId,
@@ -461,23 +475,25 @@ public final class MaleniaSkillEventPlanner {
     }
 
     private static MaleniaActionPlan scarletAeonia(
-            MaleniaSkillConfigSnapshot.ScarletAeonia config
+            MaleniaSkillConfigSnapshot.ScarletAeonia config, ActionTimeline components
     ) {
-        StageLayout layout = singleStage(
+        StageLayout layout = components != null ? componentLayout(components) : singleStage(
                 config.windupTicks(),
                 config.activeTicks(),
                 config.recoveryTicks()
         );
-        AeoniaTiming timing = minecraftTimingForScarletAeonia(layout, config);
+        AeoniaTiming timing = components == null ? minecraftTimingForScarletAeonia(layout, config)
+            : new AeoniaTiming(components.activeStartTick(2), components.activeStartTick(3), components.activeStartTick(4));
+        int lockTick = components == null ? config.targetLockTick() : components.activeStartTick(1);
         PlanBuilder builder = builder(MaleniaActionId.SCARLET_AEONIA, config.enabled(), layout);
-        builder.window(new ActiveWindow(0, config.targetLockTick()), new MoveVertical(
+        builder.window(components == null ? new ActiveWindow(0, lockTick) : layout.window(0), new MoveVertical(
             MINIMUM_VISIBLE_ASCENT,
-            config.targetLockTick()
+            components == null ? lockTick : layout.window(0).durationTicks()
         ));
-        builder.at(config.targetLockTick(), new LockPoint("aeonia_impact", true));
-        ActiveWindow dive = new ActiveWindow(timing.diveStartTick(), timing.impactTick());
+        builder.at(lockTick, new LockPoint("aeonia_impact", true));
+        ActiveWindow dive = components == null ? new ActiveWindow(timing.diveStartTick(), timing.impactTick()) : layout.window(2);
         builder.window(
-                new ActiveWindow(config.targetLockTick(), dive.startTickInclusive()),
+                new ActiveWindow(lockTick, dive.startTickInclusive()),
                 new HoldVertical()
         );
         builder.window(dive, new MoveToward(
@@ -531,18 +547,19 @@ public final class MaleniaSkillEventPlanner {
     }
 
     private static MaleniaActionPlan scarletPlunge(
-            MaleniaSkillConfigSnapshot.ScarletPlunge config
+            MaleniaSkillConfigSnapshot.ScarletPlunge config, ActionTimeline components
     ) {
-        StageLayout layout = singleStage(
+        StageLayout layout = components != null ? componentLayout(components) : singleStage(
                 config.windupTicks(),
                 config.activeTicks(),
                 config.recoveryTicks()
         );
-        PlungeTiming timing = minecraftTimingForScarletPlunge(layout.window(0));
+        PlungeTiming timing = components == null ? minecraftTimingForScarletPlunge(layout.window(0)) : new PlungeTiming(layout.window(0), layout.window(1));
         PlanBuilder builder = builder(MaleniaActionId.SCARLET_PLUNGE, config.enabled(), layout);
-        builder.window(new ActiveWindow(0, config.windupTicks()), new MoveVertical(
+        int ascentTicks = layout.window(0).startTickInclusive();
+        if (ascentTicks > 0) builder.window(new ActiveWindow(0, ascentTicks), new MoveVertical(
             MINIMUM_VISIBLE_ASCENT,
-            config.windupTicks()
+            ascentTicks
         ));
         builder.at(timing.bladeWindow().startTickInclusive(), new LockPoint("plunge_impact", true));
         builder.window(timing.bladeWindow(), new MoveToward(
@@ -636,14 +653,15 @@ public final class MaleniaSkillEventPlanner {
     }
 
     private static MaleniaActionPlan scarletPhantoms(
-            MaleniaSkillConfigSnapshot.ScarletPhantoms config
+            MaleniaSkillConfigSnapshot.ScarletPhantoms config, ActionTimeline components
     ) {
-        StageLayout layout = singleStage(
+        StageLayout layout = components != null ? componentLayout(components) : singleStage(
                 config.windupTicks(),
                 config.activeTicks(),
                 config.recoveryTicks()
         );
-        PhantomTiming timing = minecraftTimingForScarletPhantoms(layout, config);
+        PhantomTiming timing = components == null ? minecraftTimingForScarletPhantoms(layout, config)
+            : new PhantomTiming(java.util.stream.IntStream.range(0, config.phantomCount()).map(components::activeStartTick).boxed().toList(), layout.window(config.phantomCount()));
         PlanBuilder builder = builder(MaleniaActionId.SCARLET_PHANTOMS, config.enabled(), layout);
         ActiveWindow ascent = new ActiveWindow(0, layout.window(0).startTickInclusive());
         builder.window(ascent, new MoveVertical(
@@ -695,7 +713,7 @@ public final class MaleniaSkillEventPlanner {
         );
         builder.window(dive, new MoveToward(
             "boss_dive",
-            dive.durationTicks() * SCARLET_PHANTOM_DIVE_BLOCKS_PER_TICK,
+            (components == null ? dive.durationTicks() : config.activeTicks() - config.phantomCount() * config.phantomIntervalTicks()) * SCARLET_PHANTOM_DIVE_BLOCKS_PER_TICK,
             dive.durationTicks(),
             true
         ));
@@ -929,6 +947,12 @@ public final class MaleniaSkillEventPlanner {
         return lockTick;
     }
 
+    private static StageLayout componentLayout(ActionTimeline timeline) {
+        List<ActiveWindow> windows = new ArrayList<>();
+        for (int index = 0; index < timeline.stages().size(); index++) windows.add(new ActiveWindow(timeline.activeStartTick(index), timeline.activeEndTick(index)));
+        return new StageLayout(windows, timeline.totalTicks());
+    }
+
     private static int intervalHitLimit(int durationTicks, int intervalTicks) {
         return durationTicks / intervalTicks;
     }
@@ -994,8 +1018,8 @@ public final class MaleniaSkillEventPlanner {
         private PlungeTiming {
             Objects.requireNonNull(bladeWindow, "bladeWindow");
             Objects.requireNonNull(burstWindow, "burstWindow");
-            if (bladeWindow.endTickExclusive() != burstWindow.startTickInclusive()) {
-                throw new IllegalArgumentException("plunge blade must immediately precede its burst");
+            if (bladeWindow.endTickExclusive() > burstWindow.startTickInclusive()) {
+                throw new IllegalArgumentException("plunge blade must finish before its burst starts");
             }
         }
     }

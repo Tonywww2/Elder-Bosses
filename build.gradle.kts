@@ -73,6 +73,8 @@ tasks {
             expand(props)
         }
         exclude("META-INF/neoforge.mods.toml")
+        exclude("data/*/structure/**")
+        exclude("data/*/recipe/**")
         exclude("data/**/loot_table/**")
         exclude("data/**/tags/block/**")
         exclude("data/**/tags/entity_type/**")

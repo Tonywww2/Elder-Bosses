@@ -558,9 +558,14 @@ public final class MaleniaIndicatorGenerator {
         int startTick = mapping == ActionMapping.AEONIA
                 ? skillConfig.scarletAeonia().telegraphStartTick()
                 : 0;
+        if (mapping == ActionMapping.AEONIA && !skillConfig.tuning(MaleniaActionId.SCARLET_AEONIA).componentStages().isEmpty()) {
+            startTick = plan.intents().stream().filter(scheduled -> scheduled.intent() instanceof MaleniaServerIntent.LockPoint point
+            && point.pointId().equals("aeonia_impact")).mapToInt(ScheduledIntent::actionTick).findFirst().orElse(0) + 1;
+        }
+        int telegraphStart = startTick;
         return segments.values().stream()
                 .map(segment -> segment.freeze(
-                        Math.min(startTick, segment.firstTick),
+                Math.min(telegraphStart, segment.firstTick),
                         lockTick(plan, segment)
                 ))
                 .sorted(Comparator.comparingInt(Segment::activeTick)

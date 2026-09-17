@@ -5,7 +5,7 @@
 1. **Completed in Blockbench and focused tests:** correct anatomical handedness, with
    the right prosthetic arm holding the sword and the left hand empty. Geometry,
    pivots, UV faces and animation rotations are reflected together. Preserve v6 in
-   [malenia.pre-v7.bbmodel](malenia.pre-v7.bbmodel).
+   malenia.pre-v7.bbmodel (historical artifact removed).
 2. **Completed in Blockbench and focused tests:** articulate each empty-hand finger
    with proximal/distal pivots and an opposed thumb. Relax the idle palm, open before
    a grab, close after contact, and release on a miss or throw. Prevent backwards

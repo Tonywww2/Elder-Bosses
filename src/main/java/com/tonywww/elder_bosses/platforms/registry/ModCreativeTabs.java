@@ -34,6 +34,19 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.YOUNG_LION_GREATSWORD.get());
                         output.accept(ModItems.CIRCLET_OF_FADING_LIGHT.get());
                         output.accept(ModItems.GATE_FRAGMENT.get());
+                        output.accept(ModItems.RUNE_FRAGMENT.get());
+                        output.accept(ModItems.WEATHERED_DIVINE_STONE.get());
+                        output.accept(ModItems.ROOT_RELIEF_STONE.get());
+                        output.accept(ModItems.PALE_SEDIMENT.get());
+                        output.accept(ModItems.CONSORT_ALTAR.get());
+                        output.accept(ModItems.DIVINE_FLAGSTONE.get());
+                        output.accept(ModItems.CRACKED_DIVINE_FLAGSTONE.get());
+                        output.accept(ModItems.DIVINE_MASONRY.get());
+                        output.accept(ModItems.DIVINE_FOUNDATION.get());
+                        output.accept(ModItems.DIVINE_STONE_SLAB.get());
+                        output.accept(ModItems.DIVINE_STONE_STAIRS.get());
+                        output.accept(ModItems.DIVINE_BALUSTRADE.get());
+                        output.accept(ModItems.DIVINE_PILLAR.get());
                     })
                     .build()
     );

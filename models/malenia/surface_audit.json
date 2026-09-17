@@ -1,6 +1,6 @@
 {
-  "revision": "reference_motion_v7",
-  "geometry_sha256": "92fc23cf90089b761ed8bbdb497ba979208a269b1837428e8dbe06a80e914523",
+  "revision": "sculpted_relief_v9",
+  "geometry_sha256": "c747377bf4e738c0e53c79b07cdf30c75fa4f00e7572ad73b35488b242dfb4ae",
   "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
   "tolerance_model_units": 0.006,
   "scope": "Same-facing near-coplanar opaque surface intersections in sampled poses; outward-ray exposure filter. Not a proof for every viewing angle or arbitrary animation frame.",
@@ -9,7 +9,7 @@
       "clip": "idle_phase_one",
       "tick": 0,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
@@ -23,77 +23,77 @@
       "clip": "single_slash",
       "tick": 7,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "single_slash",
       "tick": 10,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "single_slash",
       "tick": 12,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "double_slash",
       "tick": 29,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "rapid_slashes",
       "tick": 16,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "thrust",
       "tick": 24,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "kick",
       "tick": 10,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "grab_impale",
       "tick": 24,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "grab_impale",
       "tick": 44,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "waterfowl_dance",
       "tick": 26,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "waterfowl_dance",
       "tick": 38,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
@@ -107,7 +107,7 @@
       "clip": "upward_combo",
       "tick": 28,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
@@ -156,77 +156,77 @@
       "clip": "walk",
       "tick": 0,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "walk",
       "tick": 8,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "walk",
       "tick": 16,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "walk",
       "tick": 24,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "walk",
       "tick": 31,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "walk_back",
       "tick": 9,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "walk_back",
       "tick": 27,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "strafe_left",
       "tick": 9,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "strafe_right",
       "tick": 9,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "run",
       "tick": 5,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     },
     {
       "clip": "run",
       "tick": 15,
       "phase": 1,
-      "faces": 983,
+      "faces": 1418,
       "exposed_conflicts": 0
     }
   ],

@@ -1,36 +1,43 @@
 {
-  "revision": "reference_lion_v3",
+  "revision": "sculpted_relief_v11",
   "bones": 125,
-  "cubes": 550,
-  "animations": 43,
+  "cubes": 620,
+  "animations": 44,
   "files": [
     {
       "source": "geo/promised_consort.geo.json",
       "target": "geo/entity/promised_consort.geo.json",
-      "bytes": 1056078,
-      "sha256": "1c16d69dc2e223cea325798ef4bf7cc127f207146760c4c979e204b3089ca4a0"
+      "bytes": 1159001,
+      "sha256": "2ba7aa4f976936ed2584052de8f15b89b4b3339f1c8e52c29d05ba1f994601e2"
     },
     {
       "source": "animations/promised_consort.animation.json",
       "target": "animations/entity/promised_consort.animation.json",
-      "bytes": 13722547,
-      "sha256": "587cbad39b4c7dcffc99dc0034baee89ee17f3367afab6150848b9169bae2700"
+      "bytes": 24925694,
+      "sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598"
     },
     {
       "source": "textures/promised_consort.png",
       "target": "textures/entity/promised_consort/promised_consort.png",
-      "bytes": 29794,
-      "sha256": "5a10ec1631225a8e47d6fcc9aac4a17d99556cc9b3be3b0953b36f40be2a0bce"
+      "bytes": 90215,
+      "sha256": "bf7462fee714f49edfcf2b9c8c3ad06464791178694396298156eb503e639224"
     },
     {
       "source": "textures/promised_consort_clone.png",
       "target": "textures/entity/promised_consort/promised_consort_clone.png",
-      "bytes": 25400,
-      "sha256": "54eebd3f41851d73561c3526161092ed161e4f86fc043d3a153489675593dc4f"
+      "bytes": 35919,
+      "sha256": "8501c4f40faf2bacb758e96f97a2d050cf477d339d11147efceda229bb2c0450"
     }
   ],
   "glowmask": "authoring_only; base atlas is the non-emissive runtime fallback",
   "reference_images_in_runtime": false,
-  "visual_review": "see visual_review.json",
-  "runtime_validation": "v3 user-accepted observed scope on Forge and NeoForge; see runtime_validation.json; not exhaustive per-clip acceptance"
+  "visual_review": "runtime_validation.json",
+  "runtime_validation": "pending_current_motion_world_review",
+  "texture_revision": "clustered_transition_v8",
+  "export_scope": "current_consolidated_assets",
+  "source_transparency_preserved_in_clone": true,
+  "motion_revision": "video_motion_v12",
+  "impact_revision": "impact_motion_v2",
+  "current_assets": "current_assets.json",
+  "consolidated": true
 }

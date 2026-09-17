@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "elder_bosses:block/divine_flagstone"
+  }
+}

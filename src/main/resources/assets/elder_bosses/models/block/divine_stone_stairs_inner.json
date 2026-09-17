@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "elder_bosses:block/divine_flagstone",
+    "top": "elder_bosses:block/divine_flagstone",
+    "side": "elder_bosses:block/divine_masonry"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "elder_bosses:promised_consort_arena",
+  "biomes": "#elder_bosses:has_structure/promised_consort_arena",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "terrain": {
+    "max_height_difference": 12,
+    "max_entry_height_difference": 1
+  }
+}

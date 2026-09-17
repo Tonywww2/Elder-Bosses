@@ -1,0 +1,1307 @@
+{
+  "revision": "sculpted_relief_v11",
+  "geometry_revision": "sculpted_relief_v11",
+  "texture_revision": "clustered_transition_v8",
+  "historical_geometry_fields_scope": "changed_geometry, moved bones, baseline and arm length records describe v9 relative to v8; style_refinement records the transform-preserving v10 pass",
+  "radahn_scale": 1.2,
+  "miquella_body_scale": 1,
+  "bones": 125,
+  "cubes": 620,
+  "census": {
+    "radahn": 450,
+    "miquella": 170
+  },
+  "removed": [],
+  "added": [],
+  "changed_geometry": [
+    "miquella_upper_elbow_r",
+    "miquella_upper_forearm_flesh_r",
+    "miquella_upper_palm_r",
+    "miquella_upper_resting_hand_block_r",
+    "miquella_upper_wrist_taper_r",
+    "miquella_upper_hand_bridge_r",
+    "miquella_upper_upper_flesh_r",
+    "miquella_upper_upper_taper_r",
+    "miquella_upper_elbow_l",
+    "miquella_upper_forearm_flesh_l",
+    "miquella_upper_palm_l",
+    "miquella_upper_resting_hand_block_l",
+    "miquella_upper_wrist_taper_l",
+    "miquella_upper_hand_bridge_l",
+    "miquella_upper_upper_flesh_l",
+    "miquella_upper_upper_taper_l",
+    "miquella_lower_elbow_r",
+    "miquella_lower_forearm_flesh_r",
+    "miquella_lower_palm_r",
+    "miquella_lower_resting_hand_block_r",
+    "miquella_lower_wrist_taper_r",
+    "miquella_lower_hand_bridge_r",
+    "miquella_lower_upper_flesh_r",
+    "miquella_lower_upper_taper_r",
+    "miquella_lower_elbow_l",
+    "miquella_lower_forearm_flesh_l",
+    "miquella_lower_palm_l",
+    "miquella_lower_resting_hand_block_l",
+    "miquella_lower_wrist_taper_l",
+    "miquella_lower_hand_bridge_l",
+    "miquella_lower_upper_flesh_l",
+    "miquella_lower_upper_taper_l"
+  ],
+  "outlined_parts": [],
+  "engraved_blade_segments": 48,
+  "atlas_last_row": 318,
+  "animation_sha256": "bbc6d4135bceae1281fb067299ed64fc9392386e19073b78cdf5fb418f542217",
+  "rig_and_animation_tracks_unchanged": false,
+  "status": "relief_geometry_and_pose_checks_passed; world_entry_and_appearance_unconfirmed",
+  "current_runtime_record": "runtime_validation.json",
+  "baseline": "promised_consort.bbmodel.pre-v9",
+  "cloth_segments": [
+    {
+      "name": "cape_shoulder_fold_0",
+      "bone": "cape",
+      "top": [
+        -19.11,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -19.11,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_0",
+      "bone": "cape_middle",
+      "top": [
+        -19.11,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -19.11,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_0",
+      "bone": "cape_end",
+      "top": [
+        -19.11,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -19.11,
+        8.4,
+        17.193
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_0",
+      "bone": "cape",
+      "top": [
+        -16.17,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -16.17,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_0",
+      "bone": "cape_middle",
+      "top": [
+        -16.17,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -16.17,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_0",
+      "bone": "cape_end",
+      "top": [
+        -16.17,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -16.17,
+        8.4,
+        17.193
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_fold_1",
+      "bone": "cape",
+      "top": [
+        -13.23,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -13.23,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_1",
+      "bone": "cape_middle",
+      "top": [
+        -13.23,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -13.23,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_1",
+      "bone": "cape_end",
+      "top": [
+        -13.23,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -13.23,
+        9.06,
+        17.1039
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_1",
+      "bone": "cape",
+      "top": [
+        -10.29,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -10.29,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_1",
+      "bone": "cape_middle",
+      "top": [
+        -10.29,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -10.29,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_1",
+      "bone": "cape_end",
+      "top": [
+        -10.29,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -10.29,
+        9.06,
+        17.1039
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_fold_2",
+      "bone": "cape",
+      "top": [
+        -7.35,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -7.35,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_2",
+      "bone": "cape_middle",
+      "top": [
+        -7.35,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -7.35,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_2",
+      "bone": "cape_end",
+      "top": [
+        -7.35,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -7.35,
+        9.72,
+        17.0148
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_2",
+      "bone": "cape",
+      "top": [
+        -4.41,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -4.41,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_2",
+      "bone": "cape_middle",
+      "top": [
+        -4.41,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -4.41,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_2",
+      "bone": "cape_end",
+      "top": [
+        -4.41,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -4.41,
+        9.72,
+        17.0148
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_fold_3",
+      "bone": "cape",
+      "top": [
+        -1.47,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        -1.47,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_3",
+      "bone": "cape_middle",
+      "top": [
+        -1.47,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        -1.47,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_3",
+      "bone": "cape_end",
+      "top": [
+        -1.47,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        -1.47,
+        8.4,
+        17.193
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_3",
+      "bone": "cape",
+      "top": [
+        1.47,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        1.47,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_3",
+      "bone": "cape_middle",
+      "top": [
+        1.47,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        1.47,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_3",
+      "bone": "cape_end",
+      "top": [
+        1.47,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        1.47,
+        8.4,
+        17.193
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_fold_4",
+      "bone": "cape",
+      "top": [
+        4.41,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        4.41,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_4",
+      "bone": "cape_middle",
+      "top": [
+        4.41,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        4.41,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_4",
+      "bone": "cape_end",
+      "top": [
+        4.41,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        4.41,
+        9.06,
+        17.1039
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_4",
+      "bone": "cape",
+      "top": [
+        7.35,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        7.35,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_4",
+      "bone": "cape_middle",
+      "top": [
+        7.35,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        7.35,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_4",
+      "bone": "cape_end",
+      "top": [
+        7.35,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        7.35,
+        9.06,
+        17.1039
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_fold_5",
+      "bone": "cape",
+      "top": [
+        10.29,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        10.29,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_5",
+      "bone": "cape_middle",
+      "top": [
+        10.29,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        10.29,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_5",
+      "bone": "cape_end",
+      "top": [
+        10.29,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        10.29,
+        9.72,
+        17.0148
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_5",
+      "bone": "cape",
+      "top": [
+        13.23,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        13.23,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_5",
+      "bone": "cape_middle",
+      "top": [
+        13.23,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        13.23,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_5",
+      "bone": "cape_end",
+      "top": [
+        13.23,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        13.23,
+        9.72,
+        17.0148
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_fold_6",
+      "bone": "cape",
+      "top": [
+        16.17,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        16.17,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_fold_6",
+      "bone": "cape_middle",
+      "top": [
+        16.17,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        16.17,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_fold_6",
+      "bone": "cape_end",
+      "top": [
+        16.17,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        16.17,
+        8.4,
+        17.193
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_shoulder_return_6",
+      "bone": "cape",
+      "top": [
+        19.11,
+        77.16,
+        7.9104
+      ],
+      "bottom": [
+        19.11,
+        53.16,
+        11.1504
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_mid_return_6",
+      "bone": "cape_middle",
+      "top": [
+        19.11,
+        57.24,
+        10.5996
+      ],
+      "bottom": [
+        19.11,
+        30.36,
+        14.2284
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "cape_hem_return_6",
+      "bone": "cape_end",
+      "top": [
+        19.11,
+        34.44,
+        13.6776
+      ],
+      "bottom": [
+        19.11,
+        8.4,
+        17.193
+      ],
+      "width": 3.3,
+      "thickness": 0.66
+    },
+    {
+      "name": "front_pleat_4",
+      "bone": "tabard_front",
+      "top": [
+        11.261489,
+        47.590386,
+        -8.607605
+      ],
+      "bottom": [
+        11.778511,
+        35.569614,
+        -9.512395
+      ],
+      "width": 5.34,
+      "thickness": 0.576
+    },
+    {
+      "name": "front_pleat_3",
+      "bone": "tabard_front",
+      "top": [
+        12.761489,
+        47.590386,
+        -9.003605
+      ],
+      "bottom": [
+        13.278511,
+        35.569614,
+        -9.908395
+      ],
+      "width": 1.26,
+      "thickness": 0.36
+    },
+    {
+      "name": "front_drape_r_1",
+      "bone": "tabard_front",
+      "top": [
+        11.735513,
+        36.430965,
+        -9.497141
+      ],
+      "bottom": [
+        12.384487,
+        25.009035,
+        -9.042859
+      ],
+      "width": 5.64,
+      "thickness": 0.576
+    },
+    {
+      "name": "front_drape_r_1_fold",
+      "bone": "tabard_front",
+      "top": [
+        13.235513,
+        36.430965,
+        -9.893141
+      ],
+      "bottom": [
+        13.884487,
+        25.009035,
+        -9.438859
+      ],
+      "width": 1.26,
+      "thickness": 0.36
+    },
+    {
+      "name": "front_drape_r_2",
+      "bone": "tabard_front",
+      "top": [
+        12.384122,
+        25.869372,
+        -9.018993
+      ],
+      "bottom": [
+        11.735878,
+        14.330628,
+        -10.121007
+      ],
+      "width": 5.28,
+      "thickness": 0.576
+    },
+    {
+      "name": "front_drape_r_2_fold",
+      "bone": "tabard_front",
+      "top": [
+        13.884122,
+        25.869372,
+        -9.414993
+      ],
+      "bottom": [
+        13.235878,
+        14.330628,
+        -10.517007
+      ],
+      "width": 1.26,
+      "thickness": 0.36
+    },
+    {
+      "name": "front_pleat_0",
+      "bone": "tabard_front",
+      "top": [
+        -11.261489,
+        47.590386,
+        -8.607605
+      ],
+      "bottom": [
+        -11.778511,
+        35.569614,
+        -9.512395
+      ],
+      "width": 5.34,
+      "thickness": 0.576
+    },
+    {
+      "name": "front_pleat_1",
+      "bone": "tabard_front",
+      "top": [
+        -12.761489,
+        47.590386,
+        -9.003605
+      ],
+      "bottom": [
+        -13.278511,
+        35.569614,
+        -9.908395
+      ],
+      "width": 1.26,
+      "thickness": 0.36
+    },
+    {
+      "name": "front_drape_l_1",
+      "bone": "tabard_front",
+      "top": [
+        -11.735513,
+        36.430965,
+        -9.497141
+      ],
+      "bottom": [
+        -12.384487,
+        25.009035,
+        -9.042859
+      ],
+      "width": 5.64,
+      "thickness": 0.576
+    },
+    {
+      "name": "front_drape_l_1_fold",
+      "bone": "tabard_front",
+      "top": [
+        -13.235513,
+        36.430965,
+        -9.893141
+      ],
+      "bottom": [
+        -13.884487,
+        25.009035,
+        -9.438859
+      ],
+      "width": 1.26,
+      "thickness": 0.36
+    },
+    {
+      "name": "front_drape_l_2",
+      "bone": "tabard_front",
+      "top": [
+        -12.385539,
+        25.869053,
+        -9.016584
+      ],
+      "bottom": [
+        -11.734461,
+        14.930947,
+        -10.123416
+      ],
+      "width": 5.28,
+      "thickness": 0.576
+    },
+    {
+      "name": "front_drape_l_2_fold",
+      "bone": "tabard_front",
+      "top": [
+        -13.885539,
+        25.869053,
+        -9.412584
+      ],
+      "bottom": [
+        -13.234461,
+        14.930947,
+        -10.519416
+      ],
+      "width": 1.26,
+      "thickness": 0.36
+    }
+  ],
+  "projected_arm_opacity": 0.45,
+  "miquella_hand_scale": [
+    0.94,
+    0.9,
+    0.64
+  ],
+  "glove_sleeves": [
+    {
+      "side": "r",
+      "bone": "forearm_r",
+      "elbow": [
+        24,
+        58.2,
+        -0.24
+      ],
+      "wrist": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "cuff_start": [
+        25.2,
+        50.7,
+        -1.3199999999999998
+      ],
+      "forearm_coverage": 0.5
+    },
+    {
+      "side": "l",
+      "bone": "forearm_l",
+      "elbow": [
+        -24,
+        58.2,
+        -0.24
+      ],
+      "wrist": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "cuff_start": [
+        -25.2,
+        50.7,
+        -1.3199999999999998
+      ],
+      "forearm_coverage": 0.5
+    }
+  ],
+  "original_arm_geometry_unchanged": true,
+  "original_arm_geometry_scope": "radahn_only",
+  "rig_unchanged": false,
+  "non_cloth_animation_tracks_unchanged": true,
+  "cloth_animation_changes_inherited_from": "draped_projection_v7",
+  "cloth_animation_tracks_modified": [
+    "walk/tabard_front.rotation",
+    "walk_phase_two/tabard_front.rotation",
+    "run/tabard_front.rotation",
+    "run_phase_two/tabard_front.rotation"
+  ],
+  "protected_radahn_arms": [
+    "upper_arm_r",
+    "upper_arm_l",
+    "forearm_r",
+    "forearm_l"
+  ],
+  "faces": 3206,
+  "geometry_sha256": "81b20cb966231f005417794ee15ca98cdc8abc7e70a4400a54f43cfb0f171c77",
+  "texture_and_cloth_audit": "revision_validation.json",
+  "runtime_acceptance": "client_loaded_and_exited; world_entry_not_confirmed; appearance_question_skipped; see runtime_validation.json",
+  "historical_v8_runtime": {
+    "logged_in_at": "2026-09-12T22:00:15.623",
+    "all_dimensions_saved_at": "2026-09-12T22:01:54.147",
+    "client_exit": "normal; BUILD SUCCESSFUL",
+    "user_feedback": "Still too long; shorten both arm pairs to 3/5 of their current length",
+    "acceptance": "not_accepted; further_shortening_requested"
+  },
+  "moved_bones": [
+    "miquella_upper_forearm_r",
+    "miquella_upper_hand_r",
+    "miquella_upper_fingers_r",
+    "miquella_upper_forearm_l",
+    "miquella_upper_hand_l",
+    "miquella_upper_fingers_l",
+    "miquella_lower_forearm_r",
+    "miquella_lower_hand_r",
+    "miquella_lower_fingers_r",
+    "miquella_lower_forearm_l",
+    "miquella_lower_hand_l",
+    "miquella_lower_fingers_l"
+  ],
+  "upper_arms": [
+    {
+      "tier": "upper",
+      "side": "r",
+      "shoulder": [
+        2,
+        93.9,
+        11.1
+      ],
+      "previous_elbow": [
+        6.43952,
+        90.34967999999999,
+        5.87424
+      ],
+      "elbow": [
+        4.663712,
+        91.769808,
+        7.964544
+      ],
+      "previous_wrist": [
+        7.15352,
+        84.30068,
+        -4.80776
+      ],
+      "wrist": [
+        5.092112,
+        88.14040800000001,
+        1.5553439999999998
+      ],
+      "previous_upper_length": 7.721572217521513,
+      "upper_length": 4.632943330512908,
+      "previous_forearm_length": 12.296557282426653,
+      "forearm_length": 7.377934369455988
+    },
+    {
+      "tier": "upper",
+      "side": "l",
+      "shoulder": [
+        -6.4,
+        93.9,
+        11.1
+      ],
+      "previous_elbow": [
+        -9.11152,
+        89.95008,
+        5.87424
+      ],
+      "elbow": [
+        -8.026912000000001,
+        91.53004800000001,
+        7.964544
+      ],
+      "previous_wrist": [
+        -7.825520000000001,
+        85.05608,
+        -4.80776
+      ],
+      "wrist": [
+        -7.255312000000002,
+        88.593648,
+        1.5553439999999998
+      ],
+      "previous_upper_length": 7.089624552428714,
+      "upper_length": 4.253774731457225,
+      "previous_forearm_length": 11.819905075760975,
+      "forearm_length": 7.091943045456586
+    },
+    {
+      "tier": "lower",
+      "side": "r",
+      "shoulder": [
+        2,
+        90.2,
+        13.1
+      ],
+      "previous_elbow": [
+        9.05312,
+        85.58408,
+        8.21264
+      ],
+      "elbow": [
+        6.231872,
+        87.430448,
+        10.167584
+      ],
+      "previous_wrist": [
+        14.537120000000002,
+        82.31508,
+        -1.33936
+      ],
+      "wrist": [
+        9.522272000000001,
+        85.469048,
+        4.436384
+      ],
+      "previous_upper_length": 9.743690622674757,
+      "upper_length": 5.846214373604857,
+      "previous_forearm_length": 11.489182782078109,
+      "forearm_length": 6.893509669246863
+    },
+    {
+      "tier": "lower",
+      "side": "l",
+      "shoulder": [
+        -6.4,
+        90.2,
+        13.1
+      ],
+      "previous_elbow": [
+        -10.28512,
+        85.27016,
+        8.21264
+      ],
+      "elbow": [
+        -8.731072,
+        87.242096,
+        10.167584
+      ],
+      "previous_wrist": [
+        -15.769120000000001,
+        81.95716000000002,
+        -1.33936
+      ],
+      "wrist": [
+        -12.021472,
+        85.25429600000001,
+        4.436384
+      ],
+      "previous_upper_length": 7.9551095284477364,
+      "upper_length": 4.773065717068642,
+      "previous_forearm_length": 11.501779384077922,
+      "forearm_length": 6.901067630446753
+    }
+  ],
+  "animation_tracks_unchanged_this_revision": true,
+  "upper_arm_length_scale": 0.6,
+  "forearm_length_scale": 0.6,
+  "hand_dimensions_unchanged_this_revision": true,
+  "style_refinement": {
+    "baseline": "promised_consort.bbmodel.pre-style-v10",
+    "target_elements": [
+      "upper_cuirass",
+      "rib_chamfer_1",
+      "breastplate_1",
+      "lower_cuirass_bevel_1",
+      "rib_chamfer_-1",
+      "breastplate_-1",
+      "lower_cuirass_bevel_-1",
+      "pauldron_lame_r_0",
+      "pauldron_lame_r_1",
+      "pauldron_lame_l_0",
+      "pauldron_lame_l_1",
+      "mane_lock_01_root",
+      "mane_lock_01_tip",
+      "mane_lock_02_root",
+      "mane_lock_02_tip",
+      "mane_lock_03_root",
+      "mane_lock_03_tip",
+      "mane_lock_04_root",
+      "mane_lock_04_tip",
+      "mane_lock_05_root",
+      "mane_lock_05_tip",
+      "mane_lock_06_root",
+      "mane_lock_06_tip",
+      "mane_lock_07_root",
+      "mane_lock_07_tip",
+      "mane_lock_08_root",
+      "mane_lock_08_tip",
+      "mane_lock_09_root",
+      "mane_lock_09_tip",
+      "mane_lock_10_root",
+      "mane_lock_10_tip",
+      "mane_lock_11_root",
+      "mane_lock_11_tip",
+      "mane_lock_12_root",
+      "mane_lock_12_tip",
+      "hair_lock_01_root",
+      "hair_lock_01_tip",
+      "hair_lock_02_root",
+      "hair_lock_02_tip",
+      "hair_lock_03_root",
+      "hair_lock_03_tip",
+      "hair_lock_04_root",
+      "hair_lock_04_tip",
+      "hair_lock_05_root",
+      "hair_lock_05_tip",
+      "hair_lock_06_root",
+      "hair_lock_06_tip",
+      "miquella_torso",
+      "miquella_shoulder_drape",
+      "miquella_scalp",
+      "miquella_temple_lock_1",
+      "miquella_parted_fringe_1",
+      "miquella_face_tress_1",
+      "miquella_draped_leg_1",
+      "miquella_temple_lock_-1",
+      "miquella_parted_fringe_-1",
+      "miquella_face_tress_-1",
+      "miquella_draped_leg_-1",
+      "ivory_robe_0",
+      "ivory_robe_1",
+      "ivory_robe_2",
+      "ivory_robe_3",
+      "ivory_robe_4",
+      "miquella_lock_01_root_ribbon",
+      "miquella_lock_01_root_taper",
+      "miquella_lock_01_mid_ribbon",
+      "miquella_lock_01_mid_taper",
+      "miquella_lock_01_end_ribbon",
+      "miquella_lock_01_end_taper",
+      "miquella_lock_01_tip_ribbon",
+      "miquella_lock_01_outer_wave",
+      "miquella_lock_02_root_ribbon",
+      "miquella_lock_02_root_taper",
+      "miquella_lock_02_mid_ribbon",
+      "miquella_lock_02_mid_taper",
+      "miquella_lock_02_end_ribbon",
+      "miquella_lock_02_end_taper",
+      "miquella_lock_02_tip_ribbon",
+      "miquella_lock_02_outer_wave",
+      "miquella_lock_03_root_ribbon",
+      "miquella_lock_03_root_taper",
+      "miquella_lock_03_mid_ribbon",
+      "miquella_lock_03_mid_taper",
+      "miquella_lock_03_end_ribbon",
+      "miquella_lock_03_end_taper",
+      "miquella_lock_03_tip_ribbon",
+      "miquella_lock_03_outer_wave",
+      "miquella_lock_04_root_ribbon",
+      "miquella_lock_04_root_taper",
+      "miquella_lock_04_mid_ribbon",
+      "miquella_lock_04_mid_taper",
+      "miquella_lock_04_end_ribbon",
+      "miquella_lock_04_end_taper",
+      "miquella_lock_04_tip_ribbon",
+      "miquella_lock_04_outer_wave",
+      "miquella_lock_05_root_ribbon",
+      "miquella_lock_05_root_taper",
+      "miquella_lock_05_mid_ribbon",
+      "miquella_lock_05_mid_taper",
+      "miquella_lock_05_end_ribbon",
+      "miquella_lock_05_end_taper",
+      "miquella_lock_05_tip_ribbon",
+      "miquella_lock_05_outer_wave",
+      "miquella_lock_06_root_ribbon",
+      "miquella_lock_06_root_taper",
+      "miquella_lock_06_mid_ribbon",
+      "miquella_lock_06_mid_taper",
+      "miquella_lock_06_end_ribbon",
+      "miquella_lock_06_end_taper",
+      "miquella_lock_06_tip_ribbon",
+      "miquella_lock_06_outer_wave",
+      "miquella_lock_07_root_ribbon",
+      "miquella_lock_07_root_taper",
+      "miquella_lock_07_mid_ribbon",
+      "miquella_lock_07_mid_taper",
+      "miquella_lock_07_end_ribbon",
+      "miquella_lock_07_end_taper",
+      "miquella_lock_07_tip_ribbon",
+      "miquella_lock_07_outer_wave",
+      "miquella_lock_08_root_ribbon",
+      "miquella_lock_08_root_taper",
+      "miquella_lock_08_mid_ribbon",
+      "miquella_lock_08_mid_taper",
+      "miquella_lock_08_end_ribbon",
+      "miquella_lock_08_end_taper",
+      "miquella_lock_08_tip_ribbon",
+      "miquella_lock_08_outer_wave",
+      "miquella_lock_09_root_ribbon",
+      "miquella_lock_09_root_taper",
+      "miquella_lock_09_mid_ribbon",
+      "miquella_lock_09_mid_taper",
+      "miquella_lock_09_end_ribbon",
+      "miquella_lock_09_end_taper",
+      "miquella_lock_09_tip_ribbon",
+      "miquella_lock_09_outer_wave",
+      "miquella_lock_10_root_ribbon",
+      "miquella_lock_10_root_taper",
+      "miquella_lock_10_mid_ribbon",
+      "miquella_lock_10_mid_taper",
+      "miquella_lock_10_end_ribbon",
+      "miquella_lock_10_end_taper",
+      "miquella_lock_10_tip_ribbon",
+      "miquella_lock_10_outer_wave"
+    ],
+    "uv_regions": 858,
+    "geometry_transforms_unchanged": true,
+    "rig_unchanged": true,
+    "animation_tracks_unchanged": true,
+    "protected": "all_non_target_pixels_and_all_arm_proportions_projection_alpha_blade_patterns"
+  },
+  "proportions_revision": "proportioned_arms_v9",
+  "relief_record": "relief_validation.json"
+}

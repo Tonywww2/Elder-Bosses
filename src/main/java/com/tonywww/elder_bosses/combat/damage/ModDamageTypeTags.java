@@ -8,6 +8,7 @@ import net.minecraft.world.damagesource.DamageType;
 public final class ModDamageTypeTags {
     public static final TagKey<DamageType> FORCED_DEATH = create("forced_death");
     public static final TagKey<DamageType> BYPASSES_BOSS_SCALING = create("bypasses_boss_scaling");
+    public static final TagKey<DamageType> NON_RANGED = create("non_ranged");
     public static final TagKey<DamageType> MAGIC = create("magic");
     public static final TagKey<DamageType> FIRE = create("fire");
     public static final TagKey<DamageType> LIGHTNING = create("lightning");

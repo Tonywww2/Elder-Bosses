@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-16",
+  "revision": "material_samples_refined_v3",
+  "decision": "accepted_as_editor_material_baseline",
+  "user_response": "可以，采用这版作为细化基线",
+  "scope": "editor_material_baseline_only",
+  "session_constraint": "editor_only_no_client_no_runtime_pack_installation",
+  "whitebox_source_sha256": "23a66539db44999688bdf37c7239e9302fb44d5ab6742af3bfb9c8b9483365b3",
+  "resource_manifest_sha256": "3765a6e007561e046f92a86d6c8499cc971d8087591682d34c75aae9e9c0a49a",
+  "sample_model": "build/ai-previews/arena-materials-refined/promised_consort_arena_materials_refined_v3.bbmodel",
+  "sample_model_sha256": "76c282bd1fbc11b8f680f9022ce363856717b0d57b407867a218db56e558ae19",
+  "assistant_inspection": "baseline_and_candidate_v2_comparison_only; refined_v3_accepted_by_user_in_editor",
+  "full_arena_material_pass_approved": false,
+  "entered_world": false,
+  "runtime_deployment_approved": false,
+  "p2_in_world_gate_passed": false
+}

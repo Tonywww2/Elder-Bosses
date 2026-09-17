@@ -1,12 +1,16 @@
 {
-  "checks": 279370,
+  "status": "current_asset_contracts_passed",
+  "model": "promised_consort",
+  "checks": 1530875,
   "bones": 125,
-  "cubes": 550,
-  "faces": 3208,
-  "animations": 43,
-  "embedded_texture_matches": true,
+  "cubes": 620,
+  "faces": 3481,
+  "animations": 44,
+  "editor_channels": 16500,
+  "editor_keys": 245937,
   "runtime_files_match": true,
-  "rendered_gait_samples": 72,
-  "status": "asset_contracts_passed",
-  "runtime_acceptance": "client_world_required"
+  "editor_export_tolerance": 0.0001,
+  "historical_snapshots_required": false,
+  "visual_acceptance": "not_inferred",
+  "world_tested": false
 }

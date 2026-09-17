@@ -1,7 +1,7 @@
 {
   "ticks_per_second": 20,
   "root_motion": "server_only",
-  "revision": "reference_motion_v7",
+  "revision": "sculpted_relief_v9",
   "figure_scale": 1.2,
   "interpolation": "bounded_cubic_baked",
   "grip_rotation": "limited_wrist_pitch_with_forearm_compensation",
@@ -503,5 +503,7 @@
       "duration_ticks": 84,
       "loop": true
     }
-  }
+  },
+  "consolidated": true,
+  "current_assets": "current_assets.json"
 }

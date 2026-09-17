@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {"item": "minecraft:nether_star"},
+    {"item": "minecraft:gold_ingot"}
+  ],
+  "result": {"item": "elder_bosses:rune_fragment", "count": 1}
+}

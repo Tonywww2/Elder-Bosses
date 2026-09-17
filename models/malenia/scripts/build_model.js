@@ -6,6 +6,9 @@
     let fs = require("fs");
     let workspace = "C:/Users/12044/Documents/EX/IDEA_PROJECT/ElderBosses/models/malenia";
     let artDirection = JSON.parse(fs.readFileSync(workspace + "/art_direction.json", "utf8"));
+    let styleModule = {exports: {}};
+    new Function("module", fs.readFileSync(workspace + "/../shared/surface_style.js", "utf8"))(styleModule);
+    let surfaceStyle = styleModule.exports;
     let groups = {};
     let cubeSurfaces = [];
     let bones = [
@@ -97,7 +100,7 @@
     Project.texture_width = textureSize;
     Project.texture_height = textureSize;
     Project.geometry_name = "elder_bosses.malenia";
-    Project.visible_box = [12, 9, 3];
+    Project.visible_box = [12, 9.5, 3.25];
     Project.box_uv = false;
 
     for (let [name, parent, origin] of bones) {
@@ -113,24 +116,7 @@
     let emissive = document.createElement("canvas");
     emissive.width = emissive.height = textureSize;
     let glowPaint = emissive.getContext("2d");
-    let materials = {
-        gold: ["#433626", "#665437", "#9A7B49", "#B39760", "#D2B978"],
-        gold_edge: ["#59452F", "#8F713E", "#BDA066", "#D2B978", "#E5D7A3"],
-        joint: ["#242528", "#393834", "#62533A", "#9B804C", "#CAB075"],
-        steel: ["#37383A", "#656A68", "#A7A397", "#C3C2B1", "#E0D7B9"],
-        robe: ["#2D2C29", "#414035", "#5B5947", "#77725A", "#9B9070"],
-        cloak: ["#27171C", "#442329", "#632C31", "#7D3C3D", "#98504A"],
-        hair: ["#431E22", "#763028", "#A74335", "#BE513B", "#D46B4B"],
-        skin: ["#675852", "#8A7768", "#AD9986", "#C2AF9B", "#D6C4AA"],
-        rot: ["#302B2D", "#544445", "#80695E", "#A08E7B", "#C4AC8D"],
-        branch: ["#1A1517", "#37272A", "#4A352F", "#684632", "#866044"],
-        petal: ["#3A151A", "#732728", "#9D2D2C", "#BD4736", "#E16343"],
-        ivory: ["#524B40", "#82745D", "#B1A58B", "#D1C7AA", "#E1D7BC"],
-        silk: ["#34302E", "#595048", "#827363", "#A08B73", "#C3AA86"],
-        lichen: ["#4F5549", "#80816A", "#ADAA83", "#CCBE8C", "#E0D4A9"],
-        red_vein: ["#3B2225", "#652A29", "#8F3930", "#B45239", "#D17C49"],
-        dark: ["#16171A", "#202329", "#31353B", "#4A4E52", "#747771"]
-    };
+    let materials = artDirection.palette;
     function pixel(horizontal, vertical, color) {
         paint.fillStyle = color;
         paint.fillRect(horizontal, vertical, 1, 1);
@@ -306,7 +292,31 @@
             let density = options.silhouetteMask ? artDirection.silhouette_mask_density : artDirection.texels_per_model_unit;
             let [width, height] = dimensions.map(value => Math.max(1, Math.round(value * density)));
             let requested = options.faceTiles?.[faceName] || options.tile;
-            let [left, top] = requested ? resizeTile(requested, width, height) : surface(width, height, material, faceName, options.motif);
+            let profile = options.styleProfile;
+            let center = cube.from.map((value, axis) => (value + cube.to[axis]) / 2 / artDirection.figure_scale);
+            let nativeSize = size.map(value => value / artDirection.figure_scale);
+            if (!profile && material === "hair") profile = {kind: "hair", path: [[0, 50.8, 0], [0, 41, 2]], width: 6.8, rootContact: 0.3};
+            if (!profile && ["cloak", "robe", "silk"].includes(material)) {
+                let cape = cube.name.startsWith("cape_");
+                profile = {kind: "fabric", path: cape ? [[1.5, 39, 4.6], [1.5, 5, 5.5]] : [[0, 27, 0], [0, 7, 0]],
+                    rootContact: cape ? 0.75 : 0.5, foldFrequency: cape ? 0.76 : 1.05, hem: cape ? 5.6 : 8.2};
+            }
+            if (!profile && material === "skin" && cube.name !== "face" && cube.name !== "jaw_contour") {
+                let lower = /right_shin|right_knee/.test(cube.name), right = /right_thigh|right_hip/.test(cube.name);
+                profile = {kind: "skin", path: lower ? [[-2.8, 14, 0], [-2.8, 3, 0]] : right ? [[-2.8, 25, 0], [-2.8, 14, 0]]
+                    : cube.name === "neck" ? [[0, 43, 0], [0, 39, 0]] : [[7, 38, 0], [7, 25, 0]],
+                    rootContact: 0.7, endContact: 0.25};
+            }
+            if (!profile && material.startsWith("gold") && !options.motif) profile = {kind: "metal",
+                path: [[center[0], center[1] + Math.max(0.5, nativeSize[1] / 2), center[2]],
+                    [center[0], center[1] - Math.max(0.5, nativeSize[1] / 2), center[2]]], rootContact: 0.3};
+            let styled = () => patch(width, height, (horizontal, vertical) => {
+                let sample = surfaceStyle.facePoint(cube, faceName, (horizontal + 0.5) / width, (vertical + 0.5) / height);
+                let point = sample.point.map(value => value / artDirection.figure_scale);
+                if (profile.kind === "fabric" && options.motif === "embroidery" && point[1] >= profile.hem && point[1] < profile.hem + 0.65) return materials.gold[1];
+                return surfaceStyle.sample(point, sample.normal, materials[material], profile);
+            });
+            let [left, top] = requested ? resizeTile(requested, width, height) : profile ? styled() : surface(width, height, material, faceName, options.motif);
             cube.faces[faceName].uv = requested && (faceName === "west" || faceName === "south")
                 ? [left + width, top, left, top + height] : [left, top, left + width, top + height];
             cube.faces[faceName].texture = texture.uuid;
@@ -509,22 +519,29 @@
         box("exposed_crown_" + direction, "phase_two_hair", [direction < 0 ? -3.7 : 0.1, 49.2, -2.0], [direction < 0 ? -0.1 : 3.7, 50.8, 3.0], "hair",
             [0, 0, -direction * 12], [0, 49.5, 1], {density: 3});
     }
-    function strand(name, bone, start, end, width, depth) {
+    function strand(name, bone, start, end, width, depth, profile) {
         let vector = end.map((value, axis) => value - start[axis]);
         let length = Math.hypot(...vector);
         let rotation = [-Math.atan2(vector[2], Math.hypot(vector[0], vector[1])) * 180 / Math.PI, 0,
             Math.atan2(vector[0], -vector[1]) * 180 / Math.PI];
         box(name, bone, [start[0] - width / 2, start[1] - length - 0.08, start[2] - depth / 2],
-            [start[0] + width / 2, start[1] + 0.08, start[2] + depth / 2], "hair", rotation, start, {density: 3, only: ["north", "south", "east", "west", "down"]});
+            [start[0] + width / 2, start[1] + 0.08, start[2] + depth / 2], "hair", rotation, start,
+            {styleProfile: profile, only: ["north", "south", "east", "west", "down"]});
     }
     for (let [index, positions] of hairPaths.entries()) {
         let number = index + 1;
         let bone = "hair_0" + number;
         let endBone = "hair_end_0" + number;
-        strand("hair_lock_" + number, bone, positions[0], positions[1], index < 2 ? 2.2 : 2.5, 1.25);
-        let midpoint = positions[1].map((value, axis) => value + (positions[2][axis] - value) * 0.68);
-        strand("hair_taper_" + number, endBone, positions[1], midpoint, index < 2 ? 1.7 : 2.0, 1.08);
-        strand("hair_tip_" + number, endBone, midpoint, positions[2], 0.95, 0.75);
+        let direction = index % 2 ? -1 : 1;
+        let end = positions[2].map((value, axis) => value + (axis === 0 ? direction * [0.35, 0.15, 0.55, 0.25, 0.4, 0.7][index]
+            : axis === 1 ? [0.3, -0.4, 0.1, -0.5, -0.2, 0.6][index] : 0.3));
+        let midpoint = positions[1].map((value, axis) => value + (end[axis] - value) * 0.62
+            + (axis === 0 ? -direction * 0.22 : axis === 2 ? 0.3 : 0));
+        let width = [2.15, 1.95, 2.85, 2.6, 2.8, 2.5][index];
+        let profile = {kind: "hair", path: [positions[0], positions[1], midpoint, end], width, seed: number, rootContact: 0.8};
+        strand("hair_lock_" + number, bone, positions[0], positions[1], width, index < 2 ? 1.25 : 1.65, profile);
+        strand("hair_taper_" + number, endBone, positions[1], midpoint, width * 0.72, 1.1, profile);
+        strand("hair_tip_" + number, endBone, midpoint, end, width * 0.34, 0.72, profile);
     }
     box("fringe_l", "hair_root", [-3.5, 44.6, -3.2], [-0.25, 49.25, -2.6], "hair", [3, 0, -12], [-1.5, 49, -2.7], {density: 4});
     box("fringe_r", "hair_root", [0.15, 45.1, -3.35], [3.55, 49.5, -2.72], "hair", [5, 0, -9], [1.6, 49, -2.8], {density: 4});

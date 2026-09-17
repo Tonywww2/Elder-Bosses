@@ -1,7 +1,10 @@
 package com.tonywww.elder_bosses.boss.promisedconsort;
 
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
+import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan;
+import com.tonywww.elder_bosses.combat.geometry.Vec2;
 import com.tonywww.elder_bosses.combat.damage.DamageSourceOwnership;
+import com.tonywww.elder_bosses.platforms.entity.PlatformGravityRockProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -19,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
-public final class PromisedConsortGravityRockEntity extends ThrowableItemProjectile {
+public final class PromisedConsortGravityRockEntity extends PlatformGravityRockProjectile {
     private UUID targetId;
     private long actionSequence;
     private int projectileIndex;
@@ -30,6 +33,12 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
     private int maxHitsPerTarget = 3;
     private Vec3 arenaCenter;
     private double arenaRadius;
+    private boolean impactSoundPlayed;
+    private long heldStartTick;
+    private long launchTick;
+    private Vec3 heldOrigin;
+    private int heldCount;
+    private Item chargedItem;
 
     public PromisedConsortGravityRockEntity(
             EntityType<? extends PromisedConsortGravityRockEntity> entityType,
@@ -67,6 +76,37 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
 
     @Override
     public void tick() {
+        if (isHeld()) {
+            baseTick();
+            setDeltaMovement(Vec3.ZERO);
+            if (level().isClientSide) return;
+            PromisedConsortEntity owner = getOwner() instanceof PromisedConsortEntity boss ? boss : null;
+            long now = level().getGameTime();
+            HeldPhase phase = heldPhase(now, launchTick, owner != null && owner.isAlive(),
+                    owner == null ? -1 : owner.activeActionSequence(), actionSequence);
+            if (phase == HeldPhase.CANCEL) {
+                discard();
+                return;
+            }
+            double angle = Math.PI * 2 * projectileIndex / Math.max(1, heldCount);
+            Vec3 overhead = owner.position().add(Math.cos(angle) * 2.4, owner.getBbHeight() + 1.0 + (projectileIndex % 2) * 0.5, Math.sin(angle) * 2.4);
+            double progress = Math.max(0, Math.min(1, (now - heldStartTick) / 16.0));
+            Vec3 destination = heldOrigin.lerp(overhead, progress * progress * (3 - 2 * progress));
+            if (!level().hasChunkAt(BlockPos.containing(destination)) || arenaCenter != null
+                    && destination.subtract(arenaCenter).horizontalDistance() > arenaRadius
+                    || !level().noCollision(this, getBoundingBox().move(destination.subtract(position())))) {
+                discard();
+                return;
+            }
+            setPos(destination.x, destination.y, destination.z);
+            if (progress >= 0.8 && chargedItem != null) setItem(new net.minecraft.world.item.ItemStack(chargedItem));
+            if (phase == HeldPhase.WAIT) return;
+            setHeld(false);
+            owner.playActionSound(PromisedConsortActionSoundPlan.cue("rock_launch", PromisedConsortActionSoundPlan.Sound.DASH, 0.25F, 1.15F),
+                    position(), new Vec2(0, 1));
+                steerTowardTarget();
+                return;
+        }
         if (!level().isClientSide) {
             steerTowardTarget();
             if (!mayEnterNextPosition()) {
@@ -81,6 +121,30 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
         super.tick();
     }
 
+    public void prepareHeld(Vec3 origin, long start, long launch, int count, Item charged) {
+        if (launch <= start || count < 1 || origin == null || charged == null || !Double.isFinite(origin.x + origin.y + origin.z)) {
+            throw new IllegalArgumentException("Invalid held rock timing or origin");
+        }
+        heldOrigin = origin;
+        heldStartTick = start;
+        launchTick = launch;
+        heldCount = count;
+        chargedItem = charged;
+        setHeld(true);
+        setDeltaMovement(Vec3.ZERO);
+    }
+
+    public boolean matchesCast(PromisedConsortEntity owner, long sequence, int index) {
+        return getOwner() == owner && actionSequence == sequence && projectileIndex == index;
+    }
+
+    public enum HeldPhase { WAIT, LAUNCH, CANCEL }
+
+    public static HeldPhase heldPhase(long now, long launchTick, boolean ownerAlive, long activeSequence, long expectedSequence) {
+        if (!ownerAlive || activeSequence != expectedSequence) return HeldPhase.CANCEL;
+        return now < launchTick ? HeldPhase.WAIT : HeldPhase.LAUNCH;
+    }
+
     @Override
     protected Item getDefaultItem() {
         return Items.CRYING_OBSIDIAN;
@@ -88,6 +152,7 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
+        if (isHeld()) return;
         super.onHitEntity(result);
         if (!level().isClientSide
                 && getOwner() instanceof PromisedConsortEntity owner
@@ -106,6 +171,8 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
 
     @Override
     protected void onHit(HitResult result) {
+        if (isHeld()) return;
+        if (result.getType() != HitResult.Type.MISS) playImpactSound(result.getLocation(), 0.55F, 0.95F);
         super.onHit(result);
         if (result.getType() == HitResult.Type.BLOCK) {
             discard();
@@ -130,10 +197,18 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
         }
         durability -= amount;
         if (durability <= 0.0F) {
+            playImpactSound(position(), 0.3F, 1.25F);
             level().broadcastEntityEvent(this, (byte) 3);
             discard();
         }
         return true;
+    }
+
+    private void playImpactSound(Vec3 position, float volume, float pitch) {
+        if (level().isClientSide || impactSoundPlayed || isRemoved() || !(getOwner() instanceof PromisedConsortEntity owner)) return;
+        impactSoundPlayed = true;
+        owner.playActionSound(PromisedConsortActionSoundPlan.cue("rock_impact", PromisedConsortActionSoundPlan.Sound.STOMP, volume, pitch),
+                position, new Vec2(0, 1));
     }
 
     @Override
@@ -212,6 +287,14 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
             tag.putDouble("ArenaCenterZ", arenaCenter.z);
         }
         tag.putDouble("ArenaRadius", arenaRadius);
+        tag.putBoolean("Held", isHeld());
+        if (isHeld()) {
+            tag.putLong("HeldAge", Math.max(0, level().getGameTime() - heldStartTick));
+            tag.putLong("LaunchRemaining", Math.max(0, launchTick - level().getGameTime()));
+            tag.putInt("HeldCount", heldCount);
+            tag.putDouble("HeldX", heldOrigin.x); tag.putDouble("HeldY", heldOrigin.y); tag.putDouble("HeldZ", heldOrigin.z);
+            tag.putString("ChargedItem", net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(chargedItem == null ? Items.CRYING_OBSIDIAN : chargedItem).toString());
+        }
     }
 
     @Override
@@ -236,5 +319,14 @@ public final class PromisedConsortGravityRockEntity extends ThrowableItemProject
             );
         }
         arenaRadius = Math.max(0.0, tag.getDouble("ArenaRadius"));
+        if (tag.getBoolean("Held")) {
+            heldStartTick = level().getGameTime() - Math.max(0, tag.getLong("HeldAge"));
+            launchTick = level().getGameTime() + Math.max(0, tag.getLong("LaunchRemaining"));
+            heldOrigin = new Vec3(tag.getDouble("HeldX"), tag.getDouble("HeldY"), tag.getDouble("HeldZ"));
+            heldCount = Math.max(1, tag.getInt("HeldCount"));
+            chargedItem = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+                com.tonywww.elder_bosses.platforms.PlatformResourceLocation.parse(tag.getString("ChargedItem")));
+            setHeld(true);
+        }
     }
 }

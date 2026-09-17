@@ -6,6 +6,7 @@
     if (inEditor && Project.name !== "promised_consort") throw new Error("Open promised_consort first.");
     let manifest = JSON.parse(fs.readFileSync(path.join(workspace, "animation_manifest.json"), "utf8"));
     let artDirection = JSON.parse(fs.readFileSync(path.join(workspace, "art_direction.json"), "utf8"));
+    if ((artDirection.radahn_scale || 1) !== 1) throw new Error("Keep the refined animation library; its position tracks were scaled without changing authored rotations or timing.");
     let rig = JSON.parse(fs.readFileSync(path.join(workspace, "rig.json"), "utf8"));
     let math = inEditor ? THREE : require(path.join(workspace, ".tools/node_modules/three"));
     let library = {format_version: "1.8.0", animations: {}};

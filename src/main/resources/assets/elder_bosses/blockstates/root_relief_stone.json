@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "elder_bosses:block/root_relief_stone"},
+    "facing=east": {"model": "elder_bosses:block/root_relief_stone", "y": 90},
+    "facing=south": {"model": "elder_bosses:block/root_relief_stone", "y": 180},
+    "facing=west": {"model": "elder_bosses:block/root_relief_stone", "y": 270}
+  }
+}

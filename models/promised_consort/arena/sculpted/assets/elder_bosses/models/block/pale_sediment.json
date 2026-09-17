@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {"particle":"elder_bosses:block/pale_sediment","surface":"elder_bosses:block/pale_sediment"},
+  "elements": [
+    {"from":[0,0.02,4],"to":[4,0.45,13],"faces":{"up":{"texture":"#surface"},"down":{"texture":"#surface"},"north":{"texture":"#surface"},"south":{"texture":"#surface"},"west":{"texture":"#surface"},"east":{"texture":"#surface"}}},
+    {"from":[4,0.02,1],"to":[12,0.45,16],"faces":{"up":{"texture":"#surface"},"down":{"texture":"#surface"},"north":{"texture":"#surface"},"south":{"texture":"#surface"},"west":{"texture":"#surface"},"east":{"texture":"#surface"}}},
+    {"from":[12,0.02,3],"to":[16,0.45,11],"faces":{"up":{"texture":"#surface"},"down":{"texture":"#surface"},"north":{"texture":"#surface"},"south":{"texture":"#surface"},"west":{"texture":"#surface"},"east":{"texture":"#surface"}}},
+    {"from":[5,0.45,5],"to":[10,1,10],"faces":{"up":{"texture":"#surface"},"north":{"texture":"#surface"},"south":{"texture":"#surface"},"west":{"texture":"#surface"},"east":{"texture":"#surface"}}},
+    {"from":[11,0.45,4],"to":[12,0.75,8],"faces":{"up":{"texture":"#surface"},"north":{"texture":"#surface"},"south":{"texture":"#surface"},"west":{"texture":"#surface"},"east":{"texture":"#surface"}}}
+  ]
+}

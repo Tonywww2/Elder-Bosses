@@ -1,0 +1,64 @@
+{
+  "date": "2026-09-18",
+  "deleted_files": 2809,
+  "already_absent": 0,
+  "deleted_directories": 245,
+  "deleted_bytes": 4276869905,
+  "generated_previews_retained": 0,
+  "preview_policy": "Capture again on demand; generated previews and private archives are not versioned",
+  "retired_reconstruction_scripts_removed": 13,
+  "remaining_old_artifact_links_replaced": 143,
+  "final_verification": {
+    "forge_compile_and_resources": "passed_offline",
+    "neoforge_compile_and_resources": "passed_offline",
+    "malenia_reference_assertions": 113,
+    "malenia_GeckoLib_values": 138285,
+    "consort_GeckoLib_values": 737811,
+    "consort_pursuit_support_samples": 7872,
+    "sound_legal_phase_variant_cases": 49,
+    "staged_pinned_assets_byte_identical": 19,
+    "credential_scan_findings": 0
+  },
+  "protected": [
+    "JARs",
+    "world saves",
+    "private archives and recovery attachments",
+    "local dependency environments",
+    "both supported loader targets"
+  ],
+  "current_assets_verified": [
+    {
+      "status": "current_asset_contracts_passed",
+      "model": "malenia",
+      "checks": 311805,
+      "bones": 91,
+      "cubes": 465,
+      "faces": 1814,
+      "animations": 40,
+      "editor_channels": 10920,
+      "editor_keys": 46095,
+      "runtime_files_match": true,
+      "editor_export_tolerance": 0.001001,
+      "historical_snapshots_required": false,
+      "visual_acceptance": "not_inferred",
+      "world_tested": false
+    },
+    {
+      "status": "current_asset_contracts_passed",
+      "model": "promised_consort",
+      "checks": 1530875,
+      "bones": 125,
+      "cubes": 620,
+      "faces": 3481,
+      "animations": 44,
+      "editor_channels": 16500,
+      "editor_keys": 245937,
+      "runtime_files_match": true,
+      "editor_export_tolerance": 0.0001,
+      "historical_snapshots_required": false,
+      "visual_acceptance": "not_inferred",
+      "world_tested": false
+    }
+  ],
+  "visual_or_world_acceptance_inferred": false
+}

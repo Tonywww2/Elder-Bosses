@@ -52,6 +52,14 @@ public final class ClientModEvents {
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                 PlatformResourceLocation.id("consort_energy"), DefaultVertexFormat.POSITION_TEX_COLOR),
                 ConsortEnergyShader::install);
+            try {
+                event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                        PlatformResourceLocation.id("consort_gravity"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                        com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion::install);
+            } catch (java.io.IOException exception) {
+                com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.install(null);
+                com.mojang.logging.LogUtils.getLogger().warn("Consort gravity distortion unavailable; retaining energy effects", exception);
+            }
     }
 
     @SubscribeEvent

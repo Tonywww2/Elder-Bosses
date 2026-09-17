@@ -81,270 +81,382 @@
       "airborne": []
     },
     "left_combo_cross": {
-      "ticks": 78,
+      "ticks": 84,
       "events": [
         {
-          "tick": 9,
+          "tick": 11,
           "sword": "l"
         },
         {
-          "tick": 27,
+          "tick": 21,
           "sword": "r"
         },
         {
-          "tick": 52,
+          "tick": 44,
           "sword": "both"
+        }
+      ],
+      "phase": 0,
+      "key_poses": [
+        0,
+        3,
+        6,
+        8,
+        9.5,
+        11,
+        13,
+        16,
+        18,
+        20,
+        21,
+        23,
+        27,
+        30,
+        34,
+        38,
+        40,
+        42,
+        43,
+        44,
+        46,
+        51,
+        68,
+        76,
+        84
+      ],
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
+    },
+    "right_combo_cross": {
+      "ticks": 75,
+      "events": [
+        {
+          "tick": 11,
+          "sword": "r"
+        },
+        {
+          "tick": 41,
+          "sword": "both"
+        }
+      ],
+      "phase": 0,
+      "key_poses": [
+        0,
+        4,
+        7,
+        9,
+        11,
+        14,
+        18,
+        22,
+        29,
+        33,
+        36,
+        38,
+        40,
+        41,
+        44,
+        51,
+        59,
+        68,
+        75
+      ],
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
+    },
+    "right_combo_left_twin": {
+      "ticks": 75,
+      "events": [
+        {
+          "tick": 18,
+          "sword": "r"
+        },
+        {
+          "tick": 40,
+          "sword": "l"
+        },
+        {
+          "tick": 55,
+          "sword": "l"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
         5,
-        6,
         9,
-        12,
-        19,
-        24,
-        27,
-        30,
-        38,
-        49,
-        52,
-        58,
-        69,
-        78
-      ],
-      "airborne": []
-    },
-    "right_combo_cross": {
-      "ticks": 61,
-      "events": [
-        {
-          "tick": 9,
-          "sword": "r"
-        },
-        {
-          "tick": 35,
-          "sword": "both"
-        }
-      ],
-      "phase": 0,
-      "key_poses": [
-        0,
-        4.5,
-        5.5,
-        9,
-        12.5,
-        30.5,
-        31.5,
-        35,
-        38.5,
-        46.5,
-        61
-      ],
-      "airborne": []
-    },
-    "right_combo_left_twin": {
-      "ticks": 67,
-      "events": [
-        {
-          "tick": 9,
-          "sword": "r"
-        },
-        {
-          "tick": 26,
-          "sword": "l"
-        },
-        {
-          "tick": 44,
-          "sword": "l"
-        }
-      ],
-      "phase": 0,
-      "key_poses": [
-        0,
-        4.5,
-        5.5,
-        9,
-        12.5,
-        21.5,
-        22.5,
+        13,
+        15,
+        16.5,
+        18,
+        21,
         26,
-        29.5,
-        39.5,
-        40.5,
-        44,
-        47.5,
-        55.5,
-        67
+        32,
+        36,
+        38,
+        40,
+        43,
+        47,
+        50,
+        52,
+        55,
+        58,
+        64,
+        70,
+        75
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "left_combo_bloodflame": {
-      "ticks": 64,
+      "ticks": 66,
       "events": [
         {
-          "tick": 13,
+          "tick": 15,
           "sword": "l",
           "kind": "thrust"
         },
         {
-          "tick": 36,
-          "sword": "r"
+          "tick": 35,
+          "sword": "l",
+          "kind": "bloodflame_tear"
         },
         {
-          "tick": 52,
+          "tick": 55,
           "kind": "bloodflame"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
-        8.5,
-        9.5,
-        13,
-        16.5,
-        31.5,
-        32.5,
-        36,
-        39.5,
-        47.5,
-        64
+        4,
+        9,
+        12,
+        15,
+        20,
+        26,
+        31,
+        35,
+        39,
+        46,
+        53,
+        55,
+        66
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "cross_slash": {
-      "ticks": 49,
+      "ticks": 43,
       "events": [
         {
-          "tick": 18,
+          "tick": 17,
           "sword": "both"
         },
         {
-          "tick": 20,
+          "tick": 19,
           "kind": "debris"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
+        3,
+        5,
+        8,
+        12,
         13.5,
-        14.5,
-        18,
-        21.5,
-        29.5,
-        49
+        15,
+        16,
+        17,
+        18.5,
+        19,
+        23,
+        27,
+        31,
+        35,
+        38,
+        41,
+        43
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "right_combo_tempest": {
-      "ticks": 109,
+      "ticks": 149,
       "events": [
         {
-          "tick": 10,
+          "tick": 12,
+          "sword": "r"
+        },
+        {
+          "tick": 33,
+          "sword": "l"
+        },
+        {
+          "tick": 56,
+          "sword": "r"
+        },
+        {
+          "tick": 82,
           "sword": "both"
         },
         {
-          "tick": 29,
-          "sword": "both"
-        },
-        {
-          "tick": 48,
-          "sword": "both"
-        },
-        {
-          "tick": 75,
-          "sword": "both"
-        },
-        {
-          "tick": 79,
+          "tick": 112,
           "sword": "both"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
-        5,
+        4,
         7,
         10,
-        13,
-        22,
-        26,
-        29,
-        32,
-        39,
+        12,
+        15,
+        21,
+        27,
+        30,
+        33,
+        36,
+        42,
+        49,
+        53,
+        56,
+        60,
+        65,
+        69,
+        75,
+        78,
+        80,
+        82,
+        85,
+        88,
+        92,
+        97,
+        102,
+        106,
+        109,
+        112,
+        115,
+        119,
+        127,
+        138,
+        149
+      ],
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
+    },
+    "right_combo_earthheave": {
+      "ticks": 156,
+      "events": [
+        {
+          "tick": 16,
+          "kind": "sword",
+          "sword": "r"
+        },
+        {
+          "tick": 42,
+          "kind": "sword",
+          "sword": "l"
+        },
+        {
+          "tick": 54,
+          "kind": "sword",
+          "sword": "r"
+        },
+        {
+          "tick": 87,
+          "kind": "sword",
+          "sword": "both"
+        },
+        {
+          "tick": 105,
+          "kind": "earth_wave",
+          "sword": "both"
+        }
+      ],
+      "phase": 0,
+      "key_poses": [
+        0,
+        4,
+        9,
+        12,
+        14,
+        16,
+        20,
+        25,
+        31,
+        35,
+        38,
+        40,
+        42,
         45,
         48,
         51,
-        58,
-        71.38724559907921,
-        75,
-        77,
+        54,
+        57,
+        61,
+        67,
+        72,
         79,
+        81,
         83,
+        85,
+        87,
+        91,
         96,
-        109
+        99,
+        101,
+        103,
+        105,
+        109,
+        118,
+        130,
+        141,
+        149,
+        156
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
-    "right_combo_earthheave": {
-      "ticks": 140,
+    "lion_claw": {
+      "ticks": 57,
       "events": [
         {
-          "tick": 10,
-          "kind": "sword"
-        },
-        {
-          "tick": 29,
-          "kind": "sword"
-        },
-        {
-          "tick": 48,
-          "kind": "sword"
-        },
-        {
-          "tick": 77,
-          "kind": "sword"
-        },
-        {
-          "tick": 104,
-          "kind": "earth_wave"
+          "tick": 32,
+          "sword": "both",
+          "kind": "slam"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
         6,
-        7,
-        10,
+        11,
         13,
-        22,
-        26,
+        17,
+        21,
+        25,
         29,
         32,
-        40,
-        45,
-        48,
-        51,
-        58,
-        68,
-        74,
-        77,
-        83,
-        94,
-        102,
-        104,
-        110,
-        122,
-        140
+        36,
+        42,
+        57
       ],
-      "airborne": []
+      "airborne": [
+        [
+          13,
+          31
+        ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
-    "lion_claw": {
-      "ticks": 55,
+    "lion_claw_double": {
+      "ticks": 61,
       "events": [
         {
-          "tick": 22,
+          "tick": 26,
           "sword": "both",
           "kind": "slam"
         }
@@ -353,60 +465,34 @@
       "key_poses": [
         0,
         4,
-        11,
-        14,
-        18,
-        19,
-        22,
-        28,
-        41,
-        55
-      ],
-      "airborne": [
-        [
-          11,
-          21
-        ]
-      ]
-    },
-    "lion_claw_double": {
-      "ticks": 55,
-      "events": [
-        {
-          "tick": 16,
-          "sword": "both",
-          "kind": "slam"
-        }
-      ],
-      "phase": 0,
-      "key_poses": [
-        0,
-        2,
         5,
-        8,
-        12,
-        13,
-        16,
-        22,
-        41,
-        55
+        7,
+        11,
+        15,
+        19,
+        23,
+        26,
+        30,
+        36,
+        61
       ],
       "airborne": [
         [
-          5,
-          15
+          7,
+          25
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "gravity_dive": {
-      "ticks": 54,
+      "ticks": 79,
       "events": [
         {
-          "tick": 24,
+          "tick": 38,
           "sword": "both"
         },
         {
-          "tick": 26,
+          "tick": 43,
           "kind": "impact"
         }
       ],
@@ -414,341 +500,375 @@
       "key_poses": [
         0,
         6,
-        14,
-        18,
-        20.154675101243186,
-        24,
-        26,
-        34,
-        44,
-        54
+        12,
+        16,
+        22,
+        28,
+        33,
+        35,
+        38,
+        43,
+        48,
+        57,
+        70,
+        79
       ],
       "airborne": [
         [
           14,
-          23
+          37
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "starcaller_cry": {
-      "ticks": 74,
+      "ticks": 109,
       "events": [
         {
-          "tick": 30,
+          "tick": 18,
           "kind": "pull"
         },
         {
-          "tick": 39,
+          "tick": 58,
           "kind": "ground_and_spikes"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
-        10,
-        24,
-        30,
-        34,
+        7,
+        13,
+        18,
+        26,
         36,
-        39,
-        45,
+        44,
+        51,
+        55,
         58,
-        74
+        66,
+        77,
+        91,
+        109
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "gravity_meteor": {
-      "ticks": 118,
+      "ticks": 152,
       "events": [
         {
-          "tick": 32,
+          "tick": 90,
           "kind": "rock_launch"
         },
         {
-          "tick": 38,
+          "tick": 94,
           "kind": "rock_launch"
         },
         {
-          "tick": 44,
+          "tick": 98,
           "kind": "rock_launch"
         },
         {
-          "tick": 50,
+          "tick": 102,
           "kind": "rock_launch"
         },
         {
-          "tick": 56,
+          "tick": 106,
           "kind": "rock_launch"
         },
         {
-          "tick": 62,
+          "tick": 110,
           "kind": "rock_launch"
         },
         {
-          "tick": 68,
+          "tick": 114,
           "kind": "rock_launch"
         },
         {
-          "tick": 74,
+          "tick": 118,
           "kind": "rock_launch"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
-        9,
+        10,
         17,
-        24,
-        30,
-        32,
-        45,
-        68,
-        82,
-        96,
-        99,
-        106,
-        118
+        21,
+        29,
+        35,
+        43,
+        63,
+        78,
+        86,
+        90,
+        104,
+        118,
+        128,
+        138,
+        152
       ],
       "airborne": [
         [
           35,
-          98
+          137
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "stomp": {
-      "ticks": 43,
+      "ticks": 32,
       "events": [
         {
-          "tick": 14,
+          "tick": 20,
           "kind": "right_foot_impact"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
-        6,
-        11,
+        4,
+        9,
         14,
+        17,
         20,
-        31,
-        43
+        23,
+        32
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "spiral_assault": {
-      "ticks": 64,
+      "ticks": 79,
       "events": [
         {
-          "tick": 26,
+          "tick": 35,
           "kind": "spiral_sword"
         },
         {
-          "tick": 33,
+          "tick": 43,
           "kind": "slam"
         }
       ],
       "phase": 0,
       "key_poses": [
         0,
-        9,
+        6,
+        12,
+        16,
         22,
-        23,
-        26,
-        29,
-        30,
+        28,
         33,
-        39,
-        51,
-        64
+        35,
+        38,
+        43,
+        48,
+        57,
+        70,
+        79
       ],
       "airborne": [
         [
-          26,
-          32
+          15,
+          42
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "light_of_miquella": {
-      "ticks": 96,
+      "ticks": 144,
       "events": [
         {
-          "tick": 44,
+          "tick": 110,
           "kind": "holy_explosion"
         }
       ],
       "phase": 2,
       "key_poses": [
         0,
-        14,
-        28,
-        43,
-        44,
-        54,
-        68,
-        82,
-        96
+        12,
+        25,
+        40,
+        70,
+        102,
+        110,
+        124,
+        131,
+        137,
+        144
       ],
       "airborne": [
         [
-          24,
-          75
+          25,
+          132
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "ring_of_light": {
-      "ticks": 59,
+      "ticks": 48,
       "events": [
         {
-          "tick": 24,
+          "tick": 26,
           "kind": "expanding_ring"
         }
       ],
       "phase": 2,
       "key_poses": [
         0,
-        9,
-        20.387245599079208,
+        6,
+        14,
+        22,
         24,
-        29,
-        42,
-        59
+        26,
+        30,
+        38,
+        48
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "lightspeed_slash": {
-      "ticks": 86,
+      "ticks": 99,
       "events": [
         {
-          "tick": 28,
+          "tick": 35,
           "kind": "clone"
         },
         {
-          "tick": 34,
+          "tick": 48,
           "kind": "clone"
         },
         {
-          "tick": 40,
+          "tick": 61,
           "kind": "clone"
         },
         {
-          "tick": 51,
+          "tick": 69,
           "sword": "both"
-        }
-      ],
-      "phase": 2,
-      "key_poses": [
-        0,
-        8,
-        19,
-        28,
-        34,
-        40,
-        46,
-        47,
-        51,
-        60,
-        73,
-        86
-      ],
-      "airborne": [
-        [
-          19,
-          50
-        ]
-      ]
-    },
-    "lightspeed_dash": {
-      "ticks": 82,
-      "events": [
-        {
-          "tick": 26,
-          "kind": "clone"
-        },
-        {
-          "tick": 30,
-          "kind": "clone"
-        },
-        {
-          "tick": 34,
-          "kind": "clone"
-        },
-        {
-          "tick": 38,
-          "kind": "clone"
-        },
-        {
-          "tick": 45,
-          "sword": "both"
-        },
-        {
-          "tick": 47,
-          "kind": "trail"
-        }
-      ],
-      "phase": 2,
-      "key_poses": [
-        0,
-        9,
-        22.176027427239053,
-        26,
-        34,
-        42,
-        45,
-        49,
-        64,
-        82
-      ],
-      "airborne": []
-    },
-    "lightspeed_side_dash": {
-      "ticks": 68,
-      "events": [
-        {
-          "tick": 18,
-          "kind": "clone"
-        },
-        {
-          "tick": 23,
-          "kind": "clone"
-        },
-        {
-          "tick": 28,
-          "kind": "clone"
-        },
-        {
-          "tick": 37,
-          "sword": "r"
         }
       ],
       "phase": 2,
       "key_poses": [
         0,
         7,
-        14.17602742723905,
-        18,
-        26,
-        33,
-        37,
-        40,
-        55,
-        68
+        12,
+        22,
+        35,
+        48,
+        61,
+        65,
+        69,
+        76,
+        85,
+        99
       ],
-      "airborne": []
+      "airborne": [
+        [
+          12,
+          68
+        ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
-    "promised_consort": {
-      "ticks": 128,
+    "lightspeed_dash": {
+      "ticks": 103,
       "events": [
         {
-          "tick": 26,
+          "tick": 46,
+          "kind": "clone"
+        },
+        {
+          "tick": 52,
+          "kind": "clone"
+        },
+        {
+          "tick": 58,
+          "kind": "clone"
+        },
+        {
+          "tick": 64,
+          "kind": "clone"
+        },
+        {
+          "tick": 73,
           "sword": "both"
         },
         {
-          "tick": 34,
-          "sword": "both"
+          "tick": 80,
+          "kind": "trail"
+        }
+      ],
+      "phase": 2,
+      "key_poses": [
+        0,
+        10,
+        23,
+        37,
+        46,
+        58,
+        64,
+        68,
+        73,
+        77,
+        80,
+        89,
+        103
+      ],
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
+    },
+    "lightspeed_side_dash": {
+      "ticks": 82,
+      "events": [
+        {
+          "tick": 36,
+          "kind": "clone"
         },
         {
           "tick": 44,
+          "kind": "clone"
+        },
+        {
+          "tick": 52,
+          "kind": "clone"
+        },
+        {
+          "tick": 65,
+          "sword": "r"
+        }
+      ],
+      "phase": 2,
+      "key_poses": [
+        0,
+        6,
+        12,
+        20,
+        28,
+        36,
+        52,
+        60,
+        65,
+        69,
+        82
+      ],
+      "airborne": [
+        [
+          8,
+          24
+        ]
+      ],
+      "motion_revision": "video_motion_v12"
+    },
+    "promised_consort": {
+      "ticks": 151,
+      "events": [
+        {
+          "tick": 27,
+          "sword": "both"
+        },
+        {
+          "tick": 41,
           "sword": "both"
         },
         {
@@ -756,19 +876,23 @@
           "sword": "both"
         },
         {
-          "tick": 68,
+          "tick": 70,
           "sword": "both"
         },
         {
-          "tick": 70,
+          "tick": 111,
+          "sword": "both"
+        },
+        {
+          "tick": 115,
           "kind": "clone"
         },
         {
-          "tick": 73,
+          "tick": 120,
           "kind": "clone"
         },
         {
-          "tick": 76,
+          "tick": 127,
           "kind": "ring"
         }
       ],
@@ -776,112 +900,123 @@
       "key_poses": [
         0,
         10,
-        22,
-        23,
-        26,
-        28,
+        20,
+        24,
+        27,
         31,
-        34,
         36,
         41,
-        44,
+        45,
         49,
         54,
         58,
-        62,
-        66.5,
-        68,
-        73,
-        76,
-        92,
-        112,
-        128
+        63,
+        70,
+        75,
+        83,
+        90,
+        100,
+        107,
+        111,
+        115,
+        120,
+        127,
+        137,
+        151
       ],
       "airborne": [
         [
-          58,
-          67
+          87,
+          110
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "enhanced_earthheave": {
-      "ticks": 78,
+      "ticks": 83,
       "events": [
         {
-          "tick": 20,
+          "tick": 28,
           "sword": "both"
         },
         {
-          "tick": 23,
+          "tick": 47,
           "kind": "light_row"
         },
         {
-          "tick": 25,
+          "tick": 51,
           "kind": "light_row"
         },
         {
-          "tick": 27,
+          "tick": 55,
           "kind": "light_row"
         },
         {
-          "tick": 29,
+          "tick": 59,
           "kind": "light_row"
         }
       ],
       "phase": 2,
       "key_poses": [
         0,
-        6,
-        13,
-        17,
-        20,
-        30,
-        38,
-        45,
-        58,
-        78
+        9,
+        18,
+        24,
+        28,
+        34,
+        39,
+        43,
+        47,
+        59,
+        69,
+        83
       ],
-      "airborne": []
+      "airborne": [],
+      "motion_revision": "video_motion_v12"
     },
     "consort_meteor": {
-      "ticks": 150,
+      "ticks": 280,
       "events": [
         {
-          "tick": 91,
+          "tick": 183,
           "kind": "lock"
         },
         {
-          "tick": 110,
+          "tick": 202,
           "kind": "warning"
         },
         {
-          "tick": 121,
+          "tick": 212,
           "kind": "impact"
         }
       ],
       "phase": 2,
       "key_poses": [
         0,
-        8,
-        20,
-        32,
-        48,
-        51,
-        90,
-        108,
-        117,
-        118,
-        121,
-        129,
-        138,
-        150
+        10,
+        24,
+        34,
+        39,
+        43,
+        60,
+        150,
+        183,
+        198,
+        202,
+        208,
+        212,
+        214,
+        226,
+        245,
+        280
       ],
       "airborne": [
         [
-          32,
-          120
+          43,
+          211
         ]
-      ]
+      ],
+      "motion_revision": "video_motion_v12"
     },
     "hurt": {
       "ticks": 12,

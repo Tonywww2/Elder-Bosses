@@ -1,0 +1,24 @@
+{
+  "revision":"custom_architecture_v6",
+  "paving_bands":[[-6,-3,-8,-5,0,"elder_bosses:cracked_divine_flagstone"],[17,19,3,7,0,"elder_bosses:cracked_divine_flagstone"],[-25,-23,2,6,0,"elder_bosses:cracked_divine_flagstone"]],
+  "boxes":[
+    {"name":"west_portico_plinth","from":[-49,1,-23],"to":[-46,2,-20],"material":"stone_bricks"},
+    {"name":"west_portico_drum","from":[-49,2,-23],"to":[-47,3,-21],"material":"weathered"},
+    {"name":"west_portico_pillar","from":[-49,3,-23],"to":[-47,10,-21],"material":"pillar"},
+    {"name":"west_portico_capital","from":[-49,10,-23],"to":[-47,11,-21],"material":"stone_bricks"},
+    {"name":"west_portico_crown","from":[-49,11,-23],"to":[-47,11.5,-21],"material":"slab"},
+    {"name":"west_inner_plinth","from":[-45,1,-22],"to":[-42,2,-19],"material":"stone_bricks"},
+    {"name":"west_inner_pillar","from":[-44,2,-21],"to":[-43,8,-20],"material":"pillar"},
+    {"name":"west_inner_crown","from":[-44,8,-21],"to":[-43,8.5,-20],"material":"slab"},
+    {"name":"east_portico_plinth","from":[47,1,-30],"to":[50,2,-27],"material":"stone_bricks"},
+    {"name":"east_portico_drum","from":[48,2,-30],"to":[50,3,-28],"material":"weathered"},
+    {"name":"east_portico_pillar","from":[48,3,-30],"to":[50,11,-28],"material":"pillar"},
+    {"name":"east_portico_capital","from":[48,11,-30],"to":[50,12,-28],"material":"stone_bricks"},
+    {"name":"east_portico_crown","from":[48,12,-30],"to":[50,12.5,-28],"material":"slab"},
+    {"name":"east_inner_plinth","from":[44,1,-28],"to":[47,2,-25],"material":"stone_bricks"},
+    {"name":"east_inner_pillar","from":[45,2,-27],"to":[46,9,-26],"material":"pillar"},
+    {"name":"east_inner_crown","from":[45,9,-27],"to":[46,9.5,-26],"material":"slab"},
+    {"name":"rear_west_cornice","from":[-12,5,-64],"to":[-3,5.5,-63],"material":"slab"},
+    {"name":"rear_east_cornice","from":[4,5,-64],"to":[13,5.5,-63],"material":"slab"}
+  ]
+}

@@ -1,6 +1,7 @@
 package com.tonywww.elder_bosses.platforms.registry;
 
 import com.tonywww.elder_bosses.ElderBosses;
+import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import java.util.function.Supplier;
 import net.minecraft.sounds.SoundEvent;
@@ -36,6 +37,20 @@ public final class ModSoundEvents {
         public static final Supplier<SoundEvent> MALENIA_HURT = register("entity.malenia.hurt");
         public static final Supplier<SoundEvent> MALENIA_STAGGER = register("entity.malenia.stagger");
         public static final Supplier<SoundEvent> MALENIA_GRUNT = register("entity.malenia.grunt");
+        private static final java.util.Map<PromisedConsortActionSoundPlan.Sound, Supplier<SoundEvent>> CONSORT_ACTIONS = consortActions();
+
+    private static java.util.Map<PromisedConsortActionSoundPlan.Sound, Supplier<SoundEvent>> consortActions() {
+        var sounds = new java.util.EnumMap<PromisedConsortActionSoundPlan.Sound, Supplier<SoundEvent>>(PromisedConsortActionSoundPlan.Sound.class);
+        for (var sound : PromisedConsortActionSoundPlan.Sound.values()) {
+            sounds.put(sound, SOUNDS.register(sound.eventId(), () -> SoundEvent.createFixedRangeEvent(
+                    PlatformResourceLocation.id(sound.eventId()), sound.distance())));
+        }
+        return java.util.Map.copyOf(sounds);
+    }
+
+    public static SoundEvent promisedConsortAction(PromisedConsortActionSoundPlan.Sound sound) {
+        return CONSORT_ACTIONS.get(sound).get();
+    }
 
     private ModSoundEvents() {
     }

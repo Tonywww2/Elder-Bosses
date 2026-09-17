@@ -1,0 +1,133 @@
+{
+  "revision": "sculpted_flow_v8",
+  "geometry_sha256": "fee92a445695b7bbd8ba12e327aa40d6cc160d85f6630a18a4817fb46043d48d",
+  "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
+  "bounded_bones": [
+    [
+      "cape_02",
+      0.25,
+      0.18
+    ],
+    [
+      "cape_03",
+      0.45,
+      0.28
+    ],
+    [
+      "hair_end_01",
+      0.34,
+      0.25
+    ],
+    [
+      "hair_end_02",
+      0.36,
+      0.25
+    ],
+    [
+      "hair_end_03",
+      0.38,
+      0.25
+    ],
+    [
+      "hair_end_04",
+      0.4,
+      0.25
+    ],
+    [
+      "hair_end_05",
+      0.42000000000000004,
+      0.25
+    ],
+    [
+      "hair_end_06",
+      0.44,
+      0.25
+    ]
+  ],
+  "protected_bones": [
+    "root",
+    "pelvis",
+    "head",
+    "hand_l",
+    "prosthetic_hand_r",
+    "blade_root",
+    "blade_tip"
+  ],
+  "samples": [
+    {
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_one",
+      "tick": 0,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 8,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 8,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "walk",
+      "tick": 8,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 10,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 10,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "single_slash",
+      "tick": 10,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "bound_sign": 0,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "bound_sign": 1,
+      "protected_pose_error": 0
+    },
+    {
+      "clip": "idle_phase_two",
+      "tick": 20,
+      "bound_sign": -1,
+      "protected_pose_error": 0
+    }
+  ],
+  "preview": "previews/style_secondary_bounds.png",
+  "status": "protected_transforms_passed_visually_reviewed_before_client",
+  "scope": "Static extrema of the runtime additive layer, not a recorded physics simulation or exhaustive collision test"
+}

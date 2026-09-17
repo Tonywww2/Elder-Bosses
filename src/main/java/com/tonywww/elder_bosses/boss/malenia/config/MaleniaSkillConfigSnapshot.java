@@ -52,7 +52,13 @@ public record MaleniaSkillConfigSnapshot(
                 new EnumMap<>(MaleniaActionId.class);
         tuningCopy.putAll(tunings);
         for (MaleniaActionId actionId : MaleniaActionId.values()) {
-            Objects.requireNonNull(tuningCopy.get(actionId), "missing tuning for " + actionId);
+            SkillTuning tuning = Objects.requireNonNull(tuningCopy.get(actionId), "missing tuning for " + actionId);
+            if (!tuning.componentStages().isEmpty()) {
+                int expected = defaultComponentStages(actionId).size();
+                if (tuning.componentStages().size() != expected || expected == 0) throw new IllegalArgumentException("Incorrect component count for " + actionId);
+                if (actionId == MaleniaActionId.SCARLET_PHANTOMS && scarletPhantoms.phantomCount() != expected - 1)
+                    throw new IllegalArgumentException("Phantom count must match configured components");
+            }
         }
         tunings = Collections.unmodifiableMap(tuningCopy);
     }
@@ -67,6 +73,22 @@ public record MaleniaSkillConfigSnapshot(
             result.put(actionId, SkillTuning.NEUTRAL);
         }
         return result;
+    }
+
+    public static List<com.tonywww.elder_bosses.combat.action.ActionStage> defaultComponentStages(MaleniaActionId action) {
+        int[] durations = switch (action) {
+            case RAPID_SLASHES -> new int[]{14, 1, 1, 0, 1, 1, 0, 1, 0, 7, 6, 22};
+            case GRAB_IMPALE -> new int[]{24, 5, 0, 15, 1, 0, 9, 1, 12};
+            case WATERFOWL_DANCE -> new int[]{32, 14, 0, 4, 12, 0, 4, 12, 0, 4, 18, 42};
+            case SCARLET_AEONIA -> new int[]{0, 26, 0, 0, 17, 0, 0, 6, 0, 0, 1, 0, 8, 42, 54};
+            case SCARLET_PLUNGE -> new int[]{24, 6, 0, 0, 6, 30};
+            case SCARLET_PHANTOMS -> new int[]{36, 8, 0, 0, 8, 0, 0, 8, 0, 0, 8, 0, 0, 8, 0, 0, 32, 38};
+            default -> new int[0];
+        };
+        List<com.tonywww.elder_bosses.combat.action.ActionStage> stages = new java.util.ArrayList<>();
+        for (int index = 0; index < durations.length; index += 3) stages.add(new com.tonywww.elder_bosses.combat.action.ActionStage(
+            durations[index], durations[index + 1], durations[index + 2]));
+        return List.copyOf(stages);
     }
 
     public enum HealProfile {

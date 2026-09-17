@@ -4,11 +4,11 @@ let path = require("node:path");
 let workspace = path.resolve(__dirname, "..");
 let library = JSON.parse(fs.readFileSync(path.join(workspace, "animations/malenia.animation.json"), "utf8")).animations;
 let manifest = JSON.parse(fs.readFileSync(path.join(workspace, "animation_manifest.json"), "utf8"));
-let baseline = JSON.parse(fs.readFileSync(path.join(workspace, "malenia.pre-v7.bbmodel"), "utf8"));
 let checks = 0;
-for (let animation of baseline.animations) {
-    assert.ok(library[animation.name], "Existing animation ID is retained: " + animation.name);
-    assert.equal(library[animation.name].animation_length, animation.length, "Original gameplay duration: " + animation.name);
+for (let [name, contract] of Object.entries(manifest.clips)) {
+    let animationName = "animation.malenia." + name;
+    assert.ok(library[animationName], "Current animation ID is retained: " + name);
+    assert.equal(library[animationName].animation_length * 20, contract.duration_ticks, "Current gameplay duration: " + name);
     checks += 2;
 }
 assert.equal(Object.keys(library).length, 40);

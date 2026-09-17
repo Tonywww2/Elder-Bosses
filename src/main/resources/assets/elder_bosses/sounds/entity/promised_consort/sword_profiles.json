@@ -1,0 +1,797 @@
+{
+  "geometrySource": "models/promised_consort/promised_consort.bbmodel",
+  "geometrySha256": "9622d7761c470feb238d08c0c665f5c08ab404771f5c9b7fc997592e242289d0",
+  "animationSha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598",
+  "windowsSha256": "5565383b044ed3a75a0a7168713e89753ae8dccabff0b10f404494857a298243",
+  "measurement": "Authoring hierarchy, ZYX rotations; 0.25-tick samples in existing blade windows; tip motion relative to pelvis",
+  "events": {
+    "gravity_dive": [
+      {
+        "index": 0,
+        "contactTick": 38,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 80.09808,
+            "elevationDegrees": -41.59261
+          },
+          {
+            "side": 1,
+            "arcDegrees": 79.89749,
+            "elevationDegrees": -41.02456
+          }
+        ]
+      }
+    ],
+    "left_combo_cross": [
+      {
+        "index": 0,
+        "contactTick": 11,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 167.92774,
+            "elevationDegrees": -6.61893
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 21,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 157.74151,
+            "elevationDegrees": -2.46003
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 44,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 122.88598,
+            "elevationDegrees": -26.09485
+          },
+          {
+            "side": 1,
+            "arcDegrees": 126.68199,
+            "elevationDegrees": -25.20871
+          }
+        ]
+      }
+    ],
+    "left_combo_bloodflame": [
+      {
+        "index": 0,
+        "contactTick": 15,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 14.20412,
+            "elevationDegrees": -13.01614
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 35,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 93.05904,
+            "elevationDegrees": -8.67833
+          }
+        ]
+      }
+    ],
+    "right_combo_cross": [
+      {
+        "index": 0,
+        "contactTick": 11,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 138.74855,
+            "elevationDegrees": -17.11979
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 41,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 80.79262,
+            "elevationDegrees": -3.2073
+          },
+          {
+            "side": 1,
+            "arcDegrees": 110.84227,
+            "elevationDegrees": -13.19658
+          }
+        ]
+      }
+    ],
+    "right_combo_left_twin": [
+      {
+        "index": 0,
+        "contactTick": 18,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 86.00782,
+            "elevationDegrees": -3.84105
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 40,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 128.35257,
+            "elevationDegrees": -1.24817
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 55,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 98.97605,
+            "elevationDegrees": -3.73278
+          }
+        ]
+      }
+    ],
+    "right_combo_tempest": [
+      {
+        "index": 0,
+        "contactTick": 12,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 111.79047,
+            "elevationDegrees": -17.66001
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 33,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 98.15323,
+            "elevationDegrees": -4.17897
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 56,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 122.21548,
+            "elevationDegrees": 10.43606
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "contactTick": 82,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 284.07388,
+            "elevationDegrees": -4.85544
+          },
+          {
+            "side": 1,
+            "arcDegrees": 230.87522,
+            "elevationDegrees": -9.24225
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "contactTick": 112,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 120.25246,
+            "elevationDegrees": -10.17304
+          },
+          {
+            "side": 1,
+            "arcDegrees": 103.30813,
+            "elevationDegrees": -11.00137
+          }
+        ]
+      }
+    ],
+    "right_combo_earthheave": [
+      {
+        "index": 0,
+        "contactTick": 16,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 71.92904,
+            "elevationDegrees": -2.46196
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 42,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 118.69,
+            "elevationDegrees": -2.50934
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 54,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 126.03182,
+            "elevationDegrees": 4.26505
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "contactTick": 87,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 17.35465,
+            "elevationDegrees": -65.87829
+          },
+          {
+            "side": 1,
+            "arcDegrees": 49.33296,
+            "elevationDegrees": -26.00965
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "contactTick": 105,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 139.03938,
+            "elevationDegrees": 31.59861
+          },
+          {
+            "side": 1,
+            "arcDegrees": 138.36793,
+            "elevationDegrees": 30.80499
+          }
+        ]
+      }
+    ],
+    "lion_claw": [
+      {
+        "index": 0,
+        "contactTick": 8,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 83.93483,
+            "elevationDegrees": -80.39352
+          },
+          {
+            "side": 1,
+            "arcDegrees": 80.75442,
+            "elevationDegrees": -73.82108
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 32,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 26.7022,
+            "elevationDegrees": -27.92654
+          },
+          {
+            "side": 1,
+            "arcDegrees": 30.99724,
+            "elevationDegrees": -22.44309
+          }
+        ]
+      }
+    ],
+    "lion_claw_double": [
+      {
+        "index": 0,
+        "contactTick": 6,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 114.9298,
+            "elevationDegrees": -74.75639
+          },
+          {
+            "side": 1,
+            "arcDegrees": 113.36641,
+            "elevationDegrees": -75.50533
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 26,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 24.34765,
+            "elevationDegrees": -15.2047
+          },
+          {
+            "side": 1,
+            "arcDegrees": 30.06891,
+            "elevationDegrees": -11.07424
+          }
+        ]
+      }
+    ],
+    "starcaller_cry": [
+      {
+        "index": 0,
+        "contactTick": 58,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 15.93522,
+            "elevationDegrees": -61.19739
+          },
+          {
+            "side": 1,
+            "arcDegrees": 17.35174,
+            "elevationDegrees": -61.00875
+          }
+        ]
+      }
+    ],
+    "gravity_meteor": [
+      {
+        "index": 0,
+        "contactTick": 21,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 13.0433,
+            "elevationDegrees": -49.93785
+          },
+          {
+            "side": 1,
+            "arcDegrees": 11.52308,
+            "elevationDegrees": -44.08876
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 90,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 78.06919,
+            "elevationDegrees": -27.98053
+          },
+          {
+            "side": 1,
+            "arcDegrees": 15.0211,
+            "elevationDegrees": -22.89377
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 144,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 19.40434,
+            "elevationDegrees": -37.94889
+          },
+          {
+            "side": 1,
+            "arcDegrees": 17.1026,
+            "elevationDegrees": -29.73636
+          }
+        ]
+      }
+    ],
+    "stomp": [],
+    "cross_slash": [
+      {
+        "index": 0,
+        "contactTick": 17,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 110.21487,
+            "elevationDegrees": -13.18579
+          },
+          {
+            "side": 1,
+            "arcDegrees": 109.32041,
+            "elevationDegrees": -12.83648
+          }
+        ]
+      }
+    ],
+    "spiral_assault": [
+      {
+        "index": 0,
+        "contactTick": 35,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 95.13496,
+            "elevationDegrees": -22.70322
+          },
+          {
+            "side": 1,
+            "arcDegrees": 80.27602,
+            "elevationDegrees": -32.48137
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 43,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 31.18017,
+            "elevationDegrees": -21.75082
+          },
+          {
+            "side": 1,
+            "arcDegrees": 33.03424,
+            "elevationDegrees": -19.6454
+          }
+        ]
+      }
+    ],
+    "light_of_miquella": [],
+    "ring_of_light": [
+      {
+        "index": 0,
+        "contactTick": 26,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 104.62805,
+            "elevationDegrees": -29.03311
+          }
+        ]
+      }
+    ],
+    "lightspeed_slash": [
+      {
+        "index": 0,
+        "contactTick": 69,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 12.4736,
+            "elevationDegrees": -56.55593
+          },
+          {
+            "side": 1,
+            "arcDegrees": 12.60112,
+            "elevationDegrees": -55.9942
+          }
+        ]
+      }
+    ],
+    "lightspeed_dash": [
+      {
+        "index": 0,
+        "contactTick": 73,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 7.21783,
+            "elevationDegrees": 4.29748
+          },
+          {
+            "side": 1,
+            "arcDegrees": 11.76076,
+            "elevationDegrees": -39.62771
+          }
+        ]
+      }
+    ],
+    "lightspeed_side_dash": [
+      {
+        "index": 0,
+        "contactTick": 65,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 88.20841,
+            "elevationDegrees": -14.5387
+          }
+        ]
+      }
+    ],
+    "promised_consort": [
+      {
+        "index": 0,
+        "contactTick": 27,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 106.96385,
+            "elevationDegrees": -23.30819
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 41,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 128.24439,
+            "elevationDegrees": -29.10394
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 54,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 227.10593,
+            "elevationDegrees": -25.51454
+          },
+          {
+            "side": 1,
+            "arcDegrees": 152.3783,
+            "elevationDegrees": -26.90018
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "contactTick": 70,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 181.84741,
+            "elevationDegrees": -20.69303
+          },
+          {
+            "side": 1,
+            "arcDegrees": 110.58223,
+            "elevationDegrees": -27.32569
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "contactTick": 111,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 13.68322,
+            "elevationDegrees": -57.57026
+          },
+          {
+            "side": 1,
+            "arcDegrees": 12.22968,
+            "elevationDegrees": -56.54817
+          }
+        ]
+      }
+    ],
+    "enhanced_earthheave": [
+      {
+        "index": 0,
+        "contactTick": 28,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 11.90408,
+            "elevationDegrees": -54.14016
+          },
+          {
+            "side": 1,
+            "arcDegrees": 7.91727,
+            "elevationDegrees": -50.54383
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 47,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 49.31324,
+            "elevationDegrees": 9.34703
+          },
+          {
+            "side": 1,
+            "arcDegrees": 52.23689,
+            "elevationDegrees": 9.79502
+          }
+        ]
+      }
+    ],
+    "consort_meteor": [],
+    "gravity_bulwark": [],
+    "gravity_reflection": [],
+    "gravity_reprisal": [],
+    "cross_leap_combo": [
+      {
+        "index": 0,
+        "contactTick": 27,
+        "swings": [
+          {
+            "side": 1,
+            "arcDegrees": 93.40436,
+            "elevationDegrees": -13.89218
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "contactTick": 41,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 94.63243,
+            "elevationDegrees": -16.77245
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "contactTick": 54,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 188.27333,
+            "elevationDegrees": -18.97998
+          },
+          {
+            "side": 1,
+            "arcDegrees": 143.81343,
+            "elevationDegrees": -21.76264
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "contactTick": 70,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 134.94035,
+            "elevationDegrees": -19.91478
+          },
+          {
+            "side": 1,
+            "arcDegrees": 98.94593,
+            "elevationDegrees": -25.61772
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "contactTick": 111,
+        "swings": [
+          {
+            "side": -1,
+            "arcDegrees": 14.21484,
+            "elevationDegrees": -51.76993
+          },
+          {
+            "side": 1,
+            "arcDegrees": 12.03082,
+            "elevationDegrees": -46.09155
+          }
+        ]
+      }
+    ]
+  },
+  "clones": {
+    "clone_overhead_3": [
+      {
+        "side": -1,
+        "arcDegrees": 121.93356,
+        "elevationDegrees": -77.79714
+      },
+      {
+        "side": 1,
+        "arcDegrees": 119.6128,
+        "elevationDegrees": -79.58611
+      }
+    ],
+    "clone_side_fan_3": [
+      {
+        "side": -1,
+        "arcDegrees": 28.87132,
+        "elevationDegrees": 67.77086
+      },
+      {
+        "side": 1,
+        "arcDegrees": 140.70286,
+        "elevationDegrees": -24.20714
+      }
+    ],
+    "clone_meteor_4": [
+      {
+        "side": -1,
+        "arcDegrees": 189.62113,
+        "elevationDegrees": -55.48269
+      },
+      {
+        "side": 1,
+        "arcDegrees": 187.30037,
+        "elevationDegrees": -49.79666
+      }
+    ],
+    "clone_starcaller_2": [
+      {
+        "side": -1,
+        "arcDegrees": 50.92038,
+        "elevationDegrees": -22.57275
+      },
+      {
+        "side": 1,
+        "arcDegrees": 52.08525,
+        "elevationDegrees": -20.90824
+      }
+    ],
+    "clone_dash_4": [
+      {
+        "side": -1,
+        "arcDegrees": 79.8578,
+        "elevationDegrees": -18.06758
+      },
+      {
+        "side": 1,
+        "arcDegrees": 133.98101,
+        "elevationDegrees": -58.22248
+      }
+    ],
+    "clone_cross_return_2": [
+      {
+        "side": -1,
+        "arcDegrees": 140.57805,
+        "elevationDegrees": -18.24473
+      },
+      {
+        "side": 1,
+        "arcDegrees": 28.36055,
+        "elevationDegrees": 70.67083
+      }
+    ]
+  }
+}

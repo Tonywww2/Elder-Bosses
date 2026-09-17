@@ -30,7 +30,8 @@ public final class MaleniaConfigNbt {
     private static final int FIXED_RUNTIME_RULES_FORMAT_VERSION = 9;
     private static final int DAMAGE_ROUTING_REMOVED_FORMAT_VERSION = 10;
     private static final int SKILL_TUNING_FORMAT_VERSION = 11;
-    private static final int FORMAT_VERSION = SKILL_TUNING_FORMAT_VERSION;
+    private static final int COMPONENT_TIMING_FORMAT_VERSION = 12;
+    private static final int FORMAT_VERSION = COMPONENT_TIMING_FORMAT_VERSION;
 
     private MaleniaConfigNbt() {
     }
@@ -1112,7 +1113,7 @@ public final class MaleniaConfigNbt {
                 readScarletPhantoms(readCompound(tag, "scarletPhantoms")),
                 readWingedSweep(readCompound(tag, "wingedSweep")),
                 formatVersion >= SKILL_TUNING_FORMAT_VERSION
-                        ? readTunings(readCompound(tag, "tunings"))
+                        ? readTunings(readCompound(tag, "tunings"), formatVersion)
                         : MaleniaSkillConfigSnapshot.neutralTunings()
         );
     }
@@ -1122,20 +1123,39 @@ public final class MaleniaConfigNbt {
         for (MaleniaActionId actionId : MaleniaActionId.values()) {
             SkillTuning tuning = Objects.requireNonNull(tunings.get(actionId), actionId.name());
             CompoundTag value = new CompoundTag();
-            value.putDouble("castSpeedMultiplier", tuning.castSpeedMultiplier());
             value.putDouble("rangeMultiplier", tuning.rangeMultiplier());
+            net.minecraft.nbt.ListTag components = new net.minecraft.nbt.ListTag();
+            for (var stage : tuning.componentStages()) {
+                CompoundTag component = new CompoundTag();
+                component.putInt("windup", stage.windupTicks());
+                component.putInt("active", stage.activeTicks());
+                component.putInt("recovery", stage.recoveryTicks());
+                components.add(component);
+            }
+            value.put("components", components);
             tag.put(actionId.serializedName(), value);
         }
         return tag;
     }
 
-    private static Map<MaleniaActionId, SkillTuning> readTunings(CompoundTag tag) {
+    private static Map<MaleniaActionId, SkillTuning> readTunings(CompoundTag tag, int formatVersion) {
         if (tag.getAllKeys().size() != MaleniaActionId.values().length) {
             throw new IllegalArgumentException("Unexpected Malenia skill tuning fields");
         }
         EnumMap<MaleniaActionId, SkillTuning> tunings = new EnumMap<>(MaleniaActionId.class);
         for (MaleniaActionId actionId : MaleniaActionId.values()) {
             CompoundTag value = readCompound(tag, actionId.serializedName());
+            if (formatVersion >= COMPONENT_TIMING_FORMAT_VERSION) {
+                requireExactFields(value, "rangeMultiplier", "components");
+                var components = new java.util.ArrayList<com.tonywww.elder_bosses.combat.action.ActionStage>();
+                for (var entry : value.getList("components", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+                    CompoundTag component = (CompoundTag) entry;
+                    requireExactFields(component, "windup", "active", "recovery");
+                    components.add(new com.tonywww.elder_bosses.combat.action.ActionStage(readInt(component, "windup"), readInt(component, "active"), readInt(component, "recovery")));
+                }
+                tunings.put(actionId, new SkillTuning(1.0, readDouble(value, "rangeMultiplier"), components));
+                continue;
+            }
             requireExactFields(value, "castSpeedMultiplier", "rangeMultiplier");
             tunings.put(actionId, new SkillTuning(
                     readDouble(value, "castSpeedMultiplier"),

@@ -1,81 +1,73 @@
 {
-  "revision": "reference_lion_v3",
-  "date": "2026-09-11",
-  "geometry_sha256": "1c16d69dc2e223cea325798ef4bf7cc127f207146760c4c979e204b3089ca4a0",
-  "animations_sha256": "587cbad39b4c7dcffc99dc0034baee89ee17f3367afab6150848b9169bae2700",
-  "status": "user_accepted_observed_scope_both_loaders",
-  "historical_v1_record": "runtime_validation.json.pre-v2",
-  "rejected_v2_feedback": "user_feedback_v2.json",
-  "compilation": {
-    "forge_1_20_1": "passed",
-    "neoforge_1_21_1": "passed",
-    "warnings": "Existing loader API deprecation warnings"
+  "date": "2026-09-18",
+  "consolidated": true,
+  "model": "promised_consort",
+  "current_assets": "current_assets.json",
+  "animation_sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598",
+  "geometry_sha256": "2ba7aa4f976936ed2584052de8f15b89b4b3339f1c8e52c29d05ba1f994601e2",
+  "status": "right_cross_formally_deployed_and_offline_verified; other_action_refinement_incomplete",
+  "retained_verification": {
+    "GeckoLib": {
+      "clips": 44,
+      "transform_values": 737811
+    },
+    "sound": {
+      "contacts": 48,
+      "body_blades": 76,
+      "clone_profiles": 6,
+      "legal_phase_variant_cases": 49,
+      "six_OGGs": "unchanged",
+      "angle_profiles": "remeasured_from_current_authoring_hierarchy",
+      "both_loader_processed_hashes": "passed"
+    },
+    "support_checks": {
+      "samples": 601,
+      "maximum_foot_error_model_units": 0.005630670957791759,
+      "maximum_sole_error_degrees": 0.01167622699489839,
+      "maximum_joint_degrees_per_half_tick": 8.35181029039083,
+      "minimum_blade_tip_y": 6.7854239067245885
+    },
+    "actual_model_weight": {
+      "clips": 48,
+      "checks": 21360,
+      "low_pose_unchanged": 6284,
+      "high_pose_disabled": 78
+    },
+    "ground_debris": {
+      "status": "implemented_and_offline_verified; world_review_pending",
+      "user_direction": "Check for unfinished implementation work and continue it",
+      "fixed": [
+        "Current blade plus tip-only previous-frame ray missed blade-middle crossings over narrow raised terrain",
+        "Previous marker samples could bridge inactive swing windows or stale rendered poses"
+      ],
+      "implementation": "ClientConsortBladeTrails.groundContact is called by the production groundDebris path with actual level COLLIDER raycasts; bounded linear sweep along physical root/tip markers",
+      "limits": {
+        "target_spacing_blocks": 0.25,
+        "maximum_segments": 32,
+        "maximum_rays_per_blade_per_frame": 34,
+        "maximum_sample_gap_ticks": 1,
+        "maximum_endpoint_travel_blocks": 4
+      },
+      "eligibility": "Previous sample must share action, sword window and side, with nondecreasing authored time; current direct blade contact does not require a previous sample; only non-inside UP block hits then existing air/fluid checks",
+      "preserved": "Damage, action timing, animations, geometry, textures, six sounds, configuration, existing per-hand/window deduplication and particle-count limits; no block deletion or glow-trail collision",
+      "focused_command": "node models/promised_consort/tests/run_attack_plan_check.js ActionDebugCheck.java --check-ground-debris",
+      "focused_assertions": 33,
+      "focused_evidence": "Actual Minecraft VoxelShape clipping reproduces old current-blade/tip-only misses and detects blade-middle block/slab top contacts; reversed blade, direct first-frame contact, wall/bottom/inside/air, stale/nonfinite/missing samples, teleports, dedupe and ray cap checked",
+      "action_debug_assertions": 19859,
+      "forge_compile": "passed_offline",
+      "neoforge_compile": "passed_offline; existing EventBusSubscriber removal warnings only",
+      "limitations": "Bounded spatial samples and linear frame interpolation, not exact continuous rotating-blade volume; thin shapes and low FPS may still miss. Grounded authored blade coverage for every move and actual entity/world particle rendering remain unverified",
+      "minecraft_client_operations": "none",
+      "world_tested": false
+    }
   },
-  "neoforge_1_21_1": {
-    "loader": "21.1.233",
-    "geckolib": "4.9.2",
-    "client_started": true,
-    "entered_world": true,
-    "world": "elder-bosses-neoforge-validation-20260907",
-    "login_local_time": "01:54:44",
-    "normal_exit_local_time": "01:55:30",
-    "all_dimensions_saved_local_time": "01:55:30",
-    "user_confirmation": "Normal; consistent with Forge",
-    "individual_clips": "not enumerated by tester",
-    "new_model_or_animation_errors": false,
-    "core_shader_initialization": "no reported consort_energy compilation or load errors",
-    "configuration_notice": "Loader corrected the older common config on startup; no manual config edits in this model/VFX revision",
-    "log": "versions/1.21.1-neoforge/run/logs/latest.log"
-  },
-  "forge_1_20_1": {
-    "loader": "47.4.10",
-    "geckolib": "4.8.4",
-    "client_started": true,
-    "entered_world": true,
-    "world": "\u65b0\u7684\u4e16\u754c",
-    "login_local_time": "01:50:48",
-    "normal_exit_local_time": "01:52:42",
-    "all_dimensions_saved_local_time": "01:52:42",
-    "user_confirmation": "Animations and effects improved; retain this version",
-    "new_model_or_animation_errors": false,
-    "core_shader_initialization": "no reported consort_energy compilation or load errors",
-    "unrelated_log_notice": "Development account could not authorize against Realms",
-    "log": "run/logs/latest.log"
-  },
-  "user_confirmed_scope": [
-    "Phase-one animations and mask",
-    "Blade trails and cast-speed synchronization",
-    "Gravity OR bloodflame shader effects",
-    "Miquella pose and phase-two holy effects",
-    "Clones OR consort meteor"
+  "remaining": [
+    "Reference-led force refinement for other actions and authored blade-ground coverage",
+    "Primary reference correspondence where unresolved",
+    "Continuous phase/ranged-overlay and arm/cape/hair clearance review",
+    "User-operated client world acceptance"
   ],
-  "scope_interpretation": "Preserve the tester's selected categories; OR categories do not certify each individual effect or attack",
-  "observed_individual_clip_ids": "not enumerated by tester",
-  "focused_checks": {
-    "asset_assertions": 279370,
-    "animation_clips": 43,
-    "timeline_assertions": 31750,
-    "timeline_actions": 22,
-    "timeline_cast_speeds": [1.0, 1.3, 1.35, 1.4, 1.5, 2.0],
-    "continuity_joint_samples": 32490,
-    "rendered_gait_samples": 72,
-    "rendered_grip_samples": 596,
-    "rendered_elbow_samples": 596,
-    "miquella_hand_samples": 1176
-  },
-  "video_recording": "cancelled by user; no output; not retried",
-  "shader_scope": "Registered GLSL core shader and world geometry, not an external shader pack or fullscreen bloom/refraction system",
-  "further_acceptance": {
-    "status": "current_observed_scope_complete; no clients left running",
-    "pending": [
-      "Every transition or phase-two intermediate frame",
-      "Every clone variant and meteor stage individually",
-      "Stun and death",
-      "Every clip individually exercised in game",
-      "Full combat balance acceptance",
-      "Multiplayer and low-TPS acceptance",
-      "All non-default timing and range configurations in game",
-      "Third-party shader-pack compatibility"
-    ]
-  }
+  "cleanup_scope": "Historical artifact files removed by explicit user request; latest source/runtime assets retained. Earlier evidence counts remain historical claims, not fresh tests.",
+  "world_tested": false,
+  "minecraft_client_operations": "none"
 }

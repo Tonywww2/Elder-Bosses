@@ -257,7 +257,7 @@ public final class MaleniaActionCatalog {
             MaleniaActionDefinition definition,
             SkillTuning tuning
     ) {
-        ActionStage[] stages = definition.timeline().stages().stream()
+        ActionStage[] stages = (tuning.componentStages().isEmpty() ? definition.timeline().stages() : tuning.componentStages()).stream()
                 .map(stage -> new ActionStage(
                         tuning.scaleTicks(stage.windupTicks()),
                         tuning.scaleTicks(stage.activeTicks()),
@@ -266,7 +266,7 @@ public final class MaleniaActionCatalog {
                 .toArray(ActionStage[]::new);
         ActionTimeline timeline = ActionTimeline.ofStages(stages);
         List<MaleniaActionEvent> events = definition.events().stream()
-                .map(event -> tunedEvent(event, tuning, timeline.totalTicks()))
+                .map(event -> tunedEvent(event, tuning, timeline, definition.id()))
                 .toList();
         return new MaleniaActionDefinition(
                 definition.id(),
@@ -282,8 +282,10 @@ public final class MaleniaActionCatalog {
     private static MaleniaActionEvent tunedEvent(
             MaleniaActionEvent event,
             SkillTuning tuning,
-            int totalTicks
+                        ActionTimeline timeline,
+                        MaleniaActionId action
     ) {
+                int totalTicks = timeline.totalTicks();
         OptionalInt actionTick = event.actionTick().isPresent()
                 ? OptionalInt.of(Math.min(totalTicks - 1, tuning.scaleTicks(event.actionTick().getAsInt())))
                 : OptionalInt.empty();
@@ -296,6 +298,20 @@ public final class MaleniaActionCatalog {
         OptionalDouble maxTravel = event.maxTravel().isPresent()
                 ? OptionalDouble.of(tuning.scaleRange(event.maxTravel().getAsDouble()))
                 : OptionalDouble.empty();
+                if (!tuning.componentStages().isEmpty()) {
+                        int component = event.sequence();
+                        if (action == MaleniaActionId.WATERFOWL_DANCE) {
+                                if (component == 0) actionTick = OptionalInt.of(0);
+                                else {
+                                        int stage = component - 1;
+                                        actionTick = OptionalInt.of(Math.max(timeline.stageStartTick(stage), timeline.activeStartTick(stage) - (stage == 0 ? 10 : 4)));
+                                }
+                        } else {
+                                if (action == MaleniaActionId.SCARLET_AEONIA) component = Math.min(component, 4);
+                                actionTick = OptionalInt.of(timeline.activeStartTick(component));
+                        }
+                        delayTicks = OptionalInt.empty();
+                }
         return new MaleniaActionEvent(
                 event.type(),
                 event.sequence(),

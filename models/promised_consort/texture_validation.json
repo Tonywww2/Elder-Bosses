@@ -1,0 +1,46 @@
+{
+  "revision": "structured_flow_v10",
+  "texture_revision": "clustered_transition_v8",
+  "baseline": "promised_consort.bbmodel.pre-mottle-v1",
+  "geometry_sha256": "487040f32141aa49c11f18e5a591bde0e6fa8b032ebf42e4bd05510af4e39982",
+  "animation_sha256": "bbc6d4135bceae1281fb067299ed64fc9392386e19073b78cdf5fb418f542217",
+  "texture_sha256": "bf7462fee714f49edfcf2b9c8c3ad06464791178694396298156eb503e639224",
+  "structure_and_uv_unchanged": true,
+  "repainted_regions": 858,
+  "changed_pixels": 24610,
+  "protected_pixel_errors": 0,
+  "alpha_errors": 0,
+  "material_shades": {
+    "gold": [
+      "#AA8242",
+      "#bd9851",
+      "#D0AE60",
+      "#89693c",
+      "#675035"
+    ],
+    "mane": [
+      "#89332c",
+      "#A8402E",
+      "#69262A",
+      "#4f2026",
+      "#be5637",
+      "#D36B40"
+    ],
+    "silk": [
+      "#b4b8b6",
+      "#9A9FA3",
+      "#CED1C9",
+      "#dbdcd1",
+      "#E8E7D9"
+    ],
+    "divine_hair": [
+      "#c6ab70",
+      "#DBC284",
+      "#e6d098",
+      "#F0DEAC",
+      "#B1935C",
+      "#f8eac0"
+    ]
+  },
+  "status": "repainted_and_visually_reviewed_before_client"
+}

@@ -5,7 +5,6 @@ import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActio
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase;
 import com.tonywww.elder_bosses.combat.action.ActionStage;
 import com.tonywww.elder_bosses.combat.action.ActionTimeline;
-import com.tonywww.elder_bosses.combat.action.SkillTuning;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -46,8 +45,16 @@ public final class PromisedConsortActionCatalog {
         addConfigured(built, PromisedConsortActionId.LIGHTSPEED_DASH, PHASE_TWO, "lightspeed");
         addConfigured(built, PromisedConsortActionId.LIGHTSPEED_SIDE_DASH, PHASE_TWO, "lightspeed");
         addConfigured(built, PromisedConsortActionId.PROMISED_CONSORT, PHASE_TWO, "promised_consort");
+        addConfigured(built, PromisedConsortActionId.CROSS_LEAP_COMBO, PHASE_TWO, "cross_leap_combo");
         addConfigured(built, PromisedConsortActionId.ENHANCED_EARTHHEAVE, PHASE_TWO, "earthheave");
         addConfigured(built, PromisedConsortActionId.CONSORT_METEOR, PHASE_TWO, "consort_meteor");
+        for (var action : new PromisedConsortActionId[]{PromisedConsortActionId.GRAVITY_BULWARK,
+                PromisedConsortActionId.GRAVITY_REFLECTION, PromisedConsortActionId.GRAVITY_REPRISAL}) {
+            var skill = skillConfig.get(action);
+            EnumSet<PromisedConsortPhase> phases = EnumSet.noneOf(PromisedConsortPhase.class);
+            for (int phase : skill.integerList("phases")) phases.add(PromisedConsortPhase.fromId(phase));
+            addConfigured(built, action, phases, "ranged_defense_" + action.serializedName());
+        }
         definitions = Collections.unmodifiableMap(built);
     }
 
@@ -67,6 +74,22 @@ public final class PromisedConsortActionCatalog {
         return definitions;
     }
 
+    public PromisedConsortSkillConfigSnapshot.Skill skill(com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionSnapshot action) {
+        var skill = skillConfig.get(action.actionId());
+        return action.rangedCounter() ? skill.rangedVariant() : skill;
+    }
+
+    public ActionTimeline timeline(com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionSnapshot action) {
+        return get(action.actionId(), action.rangedCounter()).timeline();
+    }
+
+    public PromisedConsortActionDefinition get(PromisedConsortActionId actionId, boolean rangedCounter) {
+        var original = get(actionId);
+        if (!rangedCounter) return original;
+        return new PromisedConsortActionDefinition(actionId, timeline(actionId, skillConfig.get(actionId).rangedVariant()),
+                original.weight(), original.cooldownTicks(), original.availablePhases(), original.hyperArmorActive(), original.cooldownGroup());
+    }
+
     private void addConfigured(
             EnumMap<PromisedConsortActionId, PromisedConsortActionDefinition> target,
             PromisedConsortActionId actionId,
@@ -76,7 +99,7 @@ public final class PromisedConsortActionCatalog {
         PromisedConsortSkillConfigSnapshot.Skill skill = skillConfig.get(actionId);
         target.put(actionId, new PromisedConsortActionDefinition(
                 actionId,
-            tunedTimeline(timeline(actionId, skill), skill.tuning()),
+            timeline(actionId, skill),
                 skill.weight(),
                 skill.cooldownTicks(),
                 phases,
@@ -92,11 +115,11 @@ public final class PromisedConsortActionCatalog {
                 skillConfig.get(PromisedConsortActionId.LION_CLAW);
         target.put(PromisedConsortActionId.LION_CLAW_DOUBLE, new PromisedConsortActionDefinition(
                 PromisedConsortActionId.LION_CLAW_DOUBLE,
-            tunedTimeline(ActionTimeline.ofStages(new ActionStage(
+            ActionTimeline.ofStages(new ActionStage(
                         skill.integer("double_windup_ticks"),
                         skill.integer("double_active_ticks"),
                         skill.integer("double_recovery_ticks")
-            )), skill.tuning()),
+            )),
                 0.0,
                 skill.cooldownTicks(),
                 BOTH_PHASES,
@@ -109,7 +132,13 @@ public final class PromisedConsortActionCatalog {
             PromisedConsortActionId actionId,
             PromisedConsortSkillConfigSnapshot.Skill skill
     ) {
-        if (actionId == PromisedConsortActionId.CONSORT_METEOR) {
+        if (actionId == PromisedConsortActionId.GRAVITY_REPRISAL) {
+            var stages = new ActionStage[3];
+            for (int index=0;index<3;index++) stages[index] = new ActionStage(skill.integerList("components.windup_ticks").get(index),
+                skill.integerList("components.active_ticks").get(index), skill.integerList("components.recovery_ticks").get(index));
+            return ActionTimeline.ofStages(stages);
+        }
+        if (actionId == PromisedConsortActionId.CONSORT_METEOR && !skill.integerLists().containsKey("windup_ticks")) {
             int scriptTicks = skill.integer("script_ticks");
             if (scriptTicks < 122) {
                 throw new IllegalArgumentException("consort_meteor script must include tick 121");
@@ -117,7 +146,15 @@ public final class PromisedConsortActionCatalog {
             return ActionTimeline.ofStages(new ActionStage(90, 32, scriptTicks - 122));
         }
         if (skill.integerLists().containsKey("windup_ticks")) {
-            return multiStage(skill);
+            ActionTimeline configured = multiStage(actionId, skill);
+            if (actionId == PromisedConsortActionId.R_COMBO_TEMPEST && configured.stages().size() == 4) {
+                ActionStage combined = configured.stages().get(3);
+                int firstActive = Math.max(1, combined.activeTicks() / 2);
+                return ActionTimeline.ofStages(configured.stages().get(0), configured.stages().get(1), configured.stages().get(2),
+                        new ActionStage(combined.windupTicks(), firstActive, 0),
+                        new ActionStage(0, Math.max(1, combined.activeTicks() - firstActive), combined.recoveryTicks()));
+            }
+            return configured;
         }
         return ActionTimeline.ofStages(new ActionStage(
                 skill.integer("windup_ticks"),
@@ -126,28 +163,35 @@ public final class PromisedConsortActionCatalog {
         ));
     }
 
-    private static ActionTimeline multiStage(PromisedConsortSkillConfigSnapshot.Skill skill) {
+    private static ActionTimeline multiStage(PromisedConsortActionId actionId, PromisedConsortSkillConfigSnapshot.Skill skill) {
         var windup = skill.integerList("windup_ticks");
         var active = skill.integerList("active_ticks");
         var recovery = skill.integerList("recovery_ticks");
         if (windup.size() != active.size() || active.size() != recovery.size()) {
             throw new IllegalArgumentException("multi-stage timing lists must have equal sizes");
         }
+        int expected = switch (actionId) {
+            case L_COMBO_CROSS, R_COMBO_LEFT_TWIN -> 3;
+            case R_COMBO_CROSS, GRAVITY_DIVE, CROSS_SLASH, SPIRAL_ASSAULT, STARCALLER_CRY -> 2;
+            case L_COMBO_BLOODFLAME -> windup.size() == 2 ? 2 : 3;
+            case R_COMBO_TEMPEST -> windup.size() == 4 ? 4 : 5;
+            case R_COMBO_EARTHHEAVE, ENHANCED_EARTHHEAVE, CONSORT_METEOR -> 5;
+            case LIGHTSPEED_SLASH, LIGHTSPEED_SIDE_DASH -> 4;
+            case LIGHTSPEED_DASH -> 6;
+            case PROMISED_CONSORT, CROSS_LEAP_COMBO -> 8;
+            case GRAVITY_METEOR -> 12;
+            case LIGHT_OF_MIQUELLA -> 9;
+            default -> 1;
+        };
+        if (windup.size() != expected) throw new IllegalArgumentException(actionId + " requires " + expected + " timing components");
         ActionStage[] stages = new ActionStage[windup.size()];
         for (int index = 0; index < stages.length; index++) {
+            if (active.get(index) < 1) throw new IllegalArgumentException(actionId + " component release must contain at least one tick");
             stages[index] = new ActionStage(windup.get(index), active.get(index), recovery.get(index));
         }
-        return ActionTimeline.ofStages(stages);
+        ActionTimeline timeline = ActionTimeline.ofStages(stages);
+        if (timeline.totalTicks() > com.tonywww.elder_bosses.network.NetworkLimits.MAX_TICKS) throw new IllegalArgumentException(actionId + " timing exceeds the tick limit");
+        return timeline;
     }
 
-    private static ActionTimeline tunedTimeline(ActionTimeline timeline, SkillTuning tuning) {
-        ActionStage[] stages = timeline.stages().stream()
-                .map(stage -> new ActionStage(
-                        tuning.scaleTicks(stage.windupTicks()),
-                        tuning.scaleTicks(stage.activeTicks()),
-                        tuning.scaleTicks(stage.recoveryTicks())
-                ))
-                .toArray(ActionStage[]::new);
-        return ActionTimeline.ofStages(stages);
-    }
 }

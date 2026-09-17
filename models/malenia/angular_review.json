@@ -1,35 +1,16 @@
 {
-  "revision": "reference_motion_v7",
-  "generated_at": "2026-09-09T19:58:08.909Z",
+  "revision": "sculpted_relief_v9",
+  "generated_at": "2026-09-13T13:10:18.102Z",
   "inspection_status": "visually_reviewed_before_client_test",
-  "visual_assessment": {
+  "texture_revision": "clustered_transition_v1",
+  "texture_sha256": "1924af0ad3349834581b00f5bc9ea851ae9f16bbcb8454ef6a71aced80cc24d2",
+  "relief_assessment": {
     "reviewer": "assistant",
-    "reviewed_before_client_launch": true,
-    "sources_actually_frame_reviewed": ["https://www.bilibili.com/video/BV13e4y127eg/", "https://www.bilibili.com/video/BV1hB4y1U7rd/"],
-    "reviewed_material": "phase orbits, grip and empty-hand closeups, isolated crown views, ground/aerial/close-action sequence sheets",
-    "resolved_findings": [
-      "Anatomical left/right had been mirrored despite correct-looking bone names",
-      "Empty fingers moved as one rigid plate and had no independent distal pivots",
-      "Thrust, downward cuts and grab release leaned away from the intended movement",
-      "Waterfowl held the sword at shoulder height instead of overhead",
-      "Generic aerial poses did not distinguish Waterfowl, phantom release and Aeonia",
-      "A rear crown review angle was occluded by the new high wing posture; isolated head views now cover it"
-    ],
-    "observations": [
-      "The weapon is on anatomical right; the left hand remains empty",
-      "The empty hand relaxes, opens before capture, closes after contact and releases",
-      "Thrust, uppercut and downstroke have distinct blade directions and forward weight transfer",
-      "Waterfowl has overhead horizontal preparation and different compact/extended burst silhouettes",
-      "Phase-two wings, hovering release and body-dive poses are differentiated"
-    ],
-    "limitations": [
-      "Video-guided manually authored adaptation, not imported original animation data",
-      "Anonymous reference streams are low resolution and sampled, not full 4K60 or exact joint reconstruction",
-      "Static authoring previews do not include server-owned entity travel or target tracking",
-      "Not every animation frame, branch, viewing angle, terrain or network condition is covered"
-    ]
+    "inspected": ["relief_chest_1_after", "relief_head_1_after", "relief_head_2_after", "relief_shoulder_1_after", "review_phase_one_orbit", "review_phase_two_orbit", "waterfowl_sequence"],
+    "findings": ["Armor details have raised centers and sloped edge faces", "Winged helmet mask has visible opaque side thickness without filling its cutouts", "Original armor visibility and authored poses retained"],
+    "limits": "Representative poses and angles, not exhaustive collision or in-world appearance acceptance"
   },
-  "geometry_sha256": "92fc23cf90089b761ed8bbdb497ba979208a269b1837428e8dbe06a80e914523",
+  "geometry_sha256": "c747377bf4e738c0e53c79b07cdf30c75fa4f00e7572ad73b35488b242dfb4ae",
   "animation_sha256": "18ffa592cd9b53131a0b52e1d74c35775f96a136cef7be4de142cd913ca51efd",
   "scope": "Sampled 360-degree, high/low-angle, crown and grip views; structural grip checks across all clips. Not exhaustive frame, camera or terrain coverage.",
   "handedness": {
@@ -1569,7 +1550,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 272
+      "colored_pixels": 251
     },
     {
       "name": "review_phase_one_orbit_azimuth_45",
@@ -1577,7 +1558,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 275
+      "colored_pixels": 265
     },
     {
       "name": "review_phase_one_orbit_azimuth_90",
@@ -1585,7 +1566,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 179
+      "colored_pixels": 182
     },
     {
       "name": "review_phase_one_orbit_azimuth_135",
@@ -1593,7 +1574,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 268
+      "colored_pixels": 239
     },
     {
       "name": "review_phase_one_orbit_azimuth_180",
@@ -1601,7 +1582,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 228
+      "colored_pixels": 206
     },
     {
       "name": "review_phase_one_orbit_azimuth_225",
@@ -1609,7 +1590,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 209
+      "colored_pixels": 196
     },
     {
       "name": "review_phase_one_orbit_azimuth_270",
@@ -1617,7 +1598,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 173
+      "colored_pixels": 170
     },
     {
       "name": "review_phase_one_orbit_azimuth_315",
@@ -1625,7 +1606,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 274
+      "colored_pixels": 263
     },
     {
       "name": "review_phase_one_orbit_high",
@@ -1641,7 +1622,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": null,
-      "colored_pixels": 237
+      "colored_pixels": 213
     },
     {
       "name": "review_phase_two_orbit_azimuth_0",
@@ -1649,7 +1630,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 499
+      "colored_pixels": 500
     },
     {
       "name": "review_phase_two_orbit_azimuth_45",
@@ -1657,7 +1638,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 440
+      "colored_pixels": 441
     },
     {
       "name": "review_phase_two_orbit_azimuth_90",
@@ -1665,7 +1646,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 190
+      "colored_pixels": 189
     },
     {
       "name": "review_phase_two_orbit_azimuth_135",
@@ -1673,7 +1654,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 495
+      "colored_pixels": 496
     },
     {
       "name": "review_phase_two_orbit_azimuth_180",
@@ -1689,7 +1670,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 479
+      "colored_pixels": 477
     },
     {
       "name": "review_phase_two_orbit_azimuth_270",
@@ -1697,7 +1678,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 218
+      "colored_pixels": 215
     },
     {
       "name": "review_phase_two_orbit_azimuth_315",
@@ -1705,7 +1686,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": null,
-      "colored_pixels": 479
+      "colored_pixels": 477
     },
     {
       "name": "review_phase_two_orbit_high",
@@ -1729,7 +1710,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 455
+      "colored_pixels": 462
     },
     {
       "name": "review_crown_front_high",
@@ -1737,7 +1718,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 533
+      "colored_pixels": 513
     },
     {
       "name": "review_crown_back_high",
@@ -1745,7 +1726,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 681
+      "colored_pixels": 682
     },
     {
       "name": "review_crown_left_high",
@@ -1753,7 +1734,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 540
+      "colored_pixels": 560
     },
     {
       "name": "review_crown_right_high",
@@ -1761,7 +1742,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 537
+      "colored_pixels": 550
     },
     {
       "name": "review_crown_front_left",
@@ -1769,7 +1750,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 763
+      "colored_pixels": 748
     },
     {
       "name": "review_crown_front_right",
@@ -1777,7 +1758,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 759
+      "colored_pixels": 760
     },
     {
       "name": "review_crown_back_right",
@@ -1785,7 +1766,7 @@
       "tick": 20,
       "phase": 2,
       "isolated_group": "head",
-      "colored_pixels": 844
+      "colored_pixels": 842
     },
     {
       "name": "review_grip_idle_phase_one_front",
@@ -1801,7 +1782,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 661
+      "colored_pixels": 660
     },
     {
       "name": "review_grip_idle_phase_one_outer",
@@ -1833,7 +1814,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1061
+      "colored_pixels": 1072
     },
     {
       "name": "review_grip_single_slash_front",
@@ -1841,7 +1822,7 @@
       "tick": 10,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 665
+      "colored_pixels": 675
     },
     {
       "name": "review_grip_single_slash_back",
@@ -1849,7 +1830,7 @@
       "tick": 10,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 589
+      "colored_pixels": 588
     },
     {
       "name": "review_grip_single_slash_outer",
@@ -1857,7 +1838,7 @@
       "tick": 10,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1516
+      "colored_pixels": 1518
     },
     {
       "name": "review_grip_single_slash_inner",
@@ -1865,7 +1846,7 @@
       "tick": 10,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1409
+      "colored_pixels": 1411
     },
     {
       "name": "review_grip_single_slash_upper",
@@ -1873,7 +1854,7 @@
       "tick": 10,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 2053
+      "colored_pixels": 2055
     },
     {
       "name": "review_grip_single_slash_lower",
@@ -1881,7 +1862,7 @@
       "tick": 10,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1388
+      "colored_pixels": 1392
     },
     {
       "name": "review_grip_thrust_front",
@@ -1889,7 +1870,7 @@
       "tick": 22,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 755
+      "colored_pixels": 758
     },
     {
       "name": "review_grip_thrust_back",
@@ -1921,7 +1902,7 @@
       "tick": 22,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1916
+      "colored_pixels": 1917
     },
     {
       "name": "review_grip_thrust_lower",
@@ -1929,7 +1910,7 @@
       "tick": 22,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1836
+      "colored_pixels": 1837
     },
     {
       "name": "review_grip_waterfowl_dance_front",
@@ -1937,7 +1918,7 @@
       "tick": 26,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 675
+      "colored_pixels": 687
     },
     {
       "name": "review_grip_waterfowl_dance_back",
@@ -1945,7 +1926,7 @@
       "tick": 26,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 672
+      "colored_pixels": 671
     },
     {
       "name": "review_grip_waterfowl_dance_outer",
@@ -1969,7 +1950,7 @@
       "tick": 26,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1488
+      "colored_pixels": 1489
     },
     {
       "name": "review_grip_waterfowl_dance_lower",
@@ -1977,7 +1958,7 @@
       "tick": 26,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1041
+      "colored_pixels": 1044
     },
     {
       "name": "review_grip_rapid_slashes_front",
@@ -1993,7 +1974,7 @@
       "tick": 16,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 765
+      "colored_pixels": 768
     },
     {
       "name": "review_grip_rapid_slashes_outer",
@@ -2017,7 +1998,7 @@
       "tick": 16,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1763
+      "colored_pixels": 1764
     },
     {
       "name": "review_grip_rapid_slashes_lower",
@@ -2025,7 +2006,7 @@
       "tick": 16,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1119
+      "colored_pixels": 1122
     },
     {
       "name": "review_grip_scarlet_plunge_front",
@@ -2049,7 +2030,7 @@
       "tick": 26,
       "phase": 2,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 953
+      "colored_pixels": 952
     },
     {
       "name": "review_grip_scarlet_plunge_inner",
@@ -2081,7 +2062,7 @@
       "tick": 44,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 577
+      "colored_pixels": 587
     },
     {
       "name": "review_grip_grab_impale_back",
@@ -2089,7 +2070,7 @@
       "tick": 44,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 618
+      "colored_pixels": 617
     },
     {
       "name": "review_grip_grab_impale_outer",
@@ -2097,7 +2078,7 @@
       "tick": 44,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1668
+      "colored_pixels": 1667
     },
     {
       "name": "review_grip_grab_impale_inner",
@@ -2105,7 +2086,7 @@
       "tick": 44,
       "phase": 1,
       "isolated_group": "prosthetic_arm_r",
-      "colored_pixels": 1631
+      "colored_pixels": 1630
     },
     {
       "name": "review_grip_grab_impale_upper",
@@ -2137,7 +2118,7 @@
       "tick": 0,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 558
+      "colored_pixels": 559
     },
     {
       "name": "review_empty_hand_idle_phase_one_0_back",
@@ -2161,7 +2142,7 @@
       "tick": 12,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 595
+      "colored_pixels": 596
     },
     {
       "name": "review_empty_hand_single_slash_12_back",
@@ -2169,7 +2150,7 @@
       "tick": 12,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 711
+      "colored_pixels": 712
     },
     {
       "name": "review_empty_hand_grab_impale_24_palm",
@@ -2193,7 +2174,7 @@
       "tick": 24,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 1075
+      "colored_pixels": 1076
     },
     {
       "name": "review_empty_hand_grab_impale_28_palm",
@@ -2201,7 +2182,7 @@
       "tick": 28,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 1148
+      "colored_pixels": 1149
     },
     {
       "name": "review_empty_hand_grab_impale_28_side",
@@ -2209,7 +2190,7 @@
       "tick": 28,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 905
+      "colored_pixels": 906
     },
     {
       "name": "review_empty_hand_grab_impale_28_back",
@@ -2225,7 +2206,7 @@
       "tick": 54,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 708
+      "colored_pixels": 707
     },
     {
       "name": "review_empty_hand_grab_impale_54_side",
@@ -2241,7 +2222,7 @@
       "tick": 54,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 714
+      "colored_pixels": 713
     },
     {
       "name": "review_empty_hand_grab_miss_29_palm",
@@ -2265,7 +2246,7 @@
       "tick": 29,
       "phase": 1,
       "isolated_group": "upper_arm_l",
-      "colored_pixels": 1075
+      "colored_pixels": 1076
     }
   ],
   "sheets": [

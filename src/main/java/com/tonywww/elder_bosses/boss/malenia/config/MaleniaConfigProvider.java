@@ -7,6 +7,7 @@ public final class MaleniaConfigProvider {
     private static volatile Supplier<MaleniaCombatConfigSnapshot> snapshotSupplier;
     private static volatile Supplier<MaleniaSkillConfigSnapshot> skillSnapshotSupplier;
     private static volatile Supplier<Boolean> debugStateOutputSupplier;
+    private static volatile Supplier<Boolean> debugActionBroadcastSupplier;
 
     private MaleniaConfigProvider() {
     }
@@ -33,6 +34,19 @@ public final class MaleniaConfigProvider {
             throw new IllegalStateException("Malenia debug config provider is already installed");
         }
         debugStateOutputSupplier = supplier;
+    }
+
+    public static synchronized void installDebugActionBroadcast(Supplier<Boolean> supplier) {
+        Objects.requireNonNull(supplier, "supplier");
+        if (debugActionBroadcastSupplier != null) {
+            throw new IllegalStateException("Malenia action debug config is already installed");
+        }
+        debugActionBroadcastSupplier = supplier;
+    }
+
+    public static boolean debugActionBroadcastEnabled() {
+        Supplier<Boolean> supplier = debugActionBroadcastSupplier;
+        return supplier != null && supplier.get();
     }
 
     public static MaleniaCombatConfigSnapshot snapshot() {

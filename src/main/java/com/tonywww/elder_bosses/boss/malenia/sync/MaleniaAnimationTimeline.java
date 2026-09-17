@@ -19,6 +19,10 @@ public final class MaleniaAnimationTimeline {
             Map<Integer, Integer> landmarks
     ) {
         int[] authored = durations(action);
+        var components = com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.defaultComponentStages(action);
+        if (!components.isEmpty() && timeline.stages().size() == components.size()) {
+            authored = components.stream().flatMapToInt(stage -> java.util.stream.IntStream.of(stage.windupTicks(), stage.activeTicks(), stage.recoveryTicks())).toArray();
+        }
         NavigableMap<Integer, Integer> points = new TreeMap<>();
         int runtimeCursor = 0;
         int authoredCursor = 0;

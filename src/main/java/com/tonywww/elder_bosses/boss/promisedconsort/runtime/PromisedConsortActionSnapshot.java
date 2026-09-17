@@ -17,8 +17,14 @@ public record PromisedConsortActionSnapshot(
         int stageIndex,
         int phaseTick,
         long seed,
-        UUID targetId
+        UUID targetId,
+        boolean rangedCounter
 ) {
+    public PromisedConsortActionSnapshot(PromisedConsortActionId actionId, PromisedConsortPhase phase, long sequence,
+            long startGameTick, int actionTick, ActionPhase actionPhase, int stageIndex, int phaseTick, long seed, UUID targetId) {
+        this(actionId, phase, sequence, startGameTick, actionTick, actionPhase, stageIndex, phaseTick, seed, targetId, false);
+    }
+
     public PromisedConsortActionSnapshot {
         Objects.requireNonNull(actionId, "actionId");
         Objects.requireNonNull(phase, "phase");

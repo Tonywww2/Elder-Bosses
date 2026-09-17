@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "elder_bosses:block/divine_flagstone",
+    "side": "elder_bosses:block/divine_masonry"
+  }
+}

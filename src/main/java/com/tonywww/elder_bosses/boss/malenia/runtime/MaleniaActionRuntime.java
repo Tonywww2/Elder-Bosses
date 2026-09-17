@@ -4,6 +4,7 @@ import com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog;
 import com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionDefinition;
 import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId;
 import com.tonywww.elder_bosses.boss.malenia.domain.MaleniaPhase;
+import com.tonywww.elder_bosses.combat.action.ActionLifecycleEvent;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
 import com.tonywww.elder_bosses.combat.action.ActionWindow;
 
@@ -11,10 +12,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public final class MaleniaActionRuntime {
     private final MaleniaActionCatalog catalog;
     private final ActionCleanup cleanup;
+    private Consumer<ActionLifecycleEvent> lifecycleListener = event -> {};
     private ActiveAction activeAction;
     private long nextSequence;
     private long lastObservedGameTick = -1L;
@@ -26,6 +29,10 @@ public final class MaleniaActionRuntime {
     public MaleniaActionRuntime(MaleniaActionCatalog catalog, ActionCleanup cleanup) {
         this.catalog = Objects.requireNonNull(catalog, "catalog");
         this.cleanup = Objects.requireNonNull(cleanup, "cleanup");
+    }
+
+    public void setLifecycleListener(Consumer<ActionLifecycleEvent> listener) {
+        lifecycleListener = Objects.requireNonNull(listener, "listener");
     }
 
     private MaleniaActionRuntime(
@@ -71,6 +78,7 @@ public final class MaleniaActionRuntime {
         long sequence = nextSequence;
         nextSequence = Math.incrementExact(nextSequence);
         activeAction = new ActiveAction(definition, sequence, gameTick, seed, targetId);
+        publishLifecycle(activeAction, gameTick, ActionLifecycleEvent.Outcome.STARTED);
         return snapshotOf(activeAction, gameTick);
     }
 
@@ -165,7 +173,13 @@ public final class MaleniaActionRuntime {
                 reason
         );
         cleanup.clearForActionChange(result);
+        publishLifecycle(ended, endGameTick, ActionLifecycleEvent.Outcome.valueOf(reason.name()));
         return result;
+    }
+
+    private void publishLifecycle(ActiveAction action, long gameTick, ActionLifecycleEvent.Outcome outcome) {
+        lifecycleListener.accept(new ActionLifecycleEvent(action.definition.id().serializedName(), action.sequence,
+                action.startGameTick, gameTick, action.seed, action.targetId, action.definition.timeline(), outcome));
     }
 
     private MaleniaActionSnapshot snapshotOf(ActiveAction action, long gameTick) {

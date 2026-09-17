@@ -53,6 +53,7 @@ public final class ClientGameEvents {
         ClientIndicatorStateStore.onDimensionChanged();
         ClientRotStateStore.onDimensionChanged();
         ClientBossVfxController.clear();
+        com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.clear();
     }
 
     @SubscribeEvent
@@ -61,5 +62,6 @@ public final class ClientGameEvents {
         ClientIndicatorStateStore.onDisconnect();
         ClientRotStateStore.onDisconnect();
         ClientBossVfxController.clear();
+        com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.clear();
     }
 }

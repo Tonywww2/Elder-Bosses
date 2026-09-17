@@ -1,0 +1,12 @@
+# Preserve the exact bytes pinned by current asset manifests.
+*.bbmodel -text
+models/**/geo/*.json -text
+models/**/animations/*.json -text
+models/**/rig.json -text
+models/**/surface_manifest.json -text
+src/main/resources/assets/elder_bosses/geo/**/*.json -text
+src/main/resources/assets/elder_bosses/animations/**/*.json -text
+src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/sword_profiles.json -text
+*.png binary
+*.ogg binary
+*.nbt binary

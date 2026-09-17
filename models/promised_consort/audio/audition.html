@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Promised Consort | Sound Study 01</title>
+  <style>
+    :root { --ink: #23292a; --muted: #626c6e; --line: #d5dedb; --paper: #f7f9f8; --accent: #326c5c; --review: #9b3c4b; }
+    * { box-sizing: border-box; letter-spacing: 0; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 15px/1.5 "Trebuchet MS", sans-serif; }
+    header { border-top: 6px solid var(--accent); border-bottom: 1px solid var(--line); background: #fff; }
+    .inner { width: min(1120px, 100%); margin: auto; padding: 28px 32px; }
+    .meta, .status, .number, output { font: 12px/1.5 Consolas, monospace; }
+    .meta { color: var(--muted); margin: 0 0 8px; }
+    h1 { font: 38px/1.15 Georgia, serif; margin: 0 0 12px; }
+    .status { color: var(--review); margin: 0; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+    .toolbar label { color: var(--muted); }
+    input[type="range"] { accent-color: var(--accent); width: 160px; }
+    output { width: 4ch; }
+    h2 { font: 23px/1.3 Georgia, serif; margin: 24px 0 10px; }
+    .track { display: grid; grid-template-columns: 40px 180px minmax(80px, 1fr) 300px; align-items: center; gap: 16px; min-height: 105px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .number { color: var(--accent); }
+    h3 { font-size: 16px; margin: 0; }
+    .track p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+    .wave { width: 100%; height: 64px; object-fit: fill; background: #edf2ef; border: 0; }
+    audio { width: 100%; height: 42px; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    .downloads { display: flex; gap: 12px; font: 11px/1.5 Consolas, monospace; margin-top: 5px; }
+    .comparison { background: #eaf0ed; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .comparison h2 { margin-top: 0; }
+    .comparison .status { margin: 0 0 10px; }
+    footer { color: var(--muted); font-size: 12px; }
+    footer p { margin: 5px 0; }
+    @media (max-width: 920px) { .track { grid-template-columns: 28px 150px minmax(0, 1fr); } .playback { grid-column: 2 / -1; } }
+    @media (max-width: 480px) { .inner { padding: 22px 18px; } h1 { font-size: 30px; } .track { grid-template-columns: 24px minmax(0, 1fr); gap: 10px; } .wave { grid-column: 2; height: 48px; } .playback { grid-column: 2; } .toolbar { gap: 9px; } }
+  </style>
+</head>
+<body>
+  <header><div class="inner">
+    <p class="meta">ELDER BOSSES / SOUND STUDY 01</p>
+    <h1>Promised Consort</h1>
+    <p class="status">SELECTED FOR INTEGRATION / WORLD REVIEW PENDING</p>
+  </div></header>
+  <main>
+    <section class="inner" aria-labelledby="sounds-title">
+      <div class="toolbar"><label for="level">Audition level</label><input id="level" type="range" min="0" max="1" step="0.01" value="0.35"><output id="level-value" for="level">35%</output><span class="meta">48 kHz / MONO / OGG VORBIS</span></div>
+      <h2 id="sounds-title">Material &amp; Motion</h2>
+      <div class="track">
+        <span class="number">01</span><div><h3>Heavy Slash</h3><p>Steel / air</p></div>
+        <img class="wave" src="prototypes/v1/heavy_slash.png" alt="Heavy slash waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Heavy slash" src="prototypes/v1/heavy_slash.ogg"></audio><div class="downloads"><a href="prototypes/v1/heavy_slash.wav" download>WAV</a><a href="prototypes/v1/heavy_slash.ogg" download>OGG</a></div></div>
+      </div>
+      <div class="track">
+        <span class="number">02</span><div><h3>Stomp</h3><p>Stone / pressure</p></div>
+        <img class="wave" src="prototypes/v1/stomp.png" alt="Stomp waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Stomp" src="prototypes/v1/stomp.ogg"></audio><div class="downloads"><a href="prototypes/v1/stomp.wav" download>WAV</a><a href="prototypes/v1/stomp.ogg" download>OGG</a></div></div>
+      </div>
+      <div class="track">
+        <span class="number">03</span><div><h3>Gravity Dash</h3><p>Compression / passing air</p></div>
+        <img class="wave" src="prototypes/v1/gravity_dash.png" alt="Gravity dash waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Gravity dash" src="prototypes/v1/gravity_dash.ogg"></audio><div class="downloads"><a href="prototypes/v1/gravity_dash.wav" download>WAV</a><a href="prototypes/v1/gravity_dash.ogg" download>OGG</a></div></div>
+      </div>
+      <div class="track">
+        <span class="number">04</span><div><h3>Holy Echo</h3><p>Glass / overtones</p></div>
+        <img class="wave" src="prototypes/v1/holy_echo.png" alt="Holy echo waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Holy echo" src="prototypes/v1/holy_echo.ogg"></audio><div class="downloads"><a href="prototypes/v1/holy_echo.wav" download>WAV</a><a href="prototypes/v1/holy_echo.ogg" download>OGG</a></div></div>
+      </div>
+      <div class="track">
+        <span class="number">05</span><div><h3>Reflection</h3><p>Crystal / steel</p></div>
+        <img class="wave" src="prototypes/v1/reflection.png" alt="Reflection waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Reflection" src="prototypes/v1/reflection.ogg"></audio><div class="downloads"><a href="prototypes/v1/reflection.wav" download>WAV</a><a href="prototypes/v1/reflection.ogg" download>OGG</a></div></div>
+      </div>
+      <div class="track">
+        <span class="number">06</span><div><h3>Meteor Impact</h3><p>Ground / gravity / light</p></div>
+        <img class="wave" src="prototypes/v1/meteor_impact.png" alt="Meteor impact waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Meteor impact" src="prototypes/v1/meteor_impact.ogg"></audio><div class="downloads"><a href="prototypes/v1/meteor_impact.wav" download>WAV</a><a href="prototypes/v1/meteor_impact.ogg" download>OGG</a></div></div>
+      </div>
+    </section>
+    <section class="comparison" aria-labelledby="mix-title"><div class="inner">
+      <h2 id="mix-title">Combo Mix</h2>
+      <p class="status">MATCHED GAIN / LOCAL REFERENCE ONLY / NOT FOR DISTRIBUTION</p>
+      <div class="track"><span class="number">A</span><div><h3>Combat Layers</h3><p>10.6 seconds</p></div>
+        <img class="wave" src="../../../build/audio-prototype-v1-local/dense_combo.png" alt="Combat mix waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Combat mix without cue" src="../../../build/audio-prototype-v1-local/dense_combo.ogg"></audio><div class="downloads"><a href="../../../build/audio-prototype-v1-local/dense_combo.wav">WAV</a></div></div>
+      </div>
+      <div class="track"><span class="number">B</span><div><h3>With Guard Cue</h3><p>Minecraft shield reference</p></div>
+        <img class="wave" src="../../../build/audio-prototype-v1-local/dense_combo_with_cue.png" alt="Combat mix with guard cue waveform" width="900" height="80">
+        <div class="playback"><audio controls preload="metadata" aria-label="Combat mix with guard cue" src="../../../build/audio-prototype-v1-local/dense_combo_with_cue.ogg"></audio><div class="downloads"><a href="../../../build/audio-prototype-v1-local/dense_combo_with_cue.wav">WAV</a></div></div>
+      </div>
+    </div></section>
+  </main>
+  <footer class="inner"><p>Kenney CC0 source recordings + original synthesis / <a href="manifest.json">Source &amp; processing manifest</a></p><p>Six source sounds deployed. In-world acceptance pending.</p></footer>
+  <script>
+    let players = Array.from(document.querySelectorAll("audio"));
+    let level = document.querySelector("#level");
+    let levelValue = document.querySelector("#level-value");
+    function setLevel(value) {
+      level.value = value;
+      levelValue.value = Math.round(value * 100) + "%";
+      for (let player of players) if (Math.abs(player.volume - value) > 0.001) player.volume = value;
+    }
+    level.addEventListener("input", () => setLevel(Number(level.value)));
+    for (let player of players) {
+      player.volume = Number(level.value);
+      player.addEventListener("play", () => { for (let other of players) if (other !== player) other.pause(); });
+      player.addEventListener("volumechange", () => { if (Math.abs(player.volume - Number(level.value)) > 0.001) setLevel(player.volume); });
+    }
+  </script>
+</body>
+</html>

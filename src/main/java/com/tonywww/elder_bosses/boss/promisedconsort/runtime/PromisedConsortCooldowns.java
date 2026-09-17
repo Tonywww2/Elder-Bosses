@@ -41,6 +41,10 @@ public final class PromisedConsortCooldowns {
         return readyAt <= gameTick ? 0 : (int) Math.min(Integer.MAX_VALUE, readyAt - gameTick);
     }
 
+    public void recordDefenseEnded(PromisedConsortActionId actionId, long gameTick) {
+        if(actionId.rangedDefense()) recordStarted(actionId, gameTick);
+    }
+
     public void clear() {
         readyAtByGroup.clear();
     }

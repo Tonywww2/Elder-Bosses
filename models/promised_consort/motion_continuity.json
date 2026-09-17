@@ -1,48 +1,74 @@
 {
-  "samples": 32490,
+  "samples": 37638,
+  "recovery_samples": 2772,
+  "direct_recovery_clips": [
+    "lion_claw",
+    "lion_claw_double",
+    "gravity_dive",
+    "starcaller_cry",
+    "gravity_meteor",
+    "promised_consort",
+    "spiral_assault",
+    "light_of_miquella",
+    "consort_meteor",
+    "lightspeed_slash",
+    "lightspeed_dash",
+    "lightspeed_side_dash",
+    "left_combo_bloodflame",
+    "stomp",
+    "enhanced_earthheave",
+    "ring_of_light"
+  ],
   "status": "continuity_limits_passed",
   "maximum_half_tick_joint_change_limit": 45,
   "visual_acceptance": "requires_in_world_review",
+  "impact": {
+    "skills": 22,
+    "support_clips": 21,
+    "releases": 44,
+    "maximum_contact_translation": 7.571657678474377,
+    "minimum_contact_translation": 2.005617112013158
+  },
   "worst": [
     {
-      "clip": "lion_claw_double",
-      "maximum_half_tick_joint_change": 39.87577056707229,
+      "clip": "left_combo_cross",
+      "maximum_half_tick_joint_change": 43.32758021408963,
+      "tick": 21,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 51.611476602278465,
+      "maximum_elbow": 138.0750578898295
+    },
+    {
+      "clip": "right_combo_left_twin",
+      "maximum_half_tick_joint_change": 39.3709435189223,
+      "tick": 18,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 22.8073357105377,
+      "maximum_elbow": 130.07952025106133
+    },
+    {
+      "clip": "cross_slash",
+      "maximum_half_tick_joint_change": 34.81042967261348,
       "tick": 3.5,
       "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 46.223095359884745,
+      "maximum_elbow": 138.9974590138607
     },
     {
-      "clip": "gravity_dive",
-      "maximum_half_tick_joint_change": 36.54186501581731,
-      "tick": 25.5,
-      "bone": "forearm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 118.30341380781144
+      "clip": "right_combo_cross",
+      "maximum_half_tick_joint_change": 34.14493292179235,
+      "tick": 41,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 57.23562116175352,
+      "maximum_elbow": 134.12992261953497
     },
     {
-      "clip": "lightspeed_side_dash",
-      "maximum_half_tick_joint_change": 31.094396503275725,
-      "tick": 16.5,
+      "clip": "right_combo_earthheave",
+      "maximum_half_tick_joint_change": 27.686440372921236,
+      "tick": 87,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 114.41007393062233
-    },
-    {
-      "clip": "promised_consort",
-      "maximum_half_tick_joint_change": 29.584619881078474,
-      "tick": 30,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
-    },
-    {
-      "clip": "spiral_assault",
-      "maximum_half_tick_joint_change": 27.005788652107487,
-      "tick": 29,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 57.62365234870847,
+      "maximum_elbow": 139.99999509682414
     },
     {
       "clip": "clone_dash_4",
@@ -53,20 +79,28 @@
       "maximum_elbow": 114.41007393062233
     },
     {
-      "clip": "right_combo_cross",
-      "maximum_half_tick_joint_change": 23.78706108646262,
-      "tick": 37,
+      "clip": "lion_claw",
+      "maximum_half_tick_joint_change": 26.263670543641304,
+      "tick": 13,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
     },
     {
-      "clip": "cross_slash",
-      "maximum_half_tick_joint_change": 23.78706108646262,
-      "tick": 20,
+      "clip": "lion_claw_double",
+      "maximum_half_tick_joint_change": 26.263670543641247,
+      "tick": 7,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
+    },
+    {
+      "clip": "right_combo_tempest",
+      "maximum_half_tick_joint_change": 24.693957034780315,
+      "tick": 76,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 47.48384527901657,
+      "maximum_elbow": 139.99999908340573
     },
     {
       "clip": "clone_starcaller_2",
@@ -77,70 +111,62 @@
       "maximum_elbow": 122.61905755589451
     },
     {
-      "clip": "right_combo_tempest",
-      "maximum_half_tick_joint_change": 21.00007317087804,
-      "tick": 72,
+      "clip": "consort_meteor",
+      "maximum_half_tick_joint_change": 20.53716715892943,
+      "tick": 43,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
     },
     {
       "clip": "ring_of_light",
-      "maximum_half_tick_joint_change": 21.00007317087804,
-      "tick": 21,
+      "maximum_half_tick_joint_change": 19.689045841712268,
+      "tick": 24,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
-    },
-    {
-      "clip": "lightspeed_dash",
-      "maximum_half_tick_joint_change": 21.000051244316772,
-      "tick": 23,
-      "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 114.41007393062233
+      "minimum_elbow": 56.671039376567514,
+      "maximum_elbow": 133.92071756198516
     }
   ],
   "clips": [
     {
-      "clip": "lion_claw_double",
-      "maximum_half_tick_joint_change": 39.87577056707229,
+      "clip": "left_combo_cross",
+      "maximum_half_tick_joint_change": 43.32758021408963,
+      "tick": 21,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 51.611476602278465,
+      "maximum_elbow": 138.0750578898295
+    },
+    {
+      "clip": "right_combo_left_twin",
+      "maximum_half_tick_joint_change": 39.3709435189223,
+      "tick": 18,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 22.8073357105377,
+      "maximum_elbow": 130.07952025106133
+    },
+    {
+      "clip": "cross_slash",
+      "maximum_half_tick_joint_change": 34.81042967261348,
       "tick": 3.5,
       "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 46.223095359884745,
+      "maximum_elbow": 138.9974590138607
     },
     {
-      "clip": "gravity_dive",
-      "maximum_half_tick_joint_change": 36.54186501581731,
-      "tick": 25.5,
-      "bone": "forearm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 118.30341380781144
+      "clip": "right_combo_cross",
+      "maximum_half_tick_joint_change": 34.14493292179235,
+      "tick": 41,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 57.23562116175352,
+      "maximum_elbow": 134.12992261953497
     },
     {
-      "clip": "lightspeed_side_dash",
-      "maximum_half_tick_joint_change": 31.094396503275725,
-      "tick": 16.5,
+      "clip": "right_combo_earthheave",
+      "maximum_half_tick_joint_change": 27.686440372921236,
+      "tick": 87,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 114.41007393062233
-    },
-    {
-      "clip": "promised_consort",
-      "maximum_half_tick_joint_change": 29.584619881078474,
-      "tick": 30,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
-    },
-    {
-      "clip": "spiral_assault",
-      "maximum_half_tick_joint_change": 27.005788652107487,
-      "tick": 29,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 57.62365234870847,
+      "maximum_elbow": 139.99999509682414
     },
     {
       "clip": "clone_dash_4",
@@ -151,20 +177,28 @@
       "maximum_elbow": 114.41007393062233
     },
     {
-      "clip": "right_combo_cross",
-      "maximum_half_tick_joint_change": 23.78706108646262,
-      "tick": 37,
+      "clip": "lion_claw",
+      "maximum_half_tick_joint_change": 26.263670543641304,
+      "tick": 13,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
     },
     {
-      "clip": "cross_slash",
-      "maximum_half_tick_joint_change": 23.78706108646262,
-      "tick": 20,
+      "clip": "lion_claw_double",
+      "maximum_half_tick_joint_change": 26.263670543641247,
+      "tick": 7,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
+    },
+    {
+      "clip": "right_combo_tempest",
+      "maximum_half_tick_joint_change": 24.693957034780315,
+      "tick": 76,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 47.48384527901657,
+      "maximum_elbow": 139.99999908340573
     },
     {
       "clip": "clone_starcaller_2",
@@ -175,124 +209,100 @@
       "maximum_elbow": 122.61905755589451
     },
     {
-      "clip": "right_combo_tempest",
-      "maximum_half_tick_joint_change": 21.00007317087804,
-      "tick": 72,
+      "clip": "consort_meteor",
+      "maximum_half_tick_joint_change": 20.53716715892943,
+      "tick": 43,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
     },
     {
       "clip": "ring_of_light",
-      "maximum_half_tick_joint_change": 21.00007317087804,
-      "tick": 21,
+      "maximum_half_tick_joint_change": 19.689045841712268,
+      "tick": 24,
       "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
-    },
-    {
-      "clip": "lightspeed_dash",
-      "maximum_half_tick_joint_change": 21.000051244316772,
-      "tick": 23,
-      "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 114.41007393062233
-    },
-    {
-      "clip": "right_combo_left_twin",
-      "maximum_half_tick_joint_change": 17.93959351829304,
-      "tick": 46,
-      "bone": "upper_arm_r",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 100.87957462052715
-    },
-    {
-      "clip": "stomp",
-      "maximum_half_tick_joint_change": 17.935168342258976,
-      "tick": 12.5,
-      "bone": "upper_arm_r",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
-    },
-    {
-      "clip": "right_combo_earthheave",
-      "maximum_half_tick_joint_change": 17.902278230340723,
-      "tick": 102.5,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 118.30341380781144
-    },
-    {
-      "clip": "lion_claw",
-      "maximum_half_tick_joint_change": 17.626232933874658,
-      "tick": 7.5,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 56.671039376567514,
+      "maximum_elbow": 133.92071756198516
     },
     {
       "clip": "enhanced_earthheave",
-      "maximum_half_tick_joint_change": 17.626232933874658,
-      "tick": 9.5,
+      "maximum_half_tick_joint_change": 19.512630072366708,
+      "tick": 47,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 140.00000324410397
+    },
+    {
+      "clip": "spiral_assault",
+      "maximum_half_tick_joint_change": 18.767673278458606,
+      "tick": 35.5,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 109.65904211461043
+    },
+    {
+      "clip": "gravity_dive",
+      "maximum_half_tick_joint_change": 18.5073500618713,
+      "tick": 38,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 109.65904211461043
+    },
+    {
+      "clip": "lightspeed_dash",
+      "maximum_half_tick_joint_change": 17.74277966570223,
+      "tick": 77.5,
       "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 64.84192259763522,
+      "maximum_elbow": 140.0000050754832
     },
     {
       "clip": "transition",
       "maximum_half_tick_joint_change": 17.556519958033892,
       "tick": 126.5,
       "bone": "upper_arm_l",
-      "minimum_elbow": 14.730643029873674,
-      "maximum_elbow": 118.30341380781144
-    },
-    {
-      "clip": "starcaller_cry",
-      "maximum_half_tick_joint_change": 17.55651995803381,
-      "tick": 38.5,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
-    },
-    {
-      "clip": "gravity_meteor",
-      "maximum_half_tick_joint_change": 17.55651995803381,
-      "tick": 98.5,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
-    },
-    {
-      "clip": "consort_meteor",
-      "maximum_half_tick_joint_change": 17.55651995803381,
-      "tick": 120.5,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 14.730643029873699,
+      "maximum_elbow": 118.3034138078114
     },
     {
       "clip": "clone_overhead_3",
       "maximum_half_tick_joint_change": 17.55651995803381,
       "tick": 3.5,
       "bone": "upper_arm_l",
-      "minimum_elbow": 73.08943905813098,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 73.08943905813099,
+      "maximum_elbow": 118.3034138078114
     },
     {
       "clip": "clone_meteor_4",
       "maximum_half_tick_joint_change": 17.55651995803381,
       "tick": 3.5,
       "bone": "upper_arm_l",
-      "minimum_elbow": 73.08943905813098,
-      "maximum_elbow": 118.30341380781144
+      "minimum_elbow": 73.08943905813099,
+      "maximum_elbow": 118.3034138078114
     },
     {
-      "clip": "left_combo_cross",
-      "maximum_half_tick_joint_change": 15.307009777479282,
-      "tick": 26,
+      "clip": "gravity_meteor",
+      "maximum_half_tick_joint_change": 17.460798897713154,
+      "tick": 90,
       "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 122.61905755589451
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 129.25997012142793
+    },
+    {
+      "clip": "promised_consort",
+      "maximum_half_tick_joint_change": 17.17915862013619,
+      "tick": 27,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 42.497473023395806,
+      "maximum_elbow": 137.3316258100324
+    },
+    {
+      "clip": "left_combo_bloodflame",
+      "maximum_half_tick_joint_change": 16.2739965475712,
+      "tick": 14,
+      "bone": "upper_arm_l",
+      "minimum_elbow": 51.6561212394262,
+      "maximum_elbow": 127.92739745296197
     },
     {
       "clip": "clone_side_fan_3",
@@ -301,6 +311,14 @@
       "bone": "upper_arm_l",
       "minimum_elbow": 12.000016598792305,
       "maximum_elbow": 97.22317215253663
+    },
+    {
+      "clip": "starcaller_cry",
+      "maximum_half_tick_joint_change": 15.056325706051753,
+      "tick": 57.5,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
     },
     {
       "clip": "clone_cross_return_2",
@@ -312,19 +330,19 @@
     },
     {
       "clip": "lightspeed_slash",
-      "maximum_half_tick_joint_change": 13.167394617391757,
-      "tick": 51,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
+      "maximum_half_tick_joint_change": 13.225243910778017,
+      "tick": 64,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 43.04202628062707,
+      "maximum_elbow": 119.7328420180246
     },
     {
-      "clip": "left_combo_bloodflame",
-      "maximum_half_tick_joint_change": 13.120274321488834,
-      "tick": 35,
-      "bone": "upper_arm_l",
-      "minimum_elbow": 12.000016598792305,
-      "maximum_elbow": 138.09701053080536
+      "clip": "lightspeed_side_dash",
+      "maximum_half_tick_joint_change": 10.683261602138245,
+      "tick": 8,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 31.30118955951111,
+      "maximum_elbow": 134.16279926628678
     },
     {
       "clip": "intro",
@@ -332,23 +350,23 @@
       "tick": 6.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 118.30341380781144
-    },
-    {
-      "clip": "light_of_miquella",
-      "maximum_half_tick_joint_change": 8.767779371072935,
-      "tick": 75.5,
-      "bone": "upper_arm_r",
-      "minimum_elbow": 14.730643029873674,
-      "maximum_elbow": 108.76973350500934
+      "maximum_elbow": 118.3034138078114
     },
     {
       "clip": "stunned",
       "maximum_half_tick_joint_change": 8.624705614810278,
       "tick": 64.5,
       "bone": "forearm_r",
-      "minimum_elbow": 22.151121870624905,
-      "maximum_elbow": 79.99940013627253
+      "minimum_elbow": 22.15112187062492,
+      "maximum_elbow": 79.99940013627254
+    },
+    {
+      "clip": "stomp",
+      "maximum_half_tick_joint_change": 6.0690063638474046,
+      "tick": 4,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 42.924782775845614,
+      "maximum_elbow": 93.4150295648847
     },
     {
       "clip": "death",
@@ -356,7 +374,15 @@
       "tick": 20.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 22.14998741487735,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
+    },
+    {
+      "clip": "light_of_miquella",
+      "maximum_half_tick_joint_change": 3.8195476213114423,
+      "tick": 143,
+      "bone": "upper_arm_r",
+      "minimum_elbow": 64.84192259763522,
+      "maximum_elbow": 99.80676083164583
     },
     {
       "clip": "idle_phase_two",
@@ -364,7 +390,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "idle",
@@ -372,7 +398,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "walk",
@@ -380,7 +406,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "run",
@@ -388,7 +414,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "walk_phase_two",
@@ -396,7 +422,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "run_phase_two",
@@ -404,7 +430,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "hurt",
@@ -412,7 +438,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "turn_left",
@@ -420,7 +446,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "turn_right",
@@ -428,7 +454,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "turn_left_phase_two",
@@ -436,7 +462,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     },
     {
       "clip": "turn_right_phase_two",
@@ -444,7 +470,7 @@
       "tick": 0.5,
       "bone": "upper_arm_r",
       "minimum_elbow": 30.043968482936954,
-      "maximum_elbow": 32.87952758169875
+      "maximum_elbow": 32.87952758169877
     }
   ]
 }

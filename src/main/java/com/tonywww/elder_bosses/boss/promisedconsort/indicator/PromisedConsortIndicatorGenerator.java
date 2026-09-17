@@ -171,8 +171,8 @@ public final class PromisedConsortIndicatorGenerator {
             case LIGHTSPEED_SLASH -> path(bossPosition, yaw, 8.0, 1.6);
             case LIGHTSPEED_DASH -> path(bossPosition, yaw,
                     skill.number("range"), skill.number("width"));
-                case LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT, ENHANCED_EARTHHEAVE,
-                    CONSORT_METEOR -> throw new IllegalStateException(
+                case LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT, CROSS_LEAP_COMBO, ENHANCED_EARTHHEAVE,
+                    CONSORT_METEOR, GRAVITY_BULWARK, GRAVITY_REFLECTION, GRAVITY_REPRISAL -> throw new IllegalStateException(
                     "composite action must be handled before the simple shape switch"
                 );
         };
@@ -301,7 +301,7 @@ public final class PromisedConsortIndicatorGenerator {
             ));
             yield lightspeedSideDashShapes(bossPosition, yaw, skill);
             }
-            case PROMISED_CONSORT -> promisedConsortShapes(bossPosition, skill);
+            case PROMISED_CONSORT, CROSS_LEAP_COMBO -> promisedConsortShapes(bossPosition, skill);
             case ENHANCED_EARTHHEAVE -> List.of(
                 new TimedShape("slam", 0, circle(bossPosition, skill.number("radius")),
                     IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD, true),
@@ -547,12 +547,13 @@ public final class PromisedConsortIndicatorGenerator {
         if (gameTick >= timing.activeTick()) {
             return IndicatorSnapshotPacket.IndicatorState.ACTIVE;
         }
+        if (gameTick < timing.lockTick()) {
+            return IndicatorSnapshotPacket.IndicatorState.TRACKING;
+        }
         if (timing.activeTick() - gameTick <= 4) {
             return IndicatorSnapshotPacket.IndicatorState.IMMINENT;
         }
-        return gameTick >= timing.lockTick()
-                ? IndicatorSnapshotPacket.IndicatorState.LOCKED
-                : IndicatorSnapshotPacket.IndicatorState.TRACKING;
+        return IndicatorSnapshotPacket.IndicatorState.LOCKED;
     }
 
     private IndicatorSnapshotPacket packet(
@@ -567,10 +568,6 @@ public final class PromisedConsortIndicatorGenerator {
             Timing timing,
             boolean instantGuard
     ) {
-            long lockTick = instantGuard
-                ? Math.max(timing.startTick(),
-                timing.activeTick() - config.instantGuard().defaultCueLeadTicks())
-                : timing.lockTick();
         return new IndicatorSnapshotPacket(
                 bossEntityId,
                 indicatorId,
@@ -584,7 +581,7 @@ public final class PromisedConsortIndicatorGenerator {
                 shape.ranges(),
                 shape.pathPoints(),
                 timing.startTick(),
-                lockTick,
+                timing.lockTick(),
                 timing.activeTick(),
                 timing.endTick(),
                 instantGuard,
@@ -714,7 +711,7 @@ public final class PromisedConsortIndicatorGenerator {
                     IndicatorSnapshotPacket.StyleRole.GRAVITY_PURPLE;
             case L_COMBO_BLOODFLAME -> IndicatorSnapshotPacket.StyleRole.BLOODFLAME_RED;
             case LIGHT_OF_MIQUELLA, RING_OF_LIGHT, LIGHTSPEED_SLASH, LIGHTSPEED_DASH,
-                    LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT, ENHANCED_EARTHHEAVE,
+                    LIGHTSPEED_SIDE_DASH, PROMISED_CONSORT, CROSS_LEAP_COMBO, ENHANCED_EARTHHEAVE,
                     CONSORT_METEOR -> IndicatorSnapshotPacket.StyleRole.HOLY_IVORY;
             default -> IndicatorSnapshotPacket.StyleRole.PHYSICAL_GOLD;
         };

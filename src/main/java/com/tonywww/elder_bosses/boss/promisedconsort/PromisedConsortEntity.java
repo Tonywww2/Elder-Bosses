@@ -1,6 +1,11 @@
 package com.tonywww.elder_bosses.boss.promisedconsort;
 
+import com.tonywww.elder_bosses.arena.PromisedConsortArenaBinding;
+import com.tonywww.elder_bosses.platforms.arena.PlatformArenaSavedData;
+import com.tonywww.elder_bosses.combat.geometry.Vec2;
 import com.tonywww.elder_bosses.boss.promisedconsort.action.PromisedConsortActionCatalog;
+import com.tonywww.elder_bosses.combat.action.ActionLifecycleEvent;
+import com.tonywww.elder_bosses.combat.action.BossActionDebug;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortCombatConfigSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortConfigNbt;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortConfigProvider;
@@ -21,6 +26,8 @@ import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActi
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortActionSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.runtime.PromisedConsortCooldowns;
 import com.tonywww.elder_bosses.boss.promisedconsort.selection.PromisedConsortSkillSelector;
+import com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedState;
+import com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedDamage;
 import com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
@@ -42,6 +49,7 @@ import com.tonywww.elder_bosses.platforms.network.PlatformNetwork;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import com.tonywww.elder_bosses.platforms.registry.ModItems;
 import com.tonywww.elder_bosses.platforms.registry.ModSoundEvents;
+import com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -137,6 +145,20 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
         private static final EntityDataAccessor<Float> ANIMATION_NEXT_TICK =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
+        private static final EntityDataAccessor<Boolean> RANGED_DEFENDING =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
+        private static final EntityDataAccessor<Boolean> OPENING_LION =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
+        private static final EntityDataAccessor<Boolean> GATE_BOUND =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
+        private static final EntityDataAccessor<Float> RANGED_CHARGE =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
+        private static final EntityDataAccessor<Float> RANGED_DEFENSE_RADIUS =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
+            private static final EntityDataAccessor<Float> RANGED_WAVE_HEIGHT =
+                SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
+                private static final EntityDataAccessor<Float> RANGED_DEFENSE_ARC =
+                    SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Long> ACTION_SEED =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.LONG);
         private static final EntityDataAccessor<Long> STATE_START_GAME_TIME =
@@ -152,6 +174,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         private static final EntityDataAccessor<Float> STAGGER_CAPACITY =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> MIQUELLA_VISIBLE =
+            SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
+        private static final EntityDataAccessor<Boolean> PURSUING =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
         private static final EntityDataAccessor<Boolean> METEOR_LANDED =
             SynchedEntityData.defineId(PromisedConsortEntity.class, EntityDataSerializers.BOOLEAN);
@@ -170,6 +194,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         private final Set<UUID> exitedParticipants = new HashSet<>();
         private final Map<UUID, Long> dimensionAwaySince = new HashMap<>();
         private final Map<UUID, Deque<DamageEvent>> recentDamageByPlayer = new HashMap<>();
+        private PromisedConsortRangedState rangedState;
+        private com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedDefense rangedDefense;
         private final Map<UUID, Integer> rightRearTicksByPlayer = new HashMap<>();
         private final Map<UUID, Deque<Vec3>> recentPositionsByPlayer = new HashMap<>();
         private final Map<Long, ActionResult> actionResults = new HashMap<>();
@@ -199,6 +225,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         private PromisedConsortActionSnapshot currentAction;
         private Vec3 combatCenter;
         private float combatYaw;
+        private PromisedConsortArenaBinding arenaBinding;
+        private boolean arenaOwnershipChecked;
         private int stateTicks;
         private int forcedTransitionTicks = -1;
         private int disengageTicks;
@@ -223,6 +251,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         private boolean playerDefeatDialogueUsed;
         private UUID lastDamagePlayerId;
         private long lastInstantGuardCueTick = Long.MIN_VALUE;
+        private PromisedConsortActionId skillTestAction;
+        private long skillTestStartTick;
+        private boolean skillTestStarted;
+        private boolean skillTestRanged;
 
     public PromisedConsortEntity(
             EntityType<? extends PromisedConsortEntity> entityType,
@@ -250,6 +282,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         registrar.define(ACTION_TICK, -1);
         registrar.define(ANIMATION_TICK, 0.0F);
         registrar.define(ANIMATION_NEXT_TICK, 0.0F);
+        registrar.define(RANGED_DEFENDING, false);
+        registrar.define(OPENING_LION, false);
+        registrar.define(GATE_BOUND, false);
+        registrar.define(RANGED_CHARGE, 0.0F);
+        registrar.define(RANGED_DEFENSE_RADIUS, 0.0F);
+        registrar.define(RANGED_WAVE_HEIGHT,4.0F);
+        registrar.define(RANGED_DEFENSE_ARC,360.0F);
         registrar.define(ACTION_SEED, 0L);
         registrar.define(STATE_START_GAME_TIME, 0L);
         registrar.define(ACTION_SEQUENCE, -1L);
@@ -258,6 +297,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         registrar.define(STAGGER, 0.0F);
         registrar.define(STAGGER_CAPACITY, 0.0F);
         registrar.define(MIQUELLA_VISIBLE, false);
+        registrar.define(PURSUING, false);
         registrar.define(METEOR_LANDED, false);
         registrar.define(DIALOGUE_EVENT_ID, -1);
         registrar.define(DIALOGUE_START_GAME_TIME, 0L);
@@ -268,9 +308,40 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public boolean canCollideWith(net.minecraft.world.entity.Entity other) {
+        return false;
+    }
+
+    @Override
+    public void push(net.minecraft.world.entity.Entity other) {
+    }
+
+    @Override
     public void tick() {
+        if (level() instanceof ServerLevel server && arenaBinding != null && !arenaOwnershipChecked) {
+            if (!PlatformArenaSavedData.get(server).claim(arenaBinding, getUUID())) {
+                discard();
+                return;
+            }
+            arenaOwnershipChecked = true;
+        }
         super.tick();
         if (level().isClientSide) {
+            return;
+        }
+        setPursuing(false);
+        if (skillTestAction != null) {
+            tickSkillTest();
             return;
         }
         flushPendingStagger();
@@ -292,6 +363,9 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         if (combatState() == PromisedConsortCombatState.DORMANT) {
             getNavigation().stop();
+            if (arenaBinding != null) {
+                holdArenaDormantPosition();
+            }
             bossEvent.setVisible(false);
             syncNetworkState();
             return;
@@ -303,6 +377,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         updateGuardStates();
         updateRightRearTracking();
         pruneRecentDamage();
+        updateRangedPlayers();
         updateBossBarAudience();
         tickDialogue();
 
@@ -326,20 +401,147 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         syncNetworkState();
     }
 
+    public void bindArena(PromisedConsortArenaBinding binding) {
+        if (level().isClientSide || arenaBinding != null || actionRuntime != null
+                || combatState() != PromisedConsortCombatState.DORMANT) {
+            throw new IllegalStateException("Only a fresh dormant boss can bind to an arena");
+        }
+        arenaBinding = Objects.requireNonNull(binding);
+        combatCenter = binding.standingAnchor("arena_center");
+        combatYaw = binding.yaw();
+        lastLegalPosition = combatCenter;
+        holdArenaDormantPosition();
+        setPersistenceRequired();
+        getAttribute(Attributes.MAX_HEALTH).setBaseValue(currentConfig().general().baseHealth());
+        setHealth(getMaxHealth());
+    }
+
+    public Optional<PromisedConsortArenaBinding> arenaBinding() {
+        return Optional.ofNullable(arenaBinding);
+    }
+
+    private void holdArenaDormantPosition() {
+        entityData.set(GATE_BOUND, true);
+        setNoGravity(false);
+        setPosition(arenaBinding.dormantPosition());
+        setDeltaMovement(Vec3.ZERO);
+        float yaw = arenaBinding.dormantYaw();
+        setYRot(yaw);
+        setYHeadRot(yaw);
+        setYBodyRot(yaw);
+    }
+
+    public int beginSkillTest(ServerPlayer observer, PromisedConsortActionId actionId,
+                             PromisedConsortPhase testPhase) {
+        return beginSkillTest(observer,actionId,testPhase,false);
+    }
+
+    public int beginSkillTest(ServerPlayer observer, PromisedConsortActionId actionId,
+                             PromisedConsortPhase testPhase, boolean ranged) {
+        if (level().isClientSide || observer.level() != level() || observer.isSpectator()
+                || !observer.isAlive() || actionRuntime != null
+                || combatState() != PromisedConsortCombatState.DORMANT) {
+            throw new IllegalStateException("Skill tests require a fresh boss and a live non-spectator player in the same level");
+        }
+        combatConfig = PromisedConsortConfigProvider.combatSnapshot();
+        skillConfig = PromisedConsortConfigProvider.skillSnapshot();
+        combatCenter = position();
+        lastLegalPosition = combatCenter;
+        combatYaw = getYRot();
+        initializeCombatComponents();
+        if (!skillConfig.get(actionId).enabled() || !actionCatalog.get(actionId).isAvailableIn(testPhase)) {
+            throw new IllegalArgumentException("Skill is disabled or unavailable in the requested phase");
+        }
+        skillTestAction = actionId;
+        if(ranged && !skillConfig.get(actionId).hasRangedCounter()
+                || (ranged || actionId.rangedDefense()) && !combatConfig.targeting().rangedCounter().enabled()) {
+            throw new IllegalArgumentException("Ranged counter is disabled or unavailable");
+        }
+        skillTestRanged = ranged;
+        skillTestStartTick = level().getGameTime() + 20;
+        addTag("elder_bosses_skill_test");
+        roster.add(observer.getUUID());
+        highWaterParticipantCount = 1;
+        applyConfiguredAttributes();
+        setHealth(getMaxHealth());
+        setTarget(observer);
+        entityData.set(ACTIVE_PHASE, testPhase.id());
+        entityData.set(MIQUELLA_VISIBLE, testPhase == PromisedConsortPhase.PHASE_TWO);
+        bossEvent.setVisible(true);
+        return actionCatalog.get(actionId,ranged).timeline().totalTicks();
+    }
+
+    private void tickSkillTest() {
+        LivingEntity observer = getTarget();
+        if (observer == null || !observer.isAlive() || observer.isRemoved()
+            || observer.level() != level() || !insideArena(observer)
+                || observer instanceof ServerPlayer player && (player.hasDisconnected() || player.isSpectator())) {
+            discard();
+            return;
+        }
+        getNavigation().stop();
+        updateBossBarAudience();
+        if (level().getGameTime() < skillTestStartTick) {
+            syncNetworkState();
+            return;
+        }
+        if (!skillTestStarted) {
+            setCombatState(skillTestAction == PromisedConsortActionId.CONSORT_METEOR
+                    ? PromisedConsortCombatState.METEOR_SCRIPT
+                    : phase() == PromisedConsortPhase.PHASE_TWO
+                    ? PromisedConsortCombatState.PHASE_2 : PromisedConsortCombatState.PHASE_1);
+                rangedDefense.prepare(skillTestRanged);
+                currentAction = actionRuntime.start(skillTestAction, phase(), level().getGameTime(),
+                    random.nextLong(), observer.getUUID(),skillTestRanged);
+            skillTestStarted = true;
+        }
+        if (actionRuntime.advance(level().getGameTime()).isPresent() || !actionRuntime.isActive()) {
+            discard();
+            return;
+        }
+        stateTicks++;
+        recordPlayerPositions();
+        updateGuardStates();
+        if (skillTestAction == PromisedConsortActionId.CONSORT_METEOR) {
+            tickMeteorScript();
+        } else {
+            currentAction = actionRuntime.snapshot(level().getGameTime()).orElseThrow();
+            processOutcomes(actionExecutor.tick(currentAction));
+            playInstantGuardCue(currentAction);
+            syncAction(currentAction);
+        }
+        syncNetworkState();
+    }
+
     private void tickIntro() {
-        Vec3 center = combatCenter();
-        Vec3 remaining = center.subtract(position());
-        int ticksLeft = Math.max(1, INTRO_TICKS - stateTicks);
-        moveControlled(remaining.scale(1.0 / ticksLeft));
+        if (arenaBinding != null) {
+            holdArenaDormantPosition();
+        } else {
+            Vec3 remaining = combatCenter().subtract(position());
+            int ticksLeft = Math.max(1, INTRO_TICKS - stateTicks);
+            moveControlled(remaining.scale(1.0 / ticksLeft));
+        }
         if (stateTicks >= INTRO_TICKS) {
             setCombatState(PromisedConsortCombatState.PHASE_1);
             applyThresholdGates();
+            if (arenaBinding != null && skillTestAction == null && skillConfig.get(PromisedConsortActionId.LION_CLAW).enabled()) {
+                currentAction = activeParticipants().stream().filter(this::isEligibleArenaPlayer)
+                        .filter(player -> combatConfig.targeting().targetCreativePlayers() || !player.isCreative())
+                        .min(java.util.Comparator.comparingDouble(player -> distanceToSqr(player)))
+                        .map(player -> combatController.forceOpeningLion(player.getUUID())).orElse(null);
+                if (currentAction != null) {
+                    actionExecutor.prepareOpeningLion(currentAction);
+                    setTarget(currentAction.targetId() == null ? null : livingEntity(currentAction.targetId()).orElse(null));
+                    processOutcomes(actionExecutor.tick(currentAction));
+                    syncAction(currentAction);
+                }
+            }
         }
     }
 
     private void tickTransition() {
         if (stateTicks == 21) {
-            setPosition(anchor(combatConfig.arena().phaseReturnOffset()).add(0.0, 8.0, 0.0));
+            setPosition(phaseReturnAnchor().add(0.0, 8.0, 0.0));
         }
         if (stateTicks == MIQUELLA_VISIBLE_TICK) {
             entityData.set(MIQUELLA_VISIBLE, true);
@@ -351,8 +553,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             emitDialogue(PromisedConsortDialogueEvent.PHASE_TWO_VOW);
         }
         if (stateTicks == combatConfig.phaseTransition().returnImpactTick()) {
-            setPosition(anchor(combatConfig.arena().phaseReturnOffset()));
+            setPosition(phaseReturnAnchor());
             applyTransitionImpact();
+            playActionSound(PromisedConsortActionSoundPlan.cue("transition_impact", PromisedConsortActionSoundPlan.Sound.METEOR, 0.8F, 1),
+                    position(), new Vec2(0, 1));
         }
         if (stateTicks >= combatConfig.phaseTransition().durationTicks()) {
             if (combatConfig.stagger().resetOnPhaseChange()) {
@@ -364,25 +568,29 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private void tickMeteorScript() {
-        int ascentEndTick = meteorTick(50);
-        int impactTick = meteorTick(121);
+        var timeline = actionCatalog.get(PromisedConsortActionId.CONSORT_METEOR).timeline();
+        boolean components = timeline.stages().size() > 1;
+        int ascentStartTick = components ? timeline.activeStartTick(0) : 0;
+        int ascentEndTick = components ? timeline.activeEndTick(0) : 51;
+        int impactTick = components ? timeline.activeStartTick(3) : 121;
         Optional<PromisedConsortActionSnapshot> snapshot = actionRuntime.snapshot(level().getGameTime());
         currentAction = snapshot.orElse(null);
         syncAction(currentAction);
         int scriptTick = currentAction == null ? stateTicks : currentAction.actionTick();
-        if (scriptTick <= ascentEndTick) {
-            moveControlled(new Vec3(0.0, 0.28, 0.0));
+        if (scriptTick >= ascentStartTick && scriptTick < ascentEndTick) {
+            moveControlled(new Vec3(0.0, 14.28 / Math.max(1, ascentEndTick - ascentStartTick), 0.0));
         } else if (scriptTick >= impactTick && !meteorLanded()) {
             setPosition(actionExecutor.lockedPoints().getOrDefault("meteor", combatCenter()));
             entityData.set(METEOR_LANDED, true);
+            playActionSound(PromisedConsortActionSoundPlan.cue("meteor_landing", PromisedConsortActionSoundPlan.Sound.METEOR, 1, 1),
+                    position(), new Vec2(0, 1));
         }
         List<PromisedConsortHitOutcome> outcomes = snapshot
                 .map(actionExecutor::tick)
                 .orElseGet(actionExecutor::tickPersistentHazards);
         processOutcomes(outcomes);
         Optional<PromisedConsortActionRuntime.ActionEnd> ended = actionRuntime.advance(level().getGameTime());
-        if (ended.isPresent() || stateTicks >= meteorTick(skillConfig.get(
-            PromisedConsortActionId.CONSORT_METEOR).integer("script_ticks"))) {
+        if (ended.isPresent() || stateTicks >= timeline.totalTicks()) {
             currentAction = null;
             nextMeteorReadyTick = "once".equals(combatConfig.meteor().repeatMode())
                 ? Long.MAX_VALUE
@@ -447,7 +655,16 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         setTarget(result.targetId().flatMap(this::livingEntity).orElse(null));
         if (currentAction == null) {
             if (getTarget() != null) {
-                getNavigation().moveTo(getTarget(), 1.0);
+                Vec3 offset = getTarget().position().subtract(position()).multiply(1, 0, 1);
+                double separation = PromisedConsortActionExecutor.preferredSeparation(getBbWidth(), getTarget().getBbWidth());
+                if (PromisedConsortActionExecutor.shouldApproach(offset.length(), separation, !getNavigation().isDone())) {
+                    Vec3 destination = getTarget().position().subtract(offset.normalize().scale(separation));
+                    getNavigation().moveTo(destination.x, destination.y, destination.z, 1.0);
+                } else {
+                    getNavigation().stop();
+                    setDeltaMovement(getDeltaMovement().multiply(0, 1, 0));
+                    getLookControl().setLookAt(getTarget(), 20.0F, 20.0F);
+                }
             } else {
                 getNavigation().stop();
             }
@@ -490,9 +707,9 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     private void beginEncounter(ServerPlayer initiator) {
         combatConfig = PromisedConsortConfigProvider.combatSnapshot();
         skillConfig = PromisedConsortConfigProvider.skillSnapshot();
-        combatCenter = position();
+        combatCenter = arenaBinding == null ? position() : arenaBinding.standingAnchor("arena_center");
         lastLegalPosition = combatCenter;
-        combatYaw = getYRot();
+        combatYaw = arenaBinding == null ? getYRot() : arenaBinding.yaw();
         if (!applyOverlapPolicy()) {
             combatConfig = null;
             skillConfig = null;
@@ -502,7 +719,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         registerParticipant(initiator);
         applyConfiguredAttributes();
         setHealth(getMaxHealth());
-        setPosition(anchor(combatConfig.arena().introOffset()));
+        if (arenaBinding != null) {
+            holdArenaDormantPosition();
+        } else {
+            setPosition(anchor(combatConfig.arena().introOffset()));
+        }
         setCombatState(PromisedConsortCombatState.INTRO);
         bossEvent.setVisible(true);
     }
@@ -541,9 +762,26 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             StaggerTracker.PersistentState staggerState
         ) {
         actionCatalog = new PromisedConsortActionCatalog(skillConfig);
+        var rangedRules=combatConfig.targeting().rangedCounter().rules();
+        int retainedThreatTicks=Math.max(rangedRules.threatWindowTicks(),Math.max(
+            skillConfig.get(PromisedConsortActionId.GRAVITY_BULWARK).integer("trigger.threat_window_ticks"),
+            skillConfig.get(PromisedConsortActionId.GRAVITY_REPRISAL).integer("trigger.threat_window_ticks")));
+        rangedState = new PromisedConsortRangedState(new PromisedConsortRangedState.Rules(rangedRules.enterDistance(),rangedRules.exitDistance(),
+            rangedRules.dwellTicks(),rangedRules.damageWindowTicks(),rangedRules.damageThreshold(),retainedThreatTicks));
+        rangedDefense = new com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedDefense(
+            this,combatConfig.targeting().rangedCounter(),skillConfig,rangedState);
         actionRuntime = actionState == null
             ? new PromisedConsortActionRuntime(actionCatalog)
             : PromisedConsortActionRuntime.restore(actionCatalog, actionState);
+        actionRuntime.setLifecycleListener(event -> {
+            if(event.outcome()==ActionLifecycleEvent.Outcome.STARTED) rangedDefense.lifecycle(event);
+            broadcastActionDebug(event);
+            if (event.outcome() != ActionLifecycleEvent.Outcome.STARTED && actionExecutor != null) actionExecutor.releaseFlight();
+            if(event.outcome()!=ActionLifecycleEvent.Outcome.STARTED) rangedDefense.lifecycle(event);
+            if(event.outcome()!=ActionLifecycleEvent.Outcome.STARTED && cooldowns!=null) {
+                cooldowns.recordDefenseEnded(PromisedConsortActionId.fromSerializedName(event.actionId()).orElseThrow(),level().getGameTime());
+            }
+        });
         cooldowns = new PromisedConsortCooldowns(actionCatalog);
         cooldowns.restore(cooldownState);
         PromisedConsortSkillSelector selector = new PromisedConsortSkillSelector(
@@ -685,6 +923,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         if (level().isClientSide) {
             return super.hurt(source, amount);
         }
+        if (skillTestAction != null && source.is(ModDamageTypeTags.FORCED_DEATH)) {
+            discard();
+            return true;
+        }
+        if (skillTestAction != null && !skillTestStarted) {
+            return false;
+        }
         PromisedConsortCombatConfigSnapshot current = currentConfig();
         if (source.is(ModDamageTypeTags.FORCED_DEATH)
                 && current.incomingDamage().forcedDeathBypassesPolicy()) {
@@ -790,13 +1035,23 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         if (resolution.immune()) {
             return;
         }
+        var rangedConfig = combatConfig.targeting().rangedCounter();
+        if (rangedConfig.enabled() && rangedState != null && PromisedConsortRangedDamage.ranged(source, rangedConfig)) {
+            DamageSourceOwnership.playerOwner(source).filter(player -> roster.contains(player.getUUID()) && isEligibleArenaPlayer(player))
+                    .ifPresent(player -> rangedState.threat(player.getUUID(), level().getGameTime(), amount * resolution.multiplier(), false));
+        }
         applyingIncomingDamage = true;
         healthBeforeIncomingDamage = getHealth();
         resolvedIncomingHealthLoss = 0.0;
         try {
             DamageSource routedSource = routedIncomingDamageSource(source, resolution);
+                double resolvedAmount=amount*resolution.multiplier();
+                if(rangedDefense!=null && DamageSourceOwnership.playerOwner(source).filter(this::rangedParticipant).isPresent()) {
+                resolvedAmount=rangedDefense.defend(actionRuntime.snapshot(level().getGameTime()).orElse(null),source,resolvedAmount,
+                    PromisedConsortRangedDamage.ranged(source,rangedConfig));
+                }
             super.actuallyHurt(routedSource, (float) Math.min(Float.MAX_VALUE,
-                    amount * resolution.multiplier()));
+                    resolvedAmount));
         } finally {
             applyingIncomingDamage = false;
         }
@@ -911,6 +1166,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     private void recordIncomingDamage(DamageSource source, double actualLoss) {
         Optional<ServerPlayer> owner = DamageSourceOwnership.playerOwner(source);
+        if (rangedState != null && combatConfig.targeting().rangedCounter().enabled()) {
+            owner.filter(player -> roster.contains(player.getUUID()) && isEligibleArenaPlayer(player)).ifPresent(player ->
+                    rangedState.damage(player.getUUID(), level().getGameTime(), horizontalDistance(player), actualLoss,
+                            PromisedConsortRangedDamage.excluded(source, combatConfig.targeting().rangedCounter())));
+        }
         owner.ifPresent(player -> recentDamageByPlayer
                 .computeIfAbsent(player.getUUID(), ignored -> new ArrayDeque<>())
                 .addLast(new DamageEvent(level().getGameTime(), actualLoss)));
@@ -1017,6 +1277,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             super.die(source);
             return;
         }
+        if (skillTestAction != null) {
+            discard();
+            return;
+        }
         if (finalizingDefeat) {
             super.die(source);
             return;
@@ -1027,6 +1291,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public void kill() {
+        if (skillTestAction != null) {
+            discard();
+            return;
+        }
         finalizingDefeat = true;
         super.kill();
     }
@@ -1155,7 +1423,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         discardOwnedEntities();
         if (combatCenter != null) {
-            setPosition(combatCenter);
+            if (arenaBinding == null) setPosition(combatCenter);
+            else holdArenaDormantPosition();
             lastLegalPosition = combatCenter;
         }
         roster.clear();
@@ -1167,6 +1436,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         forcedRecoveryTicks = 0;
         highWaterParticipantCount = 0;
         recentDamageByPlayer.clear();
+        if (rangedState != null) rangedState.clear();
         rightRearTicksByPlayer.clear();
         recentPositionsByPlayer.clear();
         pendingStaggerByHit.clear();
@@ -1350,7 +1620,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private AABB transitionImpactBounds() {
-        return getBoundingBox().move(anchor(combatConfig.arena().phaseReturnOffset()).subtract(position())).inflate(6.0);
+        return getBoundingBox().move(phaseReturnAnchor().subtract(position())).inflate(6.0);
     }
 
     private void applyTransitionImpact() {
@@ -1443,7 +1713,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private void syncAction(PromisedConsortActionSnapshot snapshot) {
-        if (snapshot == null) {
+        if (snapshot == null || actionRuntime!=null && !actionRuntime.isActive()) {
             clearSyncedAction();
             return;
         }
@@ -1452,18 +1722,30 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         entityData.set(ACTION_ID, snapshot.actionId().ordinal());
         entityData.set(ACTION_TICK, snapshot.actionTick());
-        var timeline = actionCatalog.get(snapshot.actionId()).timeline();
-        var tuning = skillConfig.get(snapshot.actionId()).tuning();
+        entityData.set(OPENING_LION, snapshot.actionId() == PromisedConsortActionId.LION_CLAW && actionExecutor != null && actionExecutor.openingLion());
+        var timeline = actionCatalog.timeline(snapshot);
+        var skill = actionCatalog.skill(snapshot);
+        entityData.set(RANGED_DEFENDING, combatConfig.targeting().rangedCounter().enabled() && snapshot.actionId().rangedDefense()
+            && snapshot.actionPhase()==ActionPhase.ACTIVE && (snapshot.actionId()!=PromisedConsortActionId.GRAVITY_REPRISAL || snapshot.stageIndex()==0));
+        entityData.set(RANGED_CHARGE, rangedDefense==null?0:rangedDefense.charge());
+        entityData.set(RANGED_DEFENSE_RADIUS, snapshot.actionId()==PromisedConsortActionId.GRAVITY_REFLECTION
+            ?(float)skill.number("intercept_radius"):getBbWidth()*0.7F);
+        if(snapshot.actionId()==PromisedConsortActionId.GRAVITY_REPRISAL) entityData.set(RANGED_WAVE_HEIGHT,
+            (float)skill.tuning().scaleRange(skill.number("counterattack.height")));
+        if(snapshot.actionId().rangedDefense()) entityData.set(RANGED_DEFENSE_ARC,(float)skill.number("defense_arc_degrees"));
         entityData.set(ANIMATION_TICK, (float) PromisedConsortAnimationTimeline.sample(
-            snapshot.actionTick(), snapshot.actionId(), timeline, tuning));
+            snapshot.actionTick(), snapshot, timeline, skill));
         entityData.set(ANIMATION_NEXT_TICK, (float) PromisedConsortAnimationTimeline.sample(
-            snapshot.actionTick() + 1.0, snapshot.actionId(), timeline, tuning));
+            snapshot.actionTick() + 1.0, snapshot, timeline, skill));
         entityData.set(ACTION_SEED, snapshot.seed());
         entityData.set(ACTION_SEQUENCE, snapshot.sequence());
         entityData.set(ACTION_START_GAME_TIME, snapshot.startGameTick());
     }
 
     private void clearSyncedAction() {
+        entityData.set(OPENING_LION, false);
+        entityData.set(RANGED_DEFENDING,false);
+        entityData.set(RANGED_CHARGE,0.0F);
         entityData.set(ACTION_ID, -1);
         entityData.set(ACTION_TICK, -1);
         entityData.set(ANIMATION_TICK, 0.0F);
@@ -1471,6 +1753,18 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         entityData.set(ACTION_SEED, 0L);
         entityData.set(ACTION_SEQUENCE, -1L);
         entityData.set(ACTION_START_GAME_TIME, 0L);
+    }
+
+    private void broadcastActionDebug(ActionLifecycleEvent event) {
+        if (level().isClientSide || !PromisedConsortConfigProvider.debugActionBroadcastEnabled()) return;
+        PromisedConsortActionId actionId = PromisedConsortActionId.fromSerializedName(event.actionId()).orElseThrow();
+        BossActionDebug.broadcast(this, "promised_consort", event, new BossActionDebug.State(
+                phase() == PromisedConsortPhase.PHASE_ONE ? "P1" : "P2", combatState().serializedName(), stateTicks,
+                getHealth(), getMaxHealth(), entityData.get(STAGGER), entityData.get(STAGGER_CAPACITY),
+                skillConfig.get(actionId).tuning(), "hazards=" + (actionExecutor == null ? 0 : actionExecutor.hazardSnapshots().size())
+                + ", meteor_landed=" + meteorLanded()
+                + ", ranged_counter=" + (rangedDefense!=null && rangedDefense.currentCounter())
+                + ", ranged_charge=" + (rangedDefense==null?0:rangedDefense.charge())));
     }
 
     private void syncNetworkState() {
@@ -1486,7 +1780,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         if (indicatorGenerator != null && combatState() == PromisedConsortCombatState.TRANSITION) {
             long startTick = entityData.get(STATE_START_GAME_TIME);
             indicators.addAll(indicatorGenerator.createTransitionImpact(getId(), transitionImpactBounds(),
-                anchor(combatConfig.arena().phaseReturnOffset()).y, startTick,
+                phaseReturnAnchor().y, startTick,
                 startTick + combatConfig.phaseTransition().returnImpactTick(), level().getGameTime()));
         }
         Map<String, IndicatorSnapshotPacket> currentIndicators = new HashMap<>();
@@ -1616,8 +1910,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return combatState() == PromisedConsortCombatState.DORMANT
+        return arenaBinding == null && combatState() == PromisedConsortCombatState.DORMANT
             && !currentConfig().encounter().persistDormant();
+    }
+
+    @Override
+    protected boolean canUseDimensionTravel() {
+        return arenaBinding == null;
     }
 
     @Override
@@ -1627,6 +1926,23 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public void remove(RemovalReason reason) {
+        if (!level().isClientSide && skillTestAction != null && !isRemoved()) {
+            boolean completed = skillTestStarted && !actionRuntime.isActive()
+                    && level().getGameTime() - skillTestStartTick >= actionCatalog.get(skillTestAction,skillTestRanged).timeline().totalTicks();
+            actionRuntime.cancel(level().getGameTime());
+            actionExecutor.clearAll();
+            discardOwnedEntities();
+            currentAction = null;
+            clearSyncedAction();
+            setCombatState(PromisedConsortCombatState.DORMANT);
+            syncNetworkState();
+            bossEvent.removeAllPlayers();
+            if (getTarget() instanceof ServerPlayer observer && !observer.hasDisconnected()) {
+                observer.sendSystemMessage(Component.translatable(completed
+                        ? "commands.elder_bosses.test.completed" : "commands.elder_bosses.test.cancelled",
+                        skillTestAction.serializedName()));
+            }
+        }
         if (!level().isClientSide
                 && reason == RemovalReason.UNLOADED_TO_CHUNK
                 && combatConfig != null
@@ -1634,7 +1950,15 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 && "reset_dormant".equals(combatConfig.encounter().unloadPolicy())) {
             resetEncounter();
         }
+        if (level() instanceof ServerLevel server && arenaBinding != null && reason.shouldDestroy()) {
+            PlatformArenaSavedData.get(server).release(arenaBinding.origin(), getUUID());
+        }
         super.remove(reason);
+    }
+
+    @Override
+    public boolean shouldBeSaved() {
+        return skillTestAction == null && super.shouldBeSaved();
     }
 
     @Override
@@ -1675,6 +1999,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         return entityData.get(ACTION_TICK);
     }
 
+    public long activeActionSequence() {
+        return actionRuntime != null && actionRuntime.isActive() && currentAction != null ? currentAction.sequence() : -1L;
+    }
+
     public long actionSeed() {
         return entityData.get(ACTION_SEED);
     }
@@ -1685,6 +2013,20 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     public boolean meteorLanded() {
         return entityData.get(METEOR_LANDED);
+    }
+
+    public boolean isOpeningLion() {
+        return entityData.get(OPENING_LION);
+    }
+
+    @Override
+    public void setPursuing(boolean pursuing) {
+        entityData.set(PURSUING, pursuing);
+    }
+
+    public boolean isPursuing() {
+        return entityData.get(PURSUING) && actionId().isPresent()
+                && (combatState() == PromisedConsortCombatState.PHASE_1 || combatState() == PromisedConsortCombatState.PHASE_2);
     }
 
     private String sampledAnimationClip = "";
@@ -1707,7 +2049,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         if (state == PromisedConsortCombatState.INTRO) return "intro";
         if (actionId().isPresent()) return actionId().orElseThrow().serializedName();
         String suffix = miquellaVisible() ? "_phase_two" : "";
-        if (state == PromisedConsortCombatState.DORMANT) return "idle" + suffix;
+        if (state == PromisedConsortCombatState.DORMANT) return entityData.get(GATE_BOUND) ? "intro" : "idle" + suffix;
         double speed = Math.hypot(getX() - xo, getZ() - zo);
         if (speed > 0.17) return "run" + suffix;
         if (speed > 0.005) return "walk" + suffix;
@@ -1715,6 +2057,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     public boolean hasSynchronizedAnimation() {
+        if (combatState() == PromisedConsortCombatState.DORMANT && entityData.get(GATE_BOUND)) return true;
         return actionId().isPresent() || switch (combatState()) {
             case INTRO, TRANSITION, STUNNED, DEFEATED, METEOR_SCRIPT -> true;
             default -> false;
@@ -1725,6 +2068,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         double frameTime = tickCount + partialTick;
         if (frameTime == animationFrameTime) return;
         String clip = animationClip();
+        if (combatState() == PromisedConsortCombatState.DORMANT && entityData.get(GATE_BOUND)) {
+            animationTime = 0;
+            animationFrameTime = frameTime;
+            sampledAnimationClip = "";
+            gaitActive = false;
+            return;
+        }
         boolean action = actionId().isPresent()
                 && combatState() != PromisedConsortCombatState.INTRO
                 && combatState() != PromisedConsortCombatState.TRANSITION
@@ -1751,7 +2101,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         double depth = Mth.lerp(partialTick, zo, getZ());
         double distance = Math.hypot(horizontal - gaitX, depth - gaitZ);
         if (moving && gaitActive && animationFrameTime >= 0.0 && frameTime - animationFrameTime <= 5.0 && distance <= 2.0) {
-            gaitPhase = (gaitPhase + distance / (clip.startsWith("run") ? 2.25 : 1.15)) % 1.0;
+            gaitPhase = (gaitPhase + distance / (clip.startsWith("run") ? 2.70 : 1.38)) % 1.0;
         }
         gaitActive = moving;
         gaitX = horizontal;
@@ -1793,6 +2143,12 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     @Override
+    public Optional<LivingEntity> lockedActionTarget(UUID targetId) {
+        return livingEntity(targetId).filter(target -> target.isAlive() && !target.isRemoved() && insideArena(target))
+                .filter(target -> !(target instanceof ServerPlayer player) || isEligibleArenaPlayer(player));
+    }
+
+    @Override
     public Collection<? extends LivingEntity> visibleEligibleTargets() {
         if (combatConfig == null) {
             return List.of();
@@ -1827,6 +2183,72 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     @Override
     public double distanceTo(LivingEntity target) {
         return Math.sqrt(distanceToSqr(target));
+    }
+
+    private double horizontalDistance(Entity target) {
+        return Math.hypot(target.getX() - getX(), target.getZ() - getZ());
+    }
+
+    private void updateRangedPlayers() {
+        if (rangedState == null) return;
+        if (!combatConfig.targeting().rangedCounter().enabled()) {
+            rangedState.clear();
+            return;
+        }
+        Set<UUID> eligible = new java.util.HashSet<>();
+        for (LivingEntity target : visibleEligibleTargets()) {
+            if (!(target instanceof ServerPlayer player) || !roster.contains(player.getUUID())) continue;
+            eligible.add(player.getUUID());
+            rangedState.observe(player.getUUID(), level().getGameTime(), horizontalDistance(player));
+        }
+        rangedState.retain(eligible);
+    }
+
+    public boolean isRangedTarget(LivingEntity target) {
+        return rangedState != null && target instanceof ServerPlayer && combatConfig.targeting().rangedCounter().enabled()
+                && rangedState.qualifies(target.getUUID(), level().getGameTime(), horizontalDistance(target));
+    }
+
+    public boolean rangedParticipant(Entity target) {
+        return target instanceof ServerPlayer player && roster.contains(player.getUUID()) && isEligibleArenaPlayer(player);
+    }
+
+    @Override
+    public double rangedActionWeight(PromisedConsortActionId action, LivingEntity target) {
+        return rangedDefense == null ? action.rangedDefense()?0:1 : rangedDefense.weight(action,target);
+    }
+
+    @Override
+    public boolean useRangedVariant(PromisedConsortActionId action, LivingEntity target) {
+        boolean variant=rangedDefense!=null && rangedDefense.variant(action,target);
+        if(rangedDefense!=null) rangedDefense.prepare(variant);
+        return variant;
+    }
+
+    public double rangedReturnMultiplier() { return rangedDefense==null?1:rangedDefense.returnMultiplier(); }
+    public com.tonywww.elder_bosses.combat.action.ActionTimeline rangedTimeline(PromisedConsortActionId action) {
+        return actionCatalog.get(action,true).timeline();
+    }
+    public double rangedArenaRadius() { return combatConfig.arena().logicalRadius(); }
+
+    public boolean rangedDefending() { return entityData.get(RANGED_DEFENDING); }
+    public float rangedCharge() { return entityData.get(RANGED_CHARGE); }
+    public float rangedDefenseRadius() { return entityData.get(RANGED_DEFENSE_RADIUS); }
+    public float rangedWaveHeight() { return entityData.get(RANGED_WAVE_HEIGHT); }
+    public float rangedDefenseArc() { return entityData.get(RANGED_DEFENSE_ARC); }
+
+    public void tickRangedDefense(PromisedConsortActionSnapshot action) {
+        if(rangedDefense!=null) rangedDefense.tick(action);
+    }
+
+    public boolean reflectIncomingArrow(net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+        return rangedDefense!=null && actionRuntime!=null
+                && rangedDefense.reflect(actionRuntime.snapshot(level().getGameTime()).orElse(null),arrow);
+    }
+
+    public void cancelRangedAction() {
+        if(actionRuntime!=null) actionRuntime.cancel(level().getGameTime());
+        if(actionExecutor!=null) actionExecutor.cancelPendingHazards();
     }
 
     @Override
@@ -1873,6 +2295,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     @Override
     public boolean actionBlocked(long sequence) {
         return actionResults.getOrDefault(sequence, ActionResult.EMPTY).blockedCount > 0;
+    }
+
+    @Override
+    public boolean hasForcedRecovery() {
+        return forcedRecoveryTicks > 0;
     }
 
     @Override
@@ -2016,7 +2443,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                         source,
                         ShieldBlockProbe.Policy.OVERRIDE_BLOCK
                     )) {
-                    target.hurt(source, reducedDamage);
+                    hurtIgnoringCooldown(target, source, reducedDamage);
                     }
                 }
                 PlatformShieldDurability.applyConfiguredDamage(
@@ -2036,7 +2463,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         boolean blocked;
         try (ShieldBlockProbe.Scope probe = ShieldBlockProbe.begin(target, source)) {
-            target.hurt(source, attempted);
+            hurtIgnoringCooldown(target, source, attempted);
             blocked = probe.blocked();
         }
         float healthDamage = Math.max(0.0F, before - target.getHealth());
@@ -2057,6 +2484,16 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 !target.isAlive()
             );
             return Optional.of(finishBossOpeningHit(joiningPlayer, outcome));
+    }
+
+    private static void hurtIgnoringCooldown(LivingEntity target, DamageSource source, float amount) {
+        int previousCooldown = target.invulnerableTime;
+        target.invulnerableTime = 0;
+        try {
+            target.hurt(source, amount);
+        } finally {
+            target.invulnerableTime = Math.max(previousCooldown, target.invulnerableTime);
+        }
     }
 
         private PromisedConsortHitOutcome finishBossOpeningHit(
@@ -2116,6 +2553,20 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             case FIRE -> ModDamageSources.promisedConsortFire(
                     level().registryAccess(), this, this);
         };
+    }
+
+    private final PromisedConsortActionSoundPlan.AuxiliaryBudget actionSoundBudget = new PromisedConsortActionSoundPlan.AuxiliaryBudget();
+
+    @Override
+    public void playActionSound(PromisedConsortActionSoundPlan.Cue cue, Vec3 position, Vec2 direction) {
+        var audio = combatConfig.nonverbalAudio();
+        var playback = PromisedConsortActionSoundPlan.playback(cue, audio.enabled(), audio.volume(), audio.pitch());
+        if (level().isClientSide || playback.volume() <= 0) return;
+        if (!actionSoundBudget.claim(cue, level().getGameTime())) return;
+        Vec2 forward = direction.normalizedOr(new Vec2(0, 1));
+        double side = cue.side() * getBbWidth() * 0.35;
+        Vec3 origin = position.add(-forward.z() * side, cue.side() == 0 ? 0 : getBbHeight() * 0.5, forward.x() * side);
+        level().playSound(null, origin.x, origin.y, origin.z, ModSoundEvents.promisedConsortAction(cue.sound()), SoundSource.HOSTILE, playback.volume(), playback.pitch());
     }
 
     @Override
@@ -2189,6 +2640,36 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     @Override
+        public void prepareGravityRocks(PromisedConsortActionSnapshot action, int riseTick, com.tonywww.elder_bosses.combat.action.ActionTimeline timeline) {
+        cleanOwnedEntityIds();
+        var skill = skillConfig.get(PromisedConsortActionId.GRAVITY_METEOR);
+        int count = timeline.stages().size() - 4;
+        for (int index = 0; index < count && activeRockIds.size() < combatConfig.performance().maxLogicalProjectiles(); index++) {
+            final int projectileIndex = index;
+            if (activeRockIds.stream().map(id -> level().getEntity(id)).filter(PromisedConsortGravityRockEntity.class::isInstance)
+                .map(PromisedConsortGravityRockEntity.class::cast).anyMatch(rock -> rock.matchesCast(this, action.sequence(), projectileIndex))) continue;
+            double angle = Math.PI * 2 * index / count;
+            Vec3 origin = position().add(Math.cos(angle) * 2.4, 0.4, Math.sin(angle) * 2.4);
+            var contact = level().clip(new net.minecraft.world.level.ClipContext(origin.add(0, 1, 0), origin.add(0, -3, 0),
+                net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, this));
+            if (contact.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK) continue;
+            var state = level().getBlockState(contact.getBlockPos());
+            if (state.isAir() || !state.getFluidState().isEmpty()) continue;
+            var rock = ModEntities.PROMISED_CONSORT_GRAVITY_ROCK.get().create(level());
+            if (rock == null) continue;
+            origin = new Vec3(origin.x, contact.getLocation().y + 0.4, origin.z);
+            rock.setPos(origin.x, origin.y, origin.z);
+            rock.configure(this, getTarget(), action.sequence(), index, skill.number("projectile_health"), skill.integer("projectile_lifetime_ticks"),
+                skill.number("max_turn_degrees_per_tick"), skill.damage("damage"), skill.integer("max_hits_per_target"), combatCenter(), combatConfig.arena().logicalRadius());
+            Item charged = BuiltInRegistries.ITEM.get(PlatformResourceLocation.parse(combatConfig.visuals().gravityProjectileBlock()));
+            if (!(charged instanceof BlockItem)) charged = net.minecraft.world.item.Items.CRYING_OBSIDIAN;
+            rock.setItem(new ItemStack(state.getBlock().asItem()));
+            rock.prepareHeld(origin, action.startGameTick() + riseTick, action.startGameTick() + timeline.activeStartTick(index), count, charged);
+            if (level().noCollision(rock, rock.getBoundingBox()) && level().addFreshEntity(rock)) activeRockIds.add(rock.getId());
+        }
+        }
+
+        @Override
     public void spawnGravityRock(
             PromisedConsortActionSnapshot action,
             int projectileIndex,
@@ -2223,8 +2704,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         if (configuredItem instanceof BlockItem) {
             rock.setItem(new ItemStack(configuredItem));
         }
-        level().addFreshEntity(rock);
+        boolean added = level().addFreshEntity(rock);
         activeRockIds.add(rock.getId());
+        if (added) playActionSound(PromisedConsortActionSoundPlan.cue("rock_launch", PromisedConsortActionSoundPlan.Sound.DASH, 0.25F, 1.15F),
+            rock.position(), new Vec2(0, 1));
     }
 
     @Override
@@ -2233,22 +2716,43 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             int cloneIndex,
             int cloneCount
     ) {
+        double angle = Math.PI * 2.0 * cloneIndex / Math.max(1, cloneCount);
+        Vec3 origin = position().add(Math.cos(angle) * 2.0, 0, Math.sin(angle) * 2.0);
+        double yaw = Math.toRadians(getYRot());
+        spawnVisualClone(action, cloneIndex, cloneCount, origin, new Vec2(-Math.sin(yaw), Math.cos(yaw)), level().getGameTime() + 4);
+        }
+
+        @Override
+        public void spawnVisualClone(PromisedConsortActionSnapshot action, int cloneIndex, int cloneCount,
+                     Vec3 origin, Vec2 direction, long impactTick) {
         if (!combatConfig.visuals().visualClonesEnabled()
             || "paths_only".equals(combatConfig.visuals().cloneRenderMode())) {
             return;
         }
         cleanOwnedEntityIds();
-        if (activeCloneIds.size() >= combatConfig.performance().maxVisualClones()) {
-            return;
+        int cloneLimit = combatConfig.performance().maxVisualClones();
+        if (cloneLimit <= 0) return;
+        if (activeCloneIds.size() >= cloneLimit) {
+            List<PromisedConsortCloneEntity> visible = activeCloneIds.stream()
+                    .map(id -> level().getEntity(id))
+                    .filter(PromisedConsortCloneEntity.class::isInstance)
+                    .map(PromisedConsortCloneEntity.class::cast)
+                    .filter(clone -> clone.isOwnedBy(this))
+                    .toList();
+            int replacement = PromisedConsortAnimationTimeline.completedCloneIndex(level().getGameTime(),
+                    visible.stream().mapToLong(PromisedConsortCloneEntity::impactTick).toArray());
+            if (replacement < 0) return;
+            PromisedConsortCloneEntity completed = visible.get(replacement);
+            completed.discard();
+            activeCloneIds.remove(completed.getId());
         }
         PromisedConsortCloneEntity clone = ModEntities.PROMISED_CONSORT_CLONE.get().create(level());
         if (clone == null) {
             return;
         }
-        double angle = Math.PI * 2.0 * cloneIndex / Math.max(1, cloneCount);
-        clone.setPos(getX() + Math.cos(angle) * 2.0, getY(), getZ() + Math.sin(angle) * 2.0);
-        clone.setYRot(getYRot());
-        clone.configure(this, 16);
+        clone.setPos(origin.x, origin.y, origin.z);
+        clone.setYRot((float) Math.toDegrees(Math.atan2(-direction.x(), direction.z())));
+        clone.configure(this, 16, impactTick);
         level().addFreshEntity(clone);
         activeCloneIds.add(clone.getId());
     }
@@ -2298,13 +2802,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private boolean insideArena(Entity entity) {
-        if (combatCenter == null || combatConfig == null) {
+        if (combatCenter == null || combatConfig == null && arenaBinding == null) {
             double radius = currentConfig().arena().logicalRadius();
             return distanceToSqr(entity) <= radius * radius;
         }
         double x = entity.getX() - combatCenter.x;
         double z = entity.getZ() - combatCenter.z;
-        double radius = combatConfig.arena().logicalRadius();
+        double radius = currentConfig().arena().logicalRadius();
         return x * x + z * z <= radius * radius;
     }
 
@@ -2354,6 +2858,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         return entity instanceof LivingEntity living && living.isAlive()
                 ? Optional.of(living)
                 : Optional.empty();
+    }
+
+    private Vec3 phaseReturnAnchor() {
+        return arenaBinding == null ? anchor(combatConfig.arena().phaseReturnOffset()) : arenaBinding.standingAnchor("phase_return");
     }
 
     private Vec3 anchor(PromisedConsortCombatConfigSnapshot.Offset offset) {
@@ -2456,17 +2964,16 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private int meteorTick(int ticks) {
-        PromisedConsortSkillConfigSnapshot snapshot = skillConfig == null
-                ? PromisedConsortConfigProvider.skillSnapshot()
-                : skillConfig;
-        return snapshot.get(PromisedConsortActionId.CONSORT_METEOR)
-                .tuning()
-                .scaleTicks(ticks);
+        return ticks;
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        if (arenaBinding != null) {
+            tag.put("ArenaBinding", arenaBinding.save());
+            tag.putString("ArenaDimension", level().dimension().location().toString());
+        }
         tag.putInt("CombatState", combatState().id());
         tag.putInt("Phase", phase().id());
         tag.putInt("StateTicks", stateTicks);
@@ -2505,6 +3012,9 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                     PromisedConsortConfigNbt.writeAction(actionRuntime.persistentState())
             );
         }
+        if (rangedState != null) tag.putString("RangedPlayers", PromisedConsortConfigNbt.writeRangedPlayers(rangedState.save(level().getGameTime())));
+        if (combatController != null) tag.put("BurstCadence", combatController.saveCadence());
+        if(rangedDefense!=null) tag.put("RangedDefense",rangedDefense.save());
         if (staggerTracker != null) {
             tag.putString(
                     STAGGER_STATE_TAG,
@@ -2588,6 +3098,21 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             );
             lastLegalPosition = combatCenter;
         }
+        arenaBinding = null;
+        arenaOwnershipChecked = false;
+        if (tag.contains("ArenaBinding", Tag.TAG_COMPOUND)) {
+            if (!tag.getString("ArenaDimension").equals(level().dimension().location().toString())) {
+                throw new IllegalArgumentException("Arena boss saved in a different dimension");
+            }
+            arenaBinding = new PromisedConsortArenaBinding(tag.getCompound("ArenaBinding"));
+            combatCenter = arenaBinding.standingAnchor("arena_center");
+            combatYaw = arenaBinding.yaw();
+            lastLegalPosition = combatCenter;
+            setPersistenceRequired();
+            if (restored == PromisedConsortCombatState.DORMANT) {
+                holdArenaDormantPosition();
+            }
+        }
         readUuidSet(tag.getList("Roster", Tag.TAG_COMPOUND), roster);
         readUuidSet(tag.getList("ExitedParticipants", Tag.TAG_COMPOUND), exitedParticipants);
         playerDefeatDialogueUsed = tag.getBoolean("PlayerDefeatDialogueUsed");
@@ -2609,7 +3134,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         if (restored != PromisedConsortCombatState.DORMANT) {
             Optional<PromisedConsortConfigNbt.EncounterConfig> savedConfig =
                 tag.contains(ENCOUNTER_CONFIG_TAG, Tag.TAG_COMPOUND)
-                    ? PromisedConsortConfigNbt.read(tag.getCompound(ENCOUNTER_CONFIG_TAG))
+                    ? PromisedConsortConfigNbt.read(tag.getCompound(ENCOUNTER_CONFIG_TAG), PromisedConsortConfigProvider.skillSnapshot())
                     : Optional.empty();
             combatConfig = savedConfig.map(PromisedConsortConfigNbt.EncounterConfig::combat)
                 .orElseGet(PromisedConsortConfigProvider::combatSnapshot);
@@ -2638,6 +3163,10 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             ));
             }
             initializeCombatComponents(actionState, cooldownState, staggerState);
+            if (tag.contains("BurstCadence", Tag.TAG_COMPOUND)) combatController.restoreCadence(tag.getCompound("BurstCadence"));
+                if (tag.contains("RangedPlayers", Tag.TAG_STRING)) rangedState.restore(
+                    PromisedConsortConfigNbt.readRangedPlayers(tag.getString("RangedPlayers")), level().getGameTime());
+                    if(tag.contains("RangedDefense",Tag.TAG_COMPOUND)) rangedDefense.restore(tag.getCompound("RangedDefense"));
             if (tag.contains(ACTION_EXECUTOR_TAG, Tag.TAG_STRING)) {
                 PromisedConsortConfigNbt.readActionExecutor(tag.getString(ACTION_EXECUTOR_TAG))
                         .ifPresent(actionExecutor::restoreState);

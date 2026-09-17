@@ -39,17 +39,68 @@ public final class PromisedConsortConfigNbt {
     }
 
     public static Optional<EncounterConfig> read(CompoundTag tag) {
+        return read(tag, null);
+    }
+
+    public static Optional<EncounterConfig> read(CompoundTag tag, PromisedConsortSkillConfigSnapshot fallback) {
         Objects.requireNonNull(tag, "tag");
         if (!tag.contains(COMBAT_KEY) || !tag.contains(SKILLS_KEY)) {
             return Optional.empty();
         }
         try {
+            JsonObject serializedCombat = JsonParser.parseString(tag.getString(COMBAT_KEY)).getAsJsonObject();
+            JsonObject targeting = serializedCombat.getAsJsonObject("targeting");
+            if (targeting != null && !targeting.has("maxSegmentPursuitDistance")) {
+                targeting.addProperty("maxSegmentPursuitDistance", 3.0);
+            }
+            JsonElement serializedRanged = targeting == null ? null : targeting.get("rangedCounter");
+            JsonObject ranged = serializedRanged == null || serializedRanged.isJsonNull() ? null : serializedRanged.getAsJsonObject();
+            if (ranged != null) {
+                var defaults = PromisedConsortRangedConfig.defaults();
+                if (!ranged.has("segmentAdjustmentBudgetMultiplier")) {
+                    ranged.addProperty("segmentAdjustmentBudgetMultiplier", defaults.segmentAdjustmentBudgetMultiplier());
+                }
+                if (!ranged.has("pursuitSelectionWeightMultiplier")) {
+                    ranged.addProperty("pursuitSelectionWeightMultiplier", defaults.pursuitSelectionWeightMultiplier());
+                }
+                for (var entry : java.util.Map.of(
+                        "meleeSuppressionDistance", defaults.meleeSuppressionDistance(),
+                        "meleeZeroWeightDistance", defaults.meleeZeroWeightDistance(),
+                        "distantMeleeWeightMultiplier", defaults.distantMeleeWeightMultiplier(),
+                        "pursuitIdleMultiplier", defaults.pursuitIdleMultiplier()).entrySet()) {
+                    if (!ranged.has(entry.getKey())) ranged.addProperty(entry.getKey(), entry.getValue());
+                }
+            }
+            JsonObject selector = serializedCombat.getAsJsonObject("selector");
+            if (selector != null && selector.has("burst") && selector.get("burst").isJsonObject()) {
+                var savedBurst = selector.getAsJsonObject("burst");
+                var burstDefaults = GSON.toJsonTree(com.tonywww.elder_bosses.boss.promisedconsort.controller.PromisedConsortBurstCadence.Settings.defaults()).getAsJsonObject();
+                for (var entry : burstDefaults.entrySet()) if (!savedBurst.has(entry.getKey())) savedBurst.add(entry.getKey(), entry.getValue());
+            }
             PromisedConsortCombatConfigSnapshot combat = GSON.fromJson(
-                    tag.getString(COMBAT_KEY),
+                    serializedCombat,
                     PromisedConsortCombatConfigSnapshot.class
             );
             JsonElement serializedSkills = JsonParser.parseString(tag.getString(SKILLS_KEY));
             addMissingSkillTunings(serializedSkills);
+            var configured = serializedSkills.getAsJsonObject().getAsJsonObject("skills");
+                var defaults = fallback == null ? new JsonObject() : GSON.toJsonTree(fallback).getAsJsonObject().getAsJsonObject("skills");
+            for (var entry : defaults.entrySet()) {
+                if (!configured.has(entry.getKey())) {
+                    configured.add(entry.getKey(), entry.getValue().deepCopy());
+                    continue;
+                }
+                var saved = configured.getAsJsonObject(entry.getKey());
+                var standard = entry.getValue().getAsJsonObject();
+                for (String map : List.of("numbers", "integers", "integerLists", "idLists")) {
+                    if (!saved.has(map)) saved.add(map, new JsonObject());
+                    for (var field : standard.getAsJsonObject(map).entrySet()) {
+                        if (field.getKey().startsWith("ranged_counter.") && !saved.getAsJsonObject(map).has(field.getKey())) {
+                            saved.getAsJsonObject(map).add(field.getKey(), field.getValue().deepCopy());
+                        }
+                    }
+                }
+            }
             PromisedConsortSkillConfigSnapshot skills = GSON.fromJson(
                     serializedSkills,
                     PromisedConsortSkillConfigSnapshot.class
@@ -118,6 +169,15 @@ public final class PromisedConsortConfigNbt {
             String value
     ) {
         return read(value, PromisedConsortActionExecutor.PersistentState.class);
+    }
+
+    public static String writeRangedPlayers(List<com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedState.SavedPlayer> players) {
+        return GSON.toJson(players);
+    }
+
+    public static List<com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedState.SavedPlayer> readRangedPlayers(String value) {
+        return read(value, com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedState.SavedPlayer[].class)
+                .map(Arrays::asList).orElseGet(List::of);
     }
 
     public static String writeHitCounts(List<PerTargetHitCounter.PersistentCount> counts) {

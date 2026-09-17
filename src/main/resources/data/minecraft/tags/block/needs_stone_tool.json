@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "elder_bosses:divine_flagstone",
+    "elder_bosses:cracked_divine_flagstone",
+    "elder_bosses:divine_masonry",
+    "elder_bosses:divine_foundation",
+    "elder_bosses:divine_stone_slab",
+    "elder_bosses:divine_stone_stairs",
+    "elder_bosses:divine_balustrade",
+    "elder_bosses:divine_pillar"
+  ]
+}

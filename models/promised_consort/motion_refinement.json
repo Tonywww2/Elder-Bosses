@@ -1,0 +1,5 @@
+{
+  "revision": "current_consolidated",
+  "current_assets": "current_assets.json",
+  "note": "Only current assets remain; legacy reconstruction recipes and stage snapshots are retired. See the current task list for unfinished reference-led work."
+}

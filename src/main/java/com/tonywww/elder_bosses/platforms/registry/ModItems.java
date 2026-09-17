@@ -12,7 +12,9 @@ import java.util.function.Supplier;
 /*import net.minecraft.core.Holder;
 *///?}
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 //? if forge {
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -78,6 +80,19 @@ public final class ModItems {
     public static final Supplier<Item> CIRCLET_OF_FADING_LIGHT =
             register("circlet_of_fading_light");
     public static final Supplier<Item> GATE_FRAGMENT = register("gate_fragment");
+    public static final Supplier<Item> RUNE_FRAGMENT = register("rune_fragment");
+        public static final Supplier<BlockItem> WEATHERED_DIVINE_STONE = registerBlock("weathered_divine_stone", ModBlocks.WEATHERED_DIVINE_STONE);
+        public static final Supplier<BlockItem> ROOT_RELIEF_STONE = registerBlock("root_relief_stone", ModBlocks.ROOT_RELIEF_STONE);
+        public static final Supplier<BlockItem> PALE_SEDIMENT = registerBlock("pale_sediment", ModBlocks.PALE_SEDIMENT);
+        public static final Supplier<BlockItem> CONSORT_ALTAR = registerBlock("consort_altar", ModBlocks.CONSORT_ALTAR);
+        public static final Supplier<BlockItem> DIVINE_FLAGSTONE = registerBlock("divine_flagstone", ModBlocks.DIVINE_FLAGSTONE);
+        public static final Supplier<BlockItem> CRACKED_DIVINE_FLAGSTONE = registerBlock("cracked_divine_flagstone", ModBlocks.CRACKED_DIVINE_FLAGSTONE);
+        public static final Supplier<BlockItem> DIVINE_MASONRY = registerBlock("divine_masonry", ModBlocks.DIVINE_MASONRY);
+        public static final Supplier<BlockItem> DIVINE_FOUNDATION = registerBlock("divine_foundation", ModBlocks.DIVINE_FOUNDATION);
+        public static final Supplier<BlockItem> DIVINE_STONE_SLAB = registerBlock("divine_stone_slab", ModBlocks.DIVINE_STONE_SLAB);
+        public static final Supplier<BlockItem> DIVINE_STONE_STAIRS = registerBlock("divine_stone_stairs", ModBlocks.DIVINE_STONE_STAIRS);
+        public static final Supplier<BlockItem> DIVINE_BALUSTRADE = registerBlock("divine_balustrade", ModBlocks.DIVINE_BALUSTRADE);
+        public static final Supplier<BlockItem> DIVINE_PILLAR = registerBlock("divine_pillar", ModBlocks.DIVINE_PILLAR);
 
     private ModItems() {
     }
@@ -92,7 +107,11 @@ public final class ModItems {
         }
         *///?}
 
-    private static Supplier<Item> register(String name) {
+        private static Supplier<BlockItem> registerBlock(String name, Supplier<? extends Block> block) {
+                return ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        }
+
+        private static Supplier<Item> register(String name) {
         //? if forge {
         return ITEMS.register(name, () -> new Item(new Item.Properties()));
         //?} else {

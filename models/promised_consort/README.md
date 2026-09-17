@@ -1,26 +1,71 @@
 # 约定之王：GeckoLib 模型与动画工程
 
-当前制作版本：`reference_lion_v3`。v2 的实机动作被用户否定，反馈见 [user_feedback_v2.json](user_feedback_v2.json)；v1 工程和生成器以 `.pre-v2` 后缀保留，v2 导出记录以 `.rejected-v2` 后缀保留。
+## 当前单版本入口
 
-![二阶段模型](previews/phase_two_three_quarter.png)
+2026-09-18已整合为一个当前版本，删除旧快照、候选工程和全部生成预览。
+以[current_assets.json](current_assets.json)、[runtime_validation.json](runtime_validation.json)和[维护说明](../README.md)为准。
+当前为125骨骼、620方块、44段主体动画，另有3段独立防御动画。
+验证使用 `node models/promised_consort/scripts/validate_assets.js`；需要图像时重新截图，不保留预览副本。
+左右交叉发力修订已接入，但其余招式参考细化与世界验收未全部完成。
+
+## 历史制作说明
+
+以下日期、哈希和测试结果仅保留设计沿革，不代表当前文件或可重放的版本；旧重建脚本及快照已清理。
+
+当前造型版本：`sculpted_relief_v11`，动作基线：`video_motion_v12`，力量感增强：`impact_motion_v2`。身体比例沿用 `proportioned_arms_v9`，没有再次缩放。v9 已按用户要求，将两对手臂的上臂、前臂长度分别缩短至 v8 的 **3/5**，保留手臂粗细、手掌尺寸及肩部起点。上方一对投影臂、连贯披风与前腰布、半小臂黑色皮革手套，以及拉塔恩和装备 1.20 倍、米凯拉主体 1.00 倍比例均保留。新增浮雕前的基线见 promised_consort.bbmodel.pre-relief-v11 (historical artifact removed)，更早快照仍保留。
+
+22招与21段辅助动画已实装力量反馈。第二版加大重心推进、下沉与部分肩臂展开，重击增加低位保持并修正剑尖接地。当前制作、正式及双端处理动画 SHA-256 均为 `f9ea8aad5a8b74698a5dc7ba0acbc710058222994fb9c7a0e797b52b67cee950`。另按用户新要求实装段间追步与转向、逐段预警和0.8格后缘覆盖，详见[战斗预警报告](combat_telegraph_validation.json)。伤害、命中次数、全部绝对 tick、碰撞箱、几何和两张贴图不变。待机与移动不改变步幅和循环首尾；原动作基线保存为 `.pre-impact-v1`，首版力量感保存为 `.pre-impact-v2`。
+
+**第二版与新增追步玩法已部署，尚待本次游戏内认可。** 力量感首版实机未通过，反馈为移动太小、摆臂受限和落地缺少重量。更早16招的Forge认可继续作为历史证据保留：8招有完整施放日志，另8招以澄清后的明确用户报告为依据。十字斩双阶段、左起三连历史认可与掀地起手专项确认也分别保留，不自动继承给新动作，不扩大到NeoForge。完整连续原帧校准仍未完成。见 [动作记录](MOTION_PLAN.md)、[帧级台账](motion_study.json)和[实机记录](runtime_validation.json)。
+
+当前贴图修订：`clustered_transition_v8`。风格应用为 143 个甲面、鬃毛、米凯拉衣发部件分配了 858 个连续着色 UV 区域；随后按“杂色和过渡色”要求，在不再改动几何、UV、骨架和动画的前提下重绘这些区域，共改变 24610 个像素。相对 v9，2348 个非目标面涉及的 45136 个独立像素保持一致。全部 alpha 保留，上方投影臂仍为 45% 不透明度，分身导出保留相对透明度。图集仍为 512×512。
+
+上述重绘属于 v10 历史步骤。v11 新增 55 个实体装饰体块：胸甲、既有胸徽、中央冠脊和肩甲外侧具有隆起中心、倾斜收边及可见侧面。新增面只裁取原装饰对应的 UV 区域，不把整块纹样重复压缩到小斜面；整张贴图、全部原体块和骨点不变。拉塔恩细节总数为 450，米凯拉为 170，未提高原预算。见胸甲同镜头改前 (historical artifact removed)、改后 (historical artifact removed)，以及冠脊 (historical artifact removed)和肩甲 (historical artifact removed)。
+
+二阶段模型 (historical artifact removed)
 
 ## 交付内容
 
 - [Blockbench 工程](promised_consort.bbmodel)：GeckoLib Animated Model，包含完整骨架、内嵌像素贴图与 43 段动画。
-- [几何](geo/promised_consort.geo.json)：125 根骨骼、550 个 cube、3208 个可导出面；拉塔恩 364 个 cube，米凯拉与发幕 186 个 cube，均在原美术预算内。
+- [几何](geo/promised_consort.geo.json)：125 根骨骼、620 个 cube、3481 个可导出面；拉塔恩 450 个 cube，米凯拉与发幕 170 个 cube。v11 保留原有 565 个体块，只增加列入清单的装饰，保留刀刃内部端面隐藏，没有恢复独立细手指。
+- [浮雕记录](relief_validation.json)：新增几何清单、基线哈希、制作侧检查与实机状态；原身体比例和动画保持不变。
 - [动画库](animations/promised_consort.animation.json)：覆盖现有 28 个资源 ID，并补齐双阶段移动、转身、入场与六类分身动作。
-- [本体贴图](textures/promised_consort.png)：512×512 统一图集，约 1 texel/模型单位，保持 Minecraft 大像素表面，不使用高密度噪点。
+- [本体贴图](textures/promised_consort.png)：512×512 统一图集，主体保持约 1 texel/原始模型单位，仅刀面纹饰采用两倍局部采样；保持最近邻像素边缘，不使用高密度噪点。
 - [分身贴图](textures/promised_consort_clone.png)：低饱和、四档金白色、半透明。
 - [发光遮罩](textures/promised_consort_glowmask.png)：仅用于制作侧，当前游戏使用无自发光基础贴图。
-- [预览总览](previews/contact_sheet.png)、[动画清单](animation_manifest.json)、[逐招编排](choreography.json)、[动作制作记录](MOTION_PLAN.md)。
+- 预览总览 (historical artifact removed)、[动画清单](animation_manifest.json)、[逐招编排](choreography.json)、[动作制作记录](MOTION_PLAN.md)。
 
 ## 造型与动作
 
 拉塔恩采用宽肩、分层冠甲、原创狮纹胸饰、暗红鬃毛、分段红披风和两把上弧黑铁巨剑。面甲新增眉甲、眼窝暗部、口鼻护甲、宽颊甲和下颌包边；曲刃增加连续弧段，采用冷灰金属刃口并消除逐段重复条纹。
 
-米凯拉保留四臂与独立光环的项目设定，但不再居中直立、向外撑开四臂。躯干前倾贴靠，头部压低并略向角色左侧偏移，内手环抱锁骨附近，外手顺着肩甲贴放。手指末节、颈部、下巴、长袍及十组三级发束重做，发束有粗细变化和弯曲层次。
+v6 将原先位于头顶的细角改为低位、宽根、末端上扬的金属颊饰，保留手臂原有角质。红色腰布改为前方两条带褶垂带，中央露出层叠甲片；移除后围裙，但保留背后的红披风。肩甲减为两排，去掉额外肱二头肌叠块和护腕侧块，使裸露上臂、肘部与小臂护腕分段清楚。
 
-几何保留小数精度。每只持剑手包含四根三段弯曲手指、两段拇指、掌背与腕部；剑柄和手掌共用变换链。足部包含脚踝、脚跟、足弓、足背与前掌。步态按落脚位置求解髋膝角度，攻击下沉时保持脚掌接地，不包含地形 IK。
+双刀保持 v5 的弧度、长度、刃口及握柄位置。金纹以整把刀的连续坐标绘制，移除十条重复实体横饰，压薄近护手的鬃状浮雕；纹饰是参考原作方向重新绘制的像素适配，不是原作纹样提取。
+
+米凯拉保留四臂与独立光环的项目设定，但不再居中直立、向外撑开四臂。躯干前倾贴靠，头部压低并略向角色左侧偏移，内手环抱锁骨附近，外手顺着肩甲贴放。四只手改成相连的块状掌面，保留颈部、下巴、长袍及十组三级弯曲发束。
+
+v6 为四臂补充渐细上臂、小臂至手腕的过渡及腕掌连接，并补齐衣摆下的小腿、踝部与原有块状脚的连接。贴图沿各自肢体轴线取色，不套用拉塔恩的 1.20 倍坐标；主体、发幕、附身位置和动画不变。正常背面视角部分脚踝会被长发遮挡，另有隔离近景用于检查连接。
+
+v7 沿前伸方向将四只手掌、掌端和腕掌连接缩短至 v6 的 64%，宽度为 94%、厚度方向为 90%；腕部和贴肩锚点不移动，米凯拉主体不再次缩放。上方一对臂及手掌按用户指定表现为投影，只有这部分像素写入半透明 alpha。本体使用支持透明混合的 GeckoLib 渲染类型，下方一对手臂、衣发、拉塔恩和装备保持不透明。
+
+v8 修正的是上臂骨段而非掌部：肩部起点不动，肘部沿原肩肘方向收回 28%，前臂、腕部、掌块和兼容用的空手指骨点一起平移。上方左右肩肘段由约 10.72/9.85 缩短为 7.72/7.09，下方左右由约 13.53/11.05 缩短为 9.74/7.96，单位为模型单位。前臂长度、手掌尺寸和旋转保留；手位相应收近躯干，不再宣称腕部锚点与 v7 原位相同。
+
+用户在 v8 实机检查后仍认为过长，明确要求两对手臂缩短到当时长度的 3/5。v9 对四条肩肘段和四条肘腕段分别执行一次 0.6 倍变换，而不是相对 v7 或更早版本计算。肩部起点不变，前臂体块同步缩短，肘腕和手掌相应收回；不重复缩小手掌，也不缩放主体。正面有更多手臂被红鬃和头盔遮挡，已查看隔离近景与代表性动作图；v9 实机已进入世界，贴靠和遮挡观感尚未得到用户确认。
+
+v10 只改变目标面的 UV 与着色，所有体块和骨点变换继续与 v9 一致。长发按完整根梢路径取色，根部接触阴影和中段亮面不在每个方块重新起算；甲面按朝向保留选择性高光，白袍保持低对比。用户提供的参考模型仅用于研究组织方法，没有移植其像素、几何或 YSM 控制器。
+
+披风三段骨骼保留，布片改成连续纵向褶面并增加接缝重叠，不再给每一段重复画金边。前侧两条红布各有三段轻微弯折和折边，只在真正下摆保留细边。四个行走、跑步片段新增 `tabard_front.rotation` 随动，让布带在腿前抬时掀起；其余动画通道、循环和时长保留。这是预制布料形状与关键帧随动，不是实时布料物理。
+
+黑色手套覆盖掌块、握持块和腕关节，再以薄袖口延伸到肘腕连线的中点，覆盖靠腕的半截小臂。皮革有低反光褶皱、细颗粒和轻微磨亮；原大小臂、靠肘金色护腕、角质以及握柄几何不改动。袖口沿小臂骨骼运动，不扩大技能范围或碰撞箱。
+
+几何保留小数精度。拉塔恩的持剑手由连通的掌块、握持块和内侧回包组成，不再绘制独立手指或拇指；剑柄和手掌共用变换链。旧手指骨骼保留为空节点，仅用于动画兼容。胸甲底层收窄，胸、腹、肩、护臂和腿甲增加斜面、凸脊、层叠边沿及凹陷接缝。保留原足部结构与关节角度解算，不包含地形 IK。
+
+v5 应用参考模型研究中的结构明暗、接触阴影、选择性高光、纹理跨段连续和细节主次：皮肤沿上臂、小臂、小腿及手腕的三维位置表现肌肉转折，甲片覆盖端和关节处有较宽的柔和暗部；双刀使用沿完整刀长连续分布的低对比黑铁灰度，不在每个刀段重启杂色。刀柄、护手和原有金色装饰保留。对照原作近景维持暖色皮肤、旧金甲、红鬃与黑铁剑的身份特征，不照搬 YSM 角色比例或服装。
+
+v5 缩放时，米凯拉 146 个非臂段方块保持原尺寸，8 个上臂/前臂体块只调整连接端点，厚度不随拉塔恩放大；v6 的四肢局部改型另由改动清单验证。附身根节点随肩后锚点移动，四只块状手重新贴合肩甲。模型视觉放大不扩大碰撞箱、技能半径或伤害；行走/奔跑的位移驱动周期按 1.20 倍步幅调整，避免保持旧周期造成滑步。
+
+金甲、黑铁、红布、鬃毛及米凯拉衣发保持不同明度和冷暖倾向。[基础杂色算法](scripts/texture_pattern.js)与新增的[连续结构着色](../shared/surface_style.js)使用五个基色和四个中间色，形成九档离散过渡。最新目标区域采用固定种子的多尺度三维色簇：金属保留定向亮面，织物形成不规则团块，毛发沿长轴有方向但不会成为整列条纹。少量过渡色打散明暗分界，最近邻像素边缘不模糊；皮肤与光环维持低变化。非目标刀纹、手套及其他装饰保持原样，纹理不会逐帧随机变化。见 材质样张 (historical artifact removed)与头发近景 (historical artifact removed)。
 
 动画保留左右独立起手、蓄力、接触、挥过和后摇，扩大肩胯展开并增加踏步承重。v2 只追求更大角度并把腕部旋转补给前臂，实际产生扭曲与摆姿势感。v3 改用受限的双骨骼手臂解算，只在关键姿势求解自然肘弯，帧间采用四元数插值，不再逐帧切换肘弯解。手腕统一限幅，过短的抬手/收势段重新分配时间，原命中节点与片段总长不变。米凯拉保持低幅贴靠，披风和发束承担次级惯性。
 
@@ -41,7 +86,9 @@
 
 正式资源沿用 `geo/entity/promised_consort.geo.json` 和 `animations/entity/promised_consort.animation.json`；贴图位于 `textures/entity/promised_consort/`。
 
-本体按服务端实际阶段时长和关键事件映射回原始动画时间，同步当前与下一 tick 的表现端点。这样施法速度配置不再只加速伤害而漏掉动画；非循环动作保持末帧，起手有短姿态衔接，步态按实际水平位移推进。米凯拉按同步字段显隐，转换从第 56 个原始动画 tick 展开。分身读取父技能 ID，只播放表现动画，不参与命中。
+本体按服务端配置的各组成段绝对 tick 和关键事件映射回制作动画时间，同步当前与下一 tick 的表现端点；前摇、释放中、后摇独立可配，旧速度值只兼容读取并归一为 1，不再缩放时间。非循环动作保持末帧，起手有短姿态衔接，步态按实际水平位移推进。米凯拉按同步字段显隐，转换从第 56 个原始动画 tick 展开。分身读取父技能 ID，只播放表现动画，不参与命中。配置格式见 [配置说明](../../docs/config/README.md)。
+
+v10 在原有关键帧之后加入小幅临界阻尼随动，只影响披风末端、十组米凯拉长发的中末段和十二组鬃毛骨骼。重复渲染同一帧不累积偏移，长间隔和瞬移重置响应，技能期间降低幅度。主姿态、四只米凯拉手掌和双刀不受附加偏移影响；这不是完整布料碰撞或 YSM 物理。独立弹簧测试与极值姿态保护检查通过，实际动态观感未单独验收。
 
 伤害、选招、阈值、冲锋和升空路径、指示器、分身生成数量及生命周期均沿用战斗程序。动画不写入 `root`/`control` 世界位移；`pelvis` 偏移只用于视觉重心。动画以默认时序制作，未逐项验证全部非默认配置。
 
@@ -51,54 +98,85 @@
 
 ### 范围预警与星陨修订
 
-本次运行代码修订保留 v3 模型、贴图和动画：逐攻击段预告与真实伤害共用锁定形状，变更立即同步；转阶段冲击也有与真实包围盒匹配的矩形预告。伤害公式和范围数值不变，命中位置服从已公告的几何，不能临时改成另一个范围；未提前公告的直接攻击不结算，动态危险区先预告再生效。用户确认重力岩块保留追踪弹体碰撞，只提前提示发射，其虚线不是安全边界。
+逐攻击段预告与真实伤害共用锁定形状，变更立即同步；转阶段冲击也有与真实包围盒匹配的矩形预告。命中位置服从已公告的几何；未提前公告的直接攻击不结算，动态危险区先预告再生效。v4 为拉塔恩加入深色衬边与更粗的亮色穿墙边框，填充仍受遮挡，边界本身不扩大。用户确认重力岩块保留追踪弹体碰撞，只提前提示发射，其虚线不是安全边界。
 
-剑气按实际攻击侧采样剑根/剑尖，使用更亮的双层刃光与最多 3 tick 的短拖尾；历史样本与当前帧分开，避免高帧率反复覆盖导致尾迹消失。星陨增加跟随本体的白金蓄光、亮核、长光迹和锁点连接；实际落地前始终拒绝普通伤害，落地后再按配置免伤窗口处理。伤害结算放在真实落地之后。
+剑气按实际攻击侧采样剑根/剑尖，保留双层刃光与最多 3 tick 的短拖尾。星陨现采用升空离场、短暂低光、小星点逐渐聚成强烈白金星芒、沿锁点高速再入场的表现；本体和光迹共享表现轨迹，实际落地前始终拒绝普通伤害。所有攻击绕过受击伤害冷却，仍保留原命中次数、盾牌、瞬防和真正无敌状态。
+
+星陨最终采用用户确认的游戏内核心 21.6 格、外环至 31.2 格、余波至 36 格，替代此前“三倍范围”要求；通过基础半径 9/13 和星陨 `range_multiplier = 2.40` 控制。40 格逻辑场地不变，锁点考虑完整余波，伤害公式不变。新倍率只用于新开战斗，旧存档中的战斗快照不会自动更新。
 
 本轮验收独立记录在 [combat_telegraph_validation.json](combat_telegraph_validation.json)，不能用 v3 的旧实机结论代替。
 
 ## 重建步骤
 
-在 Blockbench 打开名称为 `promised_consort` 的 GeckoLib 项目，按顺序执行：
+当前动作增量工作使用 rebuild_motion.js (historical artifact removed)，不运行旧模型或动画生成器。先查询实际 Blockbench 工程并保留未保存标签；完成样片、实时审查、事件接入及新预览后，执行 [export_assets.js](scripts/export_assets.js) 时设置 `let exportOptions = {animationsOnly: true}`。此分支验证并保留几何与两张贴图哈希，只复制制作动画；完整几何重导出曾产生约 `1e-5` 的取整差异，不用于动画任务。audit_revision.js (historical artifact removed) 是异步脚本，必须在异步 IIFE 中 `await eval(...)`。
 
-1. [模型生成器](scripts/build_model.js)。
-2. [动画生成器](scripts/build_animations.js)。
-3. [多角度审查](scripts/review_model.js)与[针对性审查](scripts/audit_revision.js)，目视检查新预览。
-4. [正式导出](scripts/export_assets.js)。
+当前立体装饰使用浮雕制作脚本 (historical artifact removed)与[几何配方](../shared/relief_geometry.js)，不调用旧版比例生成流程。在 Blockbench 求值时设置 `let reliefOptions = {model: "promised_consort"}`，先从浮雕前快照准备独立项目；等编辑器完成渲染后，再以 `reuseProject: true` 更新生成的装饰并拍摄前后对照。确认制作数据后加 `saveAuthoring: true` 保存工程与几何，再执行针对性检查、多角度审查和完整导出。此流程会替换生成的 `relief_` 部件，不自动合并其上的手工修改。
 
-MCP 执行入口示例：
+v11 没有重绘图集，不需要为本轮新增体块执行贴图重绘。几何变化必须完整导出，不能用 `texturesOnly` 代替。旧版 refine_model.js (historical artifact removed)不用于当前 v11 的增量修改；身体和四臂比例不得再次缩放。
+
+只调整贴图时，打开已保存的完整工程，执行 [贴图专用重绘](scripts/repaint_textures.js)，不要调用几何生成器。`structure_repaint_only` 仅更新材质清单中带 `texture_context` 的目标面，沿用已分配的 UV，保存前比较工程元素、骨骼、动画及几何文件哈希；用 [多角度审查](scripts/review_model.js)刷新预览后，执行仅贴图导出：
 
 ```javascript
-eval(require("fs").readFileSync("C:/Users/12044/Documents/EX/IDEA_PROJECT/ElderBosses/models/promised_consort/scripts/build_model.js", "utf8"))
+(() => {
+	let exportOptions = {texturesOnly: true};
+	return eval(require("fs").readFileSync("C:/Users/12044/Documents/EX/IDEA_PROJECT/ElderBosses/models/promised_consort/scripts/export_assets.js", "utf8"));
+})()
 ```
 
-模型生成器返回 Promise，必须等贴图载入再继续。MCP 最外层不要写 `return`。脚本中的工作区路径在迁移机器时需要调整。
+此模式只同步本体与分身两张 PNG，并保留已有导出记录中的其他字段；几何和动画仅校验，不重写。Blockbench 没有打开工程时，先载入现有工程；不要在空编辑器直接执行重绘。已有动画工程上重建几何曾触发 `fix_rotation` 错误，该路径未视为修复。
 
-离线动画构建使用制作侧 Three.js：
+定向变换由 refine_model.js (historical artifact removed)完成：v4 输入执行一次 1.20 倍缩放；v5 输入执行 v6 局部改型；v6 输入执行 v7 掌部、投影、布面与长手套改型；v7 输入执行 v8 上臂缩短；v8 输入执行 v9 两对手臂 3/5 长度变换；v9 输入只准备 v10 的目标 UV 和连续着色上下文，不改体块或骨点。各阶段保存对应基线，当前 v10 不会重复缩短。只在 v7 显式传入 `refinementOptions = {rebuildAppearance: true}` 时才从 `.pre-v7` 的 v6 基线重建 v7；该操作会覆盖后续手工修改，不用于当前 v10 的增量修改。
+
+几何、UV 或布料动画改型之后依次执行重绘、制作侧检查、多角度审查、完整导出和正式资产校验。`repaint_targets` 限定本轮目标，非目标像素保持；v9 的制作基线包含 rig.json.pre-v9 (historical artifact removed)，动画沿用 v8。完整导出时不设置 `texturesOnly`，否则旧几何或动画哈希会拒绝导出。旧 [模型生成器](scripts/build_model.js)与 [动画生成器](scripts/build_animations.js)继续拒绝已放大工程，防止覆盖结构 UV 或重新求解已保留的动作。
+
+验证命令：
 
 ```powershell
-npm install three@0.170.0 --prefix models/promised_consort/.tools --ignore-scripts --no-audit --no-fund
-node models/promised_consort/scripts/build_animations.js
 node models/promised_consort/scripts/validate_manifest.js
+node models/promised_consort/scripts/validate_assets.js --authoring-only
 node models/promised_consort/scripts/validate_assets.js
+node models/shared/surface_style.test.js --assets
+node models/shared/relief_geometry.test.js --assets
 node models/promised_consort/tests/check_motion.js
-java -cp versions/1.20.1-forge/build/classes/java/main models/promised_consort/tests/TimelineCheck.java
+node models/promised_consort/tests/run_attack_plan_check.js TimelineCheck.java
+node models/promised_consort/tests/run_attack_plan_check.js RuntimePoseCheck.java
 node models/promised_consort/tests/run_attack_plan_check.js
+node models/promised_consort/tests/run_attack_plan_check.js ../../malenia/tests/AnimationTimelineTest.java
 ```
 
 重建会覆盖本工程的生成结果与预览，不自动合并手工修改。需要保留手工关键帧时，不要直接运行生成器。旧验收记录不自动适用于重新生成后的资产哈希。
 
 ## 验证状态
 
-- [资产校验](validation.json)：骨架、UV、动画时长、循环首尾、内嵌贴图及运行时文件一致性通过。
+当前整批：资源575721项、真实GeckoLib608478旋转值、时序66222项、攻击计划560728项（含真实新旧配置两阶段攻击事件集合比较）、马莲尼亚8041项通过，双端编译与资源处理通过。16招在Blockbench完成一次正常速度顺序播放，代表姿态只查看一张125327字节的汇总图；这些工程检查与用户认可分开记录。Forge 于18:58:19.176入世界、19:01:37.347保存退出，用户确认全部16招可保留；8招有本次完整日志，另外8招经澄清后明确再次确认游戏内观察，但无本次匹配日志。新提取的2438个连续源帧、161页尚未完成逐页目视，原作节奏校准、NeoForge及未覆盖的阶段和工作流仍未验证。以下六招阶段及更早数量均是各自历史记录。
+
+第六招十字斩：真实 GeckoLib 43 clips/470247 个旋转值、资源 410819 项、时序与三份配置 57096 项、攻击计划 559410 项/3936 公告、马莲尼亚时序 8041 项通过；双端编译和资源处理通过。辅助曲线在 43 tick 内保留，只截去旧片段之外的尾帧。标准预览已刷新但没有重新目视，本轮仅打开一张包含 64 连续原帧的来源汇总图，用户另行实时观察并批准独立样片。Forge 于 18:00:43 入世界，两阶段各两次 43 tick 新实体测试完成并清理，用户确认动作、节奏和可见接触正常；18:01:16 保存退出。该认可不扩写为其他技能或 NeoForge。
+
+最新时间键排序修复：正式动画曾把 `1`、`2` 等整数时间放在 `0.025` 等中间帧之前，真实 GeckoLib 解析造成起手姿态偏差。[运行库对照](tests/RuntimePoseCheck.java)先复现、再验证修复后 43 段的 467958 个旋转值；资产校验 407529 项通过。既有 Blockbench 预览只在确认解析内容完全相同后重绑定哈希，并未重新目视。测试指令已获 Forge 掀地一、二阶段生成/单次施放/清理确认。17:19:46 再次入世界、17:21:37 保存退出后，用户确认掀地起手挥砍现与 Blockbench 一致；一阶段有三次完整日志，二阶段仅用户报告，不扩写为完整招式或其他技能已验收。
+
+排序修复前的五招导出检查：双端 `compileJava`/`processResources` 通过；资源 407528 项、关节 33498 样本/恢复 3624 样本、时序与绝对 tick 配置 57235 项、攻击计划 559410 项/3936 公告、马莲尼亚时序 8041 项通过。测试中的六组旧速度参数仅验证兼容归一，不代表仍可配置速度百分比。标准预览只补充一张 25 姿态汇总图的抽样审查，完整目视验收仍待完成。资源校验中的 `refined_skill_clips: 22` 包含旧 v11 修改，实际 v12 全身重建清单仅五招。
+
+以下为各版本历史验证，不能替代当前动作与绝对 tick 配置实机验收：
+
+- [资产校验](validation.json)：308046 项检查通过，覆盖 2540 个带结构上下文的面；继续保护 v9 八段手臂各为 v8 的 3/5、肘腕位置、手掌尺寸、臂粗和动画。v11 逐项核对新增浮雕配方、父骨骼与原几何、UV、图集保护。数值检查不代替美术验收。
+- [比例与材质记录](proportion_validation.json)：v9 的四组肩肘腕位置、32 个体块和 12 个骨点改动作为历史沿用项保留；`style_refinement` 单独记录 v10 的 143 个目标及 858 个 UV 区域，不能理解为再次缩短手臂。
+- [纹理保护](texture_validation.json)：以 pre-mottle 基线 (historical artifact removed)验证本次杂色修订没有改变几何、UV、骨架或动画，透明度和非目标像素错误均为零。重绘后重新生成并查看了代表性近景。
 - [动画计算](animation_validation.json)：关键手位、自然肘弯与步态/承重求解通过；受限手腕意味着部分非接触姿态的剑向只近似目标，不宣称逐帧精确复刻。
-- [Blockbench 渲染检查](preview_validation.json)：25 张细节图、43 套动作序列图，72 个脚底样本与三种前向攻击样本通过。
-- [针对性检查](revision_validation.json)：765 条面甲采样射线、1176 个环抱手掌样本、596 个握剑及屈肘样本通过。只覆盖记录中的采样，不推断所有视角或所有中间帧。
+- [Blockbench 渲染检查](preview_validation.json)：37 张细节图、43 套动作序列图，72 个脚底样本与三种前向攻击样本通过。新增 奔跑披风 (historical artifact removed)、转身披风 (historical artifact removed)、攻击披风 (historical artifact removed)和 迈步前腰布 (historical artifact removed)，另有 投影四臂近景 (historical artifact removed)与 长手套近景 (historical artifact removed)。
+- [针对性检查](revision_validation.json)：765 条面甲采样射线、1176 个环抱手位样本、596 个握剑及屈肘样本通过；整张图集与浮雕前快照一致，3481 个可见面涉及的 71788 个独立像素均未改变，796 个投影臂独立像素 alpha 正确。八个代表动作的两处披风接缝共 1680 条背面射线无透空；手位误差只证明相对新锚点的稳定性，不代替几何接触目视检查，也不推断所有角度和所有中间帧均无穿插。
 - [连续性检查](motion_continuity.json)：32490 个关节采样，没有超过 45°/半 tick 的跳变；这是排错上限，不是视觉质量评分。
 - [时序回归](tests/TimelineCheck.java)：22 个动作、6 档施法速度、31750 项检查，验证单调播放、阶段起点、连舞事件和星陨节点。
-- [预告几何回归](tests/AttackPlanCheck.java)：22 个动作、2 个阶段、4 档速度、3 档范围倍率，242892 项检查覆盖 1932 个段；验证指示器几何还原、冻结位置恢复、提前量、螺旋位移预测与分身取整次数。这是离线几何检查，不等于实机命中或视觉验收。
+- [预告几何回归](tests/AttackPlanCheck.java)：22 个动作、2 个阶段、4 档速度、4 档范围倍率，324895 项检查覆盖 2576 个段；验证几何还原、冻结位置恢复、提前量、位移预测、分身取整、最终 36 格余波及星陨渐亮与回归时序。这是离线检查，不等于实机命中或视觉验收。
 - [目视审查](visual_review.json)：记录实际审看的代表性画面，不声称每个中间帧都已人工检查。
-- [实机记录](runtime_validation.json)：v3 两端均实际进入世界并正常退出；用户确认 Forge 动作和特效改善、可以保留，NeoForge 与 Forge 一致。观察类别原样记录，不扩写为全部逐招完成；前版记录单独归档。
+- [实机记录](runtime_validation.json)：当前首部记录22招制作覆盖与本批16招用户认可，分别列出8招日志证据和8招明确用户报告；十字斩双阶段认可、左起三连历史认可、掀地起手专项确认及更早结论分块保留，不合并历史认可范围。
+- v11 双平台资源处理与制作侧检查通过。Forge 于 2026-09-13 21:33:39 加载资源，2026-09-14 00:14:37 正常退出；未记录入世界事件，外观反馈被跳过，因此新装饰实机效果仍未验收。NeoForge 本轮未启动客户端，运行 Java 和玩法代码没有改动。
+- [历史特效与纹理验收](combat_telegraph_validation.json)：保留 2026-09-11 的 v4 整体杂色验收，不代表 v6 已通过。
+- v5 Forge 已于 2026-09-12 实际入世界，用户确认身体、刀面、比例、贴肩/握柄/行走及保留材质五项；v5 NeoForge 仅到主菜单。
+- v6 两端编译与资源处理通过。Forge 于 2026-09-12 12:41:24 进入“新的世界”，12:44:01 正常退出并完成全部维度保存；用户确认“已入世界，符合要求，可以保留”。逐项清单被跳过，仅记录整体外观通过，不扩写为每个细节或全部招式单独验收。NeoForge 本轮未重新入世界，见 [本轮记录](proportion_validation.json)。
+- v6 的上述验收已归档至 proportion_validation.json.pre-v7 (historical artifact removed)。v7 收到“米凯拉上臂仍过长”的反馈，未记录完整通过；其制作与验证记录保留在 proportion_validation.json.pre-v8 (historical artifact removed)。
+- v8 Forge 于 2026-09-12 22:00:15 入世界，22:01:54 完成全部维度保存。用户反馈仍过长，指定以此版为基线将两对手臂缩短至 3/5；v8 不记为外观通过。
+- v9 两端资源处理通过。Forge 于 2026-09-12 22:50:49 入世界，22:51:32 完成全部维度保存并正常退出；外观确认问题被跳过，仅记录实机运行完成，长度和收回后的手位观感仍待确认。NeoForge 本轮未重新入世界，见 [proportion_validation.json](proportion_validation.json)。
+- v10 两端编译和最新资源处理通过，[弹簧测试](../shared/SecondaryMotionTest.java)及[极值姿态保护](secondary_motion_validation.json)通过。用户确认两套模型的新纹理可以保留。2026-09-13 的 Forge 日志有 04:09:50 资源加载与 15:46:38 正常退出，但没有入世界或保存事件，观察来源澄清被跳过，因此不宣称日志已证实实机验收。NeoForge 本轮未重新入世界；该反馈也不等于手臂比例、完整动画、动态随动或战斗验收。
 
 固定镜头视频录制被用户取消，没有生成可交付视频，未自动重试；[录制脚本](scripts/record_motion.js)仅完成语法检查。新版实机进度以记录为准；完整逐招、二阶段未观察内容、多人、低 TPS、非默认配置和战斗平衡不因上述检查而视为已验收。
 

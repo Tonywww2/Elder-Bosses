@@ -3,48 +3,183 @@
   "tick_rate": 20,
   "timing_source": "docs/bosses/promised-consort-radahn.md; verify against Java event timelines before export",
   "clips": {
-    "idle": {"ticks": 80, "loop": true},
-    "walk": {"ticks": 40, "loop": true},
-    "hurt": {"ticks": 12, "loop": false},
-    "stunned": {"ticks": 80, "loop": false},
-    "death": {"ticks": 160, "loop": false},
-    "transition": {"ticks": 140, "loop": false},
-    "gravity_dive": {"ticks": 54, "loop": false},
-    "left_combo_cross": {"ticks": 78, "loop": false},
-    "left_combo_bloodflame": {"ticks": 64, "loop": false},
-    "right_combo_cross": {"ticks": 61, "loop": false},
-    "right_combo_left_twin": {"ticks": 67, "loop": false},
-    "right_combo_tempest": {"ticks": 109, "loop": false},
-    "right_combo_earthheave": {"ticks": 140, "loop": false},
-    "lion_claw": {"ticks": 55, "loop": false},
-    "lion_claw_double": {"ticks": 55, "loop": false},
-    "starcaller_cry": {"ticks": 74, "loop": false},
-    "gravity_meteor": {"ticks": 118, "loop": false},
-    "stomp": {"ticks": 43, "loop": false},
-    "cross_slash": {"ticks": 49, "loop": false},
-    "spiral_assault": {"ticks": 64, "loop": false},
-    "light_of_miquella": {"ticks": 96, "loop": false},
-    "ring_of_light": {"ticks": 59, "loop": false},
-    "lightspeed_slash": {"ticks": 86, "loop": false},
-    "lightspeed_dash": {"ticks": 82, "loop": false},
-    "lightspeed_side_dash": {"ticks": 68, "loop": false},
-    "promised_consort": {"ticks": 128, "loop": false},
-    "enhanced_earthheave": {"ticks": 78, "loop": false},
-    "consort_meteor": {"ticks": 150, "loop": false},
-    "idle_phase_two": {"ticks": 80, "loop": true},
-    "walk_phase_two": {"ticks": 40, "loop": true},
-    "run": {"ticks": 24, "loop": true},
-    "run_phase_two": {"ticks": 24, "loop": true},
-    "turn_left": {"ticks": 24, "loop": false},
-    "turn_right": {"ticks": 24, "loop": false},
-    "turn_left_phase_two": {"ticks": 24, "loop": false},
-    "turn_right_phase_two": {"ticks": 24, "loop": false},
-    "intro": {"ticks": 60, "loop": false},
-    "clone_overhead_3": {"ticks": 12, "loop": false},
-    "clone_side_fan_3": {"ticks": 12, "loop": false},
-    "clone_meteor_4": {"ticks": 12, "loop": false},
-    "clone_starcaller_2": {"ticks": 12, "loop": false},
-    "clone_dash_4": {"ticks": 12, "loop": false},
-    "clone_cross_return_2": {"ticks": 12, "loop": false}
-  }
+    "idle": {
+      "ticks": 80,
+      "loop": true
+    },
+    "walk": {
+      "ticks": 40,
+      "loop": true
+    },
+    "hurt": {
+      "ticks": 12,
+      "loop": false
+    },
+    "stunned": {
+      "ticks": 80,
+      "loop": false
+    },
+    "death": {
+      "ticks": 160,
+      "loop": false
+    },
+    "transition": {
+      "ticks": 140,
+      "loop": false
+    },
+    "gravity_dive": {
+      "ticks": 79,
+      "loop": false
+    },
+    "left_combo_cross": {
+      "ticks": 84,
+      "loop": false
+    },
+    "left_combo_bloodflame": {
+      "ticks": 66,
+      "loop": false
+    },
+    "right_combo_cross": {
+      "ticks": 75,
+      "loop": false
+    },
+    "right_combo_left_twin": {
+      "ticks": 75,
+      "loop": false
+    },
+    "right_combo_tempest": {
+      "ticks": 149,
+      "loop": false
+    },
+    "right_combo_earthheave": {
+      "ticks": 156,
+      "loop": false
+    },
+    "lion_claw": {
+      "ticks": 57,
+      "loop": false
+    },
+    "lion_claw_double": {
+      "ticks": 61,
+      "loop": false
+    },
+    "starcaller_cry": {
+      "ticks": 109,
+      "loop": false
+    },
+    "gravity_meteor": {
+      "ticks": 152,
+      "loop": false
+    },
+    "stomp": {
+      "ticks": 32,
+      "loop": false
+    },
+    "cross_slash": {
+      "ticks": 43,
+      "loop": false
+    },
+    "spiral_assault": {
+      "ticks": 79,
+      "loop": false
+    },
+    "light_of_miquella": {
+      "ticks": 144,
+      "loop": false
+    },
+    "ring_of_light": {
+      "ticks": 48,
+      "loop": false
+    },
+    "lightspeed_slash": {
+      "ticks": 99,
+      "loop": false
+    },
+    "lightspeed_dash": {
+      "ticks": 103,
+      "loop": false
+    },
+    "lightspeed_side_dash": {
+      "ticks": 82,
+      "loop": false
+    },
+    "promised_consort": {
+      "ticks": 151,
+      "loop": false
+    },
+    "enhanced_earthheave": {
+      "ticks": 83,
+      "loop": false
+    },
+    "consort_meteor": {
+      "ticks": 280,
+      "loop": false
+    },
+    "idle_phase_two": {
+      "ticks": 80,
+      "loop": true
+    },
+    "walk_phase_two": {
+      "ticks": 40,
+      "loop": true
+    },
+    "run": {
+      "ticks": 24,
+      "loop": true
+    },
+    "run_phase_two": {
+      "ticks": 24,
+      "loop": true
+    },
+    "turn_left": {
+      "ticks": 24,
+      "loop": false
+    },
+    "turn_right": {
+      "ticks": 24,
+      "loop": false
+    },
+    "turn_left_phase_two": {
+      "ticks": 24,
+      "loop": false
+    },
+    "turn_right_phase_two": {
+      "ticks": 24,
+      "loop": false
+    },
+    "intro": {
+      "ticks": 60,
+      "loop": false
+    },
+    "clone_overhead_3": {
+      "ticks": 12,
+      "loop": false
+    },
+    "clone_side_fan_3": {
+      "ticks": 12,
+      "loop": false
+    },
+    "clone_meteor_4": {
+      "ticks": 12,
+      "loop": false
+    },
+    "clone_starcaller_2": {
+      "ticks": 12,
+      "loop": false
+    },
+    "clone_dash_4": {
+      "ticks": 12,
+      "loop": false
+    },
+    "clone_cross_return_2": {
+      "ticks": 12,
+      "loop": false
+    },
+    "cross_leap_combo": {
+      "ticks": 151,
+      "loop": false
+    }
+  },
+  "current_assets": "current_assets.json",
+  "consolidated": true
 }

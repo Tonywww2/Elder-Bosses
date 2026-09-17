@@ -1,0 +1,470 @@
+{
+  "revision": "sculpted_relief_v11",
+  "baseline": "promised_consort.bbmodel.pre-relief-v11",
+  "baseline_suffix": ".pre-relief-v11",
+  "geometry_sha256": "81b20cb966231f005417794ee15ca98cdc8abc7e70a4400a54f43cfb0f171c77",
+  "baseline_geometry_sha256": "487040f32141aa49c11f18e5a591bde0e6fa8b032ebf42e4bd05510af4e39982",
+  "animation_sha256": "bbc6d4135bceae1281fb067299ed64fc9392386e19073b78cdf5fb418f542217",
+  "texture_sha256": "bf7462fee714f49edfcf2b9c8c3ad06464791178694396298156eb503e639224",
+  "source_cubes": 565,
+  "added_cubes": 55,
+  "cubes": 620,
+  "bones": 125,
+  "texture_revision": "clustered_transition_v8",
+  "original_geometry_uv_rig_texture_animation_preserved": true,
+  "additions": [
+    {
+      "name": "relief_lion_crest_brow_crown",
+      "source": "lion_crest_brow",
+      "face": "north",
+      "bone": "chest",
+      "depth": 1.1,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_brow_left_bevel",
+      "source": "lion_crest_brow",
+      "face": "north",
+      "bone": "chest",
+      "depth": 1.1,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_brow_lower_bevel",
+      "source": "lion_crest_brow",
+      "face": "north",
+      "bone": "chest",
+      "depth": 1.1,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_brow_right_bevel",
+      "source": "lion_crest_brow",
+      "face": "north",
+      "bone": "chest",
+      "depth": 1.1,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_brow_upper_bevel",
+      "source": "lion_crest_brow",
+      "face": "north",
+      "bone": "chest",
+      "depth": 1.1,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_muzzle_crown",
+      "source": "lion_crest_muzzle",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_muzzle_left_bevel",
+      "source": "lion_crest_muzzle",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_muzzle_lower_bevel",
+      "source": "lion_crest_muzzle",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_muzzle_right_bevel",
+      "source": "lion_crest_muzzle",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_lion_crest_muzzle_upper_bevel",
+      "source": "lion_crest_muzzle",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.65,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_1_crown",
+      "source": "crest_mane_upper_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_1_left_bevel",
+      "source": "crest_mane_upper_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_1_lower_bevel",
+      "source": "crest_mane_upper_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_1_right_bevel",
+      "source": "crest_mane_upper_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_1_upper_bevel",
+      "source": "crest_mane_upper_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_-1_crown",
+      "source": "crest_mane_upper_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_-1_left_bevel",
+      "source": "crest_mane_upper_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_-1_lower_bevel",
+      "source": "crest_mane_upper_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_-1_right_bevel",
+      "source": "crest_mane_upper_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crest_mane_upper_-1_upper_bevel",
+      "source": "crest_mane_upper_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_1_crown",
+      "source": "breastplate_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_1_left_bevel",
+      "source": "breastplate_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_1_lower_bevel",
+      "source": "breastplate_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_1_right_bevel",
+      "source": "breastplate_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_1_upper_bevel",
+      "source": "breastplate_1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_-1_crown",
+      "source": "breastplate_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_-1_left_bevel",
+      "source": "breastplate_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_-1_lower_bevel",
+      "source": "breastplate_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_-1_right_bevel",
+      "source": "breastplate_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_breastplate_-1_upper_bevel",
+      "source": "breastplate_-1",
+      "face": "north",
+      "bone": "chest",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crown_front_ridge_crown",
+      "source": "crown_front_ridge",
+      "face": "north",
+      "bone": "head",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crown_front_ridge_left_bevel",
+      "source": "crown_front_ridge",
+      "face": "north",
+      "bone": "head",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crown_front_ridge_lower_bevel",
+      "source": "crown_front_ridge",
+      "face": "north",
+      "bone": "head",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crown_front_ridge_right_bevel",
+      "source": "crown_front_ridge",
+      "face": "north",
+      "bone": "head",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_crown_front_ridge_upper_bevel",
+      "source": "crown_front_ridge",
+      "face": "north",
+      "bone": "head",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_0_crown",
+      "source": "pauldron_lame_r_0",
+      "face": "north",
+      "bone": "upper_arm_r",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_0_left_bevel",
+      "source": "pauldron_lame_r_0",
+      "face": "north",
+      "bone": "upper_arm_r",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_0_lower_bevel",
+      "source": "pauldron_lame_r_0",
+      "face": "north",
+      "bone": "upper_arm_r",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_0_right_bevel",
+      "source": "pauldron_lame_r_0",
+      "face": "north",
+      "bone": "upper_arm_r",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_0_upper_bevel",
+      "source": "pauldron_lame_r_0",
+      "face": "north",
+      "bone": "upper_arm_r",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_0_crown",
+      "source": "pauldron_lame_l_0",
+      "face": "north",
+      "bone": "upper_arm_l",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_0_left_bevel",
+      "source": "pauldron_lame_l_0",
+      "face": "north",
+      "bone": "upper_arm_l",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_0_lower_bevel",
+      "source": "pauldron_lame_l_0",
+      "face": "north",
+      "bone": "upper_arm_l",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_0_right_bevel",
+      "source": "pauldron_lame_l_0",
+      "face": "north",
+      "bone": "upper_arm_l",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_0_upper_bevel",
+      "source": "pauldron_lame_l_0",
+      "face": "north",
+      "bone": "upper_arm_l",
+      "depth": 0.85,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_1_east_crown",
+      "source": "pauldron_lame_r_1",
+      "face": "east",
+      "bone": "upper_arm_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_1_east_left_bevel",
+      "source": "pauldron_lame_r_1",
+      "face": "east",
+      "bone": "upper_arm_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_1_east_lower_bevel",
+      "source": "pauldron_lame_r_1",
+      "face": "east",
+      "bone": "upper_arm_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_1_east_right_bevel",
+      "source": "pauldron_lame_r_1",
+      "face": "east",
+      "bone": "upper_arm_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_r_1_east_upper_bevel",
+      "source": "pauldron_lame_r_1",
+      "face": "east",
+      "bone": "upper_arm_r",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_1_west_crown",
+      "source": "pauldron_lame_l_1",
+      "face": "west",
+      "bone": "upper_arm_l",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_1_west_left_bevel",
+      "source": "pauldron_lame_l_1",
+      "face": "west",
+      "bone": "upper_arm_l",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_1_west_lower_bevel",
+      "source": "pauldron_lame_l_1",
+      "face": "west",
+      "bone": "upper_arm_l",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_1_west_right_bevel",
+      "source": "pauldron_lame_l_1",
+      "face": "west",
+      "bone": "upper_arm_l",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    },
+    {
+      "name": "relief_pauldron_lame_l_1_west_upper_bevel",
+      "source": "pauldron_lame_l_1",
+      "face": "west",
+      "bone": "upper_arm_l",
+      "depth": 0.8,
+      "kind": "raised_plate"
+    }
+  ],
+  "inspection_status": "visually_reviewed_before_client_test",
+  "checks": {
+    "authoring_contracts": 308035,
+    "complete_atlas_pixel_changes": 0,
+    "projection_alpha_errors": 0,
+    "face_mask_rays": 765,
+    "embrace_samples": 1176,
+    "grip_samples": 596,
+    "cloth_continuity_rays": 1680,
+    "review_record": "visual_review.json",
+    "limits": "Sampled attachment and silhouette views; not exhaustive surface intersections or in-world acceptance"
+  },
+  "runtime_acceptance": "client_loaded_and_exited; world_entry_not_confirmed; appearance_question_skipped; see runtime_validation.json"
+}

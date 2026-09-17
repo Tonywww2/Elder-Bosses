@@ -1,14 +1,14 @@
 {
-  "revision": "reference_lion_v3",
+  "revision": "relief_lion_v4",
   "bones": 125,
-  "cubes": 550,
+  "cubes": 538,
   "census": {
-    "radahn": 364,
-    "miquella": 186
+    "radahn": 384,
+    "miquella": 154
   },
   "atlas_size": 512,
-  "atlas_rows_used": 226,
-  "surface_patches": 858,
+  "atlas_rows_used": 246,
+  "surface_patches": 922,
   "texture_loaded": true,
   "status": "built_not_visually_accepted"
 }

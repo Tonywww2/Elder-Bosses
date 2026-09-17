@@ -1,5 +1,5 @@
 {
-  "revision": "reference_lion_v3",
+  "revision": "sculpted_relief_v11",
   "face": [
     {
       "angle": -30,
@@ -21,85 +21,85 @@
     }
   ],
   "embrace": {
-    "samples": 1176,
-    "maximum_inner_hand_drift": 0.09493703111737654,
-    "maximum_outer_hand_drift": 1.5977662941889037
+    "samples": 1168,
+    "maximum_inner_hand_drift": 0.06611749054156353,
+    "maximum_outer_hand_drift": 0.9179380196718854
   },
   "followthrough": [
     {
-      "tick": 12,
+      "tick": 13,
       "side": "l",
       "hand": [
-        1.9999890791525268,
-        41.68889624807031,
-        -8.999991466264106
+        5.010070352126557,
+        52.90664885398535,
+        -22.260049746351488
       ],
       "tip": [
-        52.890281549096755,
-        33.94471013662972,
-        -29.46668914309771
+        67.68914664482496,
+        42.3017432321692,
+        -41.69631924043035
       ],
       "direction": [
-        0.9186691772532612,
-        -0.13979768514191546,
-        -0.36946386831972877
+        0.9428997924442916,
+        -0.1595327165162227,
+        -0.29238552250319544
       ]
     },
     {
-      "tick": 30,
+      "tick": 23,
       "side": "r",
       "hand": [
-        -2.0000123307364897,
-        40.49630392413659,
-        -8.999995124772319
+        -6.797995135914858,
+        52.37905356395869,
+        -21.555393756483905
       ],
       "tip": [
-        -52.890262537820774,
-        32.75211960377463,
-        -29.46679856528589
+        -66.76960268421271,
+        45.911051854519116,
+        -49.492294836589885
       ],
       "direction": [
-        -0.9186684143260917,
-        -0.13979765280944792,
-        -0.3694657775607281
+        -0.9021705432571575,
+        -0.09730005338432761,
+        -0.42026302536684346
       ]
     },
     {
-      "tick": 58,
+      "tick": 46,
       "side": "r",
       "hand": [
-        31.230154092027995,
-        43.95229050789613,
-        -3.5813675095433952
+        36.31747405320245,
+        52.35245924090155,
+        -12.442783669315508
       ],
       "tip": [
-        75.27598457927573,
-        27.225599832213796,
-        -32.71661481806438
+        98.98281463001308,
+        38.05711523141454,
+        -29.40148143897793
       ],
       "direction": [
-        0.7951132699631116,
-        -0.3019494370222809,
-        -0.5259481204553311
+        0.9426931620274807,
+        -0.2150490673557556,
+        -0.255114681851221
       ]
     },
     {
-      "tick": 58,
+      "tick": 46,
       "side": "l",
       "hand": [
-        -34.0000051086089,
-        43.30370974700125,
-        -2.000006242949385
+        -36.31490906926282,
+        52.34990810434115,
+        -12.440998125618396
       ],
       "tip": [
-        -81.90225416738676,
-        43.74043326033138,
-        -29.818413955895913
+        -95.64576122032116,
+        39.93552881665117,
+        -39.728950960718194
       ],
       "direction": [
-        -0.8647291574792646,
-        0.007883712417551822,
-        -0.5021765937234818
+        -0.8925314712286645,
+        -0.18675316143820034,
+        -0.410500705918069
       ]
     }
   ],
@@ -107,64 +107,102 @@
     {
       "name": "left_combo_cross",
       "before": {
-        "lateral_sword_envelope": 164.26354592305933,
+        "lateral_sword_envelope": 197.11625510767118,
         "torso_turn_range_degrees": 85
       },
       "after": {
-        "lateral_sword_envelope": 163.7742245003684,
-        "torso_turn_range_degrees": 132
+        "lateral_sword_envelope": 205.77322857739546,
+        "torso_turn_range_degrees": 69.71236999999999
       }
     },
     {
       "name": "right_combo_cross",
       "before": {
-        "lateral_sword_envelope": 157.4091148385645,
+        "lateral_sword_envelope": 188.8909378062774,
         "torso_turn_range_degrees": 80
       },
       "after": {
-        "lateral_sword_envelope": 158.33572774772537,
-        "torso_turn_range_degrees": 118
+        "lateral_sword_envelope": 204.93126134341662,
+        "torso_turn_range_degrees": 59.6321
       }
     },
     {
       "name": "cross_slash",
       "before": {
-        "lateral_sword_envelope": 157.40301361045016,
+        "lateral_sword_envelope": 188.88361633254013,
         "torso_turn_range_degrees": 22
       },
       "after": {
-        "lateral_sword_envelope": 157.19542295009,
-        "torso_turn_range_degrees": 56
+        "lateral_sword_envelope": 203.73339265422584,
+        "torso_turn_range_degrees": 12.3
       }
     },
     {
       "name": "promised_consort",
       "before": {
-        "lateral_sword_envelope": 164.14092897162342,
+        "lateral_sword_envelope": 196.96911476594806,
         "torso_turn_range_degrees": 85
       },
       "after": {
-        "lateral_sword_envelope": 174.21613836566797,
-        "torso_turn_range_degrees": 132
+        "lateral_sword_envelope": 209.90426477803646,
+        "torso_turn_range_degrees": 65.48098
       }
     },
     {
       "name": "lightspeed_side_dash",
       "before": {
-        "lateral_sword_envelope": 166.77489528094216,
+        "lateral_sword_envelope": 200.12987433713056,
         "torso_turn_range_degrees": 80
       },
       "after": {
-        "lateral_sword_envelope": 154.67835132353667,
-        "torso_turn_range_degrees": 118
+        "lateral_sword_envelope": 149.96734380236944,
+        "torso_turn_range_degrees": 63.54549
       }
     }
   ],
-  "grip_samples": 596,
-  "elbow_samples": 596,
+  "grip_samples": 592,
+  "elbow_samples": 592,
   "errors": [],
+  "earthheave_planted_blades": {
+    "samples": 100,
+    "minimum_tip_height": -3.104597153040878,
+    "maximum_tip_height": 0.4550436069784354,
+    "phases": [
+      1,
+      2
+    ]
+  },
+  "impact_landing_blades": {
+    "samples": 1400,
+    "minimum_tip_height": -3.500019732964894,
+    "phases": [
+      1,
+      2
+    ]
+  },
   "motion_comparison_is_acceptance": false,
-  "geometry_sha256": "1c16d69dc2e223cea325798ef4bf7cc127f207146760c4c979e204b3089ca4a0",
-  "animations_sha256": "587cbad39b4c7dcffc99dc0034baee89ee17f3367afab6150848b9169bae2700",
+  "texture_preservation": {
+    "baseline": "promised_consort.bbmodel.pre-relief-v11",
+    "faces": 3481,
+    "unique_pixels": 71788,
+    "changed_pixels": 0,
+    "scope": "complete_atlas_unchanged_and_all_visible_regions_checked"
+  },
+  "projection": {
+    "opacity": 0.45,
+    "unique_pixels": 796,
+    "alpha_errors": 0,
+    "opaque_face_pixel_checks": 85413,
+    "glove_color_count": 5
+  },
+  "cloth_continuity": {
+    "samples": 1680,
+    "uncovered_samples": 0,
+    "first_uncovered": [],
+    "scope": "rear-facing rays across two cape joints in eight representative clips"
+  },
+  "geometry_sha256": "81b20cb966231f005417794ee15ca98cdc8abc7e70a4400a54f43cfb0f171c77",
+  "animations_sha256": "f9ea8aad5a8b74698a5dc7ba0acbc710058222994fb9c7a0e797b52b67cee950",
+  "texture_sha256": "bf7462fee714f49edfcf2b9c8c3ad06464791178694396298156eb503e639224",
   "status": "revision_checks_passed"
 }
