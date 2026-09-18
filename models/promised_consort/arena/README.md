@@ -1,8 +1,10 @@
 # Promised Consort Arena Authoring
 
-Current: the user accepted v7 and authorized production integration. Both target
-template sets are published; natural-site discovery is under investigation and
-the Consort Compass provides bounded, cancellable search. See
+Current: v9 applies the approved 16/4 terrain limits, water depth 4, wet samples
+at most 25%, seven desert/badlands/savanna center biomes and 48/16 distribution.
+The fixed foundation extends to -28; accepted aboveground geometry is unchanged.
+Both targets are published and pass offline validation. No v9 client-world
+acceptance is claimed. The compass and temporary check commands remain removed. See
 [Production Integration](#production-integration) and [Current Custom Construction](#current-custom-construction)
 below. Whitebox and earlier material sections preserve historical authoring steps;
 their old "not entered world" and "no runtime assets changed" statements are not
@@ -551,13 +553,20 @@ This supersedes the historical "production templates absent" notes above, but
 does not certify natural terrain generation or summon/restore gameplay.
 
 The original v7 publication used `--ground --publish`; it now intentionally
-refuses to overwrite the approved v8 foundation revision. Current commands are:
+refuses to overwrite newer foundation revisions. Current v9 commands are:
 
 ```powershell
-node models/promised_consort/tests/run_attack_plan_check.js ../arena/ArenaNbtAuthoring.java --ground --foundation
-node models/promised_consort/tests/run_attack_plan_check.js ../arena/ArenaNbtAuthoring.java --ground --foundation --verify
-node models/promised_consort/tests/run_attack_plan_check.js ../arena/ArenaNbtAuthoring.java --ground --foundation --publish
+node models/promised_consort/tests/run_attack_plan_check.js ../arena/ArenaNbtAuthoring.java --ground --foundation --shoreline
+node models/promised_consort/tests/run_attack_plan_check.js ../arena/ArenaNbtAuthoring.java --ground --foundation --shoreline --verify
+node models/promised_consort/tests/run_attack_plan_check.js ../arena/ArenaNbtAuthoring.java --ground --foundation --shoreline --publish
 ```
+
+The shoreline mode validates and archives the exact production v8 under
+`build/arena-foundation-v9/base-v8`, then adds eight fixed layers and stages v9.
+Preserve that baseline to rerun the exporter after publishing; no old preflight
+build tree is needed. Existing voxel states, explicit air, anchors and footprint
+are unchanged; 99,944 blocks are added, bringing construction to 356,550 blocks.
+Only exact baseline or identical v9 production bytes may be overwritten.
 
 The original command first verifies the preflight package and accepted source
 hash, then copies exactly 27 NBT files per target to the correct production folder.
@@ -642,7 +651,7 @@ offline command-tree/classpath checks; no in-game completion screenshot was
 captured. A structure placement still failed during this run, so natural
 generation success remains unverified.
 
-## Approved Terrain Adaptation
+## Historical V8 Terrain Adaptation
 
 The user approved v8 on 2026-09-17 after a complete read-only survey: site span 12,
 entry span 1, local fixed foundation bottom -20, biome tag at the structure center

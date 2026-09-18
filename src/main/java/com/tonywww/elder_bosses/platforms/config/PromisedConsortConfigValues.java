@@ -636,7 +636,7 @@ public final class PromisedConsortConfigValues {
             .finish();
         addSkill(builder, PromisedConsortActionId.GRAVITY_METEOR, 0.7, 220, true)
             .tuning(1.50, 1.40)
-                .integerList("windup_ticks", 86, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                .integerList("windup_ticks", 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
                 .integerList("active_ticks", 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 5, 1)
                 .integerList("recovery_ticks", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11)
                 .integer("projectile_count", 8).integer("max_hits_per_target", 3)

@@ -1,31 +1,55 @@
 {
   "status": "offscreen_shader_compile_and_pixel_checks_passed",
   "renderer": "NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2",
-  "fragmentSha256": "48912eb5c1d126fa30fca33412b7aeb59e0f8d6406b01e233fa1aaa2866e8208",
+  "fragmentSha256": "dcd9dda58ed512c424f717fe5e8fa60b8aba7e1efef30634ed71a4b3cf5fcbeb",
   "samples": [
     {
+      "mode": 2,
+      "time": 1.0,
+      "litPixels": 17260,
+      "peakRed": 255
+    },
+    {
+      "mode": 2,
+      "time": 2.0,
+      "litPixels": 15786,
+      "peakRed": 255
+    },
+    {
+      "mode": 4,
+      "time": 1.0,
+      "litPixels": 7130,
+      "peakRed": 255
+    },
+    {
+      "mode": 4,
+      "time": 2.0,
+      "litPixels": 7174,
+      "peakRed": 255
+    },
+    {
       "mode": 10,
       "time": 1.0,
-      "litPixels": 8788,
-      "peakRed": 255
+      "litPixels": 9144,
+      "peakRed": 215
     },
     {
       "mode": 10,
       "time": 2.0,
-      "litPixels": 8800,
-      "peakRed": 255
+      "litPixels": 6708,
+      "peakRed": 155
     },
     {
       "mode": 11,
       "time": 1.0,
-      "litPixels": 10868,
-      "peakRed": 255
+      "litPixels": 968,
+      "peakRed": 219
     },
     {
       "mode": 11,
       "time": 2.0,
-      "litPixels": 11179,
-      "peakRed": 255
+      "litPixels": 942,
+      "peakRed": 171
     },
     {
       "mode": 12,
@@ -42,14 +66,14 @@
     {
       "mode": 13,
       "time": 1.0,
-      "litPixels": 24570,
-      "peakRed": 255
+      "litPixels": 14016,
+      "peakRed": 177
     },
     {
       "mode": 13,
       "time": 2.0,
-      "litPixels": 24570,
-      "peakRed": 255
+      "litPixels": 10944,
+      "peakRed": 132
     },
     {
       "mode": 14,
@@ -62,21 +86,19 @@
       "time": 2.0,
       "litPixels": 36864,
       "peakRed": 255
+    },
+    {
+      "mode": 15,
+      "time": 1.0,
+      "litPixels": 2100,
+      "peakRed": 255
+    },
+    {
+      "mode": 15,
+      "time": 2.0,
+      "litPixels": 2788,
+      "peakRed": 255
     }
   ],
-  "scope": "Actual project shaders; not in-world visual acceptance",
-  "gravity_distortion": {
-    "status": "offscreen_scene_refraction_passed",
-    "renderer": "NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2",
-    "fragment_sha256": "d1730bd75bc1067ba41b678a16187206ce219533d603ce3e907a31697d1682bb",
-    "shifted_annulus_pixels": [
-      0,
-      7558,
-      8158
-    ],
-    "animated_annulus_pixels": 5593,
-    "outside_pixels_unchanged": true,
-    "zero_intensity_identity": true,
-    "world_tested": false
-  }
+  "scope": "Actual project shaders; not in-world visual acceptance"
 }

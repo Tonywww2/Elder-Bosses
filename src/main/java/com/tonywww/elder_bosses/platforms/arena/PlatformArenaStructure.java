@@ -8,7 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.tonywww.elder_bosses.arena.PromisedConsortArenaTerrain;
 import com.tonywww.elder_bosses.arena.PromisedConsortArenaTerrain.SurfaceSample;
 import com.tonywww.elder_bosses.platforms.registry.ModStructures;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
@@ -62,21 +62,22 @@ public final class PlatformArenaStructure extends Structure {
         var centerBiome = context.biomeSource().getNoiseBiome(QuartPos.fromBlock(horizontalOrigin.getX()), QuartPos.fromBlock(entryHeight + 7),
                 QuartPos.fromBlock(horizontalOrigin.getZ()), context.randomState().sampler());
         if (!biomes().contains(centerBiome)) return Optional.empty();
-        var sampledSurfaces = new LinkedHashMap<BlockPos, Integer>();
+        var sampledSurfaces = new ArrayList<SampledColumn>();
         Iterable<SurfaceSample> samples = () -> site.samples().stream().map(point -> {
             BlockPos position = horizontalOrigin.offset(point.position().rotate(rotation));
             int surface = surfaceHeight(context, position);
-            sampledSurfaces.put(position, surface);
+            sampledSurfaces.add(new SampledColumn(position, surface, point.foundationBottomY()));
             return new SurfaceSample(surface, false, true, point.entry(), point.foundationBottomY());
         }).iterator();
         var height = terrain.placementHeight(samples, entryHeight, site.minimumY(), site.maximumY(),
                 context.heightAccessor().getMinBuildHeight(), context.heightAccessor().getMaxBuildHeight());
         if (height.isEmpty()) return Optional.empty();
-        for (var sample : sampledSurfaces.entrySet()) {
-            BlockPos position = sample.getKey();
+        Iterable<PromisedConsortArenaTerrain.ColumnSample> columns = () -> sampledSurfaces.stream().map(sample -> {
+            BlockPos position = sample.position();
             var column = context.chunkGenerator().getBaseColumn(position.getX(), position.getZ(), context.heightAccessor(), context.randomState());
-            if (!column.getBlock(sample.getValue() - 1).getFluidState().isEmpty()) return Optional.empty();
-        }
+            return terrain.sampleColumn(sample.surfaceY(), sample.foundationBottomY(), context.heightAccessor().getMinBuildHeight(), column::getBlock);
+        }).iterator();
+        if (!terrain.supportsColumns(columns, height.getAsInt(), site.samples().size())) return Optional.empty();
         BlockPos origin = horizontalOrigin.atY(height.getAsInt());
         var metadata = loaded.layout().instanceMetadata(origin, rotation, loaded.hashes().get("root"));
         var hashes = new net.minecraft.nbt.CompoundTag();
@@ -95,6 +96,9 @@ public final class PlatformArenaStructure extends Structure {
     private static int surfaceHeight(GenerationContext context, BlockPos position) {
         return context.chunkGenerator().getFirstFreeHeight(position.getX(), position.getZ(), Heightmap.Types.WORLD_SURFACE_WG,
                 context.heightAccessor(), context.randomState());
+    }
+
+    private record SampledColumn(BlockPos position, int surfaceY, int foundationBottomY) {
     }
 
     @Override

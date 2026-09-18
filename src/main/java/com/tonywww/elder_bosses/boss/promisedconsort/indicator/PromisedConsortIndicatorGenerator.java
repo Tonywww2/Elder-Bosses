@@ -60,9 +60,11 @@ public final class PromisedConsortIndicatorGenerator {
             List<PromisedConsortAttackPlan.Strike> strikes, List<HazardSnapshot> hazards, long gameTick) {
         List<IndicatorSnapshotPacket> packets = new ArrayList<>();
         long next = strikes.stream().filter(strike -> strike.endTick() > gameTick)
+            .filter(strike -> rangeVisible(action, strike.id()))
                 .mapToLong(PromisedConsortAttackPlan.Strike::activeTick).min().orElse(Long.MAX_VALUE);
         if (action != null) {
             for (var strike : strikes) {
+                if (!rangeVisible(action, strike.id())) continue;
                 if (strike.startTick() > gameTick || strike.endTick() <= gameTick || strike.startTick() >= strike.activeTick()) continue;
                 if (hazards.stream().anyMatch(hazard -> hazard.id().equals(action.sequence() + ":" + strike.id()))) continue;
                 Shape shape = shape(strike.shape(), strike.baseY());
@@ -75,6 +77,11 @@ public final class PromisedConsortIndicatorGenerator {
         }
         for (var hazard : hazards) packets.add(hazardPacket(bossEntityId, hazard, gameTick));
         return List.copyOf(packets);
+    }
+
+    public static boolean rangeVisible(PromisedConsortActionSnapshot action, String occurrence) {
+        return action == null || action.actionId() != PromisedConsortActionId.GRAVITY_METEOR
+                || !(occurrence.startsWith("rock_flight") || occurrence.startsWith("clone_meteor_"));
     }
 
         public List<IndicatorSnapshotPacket> createTransitionImpact(int bossEntityId, AABB bounds,

@@ -13,8 +13,8 @@
     {
       "source": "animations/promised_consort.animation.json",
       "target": "animations/entity/promised_consort.animation.json",
-      "bytes": 24925694,
-      "sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598"
+      "bytes": 52132370,
+      "sha256": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50"
     },
     {
       "source": "textures/promised_consort.png",
@@ -27,6 +27,12 @@
       "target": "textures/entity/promised_consort/promised_consort_clone.png",
       "bytes": 35919,
       "sha256": "8501c4f40faf2bacb758e96f97a2d050cf477d339d11147efceda229bb2c0450"
+    },
+    {
+      "source": "animations/promised_consort_ranged.animation.json",
+      "target": "animations/entity/promised_consort_ranged.animation.json",
+      "sha256": "0010fcf56ef17446c9676895190a3fda2685e1c1145714f23dc2f9499e89304a",
+      "bytes": 2294115
     }
   ],
   "glowmask": "authoring_only; base atlas is the non-emissive runtime fallback",

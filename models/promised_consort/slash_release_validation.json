@@ -1,0 +1,284 @@
+{
+  "revision": "accelerated_slash_release",
+  "results": [
+    {
+      "name": "gravity_meteor",
+      "maximumJointStep": 35.564822875440896,
+      "worstJoint": {
+        "bone": "upper_arm_r",
+        "tick": 5.75
+      },
+      "minimumTip": -0.5000000000007674,
+      "maximumSupportError": 0,
+      "accelerated_windows": [],
+      "duration": 152,
+      "contacts_unchanged": true
+    },
+    {
+      "name": "enhanced_earthheave",
+      "maximumJointStep": 45.86245493497011,
+      "worstJoint": {
+        "bone": "upper_arm_r",
+        "tick": 47
+      },
+      "minimumTip": 0.4660924288343722,
+      "maximumSupportError": 0,
+      "accelerated_windows": [
+        [
+          16,
+          28,
+          2.5
+        ],
+        [
+          38,
+          47,
+          2.3
+        ]
+      ],
+      "duration": 83,
+      "contacts_unchanged": true
+    },
+    {
+      "name": "lightspeed_slash",
+      "maximumJointStep": 33.32583743773965,
+      "worstJoint": {
+        "bone": "upper_arm_r",
+        "tick": 69
+      },
+      "minimumTip": -3.5000106079530795,
+      "maximumSupportError": 0,
+      "accelerated_windows": [
+        [
+          57,
+          69,
+          3
+        ]
+      ],
+      "duration": 99,
+      "contacts_unchanged": true
+    },
+    {
+      "name": "clone_overhead_3",
+      "maximumJointStep": 54.463150477756486,
+      "worstJoint": {
+        "bone": "upper_arm_l",
+        "tick": 4
+      },
+      "minimumTip": 6.836411227402294,
+      "maximumSupportError": 0,
+      "accelerated_windows": [
+        [
+          0,
+          4,
+          3.2
+        ]
+      ],
+      "duration": 12,
+      "contacts_unchanged": true
+    },
+    {
+      "name": "spiral_assault",
+      "maximumJointStep": 57.85422205988396,
+      "worstJoint": {
+        "bone": "upper_arm_l",
+        "tick": 6.5
+      },
+      "minimumTip": -0.5000000000000568,
+      "maximumSupportError": 2.6107007145801953e-14,
+      "crossing": [
+        0.18653135303875873,
+        118.68709226494529,
+        -47.797541019304234
+      ],
+      "accelerated_windows": [
+        [
+          27,
+          35,
+          2.5
+        ],
+        [
+          40,
+          43,
+          1.7
+        ]
+      ],
+      "duration": 79,
+      "contacts_unchanged": true
+    },
+    {
+      "name": "gravity_dive",
+      "maximumJointStep": 30.73972979272667,
+      "worstJoint": {
+        "bone": "shin_r",
+        "tick": 31
+      },
+      "minimumTip": -0.5000000000000782,
+      "maximumSupportError": 2.95110562224397e-14,
+      "crossing": [
+        9.853978444166636e-15,
+        94.81546019076313,
+        -58.60867136816118
+      ],
+      "accelerated_windows": [
+        [
+          35,
+          38,
+          2
+        ]
+      ],
+      "duration": 79,
+      "contacts_unchanged": true
+    },
+    {
+      "name": "starcaller_cry",
+      "maximumJointStep": 39.446680365785944,
+      "worstJoint": {
+        "bone": "upper_arm_r",
+        "tick": 58
+      },
+      "minimumTip": -3.8192697313402917,
+      "maximumSupportError": 0,
+      "accelerated_windows": [
+        [
+          45,
+          58,
+          2.7
+        ]
+      ],
+      "duration": 109,
+      "contacts_unchanged": true
+    }
+  ],
+  "preserved_other_clips": 37,
+  "current_hashes": {
+    "animations/promised_consort.animation.json": "f125ce32f6f2f455998aca50a2facbd9cd4fbd4cc9210ffc81f3f1e2f1728765",
+    "promised_consort.bbmodel": "68e8d3ffc2e9b11747e0f05c338a422469df6bc14c6c97ec6fd2ff07db75805c"
+  },
+  "validation": {
+    "status": "current_asset_contracts_passed",
+    "model": "promised_consort",
+    "checks": 2205161,
+    "bones": 125,
+    "cubes": 620,
+    "faces": 3481,
+    "animations": 44,
+    "editor_channels": 16500,
+    "editor_keys": 358318,
+    "runtime_files_match": true,
+    "editor_export_tolerance": 0.0001,
+    "historical_snapshots_required": false,
+    "visual_acceptance": "not_inferred",
+    "world_tested": false
+  },
+  "visual_accepted": false,
+  "world_tested": false,
+  "advance_followup": {
+    "reload_tick": 40,
+    "contact_tick": 43,
+    "release_power": 1.7,
+    "feet_preserved": true
+  },
+  "current_interpolation": {
+    "sample_ticks": 0.0625,
+    "measurements": [
+      {
+        "name": "gravity_meteor",
+        "ratios": [],
+        "maximumJointStep": 35.61043898349957,
+        "minimumTip": -0.5179671000086294
+      },
+      {
+        "name": "enhanced_earthheave",
+        "ratios": [
+          {
+            "start": 16,
+            "hit": 28,
+            "late_to_early_travel": 558.1596875134807
+          },
+          {
+            "start": 38,
+            "hit": 47,
+            "late_to_early_travel": 29127333.929413997
+          }
+        ],
+        "maximumJointStep": 46.73129178101131,
+        "minimumTip": 0.4660924288343651
+      },
+      {
+        "name": "lightspeed_slash",
+        "ratios": [
+          {
+            "start": 57,
+            "hit": 69,
+            "late_to_early_travel": 41555502.672700346
+          }
+        ],
+        "maximumJointStep": 33.360947819526324,
+        "minimumTip": -3.5000103504729267
+      },
+      {
+        "name": "clone_overhead_3",
+        "ratios": [
+          {
+            "start": 0,
+            "hit": 4,
+            "late_to_early_travel": 11683.756124469352
+          }
+        ],
+        "maximumJointStep": 54.77062301892622,
+        "minimumTip": 6.836411227402316
+      },
+      {
+        "name": "spiral_assault",
+        "ratios": [
+          {
+            "start": 27,
+            "hit": 35,
+            "late_to_early_travel": 16.766064889042664
+          },
+          {
+            "start": 40,
+            "hit": 43,
+            "late_to_early_travel": 4.037300638383325
+          }
+        ],
+        "maximumJointStep": 58.084313794218296,
+        "minimumTip": -0.5000008063725296
+      },
+      {
+        "name": "gravity_dive",
+        "ratios": [
+          {
+            "start": 35,
+            "hit": 38,
+            "late_to_early_travel": 6.368939821810609
+          }
+        ],
+        "maximumJointStep": 30.760343577146177,
+        "minimumTip": -0.5623771179606791
+      },
+      {
+        "name": "starcaller_cry",
+        "ratios": [
+          {
+            "start": 45,
+            "hit": 58,
+            "late_to_early_travel": 756.6015047422966
+          }
+        ],
+        "maximumJointStep": 39.66041304413469,
+        "minimumTip": -3.8225267470118283
+      }
+    ],
+    "speed_limit_degrees_per_half_tick": {
+      "body": 65,
+      "clone": 95
+    },
+    "scope": "Fast release limits intentionally exceed the former 45-degree opening diagnostic; actual interpolated velocity checked, not world acceptance"
+  },
+  "editor_serialization": {
+    "compacted_clips": 44,
+    "parsed_data_identical": true,
+    "bytes": 68005536
+  }
+}

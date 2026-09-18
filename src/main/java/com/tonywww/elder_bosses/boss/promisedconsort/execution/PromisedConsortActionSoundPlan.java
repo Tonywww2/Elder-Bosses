@@ -116,8 +116,11 @@ public final class PromisedConsortActionSoundPlan {
             for (Cue cue : blades(Integer.toString(event.index()), event.swings())) result.add(new TimedCue(tick, cue));
         }
         switch (action.actionId()) {
-            case GRAVITY_DIVE, SPIRAL_ASSAULT, LIGHTSPEED_SLASH, LIGHTSPEED_DASH, LIGHTSPEED_SIDE_DASH ->
+                case GRAVITY_DIVE, LIGHTSPEED_SLASH, LIGHTSPEED_DASH, LIGHTSPEED_SIDE_DASH ->
                     result.add(new TimedCue(timeline.activeStartTick(0), cue("dash", Sound.DASH, 0.7F, 1)));
+                case SPIRAL_ASSAULT -> result.add(new TimedCue(PromisedConsortCrossLeapPath.advance(timeline,
+                    action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0).takeoffTick(),
+                    cue("leap", Sound.DASH, 0.7F, 0.95F)));
             case LION_CLAW, LION_CLAW_DOUBLE -> result.add(new TimedCue(0, cue("leap", Sound.DASH, 0.45F, 0.9F)));
             case STARCALLER_CRY -> result.add(new TimedCue(timeline.activeStartTick(0), cue("pull", Sound.DASH, 0.65F, 0.75F)));
             case GRAVITY_METEOR -> result.add(new TimedCue(0, cue("gather", Sound.DASH, 0.45F, 0.7F)));
@@ -153,6 +156,11 @@ public final class PromisedConsortActionSoundPlan {
 
     public static Cue cue(String key, Sound sound, float volume, float pitch) {
         return new Cue(key, sound, volume, pitch, 0);
+    }
+
+    public static List<Cue> meteorLanding() {
+        return List.of(cue("meteor_ground_fracture", Sound.STOMP, 0.9F, 0.7F),
+                cue("meteor_landing_explosion", Sound.METEOR, 1, 0.9F));
     }
 
     public static boolean claim(Set<String> played, String key, long now, long start, long end) {

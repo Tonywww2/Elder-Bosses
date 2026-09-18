@@ -313,13 +313,19 @@ public final class TimelineCheck {
             }
             require(configured.totalTicks() == profile.get("duration_ticks").getAsInt(), "Rhythm duration differs: " + action);
             var knots = profile.getAsJsonArray("knots");
-            if (action == PromisedConsortActionId.GRAVITY_METEOR) {
+            if (action == PromisedConsortActionId.GRAVITY_METEOR || action == PromisedConsortActionId.SPIRAL_ASSAULT
+                || action == PromisedConsortActionId.GRAVITY_DIVE || action == PromisedConsortActionId.LION_CLAW
+                || action == PromisedConsortActionId.LION_CLAW_DOUBLE) {
                 var revised = new java.util.TreeMap<Integer, Integer>();
                 for (var knot : knots) {
                     var pair = knot.getAsJsonArray();
                     revised.put(pair.get(1).getAsInt(), pair.get(0).getAsInt());
                 }
-                revised.putAll(java.util.Map.of(21, 21, 34, 35, 61, 63, 131, 144));
+                if (action == PromisedConsortActionId.GRAVITY_METEOR) revised.putAll(java.util.Map.of(12, 21, 15, 28, 31, 45, 95, 144));
+                else if (action == PromisedConsortActionId.GRAVITY_DIVE) revised.put(Math.max(1, configured.activeStartTick(0) * 12 / 38), 12);
+                else if (action == PromisedConsortActionId.LION_CLAW || action == PromisedConsortActionId.LION_CLAW_DOUBLE)
+                    revised.put(Math.max(1, configured.activeStartTick(0) * 3 / 10), action == PromisedConsortActionId.LION_CLAW ? 10 : 8);
+                else revised.put(Math.max(1, configured.activeStartTick(0) * 7 / 35), 7);
                 knots = new com.google.gson.JsonArray();
                 for (var knot : revised.entrySet()) {
                     var pair = new com.google.gson.JsonArray();

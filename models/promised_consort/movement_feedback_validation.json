@@ -1,0 +1,65 @@
+{
+  "actions": [
+    {
+      "name": "gravity_meteor",
+      "interval_ticks": [
+        0,
+        63
+      ],
+      "contact_tick": 21,
+      "samples": 1217,
+      "minimum_ground_tip_y": -0.8712941411664374,
+      "maximum_foot_change": 0,
+      "maximum_joint_degrees_per_half_tick": 19.570511136236195
+    },
+    {
+      "name": "lion_claw",
+      "interval_ticks": [
+        0,
+        14
+      ],
+      "contact_tick": 8,
+      "samples": 457,
+      "minimum_ground_tip_y": -0.6000004057427404,
+      "maximum_foot_change": 0,
+      "maximum_joint_degrees_per_half_tick": 25.00840048972044
+    },
+    {
+      "name": "lion_claw_double",
+      "interval_ticks": [
+        0,
+        12
+      ],
+      "contact_tick": 6,
+      "samples": 489,
+      "minimum_ground_tip_y": -0.6000004057427404,
+      "maximum_foot_change": 0,
+      "maximum_joint_degrees_per_half_tick": 33.20875054365033
+    }
+  ],
+  "preserved_other_clips": 41,
+  "source": "BV1tyeyenEBB sampled150..158/162..170; launch direction additionally specified by user",
+  "scope": "Current opening-direction repair; no new model screenshot or exact original 3D reconstruction claimed",
+  "current_hashes": {
+    "animations/promised_consort.animation.json": "1b37f549bd211d401f7ad07afadd47de09d31dee88d145cda5b8a3cd765cb0ba",
+    "promised_consort.bbmodel": "349318b9c264171265abc09fe45de6557d40e877890363bc5b155c198a0124b8"
+  },
+  "validation": {
+    "status": "current_asset_contracts_passed",
+    "model": "promised_consort",
+    "checks": 1537283,
+    "bones": 125,
+    "cubes": 620,
+    "faces": 3481,
+    "animations": 44,
+    "editor_channels": 16500,
+    "editor_keys": 247005,
+    "runtime_files_match": true,
+    "editor_export_tolerance": 0.0001,
+    "historical_snapshots_required": false,
+    "visual_acceptance": "not_inferred",
+    "world_tested": false
+  },
+  "visual_accepted": false,
+  "world_tested": false
+}

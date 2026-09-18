@@ -135,9 +135,15 @@ public final class AttackPlanCheck {
                         }
                         require(find(plan, "spikes").shape() instanceof Annulus, "Missing gravity spikes warning");
                     }
-                    if (action == PromisedConsortActionId.LION_CLAW || action == PromisedConsortActionId.GRAVITY_DIVE) {
-                        Circle landing = (Circle) find(plan, action == PromisedConsortActionId.LION_CLAW ? "slam" : "sword").shape();
+                    if (action == PromisedConsortActionId.LION_CLAW) {
+                        Circle landing = (Circle) find(plan, "slam").shape();
                         require(landing.center().subtract(new Vec2(origin.x, origin.z)).length() <= 1.25001, "Landing marker differs from controlled movement");
+                    }
+                    if (action == PromisedConsortActionId.GRAVITY_DIVE) {
+                        var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.gravityDive(ActionTimeline.ofStages(stages), 0);
+                        var destination = leap.destination(origin, points.getOrDefault("target", origin), leap.maximumDistance(16), 1.5);
+                        Circle landing = (Circle) find(plan, "sword").shape();
+                        require(landing.center().subtract(new Vec2(destination.x, destination.z)).length() < 0.0001, "Gravity landing prediction differs from actual flight destination");
                     }
                     if (action == PromisedConsortActionId.RING_OF_LIGHT) {
                         Annulus last = (Annulus) plan.get(plan.size() - 1).shape();
@@ -145,19 +151,20 @@ public final class AttackPlanCheck {
                         require(plan.size() == stages[0].activeTicks(), "Ring must have each actual damage band");
                     }
                         if (action == PromisedConsortActionId.SPIRAL_ASSAULT) {
-                        double step = Math.min(1.25, skill.tuning().scaleRange(Math.min(1.25, skill.number("range") / stages[0].activeTicks())));
-                        Vec2 expected = new Vec2(origin.x, origin.z).add(facing.scale(step * stages[0].activeTicks()));
+                        var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.advance(ActionTimeline.ofStages(stages), 0);
+                        var destination = leap.advanceDestination(origin, points.getOrDefault("target", origin), new Vec3(facing.x(), 0, facing.z()), 16);
+                        Vec2 expected = new Vec2(destination.x, destination.z);
                         Circle landing = (Circle) find(plan, "slam").shape();
-                        require(landing.center().subtract(expected).length() < 0.0001, "Spiral prediction must not count windup as movement");
-                        Capsule opening = (Capsule) find(plan, "spin").shape();
-                        require(opening.start().subtract(new Vec2(origin.x, origin.z).add(facing.scale(step - PromisedConsortAttackPlan.REAR_REACH))).length() < 0.0001,
-                            "Spiral opening must include the movement before its first hit");
+                        require(landing.center().subtract(expected).length() < 0.0001, "Advance landing prediction differs from the leap destination");
+                        Sector opening = (Sector) find(plan, "spin").shape();
+                        require(opening.center().subtract(expected.subtract(facing.scale(PromisedConsortAttackPlan.REAR_REACH))).length() < 0.0001,
+                            "Advance opening slash is not located at landing");
                         int sampledTick = Math.max(0, stages[0].windupTicks() - 6);
                         var beforeImpact = new PromisedConsortActionSnapshot(action, snapshot.phase(), snapshot.sequence(), snapshot.startGameTick(),
                             sampledTick, ActionPhase.WINDUP, 0, sampledTick, snapshot.seed(), null);
                         var laterPlan = PromisedConsortAttackPlan.create(beforeImpact, skill, ActionTimeline.ofStages(stages), origin, facing, points, 6);
                         require(((Circle) find(laterPlan, "slam").shape()).center().subtract(expected).length() < 0.0001,
-                            "Spiral endpoint must remain stable during windup");
+                            "Advance endpoint must remain stable during windup");
                         }
                     if (action == PromisedConsortActionId.CONSORT_METEOR) {
                         Circle core = (Circle) find(plan, "core").shape();
@@ -284,7 +291,7 @@ public final class AttackPlanCheck {
                 require(strike.shape().contains(0, -0.4), "Close rear blind spot: " + action + "/" + strike.id());
             }
             if (action == PromisedConsortActionId.L_COMBO_CROSS) {
-                double front = skill(1, 1, action).number("range") * PromisedConsortAttackPlan.MELEE_REACH_MULTIPLIER;
+                double front = skill(1, 1, action).number("range") * PromisedConsortAttackPlan.MELEE_REACH_MULTIPLIER * 1.15;
                 require(plan.get(0).shape().contains(0, front - 0.001) && !plan.get(0).shape().contains(0, front + 0.001), "Rear reach changed forward range");
             }
         }
@@ -513,6 +520,11 @@ public final class AttackPlanCheck {
                     elapsed, window.phase(), window.stageIndex(), timeline.phaseTickAt(elapsed), snapshot.seed(), null);
                 var packets = indicator.createAuthoritative(19, warningAction, newPlan, List.of(), warningTick);
                 var packet = packets.stream().filter(value -> value.indicatorId().equals("hazard:1:" + strike.id())).findFirst();
+                if (action == PromisedConsortActionId.GRAVITY_METEOR
+                    && (strike.id().startsWith("rock_flight") || strike.id().startsWith("clone_meteor_"))) {
+                    require(packet.isEmpty(), "Airborne meteor range indicator remains: " + strike.id());
+                    continue;
+                }
                 require(packet.isPresent(), "Missing per-release indicator packet: " + action + "/" + strike.id());
                 require(packet.get().startTick() < packet.get().activeTick()
                     && packet.get().activeTick() == strike.activeTick(), "Indicator packet changed contact time");

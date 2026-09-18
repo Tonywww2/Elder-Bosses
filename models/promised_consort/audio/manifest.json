@@ -705,9 +705,9 @@
   "integration": {
     "body_contacts": 48,
     "individual_body_blades": 76,
-    "current_motion_revision": "force_chain_integration_v2",
-    "current_source_animation_sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598",
-    "current_revision_checks": "Right-cross body motion refined with original timing retained;48contacts/76blades;49legal phase/variant cases;all angles remeasured;both-loader processed hashes matched;OGG samples unchanged",
+    "current_motion_revision": "continuous_four_turn_dive_and_forward_lion",
+    "current_source_animation_sha256": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50",
+    "current_revision_checks": "Four-turn gravity flight with direct landing finish;forward lion flips and exact takeoff clocks;forward advance entity path;original48contacts/76blades and49legal phase cases retained;blade angles remeasured;six OGG samples unchanged;both processed copies verified",
     "tests_below_are_initial_integration_revision": true,
     "clone_profiles": 6,
     "legal_phase_variant_cases_tested": 49,
@@ -762,7 +762,7 @@
   ],
   "sword_profiles": {
     "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/sword_profiles.json",
-    "sha256": "bfc308cfe4ce51d96f390d6b36a4ca3d2ed710502a3c154736d64b287c631920"
+    "sha256": "a0a889c6e4b87257f07b585d5eccba4c938e8fd93b9609539baace59735af825"
   },
   "prototype_builder_sha256_at_creation": "8bdb96f17ad9b2d928c9b674ad321b18f30d9495959f4f80a571cf20aec36931"
 }

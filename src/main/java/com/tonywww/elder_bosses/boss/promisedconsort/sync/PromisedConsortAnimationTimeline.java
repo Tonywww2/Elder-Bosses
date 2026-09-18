@@ -127,6 +127,16 @@ public final class PromisedConsortAnimationTimeline {
             double finish=start+timeline.stages().get(index).totalTicks();
             knots.put(finish,sample(finish,action.actionId(),timeline,skill.tuning()));
         }
+        if (action.actionId() == PromisedConsortActionId.GRAVITY_DIVE && timeline.activeStartTick(0) > 1) {
+            var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.gravityDive(timeline,
+                skill.integerList("ranged_counter.attack_event_offsets").get(0));
+            knots.put((double) leap.takeoffTick(), 12.0);
+        }
+        if (action.actionId() == PromisedConsortActionId.SPIRAL_ASSAULT && timeline.activeStartTick(0) > 1) {
+            var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.advance(timeline,
+                skill.integerList("ranged_counter.attack_event_offsets").get(0));
+            knots.put((double) leap.takeoffTick(), (double) com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.ADVANCE_TAKEOFF_POSE);
+        }
         double bounded=Math.max(0,Math.min(timeline.totalTicks(),tick));
         var before=knots.floorEntry(bounded);
         var after=knots.higherEntry(bounded);
@@ -197,10 +207,22 @@ public final class PromisedConsortAnimationTimeline {
             var sequence = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortMeteorSequence.from(timeline);
             if (sequence.usable()) {
                 points.put(sequence.groundTick(), 21);
-                points.put(sequence.riseTick(), 35);
-                if (sequence.crestTick() < timeline.activeStartTick(0)) points.put(sequence.crestTick(), 63);
+                points.put(sequence.riseTick(), com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortMeteorSequence.AUTHORED_RISE_TICK);
+                if (sequence.crestTick() < timeline.activeStartTick(0)) points.put(sequence.crestTick(), com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortMeteorSequence.AUTHORED_CREST_TICK);
                 points.put(sequence.landingTick(), 144);
             }
+        }
+        if (action == PromisedConsortActionId.GRAVITY_DIVE && timeline.activeStartTick(0) > 1) {
+            var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.gravityDive(timeline, 0);
+            points.put(leap.takeoffTick(), 12);
+        }
+        if ((action == PromisedConsortActionId.LION_CLAW || action == PromisedConsortActionId.LION_CLAW_DOUBLE)
+            && timeline.activeStartTick(0) >= 4) {
+            points.put(Math.max(1, timeline.activeStartTick(0) * 3 / 10), action == PromisedConsortActionId.LION_CLAW ? 10 : 8);
+        }
+        if (action == PromisedConsortActionId.SPIRAL_ASSAULT && timeline.activeStartTick(0) > 1) {
+            var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.advance(timeline, 0);
+            points.put(leap.takeoffTick(), com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.ADVANCE_TAKEOFF_POSE);
         }
         if (action == PromisedConsortActionId.CONSORT_METEOR && timeline.stages().size() == 1) {
             ActionStage stage = timeline.stages().get(0);

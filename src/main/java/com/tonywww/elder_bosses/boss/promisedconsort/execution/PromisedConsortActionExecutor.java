@@ -74,7 +74,8 @@ public final class PromisedConsortActionExecutor {
         prepareAction(action);
         executingAction = action;
         activeTuning = catalog.skill(action).tuning();
-        if(action.rangedCounter() || action.actionId()==PromisedConsortActionId.GRAVITY_REPRISAL) {
+        if(action.rangedCounter() && action.actionId() != PromisedConsortActionId.SPIRAL_ASSAULT
+            && action.actionId() != PromisedConsortActionId.GRAVITY_DIVE || action.actionId()==PromisedConsortActionId.GRAVITY_REPRISAL) {
             if(!prepareRangedPath(action)) return tickPersistentHazards();
         } else repositionForNextStrike(action);
         if (action.actionId() == PromisedConsortActionId.LIGHT_OF_MIQUELLA) moveHolyFlight(action);
@@ -83,7 +84,9 @@ public final class PromisedConsortActionExecutor {
             && !moveMeteorSummon(action)) return tickPersistentHazards();
         if (!action.rangedCounter() && action.actionId() == PromisedConsortActionId.LIGHTSPEED_DASH
             && catalog.timeline(action).stages().size() > 2 && !moveLightspeedBody(action)) return tickPersistentHazards();
-        if (action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO && !moveCrossLeap(action)) return tickPersistentHazards();
+        if ((action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO || action.actionId() == PromisedConsortActionId.SPIRAL_ASSAULT
+            || action.actionId() == PromisedConsortActionId.GRAVITY_DIVE)
+            && !moveCrossLeap(action)) return tickPersistentHazards();
         Vec3 predictionOrigin = host.boss().position();
         updateTelegraphs(action, predictionOrigin);
         spawnAnnouncedClones(action);
@@ -121,19 +124,21 @@ public final class PromisedConsortActionExecutor {
         if (!once(action, "lion_move:" + action.actionTick())) return true;
         int impact = catalog.timeline(action).activeStartTick(0);
         var path = openingLion() ? PromisedConsortLionClawPath.opening(impact, config.instantGuard().defaultCueLeadTicks())
-                : PromisedConsortLionClawPath.create(impact, config.instantGuard().defaultCueLeadTicks(), 4, MAX_CONTROLLED_MOVEMENT_PER_TICK);
+                : PromisedConsortLionClawPath.create(impact, config.instantGuard().defaultCueLeadTicks(), 6, PromisedConsortLionClawPath.NORMAL_MAXIMUM_STEP);
         Vec3 origin = lockedPoints.computeIfAbsent("lion_origin", unused -> host.boss().position());
         lockedPoints.putIfAbsent("lion_lock", new Vec3(path.lockTick(), 0, 0));
         if (!lockedPoints.containsKey("lion_frozen")) {
             LivingEntity target = host.currentTarget().orElse(null);
             if (target == null || !target.isAlive() || !host.insideArena(target)) return cancelLionClaw();
             Vec3 destination = path.destination(origin, target.position(), openingLion() ? 64 : 12,
-                    preferredSeparation(host.boss().getBbWidth(), target.getBbWidth()));
+                    PromisedConsortLionClawPath.TARGET_OVERSHOOT);
             var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(destination.add(0, 2, 0), destination.add(0, -3, 0),
                     net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, host.boss()));
             if (support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK || support.getDirection() != net.minecraft.core.Direction.UP
                     || !host.serverLevel().getBlockState(support.getBlockPos()).getFluidState().isEmpty()) return cancelLionClaw();
             destination = new Vec3(destination.x, support.getLocation().y, destination.z);
+            destination = PromisedConsortGroundMovement.destination(host.serverLevel(), host.boss(), destination, destination);
+            if (destination == null) return cancelLionClaw();
             if (destination.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()
                     || !host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(destination.subtract(host.boss().position())).deflate(0.001))) return cancelLionClaw();
             lockedPoints.put("lion_end", destination);
@@ -146,10 +151,17 @@ public final class PromisedConsortActionExecutor {
         host.boss().setNoGravity(true);
         host.boss().setDeltaMovement(Vec3.ZERO);
         Vec3 destination = path.at(origin, lockedPoints.get("lion_end"), action.actionTick());
+        boolean terrainCorrection = false;
+        if (!host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(destination.subtract(host.boss().position())).deflate(0.001))) {
+            destination = PromisedConsortGroundMovement.destination(host.serverLevel(), host.boss(), host.boss().position(), destination);
+            if (destination == null) return cancelLionClaw();
+            terrainCorrection = true;
+        }
         Vec3 remaining = destination.subtract(host.boss().position());
         if (remaining.length() > path.maximumStep() + 0.01) return cancelLionClaw();
         int steps = Math.max(1, (int) Math.ceil(remaining.length() / 0.25));
-        for (int index = 0; index < steps; index++) {
+        if (terrainCorrection && !moveAlongGround(destination)) return cancelLionClaw();
+        for (int index = 0; !terrainCorrection && index < steps; index++) {
             Vec3 step = remaining.scale(1.0 / steps);
             if (!host.serverLevel().noCollision(host.boss(), host.boss().getBoundingBox().move(step).deflate(0.001))) return cancelLionClaw();
             host.moveControlled(step);
@@ -175,11 +187,17 @@ public final class PromisedConsortActionExecutor {
         if (!once(action, "cross_move:" + action.actionTick())) return true;
         var timeline = catalog.timeline(action);
         var skill = catalog.skill(action);
-        boolean opening = action.actionTick() <= timeline.activeStartTick(0);
+        boolean advance = action.actionId() == PromisedConsortActionId.SPIRAL_ASSAULT;
+        boolean dive = action.actionId() == PromisedConsortActionId.GRAVITY_DIVE;
+        int contactOffset = (advance || dive) && action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+        if (advance && lockedPoints.containsKey("advance_landed") || dive && lockedPoints.containsKey("dive_landed")) return true;
+        boolean opening = advance || dive || action.actionTick() <= timeline.activeStartTick(0);
         if (!opening && (action.actionTick() < timeline.stageStartTick(4) || action.actionTick() > timeline.activeStartTick(4))) return true;
-        var path = opening ? PromisedConsortCrossLeapPath.opening(timeline, skill.number("leap_height"))
+        var path = advance ? PromisedConsortCrossLeapPath.advance(timeline, contactOffset)
+            : dive ? PromisedConsortCrossLeapPath.gravityDive(timeline, contactOffset)
+            : opening ? PromisedConsortCrossLeapPath.opening(timeline, skill.number("leap_height"))
                 : PromisedConsortCrossLeapPath.finisher(timeline, skill.number("leap_height"));
-        String prefix = opening ? "cross_opening" : "cross_finisher";
+        String prefix = advance ? "advance" : dive ? "dive" : opening ? "cross_opening" : "cross_finisher";
         var boss = host.boss();
         Vec3 origin = lockedPoints.computeIfAbsent(prefix + "_origin", unused -> boss.position());
         Vec3 end = lockedPoints.getOrDefault(prefix + "_end", origin);
@@ -187,7 +205,10 @@ public final class PromisedConsortActionExecutor {
             if (opening) {
                 var target = host.currentTarget().orElse(null);
                 if (target == null || !target.isAlive() || !host.insideArena(target)) return cancelCrossLeap();
-                end = path.destination(origin, target.position(), skill.number("leap_distance"), preferredSeparation(boss.getBbWidth(), target.getBbWidth()));
+                double distance = advance || dive ? path.maximumDistance(action.rangedCounter() ? skill.number("ranged_counter.max_forward_distance") : 16)
+                    : skill.number("leap_distance");
+                end = advance ? path.advanceDestination(origin, target.position(), new Vec3(facing().x(), 0, facing().z()), distance)
+                    : path.destination(origin, target.position(), distance, dive ? 1.5 : preferredSeparation(boss.getBbWidth(), target.getBbWidth()));
                 lockedFacing = direction(origin, target.position()).normalizedOr(facing());
                 host.faceControlled(lockedFacing);
             }
@@ -202,7 +223,7 @@ public final class PromisedConsortActionExecutor {
             if (action.actionTick() >= path.takeoffTick()) {
                 Vec3 previous = origin;
                 for (int tick = path.takeoffTick() + 1; tick <= path.landingTick(); tick++) {
-                    Vec3 point = path.at(origin, end, tick);
+                    Vec3 point = advance ? path.advanceAt(origin, end, tick) : path.at(origin, end, tick);
                     int segments = Math.max(1, (int) Math.ceil(previous.distanceTo(point) / 0.25));
                     for (int index = 1; index <= segments; index++) {
                         if (!crossLeapClear(previous.lerp(point, (double) index / segments))) return cancelCrossLeap();
@@ -216,7 +237,7 @@ public final class PromisedConsortActionExecutor {
         lockedPoints.putIfAbsent("cross_flight_gravity", new Vec3(boss.isNoGravity() ? 1 : 0, 0, 0));
         boss.setNoGravity(true);
         boss.setDeltaMovement(Vec3.ZERO);
-        Vec3 destination = path.at(origin, end, action.actionTick());
+        Vec3 destination = advance ? path.advanceAt(origin, end, action.actionTick()) : path.at(origin, end, action.actionTick());
         Vec3 movement = destination.subtract(boss.position());
         if (movement.length() > 2.01) return cancelCrossLeap();
         int segments = Math.max(1, (int) Math.ceil(movement.length() / 0.25));
@@ -227,6 +248,12 @@ public final class PromisedConsortActionExecutor {
         }
         if (boss.position().distanceTo(destination) > 0.02) return cancelCrossLeap();
         if (action.actionTick() == path.landingTick()) {
+            if (dive) {
+                var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(destination.add(0, 0.1, 0), destination.add(0, -0.1, 0),
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, boss));
+                if (support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK || support.getDirection() != net.minecraft.core.Direction.UP
+                    || Math.abs(support.getLocation().y - destination.y) > 0.02) return cancelCrossLeap();
+            }
             lockedPoints.put(prefix + "_landed", destination);
             releaseFlight();
         }
@@ -269,6 +296,15 @@ public final class PromisedConsortActionExecutor {
         if (lockedPoints.containsKey("meteor_cast_cancelled")) return false;
         if (!once(action, "meteor_cast_move:" + action.actionTick())) return true;
         Vec3 origin = lockedPoints.computeIfAbsent("meteor_cast_origin", unused -> host.boss().position());
+        if (action.actionTick() >= sequence.crestTick() && action.actionTick() < sequence.landingLockTick()) {
+            var entity = action.targetId() == null ? null : host.serverLevel().getEntity(action.targetId());
+            if (entity instanceof LivingEntity target && target.isAlive() && host.insideArena(target)) {
+                lockedFacing = direction(host.boss().position(), target.position()).normalizedOr(facing());
+                host.faceControlled(lockedFacing);
+            }
+        }
+        if (action.actionTick() >= sequence.groundTick()) lockedPoints.computeIfAbsent("meteor_cast_crest",
+            unused -> sequence.crest(origin, new Vec3(facing().x(), 0, facing().z())));
         if (action.actionTick() >= sequence.landingLockTick() && !lockedPoints.containsKey("meteor_cast_end")) {
             LivingEntity target = host.currentTarget().orElse(null);
             Vec3 end = action.phase() == PromisedConsortPhase.PHASE_TWO && target != null && target.isAlive() && host.insideArena(target)
@@ -288,7 +324,8 @@ public final class PromisedConsortActionExecutor {
         lockedPoints.putIfAbsent("meteor_cast_gravity", new Vec3(host.boss().isNoGravity() ? 1 : 0, 0, 0));
         host.boss().setNoGravity(true);
         host.boss().setDeltaMovement(Vec3.ZERO);
-        Vec3 destination = sequence.at(origin, lockedPoints.getOrDefault("meteor_cast_end", origin), action.actionTick());
+        Vec3 destination = sequence.at(origin, lockedPoints.getOrDefault("meteor_cast_crest", origin.add(0, sequence.height(), 0)),
+            lockedPoints.getOrDefault("meteor_cast_end", origin), action.actionTick());
         Vec3 remaining = destination.subtract(host.boss().position());
         if (remaining.length() > 1.26) return cancelMeteorSummon();
         int steps = Math.max(1, (int) Math.ceil(remaining.length() / 0.25));
@@ -588,7 +625,8 @@ public final class PromisedConsortActionExecutor {
         PromisedConsortSkillConfigSnapshot.Skill skill = catalog.skill(action);
         activeTuning = skill.tuning();
         if(host.boss() instanceof com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity boss) boss.tickRangedDefense(action);
-        if(action.rangedCounter()) { executeRangedDash(action,skill,outcomes); return; }
+        if(action.rangedCounter() && action.actionId() != PromisedConsortActionId.SPIRAL_ASSAULT
+            && action.actionId() != PromisedConsortActionId.GRAVITY_DIVE) { executeRangedDash(action,skill,outcomes); return; }
         if (action.actionTick() == 0) {
             lockTarget("target");
         }
@@ -645,9 +683,22 @@ public final class PromisedConsortActionExecutor {
         java.util.function.Predicate<Vec3> clear=point->point.subtract(host.combatCenter()).horizontalDistance()<=config.arena().logicalRadius()
                 && host.serverLevel().noCollision(host.boss(),bounds.move(point.subtract(origin)));
         if(action.rangedCounter()) {
+            Vec3[] previousGround = {origin};
+            Map<Vec3, Vec3> groundPoints = new java.util.HashMap<>();
+            groundPoints.put(origin, origin);
+            clear = point -> {
+                if (point.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()) return false;
+                Vec3 ground = PromisedConsortGroundMovement.destination(host.serverLevel(), host.boss(), previousGround[0], point);
+                if (ground == null) return false;
+                previousGround[0] = ground;
+                groundPoints.put(point, ground);
+                return true;
+            };
             var path=com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedPath.create(action.actionId(),skill,timeline,
                     origin,origin.add(forward.scale(target.position().subtract(origin).horizontalDistance())),forward,clear);
-            lockedPoints.put("ranged_origin",path.origin()); lockedPoints.put("ranged_corner",path.corner()); lockedPoints.put("ranged_end",path.end());
+            lockedPoints.put("ranged_origin",path.origin());
+            lockedPoints.put("ranged_corner",groundPoints.getOrDefault(path.corner(),path.corner()));
+            lockedPoints.put("ranged_end",groundPoints.getOrDefault(path.end(),path.end()));
         } else {
             double width=activeTuning.scaleRange(skill.number("counterattack.width"));
             double height=activeTuning.scaleRange(skill.number("counterattack.height"));
@@ -684,8 +735,7 @@ public final class PromisedConsortActionExecutor {
             int steps=Math.max(1,(int)Math.ceil(remaining.length()/0.25));
             for(int step=0;step<steps;step++) {
                 Vec3 movement=remaining.scale(1.0/steps);
-                if(!host.serverLevel().noCollision(host.boss(),host.boss().getBoundingBox().move(movement))) { cancelRangedPath(); return; }
-                host.moveControlled(movement);
+                if (!moveAlongGround(host.boss().position().add(movement))) { cancelRangedPath(); return; }
             }
             if(destination.subtract(host.boss().position()).horizontalDistance()>0.01) { cancelRangedPath(); return; }
             if(action.actionId()==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH && action.stageIndex()==3) {
@@ -713,7 +763,9 @@ public final class PromisedConsortActionExecutor {
         var travelled=host.boss().getBoundingBox().minmax(host.boss().getBoundingBox().move(before.subtract(host.boss().position()))).inflate(
                 activeTuning.scaleRange(skill.numbers().getOrDefault("width",3.0))*0.65,0.5,activeTuning.scaleRange(skill.numbers().getOrDefault("width",3.0))*0.65);
         boolean movingSweep=sweep;
-        hit(action.sequence(),occurrence,volume(strike.shape(),strike.baseY(),host.boss().getBbHeight()),hit(skill.damage(damage),kind,kind==Kind.PHYSICAL),
+        double baseY = kind == Kind.PHYSICAL ? Math.min(before.y, host.boss().getY()) : strike.baseY();
+        double height = host.boss().getBbHeight() + (kind == Kind.PHYSICAL ? Math.abs(host.boss().getY() - before.y) : 0);
+        hit(action.sequence(),occurrence,volume(strike.shape(),baseY,height),hit(skill.damage(damage),kind,kind==Kind.PHYSICAL),
                 target->!movingSweep || target.getBoundingBox().intersects(travelled),outcomes);
         if(kind==Kind.PHYSICAL && !(action.actionId()==PromisedConsortActionId.SPIRAL_ASSAULT && index==0)
             && !(action.actionId()==PromisedConsortActionId.GRAVITY_DIVE && index==1)
@@ -753,25 +805,19 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
-        if (catalog.get(action.actionId()).timeline().stages().size() > 1) {
-            if (!activeStart(action)) return;
-            if (action.stageIndex() == 0) {
-                moveTowardLocked("target", skill.number("range"));
-                hitCircle(action, "sword", skill.number("range") * 0.65, hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
-                scheduleSwordEcho(action, "sword", skill.number("range"));
-            } else hitCircle(action, "impact", skill.number("range"), hit(skill.damage("impact_damage"), Kind.PHYSICAL, false), outcomes);
-            return;
+        Vec3 landing = lockedPoints.get("dive_landed");
+        if (landing == null) return;
+        var timeline = catalog.timeline(action);
+        int swordTick = timeline.activeStartTick(0) + (action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0);
+        int impactTick = timeline.stages().size() > 1 ? timeline.activeStartTick(1)
+            + (action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(1) : 0) : swordTick + ticks(skill, 2);
+        if (action.actionTick() == swordTick) {
+            hitCircleAt(action, "sword", landing, skill.number("range") * 0.65,
+                hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
+            scheduleSwordEcho(action, "sword", skill.number("range"));
         }
-        if (activeStart(action)) {
-            moveTowardLocked("target", skill.number("range"));
-            hitCircle(action, "sword", skill.number("range") * 0.65,
-                    hit(skill.damage("sword_damage"), Kind.PHYSICAL, true), outcomes);
-                scheduleSwordEcho(action, "sword", skill.number("range"));
-        }
-        if (activeTick(action, ticks(skill, 2))) {
-            hitCircle(action, "impact", skill.number("range"),
-                    hit(skill.damage("impact_damage"), Kind.PHYSICAL, false), outcomes);
-        }
+        if (action.actionTick() == impactTick) hitCircleAt(action, "impact", landing, skill.number("range"),
+            hit(skill.damage("impact_damage"), Kind.PHYSICAL, false), outcomes);
     }
 
     private void comboSectors(
@@ -1039,32 +1085,18 @@ public final class PromisedConsortActionExecutor {
             PromisedConsortSkillConfigSnapshot.Skill skill,
             List<PromisedConsortHitOutcome> outcomes
     ) {
-        var timeline = catalog.get(action.actionId()).timeline();
-        if (timeline.stages().size() > 1) {
-            if (action.actionPhase() != ActionPhase.ACTIVE) return;
-            moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK, skill.number("range") / timeline.activeTicksBetween(0, timeline.totalTicks())));
-            if (activeStart(action)) {
-                if (action.stageIndex() == 0) hitCapsule(action, "spin", skill.number("range"), skill.number("width"),
-                    hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
-                else {
-                    hitCircle(action, "slam", 3.5, hit(skill.damage("slam_damage"), Kind.PHYSICAL, true), outcomes);
-                    scheduleSwordEcho(action, "slam", 3.5);
-                }
-            }
-            return;
-        }
-        if (action.actionPhase() == ActionPhase.ACTIVE) {
-            moveForward(Math.min(MAX_CONTROLLED_MOVEMENT_PER_TICK,
-                    skill.number("range") / activeTicks(action)));
-            if (action.phaseTick() == 0) {
-                hitCapsule(action, "spin", skill.number("range"), skill.number("width"),
-                        hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
-            }
-            if (action.phaseTick() == activeTicks(action) - 1) {
-                hitCircle(action, "slam", 3.5,
-                        hit(skill.damage("slam_damage"), Kind.PHYSICAL, true), outcomes);
-                scheduleSwordEcho(action, "slam", 3.5);
-            }
+        if (action.actionPhase() != ActionPhase.ACTIVE || !lockedPoints.containsKey("advance_landed")) return;
+        var timeline = catalog.timeline(action);
+        boolean opening = action.stageIndex() == 0 && (timeline.stages().size() > 1 || action.phaseTick() == 0);
+        int offset = action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(action.stageIndex())
+                : timeline.stages().size() == 1 && !opening ? activeTicks(action) - 1 : 0;
+        if (action.phaseTick() != offset) return;
+        Vec3 landing = lockedPoints.get("advance_landed");
+        if (opening) hitSector(action, "spin", skill.number("range"), 140,
+                hit(skill.damage("spin_damage"), Kind.PHYSICAL, true), outcomes);
+        else {
+            hitCircleAt(action, "slam", landing, 3.5, hit(skill.damage("slam_damage"), Kind.PHYSICAL, true), outcomes);
+            scheduleSwordEcho(action, "slam", 3.5);
         }
     }
 
@@ -1221,34 +1253,32 @@ public final class PromisedConsortActionExecutor {
                 if (!path.supports(origin.distanceTo(end))) return cancelLightspeedBody();
                 int segments = Math.max(1, (int) Math.ceil(origin.distanceTo(end) / 0.25));
                 if (segments > 1024) return cancelLightspeedBody();
+                Vec3 previousGround = origin;
                 for (int index = 0; index <= segments; index++) {
                     Vec3 point = origin.lerp(end, (double) index / segments);
                     if (point.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()
                         || !host.serverLevel().hasChunkAt(net.minecraft.core.BlockPos.containing(point))) return cancelLightspeedBody();
-                    var support = host.serverLevel().clip(new net.minecraft.world.level.ClipContext(point.add(0, 0.5, 0), point.add(0, -0.6, 0),
-                            net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, boss));
-                    if (!host.serverLevel().noCollision(boss, boss.getBoundingBox().move(point.subtract(boss.position())).deflate(0.001))
-                            || support.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK
-                            || support.getDirection() != net.minecraft.core.Direction.UP
-                            || Math.abs(support.getLocation().y - point.y) > 0.1
-                            || !host.serverLevel().getBlockState(support.getBlockPos()).getFluidState().isEmpty()) return cancelLightspeedBody();
+                    Vec3 ground = PromisedConsortGroundMovement.destination(host.serverLevel(), boss, previousGround, point);
+                    if (ground == null) return cancelLightspeedBody();
+                    previousGround = ground;
                 }
+                end = previousGround;
+                lockedPoints.put("lightspeed_end", end);
                 lockedPoints.put("lightspeed_frozen", end);
             }
         }
         if (action.actionTick() <= path.departureTick() || action.actionTick() > path.impactTick()) return true;
         Vec3 destination = path.at(origin, lockedPoints.get("lightspeed_end"), action.actionTick());
-        Vec3 movement = destination.subtract(boss.position());
+        Vec3 movement = destination.subtract(boss.position()).multiply(1, 0, 1);
         if (movement.length() > 8) return cancelLightspeedBody();
         int segments = Math.max(1, (int) Math.ceil(movement.length() / 0.25));
         for (int index = 0; index < segments; index++) {
             Vec3 step = movement.scale(1.0 / segments);
-            if (!host.serverLevel().noCollision(boss, boss.getBoundingBox().move(step).deflate(0.001))) return cancelLightspeedBody();
-            host.moveControlled(step);
+            if (!moveAlongGround(boss.position().add(step))) return cancelLightspeedBody();
         }
         boss.setDeltaMovement(Vec3.ZERO);
-        if (boss.position().distanceTo(destination) > 0.02) return cancelLightspeedBody();
-        if (action.actionTick() == path.impactTick()) lockedPoints.put("lightspeed_arrived", destination);
+        if (boss.position().subtract(destination).horizontalDistance() > 0.02) return cancelLightspeedBody();
+        if (action.actionTick() == path.impactTick()) lockedPoints.put("lightspeed_arrived", boss.position());
         return true;
     }
 
@@ -1833,8 +1863,8 @@ public final class PromisedConsortActionExecutor {
         }
         double travel = Math.min(Math.min(maximumTravel, MAX_CONTROLLED_MOVEMENT_PER_TICK),
                 horizontalLength);
-        host.moveControlled(new Vec3(offset.x / horizontalLength * travel, 0.0,
-                offset.z / horizontalLength * travel));
+        moveAlongGround(host.boss().position().add(offset.x / horizontalLength * travel, 0.0,
+            offset.z / horizontalLength * travel));
     }
 
     private void moveForward(double distance) {
@@ -1842,14 +1872,34 @@ public final class PromisedConsortActionExecutor {
                 MAX_CONTROLLED_MOVEMENT_PER_TICK,
                 activeTuning.scaleRange(distance)
         );
-        host.moveControlled(new Vec3(facing().x() * distance, 0.0, facing().z() * distance));
+        moveAlongGround(host.boss().position().add(facing().x() * distance, 0.0, facing().z() * distance));
     }
 
     private void moveSide(double distance) {
         distance = activeTuning.scaleRange(distance);
-        Vec2 facing = facing();
+        Vec2 direction = sideDashDirection(facing());
         double checked = Math.min(Math.abs(distance), MAX_CONTROLLED_MOVEMENT_PER_TICK);
-        host.moveControlled(new Vec3(-facing.z() * checked, 0.0, facing.x() * checked));
+        moveAlongGround(host.boss().position().add(direction.x() * checked, 0.0, direction.z() * checked));
+    }
+
+    private boolean moveAlongGround(Vec3 destination) {
+        var boss = host.boss();
+        Vec3 origin = boss.position();
+        if (destination.subtract(host.combatCenter()).horizontalDistance() > config.arena().logicalRadius()) return false;
+        Vec3 ground = PromisedConsortGroundMovement.destination(host.serverLevel(), boss, origin, destination);
+        if (ground == null) return false;
+        double rise = ground.y - origin.y;
+        if (rise > 0) host.moveControlled(new Vec3(0, rise, 0));
+        Vec3 horizontal = ground.subtract(boss.position()).multiply(1, 0, 1);
+        int steps = Math.max(1, (int) Math.ceil(horizontal.length() / 0.25));
+        for (int index = 0; index < steps; index++) host.moveControlled(horizontal.scale(1.0 / steps));
+        if (rise < 0) host.moveControlled(new Vec3(0, rise, 0));
+        return boss.position().distanceTo(ground) < 0.02;
+    }
+
+    public static Vec2 sideDashDirection(Vec2 facing) {
+        Vec2 forward = facing.normalizedOr(new Vec2(0, 1));
+        return new Vec2(forward.x() - forward.z(), forward.z() + forward.x()).normalizedOr(forward);
     }
 
     private void lockTarget(String id) {

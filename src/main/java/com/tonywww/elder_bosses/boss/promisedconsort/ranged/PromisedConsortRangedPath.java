@@ -14,7 +14,8 @@ public record PromisedConsortRangedPath(Vec3 origin, Vec3 corner, Vec3 end) {
         if(action==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH) {
             int lateralTicks=timeline.activeTicksBetween(0,timeline.stageStartTick(3));
             double lateral=Math.min(skill.number("ranged_counter.max_lateral_distance"),lateralTicks*skill.number("ranged_counter.max_lateral_per_tick"));
-            corner=clip(origin,origin.add(-direction.z*lateral,0,direction.x*lateral),clear);
+            Vec3 diagonal = new Vec3(direction.x - direction.z, 0, direction.z + direction.x).normalize();
+            corner=clip(origin,origin.add(diagonal.scale(lateral)),clear);
         }
         Vec3 aim=target.subtract(corner).multiply(1,0,1);
         int movementTicks=action==PromisedConsortActionId.LIGHTSPEED_DASH ? timeline.activeTicksBetween(0,timeline.activeEndTick(4))

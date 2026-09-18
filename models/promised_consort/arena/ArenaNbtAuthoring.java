@@ -80,11 +80,17 @@ public final class ArenaNbtAuthoring {
             OUTPUT = Path.of("build/arena-preflight-v7");
             NAMESPACE = "elder_bosses_preflight_v7";
         }
-        if (options.stream().anyMatch(option -> !Set.of("--voxel", "--custom", "--ground", "--foundation", "--verify", "--publish").contains(option))) throw new IllegalArgumentException("Use --voxel, --custom or --ground with optional --foundation, --verify or --publish");
+        if (options.stream().anyMatch(option -> !Set.of("--voxel", "--custom", "--ground", "--foundation", "--shoreline", "--verify", "--publish").contains(option))) throw new IllegalArgumentException("Use --voxel, --custom or --ground with optional --foundation, --shoreline, --verify or --publish");
+        if (options.contains("--shoreline")) {
+            check(groundStyle && options.contains("--foundation") && !(options.contains("--verify") && options.contains("--publish")),
+                "Shoreline adaptation requires --ground --foundation and a single output mode");
+            adaptFoundation(options.contains("--publish"), options.contains("--verify"), true);
+            return;
+        }
         if (options.contains("--foundation")) {
             check(groundStyle && !(options.contains("--verify") && options.contains("--publish")), "Foundation adaptation requires --ground and a single output mode");
             verifyExport();
-            adaptFoundation(options.contains("--publish"), options.contains("--verify"));
+            adaptFoundation(options.contains("--publish"), options.contains("--verify"), false);
             return;
         }
         if (options.contains("--publish")) {
@@ -584,11 +590,25 @@ public final class ArenaNbtAuthoring {
         System.out.println("Published 54 exact accepted NBT files; two targets have equal geometry, no development functions shipped. Checks: " + checks);
     }
 
-    private static void adaptFoundation(boolean publish, boolean verifyOnly) throws Exception {
-        JsonObject base = JsonParser.parseString(Files.readString(OUTPUT.resolve("manifest.json"))).getAsJsonObject();
+    private static void adaptFoundation(boolean publish, boolean verifyOnly, boolean shoreline) throws Exception {
+        Path output = Path.of(shoreline ? "build/arena-foundation-v9" : "build/arena-foundation-v8");
+        Path baseline = output.resolve("base-v8");
+        Path baselineManifest = baseline.resolve("production_manifest.json");
+        boolean archiveBaseline = shoreline && !Files.isRegularFile(baselineManifest);
+        check(!archiveBaseline || !verifyOnly, "Stage the v8 baseline before verification");
+        Path manifest = shoreline ? (archiveBaseline ? Path.of("models/promised_consort/arena/production_manifest.json") : baselineManifest)
+                : OUTPUT.resolve("manifest.json");
+        byte[] baseManifestBytes = Files.readAllBytes(manifest);
+        JsonObject base = JsonParser.parseString(new String(baseManifestBytes, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
         check(base.get("authored_source_sha256").getAsString().equals("a24b812f06138f3a2eb55d05f45d28e75d241ecd306aceb23e1f12b634dd2722"),
             "Foundation adaptation requires accepted v7 source");
-        Path output = Path.of("build/arena-foundation-v8");
+        if (shoreline) {
+            check(base.get("revision").getAsString().equals("promised_consort_arena_v8") && base.get("foundation_bottom_y").getAsInt() == -20
+                    && base.get("authored_blocks").getAsInt() == 256606, "Shoreline baseline must be the approved v8 foundation");
+        }
+        int oldMinimum = shoreline ? -21 : -13;
+        int oldHeight = shoreline ? 69 : 61;
+        int foundationBottom = shoreline ? -28 : -20;
         Map<Path, byte[]> staged = new LinkedHashMap<>();
         Map<Path, byte[]> original = new LinkedHashMap<>();
         Map<String, CompoundTag> canonical = new HashMap<>();
@@ -598,7 +618,22 @@ public final class ArenaNbtAuthoring {
             String target = version.get("target").getAsString();
             String folder = target.equals("1.20.1-forge") ? "structures" : "structure";
             String relative = "data/elder_bosses/" + folder + "/" + PREFIX;
-            Path from = OUTPUT.resolve(target + "/data-pack/data/" + NAMESPACE + "/" + folder + "/" + PREFIX);
+            Path from = shoreline ? (archiveBaseline ? Path.of("src/main/resources") : baseline.resolve("resources")).resolve(relative)
+                    : OUTPUT.resolve(target + "/data-pack/data/" + NAMESPACE + "/" + folder + "/" + PREFIX);
+            if (shoreline) {
+                var expected = version.getAsJsonObject("template_sha256");
+                check(expected.size() == 27, "Expected one root and 26 baseline parts");
+                check(expected.get("root").getAsString().equals(target.equals("1.20.1-forge")
+                        ? "b3aeb2e5942e514f441d7e7e58057a2d1fdfa57c408ed8db909659c864111a99"
+                        : "78ff535336826e976075e88e5228411f798e010a6e691080b65973075978ec60"), "Approved v8 root changed");
+                for (var hash : expected.entrySet()) {
+                    check(sha(Files.readAllBytes(from.resolve(hash.getKey() + ".nbt"))).equals(hash.getValue().getAsString()), "Baseline template hash mismatch");
+                }
+                try (var files = Files.list(from)) {
+                    check(files.map(path -> path.getFileName().toString()).collect(java.util.stream.Collectors.toSet())
+                            .equals(expected.keySet().stream().map(name -> name + ".nbt").collect(java.util.stream.Collectors.toSet())), "Unexpected baseline files");
+                }
+            }
             var root = PlatformArenaTemplates.readCompressed(Files.newInputStream(from.resolve("root.nbt")), 64L * 1024 * 1024);
             Map<String, CompoundTag> previous = new LinkedHashMap<>();
             for (String name : PromisedConsortArenaLayout.partNames(root)) {
@@ -609,9 +644,9 @@ public final class ArenaNbtAuthoring {
             Map<BlockPos, Integer> foundations = new HashMap<>();
             int additions = 0;
             for (var part : oldLayout.parts()) {
-                check(part.offset().getY() == -13 && part.size().getY() == 61, "Unexpected base template vertical bounds");
+                check(part.offset().getY() == oldMinimum && part.size().getY() == oldHeight, "Unexpected base template vertical bounds");
                 var template = previous.get(part.name()).copy();
-                template.put("size", vector(new BlockPos(part.size().getX(), 69, part.size().getZ())));
+                template.put("size", vector(new BlockPos(part.size().getX(), oldHeight + 8, part.size().getZ())));
                 var palette = template.getList("palette", 10);
                 int voidState = -1;
                 for (int index = 0; index < palette.size(); index++) {
@@ -649,7 +684,7 @@ public final class ArenaNbtAuthoring {
                     }
                 }
                 for (BlockPos column : bottomStates.keySet()) {
-                    check(foundations.putIfAbsent(new BlockPos(part.offset().getX() + column.getX(), 0, part.offset().getZ() + column.getZ()), -20) == null,
+                    check(foundations.putIfAbsent(new BlockPos(part.offset().getX() + column.getX(), 0, part.offset().getZ() + column.getZ()), foundationBottom) == null,
                             "Overlapping fixed foundation columns");
                 }
                 additions += bottomStates.size() * 8;
@@ -660,7 +695,7 @@ public final class ArenaNbtAuthoring {
                     var restored = voxels.getCompound(index).copy();
                     var position = restored.getList("pos", 3);
                     restored.put("pos", vector(new BlockPos(position.getInt(0), position.getInt(1) - 8, position.getInt(2))));
-                    check(restored.equals(before), "Existing v7 voxel or air changed");
+                    check(restored.equals(before), "Existing baseline voxel or air changed");
                 }
                 adapted.put(part.name(), template);
             }
@@ -678,7 +713,7 @@ public final class ArenaNbtAuthoring {
             var layout = PromisedConsortArenaLayout.read(newRoot, adapted, DEFINITIONS::get);
             check(layout.anchors().equals(oldLayout.anchors()), "Aboveground anchors changed");
             var site = PromisedConsortArenaSite.from(layout, foundations);
-            check(site.minimumY() == -21 && site.maximumY() == 47 && site.samples().size() == 685, "Adapted site bounds differ");
+            check(site.minimumY() == foundationBottom - 1 && site.maximumY() == 47 && site.samples().size() == 685, "Adapted site bounds differ");
             check(site.entryProbe().equals(new BlockPos(0, 0, 64)), "Entry footprint changed");
             adapted.put("root", newRoot);
             var hashes = new JsonObject();
@@ -704,8 +739,8 @@ public final class ArenaNbtAuthoring {
             versions.add(result);
         }
         var publication = new JsonObject();
-        publication.addProperty("revision", "promised_consort_arena_v8");
-        publication.addProperty("approval_date", "2026-09-17");
+        publication.addProperty("revision", shoreline ? "promised_consort_arena_v9" : "promised_consort_arena_v8");
+        publication.addProperty("approval_date", shoreline ? "2026-09-18" : "2026-09-17");
         publication.addProperty("user_approved_for_mod_integration", true);
         publication.addProperty("structure_id", "elder_bosses:promised_consort_arena");
         publication.addProperty("template_prefix", "elder_bosses:" + PREFIX);
@@ -713,13 +748,27 @@ public final class ArenaNbtAuthoring {
         publication.addProperty("ground_source_sha256", base.get("ground_source_sha256").getAsString());
         publication.addProperty("source_version_geometry_equal", true);
         publication.addProperty("original_v7_voxels_unchanged", true);
-        publication.addProperty("foundation_bottom_y", -20);
-        publication.addProperty("foundation_extension_blocks", 99944);
-        publication.addProperty("authored_blocks", 256606);
+        if (shoreline) {
+            publication.addProperty("original_v8_voxels_unchanged", true);
+            publication.addProperty("foundation_added_since_v8", 99944);
+            publication.addProperty("baseline_manifest_sha256", sha(baseManifestBytes));
+        }
+        publication.addProperty("foundation_bottom_y", foundationBottom);
+        publication.addProperty("foundation_extension_blocks", shoreline ? 199888 : 99944);
+        publication.addProperty("authored_blocks", shoreline ? 356550 : 256606);
         publication.addProperty("explicit_air", 371456);
         publication.addProperty("manual_test_functions_shipped", false);
         publication.addProperty("natural_generation_in_world_verified", false);
         publication.add("versions", versions);
+        if (archiveBaseline) {
+            for (var asset : original.entrySet()) {
+                Path saved = baseline.resolve("resources").resolve(Path.of("src/main/resources").relativize(asset.getKey()));
+                Files.createDirectories(saved.getParent());
+                if (Files.exists(saved)) check(java.util.Arrays.equals(Files.readAllBytes(saved), asset.getValue()), "Different baseline archive exists");
+                else Files.write(saved, asset.getValue());
+            }
+            Files.write(baselineManifest, baseManifestBytes);
+        }
         for (var asset : staged.entrySet()) {
             if (verifyOnly) check(Files.isRegularFile(asset.getKey()) && java.util.Arrays.equals(Files.readAllBytes(asset.getKey()), asset.getValue()), "Staged adaptation differs");
             else {
@@ -735,7 +784,7 @@ public final class ArenaNbtAuthoring {
                 Path destination = Path.of("src/main/resources").resolve(relative.subpath(1, relative.getNameCount()));
                 byte[] existing = Files.readAllBytes(destination);
                 check(java.util.Arrays.equals(existing, original.get(destination)) || java.util.Arrays.equals(existing, asset.getValue()),
-                        "Refuse to replace production content other than exact v7 or this approved adaptation");
+                    "Refuse to replace production content other than the exact baseline or approved adaptation");
             }
             for (var asset : staged.entrySet()) {
                 Path relative = output.relativize(asset.getKey());
@@ -745,7 +794,7 @@ public final class ArenaNbtAuthoring {
             }
             writeJson(Path.of("models/promised_consort/arena/production_manifest.json"), publication);
         }
-        System.out.println("Foundation v8 " + (publish ? "published" : verifyOnly ? "verified" : "staged")
+        System.out.println("Foundation " + (shoreline ? "v9 " : "v8 ") + (publish ? "published" : verifyOnly ? "verified" : "staged")
                 + ": 54 NBT, 99944 fixed foundation additions, all existing voxels and air preserved; checks=" + checks);
     }
 

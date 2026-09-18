@@ -31,20 +31,24 @@ void main() {
             * (0.72 + 0.28 * sin(angle * 8.0 - EffectTime * 2.8));
         opacity += band(radius - InnerRatio, 0.025) * 0.22 * step(0.08, InnerRatio);
     } else if (EffectMode == 2) {
-        float filament = sin(effectUv.y * 22.0 - EffectTime * 5.0 + centered.x * 5.0) * 0.035;
-        core = band(centered.x + filament, 0.035) * (1.0 - smoothstep(0.0, 0.2, Progress));
-        opacity = (band(centered.x, 0.92) * 0.18 + band(centered.x + filament, 0.22) * 0.35 + core * 0.35)
-            * smoothstep(0.0, 0.055, effectUv.y) * (1.0 - smoothstep(0.55, 1.0, effectUv.y));
+        core = exp(-centered.x * centered.x * 180.0);
+        float glow = exp(-centered.x * centered.x * 9.0) * 0.32 + exp(-centered.x * centered.x * 2.8) * 0.16;
+        opacity = (core * 0.95 + glow) * smoothstep(0.0, 0.025, effectUv.y)
+            * (1.0 - smoothstep(0.65, 1.0, effectUv.y)) * (1.0 - Progress * 0.38);
     } else if (EffectMode == 3) {
         float fracture = centered.x + sin(effectUv.y * 26.0) * 0.12 + sin(effectUv.y * 53.0) * 0.04;
         core = band(fracture, 0.035);
         opacity = (band(fracture, 0.28) * 0.40 + core * 0.5)
             * smoothstep(0.0, 0.08, effectUv.y) * (1.0 - smoothstep(0.88, 1.0, effectUv.y));
     } else if (EffectMode == 4) {
-        float spiral = sin(angle * 4.0 + radius * 23.0 + EffectTime * 5.0);
+        float turbulence = sin(angle * 7.0 - EffectTime * 8.3 + radius * 11.0) * 0.65
+            + sin(angle * 13.0 + EffectTime * 5.7 - radius * 19.0) * 0.28;
+        float spiral = sin(angle * 4.0 + radius * 23.0 + EffectTime * 5.0 + turbulence);
         core = band(spiral, 0.09);
-        opacity = (band(spiral, 0.4) * 0.24 + core * 0.18) * smoothstep(0.14, 0.32, radius)
-            * (1.0 - smoothstep(0.80, 1.0, radius));
+        float rupture = band(sin(angle * 11.0 + turbulence * 1.5 + radius * 6.0), 0.16);
+        opacity = (band(spiral, 0.48) * 0.38 + core * 0.5 + rupture * 0.22)
+            * (0.80 + 0.20 * sin(EffectTime * 11.0 + angle * 3.0)) * smoothstep(0.10, 0.25, radius)
+            * (1.0 - smoothstep(0.85, 1.0, radius));
     } else if (EffectMode == 6) {
         float bladeLength = smoothstep(0.02, 0.20, effectUv.x);
         float wake = pow(clamp(effectUv.y, 0.0, 1.0), 0.55);
@@ -68,20 +72,16 @@ void main() {
         core = band(tear, 0.09);
         opacity = (core * 0.75 + band(tear, 0.8) * 0.32) * ends;
     } else if (EffectMode == 10) {
-        float spokes = pow(abs(cos(angle * 8.0 + EffectTime * 0.3)), 22.0);
-        float rings = band(radius - 0.82, 0.045) + band(radius - 0.63, 0.022);
-        float lattice = band(sin(angle * 6.0 + radius * 16.0), 0.14);
-        core = rings * 0.65 + spokes * band(radius - 0.73, 0.20);
-        opacity = (core + lattice * 0.22) * (1.0 - smoothstep(0.94, 1.0, radius))
-            * smoothstep(max(0.0, InnerRatio - 0.05), max(0.04, InnerRatio), radius);
+        core = exp(-radius * radius * 28.0);
+        opacity = (core * 0.65 + exp(-radius * radius * 3.8) * 0.30)
+            * (1.0 - smoothstep(0.82, 1.0, radius)) * (1.0 - Progress * 0.55);
     } else if (EffectMode == 11) {
-        float vertical = effectUv.y;
-        float sway = sin(vertical * 9.0 - EffectTime * 8.0) * (0.08 + vertical * 0.17);
-        float flicker = sin(vertical * 23.0 - EffectTime * 13.0 + centered.x * 6.0) * 0.07;
-        float taper = mix(0.82, 0.025, pow(vertical, 0.75));
-        core = band(centered.x + sway, taper * 0.28) * (1.0 - vertical);
-        opacity = band(centered.x + sway + flicker, taper) * (0.72 + core * 0.5)
-            * smoothstep(0.0, 0.05, vertical) * (1.0 - smoothstep(0.78, 1.0, vertical));
+        vec2 cell = floor((effectUv + vec2(0.0, -EffectTime * 0.18)) * vec2(9.0, 13.0));
+        vec2 local = fract((effectUv + vec2(0.0, -EffectTime * 0.18)) * vec2(9.0, 13.0)) - 0.5;
+        float seed = fract(sin(dot(cell, vec2(127.1, 311.7))) * 43758.5453);
+        core = exp(-dot(local, local) * 80.0) * step(0.43, seed);
+        opacity = core * (1.0 - smoothstep(0.1, 1.0, effectUv.y))
+            * (1.0 - smoothstep(0.7, 1.0, abs(centered.x))) * (1.0 - Progress * 0.5);
     } else if (EffectMode == 12) {
         float cracks = sin(centered.x * 14.0 + sin(effectUv.y * 28.0) * 1.4);
         float front = clamp(Progress * 2.5, 0.0, 1.0);
@@ -89,14 +89,21 @@ void main() {
         opacity = core * 0.7 + band(effectUv.y - front, 0.08) * 0.75;
         opacity *= (1.0 - smoothstep(0.90, 1.0, abs(centered.x))) * (1.0 - Progress);
     } else if (EffectMode == 13) {
-        float strands = pow(abs(sin(effectUv.x * 18.84956 + EffectTime * 2.0)), 12.0);
-        core = band(effectUv.y - 0.16, 0.08) + strands * 0.35;
-        opacity = (0.2 + core) * (1.0 - smoothstep(0.12, 1.0, effectUv.y));
+        core = exp(-effectUv.y * effectUv.y * 38.0);
+        opacity = (core * 0.65 + 0.12) * (1.0 - smoothstep(0.06, 1.0, effectUv.y)) * (1.0 - Progress * 0.5);
     } else if (EffectMode == 14) {
         float sweep = fract(effectUv.x * 0.65 + effectUv.y * 0.35 - Progress);
         float strands = sin(effectUv.x * 27.0 + effectUv.y * 19.0 - EffectTime * 12.0);
         core = band(sweep - 0.5, 0.16);
         opacity = 0.32 + core * 0.55 + band(strands, 0.13) * 0.13;
+    } else if (EffectMode == 15) {
+        float branches = sin(angle * 13.0 + sin(radius * 31.0) * 0.5 + sin(angle * 5.0) * 1.1);
+        float front = mix(0.16, 0.99, smoothstep(0.0, 0.28, Progress));
+        float revealed = 1.0 - smoothstep(front - 0.035, front + 0.02, radius);
+        core = band(branches, 0.07) * revealed;
+        opacity = (core * 0.95 + band(branches, 0.22) * 0.32) * revealed
+            * smoothstep(0.04, 0.16, radius) * (1.0 - smoothstep(0.9, 1.0, radius))
+            * (1.0 - smoothstep(0.55, 1.0, Progress));
     } else {
         float wave = mix(max(0.12, InnerRatio), 0.98, clamp(Progress, 0.0, 1.0));
         core = band(radius - wave, 0.022);

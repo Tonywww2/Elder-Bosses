@@ -65,12 +65,14 @@ public final class ClientConsortGravityDistortion {
                 if (!boss.isAlive() || ClientConsortBladeTrails.enchantment(boss.actionId().orElse(null), boss.miquellaVisible(),
                         boss.combatState() == PromisedConsortCombatState.INTRO || boss.isOpeningLion())
                         != ClientConsortBladeTrails.Enchantment.GRAVITY) continue;
-                radius = 1.6;
+                radius = 2.6;
                 height = boss.getBbHeight() * 0.65;
             } else if (entity instanceof PromisedConsortGravityRockEntity) {
-                radius = 0.6;
-                height = 0.2;
+                radius = 0.85 * PromisedConsortGravityRockEntity.SIZE_SCALE;
+                height = 0.2 * PromisedConsortGravityRockEntity.SIZE_SCALE;
             } else continue;
+            double phase = (gameTick + partialTick) * 0.05 + entity.getId() * 0.618;
+            radius *= 1 + 0.08 * Math.sin(phase * 5.7) + 0.04 * Math.sin(phase * 11.3);
             Vec3 center = new Vec3(Mth.lerp(partialTick, entity.xo, entity.getX()),
                     Mth.lerp(partialTick, entity.yo, entity.getY()) + height, Mth.lerp(partialTick, entity.zo, entity.getZ()));
             if (center.distanceToSqr(view) < radius * radius) continue;

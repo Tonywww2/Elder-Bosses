@@ -60,6 +60,19 @@ public final class ArenaTerrainSurvey {
         if (!(generator instanceof NoiseBasedChunkGenerator noise)) throw new IllegalArgumentException("Expected saved noise generator");
         var random = RandomState.create(noise.generatorSettings().value(), registries.lookupOrThrow(Registries.NOISE), seed);
         var height = LevelHeightAccessor.create(generator.getMinY(), generator.getGenDepth());
+        var structureData = com.google.gson.JsonParser.parseString(Files.readString(Path.of(
+            "src/main/resources/data/elder_bosses/worldgen/structure/promised_consort_arena.json"))).getAsJsonObject();
+        var terrain = PromisedConsortArenaTerrain.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, structureData.get("terrain")).result().orElseThrow();
+        var biomeData = com.google.gson.JsonParser.parseString(Files.readString(Path.of(
+            "src/main/resources/data/elder_bosses/tags/worldgen/biome/has_structure/promised_consort_arena.json"))).getAsJsonObject();
+        var allowedBiomes = new java.util.HashSet<String>();
+        var biomeHolders = new java.util.ArrayList<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>();
+        for (var value : biomeData.getAsJsonArray("values")) {
+            String id = value.getAsString();
+            allowedBiomes.add(id);
+            biomeHolders.add(registries.lookupOrThrow(Registries.BIOME).getOrThrow(net.minecraft.resources.ResourceKey.create(
+                Registries.BIOME, new net.minecraft.resources.ResourceLocation(id))));
+        }
         for (int[] point : new int[][]{{40, 104, 70}, {-66, 160, 64}, {56, 120, 65}, {16, 168, 69}}) {
             int actual = generator.getFirstFreeHeight(point[0], point[1], Heightmap.Types.WORLD_SURFACE_WG, height, random);
             System.out.println("Height " + point[0] + "," + point[1] + " = " + actual + " expected=" + point[2]);
@@ -84,9 +97,9 @@ public final class ArenaTerrainSurvey {
                 java.util.Optional<PlatformArenaWorldgen.Definition>>) activeField.get(null);
         active.put(null, java.util.Optional.of(definition));
         var arena = new PlatformArenaStructure(new net.minecraft.world.level.levelgen.structure.Structure.StructureSettings(
-                net.minecraft.core.HolderSet.direct(registries.lookupOrThrow(Registries.BIOME).getOrThrow(Biomes.DESERT)), Map.of(),
+            net.minecraft.core.HolderSet.direct(biomeHolders), Map.of(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
-                net.minecraft.world.level.levelgen.structure.TerrainAdjustment.NONE), PromisedConsortArenaTerrain.DEFAULT);
+            net.minecraft.world.level.levelgen.structure.TerrainAdjustment.NONE), terrain);
         Map<net.minecraft.world.level.ChunkPos, java.util.Optional<BlockPos>> runtimePositions = new HashMap<>();
         var surveyChunks = new java.util.ArrayList<int[]>(java.util.List.of(new int[]{-2, 6}, new int[]{-1, 7}, new int[]{0, 0}, new int[]{-17, -9}));
         var search = new JsonObject();
@@ -134,9 +147,8 @@ public final class ArenaTerrainSurvey {
                 var actual = arena.findValidGenerationPoint(context);
                 runtimePositions.put(context.chunkPos(), actual.map(value -> value.position()));
                 System.out.println("Runtime generation point " + context.chunkPos() + " = " + actual.map(value -> value.position().toShortString()));
-                if (((chunk[0] == -1 && chunk[1] == 7) || (chunk[0] == -2 && chunk[1] == 6)
-                        || (chunk[0] == 0 && chunk[1] == 0)) && actual.isPresent()) {
-                    throw new AssertionError("Calibrated runtime must reject the wet or steep reference sites");
+                if (chunk[0] == 0 && chunk[1] == 0 && actual.isPresent()) {
+                    throw new AssertionError("Calibrated runtime must still reject the steep spawn");
                 }
                 if (chunk[0] == -17 && chunk[1] == -9
                         && !actual.map(value -> value.position()).equals(java.util.Optional.of(new BlockPos(-264, 77, -136)))) {
@@ -154,6 +166,9 @@ public final class ArenaTerrainSurvey {
         report.addProperty("water_lava_stone_fluid_calibration_passed", true);
         report.addProperty("two_recorded_fluid_rejections_reproduced", true);
         report.addProperty("samples_per_site", site.samples().size());
+        report.add("terrain", structureData.get("terrain").deepCopy());
+        report.add("allowed_center_biomes", biomeData.get("values").deepCopy());
+        report.addProperty("water_depth_report_cap", terrain.maxWaterDepth() + 1);
         report.addProperty("verification_scope", "findValidGenerationPoint and full terrain sampling only; no pieces placed or natural structure starts created");
         if (search.size() > 0) report.add("manual_candidate_search", search);
         var sites = new JsonArray();
@@ -172,6 +187,10 @@ public final class ArenaTerrainSurvey {
                 int wet = 0;
                 int outsideBiome = 0;
                 int unsupported = 0;
+                int deepWater = 0;
+                int invalidGround = 0;
+                int minimumBed = Integer.MAX_VALUE;
+                int maximumWaterDepth = 0;
                 Map<String, Integer> biomeCounts = new java.util.TreeMap<>();
                 var points = new JsonArray();
                 for (var point : site.samples()) {
@@ -180,10 +199,16 @@ public final class ArenaTerrainSurvey {
                     var biome = generator.getBiomeSource().getNoiseBiome(QuartPos.fromBlock(position.getX()), QuartPos.fromBlock(surface),
                             QuartPos.fromBlock(position.getZ()), random.sampler());
                         biomeCounts.merge(biome.unwrapKey().orElseThrow().location().toString(), 1, Integer::sum);
-                    boolean fluid = !generator.getBaseColumn(position.getX(), position.getZ(), height, random).getBlock(surface - 1).getFluidState().isEmpty();
+                    var column = generator.getBaseColumn(position.getX(), position.getZ(), height, random);
+                    boolean fluid = !column.getBlock(surface - 1).getFluidState().isEmpty();
+                    var measuredColumn = terrain.sampleColumn(surface, point.foundationBottomY(), height.getMinBuildHeight(), column::getBlock);
                     if (fluid) wet++;
                     if (!biome.is(Biomes.DESERT)) outsideBiome++;
-                    if (entryY + 7 + point.foundationBottomY() >= surface) unsupported++;
+                    if (entryY + 7 + point.foundationBottomY() >= surface - measuredColumn.waterDepth()) unsupported++;
+                    if (measuredColumn.waterDepth() > terrain.maxWaterDepth()) deepWater++;
+                    if (!measuredColumn.groundSupported()) invalidGround++;
+                    minimumBed = Math.min(minimumBed, surface - measuredColumn.waterDepth());
+                    maximumWaterDepth = Math.max(maximumWaterDepth, measuredColumn.waterDepth());
                     minimum = Math.min(minimum, surface);
                     maximum = Math.max(maximum, surface);
                     if (point.entry()) {
@@ -196,6 +221,8 @@ public final class ArenaTerrainSurvey {
                     sample.addProperty("surface_y", surface);
                     sample.addProperty("entry", point.entry());
                     sample.addProperty("fluid", fluid);
+                    sample.addProperty("water_depth", measuredColumn.waterDepth());
+                    sample.addProperty("ground_supported", measuredColumn.groundSupported());
                     sample.addProperty("desert", biome.is(Biomes.DESERT));
                     sample.addProperty("foundation_bottom_y", point.foundationBottomY());
                     points.add(sample);
@@ -215,10 +242,14 @@ public final class ArenaTerrainSurvey {
                 measured.addProperty("wet_samples", wet);
                 measured.addProperty("outside_desert_samples", outsideBiome);
                 measured.addProperty("unsupported_samples", unsupported);
-                measured.addProperty("required_local_bottom_y", minimum - (entryY + 7) - 1);
+                measured.addProperty("over_depth_samples", deepWater);
+                measured.addProperty("invalid_ground_samples", invalidGround);
+                measured.addProperty("maximum_water_depth_capped", maximumWaterDepth);
+                measured.addProperty("required_local_bottom_y_upper_bound", minimumBed - (entryY + 7) - 1);
                 var centerBiome = generator.getBiomeSource().getNoiseBiome(QuartPos.fromBlock(origin.getX()), QuartPos.fromBlock(entryY + 7),
                     QuartPos.fromBlock(origin.getZ()), random.sampler());
                 measured.addProperty("center_biome", centerBiome.unwrapKey().orElseThrow().location().toString());
+                measured.addProperty("center_allowed", arena.biomes().contains(centerBiome));
                 measured.add("biome_counts", new com.google.gson.Gson().toJsonTree(biomeCounts));
                 if (chunk[0] == -1 && chunk[1] == 7 && rotation == Rotation.COUNTERCLOCKWISE_90 && wet != 88) {
                     throw new AssertionError("Historical rejection must include the 88 calibrated wet samples");
@@ -249,15 +280,19 @@ public final class ArenaTerrainSurvey {
             for (int attempt = 0; attempt < 4; attempt++) {
                 Rotation rotation = Rotation.values()[(first.ordinal() + attempt) % 4];
                 var candidate = measured.get(rotation);
-                if (!candidate.get("center_biome").getAsString().equals("minecraft:desert")) continue;
+                if (!allowedBiomes.contains(candidate.get("center_biome").getAsString())) continue;
                 var samples = new java.util.ArrayList<PromisedConsortArenaTerrain.SurfaceSample>();
+                var columns = new java.util.ArrayList<PromisedConsortArenaTerrain.ColumnSample>();
                 for (var value : candidate.getAsJsonArray("points")) {
                     var point = value.getAsJsonObject();
-                    samples.add(new PromisedConsortArenaTerrain.SurfaceSample(point.get("surface_y").getAsInt(), point.get("fluid").getAsBoolean(),
+                    samples.add(new PromisedConsortArenaTerrain.SurfaceSample(point.get("surface_y").getAsInt(), false,
                             true, point.get("entry").getAsBoolean(), point.get("foundation_bottom_y").getAsInt()));
+                    columns.add(new PromisedConsortArenaTerrain.ColumnSample(point.get("surface_y").getAsInt(), point.get("water_depth").getAsInt(),
+                        point.get("ground_supported").getAsBoolean(), point.get("foundation_bottom_y").getAsInt()));
                 }
-                if (PromisedConsortArenaTerrain.DEFAULT.placementHeight(samples, candidate.get("entry_y").getAsInt(), site.minimumY(), site.maximumY(),
-                        height.getMinBuildHeight(), height.getMaxBuildHeight()).isPresent()) {
+                var placement = terrain.placementHeight(samples, candidate.get("entry_y").getAsInt(), site.minimumY(), site.maximumY(),
+                    height.getMinBuildHeight(), height.getMaxBuildHeight());
+                if (placement.isPresent() && terrain.supportsColumns(columns, placement.getAsInt(), site.samples().size())) {
                     selected = rotation;
                     break;
                 }
@@ -278,7 +313,7 @@ public final class ArenaTerrainSurvey {
             System.out.println("Verified adapted decision: " + decision);
         }
         report.add("adapted_decisions", decisions);
-        Path output = Path.of("build/ai-previews/arena-terrain-survey-calibrated.json");
+        Path output = Path.of("build/ai-previews/arena-terrain-survey-v9.json");
         Files.createDirectories(output.getParent());
         Files.writeString(output, new GsonBuilder().setPrettyPrinting().create().toJson(report) + "\n");
         System.out.println("Saved complete surveys to " + output);

@@ -344,6 +344,16 @@ public class RangedCounterCheck {
                     double actual=com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline.sample(contact,snapshot,timeline,variantSkill);
                     require(Math.abs(actual-expected)<0.00001,"Contact pose not aligned to ranged event: "+action+" / "+stage);
                 }
+                if (action == com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId.SPIRAL_ASSAULT) {
+                    var leap = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.advance(timeline,
+                        variantSkill.integerList("ranged_counter.attack_event_offsets").get(0));
+                    end = leap.destination(origin, new net.minecraft.world.phys.Vec3(0, 0, 40),
+                        leap.maximumDistance(variantSkill.number("ranged_counter.max_forward_distance")), 4);
+                    require(leap.supports(origin, end) && end.horizontalDistance() > 15, "Ranged advance lost its bounded medium-long leap");
+                    require(leap.at(origin, end, leap.landingTick()).equals(end), "Ranged advance misses its landing");
+                    require(leap.at(origin, end, (leap.takeoffTick() + leap.landingTick()) / 2.0).y <= 2.001,
+                        "Ranged advance became a high lion claw");
+                } else {
                 var path=com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedPath.create(action,variantSkill,timeline,
                         origin,new net.minecraft.world.phys.Vec3(0,0,40),new net.minecraft.world.phys.Vec3(0,0,1),point->true);
                 end=path.end();
@@ -352,9 +362,11 @@ public class RangedCounterCheck {
                 var blocked=com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedPath.create(action,variantSkill,timeline,
                         origin,new net.minecraft.world.phys.Vec3(0,0,40),new net.minecraft.world.phys.Vec3(0,0,1),point->point.z<5);
                 require(blocked.end().z<5,"Ranged path passed through obstacle");
+                }
             }
             var plan=com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.create(snapshot,variantSkill,timeline,
-                    origin,new com.tonywww.elder_bosses.combat.geometry.Vec2(0,1),java.util.Map.of("ranged_origin",origin,"ranged_corner",origin,"ranged_end",end),6);
+                    origin,new com.tonywww.elder_bosses.combat.geometry.Vec2(0,1),java.util.Map.of("ranged_origin",origin,"ranged_corner",origin,"ranged_end",end,
+                        "advance_origin",origin,"advance_end",end),6);
             require(plan.isEmpty()==(action.rangedDefense() && action!=com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId.GRAVITY_REPRISAL),"Defense emits fake damage or reprisal has none");
             for(var strike:plan) require(strike.startTick()<strike.lockTick() && strike.lockTick()<strike.activeTick() && strike.activeTick()<strike.endTick(),"Ranged warning order invalid");
             require(restored.advance(100+timeline.totalTicks()).orElseThrow().completed(),"Ranged action did not finish");

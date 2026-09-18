@@ -1,0 +1,68 @@
+{
+  "revision": "continuous_four_turn_dive_and_forward_lion",
+  "results": [
+    {
+      "name": "gravity_dive",
+      "takeoff": 12,
+      "landing": 38,
+      "turns": 4,
+      "axis": "Y",
+      "maximumStep": 29.45990180032921,
+      "minimumUp": 0.7986355100472929,
+      "minimumTip": -0.5000017073827223,
+      "interpolationStep": 29.459904000003988,
+      "default_flight_minimum_blade_y": null,
+      "default_flight_minimum_foot_y": null
+    },
+    {
+      "name": "lion_claw",
+      "takeoff": 10,
+      "landing": 32,
+      "turns": 1,
+      "axis": "forward -X",
+      "maximumStep": 12.272199004508387,
+      "minimumUp": 1,
+      "minimumTip": -66.9336571771847,
+      "interpolationStep": 12.272200000000023,
+      "default_flight_minimum_blade_y": -1.0000022857052606,
+      "default_flight_minimum_foot_y": 6.168811068121425
+    },
+    {
+      "name": "lion_claw_double",
+      "takeoff": 8,
+      "landing": 26,
+      "turns": 1,
+      "axis": "forward -X",
+      "maximumStep": 14.999035493826886,
+      "minimumUp": 1,
+      "minimumTip": -66.23340809104734,
+      "interpolationStep": 14.999036000003562,
+      "default_flight_minimum_blade_y": -1.0000022857052606,
+      "default_flight_minimum_foot_y": 6.168514415533885
+    }
+  ],
+  "unchanged_clips": 41,
+  "editor_bytes": 91371020,
+  "visual_accepted": false,
+  "world_tested": false,
+  "current_hashes": {
+    "animations/promised_consort.animation.json": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50",
+    "promised_consort.bbmodel": "fbf84df58a06d546b75c89f1356bb145bb77a08a4c89b613b1775b1e4f02289b"
+  },
+  "validation": {
+    "status": "current_asset_contracts_passed",
+    "model": "promised_consort",
+    "checks": 3005605,
+    "bones": 125,
+    "cubes": 620,
+    "faces": 3481,
+    "animations": 44,
+    "editor_channels": 16500,
+    "editor_keys": 491725,
+    "runtime_files_match": true,
+    "editor_export_tolerance": 0.0001,
+    "historical_snapshots_required": false,
+    "visual_acceptance": "not_inferred",
+    "world_tested": false
+  }
+}

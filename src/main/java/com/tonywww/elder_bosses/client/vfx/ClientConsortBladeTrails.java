@@ -103,10 +103,11 @@ public final class ClientConsortBladeTrails {
             var particle = new BlockParticleOption(ParticleTypes.BLOCK, state);
             int count = Math.min(16, ElderBossesCommonConfig.VALUES.skillVfx().particleBudgetPerBossPerTick() / 2);
             for (int index = 0; index < count; index++) {
-                entity.level().addParticle(particle, point.x + (random.nextDouble() - 0.5) * 0.35, point.y,
-                        point.z + (random.nextDouble() - 0.5) * 0.35,
-                        sweep.x * 0.16 + (random.nextDouble() - 0.5) * 0.24, 0.10 + random.nextDouble() * 0.18,
-                        sweep.z * 0.16 + (random.nextDouble() - 0.5) * 0.24);
+                var fragment = Minecraft.getInstance().particleEngine.createParticle(particle,
+                    point.x + (random.nextDouble() - 0.5) * 0.55, point.y, point.z + (random.nextDouble() - 0.5) * 0.55,
+                    sweep.x * 0.23 + (random.nextDouble() - 0.5) * 0.34, 0.18 + random.nextDouble() * 0.26,
+                    sweep.z * 0.23 + (random.nextDouble() - 0.5) * 0.34);
+                if (fragment != null) fragment.scale(1.6F);
             }
         }
     }

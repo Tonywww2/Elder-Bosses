@@ -40,6 +40,10 @@ public final class ActionDebugCheck {
         bootstrap.setAccessible(true);
         bootstrap.setBoolean(null, true);
         net.minecraft.core.registries.BuiltInRegistries.bootStrap();
+        if (List.of(arguments).contains("--sync-meteor-rhythm")) {
+            syncMeteorRhythm();
+            return;
+        }
         if (List.of(arguments).contains("--check-ground-debris")) {
             checkGroundDebris();
             System.out.println("Ground debris passed: " + assertions + " checks; swept blade, actual voxel top faces and bounded sample continuity");
@@ -74,14 +78,26 @@ public final class ActionDebugCheck {
         PromisedConsortActionCatalog consort = new PromisedConsortActionCatalog(ElderBossesCommonConfig.VALUES.promisedConsortSkillSnapshot());
         checkMalenia(malenia);
         checkConsort(consort);
+        for (double ratio : new double[]{0, 0.01, 0.05, 0.65, Double.NaN}) {
+            float gate = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortPhaseGate.threshold(1000, ratio);
+            require(gate >= 50, "Phase transition threshold must never be below five percent");
+            for (float health : new float[]{50, 1, 0, -100000, -Float.MAX_VALUE, Float.NEGATIVE_INFINITY}) {
+                float safe = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortPhaseGate.protect(health, 1000, 1000, ratio);
+                require(Float.isFinite(safe) && safe >= gate, "Extreme incoming health loss bypasses the phase gate");
+            }
+        }
+        checkComboReach(consort);
         checkBurstCadence();
         checkChainRecovery(consort);
         checkBurstPersistence(consort);
         checkHolyFlight(consort);
         checkLionPath();
+        checkGroundMovement();
         checkLionPlan(consort);
         checkMeteorSequence(consort);
         checkCrossLeap(consort);
+        checkAdvance(consort);
+        checkGravityDiveFlight(consort);
         checkLightspeedPath(consort);
         checkBladeEnchantment();
         checkSkillTestCommands();
@@ -94,6 +110,107 @@ public final class ActionDebugCheck {
         if (List.of(arguments).contains("--sync-cross-leap-configs")) syncCrossLeapConfigs(true);
         if (List.of(arguments).contains("--check-cross-leap-configs")) syncCrossLeapConfigs(false);
         System.out.println("Action debug passed: " + assertions + " checks; start/end/cancel/replace/resume, " + PromisedConsortActionId.values().length + " Consort command routes and four ranged variants");
+    }
+
+    private static void checkAdvance(PromisedConsortActionCatalog catalog) {
+        var id = PromisedConsortActionId.SPIRAL_ASSAULT;
+        Vec3 origin = new Vec3(0, 64, 0);
+        for (boolean ranged : new boolean[]{false, true}) {
+            var runtime = new PromisedConsortActionRuntime(catalog);
+            var action = runtime.start(id, PromisedConsortPhase.PHASE_TWO, 100, 42, TARGET, ranged);
+            var skill = catalog.skill(action);
+            var timeline = catalog.timeline(action);
+            int offset = ranged ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+            var path = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.advance(timeline, offset);
+            Vec3 end = path.advanceDestination(origin, new Vec3(0, 64, 40), new Vec3(0, 0, 1), ranged ? 24 : 16);
+            require(path.supports(origin, end) && end.z >= 12 && path.height() <= 2, "Advance is not a bounded low medium-distance leap");
+            Vec3 previous = origin;
+            for (int tick = 0; tick <= path.landingTick(); tick++) {
+                Vec3 point = path.advanceAt(origin, end, tick);
+                require(point.distanceTo(previous) <= 2.001 && point.y <= 66.001, "Advance arc exceeds speed/height");
+                previous = point;
+            }
+            require(previous.equals(end), "Advance does not land at its locked destination");
+            for (double distance : new double[]{0, 2, 4, 8, 16, 40}) {
+                Vec3 nearEnd = path.advanceDestination(origin, origin.add(0, 0, distance), new Vec3(0, 0, 1), ranged ? 24 : 16);
+                Vec3 launch = path.advanceAt(origin, nearEnd, path.takeoffTick() + 1).subtract(origin);
+                require(nearEnd.z >= Math.min(6, path.maximumDistance(ranged ? 24 : 16)), "Close target collapses forward leap");
+                require(launch.z > Math.abs(launch.y) * 2, "Advance starts vertically instead of lunging forward");
+                require(path.supports(origin, nearEnd), "Forward launch exceeds the existing travel budget");
+            }
+            require(Math.abs(com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline.sample(path.takeoffTick(),
+                action, timeline, skill) - 7) < 0.00001, "Advance lift does not coincide with its faster authored takeoff");
+            var sound = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan.schedule(action, timeline, skill)
+                .stream().filter(cue -> cue.cue().key().equals("leap")).toList();
+            require(sound.size() == 1 && sound.get(0).tick() == path.takeoffTick(), "Advance rush sound plays at landing instead of takeoff");
+            var points = java.util.Map.of("advance_origin", origin, "advance_end", end);
+            var plan = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.create(action, skill, timeline,
+                origin, new com.tonywww.elder_bosses.combat.geometry.Vec2(0, 1), points, 6);
+            require(plan.size() == 2 && plan.get(0).id().equals("spin") && plan.get(1).id().equals("slam"), "Advance changed the two persisted attack IDs");
+            for (int index = 0; index < plan.size(); index++) {
+                var strike = plan.get(index);
+                int hitOffset = ranged ? skill.integerList("ranged_counter.attack_event_offsets").get(index) : 0;
+                require(strike.activeTick() == 100 + timeline.activeStartTick(index) + hitOffset, "Advance changed a damage contact time");
+                require(strike.lockTick() == 100 + path.takeoffTick() && strike.baseY() == end.y, "Advance warning is not frozen at the ground landing");
+            }
+            var airbornePlan = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.create(action, skill, timeline,
+                origin.add(0, 2, 6), new com.tonywww.elder_bosses.combat.geometry.Vec2(0, 1), points, 6);
+            require(airbornePlan.equals(plan), "Advance warning follows airborne body instead of locked landing");
+        }
+        require(Math.abs(com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.COLLISION_SIZE - 1.0125F) < 1.0e-6,
+            "Rock registration size does not match its shared 35 percent enlargement");
+        var lion = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortLionClawPath.create(32, 6, 6, 1.25);
+        require(lion.height() >= 5, "Lion claw is not visibly higher than advance");
+    }
+
+    private static void checkGravityDiveFlight(PromisedConsortActionCatalog catalog) {
+        Vec3 origin = new Vec3(0, 64, 0);
+        for (boolean ranged : new boolean[]{false, true}) {
+            var runtime = new PromisedConsortActionRuntime(catalog);
+            var action = runtime.start(PromisedConsortActionId.GRAVITY_DIVE, PromisedConsortPhase.PHASE_TWO, 100, 42, TARGET, ranged);
+            var skill = catalog.skill(action);
+            var timeline = catalog.timeline(action);
+            int offset = ranged ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+            var path = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.gravityDive(timeline, offset);
+            Vec3 end = path.destination(origin, origin.add(0, 0, 12), path.maximumDistance(ranged ? 24 : 16), 1.5);
+            require(path.supports(origin, end), "Gravity dive exceeds flight budget");
+            Vec3 previous = origin;
+            for (int tick = 0; tick <= path.landingTick(); tick++) {
+                Vec3 point = path.at(origin, end, tick);
+                require(point.distanceTo(previous) <= 2.001, "Gravity dive flight step exceeds collision budget");
+                if (tick > path.takeoffTick() && tick < path.landingTick()) require(point.y > origin.y, "Gravity dive lands before the final spinning contact");
+                previous = point;
+            }
+            require(previous.equals(end), "Gravity dive misses its actual landing point");
+            require(Math.abs(com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline.sample(path.takeoffTick(), action, timeline, skill) - 12) < 0.00001,
+                "Gravity spin does not start at actual takeoff");
+            require(Math.abs(com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline.sample(path.landingTick(), action, timeline, skill) - 38) < 0.00001,
+                "Gravity spin completion does not match landing");
+            var points = java.util.Map.of("dive_origin", origin, "dive_end", end);
+            var plan = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.create(action, skill, timeline,
+                origin, new com.tonywww.elder_bosses.combat.geometry.Vec2(0, 1), points, 6);
+            require(plan.size() == 2 && plan.get(0).id().equals("sword") && plan.get(1).id().equals("impact"), "Gravity dive added a separate finishing attack");
+            for (var strike : plan) require(strike.baseY() == end.y && strike.lockTick() == 100 + path.takeoffTick(), "Gravity warning is not grounded and frozen at launch");
+            require(plan.equals(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.create(action, skill, timeline,
+                origin.add(0, 3, 4), new com.tonywww.elder_bosses.combat.geometry.Vec2(0, 1), points, 6)), "Gravity warning moves with the spinning body");
+        }
+    }
+
+    private static void checkComboReach(PromisedConsortActionCatalog catalog) {
+        var id = PromisedConsortActionId.L_COMBO_CROSS;
+        var runtime = new PromisedConsortActionRuntime(catalog);
+        var action = runtime.start(id, PromisedConsortPhase.PHASE_ONE, 100, 42, TARGET);
+        var skill = catalog.skill(action);
+        var plan = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.create(action, skill, catalog.timeline(action),
+            Vec3.ZERO, new com.tonywww.elder_bosses.combat.geometry.Vec2(0, 1), java.util.Map.of(), 6);
+        require(plan.size() == 3, "Combo reach adjustment added a hit");
+        double expected = skill.number("range") * skill.rangeMultiplier() * 1.3 * 1.15 + 0.8;
+        for (var strike : plan) {
+            var sector = (com.tonywww.elder_bosses.combat.geometry.Sector) strike.shape();
+            require(Math.abs(sector.radius() - expected) < 1.0e-8, "Combo reach did not expand with its authoritative warning");
+        }
+        require(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAttackPlan.comboReachMultiplier(PromisedConsortActionId.GRAVITY_METEOR) == 1,
+            "Combo reach leaked into projectile or gravity areas");
     }
 
         private static void checkCrossLeap(PromisedConsortActionCatalog catalog) {
@@ -198,6 +315,15 @@ public final class ActionDebugCheck {
         }
 
         private static void checkLightspeedPath(PromisedConsortActionCatalog catalog) {
+            for (var facing : List.of(new com.tonywww.elder_bosses.combat.geometry.Vec2(0, 1),
+                    new com.tonywww.elder_bosses.combat.geometry.Vec2(1, 0),
+                    new com.tonywww.elder_bosses.combat.geometry.Vec2(0, -1),
+                    new com.tonywww.elder_bosses.combat.geometry.Vec2(-1, 0))) {
+                var diagonal = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionExecutor.sideDashDirection(facing);
+                require(Math.abs(Math.hypot(diagonal.x(), diagonal.z()) - 1) < 1.0e-8, "Side dash changes its travel budget");
+                require(diagonal.x() * facing.x() + diagonal.z() * facing.z() > 0.7, "Side dash has no forward component");
+                require(-diagonal.x() * facing.z() + diagonal.z() * facing.x() > 0.7, "Side dash lost its lateral direction");
+            }
         var id = PromisedConsortActionId.LIGHTSPEED_DASH;
         var timeline = catalog.get(id).timeline();
         var path = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortLightspeedPath.from(timeline, 6);
@@ -451,7 +577,38 @@ public final class ActionDebugCheck {
         System.out.println("Holy flight: 12-block rise in16ticks, elevated release, bounded curve and ground return passed");
     }
 
+    private static void checkGroundMovement() {
+        Vec3 origin = new Vec3(0, 64, 0), next = new Vec3(0, 64, 0.25);
+        for (double height : new double[]{64, 64.5, 65, 63.5, 62.75}) {
+            Vec3 result = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.step(origin, next, height, point -> true);
+            require(result != null && result.y == height && result.z == next.z, "Ground step lost slope or horizontal progress");
+        }
+        for (double height : new double[]{65.1, 62.7, Double.NaN, Double.POSITIVE_INFINITY}) require(
+            com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.step(origin, next, height, point -> true) == null,
+            "Ground step accepts a wall, cliff or invalid terrain");
+        require(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.step(origin, next, 65,
+            point -> point.z != 0) == null, "Ground step crosses a low ceiling");
+        require(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.step(origin, next, 64.5,
+            point -> point.z == 0) == null, "Ground step crosses an obstructed destination");
+        var body = new net.minecraft.world.phys.AABB(-0.3, 64, -0.3, 0.3, 66, 0.3);
+        var floor = net.minecraft.world.phys.shapes.Shapes.box(-2, 63, -2, 2, 64, 2);
+        var slab = net.minecraft.world.phys.shapes.Shapes.box(-1, 64, 0.5, 1, 64.5, 1.5);
+        var shapes = List.of(floor, slab);
+        double support = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.supportHeight(body.move(0, 0, 0.25), 64, shapes);
+        require(support == 64.5, "Wide footprint misses the slab edge before its center reaches it");
+        Vec3 step = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.step(origin, next, support,
+            point -> shapes.stream().flatMap(shape -> shape.toAabbs().stream()).noneMatch(box -> box.intersects(body.move(point.subtract(origin)).deflate(0.001))));
+        require(step != null && step.y == 64.5, "Real slab geometry blocks the supported step-up route");
+        require(!Double.isFinite(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortGroundMovement.supportHeight(body, 64, List.of())),
+            "No supporting terrain is treated as walkable");
+    }
+
     private static void checkLionPath() {
+        var aimed = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortLionClawPath.create(30, 6, 6, 2);
+        for (Vec3 forward : List.of(new Vec3(0, 0, 1), new Vec3(1, 0, 0), new Vec3(0, 0, -1), new Vec3(-1, 0, 0))) {
+            Vec3 target = forward.scale(8), landing = aimed.destination(Vec3.ZERO, target, 12, 1.5);
+            require(Math.abs(landing.subtract(target).dot(forward) - 1.5) < 0.00001, "Lion must lock behind the target along its approach");
+        }
         var opening = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortLionClawPath.opening(30, 6);
         var gate = new Vec3(0, 64, -30);
         var far = opening.destination(gate, new Vec3(0, 64, 36), 64, 4);
@@ -462,8 +619,8 @@ public final class ActionDebugCheck {
             require(current.distanceTo(previousOpening) <= opening.maximumStep(), "Opening rush exceeds per-tick budget");
             previousOpening = current;
         }
-        for (int impact : new int[]{12, 25, 30, 48}) for (double step : new double[]{1.25, 4}) {
-            var path = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortLionClawPath.create(impact, 6, 4, step);
+        for (int impact : new int[]{12, 25, 30, 48}) for (double step : new double[]{1.25, 4}) for (double height : new double[]{4, 6}) {
+            var path = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortLionClawPath.create(impact, 6, height, step);
             var origin = new Vec3(10, 64, -5);
             var destination = path.destination(origin, origin.add(0, 0, 60), step == 4 ? 48 : 12, 4);
             require(path.takeoffTick() < path.lockTick() && path.lockTick() < impact, "Lion locks before takeoff or after impact");
@@ -473,11 +630,11 @@ public final class ActionDebugCheck {
             for (int tick = 1; tick <= impact; tick++) {
                 var current = path.at(origin, destination, tick);
                 require(current.distanceTo(previous) <= step + 0.00001, "Lion trajectory exceeds movement budget");
-                require(current.y >= origin.y && current.y <= origin.y + 4, "Lion trajectory height invalid");
+                require(current.y >= origin.y && current.y <= origin.y + height, "Lion trajectory height invalid");
                 previous = current;
             }
             require(previous.equals(destination), "Lion does not arrive at locked landing point");
-            require(path.destination(origin, origin.add(0, 0, 2), 48, 4).equals(origin), "Lion runs through close target");
+            require(path.destination(origin, origin.add(0, 0, 2), 48, 1.5).z > origin.z, "Lion retains the old stop-before-target rule");
         }
         System.out.println("Lion claw path: airborne lock, bounded normal/opening movement, stop distance and exact landing passed");
     }
@@ -532,9 +689,30 @@ public final class ActionDebugCheck {
         }
         var sequence = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortMeteorSequence.from(timeline);
         require(sequence.usable(), "Default meteor sequence is not ordered");
+        require(timeline.activeStartTick(0) == 50 && sequence.groundTick() == 12 && sequence.riseTick() == 15
+            && sequence.crestTick() == 31, "Meteor must cut, pause briefly, rise, then aim before launching");
+        require(com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline.sample(sequence.riseTick(),
+            PromisedConsortActionId.GRAVITY_METEOR, timeline, com.tonywww.elder_bosses.combat.action.SkillTuning.NEUTRAL) == 28,
+            "Meteor starts flight before or after its authored upstroke");
+        require(com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortAnimationTimeline.sample(sequence.crestTick(),
+            PromisedConsortActionId.GRAVITY_METEOR, timeline, com.tonywww.elder_bosses.combat.action.SkillTuning.NEUTRAL) == 45,
+            "Meteor crest does not match the raised blade pose");
         require(sequence.groundTick() < sequence.riseTick() && sequence.crestTick() < timeline.activeStartTick(0), "Rocks fire before ground cut/ascent");
         var origin = new Vec3(0, 64, 0);
         var landing = sequence.landing(origin, new Vec3(0, 64, 30), 4);
+        for (Vec3 forward : List.of(new Vec3(0, 0, 1), new Vec3(1, 0, 0), new Vec3(0, 0, -1), new Vec3(-1, 0, 0))) {
+            Vec3 crest = sequence.crest(origin, forward);
+            Vec3 airborne = sequence.at(origin, crest, origin, (sequence.riseTick() + sequence.crestTick()) * 0.5);
+            require(airborne.subtract(origin).dot(forward) > 1 && airborne.y > origin.y + 1, "Meteor ascent is vertical instead of forward/up");
+            require(sequence.at(origin, crest, origin, sequence.crestTick()).equals(crest), "Meteor does not reach forward crest");
+            Vec3 prior = origin;
+            for (int tick = 0; tick <= sequence.landingTick(); tick++) {
+                Vec3 point = sequence.at(origin, crest, origin, tick);
+                require(point.distanceTo(prior) <= 1.25, "Diagonal meteor path exceeds its movement budget");
+                prior = point;
+            }
+            require(prior.equals(origin), "Phase-one meteor does not complete its landing");
+        }
         var previous = origin;
         for (int tick = 0; tick < timeline.totalTicks(); tick++) {
             var point = sequence.at(origin, landing, tick);
@@ -557,6 +735,16 @@ public final class ActionDebugCheck {
                 require(skill.damage("damage").equals(new com.tonywww.elder_bosses.combat.damage.DamageFormula(2, 0.35))
                     && skill.integer("max_hits_per_target") == 3, "Old rock damage or cap changed");
                 var ground = plan.stream().filter(strike -> strike.id().equals("meteor_ground")).findFirst().orElseThrow();
+                require(ground.shape().contains(4, 0) && !ground.shape().contains(0, 4), "Meteor opening hit is not directed toward the authored side after entity yaw conversion");
+                var generator = new com.tonywww.elder_bosses.boss.promisedconsort.indicator.PromisedConsortIndicatorGenerator(catalog,
+                    ElderBossesCommonConfig.VALUES.promisedConsortCombatSnapshot());
+                var warning = generator.createAuthoritative(1, action, plan, List.of(), ground.lockTick());
+                require(warning.stream().anyMatch(packet -> packet.indicatorId().endsWith(":meteor_ground")), "Meteor ground cut has no warning");
+                for (var strike : plan) {
+                    var packets = generator.createAuthoritative(1, action, plan, List.of(), strike.lockTick());
+                    require(packets.stream().noneMatch(packet -> packet.indicatorId().contains(":rock_flight") || packet.indicatorId().contains(":clone_meteor_")),
+                        "Meteor airborne range indicator was not removed");
+                }
                 require(ground.activeTick() == 100 + sequence.groundTick() && ground.activeTick() < 100 + sequence.riseTick(), "Ground slash occurs after takeoff");
                 if (phase == PromisedConsortPhase.PHASE_TWO) {
                 var body = plan.stream().filter(strike -> strike.id().equals("meteor_body")).findFirst().orElseThrow();
@@ -629,6 +817,23 @@ public final class ActionDebugCheck {
 
     private static void checkBladeEnchantment() {
         checkGroundDebris();
+        int stompFragments = 0;
+        for (int elapsed = -1; elapsed <= 24; elapsed++) {
+            int count = com.tonywww.elder_bosses.client.vfx.ClientConsortEnergyRenderer.impactParticleCount(true, elapsed, 18);
+            require(count >= 0 && count <= 18 && ((elapsed >= 0 && elapsed < 8) == (count > 0)), "Stomp material particles escape their budget or time window");
+            stompFragments += count;
+            require(com.tonywww.elder_bosses.client.vfx.ClientConsortEnergyRenderer.impactParticleCount(false, elapsed, 0) == 0, "Flame ignores zero particle budget");
+        }
+        require(stompFragments == 144, "Stomp lacks a sustained material-fragment burst");
+        var landing = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan.meteorLanding();
+        require(landing.size() == 2 && landing.get(0).sound() == com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan.Sound.STOMP
+            && landing.get(1).sound() == com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan.Sound.METEOR,
+            "Meteor landing must contain distinct fracture and explosion layers");
+        var played = new java.util.HashSet<String>();
+        var emitted = new java.util.ArrayList<com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan.Cue>();
+        for (int repeat = 0; repeat < 3; repeat++) com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortActionSoundPlan.dispatch(
+            landing, played, "land:", 20, 20, 21, emitted::add);
+        require(emitted.size() == 2, "Repeated landing dispatch multiplies sound layers");
         var gravity = com.tonywww.elder_bosses.client.vfx.ClientConsortBladeTrails.Enchantment.GRAVITY;
         var holy = com.tonywww.elder_bosses.client.vfx.ClientConsortBladeTrails.Enchantment.HOLY;
         var none = com.tonywww.elder_bosses.client.vfx.ClientConsortBladeTrails.Enchantment.NONE;
@@ -676,6 +881,47 @@ public final class ActionDebugCheck {
     private static void syncFlightConfigs(boolean write) throws Exception {
         syncConfigFields(write, "promised_consort.skills.light_of_miquella",
                 List.of("flight_height", "flight_ascent_ticks", "flight_descent_ticks"), ".pre-holy-flight-v1");
+    }
+
+    private static void syncMeteorRhythm() throws Exception {
+        String key = "promised_consort.skills.gravity_meteor.windup_ticks";
+        for (String file : List.of("docs/config/elder-bosses-common.example.toml", "run/config/elder_bosses-common.toml",
+                "versions/1.21.1-neoforge/run/config/elder_bosses-common.toml")) {
+            Path path = Path.of(file);
+            String text = Files.readString(path);
+            var before = new TomlParser().parse(text);
+            List<Integer> ticks = before.get(key);
+            if (ticks == null || ticks.isEmpty() || ticks.get(0) != 86) {
+                System.out.println("Preserved current/custom meteor windup: " + file);
+                continue;
+            }
+            var updated = new ArrayList<>(ticks);
+            updated.set(0, 50);
+            var matcher = java.util.regex.Pattern.compile("(?ms)(^\\s*\\[promised_consort\\.skills\\.gravity_meteor\\]\\s*\\R(?:(?!^\\s*\\[).)*?^\\s*windup_ticks\\s*=\\s*\\[\\s*)86(?=\\s*,)").matcher(text);
+            require(matcher.find(), "Cannot locate the exact meteor windup assignment: " + file);
+            String replacement = text.substring(0, matcher.end() - 2) + "50" + text.substring(matcher.end());
+            var parsed = new TomlParser().parse(replacement);
+            require(parsed.get(key).equals(updated), "Meteor timing replacement differs");
+            parsed.set(key, ticks);
+            require(parsed.equals(before), "Meteor migration changes an unrelated config value");
+            require(Files.readString(path).equals(text), "Config changed while migrating");
+            Files.writeString(path, replacement);
+            System.out.println("Meteor windup86->50, other config values retained: " + file);
+        }
+        Path fixture = Path.of("models/promised_consort/tests/fixtures/action_timings.json");
+        var document = com.google.gson.JsonParser.parseString(Files.readString(fixture)).getAsJsonObject();
+        var profile = document.getAsJsonObject("gravity_meteor");
+        var first = profile.getAsJsonArray("stage_ticks").get(0).getAsJsonArray();
+        if (first.get(0).getAsInt() == 86) {
+            first.set(0, new com.google.gson.JsonPrimitive(50));
+            profile.addProperty("duration_ticks", profile.get("duration_ticks").getAsInt() - 36);
+            for (var value : profile.getAsJsonArray("knots")) {
+                var pair = value.getAsJsonArray();
+                int tick = pair.get(1).getAsInt();
+                if (tick >= 86) pair.set(1, new com.google.gson.JsonPrimitive(tick - 36));
+            }
+            Files.writeString(fixture, new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(document) + "\n");
+        }
     }
 
     private static void syncMeteorConfigs(boolean write) throws Exception {

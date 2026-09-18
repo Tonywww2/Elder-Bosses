@@ -23,6 +23,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.UUID;
 
 public final class PromisedConsortGravityRockEntity extends PlatformGravityRockProjectile {
+    public static final float SIZE_SCALE = 1.35F;
+    public static final float COLLISION_SIZE = 0.75F * SIZE_SCALE;
     private UUID targetId;
     private long actionSequence;
     private int projectileIndex;
@@ -38,6 +40,7 @@ public final class PromisedConsortGravityRockEntity extends PlatformGravityRockP
     private long launchTick;
     private Vec3 heldOrigin;
     private int heldCount;
+    private int gatherTicks = 16;
     private Item chargedItem;
 
     public PromisedConsortGravityRockEntity(
@@ -89,8 +92,9 @@ public final class PromisedConsortGravityRockEntity extends PlatformGravityRockP
                 return;
             }
             double angle = Math.PI * 2 * projectileIndex / Math.max(1, heldCount);
-            Vec3 overhead = owner.position().add(Math.cos(angle) * 2.4, owner.getBbHeight() + 1.0 + (projectileIndex % 2) * 0.5, Math.sin(angle) * 2.4);
-            double progress = Math.max(0, Math.min(1, (now - heldStartTick) / 16.0));
+                Vec3 overhead = owner.position().add(Math.cos(angle) * 2.4 * SIZE_SCALE,
+                    owner.getBbHeight() + (1.0 + (projectileIndex % 2) * 0.5) * SIZE_SCALE, Math.sin(angle) * 2.4 * SIZE_SCALE);
+            double progress = Math.max(0, Math.min(1, (now - heldStartTick) / (double) gatherTicks));
             Vec3 destination = heldOrigin.lerp(overhead, progress * progress * (3 - 2 * progress));
             if (!level().hasChunkAt(BlockPos.containing(destination)) || arenaCenter != null
                     && destination.subtract(arenaCenter).horizontalDistance() > arenaRadius
@@ -122,6 +126,10 @@ public final class PromisedConsortGravityRockEntity extends PlatformGravityRockP
     }
 
     public void prepareHeld(Vec3 origin, long start, long launch, int count, Item charged) {
+        prepareHeld(origin, start, launch, count, charged, 16);
+    }
+
+    public void prepareHeld(Vec3 origin, long start, long launch, int count, Item charged, int gatherTicks) {
         if (launch <= start || count < 1 || origin == null || charged == null || !Double.isFinite(origin.x + origin.y + origin.z)) {
             throw new IllegalArgumentException("Invalid held rock timing or origin");
         }
@@ -129,6 +137,7 @@ public final class PromisedConsortGravityRockEntity extends PlatformGravityRockP
         heldStartTick = start;
         launchTick = launch;
         heldCount = count;
+        this.gatherTicks = Math.max(1, gatherTicks);
         chargedItem = charged;
         setHeld(true);
         setDeltaMovement(Vec3.ZERO);
@@ -292,6 +301,7 @@ public final class PromisedConsortGravityRockEntity extends PlatformGravityRockP
             tag.putLong("HeldAge", Math.max(0, level().getGameTime() - heldStartTick));
             tag.putLong("LaunchRemaining", Math.max(0, launchTick - level().getGameTime()));
             tag.putInt("HeldCount", heldCount);
+            tag.putInt("GatherTicks", gatherTicks);
             tag.putDouble("HeldX", heldOrigin.x); tag.putDouble("HeldY", heldOrigin.y); tag.putDouble("HeldZ", heldOrigin.z);
             tag.putString("ChargedItem", net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(chargedItem == null ? Items.CRYING_OBSIDIAN : chargedItem).toString());
         }
@@ -324,6 +334,7 @@ public final class PromisedConsortGravityRockEntity extends PlatformGravityRockP
             launchTick = level().getGameTime() + Math.max(0, tag.getLong("LaunchRemaining"));
             heldOrigin = new Vec3(tag.getDouble("HeldX"), tag.getDouble("HeldY"), tag.getDouble("HeldZ"));
             heldCount = Math.max(1, tag.getInt("HeldCount"));
+            gatherTicks = tag.contains("GatherTicks") ? Math.max(1, tag.getInt("GatherTicks")) : 16;
             chargedItem = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
                 com.tonywww.elder_bosses.platforms.PlatformResourceLocation.parse(tag.getString("ChargedItem")));
             setHeld(true);

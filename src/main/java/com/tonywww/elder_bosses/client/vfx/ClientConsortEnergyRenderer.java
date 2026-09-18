@@ -21,6 +21,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public final class ClientConsortEnergyRenderer {
+    private static final Map<VisualKey, Long> PARTICLE_TICKS = new HashMap<>();
+    private static final Map<Integer, Integer> PARTICLE_BUDGETS = new HashMap<>();
+    private static long particleTick = Long.MIN_VALUE;
     private static final Map<VisualKey, IndicatorSnapshotPacket> AFTERGLOWS = new LinkedHashMap<>();
     private static Object effectLevel;
 
@@ -32,13 +35,23 @@ public final class ClientConsortEnergyRenderer {
         var config = ElderBossesCommonConfig.VALUES.skillVfx();
         if (effectLevel != minecraft.level || !config.enabled()) {
             AFTERGLOWS.clear();
+            PARTICLE_TICKS.clear();
+            PARTICLE_BUDGETS.clear();
             effectLevel = minecraft.level;
         }
-        if (!config.enabled() || !ConsortEnergyShader.ready() || minecraft.level == null) return;
+        if (!config.enabled() || minecraft.level == null) return;
+        boolean shaderReady = ConsortEnergyShader.ready();
         Vec3 cameraPosition = camera.getPosition();
         double time = gameTick + partialTick;
-        renderDefenses(poses,cameraPosition,time,config.renderDistance());
-        renderGravityRocks(poses, cameraPosition, time, partialTick, config.renderDistance());
+        if (particleTick != gameTick) {
+            particleTick = gameTick;
+            PARTICLE_BUDGETS.clear();
+            PARTICLE_TICKS.entrySet().removeIf(entry -> gameTick - entry.getValue() > 60);
+        }
+        if (shaderReady) {
+            renderDefenses(poses,cameraPosition,time,config.renderDistance());
+            renderGravityRocks(poses, cameraPosition, time, partialTick, config.renderDistance());
+        }
         var current = ClientIndicatorStateStore.activeSnapshots(gameTick, partialTick).stream()
                 .filter(snapshot -> minecraft.level.getEntity(snapshot.bossEntityId()) instanceof PromisedConsortEntity)
                 .filter(snapshot -> snapshot.slot() != IndicatorSnapshotPacket.SegmentSlot.NEXT)
@@ -86,6 +99,15 @@ public final class ClientConsortEnergyRenderer {
                 double outer = snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.ANNULUS ? snapshot.ranges().get(1) : first;
                 float inner = snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.ANNULUS ? (float) (first / Math.max(0.01, outer)) : 0.0F;
                 int rgb = snapshot.styleRole().rgb();
+                if (isStomp(snapshot) || style.contains("BLOOD")) {
+                    impactParticles(snapshot, gameTick, isStomp(snapshot));
+                    continue;
+                }
+                if (!shaderReady) continue;
+                if (style.contains("HOLY") || style.contains("CLONE")) {
+                    holyLayers(buffers, poses.last(), snapshot, cameraPosition, time, active, progress, strength);
+                    continue;
+                }
                 if(snapshot.indicatorId().endsWith(":reprisal")) {
                     renderReprisal(buffers,poses.last(),snapshot,time);
                     continue;
@@ -161,8 +183,6 @@ public final class ClientConsortEnergyRenderer {
                 if (style.contains("HOLY") || style.contains("CLONE")) {
                     holyLayers(buffers, poses.last(), snapshot, cameraPosition, time, active, progress, strength);
                 }
-                if (isStomp(snapshot)) stompLayers(buffers, poses.last(), snapshot, time, active, progress);
-                if (style.contains("BLOOD")) bloodflameLayers(buffers, poses.last(), snapshot, cameraPosition, time, active, progress);
             }
         } finally {
             RenderSystem.enableDepthTest();
@@ -187,7 +207,7 @@ public final class ClientConsortEnergyRenderer {
                         || rock.isRemoved() || rock.distanceToSqr(view) > distance * distance) continue;
                 if (++count > 48) break;
                 Vec3 center = new Vec3(net.minecraft.util.Mth.lerp(partialTick, rock.xo, rock.getX()),
-                        net.minecraft.util.Mth.lerp(partialTick, rock.yo, rock.getY()) + 0.2,
+                        net.minecraft.util.Mth.lerp(partialTick, rock.yo, rock.getY()) + 0.2 * com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE,
                         net.minecraft.util.Mth.lerp(partialTick, rock.zo, rock.getZ()));
                 ConsortEnergyShader.configure(4, (float) ((time % 24000) / 20), 0, 0);
                 var consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
@@ -196,7 +216,8 @@ public final class ClientConsortEnergyRenderer {
                 if (!rock.isHeld() && rock.getDeltaMovement().lengthSqr() > 0.0001) {
                     ConsortEnergyShader.configure(8, (float) ((time % 24000) / 20), 0, 0);
                     consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-                    ribbon(consumer, poses.last(), center.subtract(rock.getDeltaMovement().normalize().scale(1.3)), center, 0.15, 0xB788FC, 0.65F);
+                    double scale = com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE;
+                    ribbon(consumer, poses.last(), center.subtract(rock.getDeltaMovement().normalize().scale(1.3 * scale)), center, 0.15 * scale, 0xB788FC, 0.65F);
                     buffers.endBatch(ConsortEnergyShader.ENERGY);
                 }
             }
@@ -209,7 +230,8 @@ public final class ClientConsortEnergyRenderer {
     }
 
     public static void rockAura(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center, Vec3 view, double time, boolean held) {
-        double radius = (held ? 0.5 : 0.38) * (1 + Math.sin(time * 0.5) * 0.08);
+        double radius = (held ? 0.8 : 0.6) * (1 + Math.sin(time * 0.5) * 0.10 + Math.sin(time * 0.91) * 0.05);
+        radius *= com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE;
         defenseSurface(consumer, pose, center, radius, radius, 0, 360, 0xB584FF, 0.35F);
         sparkle(consumer, pose, center, view, radius * 0.5, 0xE2C4FF, 0.7F);
     }
@@ -337,95 +359,74 @@ public final class ClientConsortEnergyRenderer {
         VertexConsumer consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
         if (corridor) {
             double width = snapshot.ranges().get(1);
-            ground(consumer, pose, center.add(direction.scale(length / 2)), width / 2, length / 2,
-                    snapshot.directionYawDegrees(), 0xFFDF91, active ? strength : 0.35F);
-        } else ground(consumer, pose, center, radius, radius, 0, 0xFFDF91, active ? strength : 0.35F);
+            ground(consumer, pose, center.add(direction.scale(length / 2)), width * 1.2, length * 0.65,
+                snapshot.directionYawDegrees(), 0xFFF3D8, active ? strength * 0.32F : 0.06F);
+        } else ground(consumer, pose, center, radius * 1.5, radius * 1.5, 0, 0xFFF3D8, active ? strength * 0.32F : 0.06F);
         buffers.endBatch(ConsortEnergyShader.ENERGY);
-        if (ring) {
-            ConsortEnergyShader.configure(13, clock, progress, 0);
-            consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-            ringWall(consumer, pose, center, (length + radius) / 2, active ? 2.6 * (1 - progress) + 0.2 : 0.3,
-                    0xFFF0B5, active ? strength * 0.8F : 0.25F, 48);
-            buffers.endBatch(ConsortEnergyShader.ENERGY);
-        }
         ConsortEnergyShader.configure(2, clock, progress, 0);
         consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
+        if (!corridor && !ring && active) {
+            double width = Math.max(0.9, Math.min(3.5, radius * 0.45));
+            double height = Math.min(32, 12 + radius * 2) * (1 - progress * 0.55);
+            pillar(consumer, pose, center, view, width, height, 0xFFFBF2, strength);
+            pillar(consumer, pose, center, view, width * 3.2, height * 1.08, 0xFFF2D0, strength * 0.14F);
+        }
         int columns = corridor ? Math.min(10, Math.max(3, (int) Math.ceil(length / 2))) : radius > 5 ? 12 : 6;
         for (int index = 0; index < columns; index++) {
             double ratio = (index + 0.5) / columns, angle = ratio * Math.PI * 2;
             Vec3 point = corridor ? center.add(direction.scale(length * ratio))
                     : center.add(Math.cos(angle) * radius * (ring ? 0.88 : 0.66), 0, Math.sin(angle) * radius * (ring ? 0.88 : 0.66));
-            double height = active ? (3 + Math.min(16, radius) * (index % 2 == 0 ? 1.0 : 0.65)) * (1 - progress * 0.75) : 0.55;
-            pillar(consumer, pose, point, view, active ? 0.45 + Math.min(0.7, radius * 0.06) : 0.14,
-                    height, 0xFFF0B5, active ? strength : 0.4F);
-        }
-        buffers.endBatch(ConsortEnergyShader.ENERGY);
-        if (!active) return;
-        ConsortEnergyShader.configure(7, clock, 1 - progress, 0);
-        consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-        Vec3 sparkleCenter = corridor ? center.add(direction.scale(length * 0.55)) : center;
-        for (int index = 0; index < 8; index++) {
-            double angle = index * Math.PI / 4 + progress;
-            Vec3 point = sparkleCenter.add(Math.cos(angle) * (1 + progress * 2.5), 0.8 + progress * 5 + index % 3,
-                    Math.sin(angle) * (1 + progress * 2.5));
-            sparkle(consumer, pose, point, view, 0.18 + (1 - progress) * 0.35, 0xFFF8DA, strength);
+            double height = active ? (5 + Math.min(20, radius * 1.5) * (index % 2 == 0 ? 1.0 : 0.75)) * (1 - progress * 0.6) : 0.55;
+            double width = active ? 0.7 + Math.min(1.0, radius * 0.08) : 0.14;
+            pillar(consumer, pose, point, view, width, height, 0xFFF7E8, active ? strength : 0.22F);
+            if (active) pillar(consumer, pose, point, view, width * 3.2, height * 1.1, 0xFFF1CC, strength * 0.14F);
         }
         buffers.endBatch(ConsortEnergyShader.ENERGY);
     }
 
-    private static void stompLayers(MultiBufferSource.BufferSource buffers, PoseStack.Pose pose, IndicatorSnapshotPacket snapshot,
-                                    double time, boolean active, float progress) {
-        if (snapshot.shapeType() != IndicatorSnapshotPacket.ShapeType.RECTANGLE) return;
-        Vec3 origin = anchor(snapshot).add(0, 0.2, 0), direction = forward(snapshot.directionYawDegrees());
-        Vec3 across = new Vec3(direction.z, 0, -direction.x);
+    public static int impactParticleCount(boolean stomp, long elapsed, int budgetRemaining) {
+        if (elapsed < 0 || elapsed >= (stomp ? 8 : 24)) return 0;
+        return Math.min(Math.max(0, budgetRemaining), stomp ? 24 : 14);
+    }
+
+    private static void impactParticles(IndicatorSnapshotPacket snapshot, long gameTick, boolean stomp) {
+        var minecraft = Minecraft.getInstance();
+        long elapsed = gameTick - snapshot.activeTick();
+        int budget = ElderBossesCommonConfig.VALUES.skillVfx().particleBudgetPerBossPerTick();
+        int count = impactParticleCount(stomp, elapsed, budget - PARTICLE_BUDGETS.getOrDefault(snapshot.bossEntityId(), 0));
+        if (count == 0 || snapshot.ranges().size() < 2) return;
+        var key = new VisualKey(snapshot.bossEntityId(), snapshot.indicatorId());
+        if (PARTICLE_TICKS.getOrDefault(key, Long.MIN_VALUE) == gameTick) return;
+        PARTICLE_TICKS.put(key, gameTick);
+        PARTICLE_BUDGETS.merge(snapshot.bossEntityId(), count, Integer::sum);
+        Vec3 origin = anchor(snapshot), forward = forward(snapshot.directionYawDegrees()), across = new Vec3(forward.z, 0, -forward.x);
         double length = snapshot.ranges().get(0), width = snapshot.ranges().get(1);
-        float strength = active ? 1 - progress : 0.28F;
-        ConsortEnergyShader.configure(12, (float) ((time % 24000) / 20), progress, 0);
-        VertexConsumer consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-        ground(consumer, pose, origin.add(direction.scale(length / 2)), width / 2, length / 2,
-                snapshot.directionYawDegrees(), 0xEFC78A, strength);
-        if (active) for (int row = 0; row < 4; row++) {
-            double advance = Math.min(1, progress * 2.5) - row * 0.13;
-            if (advance < 0) continue;
-            Vec3 ridge = origin.add(direction.scale(length * advance));
-            for (int piece = 0; piece < 7; piece++) {
-                Vec3 start = ridge.add(across.scale(width * ((piece + 0.5) / 7 - 0.5)));
-                Vec3 half = across.scale(width / 19), rise = new Vec3(0, (0.7 + piece % 3 * 0.35) * strength, 0);
-                quad(consumer, pose, start.subtract(half), start.add(half), start.add(half).add(rise),
-                        start.subtract(half).add(rise), 0xD6BA88, strength);
+        var random = new java.util.Random(snapshot.indicatorId().hashCode() * 31L + gameTick * 7919 + snapshot.bossEntityId());
+        var boss = minecraft.level.getEntity(snapshot.bossEntityId());
+        if (boss == null) return;
+        for (int index = 0; index < count; index++) {
+            double advance = stomp ? Math.min(1, (elapsed + random.nextDouble()) / 6.0) : random.nextDouble();
+            Vec3 point = origin.add(forward.scale(length * advance)).add(across.scale((random.nextDouble() - 0.5) * width));
+            if (!minecraft.level.hasChunkAt(net.minecraft.core.BlockPos.containing(point))) continue;
+            if (stomp) {
+                var contact = minecraft.level.clip(new net.minecraft.world.level.ClipContext(point.add(0, 2, 0), point.add(0, -3, 0),
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, boss));
+                if (contact.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK || contact.getDirection() != net.minecraft.core.Direction.UP) continue;
+                var state = minecraft.level.getBlockState(contact.getBlockPos());
+                if (state.isAir() || !state.getFluidState().isEmpty()) continue;
+                point = contact.getLocation().add(0, 0.07, 0);
+                var particle = minecraft.particleEngine.createParticle(new net.minecraft.core.particles.BlockParticleOption(net.minecraft.core.particles.ParticleTypes.BLOCK, state),
+                    point.x, point.y, point.z, forward.x * 0.25 + (random.nextDouble() - 0.5) * 0.4,
+                    0.25 + random.nextDouble() * 0.5, forward.z * 0.25 + (random.nextDouble() - 0.5) * 0.4);
+                if (particle != null) { particle.scale(2.0F + random.nextFloat()); particle.setLifetime(24 + random.nextInt(17)); }
+            } else {
+                point = point.add(0, 0.1 + random.nextDouble() * 1.4, 0);
+                var type = index % 5 == 0 ? net.minecraft.core.particles.ParticleTypes.SMOKE : net.minecraft.core.particles.ParticleTypes.FLAME;
+                var particle = minecraft.particleEngine.createParticle(type, point.x, point.y, point.z,
+                    (random.nextDouble() - 0.5) * 0.13, 0.05 + random.nextDouble() * 0.2, (random.nextDouble() - 0.5) * 0.13);
+                if (particle != null) { particle.scale(0.6F + random.nextFloat() * 0.7F); particle.setLifetime(10 + random.nextInt(15)); }
             }
         }
-        buffers.endBatch(ConsortEnergyShader.ENERGY);
-    }
-
-    private static void bloodflameLayers(MultiBufferSource.BufferSource buffers, PoseStack.Pose pose, IndicatorSnapshotPacket snapshot,
-                                        Vec3 view, double time, boolean active, float progress) {
-        if (snapshot.ranges().size() < 2 || snapshot.shapeType() != IndicatorSnapshotPacket.ShapeType.RECTANGLE
-                && snapshot.shapeType() != IndicatorSnapshotPacket.ShapeType.CAPSULE) return;
-        Vec3 origin = anchor(snapshot).add(0, 0.18, 0), direction = forward(snapshot.directionYawDegrees());
-        double length = snapshot.ranges().get(0), width = snapshot.ranges().get(1);
-        float clock = (float) ((time % 24000) / 20), strength = active ? 1 - progress * progress : 0.4F;
-        ConsortEnergyShader.configure(11, clock, progress, 0);
-        VertexConsumer consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-        int tongues = Math.min(14, Math.max(5, (int) Math.ceil(length * 1.3)));
-        for (int index = 0; index < tongues; index++) {
-            Vec3 point = origin.add(direction.scale(length * (index + 0.5) / tongues));
-            double height = active ? (2.8 + index % 3 * 0.65) * (1 - progress * 0.65) : 0.45;
-            pillar(consumer, pose, point, view, Math.max(0.4, width * 0.45), height, 0xC9213B, strength);
-            if (active) pillar(consumer, pose, point.add(0, 0.08, 0), view, Math.max(0.2, width * 0.23),
-                    height * 0.65, 0xFF9C47, strength * 0.88F);
-        }
-        buffers.endBatch(ConsortEnergyShader.ENERGY);
-        if (!active) return;
-        ConsortEnergyShader.configure(7, clock, 0, 0);
-        consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-        for (int index = 0; index < 12; index++) {
-            double rise = (progress + index / 12.0) % 1;
-            Vec3 point = origin.add(direction.scale(length * (index + 0.5) / 12)).add(Math.sin(index * 2.4) * width * 0.4,
-                    rise * 4.5 + 0.5, Math.cos(index * 2.4) * width * 0.4);
-            sparkle(consumer, pose, point, view, 0.12 + (1 - rise) * 0.12, 0xFF803B, strength * (float) (1 - rise));
-        }
-        buffers.endBatch(ConsortEnergyShader.ENERGY);
     }
 
     public static void ringWall(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center, double radius, double height,

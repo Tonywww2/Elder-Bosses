@@ -1,0 +1,86 @@
+{
+  "action": "spiral_assault",
+  "display_name": "Leaping Advance",
+  "duration_ticks": 79,
+  "contacts": [
+    35,
+    43
+  ],
+  "preserved_other_clips": 43,
+  "revision": "complete_jump_reset",
+  "control_ticks": [
+    0,
+    6,
+    10,
+    12,
+    16,
+    23,
+    28,
+    32,
+    35,
+    37,
+    40,
+    43,
+    50,
+    65,
+    79
+  ],
+  "maximum_grounded_takeoff_foot_error": 0.007388422166541726,
+  "authored_phases": {
+    "load": [
+      0,
+      10
+    ],
+    "takeoff": [
+      10,
+      12
+    ],
+    "flight": [
+      12,
+      28
+    ],
+    "downstroke_before_landing": [
+      28,
+      35
+    ],
+    "impact": [
+      35,
+      37
+    ],
+    "followup": [
+      37,
+      43
+    ],
+    "carry_and_recovery": [
+      43,
+      79
+    ]
+  },
+  "maximum_joint_degrees_per_half_tick": 33.82062230628578,
+  "maximum_trunk_rotation": 36,
+  "minimum_blade_tip_y": -0.6000015601986632,
+  "scope": "Original project-authored low-leap replacement; no original-game identity or new video correspondence claimed",
+  "current_sampled_review": {"image_bytes": 102904, "sampled_ticks": [0,6,10,12,23,32,35,43], "phases": [1,2], "panels": 16, "actual_editor_samples": 159, "minimum_chest_up_y": 0.6691306063588583, "static_inspected": true, "image_retained": false, "scope": "Authored poses only; complete moving-entity and visual clearance acceptance pending"},
+  "visual_accepted": false,
+  "world_tested": false,
+  "current_hashes": {
+    "animations/promised_consort.animation.json": "27bd92fbd1531d5a726a8af8e3770b4c97b5588aa02b638e69d0ff76e1b329f0",
+    "promised_consort.bbmodel": "e29e9276d2eea104a3a1dbba99849bebadb41932acf84d2aa12737bd5f0a92e8"
+  },
+  "validation": {
+    "status": "current_asset_contracts_passed",
+    "model": "promised_consort",
+    "checks": 1604603,
+    "bones": 125,
+    "cubes": 620,
+    "faces": 3481,
+    "animations": 44,
+    "editor_channels": 16500,
+    "editor_keys": 258225,
+    "runtime_files_match": true,
+    "editor_export_tolerance": 0.0001,
+    "historical_snapshots_required": false,
+    "visual_acceptance": "not_inferred",
+    "world_tested": false
+  }
+}

@@ -12,7 +12,7 @@
   "files": [
     {
       "source": "promised_consort.bbmodel",
-      "sha256": "9622d7761c470feb238d08c0c665f5c08ab404771f5c9b7fc997592e242289d0"
+      "sha256": "fbf84df58a06d546b75c89f1356bb145bb77a08a4c89b613b1775b1e4f02289b"
     },
     {
       "source": "geo/promised_consort.geo.json",
@@ -22,7 +22,7 @@
     {
       "source": "animations/promised_consort.animation.json",
       "runtime": "../../src/main/resources/assets/elder_bosses/animations/entity/promised_consort.animation.json",
-      "sha256": "6ad3090e0f05184223224d64ed03090cb5cb917a64b062ed2daf323255f39598"
+      "sha256": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50"
     },
     {
       "source": "textures/promised_consort.png",
@@ -41,6 +41,11 @@
     {
       "source": "surface_manifest.json",
       "sha256": "493f792d34d699f8cadca8860d218a8b9f17a38862b4c68c116a0bb4ad0d3dde"
+    },
+    {
+      "source": "animations/promised_consort_ranged.animation.json",
+      "runtime": "../../src/main/resources/assets/elder_bosses/animations/entity/promised_consort_ranged.animation.json",
+      "sha256": "0010fcf56ef17446c9676895190a3fda2685e1c1145714f23dc2f9499e89304a"
     }
   ],
   "acceptance": "Consolidation preserves current bytes and prior acceptance boundaries; not new visual or world acceptance"

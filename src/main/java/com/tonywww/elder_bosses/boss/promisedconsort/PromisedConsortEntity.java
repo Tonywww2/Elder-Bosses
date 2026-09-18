@@ -387,6 +387,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             return;
         }
 
+        applyThresholdGates();
         switch (combatState()) {
             case INTRO -> tickIntro();
             case TRANSITION -> tickTransition();
@@ -582,8 +583,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         } else if (scriptTick >= impactTick && !meteorLanded()) {
             setPosition(actionExecutor.lockedPoints().getOrDefault("meteor", combatCenter()));
             entityData.set(METEOR_LANDED, true);
-            playActionSound(PromisedConsortActionSoundPlan.cue("meteor_landing", PromisedConsortActionSoundPlan.Sound.METEOR, 1, 1),
-                    position(), new Vec2(0, 1));
+                for (var cue : PromisedConsortActionSoundPlan.meteorLanding()) playActionSound(cue, position(), new Vec2(0, 1));
         }
         List<PromisedConsortHitOutcome> outcomes = snapshot
                 .map(actionExecutor::tick)
@@ -601,6 +601,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private void tickStunned() {
+        if (transitionTriggered && phase() == PromisedConsortPhase.PHASE_ONE) {
+            setCombatState(PromisedConsortCombatState.PHASE_1);
+            tickCombat();
+            return;
+        }
         getNavigation().stop();
         processOutcomes(actionExecutor.tickPersistentHazards());
         if (stateTicks >= combatConfig.stagger().stunTicks()) {
@@ -1107,13 +1112,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     private void applyThresholdGates() {
-        if (combatState() == PromisedConsortCombatState.PHASE_1 && !transitionTriggered) {
-            float threshold = (float) (getMaxHealth() * combatConfig.general().phaseTwoHealthRatio());
+        if (combatConfig == null || finalizingDefeat || skillTestAction != null) return;
+        if (protectsPhaseTransition()) {
+            float threshold = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortPhaseGate.threshold(
+                getMaxHealth(), combatConfig.general().phaseTwoHealthRatio());
             if (getHealth() <= threshold) {
                 transitionTriggered = true;
-                if (combatConfig.phaseTransition().damageGate()) {
-                    super.setHealth(threshold);
-                }
+                super.setHealth(threshold);
             }
         } else if (combatState() == PromisedConsortCombatState.PHASE_2
             && !meteorTriggered
@@ -1131,6 +1136,15 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     public void setHealth(float health) {
+        if (protectsPhaseTransition()) {
+            float threshold = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortPhaseGate.threshold(
+                getMaxHealth(), combatConfig.general().phaseTwoHealthRatio());
+            if (health <= threshold || transitionTriggered) {
+                transitionTriggered = true;
+                health = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortPhaseGate.protect(
+                    health, getHealth(), getMaxHealth(), combatConfig.general().phaseTwoHealthRatio());
+            }
+        }
         if (applyingIncomingDamage && combatConfig != null) {
                 if (combatState() == PromisedConsortCombatState.PHASE_1 && !transitionTriggered
                     && combatConfig.phaseTransition().damageGate()
@@ -1162,6 +1176,12 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             }
         }
         super.setHealth(health);
+    }
+
+    private boolean protectsPhaseTransition() {
+        return combatConfig != null && !level().isClientSide && !finalizingDefeat && skillTestAction == null
+            && phase() == PromisedConsortPhase.PHASE_ONE && combatState() != PromisedConsortCombatState.DORMANT
+            && combatState() != PromisedConsortCombatState.DEFEATED;
     }
 
     private void recordIncomingDamage(DamageSource source, double actualLoss) {
@@ -1283,6 +1303,18 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         if (finalizingDefeat) {
             super.die(source);
+            return;
+        }
+        if (protectsPhaseTransition()) {
+            transitionTriggered = true;
+            super.setHealth(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortPhaseGate.threshold(
+                getMaxHealth(), combatConfig.general().phaseTwoHealthRatio()));
+            deathTime = 0;
+            if (combatController != null) combatController.cancel();
+            if (actionExecutor != null) actionExecutor.clearAll();
+            currentAction = null;
+            clearSyncedAction();
+            setCombatState(PromisedConsortCombatState.TRANSITION);
             return;
         }
         super.setHealth(1.0F);
@@ -2664,7 +2696,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             Item charged = BuiltInRegistries.ITEM.get(PlatformResourceLocation.parse(combatConfig.visuals().gravityProjectileBlock()));
             if (!(charged instanceof BlockItem)) charged = net.minecraft.world.item.Items.CRYING_OBSIDIAN;
             rock.setItem(new ItemStack(state.getBlock().asItem()));
-            rock.prepareHeld(origin, action.startGameTick() + riseTick, action.startGameTick() + timeline.activeStartTick(index), count, charged);
+            int gather = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortMeteorSequence.from(timeline).crestTick() - riseTick;
+            rock.prepareHeld(origin, action.startGameTick() + riseTick, action.startGameTick() + timeline.activeStartTick(index), count, charged, gather);
             if (level().noCollision(rock, rock.getBoundingBox()) && level().addFreshEntity(rock)) activeRockIds.add(rock.getId());
         }
         }

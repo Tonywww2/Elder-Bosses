@@ -47,6 +47,11 @@ public final class ArenaContractCheck {
     private static int checks;
 
     public static void main(String[] arguments) throws Exception {
+        if (arguments.length == 1 && arguments[0].equals("--terrain-only")) {
+            terrain();
+            System.out.println("Arena terrain checks passed: " + checks);
+            return;
+        }
         if (arguments.length == 4 && arguments[0].equals("--saved-arena")) {
             savedArena(Path.of(arguments[1]), Integer.parseInt(arguments[2]), Integer.parseInt(arguments[3]));
             return;
@@ -203,7 +208,7 @@ public final class ArenaContractCheck {
         rejected(() -> PromisedConsortArenaSite.from(layout, Map.of(new BlockPos(0, 0, 12), -13)), "foundation outside part height rejected");
     }
 
-    private static void terrain() {
+    private static void terrain() throws Exception {
         var rule = new PromisedConsortArenaTerrain(4, 1);
         var flat = List.of(new SurfaceSample(64, false, true, true, -12), new SurfaceSample(64, false, true, false, -12));
         check(rule.placementHeight(flat, 64, -12, 29, -64, 320).orElseThrow() == 71, "origin is entrance +7; combat feet +8");
@@ -259,7 +264,7 @@ public final class ArenaContractCheck {
         check(desertReads[0] == 104, "Terrain rejection still stops sampling early without diagnostic counters");
         check(relaxed.placementHeight(measuredSpanPrefix, 65, -13, 47, -64, 320).orElseThrow() == 72,
             "Supported five-block test site passes with relaxed tolerance and valid entry reference");
-        var adapted = PromisedConsortArenaTerrain.DEFAULT;
+        var adapted = new PromisedConsortArenaTerrain(12, 1);
         check(adapted.equals(new PromisedConsortArenaTerrain(12, 1)), "Approved desert terrain adaptation");
         var entry = new SurfaceSample(70, false, true, true, -20);
         check(adapted.placementHeight(List.of(entry, new SurfaceSample(58, false, true, false, -20)), 70, -21, 47, -64, 320)
@@ -274,6 +279,61 @@ public final class ArenaContractCheck {
             .isEmpty(), "Water remains disallowed after biome scope changes");
         check(adapted.placementHeight(List.of(new SurfaceSample(-60, false, true, true, -20)), -60, -21, 47, -64, 320)
             .isEmpty(), "Deeper fixed foundation cannot cross world bottom");
+        waterTerrain();
+    }
+
+    private static void waterTerrain() throws Exception {
+        net.minecraft.SharedConstants.tryDetectVersion();
+        var bootstrap = net.minecraft.server.Bootstrap.class.getDeclaredField("isBootstrapped");
+        bootstrap.setAccessible(true);
+        if (!bootstrap.getBoolean(null)) {
+            bootstrap.setBoolean(null, true);
+            net.minecraft.core.registries.BuiltInRegistries.bootStrap();
+        }
+        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
+            for (var state : block.getStateDefinition().getPossibleStates()) state.initCache();
+        }
+        var rule = PromisedConsortArenaTerrain.DEFAULT;
+        var stone = net.minecraft.world.level.block.Blocks.STONE.defaultBlockState();
+        var water = net.minecraft.world.level.block.Blocks.WATER.defaultBlockState();
+        var flowing = water.setValue(net.minecraft.world.level.block.LiquidBlock.LEVEL, 1);
+        var lava = net.minecraft.world.level.block.Blocks.LAVA.defaultBlockState();
+        var air = net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
+        check(!water.getFluidState().isEmpty() && !lava.getFluidState().isEmpty() && stone.getFluidState().isEmpty(), "offline fluid calibration");
+        check(rule.equals(new PromisedConsortArenaTerrain(16, 4, 4, 25)), "approved terrain and water defaults");
+        var entry = new SurfaceSample(70, false, true, true, -28);
+        check(rule.placementHeight(List.of(entry, new SurfaceSample(54, false, true, false, -28)), 70, -29, 47, -64, 320).orElseThrow() == 77,
+                "sixteen-block surface depression accepted");
+        check(rule.placementHeight(List.of(entry, new SurfaceSample(87, false, true, false, -28)), 70, -29, 47, -64, 320).isEmpty(), "seventeen-block span rejected");
+        check(rule.placementHeight(List.of(entry, new SurfaceSample(74, false, true, true, -28)), 70, -29, 47, -64, 320).isPresent(), "four-block entry accepted");
+        check(rule.placementHeight(List.of(entry, new SurfaceSample(75, false, true, true, -28)), 70, -29, 47, -64, 320).isEmpty(), "five-block entry rejected");
+        check(rule.placementHeight(List.of(entry), 300, -29, 47, -64, 320).isEmpty(), "world ceiling retained");
+        check(rule.placementHeight(List.of(new SurfaceSample(-43, false, true, true, -28)), -43, -29, 47, -64, 320).isEmpty(), "world floor retained");
+        var dry = rule.sampleColumn(70, -28, -64, height -> stone);
+        var wet = rule.sampleColumn(54, -28, -64, height -> height >= 50 ? water : stone);
+        check(wet.waterDepth() == 4 && wet.groundSupported(), "four-block water depth is measured against solid bed");
+        check(rule.supportsColumns(List.of(dry, dry, dry, wet), 77, 4), "16 surface drop plus 4 water depth embeds -28 foundation by one block at 25 percent");
+        var equality = new PromisedConsortArenaTerrain.ColumnSample(54, 4, true, -27);
+        check(!rule.supportsColumns(List.of(dry, dry, dry, equality), 77, 4), "bed equality is not embedment");
+        var deep = rule.sampleColumn(54, -28, -64, height -> height >= 49 ? water : stone);
+        check(deep.waterDepth() == 5 && !rule.supportsColumns(List.of(dry, dry, dry, deep), 77, 4), "five-block water rejected");
+        check(!rule.sampleColumn(54, -28, -64, height -> lava).groundSupported(), "lava surface rejected");
+        check(!rule.sampleColumn(54, -28, -64, height -> height >= 50 ? water : lava).groundSupported(), "lava beneath water rejected");
+        check(!rule.sampleColumn(54, -28, -64, height -> height >= 50 ? water : air).groundSupported(), "water over unsupported air rejected");
+        check(rule.sampleColumn(54, -28, -64, height -> height >= 50 ? flowing : stone).waterDepth() == 4, "flowing water counts toward depth");
+        var columns = new java.util.ArrayList<PromisedConsortArenaTerrain.ColumnSample>();
+        for (int index = 0; index < 685; index++) columns.add(index < 171 ? wet : dry);
+        check(rule.supportsColumns(columns, 77, 685), "171 of 685 wet samples within 25 percent");
+        columns.set(171, wet);
+        check(!rule.supportsColumns(columns, 77, 685), "172 of 685 wet samples exceeds 25 percent");
+        check(!rule.supportsColumns(List.of(dry), 77, 685) && !rule.supportsColumns(List.of(dry, dry), 77, 1), "exact sample denominator required");
+        var wetEntry = rule.sampleColumn(70, -28, -64, height -> height >= 66 ? water : stone);
+        check(rule.supportsColumns(List.of(wetEntry, dry, dry, dry), 77, 4), "entry water follows the same depth and ratio rules");
+        var encoded = PromisedConsortArenaTerrain.CODEC.encodeStart(JsonOps.INSTANCE, rule).result().orElseThrow();
+        check(PromisedConsortArenaTerrain.CODEC.parse(JsonOps.INSTANCE, encoded).result().orElseThrow().equals(rule), "water settings codec round trip");
+        for (String invalid : List.of("{\"max_water_depth\":-1}", "{\"max_water_depth\":65}", "{\"max_water_percentage\":101}", "{\"allow_lava\":1}")) {
+            check(PromisedConsortArenaTerrain.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(invalid)).error().isPresent(), "invalid water data rejected");
+        }
     }
 
     private static void compressedTemplates() throws Exception {
@@ -525,11 +585,14 @@ public final class ArenaContractCheck {
             .equals(PromisedConsortArenaTerrain.DEFAULT), "approved terrain rules");
         JsonObject placement = json(data.resolve("worldgen/structure_set/promised_consort_arena.json")).getAsJsonObject("placement");
         check(placement.get("type").getAsString().equals("minecraft:random_spread"), "surface candidate distribution");
-        check(placement.get("spacing").getAsInt() == 96 && placement.get("separation").getAsInt() == 32, "approved rarity");
+        check(placement.get("spacing").getAsInt() == 48 && placement.get("separation").getAsInt() == 16, "approved candidate density");
         check(placement.get("salt").getAsInt() == 19660916, "stable generation salt");
         var biomes = json(data.resolve("tags/worldgen/biome/has_structure/promised_consort_arena.json"));
-        check(!biomes.get("replace").getAsBoolean() && biomes.getAsJsonArray("values").size() == 1
-            && biomes.getAsJsonArray("values").get(0).getAsString().equals("minecraft:desert"), "default desert only, extensible tag");
+        var allowedBiomes = new HashSet<String>();
+        for (var biome : biomes.getAsJsonArray("values")) allowedBiomes.add(biome.getAsString());
+        check(!biomes.get("replace").getAsBoolean() && biomes.getAsJsonArray("values").size() == 7
+            && allowedBiomes.equals(Set.of("minecraft:desert", "minecraft:badlands", "minecraft:eroded_badlands", "minecraft:wooded_badlands",
+                "minecraft:savanna", "minecraft:savanna_plateau", "minecraft:windswept_savanna")), "approved desert badlands and savanna families");
         for (String block : BLOCKS) {
             JsonObject variants = json(assets.resolve("blockstates/" + block + ".json")).getAsJsonObject("variants");
             check(variants.size() == (block.equals("weathered_divine_stone") ? 1 : 4), "variant count " + block);
@@ -612,10 +675,10 @@ public final class ArenaContractCheck {
         JsonObject manifest = json(Path.of("models/promised_consort/arena/production_manifest.json"));
         check(manifest.get("user_approved_for_mod_integration").getAsBoolean(), "Authored arena is approved for integration");
         check(manifest.get("authored_source_sha256").getAsString().equals("a24b812f06138f3a2eb55d05f45d28e75d241ecd306aceb23e1f12b634dd2722"), "Publication retains accepted v7 architecture");
-        check(manifest.get("revision").getAsString().equals("promised_consort_arena_v8")
-            && manifest.get("original_v7_voxels_unchanged").getAsBoolean(), "Approved fixed foundation revision");
-        check(manifest.get("foundation_bottom_y").getAsInt() == -20 && manifest.get("foundation_extension_blocks").getAsInt() == 99944,
-            "Eight fixed layers under the original footprint");
+        check(manifest.get("revision").getAsString().equals("promised_consort_arena_v9")
+            && manifest.get("original_v7_voxels_unchanged").getAsBoolean() && manifest.get("original_v8_voxels_unchanged").getAsBoolean(), "Approved fixed foundation revision");
+        check(manifest.get("foundation_bottom_y").getAsInt() == -28 && manifest.get("foundation_extension_blocks").getAsInt() == 199888
+                && manifest.get("foundation_added_since_v8").getAsInt() == 99944, "Eight additional fixed layers below v8");
         String target = neo ? "1.21.1-neoforge" : "1.20.1-forge";
         JsonObject version = null;
         for (var value : manifest.getAsJsonArray("versions")) {
@@ -661,7 +724,7 @@ public final class ArenaContractCheck {
         var layout = PromisedConsortArenaLayout.read(metadata, templates);
         check(layout.parts().size() == 26 && layout.anchors().get("arena_center").equals(new BlockPos(0, 1, 0)), "Production parts and combat anchor");
         check(layout.anchors().get("summon_altar").equals(new BlockPos(8, 1, 43)), "Production altar anchor");
-        check(authoredBlocks == 256606 && explicitAir == 371456, "Accepted architecture plus fixed foundation and unchanged clearing totals");
+        check(authoredBlocks == 356550 && explicitAir == 371456, "Accepted architecture plus fixed foundation and unchanged clearing totals");
         Map<BlockPos, Integer> foundations = new HashMap<>();
         for (var part : layout.parts()) {
             var template = templates.get(part.name());
@@ -674,9 +737,9 @@ public final class ArenaContractCheck {
                         part.offset().getY() + position.getInt(1), Math::min);
             }
         }
-        check(foundations.size() == 12493 && foundations.values().stream().allMatch(bottom -> bottom == -20), "All authored foundation columns reach fixed -20");
+        check(foundations.size() == 12493 && foundations.values().stream().allMatch(bottom -> bottom == -28), "All authored foundation columns reach fixed -28");
         var site = PromisedConsortArenaSite.from(layout, foundations);
-        check(site.samples().size() == 685 && site.minimumY() == -21 && site.maximumY() == 47, "Sampling footprint and vertical bounds");
+        check(site.samples().size() == 685 && site.minimumY() == -29 && site.maximumY() == 47, "Sampling footprint and vertical bounds");
         try (var namespaces = Files.list(root.resolve("data"))) {
             check(namespaces.noneMatch(path -> path.getFileName().toString().startsWith("elder_bosses_preflight")), "No development namespace in module resources");
         }

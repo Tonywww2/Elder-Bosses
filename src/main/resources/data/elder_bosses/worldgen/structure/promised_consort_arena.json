@@ -5,7 +5,9 @@
   "spawn_overrides": {},
   "terrain_adaptation": "none",
   "terrain": {
-    "max_height_difference": 12,
-    "max_entry_height_difference": 1
+    "max_height_difference": 16,
+    "max_entry_height_difference": 4,
+    "max_water_depth": 4,
+    "max_water_percentage": 25
   }
 }

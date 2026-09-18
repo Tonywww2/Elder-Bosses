@@ -702,7 +702,7 @@
 
 		[promised_consort.skills.gravity_meteor]
 			body_range = 4.5
-			windup_ticks = [86, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			windup_ticks = [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			hyper_armor_active = true
 			weight = 0.7
 			projectile_lifetime_ticks = 60

@@ -49,7 +49,8 @@ public final class PromisedConsortAttackPlan {
                                       ActionTimeline timeline, Vec3 position, Vec2 facing,
                                       Map<String, Vec3> points, int lead) {
         var plan = new PromisedConsortAttackPlan(action, skill, timeline, position, facing, points, lead);
-        if(action.rangedCounter() || action.actionId().rangedDefense()) {
+        if(action.rangedCounter() && action.actionId() != PromisedConsortActionId.SPIRAL_ASSAULT
+            && action.actionId() != PromisedConsortActionId.GRAVITY_DIVE || action.actionId().rangedDefense()) {
             plan.rangedPlan();
             return List.copyOf(plan.strikes);
         }
@@ -69,7 +70,10 @@ public final class PromisedConsortAttackPlan {
         if (!sequence.usable()) return;
         stageIndex = 0;
         Vec3 origin = points.getOrDefault("meteor_cast_origin", position);
-        add("meteor_ground", sector(origin, skill.numbers().getOrDefault("sword_range", 4.5), 140), origin.y,
+        Vec2 side = new Vec2(facing.z(), -facing.x());
+        var cut = new Sector(new Vec2(origin.x, origin.z).subtract(side.scale(REAR_REACH)), side,
+            range(skill.numbers().getOrDefault("sword_range", 4.5)) + REAR_REACH, Math.toRadians(70));
+        add("meteor_ground", cut, origin.y,
                 0, sequence.groundTick(), sequence.groundTick() + 1, StyleRole.PHYSICAL_GOLD, true);
         if (action.phase() == PromisedConsortPhase.PHASE_TWO) {
             Vec3 landing = points.getOrDefault("meteor_cast_end", sequence.landing(origin, points.getOrDefault("target", origin), 4));
@@ -140,10 +144,15 @@ public final class PromisedConsortAttackPlan {
         Vec3 target = points.getOrDefault("target", position);
         switch (action.actionId()) {
             case GRAVITY_DIVE -> {
-                Vec3 landing = points.getOrDefault("attack_origin:sword", lunge(target, number("range")));
+                if (action.rangedCounter()) hit += skill.integerList("ranged_counter.attack_event_offsets").get(index);
+                int offset = action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+                var path = PromisedConsortCrossLeapPath.gravityDive(timeline, offset);
+                Vec3 origin = points.getOrDefault("dive_origin", position);
+                Vec3 landing = points.getOrDefault("dive_end", path.destination(origin, target,
+                    path.maximumDistance(action.rangedCounter() ? number("ranged_counter.max_forward_distance") : 16), 1.5));
                 if (stageCount > 1) {
                     add(index == 0 ? "sword" : "impact", circle(landing, number("range") * (index == 0 ? 0.65 : 1.0)), landing.y,
-                        Math.min(start, Math.max(0, hit - lead)), hit, hit + 1,
+                        0, hit, hit + 1,
                         index == 0 ? StyleRole.PHYSICAL_GOLD : StyleRole.GRAVITY_PURPLE, index == 0);
                     break;
                 }
@@ -248,19 +257,16 @@ public final class PromisedConsortAttackPlan {
                 add("debris", capsule(position, facing, number("debris_range"), 2, false), start, hit + ticks(2), StyleRole.PHYSICAL_GOLD, false);
             }
             case SPIRAL_ASSAULT -> {
-                if (stageCount > 1) {
-                    int movementTicks = timeline.activeTicksBetween(0, timeline.totalTicks());
-                    Vec3 destination = movingOrigin(hit, timeline.activeStartTick(0), movementTicks, true, false);
-                    add(index == 0 ? "spin" : "slam", index == 0 ? capsule(destination, facing, number("range"), number("width"), false)
-                        : circle(destination, 3.5), destination.y, Math.min(start, Math.max(0, hit - lead)), hit, hit + 1,
-                        StyleRole.PHYSICAL_GOLD, true);
-                    break;
-                }
-                Vec3 opening = movingOrigin(hit, hit, active, true, false);
-                add("spin", capsule(opening, facing, number("range"), number("width"), false), opening.y,
-                    start, hit, hit + 1, StyleRole.PHYSICAL_GOLD, true);
-                Vec3 landing = movingOrigin(hit + active - 1, hit, active, true, false);
-                add("slam", circle(landing, 3.5), landing.y, start, hit + active - 1, hit + active, StyleRole.PHYSICAL_GOLD, true);
+                if (action.rangedCounter()) hit += skill.integerList("ranged_counter.attack_event_offsets").get(index);
+                int offset = action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+                var path = PromisedConsortCrossLeapPath.advance(timeline, offset);
+                Vec3 origin = points.getOrDefault("advance_origin", position);
+                Vec3 landing = points.getOrDefault("advance_end", path.advanceDestination(origin, target,
+                    new Vec3(facing.x(), 0, facing.z()), action.rangedCounter() ? number("ranged_counter.max_forward_distance") : 16));
+                add(index == 0 ? "spin" : "slam", index == 0 ? sector(landing, number("range"), 140) : circle(landing, 3.5),
+                        landing.y, 0, hit, hit + 1, StyleRole.PHYSICAL_GOLD, true);
+                if (stageCount == 1) add("slam", circle(landing, 3.5), landing.y, 0, hit + active - 1, hit + active, StyleRole.PHYSICAL_GOLD, true);
+                break;
             }
             case LIGHT_OF_MIQUELLA -> {
                 if (stageCount > 1) {
@@ -399,6 +405,7 @@ public final class PromisedConsortAttackPlan {
     private void add(String id, HorizontalShape shape, double height, int start, int hit, int end, StyleRole style, boolean guard) {
         if (style == StyleRole.PHYSICAL_GOLD && action.actionId() != PromisedConsortActionId.CONSORT_METEOR) {
             shape = expandMelee(shape);
+            if (guard) shape = expandShape(shape, comboReachMultiplier(action.actionId()));
         }
         shape = expandShape(shape, closeImpactMultiplier(action.actionId()));
         long origin = action.startGameTick();
@@ -414,6 +421,15 @@ public final class PromisedConsortAttackPlan {
         if ((action.actionId() == PromisedConsortActionId.LION_CLAW || action.actionId() == PromisedConsortActionId.LION_CLAW_DOUBLE)
             && points.containsKey("lion_lock")) lock = Math.max(start, Math.min(hit - 1, (int) points.get("lion_lock").x));
         if (action.actionId() == PromisedConsortActionId.GRAVITY_METEOR && id.equals("meteor_body")) lock = start;
+        if (action.actionId() == PromisedConsortActionId.GRAVITY_DIVE) {
+            int offset = action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+            start = 0;
+            lock = PromisedConsortCrossLeapPath.gravityDive(timeline, offset).takeoffTick();
+        }
+        if (action.actionId() == PromisedConsortActionId.SPIRAL_ASSAULT) {
+            int offset = action.rangedCounter() ? skill.integerList("ranged_counter.attack_event_offsets").get(0) : 0;
+            lock = PromisedConsortCrossLeapPath.advance(timeline, offset).takeoffTick();
+        }
         if (action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO) {
             if (id.equals("opening_0")) lock = PromisedConsortCrossLeapPath.opening(timeline, skill.number("leap_height")).takeoffTick();
             if (id.equals("finisher")) lock = PromisedConsortCrossLeapPath.finisher(timeline, skill.number("leap_height")).takeoffTick();
@@ -427,6 +443,14 @@ public final class PromisedConsortAttackPlan {
     public static double closeImpactMultiplier(PromisedConsortActionId action) {
         return switch (action) {
             case LION_CLAW, LION_CLAW_DOUBLE, STOMP, GRAVITY_DIVE -> 1.5;
+            default -> 1.0;
+        };
+    }
+
+    public static double comboReachMultiplier(PromisedConsortActionId action) {
+        return switch (action) {
+            case L_COMBO_CROSS, R_COMBO_CROSS, R_COMBO_LEFT_TWIN, L_COMBO_BLOODFLAME,
+                 R_COMBO_TEMPEST, R_COMBO_EARTHHEAVE, PROMISED_CONSORT, CROSS_LEAP_COMBO -> 1.15;
             default -> 1.0;
         };
     }

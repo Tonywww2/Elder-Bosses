@@ -4,6 +4,9 @@ import com.tonywww.elder_bosses.combat.action.ActionTimeline;
 import net.minecraft.world.phys.Vec3;
 
 public record PromisedConsortMeteorSequence(int groundTick, int riseTick, int crestTick, int landingLockTick, int landingTick) {
+    public static final int AUTHORED_RISE_TICK = 28;
+    public static final int AUTHORED_CREST_TICK = 45;
+
     public static PromisedConsortMeteorSequence from(ActionTimeline timeline) {
         int first = timeline.activeStartTick(0);
         int rocks = timeline.stages().size() - 4;
@@ -11,8 +14,10 @@ public record PromisedConsortMeteorSequence(int groundTick, int riseTick, int cr
         int land = Math.min(timeline.totalTicks() - 1, timeline.activeEndTick(last)
                 + (int) Math.ceil(timeline.stages().get(last).recoveryTicks() * 6.0 / 14));
         if (land <= timeline.activeEndTick(last)) land = 0;
-        return new PromisedConsortMeteorSequence((int) Math.ceil(first * 21.0 / 90),
-                (int) Math.ceil(first * 35.0 / 90), (int) Math.ceil(first * 63.0 / 90),
+        int ground = Math.max(1, (int) Math.ceil(first * 12.0 / 50));
+        int rise = ground + Math.max(1, (int) Math.ceil(first * 3.0 / 50));
+        int crest = Math.min(first - 1, rise + Math.min(16, Math.max(1, (int) Math.ceil(first * 16.0 / 50))));
+        return new PromisedConsortMeteorSequence(ground, rise, crest,
                 timeline.activeStartTick(Math.max(0, rocks)), land);
     }
 
@@ -21,7 +26,7 @@ public record PromisedConsortMeteorSequence(int groundTick, int riseTick, int cr
     }
 
     public double height() {
-        return Math.min(8, Math.min(crestTick - riseTick, landingTick - landingLockTick) * 0.45);
+        return Math.min(8, Math.min((crestTick - riseTick) * 0.6, (landingTick - landingLockTick) * 0.45));
     }
 
     public Vec3 landing(Vec3 origin, Vec3 target, double separation) {
@@ -31,12 +36,22 @@ public record PromisedConsortMeteorSequence(int groundTick, int riseTick, int cr
     }
 
     public Vec3 at(Vec3 origin, Vec3 landing, double tick) {
+        return at(origin, origin.add(0, height(), 0), landing, tick);
+    }
+
+    public Vec3 crest(Vec3 origin, Vec3 forward) {
+        double distance = Math.min(8, Math.min((crestTick - riseTick) * 0.55, (landingTick - landingLockTick) * 0.35));
+        Vec3 direction = forward.multiply(1, 0, 1).normalize();
+        return origin.add(direction.scale(distance)).add(0, height(), 0);
+    }
+
+    public Vec3 at(Vec3 origin, Vec3 crest, Vec3 landing, double tick) {
         if (tick <= riseTick) return origin;
-        if (tick < crestTick) return origin.add(0, height() * smooth((tick - riseTick) / (crestTick - riseTick)), 0);
-        if (tick <= landingLockTick) return origin.add(0, height(), 0);
+        if (tick < crestTick) return origin.lerp(crest, smooth((tick - riseTick) / (crestTick - riseTick)));
+        if (tick <= landingLockTick) return crest;
         if (tick >= landingTick) return landing;
         double progress = smooth((tick - landingLockTick) / (landingTick - landingLockTick));
-        return origin.lerp(landing, progress).add(0, height() * (1 - progress), 0);
+        return crest.lerp(landing, progress);
     }
 
     private static double smooth(double value) { return value * value * (3 - 2 * value); }

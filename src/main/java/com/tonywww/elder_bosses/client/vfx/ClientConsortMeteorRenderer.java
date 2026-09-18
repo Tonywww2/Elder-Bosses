@@ -48,13 +48,17 @@ public final class ClientConsortMeteorRenderer {
                 }
                 if (meteor) {
                     var marker = impact(boss);
-                    if (marker != null) {
+                    if (marker != null && (cached == null || !cached.landed())) {
                         double outer = ClientIndicatorStateStore.snapshots().stream()
                                 .filter(value -> value.bossEntityId() == boss.getId() && value.indicatorId().endsWith(":outer")
                                         && value.activeTick() == marker.activeTick())
                                 .mapToDouble(value -> value.ranges().get(1)).max().orElse(marker.ranges().get(0));
                         cached = new ImpactVisual(boss.actionSeed(), new Vec3(marker.anchor().x(), marker.anchor().y(), marker.anchor().z()),
-                                marker.ranges().get(0), outer, marker.activeTick());
+                                marker.ranges().get(0), outer, marker.activeTick(), false);
+                        IMPACTS.put(boss, cached);
+                    }
+                    if (cached != null && boss.meteorLanded() && !cached.landed()) {
+                        cached = new ImpactVisual(cached.seed(), cached.center(), cached.core(), cached.outer(), (long) now, true);
                         IMPACTS.put(boss, cached);
                     }
                 }
@@ -141,13 +145,14 @@ public final class ClientConsortMeteorRenderer {
                                      ImpactVisual impact, double now) {
         double elapsed = now - impact.tick();
         if (elapsed < -29 || elapsed >= 40) return;
+        if (!impact.landed() && elapsed >= 0) return;
         float time = (float) ((now % 24000) / 20);
         Vec3 center = impact.center().add(0, 0.18, 0);
         Vec3 across = view.subtract(center).multiply(1, 0, 1).normalize().cross(new Vec3(0, 1, 0));
         if (across.lengthSqr() < 0.01) across = new Vec3(1, 0, 0);
         if (elapsed < 0) {
             float charge = (float) smooth(-29, 0, elapsed);
-            ConsortEnergyShader.configure(1, time, charge, 0);
+            ConsortEnergyShader.configure(10, time, charge, 0);
             VertexConsumer consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
             ground(consumer, pose, center, impact.core() * (1.0 - charge * 0.55), 0xFFE3A3, 0.35F + charge * 0.5F);
             buffers.endBatch(ConsortEnergyShader.ENERGY);
@@ -167,6 +172,10 @@ public final class ClientConsortMeteorRenderer {
             return;
         }
         float strength = (float) impactEnvelope(elapsed);
+        ConsortEnergyShader.configure(15, time, (float) (elapsed / 40), 0);
+        VertexConsumer fractures = buffers.getBuffer(ConsortEnergyShader.ENERGY);
+        ground(fractures, pose, center.add(0, 0.025, 0), impact.outer(), 0xE6A84C, strength);
+        buffers.endBatch(ConsortEnergyShader.ENERGY);
         ConsortEnergyShader.configure(5, time, (float) smooth(0, 24, elapsed), 0);
         VertexConsumer consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
         ground(consumer, pose, center, impact.outer(), 0xFFD27A, strength);
@@ -248,7 +257,7 @@ public final class ClientConsortMeteorRenderer {
                 center.add(half).add(0, height, 0), center.subtract(half).add(0, height, 0), 0xFFF0BE, alpha);
     }
 
-    private record ImpactVisual(long seed, Vec3 center, double core, double outer, long tick) {
+    private record ImpactVisual(long seed, Vec3 center, double core, double outer, long tick, boolean landed) {
     }
 
     private static Vec3 visualPosition(PromisedConsortEntity boss, float partialTick) {

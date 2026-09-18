@@ -53,7 +53,7 @@ public final class ModEntities {
                                     PromisedConsortGravityRockEntity::new,
                                     MobCategory.MISC
                             )
-                            .sized(0.75F, 0.75F)
+                            .sized(PromisedConsortGravityRockEntity.COLLISION_SIZE, PromisedConsortGravityRockEntity.COLLISION_SIZE)
                             .clientTrackingRange(8)
                             .updateInterval(1)
                             .build(ElderBosses.MOD_ID + ":promised_consort_gravity_rock")

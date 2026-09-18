@@ -71,7 +71,8 @@ public final class ClientModEvents {
         );
         event.registerEntityRenderer(
             ModEntities.PROMISED_CONSORT_GRAVITY_ROCK.get(),
-            context -> new ThrownItemRenderer<>(context)
+            context -> new ThrownItemRenderer<>(context,
+                com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE, false)
         );
         event.registerEntityRenderer(
             ModEntities.PROMISED_CONSORT_CLONE.get(),

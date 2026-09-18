@@ -75,7 +75,7 @@ public final class VfxRenderCheck {
                 return;
             }
             List<Sample> results = new ArrayList<>();
-            for (int mode : new int[]{10,11,12,13,14}) {
+            for (int mode : new int[]{2,4,10,11,12,13,14,15}) {
                 byte[] first = null;
                 for (float time : new float[]{1,2}) {
                     GL11.glClearColor(0,0,0,0);
@@ -99,6 +99,17 @@ public final class VfxRenderCheck {
                             throw new AssertionError("Invisible or unmasked shader mode " + mode + ": " + lit + "/" + maximum);
                         }
                         if (first != null && Arrays.equals(first,data)) throw new AssertionError("Static shader mode " + mode);
+                        if (mode == 2 || mode == 10) {
+                            int previousAlpha = 256;
+                            for (int horizontal = SIZE / 2; horizontal < SIZE - 2; horizontal += 8) {
+                                int alpha = Byte.toUnsignedInt(data[(SIZE / 2 * SIZE + horizontal) * 4 + 3]);
+                                if (alpha > previousAlpha + 1) throw new AssertionError("Light contains rings or repeated patterns instead of smooth falloff");
+                                previousAlpha = alpha;
+                            }
+                            int coreAlpha = Byte.toUnsignedInt(data[(SIZE / 2 * SIZE + SIZE / 2) * 4 + 3]);
+                            int glowAlpha = Byte.toUnsignedInt(data[(SIZE / 2 * SIZE + SIZE * 3 / 4) * 4 + 3]);
+                            if (coreAlpha <= glowAlpha || glowAlpha == 0) throw new AssertionError("Missing dim outer light halo: mode" + mode + "/" + coreAlpha + "/" + glowAlpha);
+                        }
                         first = data;
                         results.add(new Sample(mode,time,lit,maximum));
                     } finally {
@@ -112,7 +123,7 @@ public final class VfxRenderCheck {
                     "Actual project shaders; not in-world visual acceptance");
             Files.writeString(Path.of("models/promised_consort/vfx_render_validation.json"),
                     new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(report) + "\n");
-            System.out.println("Layered effect shader passed: 5 modes, " + results.size() + " rendered frames; mode14 covers every pixel, other modes remain masked; " + report.renderer());
+            System.out.println("Layered effect shader passed: 8 modes, " + results.size() + " rendered frames; clean light falloff and halos checked; " + report.renderer());
             GL15.glDeleteBuffers(vbo);
             GL30.glDeleteVertexArrays(vao);
             GL20.glDeleteProgram(program);

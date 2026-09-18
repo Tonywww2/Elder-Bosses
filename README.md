@@ -46,18 +46,22 @@ they have no crafting recipes. Current original material generation uses
 [ArenaTextureAuthoring.java](models/promised_consort/arena/ArenaTextureAuthoring.java).
 
 The fixed-template surface structure type is registered, with biome tag
-`elder_bosses:has_structure/promised_consort_arena` (desert by default) and
-random-spread spacing/separation of 96/32. Manual test NBT is available under
+`elder_bosses:has_structure/promised_consort_arena` (desert, badlands and savanna
+families by default) and random-spread spacing/separation of 48/16. Manual test NBT is available under
 separate preflight namespaces and has been imported in the Forge test world.
-The accepted v7 architecture is included with the approved v8 fixed foundation:
+The accepted v7 architecture is included with the approved v9 fixed foundation:
 one metadata root and 26 fixed pieces per target. The original building and air
-mask are unchanged; eight fixed masonry layers extend the foundation to local
-Y=-20. No replacement building or procedural foundations are generated.
-Worldgen allows a 12-block site span and 1-block entry span, requires the structure
-center in the biome tag, and still checks sampled surface fluids and foundation
-contact. It tries the seeded rotation first, then the other three in fixed order.
+mask are unchanged; another eight fixed masonry layers below v8 extend the
+foundation to local Y=-28. No procedural foundations or shoreline paths are generated.
+Worldgen and manual placement share a 16-block surface span and 4-block entry span.
+Water is allowed including at the entrance, at most four blocks deep and at most
+25% of sampled columns (171 of the current 685). Lava and unsupported ground are
+rejected; fixed foundations must extend below actual ground or the waterbed.
+The structure center must be in the biome tag. It tries the seeded rotation first,
+then the other three in fixed order.
 It affects only newly generated chunks; previously rejected structure starts are
-not retried automatically. Natural-site discovery still needs in-world acceptance.
+not retried automatically. Existing saved pieces retain their original foundation
+snapshots. The v9 rules and resources pass offline checks; in-world acceptance is pending.
 
 The Consort Compass and its search, target tracking, needle rendering and resources
 have been removed. It is no longer available in the creative tab or through `/give`.
