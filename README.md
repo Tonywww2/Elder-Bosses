@@ -39,6 +39,36 @@ classes from obsolete split dependencies. If Forge startup reports a missing
 version under `.gradle/loom-cache/remapped_mods/remapped/mezz/jei/` and verify with
 `:1.20.1-forge:runClient`. Compilation alone does not exercise JEI client initialization.
 
+## Malenia Haligtree chamber
+
+The [Haligtree arena](docs/arenas/malenia-arena.md) is a 73×42×83-block authored
+NBT chamber with pale roots, varied white flower clusters, waterlogged silt slabs and a
+stone vestibule. Operators can build, inspect, enter and undo it:
+
+```mcfunction
+/elderbosses arena malenia build <x> <y> <z> [north|east|south|west]
+/elderbosses arena malenia enter <x> <y> <z>
+/elderbosses arena malenia info <x> <y> <z>
+/elderbosses arena malenia undo <x> <y> <z>
+```
+
+The origin is the central floor block. Stand outside the target volume and load
+its chunks first. Placement clears the authored interior and replaces ordinary
+blocks after persisting an undo journal; fluids, containers and occupied volumes
+are rejected. Later edits block undo. Manual placement does not spawn Malenia
+or bind her encounter automatically.
+
+The underground variant also generates naturally in dark forests, with a pale
+root entrance and eight return stair flights. Defaults are 48-chunk spacing,
+16-chunk separation and 50% candidate frequency, followed by biome and terrain
+checks. Only new chunks are affected. Use `/locate structure elder_bosses:malenia_arena`;
+see the arena guide for datapack configuration. Sneak-use the prayer stone in the
+southern vestibule with a main-hand rune fragment to summon and bind Malenia.
+One boss can own each chamber; ownership persists through chunk unload. Enter
+the arena to awaken her. Empty arenas reset after the configured grace period,
+and completed defeat frees the chamber for another offering. Existing R1 worlds
+accept the polished-andesite floor tile at the same location.
+
 ## Curios equipment
 
 Curios is included in both development runtimes (Forge `5.14.1+1.20.1`, NeoForge

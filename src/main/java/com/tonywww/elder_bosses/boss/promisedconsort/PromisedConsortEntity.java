@@ -2046,6 +2046,21 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         return PromisedConsortPhase.fromId(entityData.get(ACTIVE_PHASE));
     }
 
+    @Override
+    protected Component getTypeName() {
+        return phase() == PromisedConsortPhase.PHASE_TWO
+                ? Component.translatable("entity.elder_bosses.promised_consort.phase_two")
+                : super.getTypeName();
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
+        super.onSyncedDataUpdated(accessor);
+        if (ACTIVE_PHASE.equals(accessor) && bossEvent != null) {
+            bossEvent.setName(getTypeName());
+        }
+    }
+
     public Optional<PromisedConsortActionId> actionId() {
         int id = entityData.get(ACTION_ID);
         PromisedConsortActionId[] values = PromisedConsortActionId.values();

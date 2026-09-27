@@ -6,7 +6,15 @@
 
 Forge 1.20.1 使用 `ForgeConfigSpec`，NeoForge 1.21.1 使用对应的 `ModConfigSpec`，两端都以 `ModConfig.Type.COMMON` 注册相同语义的配置树。不得再注册 `malenia-server.toml`、`radahn-server.toml`、独立 client 配置或第二个 common 配置。
 
+## 女武神弹反窗口（V15）
+
+`[malenia.instant_guard]` 使用 `window_ticks = 8` 控制攻击前的举盾窗口；窗口延续至该攻击段结束。玩家在窗口内举盾即满足弹反条件，不再使用启动 tick、结束 tick 和重新准备间隔。
+
+新增 `cue_effect_enabled = true` 控制红白光圈。关闭光圈不影响弹反判定或提示音，光圈也不依赖地面范围指示器及一般技能特效的开关。详细行为与当前位移默认值见 [V15 实现记录](../bosses/malenia-combat-readability-v15.md)。
+
 ## 配置树
+
+项目规范见 [AGENTS.md](../../AGENTS.md)：不要求兼容任何旧配置或旧配置快照。字段、结构和默认值按当前版本直接调整，不增加旧字段别名、自动迁移或历史默认值回退。配置样例和测试同步采用当前设计。
 
 | 根节 | 读取侧 | 用途 |
 | --- | --- | --- |
@@ -498,6 +506,8 @@ Malenia 的下列行为是程序不变量，不在 TOML 中重复开放：战斗
 `malenia.performance.max_rot_zones` 是服务端权威的玩法上限，不是纯视觉性能选项。它限制每个 Malenia 实例同时活动的腐败区域数量；达到上限时创建新区域会移除最早的活动区域，设为 `0` 则不再创建腐败区域，因此会直接影响区域伤害与腐败积累。该值在开战时进入战斗快照，重载只影响下一场战斗。
 
 猩红腐败适用于所有 `LivingEntity`。每个实体的积累容量只读取独立属性 `elder_bosses:scarlet_rot_capacity`，默认值为 100；该属性不属于 TOML，不写入战斗快照，也不随最大生命、当前生命、护甲、攻击力或其他属性缩放。`[malenia.scarlet_rot]` 只配置积累衰减、触发持续时间、伤害、治疗削弱、移动减速和净化规则。
+
+当前腐败衰减为 `decay_delay_ticks = 120`、`decay_interval_ticks = 40`、`decay_per_interval = 8.0`。从最后一次正数积累开始计时，第 120 tick 首次减少 8，之后每 40 tick 减少 8；再次积累会重新等待 120 tick。零积累不会延后衰减。字段只采用当前定义，不保留旧的每 20 tick 配置字段。
 
 奉献义手刀与年轻狮子大剑的武器数值、四件饰品的加成使用 `equipment.*` 启动快照。无垢金翼盔仍使用原有注册期固定数值。Boss 的战斗配置树与装备配置独立。
 

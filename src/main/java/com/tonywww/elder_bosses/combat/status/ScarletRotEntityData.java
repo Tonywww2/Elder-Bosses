@@ -8,7 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
 public class ScarletRotEntityData implements ScarletRotData {
-    private static final int DECAY_INTERVAL_TICKS = 20;
     private static final int FORMAT_VERSION = 2;
     private static final String FORMAT_VERSION_TAG = "FormatVersion";
     private static final String STATE_TAG = "State";
@@ -218,8 +217,8 @@ public class ScarletRotEntityData implements ScarletRotData {
     ) {
         state = new ScarletRotState(
                 config.decayDelayTicks(),
-                DECAY_INTERVAL_TICKS,
-                config.decayPerTwentyTicks(),
+                config.decayIntervalTicks(),
+                config.decayPerInterval(),
                 config.durationTicks(),
                 config.damageIntervalTicks(),
                 config.healingReduction(),

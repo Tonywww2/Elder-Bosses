@@ -1,6 +1,6 @@
 # Sources and Asset Provenance
 
-Research dates: 2026-09-09 and 2026-09-10. The v7 domestic-video research is recorded separately below.
+Research dates: 2026-09-09, 2026-09-10 and 2026-09-26. The v7 domestic-video research is recorded separately below.
 
 ## Project Sources
 
@@ -18,11 +18,25 @@ Research dates: 2026-09-09 and 2026-09-10. The v7 domestic-video research is rec
 | Source | Used For | Boundary |
 | --- | --- | --- |
 | [Malenia, Blade of Miquella, wiki.gg](https://eldenring.wiki.gg/wiki/Malenia,_Blade_of_Miquella) | Three prosthetic locations, four Boss Waterfowl bursts, rapid-slash and Aeonia sequence | Behavior and silhouette research; no text, images, mesh or game textures embedded |
+| [Bandai Namco Malenia S.H.Figuarts](https://store.bandainamcoent.com/merchandise/elden-ring/elden-ring/elden-ring-malenia-blade-of-miquella-shfiguarts?sku=WS91306) | V10 winged helmet, red hair, prosthetic sword, armor and cloak silhouette | Visual reference only; no product image or pattern copied into the asset |
+| [Bandai Namco Europe Malenia helmet replica](https://store.bandainamcoent.eu/elden-ring-helmet-of-malenia-mini-replica/?setCurrencyId=2) | V10 winged crest and weathered metallic finish | Original cube shapes and pixel treatment; no replica geometry or engraving copied |
 | [Blockbench: Entity Modeling and Animation](https://www.blockbench.net/wiki/guides/bedrock-modeling/) | Bone hierarchy, pivots, entity UV and animation workflow | API/workflow reference |
 | [Blockbench: Minecraft Style Guide](https://www.blockbench.net/wiki/guides/minecraft-style-guide/) | One texel per model unit, avoiding sub-pixel elements and noisy surfaces, favoring texture detail and cutout planes | Used for the pixel-style revision; no reference image included in the atlas |
 | [GeckoLib animation documentation](https://github.com/bernie-g/geckolib/wiki/Defining-Animations-in-Code-(Geckolib4)) | Attempted documentation lookup | Page extraction failed; no unsupported API claims taken from this fetch |
 | Local `MC_Dev_Skills/references/15-geckolib-models.md` | Model/entity/renderer integration and version split | Read with explicit user approval; not copied into this delivery |
 | Local GeckoLib 4.8.4 / 4.9.2 source artifacts and `javap` | Actual controller timing, model callback and bone APIs | Read-only; no JAR modified |
+| Local vanilla Minecraft 1.21.1 client JAR | V12 clustered color variation, discrete shade transitions and material-specific highlights | Reference inspection only; no vanilla pixels copied into the atlas |
+
+### V12 vanilla texture study
+
+The local Gradle cache's `minecraft_1.21.1_client.jar` supplied these entries under
+`assets/minecraft/textures/`: `block/gold_block.png`, `block/raw_gold_block.png`,
+`block/copper_block.png`, `block/red_wool.png`, `block/red_terracotta.png`,
+`item/gold_ingot.png`, `item/golden_sword.png` and `item/leather.png`.
+Red wool informed restrained clusters in cloth, copper informed broader tonal
+patches, and gold items informed narrow highlights against darker metal planes.
+Study extracts and comparison sheets remain in ignored `build/` files. The
+Malenia atlas uses the project's own ramps and deterministic cluster fields.
 
 ## Created Assets
 
@@ -40,7 +54,7 @@ Research dates: 2026-09-09 and 2026-09-10. The v7 domestic-video research is rec
 - Natural-motion v4: the user explicitly withdrew strict vanilla pixel constraints.
   Concentric joint surfaces, draped cloth, fitted hair and physical blade detailing
   are newly authored refinements; no original-game mesh or animation was imported.
-- Pixel-finish/gait v5: the latest request restores Minecraft styling to textures,
+- Pixel-finish/gait v5: that request restored Minecraft styling to textures,
   not to geometry precision. The lower-density atlas, revised hands/feet and
   leg-length-based support/swing poses are original authoring, not extracted assets.
 - Crown/grip v6: the scalp underlayer, closed mechanical fingers, physical handle
@@ -51,6 +65,16 @@ Research dates: 2026-09-09 and 2026-09-10. The v7 domestic-video research is rec
   added, and swordplay/aerial poses were manually re-authored from the Bilibili evidence
   below. No source-game rig, extracted motion or reference-video pixels are embedded
   in the model, texture, animation JSON or distributable model previews.
+- Appearance v10: eleven existing cubes were reshaped for the winged helmet and
+  left cape folds. The cuirass and rot-wing UV regions were repainted with original
+  pixel clusters. Bone hierarchy and authored animation data were preserved.
+- Material/hand v11: four natural-hand knuckle ridges and four prosthetic knuckle
+  plates were added to the existing hand bones. Skin, prosthetic metal, armor, hair
+  and cloak pixels were painted with original stepped palettes. No new external
+  reference image, model geometry or texture pixels were imported.
+- Texture variation v12: original thirteen-step base ramps, correlated color
+  clusters and small warm/cool shifts refine the V11 atlas. All alpha values,
+  protected pixels, geometry, UVs, bones and animation data are preserved.
 - Audio and voice recordings: none included.
 
 Original construction does not grant rights to the underlying ELDEN RING character,

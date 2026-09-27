@@ -1,0 +1,12 @@
+{
+  "type": "elder_bosses:malenia_arena",
+  "biomes": "#elder_bosses:has_structure/malenia_arena",
+  "step": "underground_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "terrain": {
+    "minimum_roof_cover": 3,
+    "max_surface_height_difference": 16,
+    "max_entry_height_difference": 2
+  }
+}

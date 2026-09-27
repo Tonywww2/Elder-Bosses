@@ -1,7 +1,6 @@
 let assert = require("node:assert/strict");
 let fs = require("node:fs");
 let path = require("node:path");
-require("../scripts/build_animations.js");
 let workspace = path.resolve(__dirname, "..");
 let clips = JSON.parse(fs.readFileSync(path.join(workspace, "animations/malenia.animation.json"), "utf8")).animations;
 let art = JSON.parse(fs.readFileSync(path.join(workspace, "art_direction.json"), "utf8"));

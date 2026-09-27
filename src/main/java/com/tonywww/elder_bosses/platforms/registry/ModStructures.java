@@ -3,6 +3,7 @@ package com.tonywww.elder_bosses.platforms.registry;
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.platforms.arena.PlatformArenaPiece;
 import com.tonywww.elder_bosses.platforms.arena.PlatformArenaStructure;
+import com.tonywww.elder_bosses.platforms.arena.PlatformMaleniaArenaStructure;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -23,8 +24,17 @@ public final class ModStructures {
             "promised_consort_arena", () -> () -> PlatformArenaStructure.CODEC);
     public static final Supplier<StructurePieceType> ARENA_PIECE = PIECES.register(
             "promised_consort_arena_piece", () -> ModStructures::loadPiece);
+    public static final Supplier<StructureType<PlatformMaleniaArenaStructure>> MALENIA_ARENA = STRUCTURES.register(
+            "malenia_arena", () -> () -> PlatformMaleniaArenaStructure.CODEC);
+    public static final Supplier<StructurePieceType> MALENIA_ARENA_PIECE = PIECES.register(
+            "malenia_arena_piece", () -> ModStructures::loadMaleniaPiece);
 
     private ModStructures() {
+    }
+
+    private static PlatformArenaPiece loadMaleniaPiece(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext context,
+                                                      net.minecraft.nbt.CompoundTag data) {
+        return new PlatformArenaPiece(MALENIA_ARENA_PIECE.get(), context, data);
     }
 
     private static PlatformArenaPiece loadPiece(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext context,

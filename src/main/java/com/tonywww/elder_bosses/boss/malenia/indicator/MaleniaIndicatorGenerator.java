@@ -239,6 +239,8 @@ public final class MaleniaIndicatorGenerator {
         }
         if (intent instanceof MaleniaServerIntent.WaterfowlBurst burst) {
             int index = burst.burstIndex();
+            if (index == 3) return Optional.of(new ResolvedShape(
+                    origin, facing.yawDegrees(), new IndicatorGeometry.Circle(burst.width() * 0.5)));
             double maxTravel = skillConfig.waterfowlDance().burstMaxTravel().get(index);
             String pointId = "waterfowl_burst_" + (index + 1);
             Optional<List<IndicatorPoint>> points = pathFor(
@@ -280,7 +282,7 @@ public final class MaleniaIndicatorGenerator {
             return Optional.of(new ResolvedShape(
                     path.get(0),
                     directionOf(path, facing).yawDegrees(),
-                    new IndicatorGeometry.Capsule(length, phantom.width())
+                    new IndicatorGeometry.Path(phantom.width(), path)
             ));
         }
         return Optional.empty();

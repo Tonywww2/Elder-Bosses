@@ -42,7 +42,7 @@ public final class MaleniaSkillEventPlanner {
     private static final double FLYING_SLASH_MINECRAFT_ASCENT_DISTANCE = 1.25;
     private static final double SCARLET_PHANTOMS_MINECRAFT_ASCENT_DISTANCE = 2.0;
     // Minecraft movement budget, not a value asserted for the original attack.
-    private static final double SCARLET_PHANTOM_DIVE_BLOCKS_PER_TICK = 1.15;
+    private static final double SCARLET_PHANTOM_DIVE_BLOCKS_PER_TICK = 2.2;
     // Half of Malenia's confirmed 0.9-block logical collision-box width.
     private static final double WINGED_SWEEP_INNER_RADIUS = 0.45;
 
@@ -100,10 +100,13 @@ public final class MaleniaSkillEventPlanner {
                 SkillTuning tuning,
                 int totalTicks
             ) {
+            // One stateful movement intent per window. Rebuilding it every tick
+            // resets the executor's identity-keyed acceleration/travel progress.
+            Map<MaleniaServerIntent, MaleniaServerIntent> tuned = new java.util.IdentityHashMap<>();
             List<ScheduledIntent> intents = plan.intents().stream()
                 .map(scheduled -> new ScheduledIntent(
                     Math.min(totalTicks - 1, tuning.scaleTicks(scheduled.actionTick())),
-                    tunedIntent(scheduled.intent(), tuning)
+                    tuned.computeIfAbsent(scheduled.intent(), intent -> tunedIntent(intent, tuning))
                 ))
                 .sorted(Comparator.comparingInt(ScheduledIntent::actionTick))
                 .toList();
@@ -114,6 +117,10 @@ public final class MaleniaSkillEventPlanner {
                 MaleniaServerIntent intent,
                 SkillTuning tuning
             ) {
+            if (intent instanceof LockPoint value && value.maximumHorizontalDistance().isPresent()) {
+                return new LockPoint(value.pointId(), value.projectToSurface(),
+                        OptionalDouble.of(tuning.scaleRange(value.maximumHorizontalDistance().getAsDouble())));
+            }
             if (intent instanceof MoveToward value) {
                 return new MoveToward(
                     value.pointId(),
@@ -392,7 +399,7 @@ public final class MaleniaSkillEventPlanner {
         builder.at(active.startTickInclusive(), new LockFacing());
         if (components != null) {
             for (int tick = active.startTickInclusive(); tick < active.endTickExclusive(); tick++) builder.at(tick, new Grab(config.range(), config.width(),
-                hit("grab", config.grabDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, false, 1),
+                hit("grab", config.grabDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, true, 1),
                 hit("impale", config.impaleDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, false, 1),
                 hit("throw", config.throwDamage(), DamageChannel.PHYSICAL, 0.0, config.healProfile(), false, 1),
                 components.activeStartTick(1) - tick, components.activeStartTick(2) - tick));
@@ -402,7 +409,7 @@ public final class MaleniaSkillEventPlanner {
         builder.window(active, new Grab(
                 config.range(),
                 config.width(),
-            hit("grab", config.grabDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, false, 1),
+            hit("grab", config.grabDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, true, 1),
             hit("impale", config.impaleDamage(), DamageChannel.PHYSICAL, 0.0, HealProfile.NONE, false, 1),
             hit("throw", config.throwDamage(), DamageChannel.PHYSICAL, 0.0, config.healProfile(), false, 1),
             GRAB_IMPALE_DELAY_TICKS,
@@ -446,13 +453,15 @@ public final class MaleniaSkillEventPlanner {
             ascentTicks
         ));
         List<ActiveWindow> bursts = components != null ? layout.windows() : minecraftTimingForWaterfowl(layout.window(0), config);
+        builder.window(new ActiveWindow(0, bursts.get(bursts.size() - 1).endTickExclusive()), new HoldVertical());
         for (int index = 0; index < bursts.size(); index++) {
             String pointId = "waterfowl_burst_" + (index + 1);
             ActiveWindow burst = bursts.get(index);
             int lockTick = components == null ? config.burstLockTicks().get(index)
                 : Math.max(components.stageStartTick(index), burst.startTickInclusive() - (index == 0 ? 10 : 4));
-            builder.at(lockTick, new LockPoint(pointId));
-            builder.window(burst, new MoveToward(
+            builder.at(lockTick, new LockPoint(pointId, false,
+                    OptionalDouble.of(config.burstMaxTravel().get(index))));
+            if (index < 3) builder.window(burst, new MoveToward(
                 pointId,
                 config.burstMaxTravel().get(index),
                 burst.durationTicks()
@@ -487,21 +496,24 @@ public final class MaleniaSkillEventPlanner {
         int lockTick = components == null ? config.targetLockTick() : components.activeStartTick(1);
         PlanBuilder builder = builder(MaleniaActionId.SCARLET_AEONIA, config.enabled(), layout);
         builder.window(components == null ? new ActiveWindow(0, lockTick) : layout.window(0), new MoveVertical(
-            MINIMUM_VISIBLE_ASCENT,
+            3.8,
             components == null ? lockTick : layout.window(0).durationTicks()
         ));
-        builder.at(lockTick, new LockPoint("aeonia_impact", true));
         ActiveWindow dive = components == null ? new ActiveWindow(timing.diveStartTick(), timing.impactTick()) : layout.window(2);
+        // Cap the marked landing to a distance reachable without a final teleport.
+        double landingRange = Math.min(config.radius() * 1.8, dive.durationTicks() * 0.45);
+        builder.at(lockTick, new LockPoint("aeonia_impact", true, OptionalDouble.of(landingRange)));
         builder.window(
                 new ActiveWindow(lockTick, dive.startTickInclusive()),
                 new HoldVertical()
         );
         builder.window(dive, new MoveToward(
             "aeonia_impact",
-            remainingTravelAfterAscent(config.radius()),
+            Math.hypot(landingRange, 4.8),
             dive.durationTicks(),
             true
         ));
+        builder.at(timing.impactTick(), new AnchorAtBoss("aeonia_impact"));
         builder.at(timing.impactTick(), new HitCircle(
                 config.radius(),
                 Optional.of("aeonia_impact"),
@@ -709,11 +721,11 @@ public final class MaleniaSkillEventPlanner {
         );
         builder.at(
                 phantomLockTick(dive.startTickInclusive()),
-                new LockPoint("boss_dive", true)
+                new LockPoint("boss_dive", true, OptionalDouble.of(dive.durationTicks() * 1.5))
         );
         builder.window(dive, new MoveToward(
             "boss_dive",
-            (components == null ? dive.durationTicks() : config.activeTicks() - config.phantomCount() * config.phantomIntervalTicks()) * SCARLET_PHANTOM_DIVE_BLOCKS_PER_TICK,
+            dive.durationTicks() * SCARLET_PHANTOM_DIVE_BLOCKS_PER_TICK,
             dive.durationTicks(),
             true
         ));

@@ -35,8 +35,8 @@ for (let [name, clip] of Object.entries(library.animations)) {
     }
     for (let value of Object.values(clip.bones.forearm_l.rotation)) assert.ok(value[0] <= -5.999, "Empty-hand elbow does not bend backwards");
 }
-let grab = library.animations["animation.malenia.grab_impale"].bones.finger_l_1.rotation;
+let grab = library.animations["animation.malenia.grab_impale"].bones.fingers_l.rotation;
 assert.ok(-grab["1.2"][0] < 25, "Hand is open before capture");
 assert.ok(-grab["1.4"][0] > 45, "Hand closes after contact");
 assert.ok(-grab["2.7"][0] < 25, "Hand opens for release");
-process.stdout.write("Anatomical handedness, weapon ownership and articulated empty-hand checks passed.\n");
+process.stdout.write("Anatomical handedness, weapon ownership and grouped block-hand checks passed.\n");

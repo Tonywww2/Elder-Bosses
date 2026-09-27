@@ -19,14 +19,14 @@ for (let [name, event, expected] of [
     ["upward_combo", "hits", [18, 48]], ["kick", "hits", [9]], ["thrust", "hits", [22]],
     ["grab_impale", "grab", [24]], ["grab_impale", "impale_after_capture", [20]],
     ["grab_impale", "throw_after_capture", [30]], ["retreat_slash", "hits", [8]],
-    ["waterfowl_dance", "bursts", [[32, 45], [50, 61], [66, 77], [82, 99]]],
-    ["waterfowl_dance", "lock", [22, 46, 62, 78]], ["scarlet_aeonia", "impact", [49]],
-    ["scarlet_aeonia", "bloom", [58]], ["scarlet_plunge", "blade", [24, 29]],
+    ["waterfowl_dance", "bursts", [[32, 49], [62, 73], [82, 101], [110, 115]]],
+    ["waterfowl_dance", "lock", [22, 58, 78, 106]], ["scarlet_aeonia", "impact", [61]],
+    ["scarlet_aeonia", "bloom", [70]], ["scarlet_plunge", "blade", [24, 29]],
     ["scarlet_plunge", "burst", [30, 35]], ["flying_slash", "hits", [20, 45]],
     ["scarlet_phantoms", "phantoms", [36, 44, 52, 60, 68]],
-    ["scarlet_phantoms", "boss_dive", [76, 107]], ["winged_sweep", "hits", [16]]
+    ["scarlet_phantoms", "boss_dive", [76, 87]], ["winged_sweep", "hits", [16]]
 ]) {
-    assert.deepEqual(manifest.clips[name].events[event], expected, "Unchanged event contract " + name + "/" + event);
+    assert.deepEqual(manifest.clips[name].events[event], expected, "Authored event contract " + name + "/" + event);
     checks++;
 }
 function rotation(name, bone, tick) {

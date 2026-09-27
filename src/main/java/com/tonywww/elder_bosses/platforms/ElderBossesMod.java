@@ -90,7 +90,10 @@ public final class ElderBossesMod {
         modBus.addListener(ModEntityEvents::addLivingEntityAttributes);
         PlatformCombatEvents.register();
         PlatformSkillTestCommands.register();
+        com.tonywww.elder_bosses.platforms.command.PlatformMaleniaArenaCommands.register();
         PlatformArenaWorldgen.register();
+        com.tonywww.elder_bosses.platforms.arena.PlatformMaleniaArenaWorldgen.register();
         PlatformArenaSummoning.register();
+        com.tonywww.elder_bosses.platforms.arena.PlatformMaleniaArenaSummoning.register();
     }
 }

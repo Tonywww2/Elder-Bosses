@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "elder_bosses:block/haligtree_root"
+    },
+    "axis=z": {
+      "model": "elder_bosses:block/haligtree_root",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "elder_bosses:block/haligtree_root",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

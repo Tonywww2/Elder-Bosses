@@ -19,7 +19,7 @@ public final class MaleniaAnimationTimeline {
             Map<Integer, Integer> landmarks
     ) {
         int[] authored = durations(action);
-        var components = com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.defaultComponentStages(action);
+        var components = authoredComponentStages(action);
         if (!components.isEmpty() && timeline.stages().size() == components.size()) {
             authored = components.stream().flatMapToInt(stage -> java.util.stream.IntStream.of(stage.windupTicks(), stage.activeTicks(), stage.recoveryTicks())).toArray();
         }
@@ -54,6 +54,13 @@ public final class MaleniaAnimationTimeline {
         return lower.getValue() + fraction * (upper.getValue() - lower.getValue());
     }
 
+    public static java.util.List<ActionStage> authoredComponentStages(MaleniaActionId action) {
+        if (action == MaleniaActionId.SCARLET_AEONIA) return java.util.List.of(
+                new ActionStage(0, 26, 0), new ActionStage(0, 17, 0), new ActionStage(0, 18, 0),
+                new ActionStage(0, 1, 0), new ActionStage(8, 42, 54));
+        return com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.defaultComponentStages(action);
+    }
+
     public static int[] durations(MaleniaActionId action) {
         return switch (action) {
             case SINGLE_SLASH -> new int[]{10, 3, 14};
@@ -65,11 +72,11 @@ public final class MaleniaAnimationTimeline {
             case THRUST -> new int[]{22, 4, 24};
             case GRAB_IMPALE -> new int[]{24, 5, 38};
             case RETREAT_SLASH -> new int[]{8, 4, 20};
-            case WATERFOWL_DANCE -> new int[]{32, 68, 42};
-            case SCARLET_AEONIA -> new int[]{42, 58, 54};
+            case WATERFOWL_DANCE -> new int[]{32, 84, 26};
+            case SCARLET_AEONIA -> new int[]{54, 58, 54};
             case SCARLET_PLUNGE -> new int[]{24, 12, 30};
             case FLYING_SLASH -> new int[]{20, 5, 8, 12, 4, 24};
-            case SCARLET_PHANTOMS -> new int[]{36, 72, 38};
+            case SCARLET_PHANTOMS -> new int[]{36, 52, 38};
             case WINGED_SWEEP -> new int[]{16, 8, 22};
         };
     }

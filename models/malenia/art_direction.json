@@ -1,7 +1,7 @@
 {
-  "revision": "sculpted_relief_v9",
+  "revision": "combat_readability_v15",
   "surface_style": "continuous_structure_shading",
-  "texture_revision": "clustered_transition_v1",
+  "texture_revision": "clustered_hue_transition_v4",
   "mirror_legacy_x": true,
   "figure_scale": 1.2,
   "flower_scale": 1,
@@ -12,7 +12,7 @@
   "precision_decimals": 4,
   "maximum_cubes": 660,
   "style": "detailed_geometry_minecraft_pixel_textures",
-  "collision_and_hit_timing": "unchanged",
+  "collision_and_hit_timing": "server_owned_component_timing_v13",
   "palette": {
     "gold": [
       "#433626",
@@ -219,5 +219,7 @@
     }
   ],
   "consolidated": true,
-  "current_assets": "current_assets.json"
+  "current_assets": "current_assets.json",
+  "phase_two_wings": "procedural_shader_only; scarlet/orange/violet/black/yellow; no model surfaces",
+  "hands": "palm + grouped four fingers + grouped thumb"
 }

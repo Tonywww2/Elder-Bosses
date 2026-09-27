@@ -1,0 +1,54 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "elder_bosses:block/haligtree_white_petals",
+        "y": 0
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals",
+        "y": 90
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals",
+        "y": 180
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals",
+        "y": 270
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_2",
+        "y": 0
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_2",
+        "y": 90
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_2",
+        "y": 180
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_2",
+        "y": 270
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_3",
+        "y": 0
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_3",
+        "y": 90
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_3",
+        "y": 180
+      },
+      {
+        "model": "elder_bosses:block/haligtree_white_petals_3",
+        "y": 270
+      }
+    ]
+  }
+}

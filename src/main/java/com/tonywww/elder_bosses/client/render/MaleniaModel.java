@@ -17,6 +17,8 @@ import java.util.WeakHashMap;
 public final class MaleniaModel extends PlatformMaleniaGeoModel {
     private static final ResourceLocation MODEL = PlatformResourceLocation.id("geo/malenia/malenia.geo.json");
     private static final ResourceLocation TEXTURE = PlatformResourceLocation.id("textures/entity/malenia/malenia.png");
+    private static final ResourceLocation PHASE_TWO_MODEL = PlatformResourceLocation.id("geo/malenia/malenia_phase_two.geo.json");
+    private static final ResourceLocation PHASE_TWO_TEXTURE = PlatformResourceLocation.id("textures/entity/malenia/malenia_phase_two.png");
     private static final ResourceLocation ANIMATION = PlatformResourceLocation.id("animations/malenia/malenia.animation.json");
     private static final List<String> ARMOR = List.of(
             "helm", "armor_torso", "armor_shoulder_l", "armor_shoulder_r", "armor_waist",
@@ -25,12 +27,17 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
 
     @Override
     public ResourceLocation getModelResource(MaleniaEntity entity) {
-        return MODEL;
+        return phaseTwoAppearance(entity) ? PHASE_TWO_MODEL : MODEL;
     }
 
     @Override
     public ResourceLocation getTextureResource(MaleniaEntity entity) {
-        return TEXTURE;
+        return phaseTwoAppearance(entity) ? PHASE_TWO_TEXTURE : TEXTURE;
+    }
+
+    private static boolean phaseTwoAppearance(MaleniaEntity entity) {
+        return entity != null && (entity.activePhase() == MaleniaPhase.PHASE_TWO
+                || entity.combatState() == MaleniaCombatState.TRANSITION && entity.animationTime() >= 71);
     }
 
     @Override
@@ -40,6 +47,7 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
 
     @Override
     protected void afterAnimations(MaleniaEntity entity) {
+        for (String marker : List.of("blade_root", "blade_tip", "chest")) getBone(marker).ifPresent(bone -> bone.setTrackingMatrices(true));
         blendTransition(entity);
         applySecondaryMotion(entity);
         boolean transitioning = entity.combatState() == MaleniaCombatState.TRANSITION;
@@ -50,9 +58,11 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
         }
         visible("phase_two_body", transitioning || secondPhase, !transitioning);
         visible("phase_two_hair", transitioning || secondPhase, !transitioning);
-        visible("wing_root_l", transitioning || secondPhase, !transitioning);
-        visible("wing_root_r", transitioning || secondPhase, !transitioning);
-        boolean flower = scriptedLayers || entity.animationClip().equals("scarlet_aeonia");
+        // Wing bones are animation controls only; all visible wings are rendered by the rot shader.
+        visible("wing_root_l", false, false);
+        visible("wing_root_r", false, false);
+        boolean flower = scriptedLayers || (entity.animationClip().equals("scarlet_aeonia") && (entity.animationTime() < 70
+                || !com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.hasWorldBloom(entity.getId())));
         visible("aeonia_core", flower, false);
         if (!scriptedLayers) {
             getBone("pelvis").ifPresent(bone -> {
@@ -69,11 +79,12 @@ public final class MaleniaModel extends PlatformMaleniaGeoModel {
         double vertical = entity.getY() - entity.yo;
         boolean inactive = entity.combatState() == MaleniaCombatState.DORMANT
                 || entity.combatState() == MaleniaCombatState.DEFEATED || entity.combatState() == MaleniaCombatState.STUNNED;
-        double strength = inactive || speed > 2 || Math.abs(vertical) > 2 ? 0 : entity.hasSynchronizedAnimation() ? 0.4 : 1;
+        double strength = inactive || speed > 5 || Math.abs(vertical) > 5 ? 0 : entity.hasSynchronizedAnimation() ? 0.75 : 1;
         SecondaryMotionSpring.Offset offset = history.secondary.sample(entity.animationFrameTime(), speed,
                 Mth.wrapDegrees(entity.yBodyRot - entity.yBodyRotO), vertical, strength);
-        secondaryBone("cape_02", offset, 0.25, 0.18);
-        secondaryBone("cape_03", offset, 0.45, 0.28);
+        secondaryBone("cape_01", offset, -0.75, 0.25);
+        secondaryBone("cape_02", offset, -1.5, 0.55);
+        secondaryBone("cape_03", offset, -2.4, 0.9);
         for (int index = 1; index <= 6; index++) {
             secondaryBone("hair_end_0" + index, offset, 0.32 + index * 0.02, 0.25);
         }

@@ -47,6 +47,10 @@ public final class ClientIndicatorEvents {
         ClientConsortEnergyRenderer.render(event.getPoseStack(), event.getCamera(), minecraft.level.getGameTime(), partialTick);
         ClientConsortBladeTrails.render(event.getPoseStack(), event.getCamera(), partialTick);
         ClientConsortMeteorRenderer.render(event.getPoseStack(), event.getCamera(), partialTick);
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.render(event.getPoseStack(), event.getCamera(), partialTick);
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaWings.render(event.getPoseStack(), event.getCamera(), partialTick);
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaParryCue.render(event.getPoseStack(), event.getCamera(), partialTick);
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaParryFeedback.render(event.getPoseStack(), event.getCamera(), partialTick);
         ElderBossesCommonConfig.IndicatorValues indicators = ElderBossesCommonConfig.VALUES.indicators();
         if (!indicators.enabled()) {
             ClientIndicatorStateStore.clear();

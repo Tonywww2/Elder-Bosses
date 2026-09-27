@@ -1,9 +1,19 @@
 {
   "music.promised_consort.phase_one": {
-    "sounds": [{"name": "elder_bosses:music/promised_consort/phase_one", "stream": true}]
+    "sounds": [
+      {
+        "name": "elder_bosses:music/promised_consort/phase_one",
+        "stream": true
+      }
+    ]
   },
   "music.promised_consort.phase_two": {
-    "sounds": [{"name": "elder_bosses:music/promised_consort/phase_two", "stream": true}]
+    "sounds": [
+      {
+        "name": "elder_bosses:music/promised_consort/phase_two",
+        "stream": true
+      }
+    ]
   },
   "malenia.instant_guard_cue": {
     "subtitle": "subtitles.elder_bosses.malenia.instant_guard_cue",
@@ -43,27 +53,57 @@
   },
   "entity.promised_consort.heavy_slash": {
     "subtitle": "subtitles.elder_bosses.entity.promised_consort.heavy_slash",
-    "sounds": [{"name": "elder_bosses:entity/promised_consort/heavy_slash", "attenuation_distance": 48}]
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/promised_consort/heavy_slash",
+        "attenuation_distance": 48
+      }
+    ]
   },
   "entity.promised_consort.stomp": {
     "subtitle": "subtitles.elder_bosses.entity.promised_consort.stomp",
-    "sounds": [{"name": "elder_bosses:entity/promised_consort/stomp", "attenuation_distance": 48}]
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/promised_consort/stomp",
+        "attenuation_distance": 48
+      }
+    ]
   },
   "entity.promised_consort.gravity_dash": {
     "subtitle": "subtitles.elder_bosses.entity.promised_consort.gravity_dash",
-    "sounds": [{"name": "elder_bosses:entity/promised_consort/gravity_dash", "attenuation_distance": 48}]
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/promised_consort/gravity_dash",
+        "attenuation_distance": 48
+      }
+    ]
   },
   "entity.promised_consort.holy_echo": {
     "subtitle": "subtitles.elder_bosses.entity.promised_consort.holy_echo",
-    "sounds": [{"name": "elder_bosses:entity/promised_consort/holy_echo", "attenuation_distance": 48}]
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/promised_consort/holy_echo",
+        "attenuation_distance": 48
+      }
+    ]
   },
   "entity.promised_consort.reflection": {
     "subtitle": "subtitles.elder_bosses.entity.promised_consort.reflection",
-    "sounds": [{"name": "elder_bosses:entity/promised_consort/reflection", "attenuation_distance": 24}]
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/promised_consort/reflection",
+        "attenuation_distance": 24
+      }
+    ]
   },
   "entity.promised_consort.meteor_impact": {
     "subtitle": "subtitles.elder_bosses.entity.promised_consort.meteor_impact",
-    "sounds": [{"name": "elder_bosses:entity/promised_consort/meteor_impact", "attenuation_distance": 64}]
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/promised_consort/meteor_impact",
+        "attenuation_distance": 64
+      }
+    ]
   },
   "entity.malenia.grunt": {
     "subtitle": "subtitles.elder_bosses.entity.malenia.grunt",
@@ -71,6 +111,32 @@
       {
         "name": "minecraft:entity.player.attack.strong",
         "type": "event"
+      }
+    ]
+  },
+  "music.malenia.phase_one": {
+    "sounds": [
+      {
+        "name": "elder_bosses:music/malenia/phase_one",
+        "stream": true
+      }
+    ]
+  },
+  "music.malenia.phase_two": {
+    "sounds": [
+      {
+        "name": "elder_bosses:music/malenia/phase_two",
+        "stream": true
+      }
+    ]
+  },
+  "entity.malenia.parry_success": {
+    "subtitle": "subtitles.elder_bosses.entity.malenia.parry_success",
+    "sounds": [
+      {
+        "name": "elder_bosses:entity/malenia/parry_success",
+        "preload": true,
+        "attenuation_distance": 32
       }
     ]
   }

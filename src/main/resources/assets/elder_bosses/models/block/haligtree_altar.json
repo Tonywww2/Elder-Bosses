@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "elder_bosses:block/haligtree_altar",
+    "side": "elder_bosses:block/haligtree_root",
+    "bottom": "elder_bosses:block/haligtree_silt"
+  }
+}

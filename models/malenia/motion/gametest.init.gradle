@@ -1,0 +1,18 @@
+// Isolated motion fixture; excluded from release source sets.
+allprojects {
+    afterEvaluate {
+        if (path == ':1.20.1-forge') {
+            sourceSets.main.java.srcDir(rootProject.file('models/malenia/motion/gametest/java'))
+            sourceSets.main.resources.srcDir(rootProject.file('models/malenia/arena/gametest/resources'))
+            loom.runs.create('maleniaMotionTest') {
+                server()
+                property('forge.enableGameTest', 'true')
+                property('forge.gameTestServer', 'true')
+                property('forge.enabledGameTestNamespaces', 'elder_bosses')
+                runDir('../../build/malenia-v15/gametest')
+                ideConfigGenerated(false)
+            }
+        }
+    }
+}
+

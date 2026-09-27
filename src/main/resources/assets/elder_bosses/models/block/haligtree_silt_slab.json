@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "elder_bosses:block/haligtree_silt",
+    "top": "elder_bosses:block/haligtree_silt",
+    "side": "elder_bosses:block/haligtree_silt"
+  }
+}

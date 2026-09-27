@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.ShaderInstance;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.network.ClientNetworkHandlers;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
+import com.tonywww.elder_bosses.platforms.registry.ModBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 //? if forge {
@@ -19,6 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterShadersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,6 +33,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 *///?}
 
@@ -49,7 +52,27 @@ public final class ClientModEvents {
     }
 
     @SubscribeEvent
+    public static void registerArenaColors(RegisterColorHandlersEvent.Block event) {
+        event.register((state, level, pos, tint) -> 0x718D8F, ModBlocks.HALIGTREE_SHALLOW_WATER.get());
+    }
+
+    @SubscribeEvent
+    public static void registerArenaItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register((stack, tint) -> 0x718D8F,
+                com.tonywww.elder_bosses.platforms.registry.ModItems.HALIGTREE_SHALLOW_WATER.get());
+    }
+
+    @SubscribeEvent
     public static void registerShaders(RegisterShadersEvent event) throws java.io.IOException {
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                PlatformResourceLocation.id("malenia_parry_cue"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                com.tonywww.elder_bosses.client.vfx.MaleniaParryCueShader::install);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                PlatformResourceLocation.id("malenia_wings"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                com.tonywww.elder_bosses.client.vfx.MaleniaWingShader::install);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                PlatformResourceLocation.id("malenia_effect"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                com.tonywww.elder_bosses.client.vfx.MaleniaEffectShader::install);
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                 PlatformResourceLocation.id("consort_energy"), DefaultVertexFormat.POSITION_TEX_COLOR),
                 ConsortEnergyShader::install);

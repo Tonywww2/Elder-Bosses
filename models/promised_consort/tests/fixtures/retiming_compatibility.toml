@@ -1195,7 +1195,8 @@
 		distance_weight = 0.45
 
 	[malenia.scarlet_rot]
-		decay_delay_ticks = 60
+		decay_delay_ticks = 120
+		decay_interval_ticks = 40
 		movement_speed_reduction = 0.1
 		healing_reduction = 0.3
 		honey_buildup_reduction = 25.0
@@ -1204,7 +1205,7 @@
 		duration_ticks = 120
 		damage_interval_ticks = 20
 		consume_cleanse_item = true
-		decay_per_20_ticks = 8.0
+		decay_per_interval = 8.0
 
 		[malenia.scarlet_rot.damage]
 			attack_ratio = 0.1

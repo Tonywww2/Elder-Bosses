@@ -32,7 +32,11 @@ public final class BossMusicCheck {
         state.observe(2, boss, "phase_two", "phase_2", false, 100, 5);
         check(state.select(5, id -> 1, 96) == null, "HUD audience exit stops playback");
         state.observe(3, "elder_bosses:malenia", "phase_one", "phase_1", true, 100, 5);
-        check(state.select(5, id -> 1, 96) == null, "Other bosses cannot start Consort music");
+        check(state.select(5, id -> 1, 96).boss().equals("elder_bosses:malenia"), "Malenia selects its own music");
+        state.observe(3, "elder_bosses:malenia", "phase_one", "transition", true, 0, 6);
+        check(state.select(6, id -> 1, 96).phase() == 2, "Zero-health phase transition keeps music and selects phase two");
+        state.observe(3, "elder_bosses:malenia", "phase_two", "defeated", true, 0, 7);
+        check(state.select(7, id -> 1, 96) == null, "Malenia defeat stops encounter");
         state.observe(4, boss, "phase_one", "phase_1", true, 100, 10);
         check(state.select(10, id -> 96*96+1, 96) == null, "Distance limit");
         check(state.select(10, id -> Double.POSITIVE_INFINITY, 96) == null, "Unloaded entity");
@@ -75,6 +79,23 @@ public final class BossMusicCheck {
                 check(Files.exists(Path.of("versions",target,"build/resources/main/META-INF/BGM-CREDITS.txt")),"Packaged music attribution");
             }
         }
+        var malenia=JsonParser.parseString(Files.readString(Path.of("models/malenia/audio/manifest.json"))).getAsJsonObject();
+        for(var value:malenia.getAsJsonArray("tracks")) {
+            var track=value.getAsJsonObject();var file=Path.of(track.get("runtime").getAsString());
+            String phase=file.getFileName().toString().replace(".ogg", "");
+            byte[] bytes=Files.readAllBytes(file);
+            check(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes)).equals(track.get("sha256").getAsString()),"Pinned Malenia loop bytes");
+            check(sounds.getAsJsonObject("music.malenia."+phase).getAsJsonArray("sounds").get(0).getAsJsonObject().get("stream").getAsBoolean(),"Malenia music streams");
+            check(track.get("loop_boundary_step").getAsDouble()<.003,"Malenia loop seam de-clicked");
+            for(String target:new String[]{"1.20.1-forge","1.21.1-neoforge"}) {
+                check(java.util.Arrays.equals(bytes,Files.readAllBytes(Path.of("versions",target,"build/resources/main/assets/elder_bosses/sounds/music/malenia",phase+".ogg"))),"Malenia audio packaged on "+target);
+            }
+        }
+        var parry=malenia.getAsJsonObject("parry");var impact=Files.readAllBytes(Path.of(parry.get("runtime").getAsString()));
+        check(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(impact)).equals(parry.get("sha256").getAsString()),"Pinned success sound");
+        check(parry.get("channels").getAsInt()==1,"Success impact supports positional mono audio");
+        check(sounds.getAsJsonObject("entity.malenia.parry_success").getAsJsonArray("sounds").get(0).getAsJsonObject().get("preload").getAsBoolean(),"Short parry sound preloads");
+        check(Files.readString(Path.of("src/main/resources/META-INF/BGM-CREDITS.txt")).contains("Sascha Ende"),"Malenia attribution retained");
         System.out.println("BossMusicCheck passed: "+checks+" checks (selection, lifecycle, fades, resources; no in-game audio claim)");
     }
 }

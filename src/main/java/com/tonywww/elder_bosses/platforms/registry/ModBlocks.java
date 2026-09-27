@@ -5,6 +5,8 @@ import com.tonywww.elder_bosses.platforms.block.ConsortAltarBlock;
 import com.tonywww.elder_bosses.platforms.block.PaleSedimentBlock;
 import com.tonywww.elder_bosses.platforms.block.RootReliefBlock;
 import com.tonywww.elder_bosses.platforms.block.DivineStairBlock;
+import com.tonywww.elder_bosses.platforms.block.HaligtreeSurfaceBlock;
+import com.tonywww.elder_bosses.platforms.block.HaligtreeSiltSlabBlock;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
@@ -52,6 +54,20 @@ public final class ModBlocks {
 
     private ModBlocks() {
     }
+
+    public static final Supplier<RotatedPillarBlock> HALIGTREE_ROOT = BLOCKS.register(
+            "haligtree_root", () -> new RotatedPillarBlock(stoneProperties().strength(3.0F).sound(net.minecraft.world.level.block.SoundType.WOOD)));
+    public static final Supplier<Block> HALIGTREE_ALTAR = BLOCKS.register(
+            "haligtree_altar", () -> new Block(stoneProperties().strength(4.0F).lightLevel(state -> 4)));
+    public static final Supplier<Block> HALIGTREE_SILT = BLOCKS.register(
+            "haligtree_silt", () -> new Block(stoneProperties().strength(1.0F)));
+    public static final Supplier<SlabBlock> HALIGTREE_SILT_SLAB = BLOCKS.register(
+            "haligtree_silt_slab", () -> new HaligtreeSiltSlabBlock(stoneProperties().strength(1.0F)));
+    // Registry compatibility for existing worlds; new templates use waterlogged silt slabs.
+    public static final Supplier<HaligtreeSurfaceBlock> HALIGTREE_SHALLOW_WATER = BLOCKS.register(
+            "haligtree_shallow_water", () -> new HaligtreeSurfaceBlock(stoneProperties().strength(0.2F)));
+    public static final Supplier<HaligtreeSurfaceBlock> HALIGTREE_WHITE_PETALS = BLOCKS.register(
+            "haligtree_white_petals", () -> new HaligtreeSurfaceBlock(stoneProperties().strength(0.1F)));
 
     private static BlockBehaviour.Properties stoneProperties() {
         //? if forge {

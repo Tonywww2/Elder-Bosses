@@ -20,8 +20,8 @@ public final class ElderBossesHudRenderer {
     private static final int SUBTITLE_TEXT_COLOR = 0xD9D0B5;
     private static final int BOSS_BAR_WIDTH = 182;
     private static final int SUBTITLE_MAX_WIDTH = 320;
-    private static final int ROT_WIDTH = 28;
-    private static final int ROT_HEIGHT = 22;
+    private static final int ROT_WIDTH = 182;
+    private static final int ROT_HEIGHT = 20;
 
     private ElderBossesHudRenderer() {
     }
@@ -76,64 +76,22 @@ public final class ElderBossesHudRenderer {
             return;
         }
 
-        int x = (screenWidth - ROT_WIDTH) / 2;
-        int y = Math.max(4, screenHeight - 58);
-        int filledPetals = meter.active()
-                ? 6
-                : (int) Math.ceil(meter.buildupRatio() * 6.0);
-        boolean flash = meter.active() && gameTime % 10L < 5L;
-
-        drawPetal(graphics, x + 4, y, filledPetals > 0, flash);
-        drawPetal(graphics, x + 16, y, filledPetals > 1, flash);
-        drawPetal(graphics, x, y + 7, filledPetals > 2, flash);
-        drawPetal(graphics, x + 20, y + 7, filledPetals > 3, flash);
-        drawPetal(graphics, x + 4, y + 14, filledPetals > 4, flash);
-        drawPetal(graphics, x + 16, y + 14, filledPetals > 5, flash);
-        graphics.fill(x + 11, y + 8, x + 17, y + 14, meter.active() ? ROT_CORE_COLOR : ROT_EMPTY_COLOR);
-
-        if (meter.active()) {
-            drawCountdownFrame(graphics, x, y, ROT_WIDTH, ROT_HEIGHT, meter.activeRemainingRatio());
+        int width = Math.min(182, screenWidth - 24);
+        int x = (screenWidth - width) / 2, y = Math.max(14, screenHeight - 76);
+        double ratio = meter.active() ? meter.activeRemainingRatio() : meter.buildupRatio();
+        int fill = (int) Math.round((width - 4) * ratio);
+        graphics.fill(x - 1, y - 1, x + width + 1, y + 9, 0xE0100B10);
+        graphics.fill(x, y, x + width, y + 8, 0xFFB09272);
+        graphics.fill(x + 1, y + 1, x + width - 1, y + 7, 0xF0301820);
+        if (fill > 0) {
+            int color = meter.active() ? 0xFFE65032 : ROT_FILL_COLOR;
+            graphics.fill(x + 2, y + 2, x + 2 + fill, y + 6, color);
+            graphics.fill(x + 2, y + 2, x + 2 + fill, y + 3, 0xFFFFAD63);
+            graphics.fill(x + Math.max(2, fill), y + 1, x + 2 + fill, y + 7, 0xFFFFD5A6);
         }
-    }
-
-    private static void drawPetal(
-            GuiGraphics graphics,
-            int x,
-            int y,
-            boolean filled,
-            boolean highlighted
-    ) {
-        int color = filled
-                ? (highlighted ? ROT_HIGHLIGHT_COLOR : ROT_FILL_COLOR)
-                : ROT_EMPTY_COLOR;
-        graphics.fill(x + 2, y, x + 6, y + 1, color);
-        graphics.fill(x, y + 1, x + 8, y + 5, color);
-        graphics.fill(x + 2, y + 5, x + 6, y + 6, color);
-    }
-
-    private static void drawCountdownFrame(
-            GuiGraphics graphics,
-            int x,
-            int y,
-            int width,
-            int height,
-            double ratio
-    ) {
-        int remaining = (int) Math.round((2 * width + 2 * height - 4) * ratio);
-        int top = Math.min(width, remaining);
-        graphics.fill(x, y, x + top, y + 1, ROT_TIMER_COLOR);
-        remaining -= top;
-
-        int right = Math.min(height - 1, Math.max(0, remaining));
-        graphics.fill(x + width - 1, y + 1, x + width, y + 1 + right, ROT_TIMER_COLOR);
-        remaining -= right;
-
-        int bottom = Math.min(width - 1, Math.max(0, remaining));
-        graphics.fill(x + width - bottom - 1, y + height - 1, x + width - 1, y + height, ROT_TIMER_COLOR);
-        remaining -= bottom;
-
-        int left = Math.min(height - 2, Math.max(0, remaining));
-        graphics.fill(x, y + height - left - 1, x + 1, y + height - 1, ROT_TIMER_COLOR);
+        graphics.drawString(Minecraft.getInstance().font,
+                Component.translatable(meter.active() ? "hud.elder_bosses.rot_active" : "hud.elder_bosses.rot_buildup"),
+                x, y - 11, meter.active() ? 0xFFFF9472 : 0xFFE9C7B0, true);
     }
 
     private static void renderSubtitle(

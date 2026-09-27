@@ -1,0 +1,18 @@
+// Opt-in isolated server world; never build a release with this fixture enabled.
+allprojects {
+    afterEvaluate {
+        if (path == ':1.20.1-forge') {
+            sourceSets.main.java.srcDir(rootProject.file('models/malenia/arena/gametest/java'))
+            sourceSets.main.resources.srcDir(rootProject.file('models/malenia/arena/gametest/resources'))
+            loom.runs.create('maleniaArenaTest') {
+                server()
+                property('forge.enableGameTest', 'true')
+                property('forge.gameTestServer', 'true')
+                property('forge.enabledGameTestNamespaces', 'elder_bosses')
+                runDir('../../build/' + (project.hasProperty('maleniaSurfaceCheck') ? 'malenia-surface-gametest' :
+                    project.hasProperty('maleniaWorldgenCheck') ? 'malenia-worldgen-gametest' : 'malenia-arena-gametest'))
+                ideConfigGenerated(false)
+            }
+        }
+    }
+}

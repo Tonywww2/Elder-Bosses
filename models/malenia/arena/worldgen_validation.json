@@ -1,0 +1,125 @@
+{
+  "date": "2026-09-27",
+  "revision": "haligtree_dark_forest_worldgen_r1",
+  "settings": {
+    "biomes": [
+      "minecraft:dark_forest"
+    ],
+    "spacing": 48,
+    "separation": 16,
+    "frequency": 0.5,
+    "salt": 19660927,
+    "minimum_roof_cover": 3,
+    "max_surface_height_difference": 16,
+    "max_entry_height_difference": 2
+  },
+  "geometry": {
+    "parts": 19,
+    "surface_entry": [
+      3,
+      58,
+      46
+    ],
+    "bounds": [
+      [
+        -36,
+        -4,
+        -38
+      ],
+      [
+        36,
+        64,
+        48
+      ]
+    ],
+    "stair_flights": 8,
+    "stair_width": 3,
+    "stair_rise": 52,
+    "authored_cells": 261363
+  },
+  "asset_checks": {
+    "passed": true,
+    "assertions": 2579311,
+    "command": "node models/promised_consort/tests/run_attack_plan_check.js ../../malenia/tests/ArenaAssetCheck.java",
+    "coverage": [
+      "manual and natural roots",
+      "exact dual-version NBT parity apart from DataVersion",
+      "full explicit-air volumes and non-overlapping parts",
+      "four rotations",
+      "malformed resources rejected"
+    ]
+  },
+  "forge_server": {
+    "passed": true,
+    "log": "build/malenia-worldgen-stairs.log",
+    "world": "build/malenia-worldgen-gametest",
+    "test_dimension": "elder_bosses:malenia_forest_check",
+    "terrain": "overworld noise generator with fixed dark-forest biome; fixed plains control",
+    "candidate_cells": 289,
+    "frequency_accepted": 153,
+    "frequency_rejected": 136,
+    "natural_start_chunk": [
+      -91,
+      57
+    ],
+    "origin": [
+      -1448,
+      10,
+      920
+    ],
+    "entry": [
+      -1445,
+      68,
+      966
+    ],
+    "rotation": "NONE",
+    "coverage": [
+      "actual naturally generated start and all 19 parts",
+      "same candidate rejected in plains",
+      "seeded selection deterministic",
+      "surface doorway clearance",
+      "stairs navigable down and up with player-sized mob",
+      "piece snapshot serialization round trip",
+      "existing manual four-rotation placement and undo regression"
+    ],
+    "first_generation_log": "build/malenia-worldgen-deep.log",
+    "notes": [
+      "Initial natural placement passed; navigation first exceeded test mob search budget. Increased test follow range to 256; both directions then reached their targets. No production navigation settings changed.",
+      "Final passing run also loaded the natural start saved by the prior run."
+    ]
+  },
+  "builds": {
+    "forge_1_20_1": "passed",
+    "neoforge_1_21_1": "passed",
+    "log": "build/malenia-worldgen-build.log"
+  },
+  "artifacts": [
+    {
+      "path": "versions/1.20.1-forge/build/libs/elder_bosses-forge-0.1.0+1.20.1.jar",
+      "sha256": "8682164d60dbf67b0a03e3292d0ed68375399e9fe10fbe6b13f8c473d7bcd2b9",
+      "arena_templates": 25,
+      "test_fixtures_absent": true,
+      "resource_bytes_match_source": true
+    },
+    {
+      "path": "versions/1.21.1-neoforge/build/libs/elder_bosses-neoforge-0.1.0+1.21.1.jar",
+      "sha256": "1ccb256de35acab216c0f91186a20ba89f30699ba4935f005744fe54f4024f5a",
+      "arena_templates": 25,
+      "test_fixtures_absent": true,
+      "resource_bytes_match_source": true
+    }
+  ],
+  "not_verified": [
+    "NeoForge runtime world generation",
+    "unmodified overworld multi-biome seed survey and observed encounter density",
+    "client-world entrance appearance and lighting",
+    "full two-phase combat and multiplayer"
+  ],
+  "not_implemented": [
+    "automatic Malenia spawning or encounter ownership",
+    "battle fog doors",
+    "battle destruction and reset"
+  ],
+  "subsequent_binding_report": "binding_validation.json",
+  "subsequent_surface_report": "surface_validation.json"
+}

@@ -43,6 +43,8 @@ public final class MaleniaCombatController {
     private final MaleniaSkillSelector skillSelector;
     private final Map<MaleniaActionId, MaleniaActionPlan> eventPlans;
     private final Deque<MaleniaActionId> completedActionHistory = new ArrayDeque<>();
+    private final MaleniaBurstCadence burst = new MaleniaBurstCadence();
+    private long breathingUntilGameTime;
 
     private MaleniaCombatState observedState;
     private UUID targetId;
@@ -96,6 +98,16 @@ public final class MaleniaCombatController {
         } else {
             actionEnded = finishAction(actionRuntime.advance(gameTime));
         }
+        if (stateChanged) burst.reset();
+        if (actionEnded.isEmpty() && !stateChanged && isRandomSelectionState(state)
+                && burst.mayShortenRecovery() && currentTarget().isPresent()
+                && actionRuntime.definition(gameTime).map(definition -> switch (definition.id()) {
+                    case SINGLE_SLASH, DOUBLE_SLASH, RAPID_SLASHES, RUNNING_SLASH,
+                            KICK, THRUST, RETREAT_SLASH -> true;
+                    default -> false; // Keep grab release, aerial landings and major punish windows intact.
+                }).orElse(false)) {
+            actionEnded = finishAction(actionRuntime.finishRecovery(gameTime, 6));
+        }
         if (actionEnded.filter(end -> end.actionId() == MaleniaActionId.SCARLET_AEONIA)
                 .isPresent()) {
             MaleniaActionRuntime.ActionEnd aeoniaEnd = actionEnded.get();
@@ -117,7 +129,10 @@ public final class MaleniaCombatController {
         }
 
         if (actionEnded.isPresent() && isRandomSelectionState(state)) {
-            nextSelectionGameTime = nextSelectionTime(gameTime, phase);
+            if (!actionEnded.get().completed()) burst.reset();
+            boolean breathing = burst.complete();
+            nextSelectionGameTime = breathing ? nextSelectionTime(gameTime, phase) : addSaturated(gameTime, 2);
+            if (breathing) breathingUntilGameTime = Math.max(nextSelectionGameTime, aeoniaRecoveryUntilGameTime);
         }
 
         if (isRandomSelectionState(state)
@@ -125,7 +140,8 @@ public final class MaleniaCombatController {
             && gameTime >= aeoniaRecoveryUntilGameTime
                 && gameTime >= nextSelectionGameTime) {
             actionStarted = observeAndStart(phase, gameTime);
-            nextSelectionGameTime = nextSelectionTime(gameTime, phase);
+            // A failed selection must not insert a full rest between two links.
+            if (actionStarted.isEmpty()) nextSelectionGameTime = addSaturated(gameTime, 4);
         }
 
         Optional<MaleniaActionSnapshot> action = actionRuntime.snapshot(gameTime);
@@ -147,6 +163,7 @@ public final class MaleniaCombatController {
     }
 
     public TickResult cancel() {
+        burst.reset();
         long gameTime = host.gameTime();
         validateGameTime(gameTime);
         Optional<MaleniaActionRuntime.ActionEnd> actionEnded = finishAction(
@@ -410,6 +427,7 @@ public final class MaleniaCombatController {
     ) {
         UUID selectedTargetId = target.map(LivingEntity::getUUID).orElse(null);
         long seed = stableSeed(gameTime, phase, selectedTargetId);
+        if (isRandomSelectionState(host.combatState())) burst.start(seed);
         MaleniaActionSnapshot started = actionRuntime.start(
                 actionId,
                 phase,
@@ -419,6 +437,10 @@ public final class MaleniaCombatController {
         );
         cooldowns.recordActionStarted(actionId, phase, gameTime);
         return started;
+    }
+
+    public boolean isBreathing(long gameTime) {
+        return gameTime < breathingUntilGameTime || gameTime < aeoniaRecoveryUntilGameTime;
     }
 
     private Optional<MaleniaActionRuntime.ActionEnd> finishAction(

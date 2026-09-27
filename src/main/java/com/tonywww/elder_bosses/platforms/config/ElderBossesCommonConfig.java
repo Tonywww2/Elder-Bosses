@@ -125,12 +125,10 @@ public final class ElderBossesCommonConfig {
     private final Supplier<Boolean> staggerResetOnPhaseChange;
 
     private final Supplier<Boolean> instantGuardEnabled;
-    private final Supplier<Integer> instantGuardStartTick;
-    private final Supplier<Integer> instantGuardEndTick;
-    private final Supplier<Integer> instantGuardRearmTicks;
+    private final Supplier<Boolean> instantGuardCueEffectEnabled;
     private final Supplier<Double> instantGuardBlockedDamageMultiplier;
     private final Supplier<Double> instantGuardShieldDurabilityMultiplier;
-    private final Supplier<Integer> instantGuardDefaultCueLeadTicks;
+    private final Supplier<Integer> instantGuardWindowTicks;
     private final Supplier<Integer> instantGuardCuePulseCount;
     private final Supplier<String> instantGuardRedCueColor;
     private final Supplier<String> instantGuardEligibleItemTag;
@@ -151,7 +149,8 @@ public final class ElderBossesCommonConfig {
     private final Supplier<? extends UnmodifiableConfig> grabHeal;
 
     private final Supplier<Integer> scarletRotDecayDelayTicks;
-    private final Supplier<Double> scarletRotDecayPerTwentyTicks;
+    private final Supplier<Integer> scarletRotDecayIntervalTicks;
+    private final Supplier<Double> scarletRotDecayPerInterval;
     private final Supplier<Integer> scarletRotDurationTicks;
     private final Supplier<Integer> scarletRotDamageIntervalTicks;
     private final Supplier<? extends UnmodifiableConfig> scarletRotDamage;
@@ -220,7 +219,7 @@ public final class ElderBossesCommonConfig {
     ) {
         equipment = new EquipmentConfigValues(builder);
         builder.push("boss_music");
-        bossMusicEnabled = builder.comment("Client-local Promised Consort battle music; also uses the Music slider.").define("enabled", true);
+        bossMusicEnabled = builder.comment("Client-local boss battle music for Promised Consort and Malenia; also uses the Music slider.").define("enabled", true);
         bossMusicVolume = builder.defineInRange("volume", 0.85, 0.0, 1.0);
         bossMusicDistance = builder.defineInRange("distance", 96.0, 16.0, 256.0);
         bossMusicFadeTicks = builder.defineInRange("fade_ticks", 40, 1, 200);
@@ -300,7 +299,7 @@ public final class ElderBossesCommonConfig {
         builder.pop();
 
         builder.push("stagger");
-        staggerDamageConversionRatio = builder.defineInRange("damage_conversion_ratio", 0.75, 0.0, 1.0);
+        staggerDamageConversionRatio = builder.defineInRange("damage_conversion_ratio", 0.5, 0.0, 1.0);
         staggerCapacityHealthRatio = builder.defineInRange("capacity_health_ratio", 0.10, 0.001, 1.0);
         staggerDistanceBands = builder.defineList(
             "distance_bands", defaultDistanceBandConfigs(), ElderBossesCommonConfig::isDistanceBand);
@@ -315,14 +314,12 @@ public final class ElderBossesCommonConfig {
 
         builder.push("instant_guard");
         instantGuardEnabled = builder.define("enabled", true);
-        instantGuardStartTick = builder.defineInRange("start_tick", 3, 0, Integer.MAX_VALUE);
-        instantGuardEndTick = builder.defineInRange("end_tick", 6, 0, Integer.MAX_VALUE);
-        instantGuardRearmTicks = builder.defineInRange("rearm_ticks", 4, 4, Integer.MAX_VALUE);
+        instantGuardCueEffectEnabled = builder.define("cue_effect_enabled", true);
         instantGuardBlockedDamageMultiplier = builder.defineInRange("blocked_damage_multiplier", 0.0, 0.0, 1.0);
         instantGuardShieldDurabilityMultiplier = builder.defineInRange(
             "shield_durability_multiplier", 0.50, 0.0, 100.0);
-        instantGuardDefaultCueLeadTicks = builder.defineInRange(
-            "default_cue_lead_ticks", 6, 0, Integer.MAX_VALUE);
+        instantGuardWindowTicks = builder.defineInRange(
+            "window_ticks", 8, 0, Integer.MAX_VALUE);
         instantGuardCuePulseCount = builder.defineInRange("cue_pulse_count", 3, 1, 64);
         instantGuardRedCueColor = builder.define("red_cue_color", "#FF2020");
         instantGuardEligibleItemTag = builder.define("eligible_item_tag", "elder_bosses:instant_guard_items");
@@ -390,8 +387,9 @@ public final class ElderBossesCommonConfig {
         builder.pop();
 
         builder.push("scarlet_rot");
-        scarletRotDecayDelayTicks = builder.defineInRange("decay_delay_ticks", 60, 0, Integer.MAX_VALUE);
-        scarletRotDecayPerTwentyTicks = builder.defineInRange("decay_per_20_ticks", 8.0, 0.0, 1_000_000.0);
+        scarletRotDecayDelayTicks = builder.defineInRange("decay_delay_ticks", 120, 0, Integer.MAX_VALUE);
+        scarletRotDecayIntervalTicks = builder.defineInRange("decay_interval_ticks", 40, 1, NetworkLimits.MAX_TICKS);
+        scarletRotDecayPerInterval = builder.defineInRange("decay_per_interval", 8.0, 0.0, 1_000_000.0);
         scarletRotDurationTicks = builder.defineInRange(
             "duration_ticks", 120, 1, NetworkLimits.MAX_TICKS);
         scarletRotDamageIntervalTicks = builder.defineInRange(
@@ -683,12 +681,10 @@ public final class ElderBossesCommonConfig {
     public MaleniaInstantGuardValues maleniaInstantGuard() {
         return new MaleniaInstantGuardValues(
                 instantGuardEnabled.get(),
-                instantGuardStartTick.get(),
-                instantGuardEndTick.get(),
-                instantGuardRearmTicks.get(),
+                instantGuardCueEffectEnabled.get(),
                 instantGuardBlockedDamageMultiplier.get(),
                 instantGuardShieldDurabilityMultiplier.get(),
-                instantGuardDefaultCueLeadTicks.get(),
+                instantGuardWindowTicks.get(),
                 instantGuardCuePulseCount.get(),
                 instantGuardRedCueColor.get(),
                 instantGuardEligibleItemTag.get()
@@ -717,7 +713,8 @@ public final class ElderBossesCommonConfig {
     public MaleniaScarletRotValues maleniaScarletRot() {
         return new MaleniaScarletRotValues(
                 scarletRotDecayDelayTicks.get(),
-                scarletRotDecayPerTwentyTicks.get(),
+                scarletRotDecayIntervalTicks.get(),
+                scarletRotDecayPerInterval.get(),
                 scarletRotDurationTicks.get(),
                 scarletRotDamageIntervalTicks.get(),
                 readDamageFormula(scarletRotDamage.get()),
@@ -841,19 +838,18 @@ public final class ElderBossesCommonConfig {
                 ),
                 new MaleniaCombatConfigSnapshot.InstantGuard(
                     instantGuard.enabled(),
-                    instantGuard.startTick(),
-                    instantGuard.endTick(),
-                    instantGuard.rearmTicks(),
+                    instantGuard.cueEffectEnabled(),
                     instantGuard.blockedDamageMultiplier(),
                     instantGuard.shieldDurabilityMultiplier(),
-                    instantGuard.defaultCueLeadTicks(),
+                    instantGuard.windowTicks(),
                     instantGuard.cuePulseCount(),
                     instantGuard.redCueColor(),
                     instantGuard.eligibleItemTag()
                 ),
                 new MaleniaCombatConfigSnapshot.ScarletRot(
                     scarletRot.decayDelayTicks(),
-                    scarletRot.decayPerTwentyTicks(),
+                    scarletRot.decayIntervalTicks(),
+                    scarletRot.decayPerInterval(),
                     scarletRot.durationTicks(),
                     scarletRot.damageIntervalTicks(),
                     toCombatDamageFormula(scarletRot.damage()),
@@ -1143,11 +1139,11 @@ public final class ElderBossesCommonConfig {
 
                 builder.push("running_slash");
                 runningSlash = new SkillHeader(builder, 0.9, 55, "standard", 1.30, 1.30);
-                runningSlashRange = builder.defineInRange("range", 6.0, 0.01, 2048.0);
+                runningSlashRange = builder.defineInRange("range", 9.0, 0.01, 2048.0);
                 runningSlashWindupTicks = builder.defineInRange(
                     "windup_ticks", 16, 1, NetworkLimits.MAX_TICKS);
                 runningSlashActiveTicks = builder.defineInRange(
-                    "active_ticks", 4, 1, NetworkLimits.MAX_TICKS);
+                    "active_ticks", 6, 1, NetworkLimits.MAX_TICKS);
                 runningSlashRecoveryTicks = builder.defineInRange(
                     "recovery_ticks", 18, 1, NetworkLimits.MAX_TICKS);
                 runningSlashDamage = builder.define(
@@ -1189,12 +1185,12 @@ public final class ElderBossesCommonConfig {
 
                 builder.push("thrust");
                 thrust = new SkillHeader(builder, 0.75, 85, "heavy", 1.40, 1.30);
-                thrustRange = builder.defineInRange("range", 7.0, 0.01, 2048.0);
+                thrustRange = builder.defineInRange("range", 10.0, 0.01, 2048.0);
                 thrustWidth = builder.defineInRange("width", 1.2, 0.01, 2048.0);
                 thrustWindupTicks = builder.defineInRange(
                     "windup_ticks", 22, 1, NetworkLimits.MAX_TICKS);
                 thrustActiveTicks = builder.defineInRange(
-                    "active_ticks", 4, 1, NetworkLimits.MAX_TICKS);
+                    "active_ticks", 6, 1, NetworkLimits.MAX_TICKS);
                 thrustRecoveryTicks = builder.defineInRange(
                     "recovery_ticks", 24, 1, NetworkLimits.MAX_TICKS);
                 thrustDamage = builder.define(
@@ -1251,7 +1247,7 @@ public final class ElderBossesCommonConfig {
                 waterfowlBurstMaxHitsPerTarget = builder.defineList(
                     "burst_max_hits_per_target", List.of(2, 2, 2, 1), ElderBossesCommonConfig::isPositiveInteger);
                 waterfowlBurstMaxTravel = builder.defineList(
-                    "burst_max_travel", List.of(7.0, 6.0, 5.0, 4.0), ElderBossesCommonConfig::isPositiveNumber);
+                    "burst_max_travel", List.of(11.0, 9.0, 8.0, 4.0), ElderBossesCommonConfig::isPositiveNumber);
                 waterfowlSlashDamage = builder.define(
                     "slash_damage", damageFormulaConfig(0.0, 0.22), ElderBossesCommonConfig::isDamageFormula);
                 waterfowlActionHealCap = builder.defineInRange("action_heal_cap", 16.0, 0.0, 1_000_000.0);
@@ -1303,7 +1299,7 @@ public final class ElderBossesCommonConfig {
 
                 builder.push("flying_slash");
                 flyingSlash = new SkillHeader(builder, 0.75, 120, "heavy", 1.35, 1.30);
-                flyingSlashRange = builder.defineInRange("range", 7.0, 0.01, 2048.0);
+                flyingSlashRange = builder.defineInRange("range", 11.0, 0.01, 2048.0);
                 flyingSlashWindupTicks = builder.defineList(
                     "windup_ticks", List.of(20, 12), ElderBossesCommonConfig::isPositiveTick);
                 flyingSlashActiveTicks = builder.defineList(
@@ -1323,7 +1319,7 @@ public final class ElderBossesCommonConfig {
                 scarletPhantoms = new SkillHeader(builder, 0.35, 280, "none", 1.50, 1.45);
                 scarletPhantoms.components(builder, com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId.SCARLET_PHANTOMS);
                 scarletPhantomsWindupTicks = () -> 36;
-                scarletPhantomsActiveTicks = () -> 72;
+                scarletPhantomsActiveTicks = () -> 52;
                 scarletPhantomsRecoveryTicks = () -> 38;
                 scarletPhantomsCount = builder.defineInRange("phantom_count", 5, 1, Integer.MAX_VALUE);
                 scarletPhantomsWidth = builder.defineInRange("phantom_width", 1.6, 0.01, 2048.0);
@@ -2075,12 +2071,10 @@ public final class ElderBossesCommonConfig {
 
     public record MaleniaInstantGuardValues(
             boolean enabled,
-            int startTick,
-            int endTick,
-            int rearmTicks,
+            boolean cueEffectEnabled,
             double blockedDamageMultiplier,
             double shieldDurabilityMultiplier,
-            int defaultCueLeadTicks,
+            int windowTicks,
             int cuePulseCount,
             String redCueColor,
             String eligibleItemTag
@@ -2113,7 +2107,8 @@ public final class ElderBossesCommonConfig {
 
     public record MaleniaScarletRotValues(
             int decayDelayTicks,
-            double decayPerTwentyTicks,
+            int decayIntervalTicks,
+            double decayPerInterval,
             int durationTicks,
             int damageIntervalTicks,
             DamageFormulaValues damage,

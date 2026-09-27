@@ -31,7 +31,7 @@ public final class MaleniaConfigNbt {
     private static final int DAMAGE_ROUTING_REMOVED_FORMAT_VERSION = 10;
     private static final int SKILL_TUNING_FORMAT_VERSION = 11;
     private static final int COMPONENT_TIMING_FORMAT_VERSION = 12;
-    private static final int FORMAT_VERSION = COMPONENT_TIMING_FORMAT_VERSION;
+    private static final int FORMAT_VERSION = 14;
 
     private MaleniaConfigNbt() {
     }
@@ -56,7 +56,7 @@ public final class MaleniaConfigNbt {
         try {
             requireExactFields(tag, "formatVersion", "combat", "skills");
             int formatVersion = readInt(tag, "formatVersion");
-            if (formatVersion < LEGACY_FORMAT_VERSION || formatVersion > FORMAT_VERSION) {
+            if (formatVersion != FORMAT_VERSION) {
                 return Optional.empty();
             }
             return Optional.of(new EncounterConfig(
@@ -760,70 +760,34 @@ public final class MaleniaConfigNbt {
     private static CompoundTag writeInstantGuard(MaleniaCombatConfigSnapshot.InstantGuard value) {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("enabled", value.enabled());
-        tag.putInt("startTick", value.startTick());
-        tag.putInt("endTick", value.endTick());
-        tag.putInt("rearmTicks", value.rearmTicks());
+        tag.putBoolean("cueEffectEnabled", value.cueEffectEnabled());
         tag.putDouble("blockedDamageMultiplier", value.blockedDamageMultiplier());
         tag.putDouble("shieldDurabilityMultiplier", value.shieldDurabilityMultiplier());
-        tag.putInt("defaultCueLeadTicks", value.defaultCueLeadTicks());
+        tag.putInt("windowTicks", value.windowTicks());
         tag.putInt("cuePulseCount", value.cuePulseCount());
         tag.putString("redCueColor", value.redCueColor());
         tag.putString("eligibleItemTag", value.eligibleItemTag());
         return tag;
     }
 
-    private static MaleniaCombatConfigSnapshot.InstantGuard readInstantGuard(
-            CompoundTag tag,
-            int formatVersion
-    ) {
-        if (formatVersion < FIXED_INVARIANTS_FORMAT_VERSION) {
-            requireExactFields(
-                    tag,
-                    "enabled",
-                    "startTick",
-                    "endTick",
-                    "rearmTicks",
-                    "blockedDamageMultiplier",
-                    "shieldDurabilityMultiplier",
-                    "defaultCueLeadTicks",
-                    "cuePulseCount",
-                    "redCueColor",
-                    "cueSound",
-                    "eligibleItemTag"
-            );
-        } else {
-            requireExactFields(
-                    tag,
-                    "enabled",
-                    "startTick",
-                    "endTick",
-                    "rearmTicks",
-                    "blockedDamageMultiplier",
-                    "shieldDurabilityMultiplier",
-                    "defaultCueLeadTicks",
-                    "cuePulseCount",
-                    "redCueColor",
-                    "eligibleItemTag"
-            );
-        }
+    private static MaleniaCombatConfigSnapshot.InstantGuard readInstantGuard(CompoundTag tag, int formatVersion) {
+        requireExactFields(tag, "enabled", "cueEffectEnabled", "blockedDamageMultiplier", "shieldDurabilityMultiplier", "windowTicks", "cuePulseCount", "redCueColor", "eligibleItemTag");
         return new MaleniaCombatConfigSnapshot.InstantGuard(
                 readBoolean(tag, "enabled"),
-                readInt(tag, "startTick"),
-                readInt(tag, "endTick"),
-                readInt(tag, "rearmTicks"),
+                readBoolean(tag, "cueEffectEnabled"),
                 readDouble(tag, "blockedDamageMultiplier"),
                 readDouble(tag, "shieldDurabilityMultiplier"),
-                readInt(tag, "defaultCueLeadTicks"),
+                readInt(tag, "windowTicks"),
                 readInt(tag, "cuePulseCount"),
                 readString(tag, "redCueColor"),
-                readString(tag, "eligibleItemTag")
-        );
+                readString(tag, "eligibleItemTag"));
     }
 
     private static CompoundTag writeScarletRot(MaleniaCombatConfigSnapshot.ScarletRot value) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("decayDelayTicks", value.decayDelayTicks());
-        tag.putDouble("decayPerTwentyTicks", value.decayPerTwentyTicks());
+        tag.putInt("decayIntervalTicks", value.decayIntervalTicks());
+        tag.putDouble("decayPerInterval", value.decayPerInterval());
         tag.putInt("durationTicks", value.durationTicks());
         tag.putInt("damageIntervalTicks", value.damageIntervalTicks());
         tag.put("damage", writeDamageFormula(value.damage()));
@@ -840,58 +804,13 @@ public final class MaleniaConfigNbt {
             CompoundTag tag,
             int formatVersion
     ) {
-        if (formatVersion < FIXED_INVARIANTS_FORMAT_VERSION) {
-            requireExactFields(
-                    tag,
-                    "playerThreshold",
-                    "decayDelayTicks",
-                    "decayPerTwentyTicks",
-                    "durationTicks",
-                    "damageIntervalTicks",
-                    "damage",
-                    "healingReduction",
-                    "movementSpeedReduction",
-                    "honeyBuildupReduction",
-                    "cleanseItem",
-                    "consumeCleanseItem",
-                    "cleanseUseTicks",
-                    "milkClearsRot"
-            );
-        } else if (formatVersion < DAMAGE_STATUS_REMOVED_FORMAT_VERSION) {
-            requireExactFields(
-                    tag,
-                    "playerThreshold",
-                    "decayDelayTicks",
-                    "decayPerTwentyTicks",
-                    "durationTicks",
-                    "damageIntervalTicks",
-                    "damage",
-                    "healingReduction",
-                    "movementSpeedReduction",
-                    "honeyBuildupReduction",
-                    "consumeCleanseItem",
-                    "cleanseUseTicks",
-                    "milkClearsRot"
-            );
-                } else {
-                    requireExactFields(
-                        tag,
-                        "decayDelayTicks",
-                        "decayPerTwentyTicks",
-                        "durationTicks",
-                        "damageIntervalTicks",
-                        "damage",
-                        "healingReduction",
-                        "movementSpeedReduction",
-                        "honeyBuildupReduction",
-                        "consumeCleanseItem",
-                        "cleanseUseTicks",
-                        "milkClearsRot"
-                    );
-        }
+        requireExactFields(tag, "decayDelayTicks", "decayIntervalTicks", "decayPerInterval",
+                "durationTicks", "damageIntervalTicks", "damage", "healingReduction", "movementSpeedReduction",
+                "honeyBuildupReduction", "consumeCleanseItem", "cleanseUseTicks", "milkClearsRot");
         return new MaleniaCombatConfigSnapshot.ScarletRot(
                 readInt(tag, "decayDelayTicks"),
-                readDouble(tag, "decayPerTwentyTicks"),
+                readInt(tag, "decayIntervalTicks"),
+                readDouble(tag, "decayPerInterval"),
                 readInt(tag, "durationTicks"),
                 readInt(tag, "damageIntervalTicks"),
                 readDamageFormula(readCompound(tag, "damage")),

@@ -6,8 +6,21 @@ Authoring format: **GeckoLib Animated Model** in Blockbench.
 The current single-version contract is [current_assets.json](current_assets.json).
 Old snapshots and generated previews were removed on 2026-09-18; capture fresh
 images when needed. Use [the current maintenance workflow](../README.md), not
-the historical reconstruction commands below. Existing animation values are
-unchanged; JSON time keys were normalized into chronological order.
+the historical reconstruction commands below. The current V15 uses grouped block
+hands and a narrower continuous cape (385 body/flower cubes, 92 bones). GPU rot
+wings and the V12 atlas remain current for phase one. V16 adds the current
+phase-two variation (155 cubes, the same 92 bones and 40 animations), pale skin,
+fungal relief and a separate eight-material atlas. See [V16 changes](../../docs/bosses/malenia-phase-two-feedback-v16.md).
+After editing shared geometry or animations, run `node models/malenia/scripts/build_phase_two.js`
+to synchronize `malenia_phase_two.bbmodel` and its runtime geometry/texture.
+Audio previews and provenance are in [audio/audition.html](audio/audition.html)
+and [audio/manifest.json](audio/manifest.json).
+Generate with `node models/malenia/scripts/build_animations.js`, then synchronize
+native and runtime keys with `node models/malenia/scripts/sync_animations.js`.
+After a geometry export, use `node models/malenia/scripts/refine_v15.js`, then
+`node models/malenia/scripts/sync_shader_wings.js`
+to enforce the shader-only wing surface contract. Empty wing animation controls
+remain in the rig; neither the boss nor its projections render wing cubes.
 
 Model and animation contact sheet (historical artifact removed)
 
@@ -23,17 +36,21 @@ Model and animation contact sheet (historical artifact removed)
 | [animation_manifest.json](animation_manifest.json) | Clip lengths, default stage durations and event landmarks |
 | [art_direction.json](art_direction.json) | Authoring-only figure size, precision, texel density and detail budget |
 | [validation.json](validation.json) | Generated structural validation results |
-| [surface_audit.json](surface_audit.json) | Geometry/animation-hashed near-coplanar surface checks in 32 poses |
-| [angular_review.json](angular_review.json) | Pre-client visual review, 88 angles, anatomical sides, crown and posed-motion checks |
-| [preview_validation.json](preview_validation.json) | Visible-pixel checks and rendered foot-contact samples |
-| [texture_validation.json](texture_validation.json) | Texture-only changes, protected pixels, alpha and current PNG hash |
+| [combat_readability_v15_validation.json](combat_readability_v15_validation.json) | Current server, shader, asset and release validation |
+| [surface_audit.json](surface_audit.json) | Historical v9 near-coplanar surface checks in 32 poses |
+| [angular_review.json](angular_review.json) | Historical v9 pre-client visual review in 88 angles |
+| [preview_validation.json](preview_validation.json) | Current revision's preview and world-test status |
+| [texture_validation.json](texture_validation.json) | Historical v8 texture-only validation |
+| [appearance_v10_validation.json](appearance_v10_validation.json) | Historical V10 appearance pass |
+| [material_hands_v11_validation.json](material_hands_v11_validation.json) | Historical V11 material/hand pass |
+| [texture_variation_v12_validation.json](texture_variation_v12_validation.json) | Current texture variation, preservation checks and validation scope |
 | [relief_validation.json](relief_validation.json) | Added decoration geometry, preserved baseline, review and runtime status |
 | [secondary_motion_validation.json](secondary_motion_validation.json) | Sampled protected transforms under bounded secondary offsets |
 | [runtime_validation.json](runtime_validation.json) | Platform runs, user feedback and evidence limitations |
 | [MOTION_PLAN.md](MOTION_PLAN.md) | Bilibili reference evidence, optimization plan and execution record |
 | [SOURCES.md](SOURCES.md) | Research, authorship and distribution boundaries |
 
-The current `sculpted_relief_v9` model has **91 bones, 465 cubes and 1,814 textured faces**.
+The current `combat_readability_v15` model has **92 bones, 385 cubes and 1,369 textured faces**.
 Minecraft pixel styling remains a texture requirement only. Fractional
 geometry, refined joints, the cape, hair and physical blade remain detailed.
 It preserves the **1.2 authoring scale** without separately rounding joints and geometry.
@@ -45,6 +62,44 @@ There are no arbitrary meshes, skinned vertices or imported game assets. The pro
 embeds its texture and remains a cube-and-bone GeckoLib asset.
 
 ## Current Refinement
+
+V12 adds clustered color variation and intermediate shades to the existing atlas,
+guided by locally inspected vanilla Minecraft 1.21.1 block and item textures.
+Thirteen-step base ramps and restrained warm/cool shifts break up broad armor
+planes; low-contrast cloth patches and lengthwise hair variation retain readable
+material shapes. Skin remains subtle, and rot membranes retain their veins and
+cutout edges. All clusters and palette choices are original pixel painting.
+The pass changes 11,492 pixels while preserving every alpha value, protected
+pixel, cube, bone, UV and animation. Saved authoring and runtime assets match
+[current_assets.json](current_assets.json). See the [V12 validation record](texture_variation_v12_validation.json)
+for pixel counts, reference entries and the offline review scope.
+
+### V11 material and hand pass
+
+V11 gives the previously flat left palm and fingers five restrained skin tones,
+with light fingertip planes, shaded sides and visible knuckle ridges. Four small
+mechanical knuckle plates and a darker finger-joint palette separate the right
+prosthetic grip from its palm and backplate. Armor, red hair and the dark crimson
+cape use broader stepped color ranges and clustered shading, retaining hard pixel
+edges and material separation. Eight added cubes belong to the existing `hand_l`
+and `blade_mount` bones. The rig, all 40 animation clips, weapon alignment,
+collision and attack timing are unchanged. See the [V11 validation record](material_hands_v11_validation.json)
+for the offline review and its limits.
+
+### V10 silhouette pass
+
+V10 reshapes the helmet shell, brow, wing bases, crest and raised quills so its
+asymmetric, eye-shading silhouette reads at Minecraft viewing distance. Three
+left cape folds extend the torn diagonal. The chest texture uses restrained
+weathered bronze clusters, and the phase-two rot membranes have darker tissue,
+more continuous mass and irregular openings. These are original cube and pixel
+edits guided by the [appearance source ledger](../../docs/references/malenia-sources.md).
+At V10, the 91-bone rig, 465-cube count, 40 clips, animation file, collision and
+combat timing were unchanged. That revision was reviewed offline in multiple
+angles and representative action poses, but not accepted in-world. See its
+[scoped historical record](appearance_v10_validation.json).
+
+### Earlier passes
 
 V9 addresses flat-looking decoration with real raised centers, sloped edges and
 different surface normals on the chest leaves and keel, brow, crest, shoulder armor,
@@ -69,7 +124,7 @@ fabric, skin and selected gold surfaces use continuous structural shading and
 material-specific highlights. The user-provided reference models informed these
 techniques; their pixels, geometry and YSM controllers were not imported.
 
-The latest texture revision is `clustered_transition_v1`. Fixed-seed, multiscale
+The v8 texture revision was `clustered_transition_v1`. Fixed-seed, multiscale
 color clusters and four intermediate colors between five palette anchors produce
 nine discrete tones without blurring pixel edges. Hair follows complete root-to-tip
 paths; fabric uses irregular low-contrast patches, gold keeps directional highlights,
@@ -138,7 +193,7 @@ possible camera, shader or animation frame; close-view in-world observation is a
 
 ### Pre-Client Review
 
-The latest request requires a multi-angle model review **before** launching the game.
+The V7 review required a multi-angle model review **before** launching the game.
 [Review sheets](angular_review.json) cover both phases at eight azimuths plus high/low
 angles, eight crown views, and six directions for seven grip poses. Grip closeups
 isolate the right arm where the torso would hide the target; full-body orbit and pose
@@ -169,6 +224,13 @@ relaxed empty hand (historical artifact removed),
 open capture hand (historical artifact removed).
 
 ## Motion Contract
+
+The [skill design R1](../../docs/bosses/malenia-skill-design.md) and
+[new video analysis](../../docs/references/malenia-skill-video-analysis.md)
+describe the combat-presentation pass. The [first implementation](../../docs/bosses/malenia-skill-implementation.md)
+now adds runtime blade trails, independent model phantoms, a world-anchored bloom and server-resolved contact feedback.
+It reuses these V12 assets and animation clips; the new Aeonia timing is mapped onto the existing authored timeline.
+In-world combat acceptance remains pending.
 
 - The detailed geometry is still animated by named bones and ordinary GeckoLib keys;
   its increased precision does not make the client authoritative for hits or movement.
@@ -299,6 +361,24 @@ hooks; they do not add new gameplay states or spawn additional entities.
 Open [malenia.bbmodel](malenia.bbmodel) with the GeckoLib Blockbench plugin installed.
 The two idle clips provide convenient stage visibility previews. Combat clips are
 shared by both phases; Java applies the appropriate stage layers after animation.
+For the current V12 project, edit the saved cubes and embedded atlas directly,
+then export geometry and copy the atlas to both authoring and runtime directories.
+Update [current_assets.json](current_assets.json) after checking the four hashes.
+The [V12 Blockbench script](scripts/repaint_variation_v12.js) creates a texture draft
+from the V11 baseline; after visual review, the [V12 finalization script](scripts/finalize_variation_v12.mjs)
+checks the baseline hashes and preservation report, embeds the atlas and synchronizes
+both PNG copies without exporting geometry or animations. These scripts record
+the V12 pass and should not be reapplied to the current atlas.
+The historical [V11 Blockbench script](scripts/refine_materials_hands_v11.js) and
+[finalization script](scripts/finalize_materials_hands_v11.mjs) record the hand pass;
+they require the V10 baseline and reviewed draft exports to replay it. The
+[V10 finalization script](scripts/finalize_appearance_v10.mjs) similarly records
+the earlier silhouette pass from V9.
+Re-run the asset validator and both loaders' `processResources` tasks after edits.
+The older reconstruction instructions below describe historical passes and are
+not an incremental build path for V12.
+
+### Historical reconstruction workflow
 
 The v9 decoration is generated by refine_relief.js (historical artifact removed) using
 [relief_geometry.js](../shared/relief_geometry.js). In Blockbench, evaluate the former
@@ -372,6 +452,19 @@ not edited inside any JAR. Normal resource processing is sufficient to run the m
 
 ## Verification
 
+- V12: [texture_variation_v12_validation.json](texture_variation_v12_validation.json)
+  records the before/after atlas review and saved-project model and isolated-hand
+  inspection. The asset validator passed 311,965 checks; Forge 1.20.1 and NeoForge
+  1.21.1 both processed the resources successfully. Geometry and animation hashes
+  are unchanged from V11. V12 has not been tested in-world.
+- V11: [material_hands_v11_validation.json](material_hands_v11_validation.json)
+  records saved-project hand closeups, both-phase multi-angle and representative
+  action views, structural and motion checks, and successful Forge 1.20.1 /
+  NeoForge 1.21.1 resource processing. V11 has not been tested in-world.
+- V10: [appearance_v10_validation.json](appearance_v10_validation.json) records
+  offline multi-angle and action-pose inspection, structural and motion checks,
+  and successful Forge 1.20.1 / NeoForge 1.21.1 resource processing. Neither
+  loader has been tested in-world with the V10 appearance yet.
 - [Relief checks](../shared/relief_geometry.test.js) cover actual forward depth,
   sloped normals, rotation composition, integer UV bounds, transparent mask gaps,
   source attachments, geometry budgets and preservation of the original assets.
@@ -406,7 +499,8 @@ not edited inside any JAR. Normal resource processing is sufficient to run the m
   remains historical evidence, not proof that v7 preserves the old choreography.
 - [Shared surface tests](../shared/surface_style.test.js) pass for deterministic
   clusters, transition tones, material response and both texture-only asset contracts.
-  The latest texture and review hashes match the editable and runtime assets.
+  These texture and review reports describe earlier passes; V12 asset hashes
+  and authoring/runtime identity are recorded in the current contract.
 - [Secondary spring tests](../shared/SecondaryMotionTest.java) pass for bounded motion,
   repeated frames, resets and time-step independence. Twelve static offset samples
   retain protected main-pose, hand and blade transforms; in-world motion is not separately accepted.
@@ -441,3 +535,13 @@ This delivery does not add an arena, original-game audio, particle systems, swor
 trails, independent phantom rendering or persistent post-defeat flower placement.
 Existing indicators and gameplay remain authoritative. See the project design docs
 for those separate presentation and world-content contracts.
+
+## 2026-09-26: Haligtree chamber R1
+
+The historical scope note above describes the earlier model delivery. The
+[new arena](../../docs/arenas/malenia-arena.md) now includes a 73×42×83-block root
+chamber, eighteen fixed NBT parts per Minecraft version, dry decorative shallow
+water, white flower banks, a root seat and a stone vestibule. Operator commands
+provide placement, entry, anchor information and durable block undo. Its authoring
+tools and server checks live in [arena/](arena/README.md). Natural generation and
+encounter binding are not included in this architectural release.

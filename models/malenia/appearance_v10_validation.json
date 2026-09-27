@@ -1,0 +1,40 @@
+{
+  "revision": "minecraft_silhouette_v10",
+  "date": "2026-09-26",
+  "scope": "Offline appearance revision of the existing Blockbench and GeckoLib model",
+  "changes": {
+    "reshaped_cubes": 11,
+    "areas": [
+      "asymmetric winged helmet shell, brow, bases, crest and quills",
+      "three left cape folds",
+      "weathered bronze cuirass palette",
+      "darker and fuller perforated phase-two rot membranes"
+    ],
+    "unchanged": [
+      "91-bone rig",
+      "465-cube count and 1814 textured faces",
+      "40 authored animations and their timing",
+      "collision and gameplay timing"
+    ]
+  },
+  "assets": {
+    "geometry_sha256": "2aed95f3e44a56c7a1b1b23d7c86e45c85b6ff87bf3231dac2e580c27adb733b",
+    "animation_sha256": "75d59dc834da2ec3fc411271ad4e76261372920fecf5f37b9b58ebc997550603",
+    "texture_sha256": "f7224b4b74e506cbab2d9014b419fce702564c628418be70368b5d5eb29aa7d4",
+    "authoring_and_runtime_copies_match": true
+  },
+  "checks": {
+    "asset_validator": "passed: 311805 checks",
+    "reference_motion": "passed: 113 checks",
+    "hand_pose": "passed",
+    "forge_1_20_1_process_resources": "passed",
+    "neoforge_1_21_1_process_resources": "passed",
+    "offline_review": "Reviewed front and back views of both phases, helmet, cuirass, prosthetic, rot wing, and representative idle, run, slash, thrust, grab, Waterfowl and flying-slash poses in Blockbench"
+  },
+  "limitations": {
+    "full_88_angle_review_rerun": false,
+    "in_world_tested": false,
+    "combat_acceptance": false,
+    "media": "Temporary contact sheets under ignored build/; no reference image or preview is included in runtime resources"
+  }
+}

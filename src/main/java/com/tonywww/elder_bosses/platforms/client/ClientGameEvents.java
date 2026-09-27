@@ -42,12 +42,14 @@ public final class ClientGameEvents {
         if (event.phase == TickEvent.Phase.END) {
             ClientBossMusic.tick();
             ClientBossVictoryBanner.tick();
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.tick();
         }
     }
     //?} else {
     /*public static void onClientTick(ClientTickEvent.Post event) {
         ClientBossMusic.tick();
         ClientBossVictoryBanner.tick();
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.tick();
     }
     *///?}
 
@@ -68,6 +70,7 @@ public final class ClientGameEvents {
         ClientIndicatorStateStore.onTrackingEnd(entityId);
         ClientRotStateStore.onTrackingEnd(entityId);
         ClientBossVfxController.onTrackingEnd(entityId);
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.remove(entityId);
     }
 
     @SubscribeEvent
@@ -82,6 +85,7 @@ public final class ClientGameEvents {
         ClientIndicatorStateStore.onDimensionChanged();
         ClientRotStateStore.onDimensionChanged();
         ClientBossVfxController.clear();
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.clear();
         com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.clear();
     }
 
@@ -94,6 +98,7 @@ public final class ClientGameEvents {
         ClientIndicatorStateStore.onDisconnect();
         ClientRotStateStore.onDisconnect();
         ClientBossVfxController.clear();
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.clear();
         com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.clear();
     }
 }

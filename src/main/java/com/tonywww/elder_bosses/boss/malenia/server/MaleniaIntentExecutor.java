@@ -46,10 +46,9 @@ import java.util.UUID;
 public final class MaleniaIntentExecutor {
     private static final double POSITION_EPSILON_SQUARED = 1.0E-6;
     private static final double GRAB_ANCHOR_MARGIN = 1.0 / 16.0;
-    private static final double MAX_HORIZONTAL_TRAVEL_PER_TICK = 1.15;
+    private static final double MAX_HORIZONTAL_TRAVEL_PER_TICK = 3.6;
     private static final double LOCKED_POINT_ARRIVAL_MARGIN = 0.5;
     private static final double ENTITY_COLLISION_MARGIN = 0.05;
-    private static final int WATERFOWL_AIRBORNE_END_TICK_EXCLUSIVE = 100;
     // Matches the documented 3-block underfoot rot-pool radius; no config field exists.
     private static final double SCARLET_PHANTOM_SPAWN_RADIUS = 3.0;
     private static final double HALF_CIRCLE_RADIANS = Math.PI;
@@ -80,6 +79,9 @@ public final class MaleniaIntentExecutor {
     private double horizontalTravelThisTick;
     private boolean verticalControlActive;
     private UUID grabbedPlayerId;
+    private ServerPlayer grabbedPlayer;
+    private boolean grabbedHadNoGravity;
+    private long grabbedAt;
     private double grabLeashDistance;
     private HitSpec grabImpaleHit;
     private HitSpec grabThrowHit;
@@ -142,11 +144,11 @@ public final class MaleniaIntentExecutor {
         lastProcessedGameTick = gameTick;
 
         List<HitOutcome> outcomes = new ArrayList<>();
+        boss.setDeltaMovement(0, boss.getDeltaMovement().y, 0);
         releaseVerticalControl(boss);
         maintainGrab(level, boss);
         resolveGrabFollowUps(level, boss, snapshot, outcomes);
         resetMovementTrace(boss);
-        applyWaterfowlGravityControl(boss, snapshot);
         for (MaleniaServerIntent intent : intents) {
             handleIntent(
                     level,
@@ -257,24 +259,6 @@ public final class MaleniaIntentExecutor {
         releaseGrab();
     }
 
-    private void applyWaterfowlGravityControl(
-            LivingEntity boss,
-            MaleniaActionSnapshot snapshot
-    ) {
-        if (snapshot.actionId() != MaleniaActionId.WATERFOWL_DANCE
-                || snapshot.actionTick() >= WATERFOWL_AIRBORNE_END_TICK_EXCLUSIVE) {
-            releaseGravityControl();
-            return;
-        }
-        if (gravityControlledBoss != boss) {
-            releaseGravityControl();
-            gravityControlledBoss = boss;
-        }
-        boss.setNoGravity(true);
-        Vec3 velocity = boss.getDeltaMovement();
-        boss.setDeltaMovement(velocity.x, 0.0, velocity.z);
-    }
-
     private void releaseGravityControl() {
         if (gravityControlledBoss == null) {
             verticalControlActive = false;
@@ -295,9 +279,11 @@ public final class MaleniaIntentExecutor {
         if (intent instanceof MaleniaServerIntent.LockFacing) {
             lockFacing(level, boss, snapshot);
         } else if (intent instanceof MaleniaServerIntent.LockPoint lockPoint) {
-            lockPoint(level, snapshot, lockPoint);
+            lockPoint(level, boss, snapshot, lockPoint);
+        } else if (intent instanceof MaleniaServerIntent.AnchorAtBoss anchor) {
+            lockedPoints.put(anchor.pointId(), boss.position());
         } else if (intent instanceof MaleniaServerIntent.LockPhantom lockPhantom) {
-            lockPhantom(level, snapshot, lockPhantom);
+            lockPhantom(level, boss, snapshot, lockPhantom);
         } else if (intent instanceof MaleniaServerIntent.MoveToward moveToward) {
             moveToward(boss, moveToward);
         } else if (intent instanceof MaleniaServerIntent.MoveVertical moveVertical) {
@@ -349,18 +335,38 @@ public final class MaleniaIntentExecutor {
 
     private void lockPoint(
             ServerLevel level,
+            LivingEntity boss,
             MaleniaActionSnapshot snapshot,
             MaleniaServerIntent.LockPoint intent
     ) {
-        LivingEntity target = resolveTarget(level, null, snapshot);
-        if (target != null) {
-            Vec3 point = target.position();
+        LivingEntity target = resolveTarget(level, boss, snapshot);
+        {
+            Vec3 point = target == null ? boss.position() : target.position();
+            if (intent.pointId().startsWith("waterfowl_burst_") && target != null) {
+                Vec3 direction = point.subtract(boss.position()).multiply(1, 0, 1).normalize();
+                // The three rushes cut through the locked target, then turn in
+                // their pauses. Stopping at its collision box erased later rushes.
+                point = point.add(direction.scale(2.0));
+                if (direction.lengthSqr() > POSITION_EPSILON_SQUARED) lockedFacing = new Vec2(direction.x, direction.z);
+            }
+            if (intent.maximumHorizontalDistance().isPresent()) {
+                Vec3 offset = point.subtract(boss.position()).multiply(1, 0, 1);
+                double maximum = intent.maximumHorizontalDistance().getAsDouble();
+                if (offset.length() > maximum) {
+                    Vec3 bounded = boss.position().add(offset.normalize().scale(maximum));
+                    point = new Vec3(bounded.x, point.y, bounded.z);
+                }
+            }
             if (intent.projectToSurface()) {
-                BlockPos surface = level.getHeightmapPos(
-                        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                        BlockPos.containing(point)
-                );
-                point = new Vec3(point.x, surface.getY(), point.z);
+                if (boss instanceof com.tonywww.elder_bosses.boss.malenia.MaleniaEntity malenia && malenia.arenaBinding().isPresent()) {
+                    point = malenia.arenaSurfacePoint(point);
+                } else {
+                    BlockPos surface = level.getHeightmapPos(
+                            Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                            BlockPos.containing(point)
+                    );
+                    point = new Vec3(point.x, surface.getY(), point.z);
+                }
             }
             lockedPoints.put(intent.pointId(), point);
         }
@@ -368,6 +374,7 @@ public final class MaleniaIntentExecutor {
 
     private void lockPhantom(
             ServerLevel level,
+            LivingEntity boss,
             MaleniaActionSnapshot snapshot,
             MaleniaServerIntent.LockPhantom intent
     ) {
@@ -376,7 +383,7 @@ public final class MaleniaIntentExecutor {
                 pointId + "_origin",
                 phantomSpawnPoint(snapshot.seed(), intent.phantomIndex(), intent.phantomCount())
         );
-        LivingEntity target = resolveTarget(level, null, snapshot);
+        LivingEntity target = resolveTarget(level, boss, snapshot);
         if (target != null) {
             lockedPoints.put(pointId, target.position());
         }
@@ -440,8 +447,7 @@ public final class MaleniaIntentExecutor {
             releaseGravityControl();
             gravityControlledBoss = boss;
         }
-        Vec3 movement = boss.getDeltaMovement();
-        boss.setDeltaMovement(movement.x, 0.0, movement.z);
+        boss.setDeltaMovement(Vec3.ZERO);
         boss.setNoGravity(true);
         boss.fallDistance = 0.0F;
         verticalControlActive = true;
@@ -663,6 +669,14 @@ public final class MaleniaIntentExecutor {
                     intent.grabHit()
             );
             if (outcome.isPresent()) {
+                if (outcome.get().contactType() == HitOutcome.ContactType.BLOCKED) { outcomes.add(outcome.get()); return; }
+                if (!candidate.isAlive()) return;
+                grabbedPlayer = candidate;
+                grabbedHadNoGravity = candidate.isNoGravity();
+                grabbedAt = level.getGameTime();
+                candidate.stopUsingItem();
+                candidate.stopRiding();
+                candidate.setNoGravity(true);
                 grabbedPlayerId = candidate.getUUID();
                 grabLeashDistance = intent.length() + boss.getBbWidth() + candidate.getBbWidth();
                 grabImpaleHit = intent.impaleHit();
@@ -703,7 +717,7 @@ public final class MaleniaIntentExecutor {
             MaleniaActionSnapshot snapshot,
             HitSpec hit
     ) {
-        ServerPlayer player = resolveGrabbed(level);
+        ServerPlayer player = resolveGrabbed(level, boss);
         if (player == null) {
             releaseGrab();
             return Optional.empty();
@@ -719,7 +733,7 @@ public final class MaleniaIntentExecutor {
     }
 
     private void maintainGrab(ServerLevel level, LivingEntity boss) {
-        ServerPlayer player = resolveGrabbed(level);
+        ServerPlayer player = resolveGrabbed(level, boss);
         if (player == null) {
             releaseGrab();
             return;
@@ -728,7 +742,7 @@ public final class MaleniaIntentExecutor {
         Vec2 facing = facing(boss);
         Vec3 anchor = new Vec3(
                 boss.getX() + facing.x() * spacing,
-                boss.getY(),
+                boss.getY() + 1.9 * smoothGrabLift(level.getGameTime() - grabbedAt),
                 boss.getZ() + facing.z() * spacing
         );
         Vec3 offset = anchor.subtract(player.position());
@@ -737,9 +751,10 @@ public final class MaleniaIntentExecutor {
             return;
         }
         double distance = offset.length();
-        if (offset.lengthSqr() <= POSITION_EPSILON_SQUARED) {
-            return;
-        }
+        player.setDeltaMovement(Vec3.ZERO);
+        player.fallDistance = 0;
+        player.setNoGravity(true);
+        if (offset.lengthSqr() <= POSITION_EPSILON_SQUARED) return;
         double maxStep = Math.max(boss.getBbWidth(), player.getBbWidth());
         Vec3 step = distance > maxStep ? offset.scale(maxStep / distance) : offset;
         if (!level.noCollision(player, player.getBoundingBox().move(step))) {
@@ -748,6 +763,8 @@ public final class MaleniaIntentExecutor {
         }
         Vec3 before = player.position();
         player.move(MoverType.SELF, step);
+        // Server-authoritative player positioning: a bare move is overwritten by the next client movement packet.
+        player.connection.teleport(player.getX(), player.getY(), player.getZ(), player.getYRot(), player.getXRot());
         Vec3 actual = player.position().subtract(before);
         if (actual.distanceToSqr(step) > POSITION_EPSILON_SQUARED) {
             releaseGrab();
@@ -1006,7 +1023,9 @@ public final class MaleniaIntentExecutor {
             };
         boolean blocked;
         float blockedDamage;
-        ShieldBlockProbe.Policy blockPolicy = suppressShieldDamage
+        boolean grabContact = activeActionId == MaleniaActionId.GRAB_IMPALE;
+        if (grabContact) target.invulnerableTime = 0;
+        ShieldBlockProbe.Policy blockPolicy = grabContact ? ShieldBlockProbe.Policy.OVERRIDE_BLOCK : suppressShieldDamage
             ? ShieldBlockProbe.Policy.SUPPRESS_SHIELD_DAMAGE
             : ShieldBlockProbe.Policy.OBSERVE;
         try (ShieldBlockProbe.Scope blockProbe = ShieldBlockProbe.begin(
@@ -1195,6 +1214,14 @@ public final class MaleniaIntentExecutor {
         }
         Vec3 movement = requestedMovement;
         double requestedDistance = movement.length();
+        // Bound vertical dives as well as horizontal dashes. Packet interpolation
+        // cannot disguise a multi-block vertical displacement in a single tick.
+        double stepLimit = activeActionId == MaleniaActionId.SCARLET_AEONIA ? 0.95
+                : activeActionId == MaleniaActionId.WATERFOWL_DANCE ? 1.8 : 3.6;
+        if (requestedDistance > stepLimit) {
+            movement = movement.scale(stepLimit / requestedDistance);
+            requestedDistance = stepLimit;
+        }
         if (requestedDistance > remainingTravel) {
             movement = movement.scale(remainingTravel / requestedDistance);
         }
@@ -1206,7 +1233,11 @@ public final class MaleniaIntentExecutor {
         if (horizontalDistance > remainingHorizontal) {
             movement = movement.scale(remainingHorizontal / horizontalDistance);
         }
-        movement = clipMovementAgainstTargets(entity, movement);
+        // A diving bloom must reach the floor even when a player is directly
+        // underneath it. Block collision is still resolved by Entity.move.
+        if (activeActionId != MaleniaActionId.SCARLET_AEONIA && activeActionId != MaleniaActionId.WATERFOWL_DANCE
+                && activeActionId != MaleniaActionId.SCARLET_PHANTOMS && activeActionId != MaleniaActionId.GRAB_IMPALE)
+            movement = clipMovementAgainstTargets(entity, movement);
         Vec3 before = entity.position();
         entity.move(MoverType.SELF, movement);
         Vec3 actualMovement = entity.position().subtract(before);
@@ -1258,6 +1289,8 @@ public final class MaleniaIntentExecutor {
             return;
         }
         float yaw = (float) Math.toDegrees(Math.atan2(-lockedFacing.x(), lockedFacing.z()));
+        if (activeActionId == MaleniaActionId.WATERFOWL_DANCE)
+            yaw = net.minecraft.util.Mth.approachDegrees(boss.getYRot(), yaw, 45.0F);
         boss.setYRot(yaw);
         boss.setYHeadRot(yaw);
         boss.setYBodyRot(yaw);
@@ -1283,12 +1316,12 @@ public final class MaleniaIntentExecutor {
         return validHitTarget(level, boss, target) ? target : null;
     }
 
-    private ServerPlayer resolveGrabbed(ServerLevel level) {
+    private ServerPlayer resolveGrabbed(ServerLevel level, LivingEntity boss) {
         if (grabbedPlayerId == null) {
             return null;
         }
-        ServerPlayer player = level.getServer().getPlayerList().getPlayer(grabbedPlayerId);
-        return validTarget(level, player) ? player : null;
+        ServerPlayer player = grabbedPlayer;
+        return validTarget(level, player) && validHitTarget(level,boss,player) ? player : null;
     }
 
     private static boolean validTarget(ServerLevel level, ServerPlayer player) {
@@ -1306,6 +1339,7 @@ public final class MaleniaIntentExecutor {
             LivingEntity target
         ) {
         return target != boss
+            && (!(boss instanceof com.tonywww.elder_bosses.boss.malenia.MaleniaEntity malenia) || malenia.insideBoundArena(target.position()))
             && target.level() == level
             && target.isAlive()
             && !target.isRemoved()
@@ -1316,7 +1350,17 @@ public final class MaleniaIntentExecutor {
                 || (!player.isCreative() && !player.isSpectator()));
         }
 
+    private static double smoothGrabLift(long age) {
+        double t = Math.max(0, Math.min(1, age / 10.0));
+        return t * t * (3 - 2 * t);
+    }
+
     private void releaseGrab() {
+        if (grabbedPlayer != null) {
+            grabbedPlayer.setNoGravity(grabbedHadNoGravity);
+            grabbedPlayer.fallDistance = 0;
+        }
+        grabbedPlayer = null;
         grabbedPlayerId = null;
         grabLeashDistance = 0.0;
         grabImpaleHit = null;
@@ -1506,19 +1550,22 @@ public final class MaleniaIntentExecutor {
 
     private static final class MoveTowardProgress {
         private final double initialDistance;
-        private int remainingTicks;
+        private final int duration;
+        private int elapsed;
         private double traveled;
 
         private MoveTowardProgress(double initialDistance, int remainingTicks) {
             this.initialDistance = initialDistance;
-            this.remainingTicks = remainingTicks;
+            this.duration = remainingTicks;
         }
 
         private double nextBudget() {
-            if (remainingTicks <= 0) {
+            if (elapsed >= duration) {
                 return 0.0;
             }
-            return Math.max(0.0, initialDistance - traveled) / remainingTicks--;
+            double fraction = (double) ++elapsed / duration;
+            double cumulative = fraction * fraction * (3 - 2 * fraction);
+            return Math.max(0.0, initialDistance * cumulative - traveled);
         }
 
         private void recordTravel(double distance) {

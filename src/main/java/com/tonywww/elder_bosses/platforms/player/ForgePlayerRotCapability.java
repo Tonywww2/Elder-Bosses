@@ -26,11 +26,20 @@ public final class ForgePlayerRotCapability {
 
     public static final class Provider implements ICapabilitySerializable<CompoundTag> {
         private final ScarletRotData data = new ScarletRotEntityData();
-        private final LazyOptional<ScarletRotData> optional = LazyOptional.of(() -> data);
+        private LazyOptional<ScarletRotData> optional = LazyOptional.of(() -> data);
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> requested, Direction side) {
-            return requested == CAPABILITY ? optional.cast() : LazyOptional.empty();
+            if (requested != CAPABILITY) {
+                return LazyOptional.empty();
+            }
+            // Forge transports the same player between dimensions: remove() invalidates
+            // its capabilities, then revive() makes the player usable again. Keep the
+            // data and rebuild only the invalidated LazyOptional on the next lookup.
+            if (optional == null) {
+                optional = LazyOptional.of(() -> data);
+            }
+            return optional.cast();
         }
 
         @Override
@@ -44,7 +53,11 @@ public final class ForgePlayerRotCapability {
         }
 
         public void invalidate() {
-            optional.invalidate();
+            LazyOptional<ScarletRotData> previous = optional;
+            optional = null;
+            if (previous != null) {
+                previous.invalidate();
+            }
         }
     }
 }

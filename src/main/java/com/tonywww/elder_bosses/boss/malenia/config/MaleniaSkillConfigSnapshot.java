@@ -79,10 +79,10 @@ public record MaleniaSkillConfigSnapshot(
         int[] durations = switch (action) {
             case RAPID_SLASHES -> new int[]{14, 1, 1, 0, 1, 1, 0, 1, 0, 7, 6, 22};
             case GRAB_IMPALE -> new int[]{24, 5, 0, 15, 1, 0, 9, 1, 12};
-            case WATERFOWL_DANCE -> new int[]{32, 14, 0, 4, 12, 0, 4, 12, 0, 4, 18, 42};
-            case SCARLET_AEONIA -> new int[]{0, 26, 0, 0, 17, 0, 0, 6, 0, 0, 1, 0, 8, 42, 54};
+            case WATERFOWL_DANCE -> new int[]{32, 18, 0, 12, 12, 0, 8, 20, 0, 8, 6, 26};
+            case SCARLET_AEONIA -> new int[]{0, 26, 0, 0, 17, 0, 0, 18, 0, 0, 1, 0, 24, 42, 54};
             case SCARLET_PLUNGE -> new int[]{24, 6, 0, 0, 6, 30};
-            case SCARLET_PHANTOMS -> new int[]{36, 8, 0, 0, 8, 0, 0, 8, 0, 0, 8, 0, 0, 8, 0, 0, 32, 38};
+            case SCARLET_PHANTOMS -> new int[]{36, 8, 0, 0, 8, 0, 0, 8, 0, 0, 8, 0, 0, 8, 0, 0, 12, 38};
             default -> new int[0];
         };
         List<com.tonywww.elder_bosses.combat.action.ActionStage> stages = new java.util.ArrayList<>();

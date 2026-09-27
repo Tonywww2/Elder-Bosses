@@ -101,6 +101,20 @@ public final class MaleniaActionRuntime {
         return Optional.of(endActive(ActionEndReason.COMPLETED, completionTick));
     }
 
+    /** Only the final recovery may be linked; intermediate pauses belong to the skill. */
+    public Optional<ActionEnd> finishRecovery(long gameTick, int minimumRecoveryTicks) {
+        if (minimumRecoveryTicks < 1) throw new IllegalArgumentException("Recovery must keep at least one tick");
+        Optional<ActionEnd> completed = advance(gameTick);
+        if (completed.isPresent() || activeAction == null) return completed;
+        int elapsed = Math.toIntExact(gameTick - activeAction.startGameTick);
+        var timeline = activeAction.definition.timeline();
+        var window = timeline.windowAt(elapsed);
+        if (window.phase() != ActionPhase.RECOVERY
+                || window.stageIndex() != timeline.stages().size() - 1
+                || elapsed - window.startTickInclusive() < minimumRecoveryTicks) return Optional.empty();
+        return Optional.of(endActive(ActionEndReason.COMPLETED, gameTick));
+    }
+
     public Optional<ActionEnd> cancel(long gameTick) {
         Optional<ActionEnd> completed = advance(gameTick);
         if (completed.isPresent() || activeAction == null) {

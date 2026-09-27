@@ -1,0 +1,42 @@
+{
+  "revision": "shader_wings_v14",
+  "date": "2026-09-27",
+  "wing_model_cubes": 0,
+  "body_and_flower_cubes": 415,
+  "shader_layers": 3,
+  "support_vertices_per_owner": 7680,
+  "checks": {
+    "current_asset_contracts": 355272,
+    "joint_and_acceleration": 4983,
+    "hand_pose": "passed",
+    "forge_motion_gametest": "passed",
+    "forge_build": "passed",
+    "neoforge_build": "passed",
+    "actual_glsl_compile": "passed",
+    "preview_views": 6,
+    "animated_pixels_changed": 77254
+  },
+  "manual_client_playtest": false,
+  "preview": "../../build/malenia-wings-v14/previews/shader-wings.png",
+  "jars": [
+    {
+      "loader": "forge",
+      "path": "versions\\1.20.1-forge\\build\\libs\\elder_bosses-forge-0.1.0+1.20.1.jar",
+      "sha256": "73c1af1a59a4634462b5d2f520a519548363f88a24689f86d8ee44df5bf63704",
+      "shader_and_geometry_match": true,
+      "test_fixtures_absent": true
+    },
+    {
+      "loader": "neoforge",
+      "path": "versions\\1.21.1-neoforge\\build\\libs\\elder_bosses-neoforge-0.1.0+1.21.1.jar",
+      "sha256": "d540e61dc5956c3847e0e36abdd4abb62291bdc33443377faa71e2589ac922ce",
+      "shader_and_geometry_match": true,
+      "test_fixtures_absent": true
+    }
+  ],
+  "shader_sha256": {
+    "malenia_wings.fsh": "56cdeb6d105a16d5b898a11fb55fe534aab3c8a5ef5d832abc9df290ea5a686f",
+    "malenia_wings.json": "6cfedf355b91c6abafacfea30de654db5559fa7028d393d78674b6d2082b2a29",
+    "malenia_wings.vsh": "11e631e77e147da89a6e72e67f6cc94db4e6a3437de1dd69299f197abb38170a"
+  }
+}

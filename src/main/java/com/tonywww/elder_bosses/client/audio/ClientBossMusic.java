@@ -20,6 +20,7 @@ public final class ClientBossMusic {
     private static long startedAt;
     private static int owner = -1;
     private static int phase;
+    private static int parryDuckTicks;
 
     private ClientBossMusic() {}
 
@@ -30,11 +31,19 @@ public final class ClientBossMusic {
 
     public static void onTrackingEnd(int entityId) { STATE.remove(entityId); }
 
+    public static void observe(com.tonywww.elder_bosses.network.MaleniaCombatSnapshotPacket packet) {
+        STATE.observe(packet.entityId(), "elder_bosses:malenia", packet.phase().name().toLowerCase(java.util.Locale.ROOT),
+                packet.combatState().name().toLowerCase(java.util.Locale.ROOT), true, packet.phaseHealth(), clock);
+    }
+
+    public static void emphasizeParry() { parryDuckTicks = 12; }
+
     public static void tick() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.player == null) { clear(); return; }
         if (mc.isPaused()) return;
         clock++;
+        if (parryDuckTicks > 0) parryDuckTicks--;
         var settings = ElderBossesCommonConfig.VALUES.bossMusic();
         if (!settings.enabled() || settings.volume() <= 0
                 || mc.options.getSoundSourceVolume(SoundSource.MUSIC) <= 0
@@ -60,8 +69,10 @@ public final class ClientBossMusic {
         if (playing == null || owner != encounter.entityId() || phase != encounter.phase()) {
             if (clock < retryAt) return;
             retire(mc, settings.fadeTicks());
-            SoundEvent event = encounter.phase() == 2 ? ModSoundEvents.CONSORT_MUSIC_PHASE_TWO.get()
-                    : ModSoundEvents.CONSORT_MUSIC_PHASE_ONE.get();
+            boolean malenia = encounter.boss().equals("elder_bosses:malenia");
+            SoundEvent event = malenia
+                    ? encounter.phase() == 2 ? ModSoundEvents.MALENIA_MUSIC_PHASE_TWO.get() : ModSoundEvents.MALENIA_MUSIC_PHASE_ONE.get()
+                    : encounter.phase() == 2 ? ModSoundEvents.CONSORT_MUSIC_PHASE_TWO.get() : ModSoundEvents.CONSORT_MUSIC_PHASE_ONE.get();
             if (mc.getSoundManager().getSoundEvent(event.getLocation()) == null) { retryAt = clock + 100; return; }
             playing = new Loop(event, (float) settings.volume(), settings.fadeTicks());
             owner = encounter.entityId(); phase = encounter.phase(); startedAt = clock;
@@ -69,7 +80,7 @@ public final class ClientBossMusic {
             mc.getMusicManager().stopPlaying();
             mc.getSoundManager().play(playing);
         }
-        if (playing != null) playing.target = (float) settings.volume();
+        if (playing != null) playing.target = (float) (settings.volume() * (1 - .65 * Math.min(1, parryDuckTicks / 6.0)));
     }
 
     private static void retire(Minecraft mc, int ticks) {
@@ -91,7 +102,7 @@ public final class ClientBossMusic {
     }
 
     public static void clear() {
-        stopStreams(Minecraft.getInstance()); STATE.clear(); clock = 0; startedAt = 0;
+        stopStreams(Minecraft.getInstance()); STATE.clear(); clock = 0; startedAt = 0; parryDuckTicks = 0;
     }
 
     private static final class Loop extends AbstractTickableSoundInstance {

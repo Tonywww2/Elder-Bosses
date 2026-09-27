@@ -1,7 +1,24 @@
 # 女武神马莲尼亚：资料与图片台账
 
-> 最后核对：2026-09-07  
+> 最后核对：2026-09-26
 > 目的：区分原作事实、社区数据、已修复 Bug 与本项目原创改编，并记录本地研究图版权状态。
+
+## 2026-09-26 技能视频复核
+
+本轮加入用户提供的 [BV1mT4y1Y7RG](https://www.bilibili.com/video/BV1mT4y1Y7RG/)，并重新抽样 [BV13e4y127eg](https://www.bilibili.com/video/BV13e4y127eg/) 的剑术、水鸟和幻影片段。实际取得匿名低清流，检查了 353 张抽样图；没有按视频标题声称分析 4K60，也未分析原声。
+
+时间位置、样本覆盖、播放流截断限制以及代码核查详见[本轮视频分析](malenia-skill-video-analysis.md)。该记录补充并限制下文的早期说法：水鸟四次独立锁点仍是当前项目合同，未由本轮画面确认其全部原作追踪规则；幻影五次释放为项目适配，六个可见攻击拍属于待复核的还原候选，不能直接等同于六个不同幻影。
+
+对应[技能设计 R1](../bosses/malenia-skill-design.md)明确区分既有实现与拟议修改；研究画面仅保存在忽略的 `build/` 目录，未进入运行资产。
+
+## 2026-09-26 外貌复核
+
+| 官方来源 | 用于当前模型的观察 | 改编边界 |
+| --- | --- | --- |
+| [Bandai Namco S.H.Figuarts Malenia 商品页](https://store.bandainamcoent.com/merchandise/elden-ring/elden-ring/elden-ring-malenia-blade-of-miquella-shfiguarts?sku=WS91306) | 商品图从多个角度展示翼盔、赤发、贴身旧金甲、右臂义肢、长刀与暗红披风的层次 | 用于轮廓、比例和材质关系；不复制手办纹样或图片像素 |
+| [Bandai Namco Europe 马莲尼亚头盔复刻品页](https://store.bandainamcoent.eu/elden-ring-helmet-of-malenia-mini-replica/?setCurrencyId=2) | 官方描述强调翼形盔饰及带雕刻、轻微磨损感的金属表面 | 用方块轮廓和原创低分辨率纹理表达，不照搬头盔细纹 |
+
+V10 外观改动集中在头盔不对称外展、左侧披风折面、暗旧金胸甲和二阶段带孔的深色腐败翼膜。腐败翼的具体块面与像素排布为本项目原创设计；这两件商品不作为二阶段翼形的直接证据。
 
 ## 1. 证据分级
 

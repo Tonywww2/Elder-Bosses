@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-26",
+  "revision": "malenia_skill_implementation_r1",
+  "protocol": 5,
+  "checks": {
+    "skill_effects": {
+      "passed": true,
+      "checks": 5980,
+      "log": "build/malenia-skill-check.log"
+    },
+    "animation_timeline": {
+      "passed": true,
+      "checks": 8105,
+      "log": "build/malenia-timeline-check.log"
+    }
+  },
+  "offscreen_render": {
+    "passed": true,
+    "frames": 6,
+    "preview": "build/malenia-skill-previews/skill-effects.png",
+    "uses_actual_geometry_texture_and_shader": true
+  },
+  "builds": [
+    {
+      "loader": "1.20.1-forge",
+      "path": "versions/1.20.1-forge/build/libs/elder_bosses-forge-0.1.0+1.20.1.jar",
+      "bytes": 13530254,
+      "sha256": "9e17abe329a98487c818aaffe21d56bad738a66e7057bd1bdeafbdf3a617bd8f",
+      "required_classes_and_shaders_packaged": true,
+      "v12_assets_match_source": true
+    },
+    {
+      "loader": "1.21.1-neoforge",
+      "path": "versions/1.21.1-neoforge/build/libs/elder_bosses-neoforge-0.1.0+1.21.1.jar",
+      "bytes": 13514102,
+      "sha256": "ab498dbbcc1d067473ffe988ad2490b2ee13af298a680118372254f14eb0fcf0",
+      "required_classes_and_shaders_packaged": true,
+      "v12_assets_match_source": true
+    }
+  ],
+  "in_game_validated": false,
+  "multiplayer_validated": false,
+  "limitations": [
+    "Core skill bodies retain existing V12 animation files.",
+    "Six-beat phantom candidate and new combo AI remain design proposals.",
+    "Existing user configs retain their current Aeonia windup list; new default uses final component windup 24."
+  ]
+}

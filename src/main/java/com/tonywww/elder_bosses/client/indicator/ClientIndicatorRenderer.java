@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 public final class ClientIndicatorRenderer {
-    private static final double FILL_OPACITY_MULTIPLIER = 0.45;
+    private static final double FILL_OPACITY_MULTIPLIER = 0.72;
     private static final RenderType TRANSLUCENT_FILLS = IndicatorRenderType.createTranslucentFills();
+    private static final RenderType MALENIA_BACKDROP = IndicatorRenderType.createConsortLines("malenia_backdrop", 6.0);
     private static final RenderType VISIBLE_LINES = IndicatorRenderType.createVisibleLines();
     private static final RenderType OCCLUDED_LINES = IndicatorRenderType.createOccludedLines();
     private static final RenderType CONSORT_BACKDROP = IndicatorRenderType.createConsortLines("backdrop", 5.0);
@@ -56,6 +57,8 @@ public final class ClientIndicatorRenderer {
             drawFills(poseStack.last(), buffers, regular, gameTick, config, false);
             drawFills(poseStack.last(), buffers, consort, gameTick, config, true);
             buffers.endBatch(TRANSLUCENT_FILLS);
+            drawBorders(poseStack.last(), buffers, regular, MALENIA_BACKDROP, false, gameTick, config);
+            buffers.endBatch(MALENIA_BACKDROP);
             drawBorders(poseStack.last(), buffers, regular, VISIBLE_LINES, false, gameTick, config);
             buffers.endBatch(VISIBLE_LINES);
 
@@ -156,17 +159,15 @@ public final class ClientIndicatorRenderer {
             float visibility = visibility(snapshot, gameTick);
                 double layerMultiplier = occluded
                     ? config.occludedOutlineOpacityMultiplier()
-                    : 1.0 - config.occludedOutlineOpacityMultiplier();
+                    : 1.4;
                 int alpha = alpha(visibility, config.opacity() * layerMultiplier);
-            int rgb = snapshot.styleRole().rgb();
+            int rgb = renderType == MALENIA_BACKDROP ? 0x120B19 : highlighted(snapshot.styleRole().rgb());
             if (config.rangeEnabled(false)) {
                 ClientIndicatorGeometry.Mesh mesh = ClientIndicatorGeometry.create(snapshot, config.maxSegmentsPerShape());
                 drawLines(consumer, pose, mesh.borders(), rgb, alpha, snapshot.styleRole().dashed(), config.surfaceOffset());
                 drawLines(consumer, pose, mesh.accents(), rgb, alpha, true, config.surfaceOffset());
             }
-            if (occluded && snapshot.instantGuardCue()) {
-                drawInstantGuardCue(consumer, pose, snapshot, gameTick, alpha, config.surfaceOffset());
-            }
+            // Malenia parry cues are rendered by the independent red/white shader pass.
         }
     }
 
@@ -418,11 +419,11 @@ public final class ClientIndicatorRenderer {
         }
 
         private static RenderType createVisibleLines() {
-            return createLines("elder_bosses_indicator_visible_lines", LEQUAL_DEPTH_TEST);
+            return createLines("elder_bosses_indicator_visible_lines", LEQUAL_DEPTH_TEST, new LineStateShard(OptionalDouble.of(3.5)));
         }
 
         private static RenderType createOccludedLines() {
-            return createLines("elder_bosses_indicator_occluded_lines", NO_DEPTH_TEST);
+            return createLines("elder_bosses_indicator_occluded_lines", NO_DEPTH_TEST, new LineStateShard(OptionalDouble.of(3.5)));
         }
 
         private static RenderType createConsortLines(String layer, double width) {

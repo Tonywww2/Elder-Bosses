@@ -459,33 +459,21 @@ public record MaleniaCombatConfigSnapshot(
 
     public record InstantGuard(
             boolean enabled,
-            int startTick,
-            int endTick,
-            int rearmTicks,
+            boolean cueEffectEnabled,
             double blockedDamageMultiplier,
             double shieldDurabilityMultiplier,
-            int defaultCueLeadTicks,
+            int windowTicks,
             int cuePulseCount,
             String redCueColor,
             String eligibleItemTag
     ) {
         public InstantGuard {
-            requireNonNegative(startTick, "instantGuard.startTick");
-            requireNonNegative(endTick, "instantGuard.endTick");
-            if (startTick > endTick) {
-                throw new IllegalArgumentException(
-                        "instantGuard.startTick must be less than or equal to instantGuard.endTick"
-                );
-            }
-            if (rearmTicks < 4) {
-                throw new IllegalArgumentException("instantGuard.rearmTicks must be at least 4");
-            }
             requireFraction(blockedDamageMultiplier, "instantGuard.blockedDamageMultiplier");
             requireNonNegativeFinite(
                     shieldDurabilityMultiplier,
                     "instantGuard.shieldDurabilityMultiplier"
             );
-            requireNonNegative(defaultCueLeadTicks, "instantGuard.defaultCueLeadTicks");
+            requireNonNegative(windowTicks, "instantGuard.windowTicks");
             requirePositive(cuePulseCount, "instantGuard.cuePulseCount");
             requireNonBlank(redCueColor, "instantGuard.redCueColor");
             requireNonBlank(eligibleItemTag, "instantGuard.eligibleItemTag");
@@ -498,7 +486,8 @@ public record MaleniaCombatConfigSnapshot(
 
     public record ScarletRot(
             int decayDelayTicks,
-            double decayPerTwentyTicks,
+            int decayIntervalTicks,
+            double decayPerInterval,
             int durationTicks,
             int damageIntervalTicks,
             DamageFormula damage,
@@ -511,7 +500,8 @@ public record MaleniaCombatConfigSnapshot(
     ) {
         public ScarletRot {
             requireNonNegative(decayDelayTicks, "scarletRot.decayDelayTicks");
-            requireNonNegativeFinite(decayPerTwentyTicks, "scarletRot.decayPerTwentyTicks");
+            requirePositiveTick(decayIntervalTicks, "scarletRot.decayIntervalTicks");
+            requireNonNegativeFinite(decayPerInterval, "scarletRot.decayPerInterval");
             requirePositiveTick(durationTicks, "scarletRot.durationTicks");
             requirePositiveTick(damageIntervalTicks, "scarletRot.damageIntervalTicks");
             if (damageIntervalTicks > durationTicks) {

@@ -7,9 +7,8 @@
     let artDirection = JSON.parse(fs.readFileSync(path.join(workspace, "art_direction.json"), "utf8"));
     let library = {format_version: "1.8.0", animations: {}};
     let manifest = {ticks_per_second: 20, root_motion: "server_only", revision: artDirection.revision,
-        figure_scale: artDirection.figure_scale, interpolation: "bounded_cubic_baked",
-        grip_rotation: "limited_wrist_pitch_with_forearm_compensation",
-        grip_balance: {samples: 0, maximum_orientation_error_degrees: 0}, clips: {}};
+        figure_scale: artDirection.figure_scale, interpolation: "anticipation_acceleration_followthrough_baked",
+        grip_rotation: "anatomical_elbow_fixed_grip_no_compensation", clips: {}};
     let rest = {
         pelvis: [0, -5, 0], body: [0, 2, 0], chest: [1, 3, 0], neck: [0, 0, 0], head: [1, -3, 0],
         upper_arm_l: [4, 0, 6], forearm_l: [12, 0, 0], hand_l: [-6, 18, -3], fingers_l: [8, 0, 0],
@@ -185,6 +184,49 @@
             wing_root_l: [3, -14, 44], wing_root_r: [7, 20, -48]
         }
     };
+    // Re-author the entire chain, rather than moving an impossible wrist rotation
+    // into the elbow. The palm, fingers and hilt remain one rigid grip.
+    const swordPoses = {
+        rest: [[8, -5, -8], [12, 0, 0], [-38, 12, 3]],
+        wind_right: [[72, -42, -38], [54, 3, -3], [-30, -12, 5]],
+        cross_right: [[62, -4, -26], [18, 0, 0], [-42, 0, 2]],
+        slash: [[38, 62, -18], [12, 0, 3], [-38, 16, -4]],
+        wind_left: [[58, 56, 12], [68, -4, 2], [-38, 18, -6]],
+        cross_left: [[64, -8, -26], [20, 0, 0], [-42, -8, 0]],
+        reverse: [[76, -62, -60], [16, 0, -3], [-32, -16, -5]],
+        thrust_load: [[38, -26, -32], [76, 4, 0], [-46, 10, 0]],
+        thrust: [[72, -28, -10], [10, 0, 0], [-46, 0, 0]],
+        uppercut_load: [[12, -28, -20], [24, 0, 0], [-34, 12, 5]],
+        overhead: [[146, -12, -26], [38, 0, 0], [-30, 8, 0]],
+        plunge: [[30, -8, -12], [12, 0, 0], [-46, 0, 0]],
+        crouch: [[28, -26, -20], [42, 0, 0], [-40, -12, 0]],
+        hover: [[20, -16, -24], [20, 0, 0], [-38, 12, 0]],
+        waterfowl_ready: [[156, -18, -32], [24, 0, 0], [-20, -18, -10]],
+        kick_load: [[-20, -18, -34], [24, 0, 0], [-28, -16, 0]],
+        kick: [[-28, -12, -38], [18, 0, 0], [-32, -12, 0]],
+        grab_load: [[8, -12, -26], [20, 0, 0], [-28, -16, 0]],
+        grab: [[20, -12, -30], [32, 0, 0], [-26, -12, 0]],
+        lift: [[-24, -16, -30], [52, 0, 0], [-26, 8, 0]],
+        impale: [[84, -6, -12], [18, 0, 0], [-40, 0, 0]],
+        throw: [[48, -26, -30], [24, 0, 0], [-40, -12, 0]],
+        kneel: [[32, -22, -26], [46, 0, 0], [-42, -18, 0]],
+        seated: [[26, -12, -14], [54, 0, 0], [-44, -16, 0]],
+        bloom: [[42, -18, -28], [48, 0, 0], [-36, 10, 0]],
+        aeonia_dive: [[30, -16, -26], [32, 0, 0], [-32, 10, 0]],
+        wings_open: [[12, -12, -32], [18, 0, 0], [-36, 14, 0]]
+    };
+    for (const [name, [arm, elbow, grip]] of Object.entries(swordPoses)) Object.assign(poses[name], {
+        prosthetic_arm_r: arm, prosthetic_forearm_r: elbow, blade_mount: grip, prosthetic_hand_r: [0, 0, 0]
+    });
+    const strikes = {
+        single_slash: [[7,10]], double_slash: [[8,11],[25,29]], rapid_slashes: [[11,14],[14,16],[16,18],[24,26]],
+        running_slash: [[13,16]], upward_combo: [[15,18],[45,48]], kick: [[5,9]], thrust: [[17,22]],
+        grab_impale: [[18,24],[40,44],[50,54]], grab_miss: [[18,24]], retreat_slash: [[6,8]],
+        waterfowl_dance: [[29,32],[36,39],[43,46],[59,62],[67,70],[79,82],[87,90],[95,98],[107,110]],
+        scarlet_aeonia: [[39,43],[55,61],[66,70]], scarlet_plunge: [[21,24],[30,34]],
+        flying_slash: [[16,20],[39,45]], scarlet_phantoms: [[33,36],[41,44],[49,52],[57,60],[65,68],[73,76]],
+        winged_sweep: [[13,16]], phantom_slash: [[3,6]], phantom_thrust: [[2,6]]
+    };
     function merge(...parts) { return Object.assign({}, ...parts); }
     function frame(tick, pose, height = 0) { return {tick, pose: typeof pose === "string" ? poses[pose] : pose, height}; }
     function vectorToGeo(channel, vector) {
@@ -200,9 +242,21 @@
     function make(name, duration, frames, options = {}) {
         let clip = {loop: options.loop || false, animation_length: duration / 20, bones: {}};
         library.animations["animation.malenia." + name] = clip;
-        manifest.clips[name] = {duration_ticks: duration, loop: clip.loop, ...(options.events ? {events: options.events} : {}), ...(options.stages ? {stages: options.stages} : {})};
+        manifest.clips[name] = {duration_ticks: duration, loop: clip.loop, ...(strikes[name] ? {acceleration_windows: strikes[name]} : {}), ...(options.events ? {events: options.events} : {}), ...(options.stages ? {stages: options.stages} : {})};
         for (let [index, entry] of frames.entries()) {
-            let pose = merge(rest, entry.pose);
+            let pose = structuredClone(merge(rest, entry.pose));
+            let clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+            let elbow = pose.prosthetic_forearm_r;
+            // Inline variants use the same hinge direction and modest pronation.
+            pose.prosthetic_forearm_r = [clamp(Math.abs(elbow[0]), 6, 100), clamp(elbow[1], -8, 8), clamp(elbow[2], -6, 6)];
+            pose.blade_mount = [clamp(pose.blade_mount[0], -48, 18), clamp(pose.blade_mount[1], -20, 20), clamp(pose.blade_mount[2], -12, 12)];
+            pose.prosthetic_hand_r = pose.prosthetic_hand_r.map(value => clamp(value, -10, 10));
+            if (strikes[name]) {
+                for (let bone of ["pelvis", "body", "chest"]) {
+                    pose[bone] = pose[bone].map((value, axis) => axis === 1 && Math.abs(value) > 90 ? value
+                        : value * (bone === "pelvis" ? 1.2 : 1.25));
+                }
+            }
             let fingerIntent = pose.fingers_l[0];
             if (name.startsWith("grab_")) {
                 if (name === "grab_impale" && entry.tick >= 28 && entry.tick < 54) fingerIntent = 68;
@@ -210,7 +264,7 @@
             }
             let closure = Math.max(0, Math.min(1, (fingerIntent - 10) / 58));
             let openness = Math.max(0, Math.min(1, -fingerIntent / 18));
-            pose.fingers_l = [0, 0, 0];
+            pose.fingers_l = [12 + closure * 52 - openness * 10, 0, 0];
             pose.forearm_l = [Math.max(6, pose.forearm_l[0]), pose.forearm_l[1], pose.forearm_l[2]];
             pose.hand_l = [Math.max(-18, Math.min(18, pose.hand_l[0])), pose.hand_l[1], pose.hand_l[2]];
             for (let finger = 0; finger < 4; finger++) {
@@ -223,7 +277,11 @@
             if (!entry.pose.skirt_front) pose.skirt_front = [Math.max(pose.thigh_r[0], pose.prosthetic_leg_l[0], 0) * 0.82, 0, 0];
             if (!entry.pose.skirt_back) pose.skirt_back = [Math.min(pose.thigh_r[0], pose.prosthetic_leg_l[0], 0) * 0.8, 0, 0];
             for (let [bone, rotation] of Object.entries(pose)) key(clip, bone, "rotation", entry.tick, rotation);
-            key(clip, "pelvis", "position", entry.tick, [0, entry.height, 0]);
+            let bodyShift = strikes[name] && entry.tick > 0 && entry.tick < duration;
+            key(clip, "pelvis", "position", entry.tick, bodyShift
+                ? [Math.sin(pose.pelvis[1] * Math.PI / 180) * 2.8, entry.height * 1.25,
+                    clamp((pose.pelvis[0] + pose.body[0]) * 0.16, -4.5, 2)]
+                : [0, entry.height, 0]);
         }
         if (options.loop === true) {
             for (let channels of Object.values(clip.bones)) {
@@ -263,17 +321,23 @@
                 + (-2 * cubed + 3 * squared) * endValue[axis] + (cubed - squared) * span * tangent(index + 1, axis);
         });
     }
-    function bakeMotion(clip) {
+    function bakeMotion(clip, name) {
         let source = JSON.parse(JSON.stringify(clip.bones));
         let length = clip.animation_length;
+        function attackTime(time) {
+            let strike = (strikes[name] || []).find(([start, end]) => time * 20 >= start && time * 20 <= end);
+            if (!strike) return time;
+            let [start, end] = strike, fraction = (time * 20 - start) / (end - start);
+            return (start + (end - start) * fraction ** 2.2) / 20;
+        }
         for (let [bone, channels] of Object.entries(source)) {
             for (let [channel, values] of Object.entries(channels)) {
                 if (channel === "scale") continue;
                 let baked = {};
                 let times = new Set(Object.keys(values).map(Number));
-                for (let tick = 0; tick <= length * 20; tick++) times.add(tick / 20);
+                for (let tick = 0; tick <= length * 20; tick += strikes[name] ? 0.5 : 1) times.add(tick / 20);
                 for (let time of [...times].sort((first, second) => first - second)) {
-                    let value = curve(values, time, clip.loop === true).map(number => Math.round(number * 1000) / 1000);
+                    let value = curve(values, attackTime(time), clip.loop === true).map(number => Math.round(number * 1000) / 1000);
                     baked[String(time)] = value;
                 }
                 clip.bones[bone][channel] = baked;
@@ -281,7 +345,7 @@
         }
         function rotation(bone, tick) {
             let time = clip.loop === true ? ((tick / 20) % length + length) % length : Math.max(0, Math.min(length, tick / 20));
-            return vectorToGeo("rotation", curve(source[bone].rotation, time, clip.loop === true));
+            return vectorToGeo("rotation", curve(source[bone].rotation, attackTime(time), clip.loop === true));
         }
         let secondaryTicks = new Set([length * 20]);
         for (let tick = 0; tick <= length * 20; tick += 2) secondaryTicks.add(tick);
@@ -294,12 +358,12 @@
             let upperPitch = pelvis[0] + body[0] + chest[0];
             let upperRoll = pelvis[2] + body[2] + chest[2];
             key(clip, "cape_01", "rotation", tick,
-                [-4.2 - clamp(upperPitch * 0.85, -22, 60), -chest[1] * 0.08, -upperRoll * 0.55]);
+                [-5.0 - clamp(upperPitch * 0.65, -18, 38), -chest[1] * 0.06, -upperRoll * 0.32]);
             for (let segment = 2; segment <= 3; segment++) {
                 let delayed = rotation("chest", tick - segment * 1.5);
                 let lag = clamp(delayed[0] - chest[0], -15, 15);
                 key(clip, "cape_0" + segment, "rotation", tick,
-                    [-0.8 + lag * 0.16, (delayed[1] - chest[1]) * 0.08, (delayed[2] - chest[2]) * 0.12]);
+                    [-1.2 + lag * 0.24 + Math.sin(tick / (length * 20) * Math.PI * 2 - segment) * 0.9, (delayed[1] - chest[1]) * 0.10, (delayed[2] - chest[2]) * 0.14]);
             }
             for (let lock = 1; lock <= 6; lock++) {
                 let delayedChest = rotation("chest", tick - 1.4 - lock * 0.25);
@@ -345,77 +409,8 @@
             }
         }
     }
-    function quaternionZYX(rotation) {
-        let [pitch, yaw, roll] = rotation.map(value => value * Math.PI / 360);
-        let pitchCos = Math.cos(pitch), pitchSin = Math.sin(pitch);
-        let yawCos = Math.cos(yaw), yawSin = Math.sin(yaw);
-        let rollCos = Math.cos(roll), rollSin = Math.sin(roll);
-        return [pitchSin * yawCos * rollCos - pitchCos * yawSin * rollSin,
-            pitchCos * yawSin * rollCos + pitchSin * yawCos * rollSin,
-            pitchCos * yawCos * rollSin - pitchSin * yawSin * rollCos,
-            pitchCos * yawCos * rollCos + pitchSin * yawSin * rollSin];
-    }
-    function multiplyQuaternion(first, second) {
-        return [first[3] * second[0] + first[0] * second[3] + first[1] * second[2] - first[2] * second[1],
-            first[3] * second[1] - first[0] * second[2] + first[1] * second[3] + first[2] * second[0],
-            first[3] * second[2] + first[0] * second[1] - first[1] * second[0] + first[2] * second[3],
-            first[3] * second[3] - first[0] * second[0] - first[1] * second[1] - first[2] * second[2]];
-    }
-    function eulerZYX(quaternion, previous) {
-        let [horizontal, vertical, depth, scalar] = quaternion;
-        let sine = Math.max(-1, Math.min(1, 2 * (scalar * vertical - depth * horizontal)));
-        let pitch = Math.atan2(2 * (scalar * horizontal + vertical * depth), 1 - 2 * (horizontal * horizontal + vertical * vertical));
-        let yaw = Math.asin(sine);
-        let roll = Math.atan2(2 * (scalar * depth + horizontal * vertical), 1 - 2 * (vertical * vertical + depth * depth));
-        if (Math.abs(sine) > 0.9999999) {
-            pitch = 0;
-            roll = Math.atan2(2 * (scalar * depth - horizontal * vertical), 1 - 2 * (horizontal * horizontal + depth * depth));
-        }
-        let primary = [pitch, yaw, roll].map(value => value * 180 / Math.PI);
-        let alternatives = [primary, [primary[0] + 180, 180 - primary[1], primary[2] + 180]];
-        return alternatives.map(rotation => rotation.map((value, axis) => value + 360 * Math.round((previous[axis] - value) / 360)))
-            .sort((first, second) => first.reduce((sum, value, axis) => sum + (value - previous[axis]) ** 2, 0)
-                - second.reduce((sum, value, axis) => sum + (value - previous[axis]) ** 2, 0))[0];
-    }
-    function balanceGrip(clip) {
-        if (Object.values(clip.bones.blade_mount.rotation).every(value => value[0] <= 50 && value[0] >= -25)) return;
-        let channels = ["prosthetic_forearm_r", "prosthetic_hand_r", "blade_mount"].map(name =>
-            Object.entries(clip.bones[name].rotation).map(([time, value]) => [Number(time), vectorToGeo("rotation", value)])
-                .sort((first, second) => first[0] - second[0]));
-        function linear(points, time) {
-            let next = points.findIndex(point => point[0] >= time);
-            if (next <= 0) return points[next === 0 ? 0 : points.length - 1][1].slice();
-            let fraction = (time - points[next - 1][0]) / (points[next][0] - points[next - 1][0]);
-            return points[next][1].map((value, axis) => points[next - 1][1][axis] + (value - points[next - 1][1][axis]) * fraction);
-        }
-        let times = new Set(channels.flatMap(points => points.map(point => point[0])));
-        for (let tick = 0; tick <= clip.animation_length * 20; tick += 0.5) times.add(tick / 20);
-        clip.bones.prosthetic_forearm_r.rotation = {};
-        clip.bones.blade_mount.rotation = {};
-        let previous = channels[0][0][1];
-        for (let time of [...times].sort((first, second) => first - second)) {
-            let [forearm, hand, mount] = channels.map(points => linear(points, time));
-            let limited = [Math.max(-50, Math.min(25, mount[0])), mount[1], mount[2]];
-            let original = multiplyQuaternion(quaternionZYX(forearm), multiplyQuaternion(quaternionZYX(hand), quaternionZYX(mount)));
-            let local = multiplyQuaternion(quaternionZYX(hand), quaternionZYX(limited));
-            let inverse = [-local[0], -local[1], -local[2], local[3]];
-            previous = eulerZYX(multiplyQuaternion(original, inverse), previous);
-            key(clip, "prosthetic_forearm_r", "rotation", time * 20, previous);
-            key(clip, "blade_mount", "rotation", time * 20, limited);
-            let rounded = previous.map(value => Math.round(value * 1000) / 1000);
-            let reconstructed = multiplyQuaternion(quaternionZYX(rounded), local);
-            let dot = original.reduce((sum, value, axis) => sum + value * reconstructed[axis], 0);
-            let error = 2 * Math.acos(Math.min(1, Math.abs(dot))) * 180 / Math.PI;
-            if (error > 0.002) throw new Error("Grip compensation changed blade orientation at " + time);
-            manifest.grip_balance.samples++;
-            manifest.grip_balance.maximum_orientation_error_degrees = Math.max(manifest.grip_balance.maximum_orientation_error_degrees, error);
-        }
-        if (clip.loop === true) for (let name of ["prosthetic_forearm_r", "blade_mount"]) {
-            clip.bones[name].rotation[String(clip.animation_length)] = clip.bones[name].rotation["0"].slice();
-        }
-    }
-    function scales(clip, names, values) {
-        for (let name of names) for (let [tick, scale] of values) key(clip, name, "scale", tick, [scale, scale, scale]);
+    function scales(clip, bones, frames) {
+        for (let bone of bones) for (let [tick, scale] of frames) key(clip, bone, "scale", tick, [scale, scale, scale]);
     }
     let armor = ["helm", "armor_torso", "armor_shoulder_l", "armor_shoulder_r", "armor_waist", "cape_01", "skirt_front", "skirt_back", "skirt_l", "skirt_r"];
     let wings = ["wing_root_l", "wing_root_r", "phase_two_body", "phase_two_hair"];
@@ -510,8 +505,8 @@
         frame(17, merge(rest, {pelvis: [-4, 72, 0], chest: [0, 8, 0], prosthetic_leg_l: [42, 0, -8], prosthetic_shin_l: [62, 0, 0]})),
         frame(24, merge(rest, {pelvis: [0, 28, 0]}), -0.4), frame(31, rest)], {stages: [[9, 4, 18]], events: {hits: [9]}});
     make("thrust", 50, [frame(0, rest), frame(8, "thrust_load", -0.3), frame(17, "thrust_load", -0.15),
-        frame(20, merge(poses.thrust_load, {pelvis: [-6, -8, -2], chest: [-4, -3, -2], prosthetic_arm_r: [128, -16, -16], prosthetic_forearm_r: [-25, 2, 3], blade_mount: [-83, 16, 0]})),
-        frame(22, "thrust", -1.5), frame(27, merge(poses.thrust, {prosthetic_arm_r: [134, -25, -8], chest: [-9, 12, 0]}), -1.5),
+        frame(20, merge(poses.thrust_load, {pelvis: [-6, -8, -2], chest: [-4, -3, -2], prosthetic_arm_r: [52, -25, -24], prosthetic_forearm_r: [40, 2, 0], blade_mount: [-44, 4, 0]})),
+        frame(22, "thrust", -1.5), frame(27, merge(poses.thrust, {prosthetic_arm_r: [72, -28, -10], chest: [-9, 12, 0]}), -1.5),
         frame(36, merge(rest, {pelvis: [4, 14, 0], chest: [2, 6, 0], prosthetic_arm_r: [56, -12, -10], prosthetic_forearm_r: [-24, 0, 0], blade_mount: [-55, -5, 0]}), -0.6),
         frame(44, merge(rest, {prosthetic_arm_r: [22, -8, -8], blade_mount: [-36, 18, 0]})), frame(50, rest)], {stages: [[22, 4, 24]], events: {hits: [22], cue: [16]}});
     make("grab_impale", 67, [frame(0, rest), frame(8, "grab_load"), frame(18, "grab_load", -1.5), frame(24, "grab", -1), frame(28, "grab"), frame(36, "lift"), frame(40, "lift"), frame(44, "impale"), frame(47, "impale"), frame(50, merge(poses.lift, {prosthetic_arm_r: [70, -8, -15], blade_mount: [-45, 10, 0]})), frame(52, merge(poses.throw, {upper_arm_l: [82, 0, 10], fingers_l: [65, 0, 0], pelvis: [7, -5, 0]}), -0.5), frame(54, "throw", -2), frame(58, "throw", -1), frame(67, rest)], {stages: [[24, 5, 38]], events: {grab: [24], impale_after_capture: [20], throw_after_capture: [30]}});
@@ -519,55 +514,52 @@
     make("grab_cancel", 16, [frame(0, merge(poses.grab, {fingers_l: [-15, 0, 0]})), frame(5, merge(poses.grab_load, {hand_l: [-20, 0, 0]})), frame(16, rest)]);
     make("retreat_slash", 32, [frame(0, rest), frame(4, "wind_left", -1), frame(6, merge(poses.wind_left, {pelvis: [-3, 20, 2]}), -1), frame(8, merge(poses.cross_left, {thigh_r: [-28, 0, 0], prosthetic_leg_l: [25, 0, 0]})), frame(11, "reverse", -1), frame(20, merge(rest, {pelvis: [0, -20, 0], prosthetic_arm_r: [46, -30, -38], thigh_r: [14, 0, 0], prosthetic_shin_l: [18, 0, 0]})), frame(32, rest)], {stages: [[8, 4, 20]], events: {hits: [8], cue: [2]}});
     make("waterfowl_prepare", 20, [frame(0, rest), frame(7, merge(poses.wind_left, {thigh_r: [-25, 0, 0], prosthetic_leg_l: [18, 0, 0]})), frame(13, merge(rest, {thigh_r: [18, 0, 0], prosthetic_leg_l: [-18, 0, 0]})), frame(20, rest)]);
-    let waterfowlFrames = [frame(0, rest), frame(8, "crouch", -2.5), frame(18, "waterfowl_ready"),
-        frame(22, "waterfowl_ready"), frame(28, "waterfowl_ready"),
-        frame(30, merge(poses.waterfowl_ready, {pelvis: [-10, -14, 4], body: [-8, -4, 2], chest: [-6, 2, -2],
-            prosthetic_arm_r: [156, -10, -24], prosthetic_forearm_r: [-22, 4, 2], blade_mount: [-28, -40, -6],
-            thigh_r: [98, 0, 10], shin_r: [112, 0, 0], prosthetic_leg_l: [28, 0, -8], prosthetic_shin_l: [52, 0, 0]})),
-        frame(31, merge(poses.waterfowl_ready, {pelvis: [-12, -14, 6], body: [-10, -6, 2], chest: [-8, 4, -2],
-            prosthetic_arm_r: [145, -20, -38], prosthetic_forearm_r: [-54, 6, 4], blade_mount: [-57, 18, 3],
-            thigh_r: [102, 0, 10], shin_r: [114, 0, 0], prosthetic_leg_l: [36, 0, -10], prosthetic_shin_l: [64, 0, 0]}))];
-    let burstTurns = [[-14, 56, 182, 305], [344, 420, 525, 620], [654, 732, 852, 935], [969, 1042, 1160, 1075]];
-    let burstLegs = [[105, 115, 40, 70], [72, 95, -10, 40], [52, 65, 75, 95], [15, 22, 28, 40]];
-    for (let [index, [start, end]] of [[32, 45], [50, 61], [66, 77], [82, 99]].entries()) {
-        let span = end - start;
-        let turns = burstTurns[index];
-        let [rightHip, rightKnee, leftHip, leftKnee] = burstLegs[index];
-        let legs = {thigh_r: [rightHip, 0, 10], shin_r: [rightKnee, 0, 0],
-            prosthetic_leg_l: [leftHip, 0, -10], prosthetic_shin_l: [leftKnee, 0, 0]};
-        waterfowlFrames.push(frame(start, merge(poses.waterfowl_ready, legs, {pelvis: [-12, turns[0], 6], body: [-10, -6, 2], chest: [-8, 4, -2],
-            prosthetic_arm_r: [145, -20, -38], prosthetic_forearm_r: [-58, 6, 4], blade_mount: [-57, 18, 3]})));
-        waterfowlFrames.push(frame(start + Math.round(span * 0.28), merge(poses.waterfowl_ready, legs, {
-            pelvis: [[-28, -14, -24, -8][index], turns[1], 12], body: [-12, 8, 4], chest: [-6, 10, -3],
-            prosthetic_arm_r: [122, 28, 20], prosthetic_forearm_r: [-32, 4, 8], blade_mount: [-40, 8, 0],
-            upper_arm_l: [-10, 5, 26], forearm_l: [32, 0, -4]})));
-        waterfowlFrames.push(frame(start + Math.round(span * 0.60), merge(poses.waterfowl_ready, legs, {
-            pelvis: [-20, turns[2], -9], body: [-6, -10, -3], chest: [-4, -12, 2],
-            prosthetic_arm_r: [145, -28, -52], prosthetic_forearm_r: [-48, -6, -4], blade_mount: [-55, -12, 4],
-            upper_arm_l: [8, -5, 20], forearm_l: [28, 0, -3]})));
-        waterfowlFrames.push(frame(end, merge(poses.waterfowl_ready, legs, {pelvis: [[-16, -10, -12, -4][index], turns[3], 4], body: [-3, 6, 2], chest: [3, 8, -2],
-            prosthetic_arm_r: [110, 18, -10], prosthetic_forearm_r: [-38, 4, 8], blade_mount: [-60, 14, 3]})));
-        if (index < 3) waterfowlFrames.push(frame(end + 3, merge(poses.waterfowl_ready, {pelvis: [-7, turns[3] + 28, 3]})));
-        else waterfowlFrames.push(frame(102, merge(poses.waterfowl_ready, {pelvis: [-5, 1075, 2], thigh_r: [28, 0, 6], shin_r: [45, 0, 0]})));
+    // Three travelling rushes, readable suspended checks, then an in-place after-cut.
+    let waterfowlFrames = [frame(0, rest), frame(8, "crouch", -3),
+        frame(18, "waterfowl_ready"), frame(26, "waterfowl_ready"), frame(29, "waterfowl_ready")];
+    for (let [index, [start, end]] of [[32,50],[62,74],[82,102]].entries()) {
+        let legs = index === 1
+            ? {thigh_r:[28,0,12],shin_r:[54,0,0],prosthetic_leg_l:[78,0,-10],prosthetic_shin_l:[96,0,0]}
+            : {thigh_r:[86-index*12,0,14],shin_r:[108-index*12,0,0],prosthetic_leg_l:[-18,0,-14],prosthetic_shin_l:[38,0,0]};
+        let span=end-start;
+        waterfowlFrames.push(frame(start, merge(poses.cross_right, legs, {
+            pelvis:[-26,-30,14], body:[-14,-8,6], chest:[-10,14,-4],
+            prosthetic_arm_r:[96,-42,-58], prosthetic_forearm_r:[22,0,0], blade_mount:[-36,-12,4],
+            upper_arm_l:[-22,8,36], forearm_l:[34,0,-4]}), -1));
+        waterfowlFrames.push(frame(start+Math.round(span*.38), merge(poses.slash,legs, {
+            pelvis:[-18,55,-12],body:[-10,12,-5],chest:[-8,16,4],
+            prosthetic_arm_r:[54,58,-24],prosthetic_forearm_r:[14,0,0],blade_mount:[-40,16,-6]})));
+        waterfowlFrames.push(frame(start+Math.round(span*.70), merge(poses.reverse,legs, {
+            pelvis:[-12,-48,10],body:[-8,-12,4],chest:[-6,-16,-3],
+            prosthetic_arm_r:[116,-46,-62],prosthetic_forearm_r:[28,0,0],blade_mount:[-28,-14,0]})));
+        waterfowlFrames.push(frame(end-1, merge(poses.slash,legs, {
+            pelvis:[-24,38,-6],prosthetic_arm_r:[48,60,-20],prosthetic_forearm_r:[12,0,0]}),-1));
+        waterfowlFrames.push(frame(end+3, merge(poses.waterfowl_ready, {
+            pelvis:[-6,12,3],prosthetic_arm_r:[140,-22,-32],prosthetic_forearm_r:[34,0,0]})));
+        if(index<2) waterfowlFrames.push(frame(index===0?59:79, "waterfowl_ready"));
     }
-    waterfowlFrames.push(frame(109, merge(poses.crouch, {pelvis: [-8, 1072, 0]}), -3),
-        frame(123, merge(rest, {pelvis: [0, 1075, 0], prosthetic_arm_r: [24, 8, -8], blade_mount: [-42, 28, 0]})),
-        frame(142, merge(rest, {pelvis: [0, 1075, 0]})));
-    make("waterfowl_dance", 142, waterfowlFrames, {stages: [[32, 68, 42]], events: {lock: [22, 46, 62, 78], bursts: [[32, 45], [50, 61], [66, 77], [82, 99]], recovery: [100]}});
+    waterfowlFrames.push(frame(107, merge(poses.wind_left,{pelvis:[-10,32,6]})),
+        frame(110, merge(poses.cross_left,{pelvis:[-18,-20,-8]}),-1),
+        frame(113, merge(poses.reverse,{pelvis:[-10,-68,-4]}),-2),
+        frame(116,"crouch",-3), frame(121,"crouch",-4),
+        frame(131,merge(rest,{prosthetic_arm_r:[28,-16,-18]}),-1),frame(142,rest));
+    make("waterfowl_dance",142,waterfowlFrames,{stages:[[32,18,0],[12,12,0],[8,20,0],[8,6,26]],
+        events:{lock:[22,58,78,106],bursts:[[32,49],[62,73],[82,101],[110,115]],recovery:[116]},
+        acceleration_windows:strikes.waterfowl_dance});
 
     let transition = make("transition", 150, [frame(0, rest), frame(15, "kneel", -11), frame(36, "kneel", -11), frame(42, merge(poses.kneel, {head: [5, 0, 0]}), -11), frame(65, "bloom", -12), frame(85, merge(poses.bloom, {head: [-10, 0, 0]}), -8), frame(106, "wings_open", -2), frame(120, "wings_open"), frame(135, "hover"), frame(150, "hover")], {events: {subtitle: [42], phase_layers: [71], unfold: [85, 120]}});
     scales(transition, armor, [[0, 1], [70, 1], [71, 0], [150, 0]]);
     scales(transition, wings, [[0, 0], [70, 0], [71, 0.02], [105, 1], [150, 1]]);
     scales(transition, ["aeonia_core"], [[0, 0], [25, 0], [42, 0.25], [70, 0.42], [105, 0], [150, 0]]);
-    let aeonia = make("scarlet_aeonia", 154, [frame(0, "hover"), frame(14, "bloom"), frame(26, "bloom"), frame(35, "bloom"),
-        frame(39, "aeonia_dive"), frame(43, "aeonia_dive"), frame(47, "aeonia_dive"),
-        frame(49, merge(poses.aeonia_dive, {body: [-25, 0, 0], head: [25, 0, 0]}), -3),
-        frame(54, "bloom", -5), frame(62, "wings_open", -5), frame(74, "kneel", -10), frame(88, "kneel", -10),
-        frame(106, "crouch", -3), frame(132, rest), frame(154, rest)], {stages: [[42, 58, 54]], events: {lock: [26], dive: [43, 48], impact: [49], bloom: [58], zone_end: [142]}});
-    scales(aeonia, ["aeonia_core"], [[0, 0], [8, 0.16], [26, 0.25], [42, 0.25], [48, 0.25], [57, 0.35], [64, 1], [100, 1], [140, 1], [154, 0]]);
+    let aeonia = make("scarlet_aeonia", 166, [frame(0, "hover"), frame(14, "bloom"), frame(26, "bloom"), frame(35, "bloom"),
+        frame(39, merge(poses.bloom, {pelvis: [-30, 0, -2], body: [-16, 0, 0]})), frame(43, "aeonia_dive"), frame(51, merge(poses.aeonia_dive, {pelvis: [-52, 0, -4], body: [-20, 0, 0]})),
+        frame(61, merge(poses.aeonia_dive, {body: [-25, 0, 0], head: [25, 0, 0]}), -3),
+        frame(66, "bloom", -5), frame(74, "wings_open", -5), frame(86, "kneel", -10), frame(100, "kneel", -10),
+        frame(118, "crouch", -3), frame(144, rest), frame(166, rest)], {stages: [[54, 58, 54]], events: {lock: [26], dive: [43, 60], impact: [61], bloom: [70], zone_end: [154]}});
+    scales(aeonia, ["aeonia_core"], [[0, 0], [8, 0.16], [26, 0.25], [42, 0.25], [60, 0.25], [69, 0.35], [76, 1], [112, 1], [152, 1], [166, 0]]);
     for (let index = 1; index <= 8; index++) {
         let name = "petal_0" + index;
-        for (let [tick, pitch] of [[0, 75], [26, 80], [49, 78], [57, 72], [60 + index, -2], [90, 3], [142, 4], [154, 8]]) key(aeonia, name, "rotation", tick, [pitch, 0, 0]);
+        for (let [tick, pitch] of [[0, 52], [26, 58], [61, 56], [69, 50], [72 + index, -2], [102, 3], [154, 4], [166, 8]]) key(aeonia, name, "rotation", tick, [pitch, 0, 0]);
     }
     make("scarlet_plunge", 66, [frame(0, rest), frame(10, "overhead"),
         frame(17, merge(poses.overhead, {wing_root_l: [12, -38, 52], wing_root_r: [10, 30, -46]})),
@@ -578,7 +570,7 @@
     make("flying_slash", 73, [frame(0, rest), frame(10, merge(poses.hover, {upper_arm_l: [12, 0, 30], wing_root_l: [8, -32, 50], wing_root_r: [5, 7, -32]})),
         frame(16, merge(poses.wind_right, flyingLegs)), frame(20, merge(poses.cross_right, flyingLegs)), frame(24, merge(poses.slash, flyingLegs)),
         frame(33, "thrust_load"), frame(39, "thrust_load"),
-        frame(42, merge(poses.thrust_load, {prosthetic_arm_r: [128, -16, -16], prosthetic_forearm_r: [-25, 2, 3], blade_mount: [-83, 16, 0]})),
+        frame(42, merge(poses.thrust_load, {prosthetic_arm_r: [52, -25, -24], prosthetic_forearm_r: [40, 2, 0], blade_mount: [-44, 4, 0]})),
         frame(45, "thrust"), frame(48, "thrust"), frame(57, "crouch", -3), frame(67, merge(rest, {prosthetic_arm_r: [24, -8, -10]})), frame(73, rest)],
         {stages: [[20, 5, 8], [12, 4, 24]], events: {hits: [20, 45], cue: [14, 39]}});
     let phantomFrames = [frame(0, rest), frame(14, "wings_open"), frame(29, "hover"), frame(35, "hover")];
@@ -591,9 +583,9 @@
     }
     phantomFrames.push(frame(73, "thrust_load"),
         frame(76, merge(poses.thrust, flyingLegs, {wing_root_l: [-10, -45, 28], wing_root_r: [-7, 42, -31]})),
-        frame(103, merge(poses.thrust, flyingLegs)), frame(110, "crouch", -4), frame(126, "crouch", -1),
-        frame(139, merge(rest, {prosthetic_arm_r: [25, -12, -12]})), frame(146, rest));
-    make("scarlet_phantoms", 146, phantomFrames, {stages: [[36, 72, 38]], events: {phantoms: [36, 44, 52, 60, 68], boss_dive: [76, 107]}});
+        frame(83, merge(poses.thrust, flyingLegs)), frame(90, "crouch", -4), frame(106, "crouch", -1),
+        frame(119, merge(rest, {prosthetic_arm_r: [25, -12, -12]})), frame(126, rest));
+    make("scarlet_phantoms", 126, phantomFrames, {stages: [[36, 52, 38]], events: {phantoms: [36, 44, 52, 60, 68], boss_dive: [76, 87]}});
     make("winged_sweep", 46, [frame(0, rest), frame(9, merge(poses.wind_right, {wing_root_l: [12, -38, -12], wing_root_r: [8, 42, 18]}), -1.5), frame(13, "wind_right", -1.5), frame(16, "cross_right", -1), frame(20, merge(poses.slash, {pelvis: [8, 160, 6]})), frame(23, merge(poses.reverse, {pelvis: [4, 315, -4]})), frame(30, merge(poses.reverse, {pelvis: [2, 343, 0], prosthetic_arm_r: [50, -35, -52]})), frame(39, merge(rest, {pelvis: [0, 355, 0], prosthetic_arm_r: [28, -15, -15]})), frame(46, merge(rest, {pelvis: [0, 355, 0]}))], {stages: [[16, 8, 22]], events: {hits: [16], cue: [10]}});
 
     make("stunned", 70, [frame(0, rest), frame(5, "kneel", -10), frame(12, merge(poses.kneel, {head: [30, 0, 0]}), -11), frame(24, "kneel", -11), frame(50, "kneel", -11), frame(60, "kneel", -11), frame(70, "kneel", -11)], {loop: "hold_on_last_frame"});
@@ -608,7 +600,7 @@
     scales(flower, ["aeonia_core"], [[0, 0.6], [80, 0.6]]);
     for (let index = 1; index <= 8; index++) key(flower, "petal_0" + index, "rotation", 0, [65, 0, 0]);
     make("phantom_slash", 14, [frame(0, "wind_right"), frame(3, "wind_right"), frame(6, "cross_right"), frame(9, "slash"), frame(14, "slash")]);
-    make("phantom_thrust", 14, [frame(0, "thrust_load"), frame(2, "thrust_load"), frame(4, merge(poses.thrust_load, {prosthetic_arm_r: [28, -20, -15], prosthetic_forearm_r: [25, 0, 0], blade_mount: [-60, 28, 0]})), frame(6, "thrust"), frame(9, "thrust"), frame(14, "thrust")]);
+    make("phantom_thrust", 14, [frame(0, "thrust_load"), frame(2, "thrust_load"), frame(4, merge(poses.thrust_load, {prosthetic_arm_r: [52, -25, -24], prosthetic_forearm_r: [40, 2, 0], blade_mount: [-44, 4, 0]})), frame(6, "thrust"), frame(9, "thrust"), frame(14, "thrust")]);
     let zone = make("aeonia_loop", 84, [frame(0, "kneel", -11), frame(42, "kneel", -11), frame(84, "kneel", -11)], {loop: true, smooth: true});
     scales(zone, ["aeonia_core"], [[0, 1], [84, 1]]);
     for (let index = 1; index <= 8; index++) {
@@ -617,9 +609,8 @@
         key(zone, "petal_0" + index, "rotation", 84, [3, 0, 0]);
     }
 
-    for (let clip of Object.values(library.animations)) {
-        bakeMotion(clip);
-        balanceGrip(clip);
+    for (let [name, clip] of Object.entries(library.animations)) {
+        bakeMotion(clip, name.replace("animation.malenia.", ""));
     }
     if (artDirection.mirror_legacy_x) for (let clip of Object.values(library.animations)) {
         for (let channels of Object.values(clip.bones)) {
@@ -674,9 +665,9 @@
         window.maleniaAnimationManifest = manifest;
         return {...result, imported: imported.length};
     }
-    let output = workspace;
+    let output = process.env.MALENIA_ANIMATION_OUTPUT || workspace;
     fs.mkdirSync(path.join(output, "animations"), {recursive: true});
-    fs.writeFileSync(path.join(output, "animations/malenia.animation.json"), JSON.stringify(library, null, 2) + "\n");
+    fs.writeFileSync(path.join(output, "animations/malenia.animation.json"), require("../../shared/animation_json.js")(library));
     fs.writeFileSync(path.join(output, "animation_manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
     process.stdout.write(JSON.stringify(result) + "\n");
 })();

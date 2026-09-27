@@ -1,6 +1,7 @@
 package com.tonywww.elder_bosses.platforms.network;
 
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
+import com.tonywww.elder_bosses.network.MaleniaHitFeedbackPacket;
 import com.tonywww.elder_bosses.network.BossCombatSnapshotPacket;
 import com.tonywww.elder_bosses.network.BossDefeatedPacket;
 import com.tonywww.elder_bosses.network.EquipmentSettingsPacket;
@@ -28,7 +29,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 *///?}
 
 public final class PlatformNetwork {
-        private static final String PROTOCOL_VERSION = "4";
+        private static final String PROTOCOL_VERSION = "5";
         private static Consumer<BossDefeatedPacket> defeatClientHandler = packet -> {
         };
         private static Consumer<MaleniaCombatSnapshotPacket> combatClientHandler = packet -> {
@@ -39,6 +40,8 @@ public final class PlatformNetwork {
         };
         private static Consumer<IndicatorSnapshotPacket> indicatorClientHandler = packet -> {
         };
+
+    private static Consumer<MaleniaHitFeedbackPacket> hitFeedbackHandler = packet -> {};
 
     //? if forge {
     private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
@@ -112,7 +115,7 @@ public final class PlatformNetwork {
                     contextSupplier.get().setPacketHandled(true);
                 })
                 .add();
-        CHANNEL.messageBuilder(EquipmentSettingsPacket.class, messageId, NetworkDirection.PLAY_TO_CLIENT)
+        CHANNEL.messageBuilder(EquipmentSettingsPacket.class, messageId++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(EquipmentSettingsPacket::write)
                 .decoder(EquipmentSettingsPacket::read)
                 .consumerMainThread((packet, contextSupplier) -> {
@@ -120,8 +123,22 @@ public final class PlatformNetwork {
                     contextSupplier.get().setPacketHandled(true);
                 })
                 .add();
+        CHANNEL.messageBuilder(MaleniaHitFeedbackPacket.class, messageId, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(MaleniaHitFeedbackPacket::write).decoder(MaleniaHitFeedbackPacket::read)
+                .consumerMainThread((packet, contextSupplier) -> {
+                    hitFeedbackHandler.accept(packet);
+                    contextSupplier.get().setPacketHandled(true);
+                }).add();
         //?} else {
         /*modBus.addListener(PlatformNetwork::registerPayloadHandlers);
+        *///?}
+    }
+
+    public static void sendTo(ServerPlayer player, MaleniaHitFeedbackPacket packet) {
+        //? if forge {
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+        //?} else {
+        /*PacketDistributor.sendToPlayer(player, new MaleniaHitFeedbackPayload(packet));
         *///?}
     }
 
@@ -188,7 +205,8 @@ public final class PlatformNetwork {
                         Consumer<BossCombatSnapshotPacket> bossCombatHandler,
                         Consumer<PlayerRotSnapshotPacket> rotHandler,
                         Consumer<IndicatorSnapshotPacket> indicatorHandler,
-                        Consumer<BossDefeatedPacket> defeatHandler
+                        Consumer<BossDefeatedPacket> defeatHandler,
+                        Consumer<MaleniaHitFeedbackPacket> contactHandler
         ) {
                 combatClientHandler = Objects.requireNonNull(combatHandler, "combatHandler");
                 bossCombatClientHandler = Objects.requireNonNull(
@@ -198,6 +216,7 @@ public final class PlatformNetwork {
                 rotClientHandler = Objects.requireNonNull(rotHandler, "rotHandler");
                 indicatorClientHandler = Objects.requireNonNull(indicatorHandler, "indicatorHandler");
                 defeatClientHandler = Objects.requireNonNull(defeatHandler, "defeatHandler");
+                hitFeedbackHandler = Objects.requireNonNull(contactHandler, "contactHandler");
         }
 
         private static void handleOnClient(MaleniaCombatSnapshotPacket packet) {
@@ -223,6 +242,8 @@ public final class PlatformNetwork {
     //? if neoforge {
     /*private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
+        registrar.playToClient(MaleniaHitFeedbackPayload.TYPE, MaleniaHitFeedbackPayload.STREAM_CODEC,
+                (payload, context) -> context.enqueueWork(() -> hitFeedbackHandler.accept(payload.packet())));
         registrar.playToClient(
                 EquipmentSettingsPayload.TYPE,
                 EquipmentSettingsPayload.STREAM_CODEC,
@@ -261,6 +282,14 @@ public final class PlatformNetwork {
                         () -> handleOnClient(payload.packet())
                 )
         );
+    }
+
+    private record MaleniaHitFeedbackPayload(MaleniaHitFeedbackPacket packet) implements CustomPacketPayload {
+        private static final Type<MaleniaHitFeedbackPayload> TYPE = new Type<>(PlatformResourceLocation.id("malenia_hit_feedback"));
+        private static final StreamCodec<RegistryFriendlyByteBuf, MaleniaHitFeedbackPayload> STREAM_CODEC =
+                StreamCodec.of((buffer, payload) -> payload.packet().write(buffer),
+                        buffer -> new MaleniaHitFeedbackPayload(MaleniaHitFeedbackPacket.read(buffer)));
+        @Override public Type<MaleniaHitFeedbackPayload> type() { return TYPE; }
     }
 
     private record EquipmentSettingsPayload(EquipmentSettingsPacket packet) implements CustomPacketPayload {

@@ -1,5 +1,10 @@
 package com.tonywww.elder_bosses.boss.malenia;
 
+import com.tonywww.elder_bosses.arena.MaleniaArenaBinding;
+import com.tonywww.elder_bosses.platforms.arena.PlatformMaleniaArenaSavedData;
+import com.tonywww.elder_bosses.platforms.arena.PlatformMaleniaArenaNavigation;
+import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig;
+
 import com.tonywww.elder_bosses.boss.malenia.action.MaleniaActionCatalog;
 import com.tonywww.elder_bosses.combat.action.ActionLifecycleEvent;
 import com.tonywww.elder_bosses.combat.action.BossActionDebug;
@@ -34,7 +39,6 @@ import com.tonywww.elder_bosses.boss.malenia.sync.MaleniaSyncSnapshotFactory;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 import com.tonywww.elder_bosses.combat.geometry.Vec2;
-import com.tonywww.elder_bosses.combat.guard.InstantGuardTracker;
 import com.tonywww.elder_bosses.combat.state.HealingBudget;
 import com.tonywww.elder_bosses.combat.state.PhaseHealthPool;
 import com.tonywww.elder_bosses.combat.state.StaggerTracker;
@@ -163,9 +167,9 @@ public final class MaleniaEntity extends PlatformMonster implements
     private static final int DYNAMIC_INDICATOR_SEND_INTERVAL_TICKS = 2;
     private static final int STAGGER_DECAY_SYNC_INTERVAL_TICKS = 5;
     private static final int DEBUG_STATE_OUTPUT_INTERVAL_TICKS = 20;
-    private static final double OBSERVATION_MIN_RANGE = 4.0;
-    private static final double OBSERVATION_MAX_RANGE = 7.0;
-    private static final double NAVIGATION_SPEED_MODIFIER = 1.0;
+    private static final double OBSERVATION_MIN_RANGE = 2.8;
+    private long nextCruisePathTick;
+    private boolean cruiseHalted = true;
     private static final EntityDataAccessor<Integer> COMBAT_STATE =
             SynchedEntityData.defineId(MaleniaEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTIVE_PHASE =
@@ -213,6 +217,7 @@ public final class MaleniaEntity extends PlatformMonster implements
             new MaleniaSnapshotChangeDetector();
     private final Map<UUID, GuardState> guardStates = new HashMap<>();
     private final Set<String> playedInstantGuardCues = new HashSet<>();
+    private final Set<String> instantGuardContacts = new HashSet<>();
     private final Map<HealingHitGroup, Double> highestHealingCandidateByGroup = new HashMap<>();
     private final Map<UUID, Deque<DamageEvent>> recentDamageByPlayer = new HashMap<>();
     private final Deque<InterruptEvent> interruptEvents = new ArrayDeque<>();
@@ -221,6 +226,12 @@ public final class MaleniaEntity extends PlatformMonster implements
     private MaleniaCombatConfigSnapshot combatSnapshot;
     private int instantGuardCueRgb;
     private MaleniaSkillConfigSnapshot skillSnapshot;
+    private MaleniaArenaBinding arenaBinding;
+    private boolean arenaOwnershipChecked;
+    private double arenaRadius = 26;
+    private int arenaLeashGraceTicks = 100;
+    private boolean arenaUnloadResetsFight = true;
+    private int arenaEmptyTicks;
     private PhaseHealthPool phaseHealthPool;
     private MaleniaActionCatalog actionCatalog;
     private MaleniaActionRuntime actionRuntime;
@@ -231,7 +242,6 @@ public final class MaleniaEntity extends PlatformMonster implements
     private MaleniaIntentExecutor intentExecutor;
     private HealingBudget healingBudget;
     private StaggerTracker<StaggerSourceKey> staggerTracker;
-    private InstantGuardTracker instantGuardTracker;
     private TagKey<Item> instantGuardEligibleItemTag;
     private MaleniaDialogueController dialogueController;
     private List<MaleniaDialogueController.DialogueEmission> dialogueEvents = List.of();
@@ -257,7 +267,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     public MaleniaEntity(EntityType<? extends MaleniaEntity> entityType, Level level) {
         super(entityType, level);
         bossEvent = new ServerBossEvent(
-                Component.translatable("entity.elder_bosses.malenia"),
+                getName(),
                 BossEvent.BossBarColor.RED,
                 BossEvent.BossBarOverlay.PROGRESS
         );
@@ -303,11 +313,39 @@ public final class MaleniaEntity extends PlatformMonster implements
 
     @Override
     public void tick() {
+        if (level() instanceof ServerLevel server && arenaBinding != null && !arenaOwnershipChecked) {
+            if (!PlatformMaleniaArenaSavedData.get(server).claim(arenaBinding, getUUID())) {
+                discard();
+                return;
+            }
+            arenaOwnershipChecked = true;
+        }
         super.tick();
         if (level().isClientSide) {
             return;
         }
         dialogueEvents = List.of();
+
+        if (arenaBinding != null) {
+            if (level().getDifficulty() == net.minecraft.world.Difficulty.PEACEFUL) {
+                resetBoundEncounter();
+                return;
+            }
+            if (combatState() != MaleniaCombatState.DEFEATED) {
+                if (combatState() == MaleniaCombatState.DORMANT) holdArenaSpawn();
+                else if (!arenaBinding.contains(position(), arenaRadius)) {
+                    cancelActiveAction(true, false);
+                    holdArenaSpawn();
+                }
+                if (combatState() != MaleniaCombatState.DORMANT) {
+                    arenaEmptyTicks = countEligiblePlayers(currentConfig().general().followRange()) == 0 ? arenaEmptyTicks + 1 : 0;
+                    if (arenaEmptyTicks > 0 && arenaEmptyTicks >= Math.max(1, arenaLeashGraceTicks)) {
+                        resetBoundEncounter();
+                        return;
+                    }
+                }
+            }
+        }
 
         if (combatState() == MaleniaCombatState.DORMANT) {
             if (tickCount % DORMANT_PLAYER_SCAN_INTERVAL_TICKS == 0) {
@@ -356,6 +394,7 @@ public final class MaleniaEntity extends PlatformMonster implements
             : result.action();
         updateCombatNavigation(activeAction);
         playInstantGuardCues(activeAction);
+        instantGuardContacts.clear();
         List<HitOutcome> outcomes = activeAction
             .map(action -> intentExecutor.tick(this, action, result.intents()))
             .orElseGet(() -> intentExecutor.tickPersistentEffects(this));
@@ -369,6 +408,99 @@ public final class MaleniaEntity extends PlatformMonster implements
         int playerCount = countEligiblePlayers(currentConfig().general().followRange());
         return playerCount > 0 && beginEncounter(playerCount);
     }
+
+    public void bindArena(MaleniaArenaBinding binding) {
+        if (level().isClientSide || arenaBinding != null || phaseHealthPool != null || combatState() != MaleniaCombatState.DORMANT) {
+            throw new IllegalStateException("Only a fresh dormant Malenia can bind to an arena");
+        }
+        arenaBinding = Objects.requireNonNull(binding);
+        PlatformMaleniaArenaNavigation.configure(this,true);
+        var config = ElderBossesCommonConfig.VALUES.maleniaArena();
+        arenaRadius = Math.min(26, config.logicalRadius());
+        arenaLeashGraceTicks = config.leashGraceTicks();
+        arenaUnloadResetsFight = config.unloadResetsFight();
+        setPersistenceRequired();
+        holdArenaSpawn();
+    }
+
+    public Optional<MaleniaArenaBinding> arenaBinding() { return Optional.ofNullable(arenaBinding); }
+
+    public boolean insideBoundArena(Vec3 position) {
+        return arenaBinding == null || arenaBinding.contains(position, arenaRadius);
+    }
+
+    /** Project into the chamber floor band, never onto the forest or the cavern roof. */
+    public Vec3 arenaSurfacePoint(Vec3 position) {
+        if (arenaBinding == null) throw new IllegalStateException("No bound arena");
+        Vec3 point = arenaBinding.clampHorizontal(position, Math.max(.25,arenaRadius-getBbWidth()/2.0-.1));
+        for (int y=arenaBinding.origin().getY()+6; y>=arenaBinding.origin().getY(); y--) {
+            var floor = net.minecraft.core.BlockPos.containing(point.x,y,point.z);
+            if (!level().hasChunkAt(floor)) break;
+            var state = level().getBlockState(floor);
+            double height = com.tonywww.elder_bosses.arena.MaleniaArenaFloor.top(state,level(),floor);
+            if (height > 0) return new Vec3(point.x,y+height,point.z);
+        }
+        return arenaBinding.standingAnchor("arena_center");
+    }
+
+    private void holdArenaSpawn() {
+        getNavigation().stop();
+        setTarget(null);
+        setNoGravity(false);
+        setDeltaMovement(Vec3.ZERO);
+        setPos(arenaBinding.standingAnchor("boss_spawn"));
+        float yaw = arenaBinding.spawnYaw();
+        setYRot(yaw); setYHeadRot(yaw); setYBodyRot(yaw);
+        fallDistance = 0;
+    }
+
+    private void resetBoundEncounter() {
+        cancelActiveAction(true,false);
+        resetInvalidEncounterState();
+        arenaEmptyTicks = 0;
+        holdArenaSpawn();
+        // Keep tracking observers while the bar is hidden so re-entry receives updates.
+        syncNetworkState(Optional.empty(),List.of());
+    }
+
+    @Override
+    public void move(MoverType type, Vec3 movement) {
+        if (!level().isClientSide && arenaBinding != null) {
+            double radius = Math.max(.25,arenaRadius-getBbWidth()/2.0-.1);
+            // Commands can place the entity outside; tick() safely returns it before AI runs.
+            if (arenaBinding.contains(position(),arenaRadius)) {
+                movement = arenaBinding.clampHorizontal(position().add(movement),radius).subtract(position());
+            }
+            fallDistance = 0;
+        }
+        super.move(type,movement);
+    }
+
+    @Override
+    protected boolean canUseDimensionTravel() { return arenaBinding == null; }
+
+    @Override
+    public void travel(Vec3 input) {
+        if (!level().isClientSide && (cruiseHalted || currentActionSnapshot != null)) {
+            Vec3 velocity = getDeltaMovement();
+            setDeltaMovement(0, velocity.y, 0);
+            super.travel(Vec3.ZERO);
+            setDeltaMovement(0, getDeltaMovement().y, 0);
+        } else super.travel(input);
+    }
+
+    private void haltCruise() {
+        cruiseHalted = true;
+        getNavigation().stop();
+        getMoveControl().setWantedPosition(getX(), getY(), getZ(), 0);
+        setSpeed(0);
+        zza = xxa = 0;
+        setDeltaMovement(0, getDeltaMovement().y, 0);
+        nextCruisePathTick = 0;
+    }
+
+    @Override
+    public boolean shouldDespawnInPeaceful() { return arenaBinding == null && super.shouldDespawnInPeaceful(); }
 
     public boolean beginEncounter(int initialPlayerCount) {
         if (combatState() != MaleniaCombatState.DORMANT) {
@@ -447,6 +579,8 @@ public final class MaleniaEntity extends PlatformMonster implements
         if (next == MaleniaCombatState.PHASE_2) {
             entityData.set(ACTIVE_PHASE, MaleniaPhase.PHASE_TWO.id());
         }
+        // Aeonia takes off from the end of the transition. Its server intents own
+        // the entire flight; the arena anchor must never teleport a fighting boss.
         entityData.set(COMBAT_STATE, next.id());
         entityData.set(STATE_STARTED_GAME_TIME, level().getGameTime());
         stateTicks = 0;
@@ -463,6 +597,18 @@ public final class MaleniaEntity extends PlatformMonster implements
 
     public MaleniaPhase activePhase() {
         return MaleniaPhase.fromId(entityData.get(ACTIVE_PHASE));
+    }
+
+    @Override
+    protected Component getTypeName() {
+        return Component.translatable(activePhase() == MaleniaPhase.PHASE_TWO
+                ? "entity.elder_bosses.malenia.phase_two" : "entity.elder_bosses.malenia.phase_one");
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
+        super.onSyncedDataUpdated(accessor);
+        if (ACTIVE_PHASE.equals(accessor) && bossEvent != null) bossEvent.setName(getName());
     }
 
     public long stateStartedGameTime() {
@@ -517,7 +663,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     private String locomotionCandidate() {
         Vec3 movement = new Vec3(getX() - xo, 0.0, getZ() - zo);
         double horizontalSpeed = movement.horizontalDistanceSqr();
-        if (horizontalSpeed > 0.0025 && onGround()) {
+        if (horizontalSpeed > 0.0004 && onGround()) {
             Vec3 forward = Vec3.directionFromRotation(0.0F, getYRot());
             double ahead = movement.dot(forward);
             double across = movement.x * forward.z - movement.z * forward.x;
@@ -775,13 +921,6 @@ public final class MaleniaEntity extends PlatformMonster implements
                 : readCooldowns(savedData, actionCatalog);
         skillSelector = new MaleniaSkillSelector(skillSnapshot, combatSnapshot.selector());
         MaleniaCombatConfigSnapshot.InstantGuard instantGuard = combatSnapshot.instantGuard();
-        instantGuardTracker = new InstantGuardTracker(
-            instantGuard.startTick(),
-            instantGuard.endTick(),
-            instantGuard.rearmTicks(),
-            instantGuard.blockedDamageMultiplier(),
-            instantGuard.shieldDurabilityMultiplier()
-        );
         instantGuardEligibleItemTag = TagKey.create(
                 Registries.ITEM,
                 PlatformResourceLocation.parse(instantGuard.eligibleItemTag())
@@ -909,6 +1048,7 @@ public final class MaleniaEntity extends PlatformMonster implements
             boolean applyRot = outcome.contactType() == HitOutcome.ContactType.DAMAGED
                     && rotBuildup > 0.0;
             if (target != null) {
+                sendHitFeedback(outcome, target);
                 if (outcome.killedTarget() && target instanceof ServerPlayer player) {
                     recordPlayerDefeat(player);
                 }
@@ -965,6 +1105,21 @@ public final class MaleniaEntity extends PlatformMonster implements
         }
         projectNativeHealth();
         syncPhaseHealth();
+    }
+
+    private void sendHitFeedback(HitOutcome outcome, LivingEntity target) {
+        if (outcome.contactType() == HitOutcome.ContactType.CONTACT) return;
+        var result = outcome.blocked()
+                ? (instantGuardContacts.remove(target.getUUID() + "/" + outcome.hitIdSuffix())
+                    ? com.tonywww.elder_bosses.network.MaleniaHitFeedbackPacket.Result.INSTANT_GUARD
+                    : com.tonywww.elder_bosses.network.MaleniaHitFeedbackPacket.Result.BLOCKED)
+                : com.tonywww.elder_bosses.network.MaleniaHitFeedbackPacket.Result.DAMAGED;
+        Vec3 contact = target.position().add(0, target.getBbHeight() * 0.6, 0)
+                .add(position().subtract(target.position()).multiply(1, 0, 1).normalize().scale(target.getBbWidth() * 0.55));
+        var packet = new com.tonywww.elder_bosses.network.MaleniaHitFeedbackPacket(getId(), target.getId(),
+                outcome.actionSequence(), outcome.actionTick(), outcome.hitIdSuffix(), level().getGameTime(),
+                new IndicatorSnapshotPacket.Point(contact.x, contact.y, contact.z), result);
+        for (ServerPlayer player : List.copyOf(bossEvent.getPlayers())) PlatformNetwork.sendTo(player, packet);
     }
 
     private double resolveRotBuildup(HitOutcome outcome) {
@@ -1126,36 +1281,31 @@ public final class MaleniaEntity extends PlatformMonster implements
         if (activeAction.isPresent()
                 || (state != MaleniaCombatState.PHASE_1
                 && state != MaleniaCombatState.PHASE_2)) {
-            getNavigation().stop();
+            haltCruise();
             return;
         }
 
         LivingEntity target = getTarget();
         if (target == null || !target.isAlive()) {
-            getNavigation().stop();
+            haltCruise();
             return;
         }
 
         getLookControl().setLookAt(target, 30.0F, 30.0F);
         double distance = distanceTo(target);
-        if (distance > OBSERVATION_MAX_RANGE) {
-            getNavigation().moveTo(target, NAVIGATION_SPEED_MODIFIER);
+        long now = level().getGameTime();
+        boolean phaseTwo = state == MaleniaCombatState.PHASE_2;
+        boolean observing = !phaseTwo && distance < 9
+                && Math.floorMod(now + getId() * 13L, 76) < 18;
+        if (distance <= OBSERVATION_MIN_RANGE || observing
+                || combatController != null && combatController.isBreathing(now)) {
+            haltCruise();
             return;
         }
-
-        getNavigation().stop();
-        if (distance >= OBSERVATION_MIN_RANGE) {
-            return;
-        }
-
-        Vec3 retreatDirection = position().subtract(target.position()).multiply(1.0, 0.0, 1.0);
-        if (retreatDirection.lengthSqr() < 1.0E-6) {
-            Vec3 lookDirection = getLookAngle();
-            retreatDirection = new Vec3(-lookDirection.x, 0.0, -lookDirection.z);
-        }
-        if (retreatDirection.lengthSqr() >= 1.0E-6) {
-            double retreatStep = getAttributeValue(Attributes.MOVEMENT_SPEED);
-            move(MoverType.SELF, retreatDirection.normalize().scale(retreatStep));
+        if (now >= nextCruisePathTick || getNavigation().isDone()) {
+            cruiseHalted = false;
+            getNavigation().moveTo(target, phaseTwo ? 0.95 : distance > 12 ? 0.85 : 0.48);
+            nextCruisePathTick = now + 8;
         }
     }
 
@@ -1165,30 +1315,17 @@ public final class MaleniaEntity extends PlatformMonster implements
             UUID playerId = player.getUUID();
             observed.add(playerId);
             GuardState previous = guardStates.get(playerId);
-            boolean blocking = player.isBlocking();
+            boolean blocking = player.isUsingItem() && instantGuardEligibleItemTag != null
+                    && player.getUseItem().is(instantGuardEligibleItemTag);
             int guardingTicks = blocking
                     ? previous != null && previous.blocking() ? previous.ticks() + 1 : 1
                     : 0;
             long raisedGameTime = blocking && (previous == null || !previous.blocking())
-                    ? level().getGameTime()
+                    ? Math.max(0, level().getGameTime() - player.getTicksUsingItem())
                     : previous == null ? -1L : previous.raisedGameTime();
             guardStates.put(playerId, new GuardState(blocking, guardingTicks, raisedGameTime));
-            if (instantGuardTracker != null) {
-                boolean usingEligibleItem = player.isUsingItem()
-                    && instantGuardEligibleItemTag != null
-                    && player.getUseItem().is(instantGuardEligibleItemTag);
-                instantGuardTracker.updateGuarding(
-                    playerId,
-                    usingEligibleItem,
-                    usingEligibleItem ? player.getTicksUsingItem() : 0,
-                    level().getGameTime()
-                );
-            }
         }
         guardStates.keySet().removeIf(playerId -> !observed.contains(playerId));
-        if (instantGuardTracker != null) {
-            instantGuardTracker.removeOffline(observed);
-        }
     }
 
     private Optional<MaleniaIntentExecutor.InstantGuardResult> tryInstantGuard(
@@ -1196,31 +1333,32 @@ public final class MaleniaEntity extends PlatformMonster implements
             com.tonywww.elder_bosses.boss.malenia.execution.MaleniaServerIntent.HitSpec hit,
             float attemptedDamage
     ) {
-        if (instantGuardTracker == null
-                || instantGuardEligibleItemTag == null
-                || !combatSnapshot.instantGuard().enabled()
-            || !player.isUsingItem()
-                || !player.getUseItem().is(instantGuardEligibleItemTag)
-                || !isFacingBoss(player)) {
-            return Optional.empty();
+        if (!combatSnapshot.instantGuard().enabled() || !hit.instantGuardEligible()
+                || currentActionSnapshot == null) return Optional.empty();
+        GuardState guard = guardStates.get(player.getUUID());
+        if (guard == null || guard.raisedGameTime() < 0) return Optional.empty();
+        MaleniaActionPlan plan = eventPlans.get(currentActionSnapshot.actionId());
+        int first = Integer.MAX_VALUE, last = -1;
+        for (var scheduled : plan.intents()) {
+            var candidate = hitSpec(scheduled.intent());
+            if (candidate != null && candidate.hitIdSuffix().equals(hit.hitIdSuffix())) {
+                first = Math.min(first, scheduled.actionTick()); last = Math.max(last, scheduled.actionTick());
+            }
         }
-        InstantGuardTracker.InstantGuardResult result = instantGuardTracker.resolve(
-                player.getUUID(),
-                hit.instantGuardEligible(),
-                level().getGameTime()
-        );
-        if (!result.successful()) {
-            return Optional.empty();
-        }
+        var window = new com.tonywww.elder_bosses.boss.malenia.runtime.MaleniaParryWindow(
+                Math.max(0, first - combatSnapshot.instantGuard().windowTicks()), last + 1);
+        if (!window.accepts(guard.raisedGameTime() - currentActionSnapshot.startGameTick(),
+                currentActionSnapshot.actionTick())) return Optional.empty();
+        instantGuardContacts.add(player.getUUID() + "/" + hit.hitIdSuffix());
         PlatformShieldDurability.UsedItemSnapshot usedItem =
             PlatformShieldDurability.captureUsedItem(player);
         return Optional.of(new MaleniaIntentExecutor.InstantGuardResult(
-            result.damageMultiplier(),
+            combatSnapshot.instantGuard().blockedDamageMultiplier(),
             healthDamage -> PlatformShieldDurability.applyConfiguredDamage(
                 player,
                 usedItem,
                 healthDamage,
-                result.shieldDurabilityMultiplier()
+                combatSnapshot.instantGuard().shieldDurabilityMultiplier()
             )
         ));
     }
@@ -1257,7 +1395,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     }
 
     private void playInstantGuardCues(Optional<MaleniaActionSnapshot> activeAction) {
-        if (activeAction.isEmpty() || combatSnapshot == null) {
+        if (activeAction.isEmpty() || combatSnapshot == null || !combatSnapshot.instantGuard().enabled()) {
             return;
         }
         MaleniaActionSnapshot snapshot = activeAction.get();
@@ -1265,7 +1403,7 @@ public final class MaleniaEntity extends PlatformMonster implements
         if (plan == null) {
             return;
         }
-        int leadTicks = combatSnapshot.instantGuard().defaultCueLeadTicks();
+        int leadTicks = combatSnapshot.instantGuard().windowTicks();
         for (MaleniaActionPlan.ScheduledIntent scheduled : plan.intents()) {
             MaleniaServerIntent.HitSpec hit = hitSpec(scheduled.intent());
             if (hit == null || !hit.instantGuardEligible()) {
@@ -1470,7 +1608,12 @@ public final class MaleniaEntity extends PlatformMonster implements
             case KICK -> skillSnapshot.kick().hyperArmor()
                 && isActiveActionTick(snapshot.actionId(), actionTick);
             case WATERFOWL_DANCE -> isWaterfowlHyperArmorTick(actionTick);
-            case SCARLET_AEONIA -> actionTick >= 43 && actionTick < 50;
+            case SCARLET_AEONIA -> {
+                var timeline = actionCatalog.get(snapshot.actionId()).timeline();
+                yield timeline.stages().size() == 5
+                        ? actionTick >= timeline.activeStartTick(2) && actionTick < timeline.activeStartTick(3) + 1
+                        : actionTick >= timeline.activeStartTick(0) + 1 && actionTick < timeline.activeStartTick(0) + 8;
+            }
             case SCARLET_PHANTOMS -> skillSnapshot.scarletPhantoms().hyperArmor()
                 && isActiveActionTick(snapshot.actionId(), actionTick);
             default -> false;
@@ -1482,18 +1625,14 @@ public final class MaleniaEntity extends PlatformMonster implements
             == ActionPhase.ACTIVE;
         }
 
-        private static boolean isWaterfowlHyperArmorTick(int actionTick) {
-        return actionTick >= 32 && actionTick < 46
-            || actionTick >= 50 && actionTick < 62
-            || actionTick >= 66 && actionTick < 78
-            || actionTick >= 82 && actionTick < 100;
+        private boolean isWaterfowlHyperArmorTick(int actionTick) {
+        return eventPlans.get(MaleniaActionId.WATERFOWL_DANCE).intentsAt(actionTick).stream()
+                .anyMatch(intent -> intent instanceof MaleniaServerIntent.WaterfowlBurst);
         }
 
-        private static boolean isWaterfowlBurstExclusiveEnd(int actionTick) {
-        return actionTick == 46
-            || actionTick == 62
-            || actionTick == 78
-            || actionTick == 100;
+        private boolean isWaterfowlBurstExclusiveEnd(int actionTick) {
+        return actionTick > 0 && isWaterfowlHyperArmorTick(actionTick - 1)
+                && !isWaterfowlHyperArmorTick(actionTick);
         }
 
         private void updateHyperArmorKnockbackResistance(
@@ -1622,7 +1761,7 @@ public final class MaleniaEntity extends PlatformMonster implements
             }
             case WATERFOWL_DANCE -> {
                 List<Integer> locks = skillSnapshot.waterfowlDance().burstLockTicks();
-                int[] authoredLocks = {22, 46, 62, 78};
+                int[] authoredLocks = {22, 58, 78, 106};
                 for (int index = 0; index < 4; index++) {
                     int lock = components ? Math.max(timeline.stageStartTick(index), timeline.activeStartTick(index) - (index == 0 ? 10 : 4)) : locks.get(index);
                     landmarks.put(lock, authoredLocks[index]);
@@ -1634,8 +1773,8 @@ public final class MaleniaEntity extends PlatformMonster implements
             case SCARLET_AEONIA -> {
                 landmarks.put(components ? timeline.activeStartTick(1) : skillSnapshot.scarletAeonia().targetLockTick(), 26);
                 landmarks.put(components ? timeline.activeStartTick(2) : windup + 1, 43);
-                landmarks.put(components ? timeline.activeStartTick(3) : windup + 7, 49);
-                landmarks.put(components ? timeline.activeStartTick(4) : windup + 16, 58);
+                landmarks.put(components ? timeline.activeStartTick(3) : windup + 7, 61);
+                landmarks.put(components ? timeline.activeStartTick(4) : windup + 16, 70);
             }
             case SCARLET_PLUNGE -> landmarks.put(components ? timeline.activeStartTick(1) : windup + (activeEnd - windup) / 2, 30);
             case SCARLET_PHANTOMS -> landmarks.put(
@@ -1855,11 +1994,13 @@ public final class MaleniaEntity extends PlatformMonster implements
                         skillSnapshot,
                         indicatorContext(paths)
                 );
+                if (!combatSnapshot.instantGuard().enabled() || !combatSnapshot.instantGuard().cueEffectEnabled())
+                    frame = new MaleniaIndicatorFrame(frame.serverGameTick(), frame.current(), frame.next(), List.of());
                 packets.addAll(MaleniaIndicatorPacketMapper.toPackets(
                         frame,
                         combatSnapshot.instantGuard().cuePulseCount(),
                         instantGuardCueRgb,
-                        combatSnapshot.instantGuard().defaultCueLeadTicks()
+                        combatSnapshot.instantGuard().windowTicks()
                 ));
             }
         }
@@ -2072,6 +2213,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 player -> player.isAlive()
                         && !player.isSpectator()
                         && !player.isCreative()
+                        && insideBoundArena(player.position())
                         && distanceToSqr(player) <= range * range
         );
     }
@@ -2096,6 +2238,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 && target.level() == serverLevel
                 && target.isAlive()
                 && !target.isRemoved()
+                && insideBoundArena(target.position())
                 && !(target instanceof Enemy)
                 && !isAlliedTo(target)
                 && !target.isAlliedTo(this)
@@ -2262,6 +2405,15 @@ public final class MaleniaEntity extends PlatformMonster implements
             }
             bossEvent.removeAllPlayers();
         }
+        if (!level().isClientSide && arenaBinding != null) {
+            if (reason == Entity.RemovalReason.UNLOADED_TO_CHUNK && arenaUnloadResetsFight
+                    && combatState() != MaleniaCombatState.DORMANT && combatState() != MaleniaCombatState.DEFEATED) {
+                resetBoundEncounter();
+            }
+            if (reason.shouldDestroy() && level() instanceof ServerLevel server) {
+                PlatformMaleniaArenaSavedData.get(server).release(arenaBinding.origin(),getUUID());
+            }
+        }
         super.remove(reason);
     }
 
@@ -2288,6 +2440,12 @@ public final class MaleniaEntity extends PlatformMonster implements
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        if (arenaBinding != null) {
+            tag.put("ArenaBinding",arenaBinding.save());
+            tag.putDouble("ArenaRadius",arenaRadius);
+            tag.putInt("ArenaLeashGraceTicks",arenaLeashGraceTicks);
+            tag.putBoolean("ArenaUnloadResetsFight",arenaUnloadResetsFight);
+        }
         tag.putString("CombatState", combatState().serializedName());
         tag.putInt("CombatStateId", combatState().id());
         tag.putInt("ActivePhaseId", activePhase().id());
@@ -2330,6 +2488,17 @@ public final class MaleniaEntity extends PlatformMonster implements
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        arenaBinding = tag.contains("ArenaBinding",Tag.TAG_COMPOUND) ? new MaleniaArenaBinding(tag.getCompound("ArenaBinding")) : null;
+        PlatformMaleniaArenaNavigation.configure(this,arenaBinding!=null);
+        arenaOwnershipChecked = false;
+        arenaEmptyTicks = 0;
+        if (arenaBinding != null) {
+            arenaRadius = tag.contains("ArenaRadius",Tag.TAG_DOUBLE) && Double.isFinite(tag.getDouble("ArenaRadius"))
+                    ? Mth.clamp(tag.getDouble("ArenaRadius"),1,26) : 26;
+            arenaLeashGraceTicks = Math.max(0,tag.getInt("ArenaLeashGraceTicks"));
+            arenaUnloadResetsFight = !tag.contains("ArenaUnloadResetsFight") || tag.getBoolean("ArenaUnloadResetsFight");
+            setPersistenceRequired();
+        }
         MaleniaCombatState restoredState = MaleniaCombatState.fromId(tag.getInt("CombatStateId"));
         defeatFinalized = tag.getBoolean("DefeatFinalized");
         if (restoredState == MaleniaCombatState.DEFEATED && defeatFinalized) {
@@ -2404,6 +2573,10 @@ public final class MaleniaEntity extends PlatformMonster implements
             );
         }
         entityData.set(STATE_STARTED_GAME_TIME, Math.max(0L, level().getGameTime() - stateTicks));
+        if (arenaBinding != null && arenaUnloadResetsFight && combatState() != MaleniaCombatState.DEFEATED) {
+            // Chunk serialization happens before removal; reset again on load to honor the policy.
+            resetBoundEncounter();
+        }
     }
 
     private void tickTransition() {
@@ -2522,6 +2695,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 player -> player.isAlive()
                         && !player.isSpectator()
                         && !player.isCreative()
+                        && insideBoundArena(player.position())
                         && distanceToSqr(player) <= range * range
         ).size();
         return Mth.clamp(count, 0, snapshot.general().maxActivePlayers());
@@ -2633,7 +2807,6 @@ public final class MaleniaEntity extends PlatformMonster implements
         intentExecutor = null;
         healingBudget = null;
         staggerTracker = null;
-        instantGuardTracker = null;
         instantGuardEligibleItemTag = null;
         dialogueController = null;
         dialogueEvents = List.of();

@@ -35,6 +35,11 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.CIRCLET_OF_FADING_LIGHT.get());
                         output.accept(ModItems.GATE_FRAGMENT.get());
                         output.accept(ModItems.RUNE_FRAGMENT.get());
+                        output.accept(ModItems.HALIGTREE_ROOT.get());
+                        output.accept(ModItems.HALIGTREE_ALTAR.get());
+                        output.accept(ModItems.HALIGTREE_SILT.get());
+                        output.accept(ModItems.HALIGTREE_SILT_SLAB.get());
+                        output.accept(ModItems.HALIGTREE_WHITE_PETALS.get());
                         output.accept(ModItems.WEATHERED_DIVINE_STONE.get());
                         output.accept(ModItems.ROOT_RELIEF_STONE.get());
                         output.accept(ModItems.PALE_SEDIMENT.get());

@@ -80,6 +80,12 @@ public final class ModItems {
             register("circlet_of_fading_light");
     public static final Supplier<Item> GATE_FRAGMENT = register("gate_fragment");
     public static final Supplier<Item> RUNE_FRAGMENT = register("rune_fragment");
+    public static final Supplier<BlockItem> HALIGTREE_ROOT = registerBlock("haligtree_root", ModBlocks.HALIGTREE_ROOT);
+    public static final Supplier<BlockItem> HALIGTREE_ALTAR = registerBlock("haligtree_altar", ModBlocks.HALIGTREE_ALTAR);
+    public static final Supplier<BlockItem> HALIGTREE_SILT = registerBlock("haligtree_silt", ModBlocks.HALIGTREE_SILT);
+    public static final Supplier<BlockItem> HALIGTREE_SILT_SLAB = registerBlock("haligtree_silt_slab", ModBlocks.HALIGTREE_SILT_SLAB);
+    public static final Supplier<BlockItem> HALIGTREE_SHALLOW_WATER = registerBlock("haligtree_shallow_water", ModBlocks.HALIGTREE_SHALLOW_WATER);
+    public static final Supplier<BlockItem> HALIGTREE_WHITE_PETALS = registerBlock("haligtree_white_petals", ModBlocks.HALIGTREE_WHITE_PETALS);
         public static final Supplier<BlockItem> WEATHERED_DIVINE_STONE = registerBlock("weathered_divine_stone", ModBlocks.WEATHERED_DIVINE_STONE);
         public static final Supplier<BlockItem> ROOT_RELIEF_STONE = registerBlock("root_relief_stone", ModBlocks.ROOT_RELIEF_STONE);
         public static final Supplier<BlockItem> PALE_SEDIMENT = registerBlock("pale_sediment", ModBlocks.PALE_SEDIMENT);

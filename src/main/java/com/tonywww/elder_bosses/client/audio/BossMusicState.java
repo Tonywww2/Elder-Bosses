@@ -11,12 +11,12 @@ public final class BossMusicState {
     private int selected = -1;
 
     public void observe(int id, String boss, String phase, String state, boolean visible, float health, long tick) {
-        if (!"elder_bosses:promised_consort".equals(boss)) return;
-        if (!visible || health <= 0 || "dormant".equals(state) || "defeated".equals(state)) {
+        if (!"elder_bosses:promised_consort".equals(boss) && !"elder_bosses:malenia".equals(boss)) return;
+        if (!visible || health <= 0 && !"transition".equals(state) || "dormant".equals(state) || "defeated".equals(state)) {
             remove(id);
         } else {
             int musicPhase = "phase_two".equals(phase) || "transition".equals(state) ? 2 : 1;
-            encounters.put(id, new Encounter(id, musicPhase, tick));
+            encounters.put(id, new Encounter(id, boss, musicPhase, tick));
         }
     }
 
@@ -45,5 +45,5 @@ public final class BossMusicState {
 
     public void remove(int id) { encounters.remove(id); if (selected == id) selected = -1; }
     public void clear() { encounters.clear(); selected = -1; }
-    public record Encounter(int entityId, int phase, long lastSeen) {}
+    public record Encounter(int entityId, String boss, int phase, long lastSeen) {}
 }

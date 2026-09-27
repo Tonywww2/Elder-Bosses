@@ -32,7 +32,7 @@ public final class ModEntities {
             () -> EntityType.Builder.of(MaleniaEntity::new, MobCategory.MONSTER)
                     .sized(0.9F, 2.9F)
                     .clientTrackingRange(6)
-                    .updateInterval(2)
+                    .updateInterval(1)
                     .build(ElderBosses.MOD_ID + ":malenia")
     );
 

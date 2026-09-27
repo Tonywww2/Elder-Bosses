@@ -22,13 +22,15 @@ public final class ClientNetworkHandlers {
             ClientNetworkHandlers::handle,
                 ClientNetworkHandlers::handle,
                 ClientNetworkHandlers::handle,
-                ClientBossVictoryBanner::receive
+                ClientBossVictoryBanner::receive,
+                com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects::observe
         );
     }
 
     private static void handle(MaleniaCombatSnapshotPacket packet) {
+        com.tonywww.elder_bosses.client.audio.ClientBossMusic.observe(packet);
         ClientBossStateStore.update(packet);
-        ClientBossVfxController.observe(packet);
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.observe(packet);
         if (packet.combatState() == MaleniaCombatState.DEFEATED
                 || packet.combatState() == MaleniaCombatState.DORMANT) {
             ClientIndicatorStateStore.onTrackingEnd(packet.entityId());
@@ -51,6 +53,7 @@ public final class ClientNetworkHandlers {
     private static void handle(IndicatorSnapshotPacket packet) {
         Minecraft minecraft = Minecraft.getInstance();
         long gameTick = minecraft.level == null ? -1L : minecraft.level.getGameTime();
+        com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.observe(packet, gameTick);
         ClientIndicatorStateStore.update(packet, gameTick);
     }
 }

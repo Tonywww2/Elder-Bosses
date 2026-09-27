@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "elder_bosses:block/haligtree_root",
+    "end": "elder_bosses:block/haligtree_root"
+  }
+}

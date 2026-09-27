@@ -63,6 +63,8 @@ dependencies {
     // Loom strips jar-in-jar metadata while remapping; expose JEI's required config mod explicitly.
     modRuntimeOnly("net.mezzdev.config:mezz_config-$mcVersion-forge:0.6.3") { isTransitive = false }
     forgeRuntimeLibrary("com.eliotlash.mclib:mclib:20")
+    // Projection poses sample GeckoLib's baked keyframes; IValue is part of their public signature.
+    compileOnly("com.eliotlash.mclib:mclib:20")
 }
 
 tasks {

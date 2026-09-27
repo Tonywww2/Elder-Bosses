@@ -1,12 +1,14 @@
 {
-  "status": "cleared_regenerate_on_demand",
-  "consolidated": true,
+  "status": "v15_offscreen_gpu_reviewed",
   "model": "malenia",
-  "geometry_sha256": "c747377bf4e738c0e53c79b07cdf30c75fa4f00e7572ad73b35488b242dfb4ae",
-  "animations_sha256": "75d59dc834da2ec3fc411271ad4e76261372920fecf5f37b9b58ebc997550603",
+  "geometry_sha256": "945582f665713ff122054d9a0ae7f0b75f3bc6207071c582168eaa09b75809e6",
+  "animations_sha256": "48eede6bcc3ee7ca3c374a32a1248550c9b0d97416e39eee1ebbc67a97419dbf",
+  "texture_sha256": "5730314b08831ff111f450e6062b39074cd6eca0ea48b8e5ec57c6beefa83fff",
   "media_files": [],
   "complete": false,
   "visual_accepted": false,
   "world_tested": false,
-  "policy": "All generated previews were deleted at user request; capture current assets again when needed. Asset validation does not depend on screenshots."
+  "server_gametests_passed": true,
+  "offline_gpu_reviewed": true,
+  "policy": "Actual shaders and GeckoLib body geometry reviewed in build/malenia-v15/previews. Client world rendering and multiplayer visual acceptance remain pending; server tests do not substitute for a client playtest."
 }

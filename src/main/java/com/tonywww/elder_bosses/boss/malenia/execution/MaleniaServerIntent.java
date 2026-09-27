@@ -11,6 +11,7 @@ import java.util.OptionalDouble;
 public sealed interface MaleniaServerIntent permits
         MaleniaServerIntent.LockFacing,
         MaleniaServerIntent.LockPoint,
+        MaleniaServerIntent.AnchorAtBoss,
     MaleniaServerIntent.LockPhantom,
         MaleniaServerIntent.MoveToward,
         MaleniaServerIntent.MoveVertical,
@@ -31,14 +32,24 @@ public sealed interface MaleniaServerIntent permits
     record LockFacing() implements MaleniaServerIntent {
     }
 
-    record LockPoint(String pointId, boolean projectToSurface) implements MaleniaServerIntent {
+    record LockPoint(String pointId, boolean projectToSurface, OptionalDouble maximumHorizontalDistance) implements MaleniaServerIntent {
+        public LockPoint(String pointId, boolean projectToSurface) {
+            this(pointId, projectToSurface, OptionalDouble.empty());
+        }
         public LockPoint(String pointId) {
             this(pointId, false);
         }
 
         public LockPoint {
             requireIdentifier(pointId, "pointId");
+            Objects.requireNonNull(maximumHorizontalDistance);
+            maximumHorizontalDistance.ifPresent(value -> requirePositiveFinite(value, "maximumHorizontalDistance"));
         }
+    }
+
+    /** Resolve impact VFX and damage at the collision-clipped end of a dive. */
+    record AnchorAtBoss(String pointId) implements MaleniaServerIntent {
+        public AnchorAtBoss { requireIdentifier(pointId, "pointId"); }
     }
 
     record LockPhantom(int phantomIndex, int phantomCount) implements MaleniaServerIntent {

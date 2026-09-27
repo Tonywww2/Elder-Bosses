@@ -127,7 +127,7 @@ public final class AnimationTimelineTest {
             equal(timeline.totalTicks(), plan.totalTicks());
             if (!plan.intents().stream().allMatch(intent -> intent.actionTick() >= 0 && intent.actionTick() < timeline.totalTicks()))
                 throw new AssertionError("An intent lies outside its configured action: " + action);
-            var reference = ActionTimeline.ofStages(com.tonywww.elder_bosses.boss.malenia.config.MaleniaSkillConfigSnapshot.defaultComponentStages(action).toArray(ActionStage[]::new));
+            var reference = ActionTimeline.ofStages(MaleniaAnimationTimeline.authoredComponentStages(action).toArray(ActionStage[]::new));
             for (int stage = 0; stage < components.size(); stage++) {
                 equal(reference.activeStartTick(stage), MaleniaAnimationTimeline.sample(timeline.activeStartTick(stage), action, timeline, Map.of()));
                 checks++;

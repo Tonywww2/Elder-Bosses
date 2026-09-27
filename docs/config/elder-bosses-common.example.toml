@@ -1180,11 +1180,11 @@
 
 		[malenia.skills.running_slash]
 			windup_ticks = 16
-			active_ticks = 4
+			active_ticks = 6
 			heal_profile = "standard"
 			recovery_ticks = 18
 			weight = 0.9
-			range = 6.0
+			range = 9.0
 			range_multiplier = 1.3
 			enabled = true
 			cooldown_ticks = 55
@@ -1306,8 +1306,8 @@
 			cooldown_ticks = 360
 
 			[malenia.skills.scarlet_aeonia.components]
-				windup_ticks = [0, 0, 0, 0, 8]
-				active_ticks = [26, 17, 6, 1, 42]
+				windup_ticks = [0, 0, 0, 0, 24]
+				active_ticks = [26, 17, 18, 1, 42]
 				recovery_ticks = [0, 0, 0, 0, 54]
 
 			[malenia.skills.scarlet_aeonia.dive_damage]
@@ -1342,7 +1342,7 @@
 			minimum_start_range = 6.0
 			burst_count = 4
 			heal_profile = "waterfowl"
-			burst_max_travel = [7.0, 6.0, 5.0, 4.0]
+			burst_max_travel = [11.0, 9.0, 8.0, 4.0]
 			phase_two_opening_delay_ticks = 180
 			weight = 0.4
 			burst_width = 3.5
@@ -1359,9 +1359,9 @@
 				flat = 0.0
 
 			[malenia.skills.waterfowl_dance.components]
-				windup_ticks = [32, 4, 4, 4]
-				active_ticks = [14, 12, 12, 18]
-				recovery_ticks = [0, 0, 0, 42]
+				windup_ticks = [32, 12, 8, 8]
+				active_ticks = [18, 12, 20, 6]
+				recovery_ticks = [0, 0, 0, 26]
 
 		[malenia.skills.kick]
 			windup_ticks = 9
@@ -1406,12 +1406,12 @@
 
 		[malenia.skills.thrust]
 			windup_ticks = 22
-			active_ticks = 4
+			active_ticks = 6
 			heal_profile = "heavy"
 			width = 1.2
 			recovery_ticks = 24
 			weight = 0.75
-			range = 7.0
+			range = 10.0
 			range_multiplier = 1.3
 			enabled = true
 			cooldown_ticks = 85
@@ -1436,7 +1436,7 @@
 
 			[malenia.skills.scarlet_phantoms.components]
 				windup_ticks = [36, 0, 0, 0, 0, 0]
-				active_ticks = [8, 8, 8, 8, 8, 32]
+				active_ticks = [8, 8, 8, 8, 8, 12]
 				recovery_ticks = [0, 0, 0, 0, 0, 38]
 
 			[malenia.skills.scarlet_phantoms.phantom_damage]
@@ -1454,7 +1454,7 @@
 			heal_profile = "heavy"
 			recovery_ticks = [8, 24]
 			weight = 0.75
-			range = 7.0
+			range = 11.0
 			range_multiplier = 1.3
 			enabled = true
 			cooldown_ticks = 120
@@ -1480,14 +1480,12 @@
 
 	[malenia.instant_guard]
 		eligible_item_tag = "elder_bosses:instant_guard_items"
-		start_tick = 3
 		red_cue_color = "#FF2020"
-		end_tick = 6
 		shield_durability_multiplier = 0.5
-		rearm_ticks = 4
 		enabled = true
 		blocked_damage_multiplier = 0.0
-		default_cue_lead_ticks = 6
+		window_ticks = 8
+		cue_effect_enabled = true
 		cue_pulse_count = 3
 
 	[malenia.healing]
@@ -1533,7 +1531,8 @@
 		distance_weight = 0.45
 
 	[malenia.scarlet_rot]
-		decay_delay_ticks = 60
+		decay_delay_ticks = 120
+		decay_interval_ticks = 40
 		movement_speed_reduction = 0.1
 		healing_reduction = 0.3
 		honey_buildup_reduction = 25.0
@@ -1542,7 +1541,7 @@
 		duration_ticks = 120
 		damage_interval_ticks = 20
 		consume_cleanse_item = true
-		decay_per_20_ticks = 8.0
+		decay_per_interval = 8.0
 
 		[malenia.scarlet_rot.damage]
 			attack_ratio = 0.1

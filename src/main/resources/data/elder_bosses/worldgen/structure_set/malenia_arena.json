@@ -1,0 +1,12 @@
+{
+  "structures": [
+    { "structure": "elder_bosses:malenia_arena", "weight": 1 }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 48,
+    "separation": 16,
+    "frequency": 0.5,
+    "salt": 19660927
+  }
+}

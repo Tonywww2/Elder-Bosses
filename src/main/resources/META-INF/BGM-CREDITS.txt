@@ -16,3 +16,23 @@ No Elden Ring recordings or melodies were sampled or recreated.
 
 Files: assets/elder_bosses/sounds/music/promised_consort/phase_one.ogg
        assets/elder_bosses/sounds/music/promised_consort/phase_two.ogg
+
+Elder Bosses - Malenia battle music
+
+"Invasion" by Sascha Ende (2013)
+Source: https://ende.app/en/song/206-invasion
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+Author's licensing terms: https://ende.app/en/standard-license
+
+Adaptations: excerpts at 52-120 and 136-204 seconds, two-second cyclic
+crossfades, eight-millisecond seam ramps, loudness normalization to -21 / -19 LUFS and stereo Ogg Vorbis
+encoding. Each resulting loop lasts 66 seconds. Runtime phase crossfades
+and parry ducking are applied separately. No author endorsement is implied.
+The mod's All Rights Reserved notice does not apply to these music files;
+these adaptations retain the CC BY 4.0 license. No Elden Ring audio sampled.
+
+Files: assets/elder_bosses/sounds/music/malenia/phase_one.ogg
+       assets/elder_bosses/sounds/music/malenia/phase_two.ogg
+
+Malenia's parry_success.ogg is original procedural synthesis; no samples.

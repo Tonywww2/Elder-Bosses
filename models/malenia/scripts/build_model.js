@@ -29,6 +29,7 @@
         ["prosthetic_hand_r", "prosthetic_forearm_r", [-7, 25, 0]],
         ["blade_mount", "prosthetic_hand_r", [-7, 25, 0]],
         ["prosthetic_fingers_r", "blade_mount", [-7, 24, 0]],
+        ["prosthetic_thumb_r", "blade_mount", [-7, 25, 0]],
         ["blade", "blade_mount", [-7, 24, -3]],
         ["blade_root", "blade", [-7, 24, -3]],
         ["blade_tip", "blade", [-7, 28, -50]],
@@ -225,23 +226,6 @@
         patchCache.set(signature, tile);
         return tile;
     }
-    function wingTile(width, height, index) {
-        return patch(width, height, (horizontal, vertical) => {
-            let across = horizontal / (width - 1);
-            let rise = Math.sin(across * Math.PI);
-            let top = Math.round(height * (0.42 - rise * 0.31)) + [0, 1, -1, 0][Math.floor(horizontal / 4 + index) % 4];
-            let bottom = Math.round(height * (0.51 + rise * 0.37)) - [0, 2, 0, 1][Math.floor(horizontal / 5 + index) % 4];
-            if (vertical < top || vertical >= bottom || horizontal === 0 || horizontal === width - 1) return null;
-            let vein = Math.round(height * 0.48 + Math.sin(across * 4 + index) * 2);
-            let aperture = (Math.floor(horizontal / 3) + index * 2) % 7 === 3 && vertical > vein + 1 && vertical < bottom - 1;
-            if (aperture) return null;
-            if (vertical === vein || vertical === vein + 1) return materials.red_vein[2];
-            if (vertical === top || vertical === bottom - 1) return materials.lichen[(horizontal + index) % 5 < 2 ? 2 : 1];
-            if (horizontal % 9 === index % 9 && vertical > top + 1 && vertical < vein) return materials.red_vein[1];
-            if (horizontal % 13 < 2 && vertical === vein - 2) return materials.lichen[2];
-            return materials.branch[(Math.floor(horizontal / 4) + Math.floor(vertical / 3) + index) % 4 === 0 ? 3 : 2];
-        });
-    }
     let petalTiles = [];
     for (let index = 0; index < 4; index++) {
         petalTiles.push(patch(30, 90, (horizontal, vertical) => {
@@ -359,27 +343,12 @@
             capMaterial, [0, 0, 0], center, {only: ["east", "west"], tile, silhouetteMask: true});
     }
     function hand(prefix, palmBone, fingerBone, center, material, mirrored) {
-        box(prefix + "_palm", palmBone, [center - 1.4, 22.25, -1.0], [center + 1.4, 24.7, 0.82], material,
-            [0, 0, 0], null, {motif: "hand"});
-        box(prefix + "_palm_heel", palmBone, [center - 1.08, 24.35, -0.9], [center + 1.08, 25.2, 0.75], material);
-        for (let index = 0; index < 4; index++) {
-            let offset = (index - 1.5) * 0.65;
-            let length = fingerLengths[index];
-            let horizontal = center + (mirrored ? -offset : offset);
-            let knuckle = 22.25 - length * 0.58;
-            box(prefix + "_finger_" + index, "finger_l_" + index, [horizontal - 0.275, knuckle - 0.06, -0.76],
-                [horizontal + 0.275, 22.34, 0.48], material, [0, 0, 0],
-                [horizontal, 22.25, 0], {motif: "knuckles"});
-            box(prefix + "_fingertip_" + index, "finger_l_tip_" + index, [horizontal - 0.23, 21.98 - length, -0.7],
-                [horizontal + 0.23, knuckle + 0.07, 0.38], material, [0, 0, 0],
-                [horizontal, knuckle, 0]);
-        }
-        let direction = mirrored ? 1 : -1;
-        let thumb = center + direction * 1.55;
-        box(prefix + "_thumb", "thumb_l", [thumb - 0.4, 22.75, -0.68], [thumb + 0.4, 24.12, 0.5], material,
-            [0, 0, direction * 18], [center + direction * 1.2, 24, 0]);
-        box(prefix + "_thumb_tip", "thumb_l_tip", [thumb - 0.33, 21.85, -0.62], [thumb + 0.33, 22.88, 0.4], material,
-            [0, 0, direction * 12], [thumb, 22.8, -0.05]);
+        box(prefix + "_palm", palmBone, [center - 1.4, 22, -0.958], [center + 1.4, 25.04, 0.833], material,
+            [0, 0, 0], [center, 25, 0], {motif: "hand"});
+        box(prefix + "_finger_block", fingerBone, [center - 1.333, 19.625, -0.817], [center + 1.333, 22.208, 0.708], material,
+            [0, 0, 0], [center, 22, 0]);
+        box(prefix + "_thumb_block", "thumb_l", [4.708, 21.583, -0.817], [5.917, 24.125, 0.542], material,
+            [0, 0, -12], [5.8, 24, 0]);
     }
     function foot(prefix, bone, center) {
         box(prefix + "_sole", bone, [center - 1.55, 0, -4.1], [center + 1.55, 0.45, 1.72], "gold");
@@ -436,22 +405,10 @@
     box("vambrace_front_rail", "prosthetic_forearm_r", [-8, 26, -3], [-7, 30, -2], "gold_edge");
     box("elbow_axle_r", "prosthetic_forearm_r", [-10, 30, -1], [-9, 32, 1], "joint");
     joint("wrist_mechanism", "prosthetic_hand_r", [-7, 25, 0], 2.3, 1.28, "joint", "gold");
-    box("right_palm", "blade_mount", [-8.28, 22.98, -2.15], [-7.42, 24.93, 1.12], "gold",
-        [0, 0, 0], null, {motif: "hand"});
-    box("right_palm_heel", "blade_mount", [-8.03, 24.65, -0.9], [-6.7, 25.18, 0.9], "gold");
-    for (let index = 0; index < 4; index++) {
-        let depth = -1.78 + index * 0.8;
-        box("right_finger_" + index, "prosthetic_fingers_r", [-7.64, 23.1, depth - 0.34], [-6.55, 23.65, depth + 0.34], "gold",
-            [0, 0, 0], null, {motif: "knuckles"});
-        box("right_finger_bend_" + index, "prosthetic_fingers_r", [-6.6, 23.16, depth - 0.3], [-6.02, 24.75, depth + 0.3], "gold");
-        box("right_fingertip_" + index, "prosthetic_fingers_r", [-7.32, 24.35, depth - 0.26], [-6.4, 24.87, depth + 0.26], "gold_edge");
-    }
-    box("right_thumb", "blade_mount", [-7.38, 24.62, -2.26], [-6.52, 25.1, -0.74], "gold",
-        [0, 0, -12], [-7.4, 24.8, -0.8]);
-    box("right_thumb_tip", "blade_mount", [-6.72, 24.4, -2.45], [-6.12, 25.02, -1.62], "gold_edge",
-        [0, -12, -18], [-6.72, 24.8, -1.6]);
-    box("right_hand_backplate", "blade_mount", [-8.52, 23.2, -1.75], [-8.25, 24.72, 0.86], "gold_edge",
-        [0, 0, 0], null, {motif: "hand", only: ["west", "up", "down"]});
+    box("right_palm", "blade_mount", [-8.417, 22.917, -2.15], [-7.333, 25.083, 1.125], "gold", [0,0,0], [-7,25,0], {motif:"hand"});
+    box("right_finger_block", "prosthetic_fingers_r", [-7.542,23.042,-2.125], [-6.458,23.792,1.125], "gold");
+    box("right_finger_fold", "prosthetic_fingers_r", [-6.75,23.458,-2.125], [-6,24.917,1.125], "gold");
+    box("right_thumb_block", "prosthetic_thumb_r", [-7.583,24.5,-2.458], [-6.167,25.125,-0.625], "gold", [0,0,-10], [-7,25,0]);
 
     box("lamellar_coronet", "armor_torso", [-5, 35, -3], [5, 39, 3], "gold", [0, 0, 0], null, {motif: "cuirass"});
     box("woven_cuirass", "armor_torso", [-4, 28, -3], [4, 35, 3], "robe", [0, 0, 0], null, {motif: "cuirass"});
@@ -615,35 +572,7 @@
 
     box("opaque_rot_mantle", "phase_two_body", [-4, 33, -3], [4, 38, -2], "rot", [0, 0, 0], null, {only: ["north"]});
     box("opaque_rot_waist", "phase_two_body", [-4, 25, -3], [4, 29, -2], "red_vein", [0, 0, 0], null, {only: ["north"]});
-    for (let sideIndex = 0; sideIndex < 2; sideIndex++) {
-        let direction = sideIndex === 0 ? 1 : -1;
-        let side = direction > 0 ? "l" : "r";
-        let root = "wing_root_" + side;
-        rod("wing_root_tendon_" + side, root, [direction * 3, 36, 3], [direction * 14, 42, 5], 2, "branch");
-        let branchEnds = direction > 0 ? [[58, 51], [56, 39], [49, 27], [38, 17]] : [[57, 49], [59, 37], [47, 25], [40, 18]];
-        for (let index = 0; index < 4; index++) {
-            let bone = "wing_branch_0" + (index + 1) + "_" + side;
-            let membrane = "wing_membrane_0" + (index + 1) + "_" + side;
-            let tip = branchEnds[index];
-            let start = [direction * 8, 39 - index * 1.5, 4.4 + index * 0.6];
-            let middle = [direction * (23 + index), (start[1] + tip[1]) / 2 + 2.5, 6 + index];
-            let end = [direction * tip[0], tip[1], 6 + index * 1.2];
-            rod("wing_bough_inner_" + side + index, bone, start, middle, 1.8 - index * 0.2, "branch");
-            rod("wing_bough_outer_" + side + index, bone, middle, end, 1.1 - index * 0.13, "red_vein");
-            let fromX = direction > 0 ? 12 + index : -tip[0];
-            let toX = direction > 0 ? tip[0] : -12 - index;
-            let top = [56, 47, 37, 29][index] - sideIndex;
-            let bottom = [36, 28, 18, 10][index] + sideIndex;
-            let nativeWing = wingTile(toX - fromX, top - bottom, sideIndex * 4 + index);
-            box("torn_membrane_" + side + index, membrane, [fromX, bottom, 6 + index], [toX, top, 7 + index], "branch", [index * 3, direction * (3 + index), 0], groups[membrane].origin, {tile: nativeWing, only: ["north", "south"]});
-            for (let twig = 0; twig < 3; twig++) {
-                let ratio = 0.22 + twig * 0.3;
-                let point = middle.map((value, axis) => value + (end[axis] - value) * ratio);
-                rod("wing_twig_" + side + index + twig, bone, point, [point[0] + direction * (3 + twig), point[1] + (twig % 2 ? -5 : 5.5), point[2] - 0.6], 0.55, twig % 2 ? "lichen" : "branch");
-                if (twig === 1) box("wing_node_" + side + index, bone, [point[0] - 1, point[1] - 1, point[2] - 2], [point[0] + 1, point[1] + 1, point[2] - 1], "lichen", [15, 0, direction * 22.5], point);
-            }
-        }
-    }
+    // Rot wings are GPU effects. Retain empty control bones; author no wing cubes.
 
     box("aeonia_seed", "aeonia_core", [-5, 0, -5], [5, 6, 5], "branch", [0, 22.5, 0]);
     box("aeonia_heart", "aeonia_core", [-3, 4, -3], [3, 9, 3], "petal", [0, -22.5, 0]);

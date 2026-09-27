@@ -126,6 +126,25 @@ public final class ClientIndicatorGeometry {
         }
 
         double halfWidth = width * 0.5;
+        if (points.size() == 2 && snapshot.indicatorId().contains(":scarlet_phantoms:")) {
+            // These paths preserve flight height for the visual projection, but the real strike
+            // still has capsule end caps. Keep the warning's horizontal footprint identical.
+            var from = points.get(0);
+            var to = points.get(1);
+            double dx = to.x() - from.x(), dz = to.z() - from.z(), length = Math.hypot(dx, dz);
+            if (length > 0) {
+                List<Vertex> polygon = new ArrayList<>(segmentLimit);
+                for (int i = 0; i < segmentLimit; i++) {
+                    double angle = Math.PI * 2 * i / segmentLimit;
+                    var center = Math.sin(angle) >= 0 ? to : from;
+                    double forward = Math.sin(angle) * halfWidth, right = Math.cos(angle) * halfWidth;
+                    polygon.add(new Vertex(center.x() + (dx * forward - dz * right) / length, center.y(),
+                            center.z() + (dz * forward + dx * right) / length));
+                }
+                builder.addFan(polygon); builder.addLoop(polygon); builder.addAccent(vertex(from), vertex(to));
+                return;
+            }
+        }
         for (int index = 0; index + 1 < points.size(); index++) {
             IndicatorSnapshotPacket.Point from = points.get(index);
             IndicatorSnapshotPacket.Point to = points.get(index + 1);
