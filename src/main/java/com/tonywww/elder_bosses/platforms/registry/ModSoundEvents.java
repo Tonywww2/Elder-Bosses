@@ -29,6 +29,8 @@ public final class ModSoundEvents {
             () -> SoundEvent.createVariableRangeEvent(
                     PlatformResourceLocation.id("malenia.instant_guard_cue"))
     );
+    public static final Supplier<SoundEvent> CONSORT_MUSIC_PHASE_ONE = register("music.promised_consort.phase_one");
+    public static final Supplier<SoundEvent> CONSORT_MUSIC_PHASE_TWO = register("music.promised_consort.phase_two");
         public static final Supplier<SoundEvent> PROMISED_CONSORT_INSTANT_GUARD_CUE = SOUNDS.register(
             "promised_consort.instant_guard_cue",
             () -> SoundEvent.createVariableRangeEvent(

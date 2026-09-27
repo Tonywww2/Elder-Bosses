@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elder Bosses · 正式物品材质</title>
+<style>
+  :root { color-scheme: dark; font: 16px/1.7 system-ui,sans-serif; }
+  body { margin: 0; background: #181b21; color: #e9e3d4; --card: #252b33; --edge: #3a414c; --muted: #b1b5bc; }
+  body.light { color-scheme: light; background: #f0ebe1; color: #2c2926; --card: #fffaf1; --edge: #cfc6b5; --muted: #6b6359; }
+  main { max-width: 1160px; margin: 50px auto; padding: 0 24px; }
+  .eyebrow { letter-spacing: .2em; font-size: 12px; color: #b9a26f; }
+  h1 { margin: 10px 0; font-size: clamp(28px,4vw,42px); font-weight: 550; }
+  p { color: var(--muted); } button { color: inherit; background: var(--card); border: 1px solid var(--edge); border-radius: 6px; padding: 8px 16px; cursor: pointer; font: inherit; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 18px; margin-top: 28px; }
+  article { background: var(--card); border: 1px solid var(--edge); border-radius: 12px; padding: 20px; }
+  .hero { display: flex; align-items: center; justify-content: center; min-height: 150px; }
+  img { image-rendering: pixelated; } .hero img { width: 128px; height: 128px; }
+  h2 { font-size: 17px; font-weight: 550; margin: 14px 0 2px; }
+  .sizes { display: flex; align-items: center; gap: 16px; min-height: 70px; border-top: 1px solid var(--edge); margin-top: 16px; }
+  .sizes span { color: var(--muted); font-size: 11px; } code { display: block; color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
+  a { color: inherit; text-underline-offset: 4px; } footer { font-size: 13px; margin-top: 32px; color: var(--muted); }
+</style>
+<main>
+  <header><div class="eyebrow">ELDER BOSSES / ITEM MATERIALS</div><h1>黄金、猩红与神殿遗物</h1>
+  <p>6 件材料使用原生 16 × 16；武器、金针、翼盔和光冠共 5 件装备使用原生 32 × 32。粗像素轮廓、有限色阶和清晰边缘，下方展示背包常用的三种显示尺寸。</p>
+  <button id="theme" type="button" aria-pressed="false">切换明暗背景</button></header>
+  <div class="grid" id="items"></div>
+  <footer>另外 12 件方块物品沿用竞技场的自定义三维方块模型与材质。<a href="manifest.json">资源清单</a> · <a href="source_prompt.txt">imagegen 绘制提示词</a><p>当前页面直接使用游戏资源；实际手持姿态和游戏内光照仍待实机确认。</p></footer>
+</main>
+<script>
+  const items = [
+    ['golden_needle','金针'], ['rot_goddess_remembrance','腐败女神的追忆'],
+    ['consecrated_prosthetic_blade','奉献义手刀'], ['unalloyed_winged_helm','无垢金翼盔'],
+    ['scarlet_aeonia_core','猩红花芯'], ['haligtree_root_fragment','圣树根片'],
+    ['god_and_lord_remembrance','神与王的追忆'], ['young_lion_greatsword','年轻狮子大剑'],
+    ['circlet_of_fading_light','渐隐光冠'], ['gate_fragment','神门残片'], ['rune_fragment','卢恩残片']
+  ];
+  const equipment = new Set(['golden_needle','consecrated_prosthetic_blade','unalloyed_winged_helm','young_lion_greatsword','circlet_of_fading_light']);
+  for (const [id,name] of items) {
+    const src = '../../src/main/resources/assets/elder_bosses/textures/item/' + id + '.png';
+    const card = document.createElement('article');
+    const nativeSize = equipment.has(id) ? 32 : 16;
+    card.innerHTML = `<a class="hero" href="${src}"><img src="${src}" alt="${name}"></a><h2>${name} · ${nativeSize}×</h2><code>${id}</code><div class="sizes">${[16,32,64].map(size=>`<img src="${src}" alt="${size} 像素预览" width="${size}" height="${size}">`).join('')}<span>16 / 32 / 64</span></div>`;
+    document.querySelector('#items').append(card);
+  }
+  document.querySelector('#theme').addEventListener('click',event=>{
+    const light = document.body.classList.toggle('light');
+    event.currentTarget.setAttribute('aria-pressed', String(light));
+  });
+</script>
+</html>

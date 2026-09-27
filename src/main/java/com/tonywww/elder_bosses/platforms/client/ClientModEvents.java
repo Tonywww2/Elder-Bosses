@@ -2,6 +2,7 @@ package com.tonywww.elder_bosses.platforms.client;
 
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.client.hud.ElderBossesHudRenderer;
+import com.tonywww.elder_bosses.client.hud.ClientBossVictoryBanner;
 import com.tonywww.elder_bosses.client.render.MaleniaRenderer;
 import com.tonywww.elder_bosses.client.render.PromisedConsortCloneRenderer;
 import com.tonywww.elder_bosses.client.render.PromisedConsortRenderer;
@@ -83,6 +84,8 @@ public final class ClientModEvents {
     //? if forge {
     @SubscribeEvent
     public static void registerHud(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("boss_victory", (gui, graphics, partialTick, width, height) ->
+                ClientBossVictoryBanner.render(graphics, width, height, partialTick));
         event.registerAbove(
                 VanillaGuiOverlay.BOSS_EVENT_PROGRESS.id(),
                 "elder_bosses_hud",
@@ -97,6 +100,9 @@ public final class ClientModEvents {
     //?} else {
     /*@SubscribeEvent
     public static void registerHud(RegisterGuiLayersEvent event) {
+        event.registerAboveAll(PlatformResourceLocation.id("boss_victory"), (graphics, deltaTracker) ->
+                ClientBossVictoryBanner.render(graphics, graphics.guiWidth(), graphics.guiHeight(),
+                        deltaTracker.getGameTimeDeltaPartialTick(false)));
         event.registerAbove(
                 VanillaGuiLayers.BOSS_OVERLAY,
                 PlatformResourceLocation.id("elder_bosses_hud"),

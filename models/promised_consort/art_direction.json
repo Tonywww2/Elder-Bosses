@@ -1,6 +1,6 @@
 {
   "revision": "sculpted_relief_v11",
-  "texture_revision": "clustered_transition_v8",
+  "texture_revision": "sovereign_blades_v1",
   "project": "promised_consort",
   "geometry_identifier": "geometry.elder_bosses.promised_consort",
   "format": "geckolib_model",
@@ -504,5 +504,7 @@
   ],
   "motion_revision": "video_motion_v12",
   "current_assets": "current_assets.json",
-  "consolidated": true
+  "consolidated": true,
+  "body_texture_revision": "clustered_transition_v8",
+  "sword_texture_policy": "Continuous dark iron, bevel edge, angular gold lion and tapered vine; no per-segment motif restart"
 }

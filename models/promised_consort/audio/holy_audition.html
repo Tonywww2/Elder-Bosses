@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拉塔恩 · 圣光音效对比</title>
+<style>
+  :root { color-scheme: dark; font: 16px/1.65 system-ui, sans-serif; color: #eee8da; background: #171b20; }
+  body { max-width: 880px; margin: 0 auto; padding: 48px 24px; }
+  h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 600; margin: 12px 0; }
+  h2 { font-size: 21px; margin-top: 32px; }
+  p { color: #b7babd; }
+  a { color: #dbbf82; text-underline-offset: 4px; }
+  .eyebrow { font-size: 12px; letter-spacing: 2px; color: #dbbf82; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  article { padding: 22px; background: #222830; border: 1px solid #39414a; border-radius: 12px; }
+  article.current { border-color: #a58a53; }
+  h3 { margin: 0; font-size: 18px; } article p { font-size: 14px; min-height: 46px; }
+  audio { width: 100%; height: 44px; }
+  .toolbar { display: flex; align-items: center; gap: 12px; margin: 28px 0; }
+  input { accent-color: #dbbf82; } output { min-width: 3em; }
+  footer { margin-top: 32px; font-size: 14px; }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } body { padding: 28px 18px; } }
+</style>
+<header>
+  <div class="eyebrow">ELDER BOSSES / HOLY LIGHT</div>
+  <h1>圣光：柔和起音，扩散余韵</h1>
+  <p>去掉玻璃敲击和突出的铃音，改为低中频光雾与细腻气流。新版已接入游戏资源，等待实战试听。</p>
+</header>
+<main>
+  <div class="toolbar"><label for="level">试听音量</label><input id="level" type="range" min="0" max="1" step="0.01" value="0.5"><output id="level-value" for="level">50%</output></div>
+  <h2>单次圣光</h2>
+  <div class="grid">
+    <article><h3>旧版 · 玻璃与泛音</h3><p>起音尖，音高突出。</p><audio controls preload="metadata" aria-label="旧版单次圣光" src="prototypes/v1/holy_echo.ogg"></audio></article>
+    <article class="current"><h3>新版 · 柔和光雾</h3><p>35–55 毫秒渐入，峰值降低约 7.5 dB。</p><audio controls preload="metadata" aria-label="新版单次圣光" src="prototypes/v2/holy_echo.ogg"></audio></article>
+  </div>
+  <h2>连续光柱</h2>
+  <p>四组双光柱，间隔 250 毫秒，按圣光事件的 0.5 音量混合。保留实际音量差，便于比较密集触发时的变化。</p>
+  <div class="grid">
+    <article><h3>旧版 · 同帧叠加两次</h3><p>反复起音、叠加后的声音。</p><audio controls preload="metadata" aria-label="旧版连续光柱" src="prototypes/v2/holy_burst_before.ogg"></audio></article>
+    <article class="current"><h3>新版 · 每帧一次</h3><p>同一 Boss 的同帧圣光共用一次音效。</p><audio controls preload="metadata" aria-label="新版连续光柱" src="prototypes/v2/holy_burst_after.ogg"></audio></article>
+  </div>
+</main>
+<footer>
+  <p>连续光柱为离线模拟，游戏中的距离衰减与空间方位仍需实战确认。</p>
+  <a href="audition.html">全部动作音效</a> · <a href="bgm/audition.html">战斗 BGM</a> · <a href="prototypes/v2/holy_echo.ogg" download>下载新版 OGG</a>
+</footer>
+<script>
+  const players = [...document.querySelectorAll('audio')];
+  const level = document.querySelector('#level');
+  const output = document.querySelector('#level-value');
+  function setLevel(value) {
+    level.value = value;
+    output.value = Math.round(value * 100) + '%';
+    for (const player of players) if (Math.abs(player.volume - value) > 0.001) player.volume = value;
+  }
+  for (const player of players) {
+    player.addEventListener('play', () => { for (const other of players) if (other !== player) other.pause(); });
+    player.addEventListener('volumechange', () => { if (Math.abs(player.volume - Number(level.value)) > 0.001) setLevel(player.volume); });
+  }
+  level.addEventListener('input', () => setLevel(Number(level.value)));
+  setLevel(Number(level.value));
+</script>
+</html>

@@ -124,6 +124,17 @@ public final class ClientBossVfxController {
                     String style = snapshot.styleRole().name();
                     if (!style.contains("PHYSICAL") && !style.contains("BLOOD")) continue;
                     Vec3 point = new Vec3(snapshot.anchor().x(), snapshot.anchor().y() + 0.1, snapshot.anchor().z());
+                    if (aerialLanding(active.actionId(), snapshot.indicatorId())) {
+                        // The authoritative ground anchor keeps the impact at the feet while the body descends.
+                        // All particles use the existing per-boss budget and the single active tick.
+                        for (int index = 0; index < 12; index++) {
+                            double angle = index * Math.PI / 6;
+                            Vec3 radial = new Vec3(Math.cos(angle), 0, Math.sin(angle));
+                            emitter.add(ParticleTypes.ASH, point.add(radial.scale(1.1)), radial.scale(0.16).add(0, 0.04, 0));
+                            if (index % 3 == 0) emitter.add(ParticleTypes.END_ROD, point.add(radial.scale(0.65)), radial.scale(0.035).add(0, 0.06, 0));
+                        }
+                        continue;
+                    }
                     for (int index = 0; index < 2; index++) {
                         emitter.add(style.contains("BLOOD") ? ParticleTypes.SMALL_FLAME : ParticleTypes.ASH,
                                 point.add((random.nextDouble() - 0.5) * 1.4, 0.05, (random.nextDouble() - 0.5) * 1.4), new Vec3(0, 0.02, 0));
@@ -137,6 +148,11 @@ public final class ClientBossVfxController {
 
     public static void onTrackingEnd(int entityId) {
         ACTIVE.remove(entityId);
+    }
+
+    private static boolean aerialLanding(String action, String indicator) {
+        return (action.equals("promised_consort") || action.equals("cross_leap_combo")) && indicator.endsWith(":finisher")
+                || action.equals("lightspeed_slash") && indicator.endsWith(":body");
     }
 
     public static void clear() {

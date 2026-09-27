@@ -1,0 +1,18 @@
+Elder Bosses - Promised Consort battle music
+
+"Blackmoor Colossus" / "Colossal Boss Battle Theme"
+Music by Matthew Pablo (https://www.matthewpablo.com/).
+Source: https://opengameart.org/content/colossal-boss-battle-theme
+Licensed under Creative Commons Attribution 3.0 Unported (CC BY 3.0):
+https://creativecommons.org/licenses/by/3.0/
+
+The author-provided "Blackmoor Colossus Loop (No Vocals).wav" and
+"Blackmoor Colossus Loop.wav" were normalized to -20 LUFS and encoded as stereo
+Ogg Vorbis for the first and second combat phases. Eight-millisecond boundary
+fades remove loop clicks. Runtime fades are added.
+These adaptations retain the CC BY 3.0 license; the mod's All Rights Reserved
+notice does not apply to these music files. No author endorsement is implied.
+No Elden Ring recordings or melodies were sampled or recreated.
+
+Files: assets/elder_bosses/sounds/music/promised_consort/phase_one.ogg
+       assets/elder_bosses/sounds/music/promised_consort/phase_two.ogg

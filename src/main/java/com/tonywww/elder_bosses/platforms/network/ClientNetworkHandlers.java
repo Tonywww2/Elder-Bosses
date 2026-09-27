@@ -1,6 +1,7 @@
 package com.tonywww.elder_bosses.platforms.network;
 
 import com.tonywww.elder_bosses.client.state.ClientBossStateStore;
+import com.tonywww.elder_bosses.client.hud.ClientBossVictoryBanner;
 import com.tonywww.elder_bosses.client.state.ClientIndicatorStateStore;
 import com.tonywww.elder_bosses.client.state.ClientRotStateStore;
 import com.tonywww.elder_bosses.client.vfx.ClientBossVfxController;
@@ -20,7 +21,8 @@ public final class ClientNetworkHandlers {
                 ClientNetworkHandlers::handle,
             ClientNetworkHandlers::handle,
                 ClientNetworkHandlers::handle,
-                ClientNetworkHandlers::handle
+                ClientNetworkHandlers::handle,
+                ClientBossVictoryBanner::receive
         );
     }
 
@@ -34,6 +36,7 @@ public final class ClientNetworkHandlers {
     }
 
     private static void handle(BossCombatSnapshotPacket packet) {
+        com.tonywww.elder_bosses.client.audio.ClientBossMusic.observe(packet);
         ClientBossStateStore.update(packet);
         ClientBossVfxController.observe(packet);
         if (!packet.hudVisible()) {

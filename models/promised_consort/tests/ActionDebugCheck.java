@@ -51,6 +51,10 @@ public final class ActionDebugCheck {
         }
         for (String path : List.of("docs/config/elder-bosses-common.example.toml", "run/config/elder_bosses-common.toml",
                 "versions/1.21.1-neoforge/run/config/elder_bosses-common.toml")) {
+            if (!path.startsWith("docs/") && !Files.isRegularFile(Path.of(path))) {
+                System.out.println("Optional local run config not present: " + path);
+                continue;
+            }
             try (var reader = Files.newBufferedReader(Path.of(path))) {
                 CommentedConfig configuration = new TomlParser().parse(reader);
                 require(configuration.get("malenia.debug.action_broadcast") instanceof Boolean, "Missing Malenia broadcast flag in " + path);
@@ -60,6 +64,8 @@ public final class ActionDebugCheck {
         CommentedConfig defaults = CommentedConfig.inMemory();
         ElderBossesCommonConfig.SPEC.correct(defaults);
         ElderBossesCommonConfig.SPEC.setConfig(defaults);
+        require(Math.abs(ElderBossesCommonConfig.VALUES.bossMusic().volume() - 0.85) < 0.000001,
+                "Boss music default must be 85 percent");
         require(!ElderBossesCommonConfig.VALUES.maleniaDebugActionBroadcast(), "Malenia debug defaults on");
         require(!ElderBossesCommonConfig.VALUES.promisedConsortDebugActionBroadcast(), "Consort debug defaults on");
         AtomicBoolean maleniaEnabled = new AtomicBoolean(false);

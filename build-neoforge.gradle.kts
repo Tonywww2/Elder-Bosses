@@ -5,6 +5,8 @@ plugins {
 val modId = property("mod.id").toString()
 val mcVersion = property("deps.minecraft").toString()
 val targetNeoForgeVersion = property("deps.neoforge").toString()
+val jeiVersion = property("deps.jei").toString()
+val curiosVersion = property("deps.curios").toString()
 val artifactVersion = "${property("mod.version")}+$mcVersion"
 val javaVersion = 21
 
@@ -21,6 +23,17 @@ modstitch {
 }
 
 repositories {
+    exclusiveContent {
+        forRepository { maven("https://maven.theillusivec4.top/") }
+        filter { includeGroup("top.theillusivec4.curios") }
+    }
+    exclusiveContent {
+        forRepository { maven("https://maven.blamejared.com/") }
+        filter {
+            includeGroup("mezz.jei")
+            includeGroup("net.mezzdev.config")
+        }
+    }
     mavenCentral()
     maven("https://maven.neoforged.net/releases/")
     maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
@@ -30,6 +43,11 @@ repositories {
 dependencies {
     implementation("software.bernie.geckolib:geckolib-neoforge-1.21.1:4.9.2")
     implementation("maven.modrinth:attributefix:21.1.3")
+    compileOnly("top.theillusivec4.curios:curios-neoforge:$curiosVersion:api")
+    runtimeOnly("top.theillusivec4.curios:curios-neoforge:$curiosVersion")
+    compileOnly("mezz.jei:jei-$mcVersion-neoforge-api:$jeiVersion")
+    // JEI already contains its internal modules and the required config mod as a nested jar.
+    runtimeOnly("mezz.jei:jei-$mcVersion-neoforge:$jeiVersion") { isTransitive = false }
     runtimeOnly("maven.modrinth:uy4Cnpcm:1sdJl7J1")
     runtimeOnly("maven.modrinth:aaRl8GiW:EE1FHDyD")
 }

@@ -19,6 +19,8 @@
   "block.elder_bosses.divine_balustrade": "神殿石栏杆",
   "block.elder_bosses.divine_pillar": "凹槽神殿石柱",
   "item.elder_bosses.rune_fragment": "卢恩残片",
+  "jei.elder_bosses.info.consort_altar": "潜行时，主手持卢恩残片对祭坛使用，即可召唤约定之王。",
+  "jei.elder_bosses.info.rune_fragment": "潜行时，主手持卢恩残片对祭坛使用，即可召唤约定之王。",
   "commands.elder_bosses.test.observer": "技能测试需要同维度内存活且非旁观模式的玩家执行。",
   "commands.elder_bosses.test.position": "无法在此生成：请选择已加载、脚下有支撑且足够容纳 Boss 的空地。",
   "commands.elder_bosses.test.spawn_failed": "无法生成临时 Boss。",
@@ -112,5 +114,8 @@
   "item.elder_bosses.young_lion_greatsword": "年轻狮子大剑",
   "item.elder_bosses.circlet_of_fading_light": "渐隐光冠",
   "item.elder_bosses.gate_fragment": "神门残片",
-  "itemGroup.elder_bosses.main": "Elder Bosses"
+  "hud.elder_bosses.victory.god_slain": "GOD SLAIN",
+  "hud.elder_bosses.victory.demigod_felled": "DEMIGOD FELLED",
+  "itemGroup.elder_bosses.main": "Elder Bosses",
+  "tooltip.elder_bosses.curio.unique": "饰品效果仅在饰品槽中生效；同种饰品不可重复装备"
 }

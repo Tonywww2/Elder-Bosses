@@ -1,0 +1,330 @@
+{
+  "revision": "aerial_presence_v1",
+  "date": "2026-09-26",
+  "reference_basis": "Existing motion_study.json observations; original reference videos unavailable during this revision",
+  "changed_clips": [
+    {
+      "name": "left_combo_cross",
+      "contacts": [
+        11,
+        21,
+        44
+      ],
+      "maximum_added_torso_yaw_degrees": 31.02080049235331,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.666359205665212e-14,
+      "minimum_local_blade_tip_y": 4.244121054775022,
+      "baked_ticks": 1345
+    },
+    {
+      "name": "right_combo_cross",
+      "contacts": [
+        11,
+        41
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.207295777455206e-14,
+      "minimum_local_blade_tip_y": 6.7854239067245885,
+      "baked_ticks": 1201
+    },
+    {
+      "name": "right_combo_left_twin",
+      "contacts": [
+        18,
+        40,
+        55
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.657742603375525e-14,
+      "minimum_local_blade_tip_y": -3.600577493616946,
+      "baked_ticks": 1201
+    },
+    {
+      "name": "right_combo_tempest",
+      "contacts": [
+        12,
+        33,
+        56,
+        82,
+        112
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.776586443654626e-14,
+      "minimum_local_blade_tip_y": 17.052890211925977,
+      "baked_ticks": 2385
+    },
+    {
+      "name": "right_combo_earthheave",
+      "contacts": [
+        16,
+        42,
+        54,
+        87,
+        105
+      ],
+      "maximum_added_torso_yaw_degrees": 32.56114093206727,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.666359205665212e-14,
+      "minimum_local_blade_tip_y": -3.104102394344075,
+      "baked_ticks": 2497
+    },
+    {
+      "name": "left_combo_bloodflame",
+      "contacts": [
+        15,
+        35
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.666359205665212e-14,
+      "minimum_local_blade_tip_y": 6.0957485559158116,
+      "baked_ticks": 1057
+    },
+    {
+      "name": "cross_slash",
+      "contacts": [
+        17,
+        18
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 2.858775783108861e-14,
+      "minimum_local_blade_tip_y": 17.05487862753246,
+      "baked_ticks": 689
+    },
+    {
+      "name": "enhanced_earthheave",
+      "contacts": [
+        28,
+        47
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 2.998835493907516e-14,
+      "minimum_local_blade_tip_y": -0.6000000000000725,
+      "baked_ticks": 1329
+    },
+    {
+      "name": "ring_of_light",
+      "contacts": [
+        26
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.351623381340333e-14,
+      "minimum_local_blade_tip_y": -6.029395046901904,
+      "baked_ticks": 769
+    },
+    {
+      "name": "stomp",
+      "contacts": [
+        20
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.50352332448907e-14,
+      "minimum_local_blade_tip_y": 16.974601228971274,
+      "baked_ticks": 513
+    },
+    {
+      "name": "promised_consort",
+      "contacts": [
+        27,
+        41,
+        54,
+        70,
+        111
+      ],
+      "maximum_added_torso_yaw_degrees": 32.0573445650425,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 2.303268590560275e-12,
+      "minimum_local_blade_tip_y": -3.509356001608495,
+      "baked_ticks": 2453
+    },
+    {
+      "name": "lightspeed_slash",
+      "contacts": [
+        69
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 4.986471270604724e-14,
+      "minimum_local_blade_tip_y": -3.500010350472941,
+      "baked_ticks": 1585
+    },
+    {
+      "name": "lightspeed_side_dash",
+      "contacts": [
+        65
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 3.574849180676073e-14,
+      "minimum_local_blade_tip_y": -0.38301493808675247,
+      "baked_ticks": 1313
+    },
+    {
+      "name": "lightspeed_dash",
+      "contacts": [
+        73
+      ],
+      "maximum_added_torso_yaw_degrees": 28,
+      "maximum_contact_tip_error_units": 0,
+      "maximum_foot_solver_error_units": 2.918852133354296e-14,
+      "minimum_local_blade_tip_y": -2.505881833693117,
+      "baked_ticks": 1649
+    }
+  ],
+  "unchanged_clips": 30,
+  "geometry_and_textures_unchanged": true,
+  "current_hashes": {
+    "animations/promised_consort.animation.json": "329b673530b3d639c821a47408c231a264fa4b8b80d300bd20181163ceec4678",
+    "promised_consort.bbmodel": "d2cd04b33a1b2317ca25142f96a42f2be1522f9f2029d45564f8bba36f693d36"
+  },
+  "visual_accepted": false,
+  "world_tested": false,
+  "validation": {
+    "status": "current_asset_contracts_passed",
+    "model": "promised_consort",
+    "checks": 2853149,
+    "bones": 125,
+    "cubes": 620,
+    "faces": 3481,
+    "animations": 44,
+    "editor_channels": 16500,
+    "editor_keys": 466311,
+    "runtime_files_match": true,
+    "editor_export_tolerance": 0.0001,
+    "historical_snapshots_required": false,
+    "visual_acceptance": "not_inferred",
+    "world_tested": false
+  },
+  "interpolation_validation": {
+    "checks": 295952,
+    "sample_interval_ticks": 0.0625,
+    "measurements": [
+      {
+        "name": "left_combo_cross",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.015129711652538704,
+        "maximumHalfTickJointChange": 61.67630807026216,
+        "maximumOldHalfTickJointChange": 61.67630807026216
+      },
+      {
+        "name": "right_combo_cross",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.01677213321053608,
+        "maximumHalfTickJointChange": 53.027748912672585,
+        "maximumOldHalfTickJointChange": 53.027748912672585
+      },
+      {
+        "name": "right_combo_left_twin",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.014067998771712002,
+        "maximumHalfTickJointChange": 60.45515790685077,
+        "maximumOldHalfTickJointChange": 60.45515790685077
+      },
+      {
+        "name": "right_combo_tempest",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.014309321842816585,
+        "maximumHalfTickJointChange": 36.33771038060476,
+        "maximumOldHalfTickJointChange": 36.33771038060476
+      },
+      {
+        "name": "right_combo_earthheave",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.016820747375744308,
+        "maximumHalfTickJointChange": 53.34537481708953,
+        "maximumOldHalfTickJointChange": 53.34537481708953
+      },
+      {
+        "name": "left_combo_bloodflame",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.014608862022274712,
+        "maximumHalfTickJointChange": 30.685773830562837,
+        "maximumOldHalfTickJointChange": 30.685773830562837
+      },
+      {
+        "name": "cross_slash",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.013079899464030018,
+        "maximumHalfTickJointChange": 44.6513428092044,
+        "maximumOldHalfTickJointChange": 44.6513428092044
+      },
+      {
+        "name": "enhanced_earthheave",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.013600857508170729,
+        "maximumHalfTickJointChange": 42.427842957598905,
+        "maximumOldHalfTickJointChange": 42.427842957598905
+      },
+      {
+        "name": "ring_of_light",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.014739705321007473,
+        "maximumHalfTickJointChange": 33.640115573372874,
+        "maximumOldHalfTickJointChange": 33.640115573372874
+      },
+      {
+        "name": "stomp",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.012068305132063842,
+        "maximumHalfTickJointChange": 11.953599146292689,
+        "maximumOldHalfTickJointChange": 11.953599146292689
+      },
+      {
+        "name": "promised_consort",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.01797828359076768,
+        "maximumHalfTickJointChange": 25.04799856528905,
+        "maximumOldHalfTickJointChange": 25.096401014202662
+      },
+      {
+        "name": "lightspeed_slash",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.011286965284082268,
+        "maximumHalfTickJointChange": 30.17149445703347,
+        "maximumOldHalfTickJointChange": 30.23723417009243
+      },
+      {
+        "name": "lightspeed_side_dash",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.018477943013198998,
+        "maximumHalfTickJointChange": 19.904114418243008,
+        "maximumOldHalfTickJointChange": 19.904114418243008
+      },
+      {
+        "name": "lightspeed_dash",
+        "maximumContactError": 0,
+        "maximumGroundedFootError": 0.01174070781710879,
+        "maximumHalfTickJointChange": 17.74495712088462,
+        "maximumOldHalfTickJointChange": 17.74495712088462
+      }
+    ],
+    "source": "Serialized runtime clips compared to pre-edit pose samples; not a world test"
+  },
+  "runtime_checks": {
+    "forge_compile_and_resources": "passed",
+    "neoforge_compile_and_resources": "passed",
+    "geckolib_values": 1398933,
+    "pursuit_poses": 6944,
+    "aerial_path_and_clock": 261698,
+    "timeline": 79626,
+    "attack_plan": 781629,
+    "ranged_counter": "passed",
+    "per_blade_audio": "passed"
+  },
+  "blockbench_review": {
+    "project": "consort_motion_review",
+    "clips": 6,
+    "preview": "../../build/ai-previews/radahn_aerial_presence.jpg",
+    "viewed": "Six before/after static poses; intended entity lift included",
+    "final_camera": "Expanded after the initial inspection; projected bounds checked numerically, no second image inspection",
+    "reference_video_reinspected": false,
+    "world_tested": false
+  }
+}

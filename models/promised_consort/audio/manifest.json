@@ -1,8 +1,8 @@
 {
-  "revision": "audio_prototype_v1",
+  "revision": "audio_holy_soft_v2",
   "status": "runtime_integrated_offline_verified; world_listening_pending",
-  "scope": "Six selected +3dB sounds integrated across 25 actions and 4 ranged variants; local audition mixes are not runtime resources",
-  "style": "Original layered sound design: weighty steel and stone, low gravity pressure, clear holy overtones",
+  "scope": "Six action sounds integrated; original +3dB base mix with independently mastered holy_soft_v2 override",
+  "style": "Weighty steel and stone, low gravity pressure, soft diffuse holy light",
   "sources": [
     {
       "id": "kenney_impact",
@@ -302,54 +302,44 @@
     },
     {
       "id": "holy_echo",
-      "wav": "models/promised_consort/audio/prototypes/v1/holy_echo.wav",
-      "ogg": "models/promised_consort/audio/prototypes/v1/holy_echo.ogg",
-      "waveform": "models/promised_consort/audio/prototypes/v1/holy_echo.png",
-      "sha256": "b048e7af13f2c46916b962ed934fccb0d3a617b67d8ca0fc54a343ab3b65d06b",
-      "wav_sha256": "e226773929f47e53049b3771c8e485bfb9fb87dde45d41cfacaefbaab0795617",
-      "gain_db": 9.626406470478873,
+      "wav": "models/promised_consort/audio/prototypes/v2/holy_echo.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v2/holy_echo.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v2/holy_echo.svg",
+      "sha256": "946ed9b86d3bb34493c2048600c241466b83735c83077419b51c104e71667bb6",
+      "wav_sha256": "7546778a680b9cab6c2117f9d971ffb6cc63468c773e82640845d472839f818f",
+      "gain_db": -23.582674589329983,
       "measurement": {
-        "samples": 39872,
-        "duration": 0.8306666666666667,
-        "peak_dbfs": -10.098126916191193,
-        "rms_dbfs": -30.572855976231846,
-        "dc_offset": -1.458029476299457e-7,
-        "leading_quiet_seconds": 0.0002916666666666667,
-        "trailing_quiet_seconds": 0.2821666666666667,
-        "pcm_sha256": "17e7545df5a075055f11e2be7d4f709c8ed96173545d846b7c68fe33954fcc4f",
+        "samples": 44032,
+        "duration": 0.9173333333333333,
         "channels": 1,
         "sample_rate": 48000,
-        "oversampled_peak_dbfs": -10.098126916191193,
-        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+        "peak_dbfs": -17.64448262951507,
+        "rms_dbfs": -36.792588037242204,
+        "dc_offset": -7.381090085800679e-7,
+        "leading_quiet_seconds": 0.0010833333333333333,
+        "trailing_quiet_seconds": 0.08852083333333334,
+        "oversampled_peak_dbfs": -17.639258740856487,
+        "first_20ms_peak_dbfs": -23.010723307412604,
+        "energy_above_4khz_fraction": 0.000012508800864452496,
+        "strongest_frequency_bin_fraction": 0.005855531897395849,
+        "pcm_sha256": "5e6bf36fa2f80d64c9a9e55ba5fd94e040ebb0789658d9f4b169e93edcb5e638"
       },
       "recipe": {
-        "id": "holy_echo",
-        "duration": 0.82,
-        "peakDb": -13,
-        "purpose": "Lightweight delayed holy echo beneath the physical blade",
+        "revision": "holy_soft_v2",
+        "duration": 0.92,
+        "peak_db": -17,
+        "seed": 1704,
+        "purpose": "Soft diffuse holy-light wash beneath the physical blade",
+        "sources": "Original deterministic noise synthesis; no external recordings",
         "layers": [
-          {
-            "pack": "kenney_impact",
-            "filename": "impactGlass_light_001.ogg",
-            "filter": "asetrate=52800,aresample=48000,highpass=f=900,lowpass=f=6400",
-            "gain": 0.28,
-            "delay": 0
-          },
-          {
-            "role": "holy_overtones",
-            "generator": "aevalsrc=0.2*(sin(2*PI*622*t)*exp(-8*t)+0.55*sin(2*PI*1244*t)*exp(-11*t)+0.3*sin(2*PI*1866*t)*exp(-15*t)):s=48000:d=0.6",
-            "filter": "highpass=f=400,lowpass=f=6200,afade=t=in:d=0.01,afade=t=out:st=0.5:d=0.1",
-            "gain": 0.8,
-            "delay": 0
-          },
-          {
-            "role": "filtered_air",
-            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.32:seed=1704",
-            "filter": "highpass=f=140,lowpass=f=4500,afade=t=in:d=0.02:curve=qsin,afade=t=out:st=0.02:d=0.3:curve=exp",
-            "gain": 0.16,
-            "delay": 0
-          }
+          "240-1250 Hz soft body, 35 ms attack",
+          "850-2900 Hz diffuse air, 55 ms attack",
+          "43/79/127/181 ms low-gain diffusion, smooth release"
         ]
+      },
+      "builder": {
+        "file": "models/promised_consort/scripts/refine_holy_audio.py",
+        "sha256": "611c4491e3b986cba195ba0b07550e8901f6d5c9be410d3bace398d59c244655"
       }
     },
     {
@@ -707,7 +697,7 @@
     "individual_body_blades": 76,
     "current_motion_revision": "continuous_four_turn_dive_and_forward_lion",
     "current_source_animation_sha256": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50",
-    "current_revision_checks": "Four-turn gravity flight with direct landing finish;forward lion flips and exact takeoff clocks;forward advance entity path;original48contacts/76blades and49legal phase cases retained;blade angles remeasured;six OGG samples unchanged;both processed copies verified",
+    "current_revision_checks": "Four-turn gravity flight with direct landing finish;forward lion flips and exact takeoff clocks;forward advance entity path;original48contacts/76blades and49legal phase cases retained;blade angles remeasured;five OGG samples unchanged; holy_echo replaced with soft wash v2;both processed copies verified",
     "tests_below_are_initial_integration_revision": true,
     "clone_profiles": 6,
     "legal_phase_variant_cases_tested": 49,
@@ -747,7 +737,7 @@
     {
       "id": "holy_echo",
       "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/holy_echo.ogg",
-      "sha256": "b048e7af13f2c46916b962ed934fccb0d3a617b67d8ca0fc54a343ab3b65d06b"
+      "sha256": "946ed9b86d3bb34493c2048600c241466b83735c83077419b51c104e71667bb6"
     },
     {
       "id": "reflection",
@@ -762,7 +752,98 @@
   ],
   "sword_profiles": {
     "path": "src/main/resources/assets/elder_bosses/sounds/entity/promised_consort/sword_profiles.json",
-    "sha256": "a0a889c6e4b87257f07b585d5eccba4c938e8fd93b9609539baace59735af825"
+    "sha256": "758530c39d98540af87b9361efe4046f46675cfe9933c651e1561e067bcc24c9"
   },
-  "prototype_builder_sha256_at_creation": "8bdb96f17ad9b2d928c9b674ad321b18f30d9495959f4f80a571cf20aec36931"
+  "prototype_builder_sha256_at_creation": "8bdb96f17ad9b2d928c9b674ad321b18f30d9495959f4f80a571cf20aec36931",
+  "holy_refinement": {
+    "revision": "holy_soft_v2",
+    "previous_output": {
+      "id": "holy_echo",
+      "wav": "models/promised_consort/audio/prototypes/v1/holy_echo.wav",
+      "ogg": "models/promised_consort/audio/prototypes/v1/holy_echo.ogg",
+      "waveform": "models/promised_consort/audio/prototypes/v1/holy_echo.png",
+      "sha256": "b048e7af13f2c46916b962ed934fccb0d3a617b67d8ca0fc54a343ab3b65d06b",
+      "wav_sha256": "e226773929f47e53049b3771c8e485bfb9fb87dde45d41cfacaefbaab0795617",
+      "gain_db": 9.626406470478873,
+      "measurement": {
+        "samples": 39872,
+        "duration": 0.8306666666666667,
+        "peak_dbfs": -10.098126916191193,
+        "rms_dbfs": -30.572855976231846,
+        "dc_offset": -1.458029476299457e-7,
+        "leading_quiet_seconds": 0.0002916666666666667,
+        "trailing_quiet_seconds": 0.2821666666666667,
+        "pcm_sha256": "17e7545df5a075055f11e2be7d4f709c8ed96173545d846b7c68fe33954fcc4f",
+        "channels": 1,
+        "sample_rate": 48000,
+        "oversampled_peak_dbfs": -10.098126916191193,
+        "peak_method": "4x FFmpeg resampling sample peak estimate; not listening acceptance"
+      },
+      "recipe": {
+        "id": "holy_echo",
+        "duration": 0.82,
+        "peakDb": -13,
+        "purpose": "Lightweight delayed holy echo beneath the physical blade",
+        "layers": [
+          {
+            "pack": "kenney_impact",
+            "filename": "impactGlass_light_001.ogg",
+            "filter": "asetrate=52800,aresample=48000,highpass=f=900,lowpass=f=6400",
+            "gain": 0.28,
+            "delay": 0
+          },
+          {
+            "role": "holy_overtones",
+            "generator": "aevalsrc=0.2*(sin(2*PI*622*t)*exp(-8*t)+0.55*sin(2*PI*1244*t)*exp(-11*t)+0.3*sin(2*PI*1866*t)*exp(-15*t)):s=48000:d=0.6",
+            "filter": "highpass=f=400,lowpass=f=6200,afade=t=in:d=0.01,afade=t=out:st=0.5:d=0.1",
+            "gain": 0.8,
+            "delay": 0
+          },
+          {
+            "role": "filtered_air",
+            "generator": "anoisesrc=color=pink:amplitude=0.5:sample_rate=48000:duration=0.32:seed=1704",
+            "filter": "highpass=f=140,lowpass=f=4500,afade=t=in:d=0.02:curve=qsin,afade=t=out:st=0.02:d=0.3:curve=exp",
+            "gain": 0.16,
+            "delay": 0
+          }
+        ]
+      }
+    },
+    "before": {
+      "samples": 39232,
+      "duration": 0.8173333333333334,
+      "channels": 1,
+      "sample_rate": 48000,
+      "peak_dbfs": -10.0981285719642,
+      "rms_dbfs": -30.50257991921869,
+      "dc_offset": -1.4819252669440175e-7,
+      "leading_quiet_seconds": 0.0002916666666666667,
+      "trailing_quiet_seconds": 0.2688333333333333,
+      "oversampled_peak_dbfs": -10.0981285719642,
+      "first_20ms_peak_dbfs": -10.0981285719642,
+      "energy_above_4khz_fraction": 0.00008645051275379956,
+      "strongest_frequency_bin_fraction": 0.18232883512973785,
+      "pcm_sha256": "8791d78c32b8440006db263c7b450228f7bafeddb62194707fec83de5fe876be"
+    },
+    "after": {
+      "samples": 44032,
+      "duration": 0.9173333333333333,
+      "channels": 1,
+      "sample_rate": 48000,
+      "peak_dbfs": -17.64448262951507,
+      "rms_dbfs": -36.792588037242204,
+      "dc_offset": -7.381090085800679e-7,
+      "leading_quiet_seconds": 0.0010833333333333333,
+      "trailing_quiet_seconds": 0.08852083333333334,
+      "oversampled_peak_dbfs": -17.639258740856487,
+      "first_20ms_peak_dbfs": -23.010723307412604,
+      "energy_above_4khz_fraction": 0.000012508800864452496,
+      "strongest_frequency_bin_fraction": 0.005855531897395849,
+      "pcm_sha256": "5e6bf36fa2f80d64c9a9e55ba5fd94e040ebb0789658d9f4b169e93edcb5e638"
+    },
+    "max_holy_cues_per_boss_per_tick": 1,
+    "audition": "models/promised_consort/audio/holy_audition.html",
+    "preview_note": "Four pairs of pillars 250 ms apart at volume 0.5; no normalization. Offline example, not in-world capture.",
+    "world_listening": "pending"
+  }
 }

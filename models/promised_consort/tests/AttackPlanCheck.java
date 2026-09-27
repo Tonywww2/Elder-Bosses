@@ -433,6 +433,7 @@ public final class AttackPlanCheck {
         var parser = new com.electronwill.nightconfig.toml.TomlParser();
         for (String file : List.of("docs/config/elder-bosses-common.example.toml", "run/config/elder_bosses-common.toml",
             "versions/1.21.1-neoforge/run/config/elder_bosses-common.toml")) {
+            if (!file.startsWith("docs/") && !java.nio.file.Files.exists(java.nio.file.Path.of(file))) continue;
             var document = parser.parse(java.nio.file.Files.readString(java.nio.file.Path.of(file)));
             Number distance = document.get("promised_consort.targeting.max_segment_pursuit_distance");
             require(distance != null && Double.isFinite(distance.doubleValue()) && distance.doubleValue() >= 0 && distance.doubleValue() <= 16,

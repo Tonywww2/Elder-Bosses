@@ -137,6 +137,13 @@ public final class PromisedConsortAnimationTimeline {
                 skill.integerList("ranged_counter.attack_event_offsets").get(0));
             knots.put((double) leap.takeoffTick(), (double) com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.ADVANCE_TAKEOFF_POSE);
         }
+        var aerial = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAerialPath.from(action.actionId(), timeline,
+                skill.integer("ranged_counter.target_lock_lead_ticks"));
+        if (aerial != null && action.actionId() == PromisedConsortActionId.LIGHTSPEED_SIDE_DASH) {
+            knots.put((double) aerial.takeoffTick(), 8.0);
+            knots.put((double) aerial.crestTick(), 16.0);
+            knots.put((double) aerial.landingTick(), 24.0);
+        }
         double bounded=Math.max(0,Math.min(timeline.totalTicks(),tick));
         var before=knots.floorEntry(bounded);
         var after=knots.higherEntry(bounded);
@@ -233,6 +240,18 @@ public final class PromisedConsortAnimationTimeline {
             points.put(stage.windupTicks() + Math.max(1, (int) Math.round(stage.activeTicks() * 19.0 / 30.0)), 202);
             points.put(stage.windupTicks() + stage.activeTicks(), 212);
             points.put(timeline.totalTicks(), 280);
+        }
+        var aerial = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortAerialPath.from(action, timeline, 0);
+        if (aerial != null) {
+            boolean side = action == PromisedConsortActionId.LIGHTSPEED_SIDE_DASH;
+            points.put(aerial.takeoffTick(), side ? 8 : 12);
+            points.put(aerial.crestTick(), side ? 16 : 28);
+            if (!side) points.put(aerial.descentTick(), 62);
+            points.put(aerial.landingTick(), side ? 24 : 69);
+        }
+        if ((action == PromisedConsortActionId.PROMISED_CONSORT || action == PromisedConsortActionId.CROSS_LEAP_COMBO)
+                && timeline.stages().size() > 4 && timeline.stages().get(4).windupTicks() >= 2) {
+            points.put(com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortCrossLeapPath.finisher(timeline, 0).takeoffTick(), 87);
         }
         double bounded = Math.max(0.0, Math.min(timeline.totalTicks(), tick));
         Map.Entry<Integer, Integer> lower = points.floorEntry((int) Math.floor(bounded));

@@ -8,7 +8,9 @@ import com.tonywww.elder_bosses.platforms.arena.PlatformArenaWorldgen;
 import com.tonywww.elder_bosses.platforms.arena.PlatformArenaSummoning;
 import com.tonywww.elder_bosses.platforms.combat.PlatformCombatEvents;
 import com.tonywww.elder_bosses.platforms.command.PlatformSkillTestCommands;
+import com.tonywww.elder_bosses.platforms.compat.PlatformCuriosCompat;
 import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig;
+import com.tonywww.elder_bosses.platforms.config.PlatformEquipmentConfig;
 import com.tonywww.elder_bosses.platforms.network.PlatformNetwork;
 import com.tonywww.elder_bosses.platforms.player.PlatformPlayerRotData;
 import com.tonywww.elder_bosses.platforms.player.PlatformPlayerRotEvents;
@@ -69,6 +71,7 @@ public final class ElderBossesMod {
             ElderBossesCommonConfig.VALUES::promisedConsortDebugActionBroadcast
         );
         PlatformNetwork.register(modBus);
+        PlatformEquipmentConfig.register(modBus);
         PlayerRotService.installSyncSink((player, snapshot, reason) -> PlatformNetwork.sendTo(
             player,
             new PlayerRotSnapshotPacket(player.getId(), snapshot)
@@ -82,6 +85,7 @@ public final class ElderBossesMod {
         ModItems.register(modBus);
         ModCreativeTabs.register(modBus);
         ModSoundEvents.register(modBus);
+        PlatformCuriosCompat.register(modBus);
         modBus.addListener(ModEntityEvents::registerAttributes);
         modBus.addListener(ModEntityEvents::addLivingEntityAttributes);
         PlatformCombatEvents.register();

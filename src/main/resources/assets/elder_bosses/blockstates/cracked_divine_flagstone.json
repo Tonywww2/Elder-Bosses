@@ -1,7 +1,66 @@
 {
   "variants": {
-    "": {
-      "model": "elder_bosses:block/cracked_divine_flagstone"
-    }
+    "": [
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone",
+        "y": 0,
+        "weight": 2
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_2",
+        "y": 0,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_2",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_2",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_2",
+        "y": 270,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_3",
+        "y": 0,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_3",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_3",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "elder_bosses:block/cracked_divine_flagstone_3",
+        "y": 270,
+        "weight": 1
+      }
+    ]
   }
 }

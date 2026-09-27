@@ -1,0 +1,12 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "elder_bosses:cinzel_regular.ttf",
+      "shift": [0, 0],
+      "size": 24,
+      "oversample": 4
+    },
+    { "type": "reference", "id": "minecraft:default" }
+  ]
+}

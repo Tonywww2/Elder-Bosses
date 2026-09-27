@@ -103,6 +103,74 @@ function bladeEngraving(point) {
     return distance;
 }
 
+// Shared continuous coordinates for all 24 blade segments; never restart the motif at a cube boundary.
+function sovereignBlade(point, material, face, palette, engraving) {
+    let [along, across] = point;
+    let metal = ["#111923", "#1B2631", "#293A47", "#405461", "#657E89"];
+    let edge = ["#344653", "#526B78", "#809BA3", "#B6C7C6", "#E0DFCE"];
+    let gold = ["#382C24", "#76542E", "#AB7D3B", "#D5AB59", "#EDCC80"];
+    if (material === "blade_edge") {
+        let band = across <= 0.035 ? 4 : across < 0.08 ? 3 : across < 0.12 ? 2 : 1;
+        if (face === "up") band = 1;
+        if (face === "down") band = 4;
+        return edge[band];
+    }
+    let plate = across > 0.91 ? 0 : across > 0.72 ? 1 : across > 0.28 ? 2 : 3;
+    if (field(along / 8.5, across * 3, 92027) > 0.72 && plate > 0 && plate < 3) plate++;
+    if (!engraving || along < 1.5 || along > 45 || across < 0.16 || across > 0.88) return metal[plate];
+    let p = [along, across * 10];
+    let paths = [
+        // Flowing mane and a single tapered stem, with restrained leaf terminals.
+        [[2.1,7.5],[4.6,8.2],[7.8,7.4],[9.2,6.6]],
+        [[2.4,5.9],[4.5,6.6],[7.7,6.6]],
+        [[2.4,3.4],[5.5,3.0],[8.3,3.5]],
+        [[4.3,2.0],[7.2,2.1],[9.7,2.8]],
+        [[13.0,6.4],[18.0,6.1],[24.5,5.0],[31.0,4.4],[38.0,5.0],[44.5,6.4]],
+        [[17.6,6.1],[18.0,7.6],[21.5,7.0],[24.5,5.0]],
+        [[23.0,5.3],[25.0,2.4],[27.8,2.2],[29.0,3.2],[26.5,4.7]],
+        [[31.0,4.4],[33.0,6.8],[35.4,7.2],[36.2,6.0],[34.8,4.7]],
+        [[38.0,5.0],[40.0,3.1],[42.2,3.1],[40.2,4.4]]
+    ];
+    let distance = Infinity;
+    for (let path of paths) for (let i = 1; i < path.length; i++) distance = Math.min(distance, lineDistance(p, path[i - 1], path[i]));
+    // Angular lion in profile. The eye, jaw and cheek are cut into the gold rather than overpainted stripes.
+    let head = [[7.5,3.3],[9.1,2.7],[11.4,3.0],[12.5,4.1],[14.8,4.7],
+        [14.8,5.4],[13.0,5.6],[12.3,6.8],[9.3,6.8],[7.1,5.8],[7.5,3.3]];
+    function inside(polygon) {
+        let found = false;
+        for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+            let a = polygon[i], b = polygon[j];
+            if ((a[1] > p[1]) !== (b[1] > p[1]) && p[0] < (b[0] - a[0]) * (p[1] - a[1]) / (b[1] - a[1]) + a[0]) found = !found;
+        }
+        return found;
+    }
+    if (inside(head)) {
+        let eye = p[0] > 11.0 && p[0] < 12.4 && p[1] > 4.45 && p[1] < 5.15;
+        let cheek = lineDistance(p, [8.6,4.0], [9.7,5.8]) < 0.22;
+        let jaw = lineDistance(p, [10.3,6.05], [12.8,5.7]) < 0.18;
+        if (eye || cheek || jaw) return gold[0];
+        return gold[p[1] > 5.7 ? 3 : p[1] > 4.6 ? 2 : 4];
+    }
+    if (distance < 0.20) return gold[3];
+    if (distance < 0.42) return gold[2];
+    if (distance < 0.67) return metal[0];
+    // Sparse, dark engraved nicks; no random bright speckles across the iron.
+    return metal[plate];
+}
+
+function swordFitting(column, row, width, height, name, face) {
+    let gold = ["#382C24", "#76542E", "#AB7D3B", "#D5AB59", "#EDCC80"];
+    if (name.startsWith("grip_")) {
+        let leather = ["#16191C", "#26282B", "#3B3632", "#605345"];
+        let wrap = (row + Math.floor(column / 2)) % 4;
+        return leather[wrap === 0 ? 0 : wrap === 1 ? 3 : column === 0 || column === width - 1 ? 1 : 2];
+    }
+    let rim = column === 0 || row === 0;
+    let shadow = column === width - 1 || row === height - 1;
+    let bevel = face === "up" ? 3 : face === "down" ? 1 : 2;
+    return gold[rim ? Math.min(4, bevel + 1) : shadow ? Math.max(0, bevel - 1) : bevel];
+}
+
 module.exports = function texturePattern(width, height, material, face, motif, palette, context = {}) {
     let seed = 2166136261;
     for (let character of [width, height, material, face, motif].join(":")) seed = Math.imul(seed ^ character.charCodeAt(0), 16777619);
@@ -115,9 +183,19 @@ module.exports = function texturePattern(width, height, material, face, motif, p
     let faceLight = face === "up" ? 0.45 : face === "down" ? -0.45 : face === "south" ? -0.15 : 0;
     for (let vertical = 0; vertical < height; vertical++) {
         for (let horizontal = 0; horizontal < width; horizontal++) {
+            if (context.kind === "sword_fitting") {
+                pixels.push(swordFitting(horizontal, vertical, width, height, context.name, face));
+                shades.push(0);
+                continue;
+            }
             if (context.coordinates) {
                 let point = context.coordinates[vertical * width + horizontal];
                 if (!point || !point.every(Number.isFinite)) throw new Error("Invalid structural texture coordinate");
+                if (context.kind === "blade") {
+                    pixels.push(sovereignBlade(point, material, face, palette, context.engraving));
+                    shades.push(0);
+                    continue;
+                }
                 let shade = edgeShade(structuralShade(point, material, context), horizontal, vertical, width, height, context.edges);
                 if (context.kind === "blade" && context.engraving && material === "iron" && point[1] > 0.91) shade -= 1.25;
                 let tone = Math.max(0, Math.min(colors.length - 1, Math.round(shade)));

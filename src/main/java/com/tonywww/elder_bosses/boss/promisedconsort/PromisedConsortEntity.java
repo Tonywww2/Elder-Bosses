@@ -39,6 +39,7 @@ import com.tonywww.elder_bosses.combat.hit.PerTargetHitCounter;
 import com.tonywww.elder_bosses.combat.hit.ShieldBlockProbe;
 import com.tonywww.elder_bosses.combat.state.StaggerTracker;
 import com.tonywww.elder_bosses.network.BossCombatSnapshotPacket;
+import com.tonywww.elder_bosses.network.BossDefeatedPacket;
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.client.PlatformPromisedConsortAnimationController;
@@ -580,10 +581,26 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         int scriptTick = currentAction == null ? stateTicks : currentAction.actionTick();
         if (scriptTick >= ascentStartTick && scriptTick < ascentEndTick) {
             moveControlled(new Vec3(0.0, 14.28 / Math.max(1, ascentEndTick - ascentStartTick), 0.0));
-        } else if (scriptTick >= impactTick && !meteorLanded()) {
-            setPosition(actionExecutor.lockedPoints().getOrDefault("meteor", combatCenter()));
+        } else if (scriptTick >= impactTick && (!meteorLanded() || level().getBlockCollisions(this, getBoundingBox().deflate(0.001)).iterator().hasNext())) {
+            Vec3 landing = com.tonywww.elder_bosses.boss.promisedconsort.execution.PromisedConsortMeteorLanding.resolve(
+                    serverLevel(), this, actionExecutor.lockedPoints().getOrDefault("meteor", combatCenter()),
+                    combatCenter(), Math.max(0, combatConfig.arena().logicalRadius() - getBbWidth() * 0.5));
+            if (landing == null) {
+                combatController.cancel();
+                setDeltaMovement(Vec3.ZERO);
+                fallDistance = 0;
+                finishMeteorScript();
+                return;
+            }
+            boolean firstLanding = !meteorLanded();
+            actionExecutor.resolveMeteorLanding(landing);
+            setPosition(landing);
+            setDeltaMovement(Vec3.ZERO);
+            fallDistance = 0;
+            lastLegalPosition = landing;
+            wallPhaseTicks = 0;
             entityData.set(METEOR_LANDED, true);
-                for (var cue : PromisedConsortActionSoundPlan.meteorLanding()) playActionSound(cue, position(), new Vec2(0, 1));
+            if (firstLanding) for (var cue : PromisedConsortActionSoundPlan.meteorLanding()) playActionSound(cue, position(), new Vec2(0, 1));
         }
         List<PromisedConsortHitOutcome> outcomes = snapshot
                 .map(actionExecutor::tick)
@@ -591,13 +608,16 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         processOutcomes(outcomes);
         Optional<PromisedConsortActionRuntime.ActionEnd> ended = actionRuntime.advance(level().getGameTime());
         if (ended.isPresent() || stateTicks >= timeline.totalTicks()) {
-            currentAction = null;
-            nextMeteorReadyTick = "once".equals(combatConfig.meteor().repeatMode())
-                ? Long.MAX_VALUE
-                : level().getGameTime()
-                + skillConfig.get(PromisedConsortActionId.CONSORT_METEOR).cooldownTicks();
-            setCombatState(PromisedConsortCombatState.PHASE_2);
+            finishMeteorScript();
         }
+    }
+
+    private void finishMeteorScript() {
+        currentAction = null;
+        clearSyncedAction();
+        nextMeteorReadyTick = "once".equals(combatConfig.meteor().repeatMode())
+                ? Long.MAX_VALUE : level().getGameTime() + skillConfig.get(PromisedConsortActionId.CONSORT_METEOR).cooldownTicks();
+        setCombatState(PromisedConsortCombatState.PHASE_2);
     }
 
     private void tickStunned() {
@@ -1371,6 +1391,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 position(),
                 combatConfig.rewards().experience()
         );
+        BossDefeatedPacket victory = new BossDefeatedPacket(getUUID(), level().dimension().location(),
+                BossDefeatedPacket.Victory.GOD_SLAIN);
+        for (ServerPlayer player : List.copyOf(bossEvent.getPlayers())) {
+            if (player.level() == level() && !player.isRemoved()) PlatformNetwork.sendTo(player, victory);
+        }
         bossEvent.removeAllPlayers();
         discard();
     }

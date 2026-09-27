@@ -1,0 +1,14 @@
+allprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin('java')) {
+            tasks.register('writeCheckClasspath') {
+                dependsOn tasks.named('classes')
+                doLast {
+                    def destination = layout.buildDirectory.file('checks/runtime-classpath.txt').get().asFile
+                    destination.parentFile.mkdirs()
+                    destination.text = (sourceSets.main.output + sourceSets.main.compileClasspath).asPath
+                }
+            }
+        }
+    }
+}

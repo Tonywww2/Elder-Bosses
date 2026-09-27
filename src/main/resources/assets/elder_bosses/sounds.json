@@ -1,4 +1,10 @@
 {
+  "music.promised_consort.phase_one": {
+    "sounds": [{"name": "elder_bosses:music/promised_consort/phase_one", "stream": true}]
+  },
+  "music.promised_consort.phase_two": {
+    "sounds": [{"name": "elder_bosses:music/promised_consort/phase_two", "stream": true}]
+  },
   "malenia.instant_guard_cue": {
     "subtitle": "subtitles.elder_bosses.malenia.instant_guard_cue",
     "sounds": [

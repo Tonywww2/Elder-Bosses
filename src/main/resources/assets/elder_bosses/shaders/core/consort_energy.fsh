@@ -104,6 +104,24 @@ void main() {
         opacity = (core * 0.95 + band(branches, 0.22) * 0.32) * revealed
             * smoothstep(0.04, 0.16, radius) * (1.0 - smoothstep(0.9, 1.0, radius))
             * (1.0 - smoothstep(0.55, 1.0, Progress));
+    } else if (EffectMode == 16) {
+        // A fine continuous halo, without decorative runes or repeating radial spokes.
+        float ringDistance = radius - 0.76;
+        core = exp(-ringDistance * ringDistance * 7000.0);
+        float glow = exp(-ringDistance * ringDistance * 180.0) * 0.23;
+        opacity = (core * 0.90 + glow) * (0.94 + 0.06 * sin(EffectTime * 1.2 + angle * 2.0))
+            * (1.0 - Progress * 0.65);
+    } else if (EffectMode == 17) {
+        vec2 drift = effectUv + vec2(sin(EffectTime * 0.8) * 0.025, -EffectTime * 0.12);
+        vec2 cell = floor(drift * vec2(7.0, 10.0));
+        vec2 local = fract(drift * vec2(7.0, 10.0)) - 0.5;
+        float seed = fract(sin(dot(cell, vec2(127.1, 311.7))) * 43758.5453);
+        float heightSeed = fract(sin(dot(cell, vec2(269.5, 183.3))) * 43758.5453);
+        local += (vec2(seed, heightSeed) - 0.5) * 0.68;
+        core = exp(-local.x * local.x * 190.0 - local.y * local.y * 55.0) * step(0.40, seed);
+        opacity = core * (0.70 + 0.30 * sin(EffectTime * 2.0 + seed * 12.0))
+            * smoothstep(0.0, 0.06, effectUv.y) * (1.0 - smoothstep(0.65, 1.0, effectUv.y))
+            * (1.0 - smoothstep(0.70, 1.0, abs(centered.x))) * (1.0 - Progress * 0.65);
     } else {
         float wave = mix(max(0.12, InnerRatio), 0.98, clamp(Progress, 0.0, 1.0));
         core = band(radius - wave, 0.022);

@@ -13,20 +13,20 @@
     {
       "source": "animations/promised_consort.animation.json",
       "target": "animations/entity/promised_consort.animation.json",
-      "bytes": 52132370,
-      "sha256": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50"
+      "bytes": 49449841,
+      "sha256": "329b673530b3d639c821a47408c231a264fa4b8b80d300bd20181163ceec4678"
     },
     {
       "source": "textures/promised_consort.png",
       "target": "textures/entity/promised_consort/promised_consort.png",
-      "bytes": 90215,
-      "sha256": "bf7462fee714f49edfcf2b9c8c3ad06464791178694396298156eb503e639224"
+      "bytes": 62382,
+      "sha256": "8cfc003ff9d797774e90594c16f8575a82f0c3fb5da2443287613f15d4b75698"
     },
     {
       "source": "textures/promised_consort_clone.png",
       "target": "textures/entity/promised_consort/promised_consort_clone.png",
-      "bytes": 35919,
-      "sha256": "8501c4f40faf2bacb758e96f97a2d050cf477d339d11147efceda229bb2c0450"
+      "bytes": 19978,
+      "sha256": "e53721ca9d50be6619e473a718e5a01d5496c34ad2805707b9b4f001eb7c2edd"
     },
     {
       "source": "animations/promised_consort_ranged.animation.json",
@@ -39,8 +39,8 @@
   "reference_images_in_runtime": false,
   "visual_review": "runtime_validation.json",
   "runtime_validation": "pending_current_motion_world_review",
-  "texture_revision": "clustered_transition_v8",
-  "export_scope": "current_consolidated_assets",
+  "texture_revision": "sovereign_blades_v1",
+  "export_scope": "sword_uv_islands_only; geometry_and_animation_bytes_preserved",
   "source_transparency_preserved_in_clone": true,
   "motion_revision": "video_motion_v12",
   "impact_revision": "impact_motion_v2",

@@ -18,7 +18,8 @@ public record PromisedConsortCrossLeapPath(int takeoffTick, int landingTick, dou
 
     public static PromisedConsortCrossLeapPath finisher(ActionTimeline timeline, double height) {
         int start = timeline.stageStartTick(4), landing = timeline.activeStartTick(4);
-        return new PromisedConsortCrossLeapPath(start + Math.max(1, (landing - start) / 7), landing, height);
+        int takeoff = start + Math.max(1, (landing - start) / 7);
+        return new PromisedConsortCrossLeapPath(takeoff, landing, Math.min(height, (landing - takeoff) * 0.5));
     }
 
     public static PromisedConsortCrossLeapPath advance(ActionTimeline timeline, int contactOffset) {

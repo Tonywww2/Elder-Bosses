@@ -1,5 +1,12 @@
 # 约定之王：GeckoLib 模型与动画工程
 
+## 当前动作修订：2026-09-26
+
+`aerial_presence_v1` 已更新 14 段动画，并将王者连舞终结跳斩、光速斩悬空和侧闪小跳接入实体位移。
+制作源、运行时动画和逐刀音效参数已同步。范围、时刻、验证结果及未完成事项见
+[本轮动作复核](MOTION_REVIEW.md) 和 [检查报告](aerial_presence_validation.json)。
+先前各修订记录中的动画/工程哈希仅描述当时版本；当前资源以 `current_assets.json` 为准。
+
 ## 当前单版本入口
 
 2026-09-18已整合为一个当前版本，删除旧快照、候选工程和全部生成预览。
@@ -7,6 +14,20 @@
 当前为125骨骼、620方块、44段主体动画，另有3段独立防御动画。
 验证使用 `node models/promised_consort/scripts/validate_assets.js`；需要图像时重新截图，不保留预览副本。
 左右交叉发力修订已接入，但其余招式参考细化与世界验收未全部完成。
+
+## 当前双刀材质
+
+`sovereign_blades_v1` 重绘了双刀 116 个既有部件的 512 个可见面：连续黑铁底色、分层银灰刃口、近护手的金色狮首和沿刀长延伸的叶蔓，以及皮革缠柄、护手收边。沿每把刀完整长度取样，纹样不在 24 个曲刃段上重复起算。
+
+本轮保留现有弧形几何、UV、骨点、刀尖标记和全部动画；身体与米凯拉 59,532 个受保护像素保持一致，透明度未改动。本体、分身、内嵌 Blockbench 图集与双端资源同步。详细记录见 [双刀材质检查](blade_texture_validation.json)；先前外观认可不自动覆盖这次刀面修改。
+
+```powershell
+python models/promised_consort/scripts/refine_swords.py
+python models/promised_consort/scripts/refine_swords.py --check --processed
+python models/promised_consort/scripts/review_sword_materials.py
+```
+
+最后一条在 `build/ai-previews/sword_materials.html` 生成可旋转观察角度、切换本体／分身材质的刀面预览。预览使用当前模型的实际方块与 UV，不代表游戏内动态光照或动作验收。绘制源为 [texture_pattern.js](scripts/texture_pattern.js) 中的 `sovereignBlade` 与 `swordFitting`。
 
 ## 历史制作说明
 
@@ -93,6 +114,8 @@ v10 在原有关键帧之后加入小幅临界阻尼随动，只影响披风末�
 伤害、选招、阈值、冲锋和升空路径、指示器、分身生成数量及生命周期均沿用战斗程序。动画不写入 `root`/`control` 世界位移；`pelvis` 偏移只用于视觉重心。动画以默认时序制作，未逐项验证全部非默认配置。
 
 按用户最新要求，约定之王主特效改用注册式 GLSL core shader：真实剑根/剑尖矩阵驱动短拖尾，服务端指示器快照驱动重力环、裂纹、光柱、光路与冲击波。全部保持深度测试、低透明边缘和可读危险边界，不通过着色器决定伤害。原客户端整段通用粒子喷射已对约定之王关闭，只在物理/血焰生效点保留受预算约束的少量碎屑。马莲尼亚的特效路径不在本轮改动范围。
+
+2026-09-26 补强圣光与幻影：隐藏幻影名称，加入全亮显隐、双刀光痕、轻量辉光与光屑，以及米凯拉之光蓄力光环。实现范围、原作还原边界和验证记录见 [圣光与幻影表现更新](HOLY_VFX_REVIEW.md)。
 
 这不是外部光影包或全屏 bloom/折射系统，不要求安装光影模组；第三方光影包兼容性未验证。v3 模型轮没有增加竞技场、正式音频或近镜头发丝透明度。
 

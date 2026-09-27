@@ -9,6 +9,8 @@ asset versions.
   animations are separate runtime resources.
 - Each model's `current_assets.json` pins the current project, geometry,
   animation and texture hashes, plus their runtime destinations.
+- [Item materials](items/README.md): six native 16px material icons and five native
+  32px equipment icons, a source atlas and a [material gallery](items/gallery.html).
 - Generated previews are not retained; capture them again when needed. Old
   candidates, snapshots, comparison captures and extracted reference frames
   were removed during consolidation.

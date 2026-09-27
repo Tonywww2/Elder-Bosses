@@ -31,9 +31,11 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
     private static final int DEFAULT_LIFETIME_TICKS = 16;
     private static final EntityDataAccessor<Integer> PARENT_ACTION =
             SynchedEntityData.defineId(PromisedConsortCloneEntity.class, EntityDataSerializers.INT);
-        private static final EntityDataAccessor<Long> APPEAR_TICK =
+    private static final EntityDataAccessor<Long> APPEAR_TICK =
             SynchedEntityData.defineId(PromisedConsortCloneEntity.class, EntityDataSerializers.LONG);
-        private static final EntityDataAccessor<Long> IMPACT_TICK =
+    private static final EntityDataAccessor<Long> IMPACT_TICK =
+            SynchedEntityData.defineId(PromisedConsortCloneEntity.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Long> FADE_END_TICK =
             SynchedEntityData.defineId(PromisedConsortCloneEntity.class, EntityDataSerializers.LONG);
 
     private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
@@ -61,6 +63,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
         entityData.set(PARENT_ACTION, owner.actionId().map(Enum::ordinal).orElse(-1));
         entityData.set(APPEAR_TICK, level().getGameTime());
         entityData.set(IMPACT_TICK, Math.max(level().getGameTime() + 1, impactTick));
+        entityData.set(FADE_END_TICK, level().getGameTime() + remainingTicks);
     }
 
     @Override
@@ -68,6 +71,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
         registrar.define(PARENT_ACTION, -1);
         registrar.define(APPEAR_TICK, 0L);
         registrar.define(IMPACT_TICK, 4L);
+        registrar.define(FADE_END_TICK, 16L);
     }
 
     public String animationClip() {
@@ -90,6 +94,14 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
 
     public long impactTick() {
         return entityData.get(IMPACT_TICK);
+    }
+
+    public long appearTick() {
+        return entityData.get(APPEAR_TICK);
+    }
+
+    public long fadeEndTick() {
+        return entityData.get(FADE_END_TICK);
     }
 
     @Override
@@ -131,6 +143,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
         tag.putLong("ActionSequence", actionSequence);
         tag.putLong("AppearTick", entityData.get(APPEAR_TICK));
         tag.putLong("ImpactTick", entityData.get(IMPACT_TICK));
+        tag.putLong("FadeEndTick", entityData.get(FADE_END_TICK));
     }
 
     @Override
@@ -142,6 +155,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
         actionSequence = tag.contains("ActionSequence") ? tag.getLong("ActionSequence") : -1L;
         entityData.set(APPEAR_TICK, tag.contains("AppearTick") ? tag.getLong("AppearTick") : level().getGameTime());
         entityData.set(IMPACT_TICK, tag.contains("ImpactTick") ? tag.getLong("ImpactTick") : level().getGameTime() + 4);
+        entityData.set(FADE_END_TICK, tag.contains("FadeEndTick") ? tag.getLong("FadeEndTick") : level().getGameTime() + remainingTicks);
     }
 
     @Override

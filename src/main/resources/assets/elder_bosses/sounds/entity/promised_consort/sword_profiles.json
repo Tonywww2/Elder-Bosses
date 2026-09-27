@@ -1,7 +1,7 @@
 {
   "geometrySource": "models/promised_consort/promised_consort.bbmodel",
-  "geometrySha256": "fbf84df58a06d546b75c89f1356bb145bb77a08a4c89b613b1775b1e4f02289b",
-  "animationSha256": "160bbb2cf3d861a16e3095939a6ac7c06d48850d93030448d4424a6462835a50",
+  "geometrySha256": "d2cd04b33a1b2317ca25142f96a42f2be1522f9f2029d45564f8bba36f693d36",
+  "animationSha256": "329b673530b3d639c821a47408c231a264fa4b8b80d300bd20181163ceec4678",
   "windowsSha256": "5565383b044ed3a75a0a7168713e89753ae8dccabff0b10f404494857a298243",
   "measurement": "Authoring hierarchy, ZYX rotations; 0.25-tick samples in existing blade windows; tip motion relative to pelvis",
   "events": {
@@ -30,8 +30,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 243.24257,
-            "elevationDegrees": -22.32469
+            "arcDegrees": 274.0034,
+            "elevationDegrees": -27.31492
           }
         ]
       },
@@ -41,8 +41,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 212.11168,
-            "elevationDegrees": -13.51485
+            "arcDegrees": 244.20213,
+            "elevationDegrees": -18.9227
           }
         ]
       },
@@ -52,13 +52,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 170.15913,
-            "elevationDegrees": -37.57994
+            "arcDegrees": 192.78656,
+            "elevationDegrees": -36.04543
           },
           {
             "side": 1,
-            "arcDegrees": 174.70247,
-            "elevationDegrees": -36.49811
+            "arcDegrees": 160.53784,
+            "elevationDegrees": -41.3977
           }
         ]
       }
@@ -70,8 +70,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 19.64753,
-            "elevationDegrees": -11.4137
+            "arcDegrees": 40.51204,
+            "elevationDegrees": -19.92625
           }
         ]
       },
@@ -81,8 +81,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 119.62447,
-            "elevationDegrees": -11.6624
+            "arcDegrees": 147.61932,
+            "elevationDegrees": -15.3449
           }
         ]
       }
@@ -94,8 +94,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 166.41104,
-            "elevationDegrees": -32.77186
+            "arcDegrees": 182.21717,
+            "elevationDegrees": -34.87968
           }
         ]
       },
@@ -105,13 +105,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 109.51962,
-            "elevationDegrees": -38.52876
+            "arcDegrees": 109.48851,
+            "elevationDegrees": -63.85613
           },
           {
             "side": 1,
-            "arcDegrees": 149.52325,
-            "elevationDegrees": -20.69482
+            "arcDegrees": 175.93455,
+            "elevationDegrees": -21.83998
           }
         ]
       }
@@ -123,8 +123,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 91.06454,
-            "elevationDegrees": -12.51345
+            "arcDegrees": 85.84084,
+            "elevationDegrees": -29.96936
           }
         ]
       },
@@ -134,8 +134,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 148.63384,
-            "elevationDegrees": -9.02493
+            "arcDegrees": 174.7919,
+            "elevationDegrees": -13.59603
           }
         ]
       },
@@ -145,8 +145,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 115.46487,
-            "elevationDegrees": -8.99051
+            "arcDegrees": 139.46258,
+            "elevationDegrees": -12.19945
           }
         ]
       }
@@ -158,8 +158,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 146.55156,
-            "elevationDegrees": -35.96497
+            "arcDegrees": 168.12808,
+            "elevationDegrees": -36.41208
           }
         ]
       },
@@ -169,8 +169,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 118.662,
-            "elevationDegrees": -11.99944
+            "arcDegrees": 149.31158,
+            "elevationDegrees": -16.0864
           }
         ]
       },
@@ -180,8 +180,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 138.82775,
-            "elevationDegrees": 4.38458
+            "arcDegrees": 167.60069,
+            "elevationDegrees": -1.93528
           }
         ]
       },
@@ -191,13 +191,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 332.18089,
-            "elevationDegrees": -11.71548
+            "arcDegrees": 302.0298,
+            "elevationDegrees": -13.07144
           },
           {
             "side": 1,
-            "arcDegrees": 266.43493,
-            "elevationDegrees": -18.4186
+            "arcDegrees": 240.9174,
+            "elevationDegrees": -17.85131
           }
         ]
       },
@@ -207,13 +207,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 153.54033,
-            "elevationDegrees": -14.77199
+            "arcDegrees": 180.37042,
+            "elevationDegrees": -16.29259
           },
           {
             "side": 1,
-            "arcDegrees": 128.62812,
-            "elevationDegrees": -16.86909
+            "arcDegrees": 156.39816,
+            "elevationDegrees": -18.95268
           }
         ]
       }
@@ -225,8 +225,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 86.57379,
-            "elevationDegrees": -21.77214
+            "arcDegrees": 81.21938,
+            "elevationDegrees": -44.33551
           }
         ]
       },
@@ -236,8 +236,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 144.66473,
-            "elevationDegrees": -9.49958
+            "arcDegrees": 179.08043,
+            "elevationDegrees": -12.62154
           }
         ]
       },
@@ -247,8 +247,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 158.55004,
-            "elevationDegrees": -7.11231
+            "arcDegrees": 187.93514,
+            "elevationDegrees": -11.19275
           }
         ]
       },
@@ -258,13 +258,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 64.73473,
-            "elevationDegrees": -83.52946
+            "arcDegrees": 88.18435,
+            "elevationDegrees": -71.7874
           },
           {
             "side": 1,
-            "arcDegrees": 106.03714,
-            "elevationDegrees": -71.13601
+            "arcDegrees": 123.86277,
+            "elevationDegrees": -62.75176
           }
         ]
       },
@@ -274,13 +274,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 166.99448,
-            "elevationDegrees": 47.12514
+            "arcDegrees": 166.86812,
+            "elevationDegrees": 46.13726
           },
           {
             "side": 1,
-            "arcDegrees": 166.13874,
-            "elevationDegrees": 46.49135
+            "arcDegrees": 155.94215,
+            "elevationDegrees": 52.11195
           }
         ]
       }
@@ -429,13 +429,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 146.03755,
-            "elevationDegrees": -23.96719
+            "arcDegrees": 161.95441,
+            "elevationDegrees": -28.34433
           },
           {
             "side": 1,
-            "arcDegrees": 143.78896,
-            "elevationDegrees": -23.94945
+            "arcDegrees": 147.922,
+            "elevationDegrees": -25.11776
           }
         ]
       }
@@ -482,8 +482,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 170.93095,
-            "elevationDegrees": -46.74163
+            "arcDegrees": 189.68356,
+            "elevationDegrees": -48.55436
           }
         ]
       }
@@ -495,13 +495,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 51.23701,
-            "elevationDegrees": -80.12959
+            "arcDegrees": 73.19375,
+            "elevationDegrees": -65.85025
           },
           {
             "side": 1,
-            "arcDegrees": 52.69401,
-            "elevationDegrees": -81.15738
+            "arcDegrees": 76.49616,
+            "elevationDegrees": -71.4238
           }
         ]
       }
@@ -513,13 +513,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 11.44394,
-            "elevationDegrees": -79.32781
+            "arcDegrees": 32.11325,
+            "elevationDegrees": -29.3931
           },
           {
             "side": 1,
-            "arcDegrees": 16.41613,
-            "elevationDegrees": -76.59018
+            "arcDegrees": 35.43077,
+            "elevationDegrees": -29.95962
           }
         ]
       }
@@ -531,8 +531,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 110.19506,
-            "elevationDegrees": -20.56752
+            "arcDegrees": 137.24814,
+            "elevationDegrees": -23.10934
           }
         ]
       }
@@ -544,8 +544,8 @@
         "swings": [
           {
             "side": 1,
-            "arcDegrees": 121.57077,
-            "elevationDegrees": -28.57339
+            "arcDegrees": 147.2611,
+            "elevationDegrees": -30.19164
           }
         ]
       },
@@ -555,8 +555,8 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 149.97109,
-            "elevationDegrees": -31.9528
+            "arcDegrees": 177.122,
+            "elevationDegrees": -33.66392
           }
         ]
       },
@@ -566,13 +566,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 245.37774,
-            "elevationDegrees": -33.4426
+            "arcDegrees": 264.60281,
+            "elevationDegrees": -38.68837
           },
           {
             "side": 1,
-            "arcDegrees": 174.19877,
-            "elevationDegrees": -32.84402
+            "arcDegrees": 194.25305,
+            "elevationDegrees": -36.77707
           }
         ]
       },
@@ -582,13 +582,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 197.54502,
-            "elevationDegrees": -26.30255
+            "arcDegrees": 180.63803,
+            "elevationDegrees": -32.15605
           },
           {
             "side": 1,
-            "arcDegrees": 125.78959,
-            "elevationDegrees": -31.94451
+            "arcDegrees": 108.64721,
+            "elevationDegrees": -42.21177
           }
         ]
       },
@@ -598,13 +598,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 18.154,
-            "elevationDegrees": -62.56947
+            "arcDegrees": 38.16348,
+            "elevationDegrees": -36.2824
           },
           {
             "side": 1,
-            "arcDegrees": 16.566,
-            "elevationDegrees": -62.99201
+            "arcDegrees": 39.34585,
+            "elevationDegrees": -55.12458
           }
         ]
       }
@@ -616,13 +616,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 33.85239,
-            "elevationDegrees": -72.51237
+            "arcDegrees": 50.40464,
+            "elevationDegrees": -52.65322
           },
           {
             "side": 1,
-            "arcDegrees": 32.40444,
-            "elevationDegrees": -73.62721
+            "arcDegrees": 53.4326,
+            "elevationDegrees": -64.84802
           }
         ]
       },
@@ -632,13 +632,13 @@
         "swings": [
           {
             "side": -1,
-            "arcDegrees": 80.39612,
-            "elevationDegrees": 29.1901
+            "arcDegrees": 86.79475,
+            "elevationDegrees": 39.79703
           },
           {
             "side": 1,
-            "arcDegrees": 80.65602,
-            "elevationDegrees": 29.19948
+            "arcDegrees": 87.33353,
+            "elevationDegrees": 28.24437
           }
         ]
       }

@@ -3,8 +3,8 @@ package com.tonywww.elder_bosses.platforms.registry;
 import com.tonywww.elder_bosses.ElderBosses;
 import com.tonywww.elder_bosses.item.ConsecratedProstheticBladeItem;
 import com.tonywww.elder_bosses.item.UnalloyedWingedHelmItem;
+import com.tonywww.elder_bosses.item.YoungLionGreatswordItem;
 import com.tonywww.elder_bosses.player.GoldenNeedleItem;
-import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig.MaleniaConsecratedProstheticBladeValues;
 import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig.MaleniaUnalloyedWingedHelmValues;
 import com.tonywww.elder_bosses.platforms.item.PlatformArmorMaterials;
 import java.util.function.Supplier;
@@ -27,8 +27,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 *///?}
 
 public final class ModItems {
-    private static final MaleniaConsecratedProstheticBladeValues DEFAULT_BLADE_VALUES =
-        new MaleniaConsecratedProstheticBladeValues(9.0, 1.6, 2300, 15);
     private static final MaleniaUnalloyedWingedHelmValues DEFAULT_HELM_VALUES =
         new MaleniaUnalloyedWingedHelmValues(3.0, 3.5, 0.11, 450, 0.85);
 
@@ -66,7 +64,7 @@ public final class ModItems {
     public static final Supplier<Item> ROT_GODDESS_REMEMBRANCE = register("rot_goddess_remembrance");
     public static final Supplier<ConsecratedProstheticBladeItem> CONSECRATED_PROSTHETIC_BLADE = ITEMS.register(
             "consecrated_prosthetic_blade",
-            () -> new ConsecratedProstheticBladeItem(DEFAULT_BLADE_VALUES)
+            ConsecratedProstheticBladeItem::new
     );
     public static final Supplier<UnalloyedWingedHelmItem> UNALLOYED_WINGED_HELM = ITEMS.register(
             "unalloyed_winged_helm",
@@ -76,7 +74,8 @@ public final class ModItems {
     public static final Supplier<Item> HALIGTREE_ROOT_FRAGMENT = register("haligtree_root_fragment");
     public static final Supplier<Item> GOD_AND_LORD_REMEMBRANCE =
             register("god_and_lord_remembrance");
-    public static final Supplier<Item> YOUNG_LION_GREATSWORD = register("young_lion_greatsword");
+    public static final Supplier<YoungLionGreatswordItem> YOUNG_LION_GREATSWORD =
+            ITEMS.register("young_lion_greatsword", YoungLionGreatswordItem::new);
     public static final Supplier<Item> CIRCLET_OF_FADING_LIGHT =
             register("circlet_of_fading_light");
     public static final Supplier<Item> GATE_FRAGMENT = register("gate_fragment");

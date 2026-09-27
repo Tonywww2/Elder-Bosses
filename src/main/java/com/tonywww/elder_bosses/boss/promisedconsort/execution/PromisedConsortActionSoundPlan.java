@@ -191,7 +191,9 @@ public final class PromisedConsortActionSoundPlan {
                 counts.clear();
             }
             int count = counts.getOrDefault(cue.sound(), 0);
-            if (count >= 2) return false;
+            // A field of simultaneous light pillars shares one wash; doubling it produces a sharp volume jump.
+            int limit = cue.sound() == Sound.HOLY ? 1 : 2;
+            if (count >= limit) return false;
             counts.put(cue.sound(), count + 1);
             return true;
         }

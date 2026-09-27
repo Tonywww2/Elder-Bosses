@@ -1,0 +1,25 @@
+[equipment.weapons.consecrated_prosthetic_blade]
+attack_damage = 9.0
+attack_speed = 1.6
+durability = 2300
+enchantability = 15
+
+[equipment.weapons.young_lion_greatsword]
+attack_damage = 12.0
+attack_speed = 1.0
+durability = 2400
+enchantability = 15
+
+[equipment.curios.golden_needle]
+rot_capacity_bonus = 40.0
+
+[equipment.curios.consecrated_prosthetic_blade]
+attack_speed_bonus = 0.1
+
+[equipment.curios.young_lion_greatsword]
+attack_damage_bonus = 0.1
+knockback_resistance_bonus = 0.1
+
+[equipment.curios.circlet_of_fading_light]
+armor_bonus = 2.0
+luck_bonus = 1.0

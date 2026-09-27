@@ -1,0 +1,8 @@
+Boss victory banner font: Cinzel Regular
+Designer: Natanael Gama / The Cinzel Project Authors
+Source: https://github.com/NDISCOVER/Cinzel
+Revision: dd598495b0fb2ad84270d5cc75d642d2f1e8eabf
+Original file: fonts/ttf/Cinzel-Regular.ttf
+Bundled unchanged as: assets/elder_bosses/font/cinzel_regular.ttf
+SHA-256: af0031129f27dc752e8629a80b793d27abea94027faa27cc660c3fc33f607a1f
+License: SIL Open Font License 1.1; full text in CINZEL-OFL.txt.

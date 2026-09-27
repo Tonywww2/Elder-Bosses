@@ -136,8 +136,14 @@ public class ActionSoundPlanCheck {
     private static void checkPersistenceAndResources() throws Exception {
         var budget = new PromisedConsortActionSoundPlan.AuxiliaryBudget();
         var auxiliary = PromisedConsortActionSoundPlan.cue("holy", PromisedConsortActionSoundPlan.Sound.HOLY, 0.5F, 1);
-        require(budget.claim(auxiliary, 100) && budget.claim(auxiliary, 100) && !budget.claim(auxiliary, 100), "Auxiliary layers are unbounded");
+        require(budget.claim(auxiliary, 100) && !budget.claim(auxiliary, 100), "Simultaneous holy pillars doubled the wash");
         require(budget.claim(auxiliary, 101), "Auxiliary budget did not reset");
+        var nextPillar = PromisedConsortActionSoundPlan.cue("light_next", PromisedConsortActionSoundPlan.Sound.HOLY, 0.5F, 1.05F);
+        require(!budget.claim(nextPillar, 101), "Distinct holy occurrences bypassed the shared budget");
+        var impact = PromisedConsortActionSoundPlan.cue("impact", PromisedConsortActionSoundPlan.Sound.STOMP, 1, 1);
+        require(budget.claim(impact, 101) && budget.claim(impact, 101) && !budget.claim(impact, 101),
+                "Holy budget changed the independent ground-impact budget");
+        require(new PromisedConsortActionSoundPlan.AuxiliaryBudget().claim(auxiliary, 101), "Different bosses shared an audio budget");
         for (int blade = 0; blade < 16; blade++) require(budget.claim(PromisedConsortActionSoundPlan.cue("blade" + blade,
             PromisedConsortActionSoundPlan.Sound.SLASH, 0.5F, 1), 101), "Auxiliary cap swallowed a blade");
         for (Boolean saved : new Boolean[]{null, false, true}) for (long remaining : new long[]{0, 5}) {

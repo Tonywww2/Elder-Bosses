@@ -1,7 +1,7 @@
 {
   "status": "offscreen_shader_compile_and_pixel_checks_passed",
-  "renderer": "NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2",
-  "fragmentSha256": "dcd9dda58ed512c424f717fe5e8fa60b8aba7e1efef30634ed71a4b3cf5fcbeb",
+  "renderer": "NVIDIA GeForce RTX 5080/PCIe/SSE2",
+  "fragmentSha256": "b89b5c11556de21725c206ea8ec7c20d0b8ddc6d5b3b95b100aa3586b872fc31",
   "samples": [
     {
       "mode": 2,
@@ -98,6 +98,30 @@
       "time": 2.0,
       "litPixels": 2788,
       "peakRed": 255
+    },
+    {
+      "mode": 16,
+      "time": 1.0,
+      "litPixels": 6044,
+      "peakRed": 251
+    },
+    {
+      "mode": 16,
+      "time": 2.0,
+      "litPixels": 4338,
+      "peakRed": 166
+    },
+    {
+      "mode": 17,
+      "time": 1.0,
+      "litPixels": 905,
+      "peakRed": 211
+    },
+    {
+      "mode": 17,
+      "time": 2.0,
+      "litPixels": 601,
+      "peakRed": 142
     }
   ],
   "scope": "Actual project shaders; not in-world visual acceptance"

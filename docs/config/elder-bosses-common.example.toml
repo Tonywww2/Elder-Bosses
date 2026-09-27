@@ -1617,3 +1617,38 @@
 	render_distance = 96.0
 	particle_budget_per_boss_per_tick = 18
 	enabled = true
+
+[boss_music]
+# 客户端本地；同时受 Minecraft“音乐”滑块控制。
+enabled = true
+volume = 0.85
+distance = 96.0
+fade_ticks = 40
+
+# 装备数值：修改后重启游戏/服务器；联机采用服务端配置。
+# *_bonus 比例项中 0.10 = +10%；饰品加成设为 0 可关闭。
+[equipment.weapons.consecrated_prosthetic_blade]
+attack_damage = 9.0
+attack_speed = 1.6
+durability = 2300
+enchantability = 15
+
+[equipment.weapons.young_lion_greatsword]
+attack_damage = 12.0
+attack_speed = 1.0
+durability = 2400
+enchantability = 15
+
+[equipment.curios.golden_needle]
+rot_capacity_bonus = 40.0
+
+[equipment.curios.consecrated_prosthetic_blade]
+attack_speed_bonus = 0.1
+
+[equipment.curios.young_lion_greatsword]
+attack_damage_bonus = 0.1
+knockback_resistance_bonus = 0.1
+
+[equipment.curios.circlet_of_fading_light]
+armor_bonus = 2.0
+luck_bonus = 1.0

@@ -331,8 +331,8 @@ public final class PromisedConsortAttackPlan {
                     if (action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO) {
                         if (index == 0) contact = points.getOrDefault("cross_opening_end", PromisedConsortCrossLeapPath.opening(timeline, skill.number("leap_height"))
                                 .destination(position, target, skill.number("leap_distance"), 4));
-                        else if (index == 4) contact = points.getOrDefault("cross_finisher_end", position);
                     }
+                    if (index == 4) contact = points.getOrDefault("cross_finisher_end", position);
                     if (index < 2) add("opening_" + index, sector(contact, skill.numbers().getOrDefault("opening_range", 4.2), 140), contact.y, warning, hit, hit + 1, StyleRole.PHYSICAL_GOLD, true);
                     else if (index < 4) add("spin_" + (index - 2), annulus(position, 0, skill.numbers().getOrDefault("spin_range", 4.5)), warning, hit, StyleRole.PHYSICAL_GOLD, true);
                     else if (index == 4) add("finisher", circle(contact, skill.numbers().getOrDefault("finisher_range", 5.0)), contact.y, warning, hit, hit + 1, StyleRole.PHYSICAL_GOLD, true);
@@ -386,7 +386,10 @@ public final class PromisedConsortAttackPlan {
     private Vec3 movingOrigin(int event, int activeStart, int activeTicks, boolean dash, boolean side) {
         int steps = timeline.activeTicksBetween(Math.max(action.actionTick(), activeStart), event + 1);
         double distance = (dash ? travel(number("range"), activeTicks) : side ? Math.min(1.25, range(6.0 / activeTicks)) : 0) * steps;
-        return position.add((side ? -facing.z() : facing.x()) * distance, 0, (side ? facing.x() : facing.z()) * distance);
+        var aerial = PromisedConsortAerialPath.from(action.actionId(), timeline, 0);
+        Vec3 base = aerial != null && action.actionTick() <= aerial.landingTick()
+                ? points.getOrDefault("aerial_end", position) : position;
+        return base.add((side ? -facing.z() : facing.x()) * distance, 0, (side ? facing.x() : facing.z()) * distance);
     }
 
     private double travel(double distance, int activeTicks) {
@@ -432,8 +435,10 @@ public final class PromisedConsortAttackPlan {
         }
         if (action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO) {
             if (id.equals("opening_0")) lock = PromisedConsortCrossLeapPath.opening(timeline, skill.number("leap_height")).takeoffTick();
-            if (id.equals("finisher")) lock = PromisedConsortCrossLeapPath.finisher(timeline, skill.number("leap_height")).takeoffTick();
         }
+        if ((action.actionId() == PromisedConsortActionId.PROMISED_CONSORT || action.actionId() == PromisedConsortActionId.CROSS_LEAP_COMBO)
+                && id.equals("finisher") && timeline.stages().size() > 4 && timeline.stages().get(4).windupTicks() >= 2)
+            lock = PromisedConsortCrossLeapPath.finisher(timeline, 0).takeoffTick();
         if (stageIndex > 0 && canReposition(action.actionId(), stageIndex) && hit == timeline.activeStartTick(stageIndex)) {
             lock = Math.max(lock, repositionLockTick(timeline, stageIndex, lead));
         }
@@ -481,8 +486,7 @@ public final class PromisedConsortAttackPlan {
             case L_COMBO_CROSS, R_COMBO_CROSS, R_COMBO_LEFT_TWIN, R_COMBO_TEMPEST -> true;
             case L_COMBO_BLOODFLAME, STARCALLER_CRY -> stage < 2;
             case R_COMBO_EARTHHEAVE -> stage < 4;
-            case PROMISED_CONSORT -> stage < 5;
-            case CROSS_LEAP_COMBO -> stage < 4;
+            case PROMISED_CONSORT, CROSS_LEAP_COMBO -> stage < 4;
             default -> false;
         };
     }

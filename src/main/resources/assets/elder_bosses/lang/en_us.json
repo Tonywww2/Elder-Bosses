@@ -19,6 +19,8 @@
   "block.elder_bosses.divine_balustrade": "Divine Balustrade",
   "block.elder_bosses.divine_pillar": "Fluted Divine Pillar",
   "item.elder_bosses.rune_fragment": "Rune Fragment",
+  "jei.elder_bosses.info.consort_altar": "Sneak and use a Rune Fragment in your main hand on the altar to summon the Promised Consort.",
+  "jei.elder_bosses.info.rune_fragment": "Sneak and use a Rune Fragment in your main hand on the altar to summon the Promised Consort.",
   "commands.elder_bosses.test.observer": "Skill tests require a living non-spectator player in the same dimension.",
   "commands.elder_bosses.test.position": "Cannot spawn here: use a loaded, clear position with solid ground and room for the boss.",
   "commands.elder_bosses.test.spawn_failed": "Could not spawn the temporary boss.",
@@ -112,5 +114,8 @@
   "item.elder_bosses.young_lion_greatsword": "Young Lion Greatsword",
   "item.elder_bosses.circlet_of_fading_light": "Circlet of Fading Light",
   "item.elder_bosses.gate_fragment": "Gate Fragment",
-  "itemGroup.elder_bosses.main": "Elder Bosses"
+  "hud.elder_bosses.victory.god_slain": "GOD SLAIN",
+  "hud.elder_bosses.victory.demigod_felled": "DEMIGOD FELLED",
+  "itemGroup.elder_bosses.main": "Elder Bosses",
+  "tooltip.elder_bosses.curio.unique": "Curio bonuses require a Curios slot; only one of each item"
 }

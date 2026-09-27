@@ -7,6 +7,9 @@ let assets = path.join(root, "src/main/resources/assets/elder_bosses");
 let data = path.join(root, "src/main/resources/data");
 let output = path.join(root, "build/ai-previews/arena-custom-v6");
 let writing = process.argv.includes("--write");
+if (writing && JSON.parse(fs.readFileSync(path.join(__dirname, "production_manifest.json"), "utf8")).revision === "promised_consort_arena_v10") {
+    throw new Error("Historical v6 exporter would overwrite v10 art. Use refine_materials.py --write for current textures.");
+}
 let checks = 0;
 function check(condition, message) { checks++; if (!condition) throw new Error(message); }
 function json(file) { return JSON.parse(fs.readFileSync(file, "utf8")); }

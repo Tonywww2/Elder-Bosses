@@ -1,0 +1,33 @@
+// Opt-in runtime checks only; never add these fixtures to a release build.
+allprojects {
+    afterEvaluate {
+        if (path == ':1.20.1-forge') {
+            def withoutCurios = project.hasProperty('withoutCurios')
+            def equipmentCase = project.findProperty('equipmentConfigCase') ?: 'default'
+            if (!(equipmentCase in ['default', 'custom', 'zero'])) throw new GradleException('Unknown equipmentConfigCase')
+            def runFolder = rootProject.file('build/curios-' + (withoutCurios ? 'absent-' : '') + equipmentCase + '-gametest-run')
+            if (withoutCurios) {
+                configurations.modRuntimeOnly.exclude(group: 'top.theillusivec4.curios', module: 'curios-forge')
+            }
+            sourceSets.main.java.srcDir(rootProject.file('models/shared/curios_gametest/java'))
+            sourceSets.main.resources.srcDir(rootProject.file('models/shared/curios_gametest/resources'))
+            loom.runs.create('curiosTest') {
+                server()
+                property('forge.enableGameTest', 'true')
+                property('forge.gameTestServer', 'true')
+                property('forge.enabledGameTestNamespaces', 'elder_bosses')
+                property('elder_bosses.expectNoCurios', withoutCurios.toString())
+                property('elder_bosses.equipmentConfigCase', equipmentCase)
+                runDir('../../build/' + runFolder.name)
+                ideConfigGenerated(false)
+            }
+            tasks.named('runCuriosTest') {
+                doFirst {
+                    def config = new File(runFolder, 'config/elder_bosses-common.toml')
+                    config.parentFile.mkdirs()
+                    config.text = rootProject.file('models/shared/curios_gametest/config/' + equipmentCase + '.toml').getText('UTF-8')
+                }
+            }
+        }
+    }
+}

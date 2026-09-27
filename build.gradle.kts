@@ -5,6 +5,8 @@ plugins {
 val modId = property("mod.id").toString()
 val mcVersion = property("vers.mcVersion").toString()
 val forgeVersion = property("vers.deps.fml").toString()
+val jeiVersion = property("vers.deps.jei").toString()
+val curiosVersion = property("vers.deps.curios").toString()
 val artifactVersion = "${property("mod.version")}+$mcVersion"
 val javaVersion = 17
 
@@ -29,6 +31,17 @@ loom {
 }
 
 repositories {
+    exclusiveContent {
+        forRepository { maven("https://maven.theillusivec4.top/") }
+        filter { includeGroup("top.theillusivec4.curios") }
+    }
+    exclusiveContent {
+        forRepository { maven("https://maven.blamejared.com/") }
+        filter {
+            includeGroup("mezz.jei")
+            includeGroup("net.mezzdev.config")
+        }
+    }
     mavenCentral()
     maven("https://maven.minecraftforge.net/")
     maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
@@ -41,6 +54,14 @@ dependencies {
     forge("net.minecraftforge:forge:$mcVersion-$forgeVersion")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.20.1:4.8.4")
     modImplementation("maven.modrinth:attributefix:21.0.5")
+    modCompileOnly("top.theillusivec4.curios:curios-forge:$curiosVersion:api")
+    modRuntimeOnly("top.theillusivec4.curios:curios-forge:$curiosVersion")
+    modCompileOnly("mezz.jei:jei-$mcVersion-common-api:$jeiVersion")
+    modCompileOnly("mezz.jei:jei-$mcVersion-forge-api:$jeiVersion")
+    // The full mod already contains JEI's internal modules and API classes.
+    modRuntimeOnly("mezz.jei:jei-$mcVersion-forge:$jeiVersion") { isTransitive = false }
+    // Loom strips jar-in-jar metadata while remapping; expose JEI's required config mod explicitly.
+    modRuntimeOnly("net.mezzdev.config:mezz_config-$mcVersion-forge:0.6.3") { isTransitive = false }
     forgeRuntimeLibrary("com.eliotlash.mclib:mclib:20")
 }
 

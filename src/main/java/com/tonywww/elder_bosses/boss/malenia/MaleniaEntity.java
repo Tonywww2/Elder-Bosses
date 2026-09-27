@@ -43,6 +43,7 @@ import com.tonywww.elder_bosses.dialogue.DialogueEvent;
 import com.tonywww.elder_bosses.dialogue.MaleniaDialogueController;
 import com.tonywww.elder_bosses.network.IndicatorSnapshotPacket;
 import com.tonywww.elder_bosses.network.MaleniaCombatSnapshotPacket;
+import com.tonywww.elder_bosses.network.BossDefeatedPacket;
 import com.tonywww.elder_bosses.player.PlayerRotService;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.combat.PlatformShieldDurability;
@@ -2250,6 +2251,17 @@ public final class MaleniaEntity extends PlatformMonster implements
             exhaustCurrentPhase(damageSources().genericKill());
             return;
         }
+        // Vanilla's death timer removes the body after the custom defeat sequence.
+        // Keeping the hidden boss bar's audience until here avoids an early banner.
+        if (!level().isClientSide && !isRemoved() && defeatFinalized
+                && reason == Entity.RemovalReason.KILLED) {
+            BossDefeatedPacket victory = new BossDefeatedPacket(getUUID(), level().dimension().location(),
+                    BossDefeatedPacket.Victory.DEMIGOD_FELLED);
+            for (ServerPlayer player : List.copyOf(bossEvent.getPlayers())) {
+                if (player.level() == level() && !player.isRemoved()) PlatformNetwork.sendTo(player, victory);
+            }
+            bossEvent.removeAllPlayers();
+        }
         super.remove(reason);
     }
 
@@ -2467,7 +2479,6 @@ public final class MaleniaEntity extends PlatformMonster implements
         }
         defeatFinalized = true;
         bossEvent.setVisible(false);
-        bossEvent.removeAllPlayers();
         finalizingDefeat = true;
         try {
             setHealth(0.0F);

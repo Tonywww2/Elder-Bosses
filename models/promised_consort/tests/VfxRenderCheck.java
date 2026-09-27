@@ -75,7 +75,12 @@ public final class VfxRenderCheck {
                 return;
             }
             List<Sample> results = new ArrayList<>();
-            for (int mode : new int[]{2,4,10,11,12,13,14,15}) {
+            var preview = new java.awt.image.BufferedImage(SIZE * 3, SIZE + 28, java.awt.image.BufferedImage.TYPE_INT_RGB);
+            var labels = preview.createGraphics();
+            labels.setColor(java.awt.Color.WHITE);
+            labels.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13));
+            int[] modes = {2,4,10,11,12,13,14,15,16,17};
+            for (int mode : modes) {
                 byte[] first = null;
                 for (float time : new float[]{1,2}) {
                     GL11.glClearColor(0,0,0,0);
@@ -112,18 +117,30 @@ public final class VfxRenderCheck {
                         }
                         first = data;
                         results.add(new Sample(mode,time,lit,maximum));
+                        if (time == 1 && (mode == 2 || mode == 16 || mode == 17)) {
+                            int column = mode == 2 ? 0 : mode == 16 ? 1 : 2;
+                            for (int y = 0; y < SIZE; y++) for (int x = 0; x < SIZE; x++) {
+                                int offset = ((SIZE - 1 - y) * SIZE + x) * 4;
+                                preview.setRGB(column * SIZE + x, y, Byte.toUnsignedInt(data[offset]) << 16
+                                        | Byte.toUnsignedInt(data[offset + 1]) << 8 | Byte.toUnsignedInt(data[offset + 2]));
+                            }
+                            labels.drawString(mode == 2 ? "Soft light column" : mode == 16 ? "Miquella light halo" : "Rising gold motes",
+                                    column * SIZE + 8, SIZE + 19);
+                        }
                     } finally {
                         MemoryUtil.memFree(pixels);
                     }
                 }
             }
+            labels.dispose();
+            javax.imageio.ImageIO.write(preview, "png", output.resolve("holy-clone-shaders.png").toFile());
             if (GL11.glGetError() != GL11.GL_NO_ERROR) throw new AssertionError("OpenGL draw error");
             String hash = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(fragmentSource.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
             var report = new Report("offscreen_shader_compile_and_pixel_checks_passed", GL11.glGetString(GL11.GL_RENDERER), hash, results,
                     "Actual project shaders; not in-world visual acceptance");
             Files.writeString(Path.of("models/promised_consort/vfx_render_validation.json"),
                     new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(report) + "\n");
-            System.out.println("Layered effect shader passed: 8 modes, " + results.size() + " rendered frames; clean light falloff and halos checked; " + report.renderer());
+            System.out.println("Layered effect shader passed: " + modes.length + " modes, " + results.size() + " rendered frames; clean light falloff and halos checked; " + report.renderer());
             GL15.glDeleteBuffers(vbo);
             GL30.glDeleteVertexArrays(vao);
             GL20.glDeleteProgram(program);

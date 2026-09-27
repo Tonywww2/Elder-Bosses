@@ -25,3 +25,10 @@ mandatory = true
 versionRange = "${minecraftVersionRange}"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.elder_bosses]]
+modId = "curios"
+mandatory = false
+versionRange = "[5.14.1,6)"
+ordering = "AFTER"
+side = "BOTH"

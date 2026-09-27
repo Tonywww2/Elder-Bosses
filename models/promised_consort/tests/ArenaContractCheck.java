@@ -675,8 +675,10 @@ public final class ArenaContractCheck {
         JsonObject manifest = json(Path.of("models/promised_consort/arena/production_manifest.json"));
         check(manifest.get("user_approved_for_mod_integration").getAsBoolean(), "Authored arena is approved for integration");
         check(manifest.get("authored_source_sha256").getAsString().equals("a24b812f06138f3a2eb55d05f45d28e75d241ecd306aceb23e1f12b634dd2722"), "Publication retains accepted v7 architecture");
-        check(manifest.get("revision").getAsString().equals("promised_consort_arena_v9")
-            && manifest.get("original_v7_voxels_unchanged").getAsBoolean() && manifest.get("original_v8_voxels_unchanged").getAsBoolean(), "Approved fixed foundation revision");
+        check(manifest.get("revision").getAsString().equals("promised_consort_arena_v10")
+            && manifest.get("v9_foundation_and_metadata_unchanged").getAsBoolean(), "Refined architecture retains v9 foundation and anchors");
+        check(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(
+            Path.of("models/promised_consort/arena/refinement.json")))).equals(manifest.get("refinement_source_sha256").getAsString()), "Refinement authoring source is pinned");
         check(manifest.get("foundation_bottom_y").getAsInt() == -28 && manifest.get("foundation_extension_blocks").getAsInt() == 199888
                 && manifest.get("foundation_added_since_v8").getAsInt() == 99944, "Eight additional fixed layers below v8");
         String target = neo ? "1.21.1-neoforge" : "1.20.1-forge";
@@ -724,7 +726,7 @@ public final class ArenaContractCheck {
         var layout = PromisedConsortArenaLayout.read(metadata, templates);
         check(layout.parts().size() == 26 && layout.anchors().get("arena_center").equals(new BlockPos(0, 1, 0)), "Production parts and combat anchor");
         check(layout.anchors().get("summon_altar").equals(new BlockPos(8, 1, 43)), "Production altar anchor");
-        check(authoredBlocks == 356550 && explicitAir == 371456, "Accepted architecture plus fixed foundation and unchanged clearing totals");
+        check(authoredBlocks == 356857 && explicitAir == 371149, "307 new architectural blocks replace explicit air; clearing footprint is unchanged");
         Map<BlockPos, Integer> foundations = new HashMap<>();
         for (var part : layout.parts()) {
             var template = templates.get(part.name());

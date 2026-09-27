@@ -39,6 +39,11 @@ public final class ElderBossesCommonConfig {
     }
 
     private final Supplier<Boolean> indicatorsEnabled;
+    private final EquipmentConfigValues equipment;
+    private final Supplier<Boolean> bossMusicEnabled;
+    private final Supplier<Double> bossMusicVolume;
+    private final Supplier<Double> bossMusicDistance;
+    private final Supplier<Integer> bossMusicFadeTicks;
     private final Supplier<Boolean> maleniaIndicatorsEnabled;
     private final Supplier<Boolean> promisedConsortIndicatorsEnabled;
     private final Supplier<Double> indicatorOpacity;
@@ -213,6 +218,14 @@ public final class ElderBossesCommonConfig {
             /*ModConfigSpec.Builder builder
             *///?}
     ) {
+        equipment = new EquipmentConfigValues(builder);
+        builder.push("boss_music");
+        bossMusicEnabled = builder.comment("Client-local Promised Consort battle music; also uses the Music slider.").define("enabled", true);
+        bossMusicVolume = builder.defineInRange("volume", 0.85, 0.0, 1.0);
+        bossMusicDistance = builder.defineInRange("distance", 96.0, 16.0, 256.0);
+        bossMusicFadeTicks = builder.defineInRange("fade_ticks", 40, 1, 200);
+        builder.pop();
+
         builder.push("indicators");
         indicatorsEnabled = builder.define("enabled", true);
         maleniaIndicatorsEnabled = builder.define("malenia_enabled", true);
@@ -494,6 +507,10 @@ public final class ElderBossesCommonConfig {
         promisedConsort = new PromisedConsortConfigValues(builder);
     }
 
+    public EquipmentConfigValues equipment() {
+        return equipment;
+    }
+
     public IndicatorValues indicators() {
         return new IndicatorValues(
                 indicatorsEnabled.get(),
@@ -507,6 +524,12 @@ public final class ElderBossesCommonConfig {
                 promisedConsortIndicatorsEnabled.get()
         );
     }
+
+    public BossMusicValues bossMusic() {
+        return new BossMusicValues(bossMusicEnabled.get(), bossMusicVolume.get(), bossMusicDistance.get(), bossMusicFadeTicks.get());
+    }
+
+    public record BossMusicValues(boolean enabled, double volume, double distance, int fadeTicks) {}
 
     public SkillVfxValues skillVfx() {
         return new SkillVfxValues(
@@ -2133,41 +2156,6 @@ public final class ElderBossesCommonConfig {
             int hurtCooldownTicks,
             int gruntCooldownTicks
         ) {
-        }
-
-        public static final class MaleniaConsecratedProstheticBladeValues {
-            private final double attackDamage;
-            private final double attackSpeed;
-            private final int durability;
-            private final int enchantability;
-
-            public MaleniaConsecratedProstheticBladeValues(
-                    double attackDamage,
-                    double attackSpeed,
-                    int durability,
-                    int enchantability
-            ) {
-                this.attackDamage = attackDamage;
-                this.attackSpeed = attackSpeed;
-                this.durability = durability;
-                this.enchantability = enchantability;
-            }
-
-            public double attackDamage() {
-                return attackDamage;
-            }
-
-            public double attackSpeed() {
-                return attackSpeed;
-            }
-
-            public int durability() {
-                return durability;
-            }
-
-            public int enchantability() {
-                return enchantability;
-            }
         }
 
         public static final class MaleniaUnalloyedWingedHelmValues {

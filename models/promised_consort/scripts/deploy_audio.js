@@ -8,6 +8,8 @@ let audio = path.join(root, "models/promised_consort/audio");
 let assets = path.join(root, "src/main/resources/assets/elder_bosses");
 let relative = file => path.relative(root, file).replaceAll("\\", "/");
 let digest = file => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+// The authored timing JSON may be checked out with CRLF on Windows; its provenance uses LF.
+let digestText = file => crypto.createHash("sha256").update(fs.readFileSync(file, "utf8").replaceAll("\r\n", "\n")).digest("hex");
 let projectPath = path.join(root, "models/promised_consort/promised_consort.bbmodel");
 let animationPath = path.join(root, "models/promised_consort/animations/promised_consort.animation.json");
 let project = JSON.parse(fs.readFileSync(projectPath, "utf8"));
@@ -113,7 +115,7 @@ function buildProfiles() {
         clones[name] = [-1, 1].map(side => swing(clip(name), side, 2, 6));
     }
     return {geometrySource: relative(projectPath), geometrySha256: digest(projectPath),
-        animationSha256: digest(animationPath), windowsSha256: digest(windowsPath),
+        animationSha256: digest(animationPath), windowsSha256: digestText(windowsPath),
         measurement: "Authoring hierarchy, ZYX rotations; 0.25-tick samples in existing blade windows; tip motion relative to pelvis",
         events, clones};
 }
@@ -129,7 +131,7 @@ function main() {
     assert(["--deploy", "--check"].includes(process.argv[2]), "Use --inspect, --deploy or --check");
     let manifestPath = path.join(audio, "manifest.json");
     let manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
-    assert.equal(manifest.master_gain_db, 3, "Only deploy the selected +3dB version");
+    assert.equal(manifest.master_gain_db, 3, "Preserve the selected base mix; individual revisions are pinned by their output hashes");
     assert.equal(digest(animationPath), digest(path.join(assets, "animations/entity/promised_consort.animation.json")), "Authoring and runtime animations differ");
     let profiles = buildProfiles();
     let profilePath = path.join(assets, "sounds/entity/promised_consort/sword_profiles.json");
@@ -167,6 +169,6 @@ function main() {
         }
         console.log("Both loaders: all six sounds, sword profiles, registration JSON and subtitles match source resources");
     }
-    console.log(`Audio ${process.argv[2]}: six exact +3dB samples; ${bladeCount} body blades; six clone profiles; no game audio reference copied`);
+    console.log(`Audio ${process.argv[2]}: six manifest-pinned samples; ${bladeCount} body blades; six clone profiles; no game audio reference copied`);
 }
 try { main(); } catch (error) { console.error(error.stack); process.exitCode = 1; }

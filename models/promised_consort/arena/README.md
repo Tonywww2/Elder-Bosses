@@ -1,14 +1,31 @@
 # Promised Consort Arena Authoring
 
-Current: v9 applies the approved 16/4 terrain limits, water depth 4, wet samples
-at most 25%, seven desert/badlands/savanna center biomes and 48/16 distribution.
-The fixed foundation extends to -28; accepted aboveground geometry is unchanged.
-Both targets are published and pass offline validation. No v9 client-world
-acceptance is claimed. The compass and temporary check commands remain removed. See
-[Production Integration](#production-integration) and [Current Custom Construction](#current-custom-construction)
-below. Whitebox and earlier material sections preserve historical authoring steps;
-their old "not entered world" and "no runtime assets changed" statements are not
-the current overall status.
+Current: **v10**, 2026-09-26. Fifteen native 16px textures distinguish limestone,
+masonry, cracked slabs, fluted pillars, root relief and pale sediment. Three floor
+families use weighted variants and quarter-turn rotations to reduce repetition.
+The fixed NBT adds layered gate buttresses, entrance capitals, perimeter broken
+columns and discontinuous processional paving: 307 added blocks, 469 material
+replacements. The radius-40 floor, root metadata, 26-piece layout, 12,493 foundation
+columns and bottom Y=-28 are preserved. v9 terrain rules remain 16/4 height spans,
+four-deep water at most 25%, seven center biomes, and 48/16 distribution.
+
+Current editable sources: `refinement.json`, `refine_arena.py` and
+`refine_materials.py`. Python needs nbtlib and Pillow; the preview script also uses
+Pillow. Run generators with `--write` only for an intentional export; without it
+they check production assets. The NBT exporter stages and validates both targets
+before publication and keeps recovery inputs under ignored `build/arena-v10/`.
+Historical v6/v7 exporters do not represent the current art and must not overwrite it.
+
+Both loaders compile and process resources. ArenaContractCheck passes 3,581 checks;
+the additional authoring check covers detail support, open combat floor and matching
+loader geometry. The offline contact sheet is a simplified NBT projection, not
+Minecraft lighting or exact custom-block rendering. v10 in-world acceptance remains
+pending. Existing generated structures are not rewritten; textures update globally.
+
+## Historical Authoring Notes
+
+The following whitebox/material sections record earlier revisions. Their old
+"no runtime assets changed" or "natural generation disabled" statements are historical.
 
 Review-only architectural work, not runtime structure assets. Current revision:
 `whitebox_v3`. The user approved a continuous 113x137 architectural platform so
