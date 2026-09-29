@@ -141,5 +141,6 @@
   "block.elder_bosses.haligtree_altar.blocked": "出生点或场地锚点被遮挡，请先清理。",
   "block.elder_bosses.haligtree_altar.failed": "召唤失败，供品未消耗。",
   "block.elder_bosses.haligtree_silt_slab": "圣树淤泥半砖",
-  "subtitles.elder_bosses.entity.malenia.parry_success": "招架成功"
+  "subtitles.elder_bosses.entity.malenia.parry_success": "招架成功",
+  "subtitles.elder_bosses.ui.boss_victory_banner": "击败首领"
 }

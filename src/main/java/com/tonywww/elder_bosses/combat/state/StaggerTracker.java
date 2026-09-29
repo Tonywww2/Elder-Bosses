@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class StaggerTracker<S> {
-    public static final double DEFAULT_DAMAGE_CONVERSION_RATIO = 0.75;
-    public static final double DEFAULT_CAPACITY_HEALTH_RATIO = 0.10;
+    public static final double DEFAULT_DAMAGE_CONVERSION_RATIO = 1.0;
+    public static final double DEFAULT_CAPACITY_HEALTH_RATIO = 0.50;
+    public static final int DEFAULT_RAPID_WINDOW_TICKS = 240;
+    public static final double DEFAULT_RAPID_FRACTION = 0.25;
     public static final int DEFAULT_SOURCE_DEDUPE_TICKS = 5;
     public static final int DEFAULT_DECAY_DELAY_TICKS = 120;
     public static final double DEFAULT_DECAY_PER_TICK = 1.5;
@@ -22,6 +24,8 @@ public final class StaggerTracker<S> {
 
     private final double damageConversionRatio;
     private final double capacityHealthRatio;
+    private final int rapidWindowTicks;
+    private final double rapidFraction;
     private final List<DistanceBand> distanceBands;
     private final int sourceDedupeTicks;
     private final int decayDelayTicks;
@@ -39,11 +43,18 @@ public final class StaggerTracker<S> {
     private long stunnedUntilExclusive = -1L;
     private long immunityUntilExclusive = -1L;
     private boolean pendingStun;
+    private boolean rapidLimited;
+    private double rapidBudget;
+    private double recentRawRate;
+    private int milestoneTier;
+    private int milestoneElapsedTicks = -1;
 
     public StaggerTracker(
             double phaseMaximumHealth,
             double damageConversionRatio,
             double capacityHealthRatio,
+            int rapidWindowTicks,
+            double rapidFraction,
             List<DistanceBand> distanceBands,
             int sourceDedupeTicks,
             int decayDelayTicks,
@@ -57,6 +68,11 @@ public final class StaggerTracker<S> {
                 "damageConversionRatio"
         );
         this.capacityHealthRatio = requirePositiveFinite(capacityHealthRatio, "capacityHealthRatio");
+        if (rapidWindowTicks <= 0) throw new IllegalArgumentException("rapidWindowTicks must be positive");
+        if (!Double.isFinite(rapidFraction) || rapidFraction <= 0 || rapidFraction >= 1)
+            throw new IllegalArgumentException("rapidFraction must be between zero and one");
+        this.rapidWindowTicks = rapidWindowTicks;
+        this.rapidFraction = rapidFraction;
         this.distanceBands = validateDistanceBands(distanceBands);
         if (sourceDedupeTicks < 0) {
             throw new IllegalArgumentException("sourceDedupeTicks must be non-negative");
@@ -80,6 +96,8 @@ public final class StaggerTracker<S> {
                 phaseMaximumHealth,
                 DEFAULT_DAMAGE_CONVERSION_RATIO,
                 DEFAULT_CAPACITY_HEALTH_RATIO,
+                DEFAULT_RAPID_WINDOW_TICKS,
+                DEFAULT_RAPID_FRACTION,
                 DEFAULT_DISTANCE_BANDS,
                 DEFAULT_SOURCE_DEDUPE_TICKS,
                 DEFAULT_DECAY_DELAY_TICKS,
@@ -97,6 +115,8 @@ public final class StaggerTracker<S> {
                 checkedState.phaseMaximumHealth(),
                 checkedState.damageConversionRatio(),
                 checkedState.capacityHealthRatio(),
+                checkedState.rapidWindowTicks(),
+                checkedState.rapidFraction(),
                 checkedState.distanceBands(),
                 checkedState.sourceDedupeTicks(),
                 checkedState.decayDelayTicks(),
@@ -105,6 +125,11 @@ public final class StaggerTracker<S> {
                 checkedState.immunityTicks()
         );
         tracker.stagger = checkedState.stagger();
+        tracker.rapidLimited = checkedState.rapidLimited();
+        tracker.rapidBudget = checkedState.rapidBudget();
+        tracker.recentRawRate = checkedState.recentRawRate();
+        tracker.milestoneTier = checkedState.milestoneTier();
+        tracker.milestoneElapsedTicks = checkedState.milestoneElapsedTicks();
         tracker.pendingStun = checkedState.pendingStun();
         tracker.lastObservedGameTick = gameTick;
         tracker.lastDecayProcessedTick = gameTick;
@@ -145,6 +170,8 @@ public final class StaggerTracker<S> {
                 stagger,
                 damageConversionRatio,
                 capacityHealthRatio,
+                rapidWindowTicks,
+                rapidFraction,
                 distanceBands,
                 sourceDedupeTicks,
                 decayDelayTicks,
@@ -154,7 +181,12 @@ public final class StaggerTracker<S> {
                 remainingDecayDelayTicksAt(gameTick),
                 remainingStunnedTicksAt(gameTick),
                 remainingImmunityTicksForPersistenceAt(gameTick),
-                pendingStun
+                pendingStun,
+                rapidLimited,
+                rapidBudget,
+                recentRawRate,
+                milestoneTier,
+                milestoneElapsedTicks
         );
     }
 
@@ -203,11 +235,32 @@ public final class StaggerTracker<S> {
         if (rawIncrease == 0.0) {
             return update(StaggerResult.ZERO_INCREMENT, gameTick, 0.0, false);
         }
-        double appliedIncrease = Math.min(rawIncrease, capacity - stagger);
+        double quarter = capacity * rapidFraction;
+        if (milestoneElapsedTicks < 0) milestoneElapsedTicks = 0;
+        recentRawRate += rawIncrease / rapidWindowTicks;
+        int tier = Math.min((int) Math.floor(stagger / quarter), (int) Math.ceil(1.0 / rapidFraction) - 1);
+        double boundary = Math.min(capacity, (tier + 1.0) * quarter);
+        double targetRate = quarter / rapidWindowTicks;
+        double dynamicRatio = rapidLimited ? Math.min(1.0, targetRate / Math.max(recentRawRate, 1e-12)) : 1.0;
+        double appliedIncrease = Math.min(rawIncrease * dynamicRatio, Math.min(capacity - stagger, boundary - stagger));
+        if (rapidLimited) appliedIncrease = Math.min(appliedIncrease, rapidBudget);
+        boolean reachedBoundary = stagger + appliedIncrease >= boundary - 1e-9;
+        boolean tooFast = milestoneElapsedTicks < rapidWindowTicks || rawIncrease >= quarter;
+        if (!rapidLimited && reachedBoundary && tooFast) {
+            rapidLimited = true;
+            rapidBudget = 0.0;
+            if (boundary == capacity) appliedIncrease = 0.0;
+        } else if (rapidLimited) {
+            rapidBudget = Math.max(0.0, rapidBudget - appliedIncrease);
+        }
         lastAcceptedTickBySource.put(sourceKey, gameTick);
         firstDecayTick = Math.addExact(gameTick, (long) decayDelayTicks + 1L);
         lastDecayProcessedTick = gameTick;
         stagger += appliedIncrease;
+        if (stagger >= boundary - 1e-9 && boundary < capacity) {
+            milestoneTier = tier + 1;
+            milestoneElapsedTicks = 0;
+        }
 
         if (stagger >= capacity) {
             if (deferStun) {
@@ -271,7 +324,9 @@ public final class StaggerTracker<S> {
             throw new IllegalArgumentException("newPhaseMaximumHealth must not decrease");
         }
         phaseMaximumHealth = checkedMaximum;
+        double oldCapacity = capacity;
         capacity = calculateCapacity(checkedMaximum);
+        rapidBudget = Math.min(capacity * rapidFraction, rapidBudget * capacity / oldCapacity);
         if (pendingStun) {
             stagger = capacity;
         }
@@ -280,7 +335,9 @@ public final class StaggerTracker<S> {
     public void resizePhaseMaximumHealth(double newPhaseMaximumHealth, long gameTick) {
         advanceTo(gameTick);
         phaseMaximumHealth = requirePositiveFinite(newPhaseMaximumHealth, "newPhaseMaximumHealth");
+        double oldCapacity = capacity;
         capacity = calculateCapacity(phaseMaximumHealth);
+        rapidBudget = Math.min(capacity * rapidFraction, rapidBudget * capacity / oldCapacity);
         if (pendingStun) {
             stagger = capacity;
             return;
@@ -307,6 +364,7 @@ public final class StaggerTracker<S> {
         immunityUntilExclusive = -1L;
         pendingStun = false;
         lastAcceptedTickBySource.clear();
+        resetRapidControl();
         return snapshot(gameTick);
     }
 
@@ -317,6 +375,7 @@ public final class StaggerTracker<S> {
         lastDecayProcessedTick = gameTick;
         pendingStun = false;
         lastAcceptedTickBySource.clear();
+        resetRapidControl();
     }
 
     public double distanceMultiplier(double horizontalDistance) {
@@ -337,6 +396,15 @@ public final class StaggerTracker<S> {
             throw new IllegalArgumentException("gameTick must not move backwards");
         }
 
+        if (lastObservedGameTick >= 0 && gameTick > lastObservedGameTick) {
+            long elapsed = gameTick - lastObservedGameTick;
+            recentRawRate *= Math.exp(-(double) elapsed / rapidWindowTicks);
+            if (milestoneElapsedTicks >= 0) milestoneElapsedTicks = (int) Math.min(rapidWindowTicks,
+                    (long) milestoneElapsedTicks + elapsed);
+            if (rapidLimited) rapidBudget = Math.min(capacity * rapidFraction,
+                    rapidBudget + elapsed * capacity * rapidFraction / rapidWindowTicks);
+        }
+
         if (stagger > 0.0 && !pendingStun && firstDecayTick >= 0L) {
             long firstUnprocessedTick = Math.max(firstDecayTick, lastDecayProcessedTick + 1L);
             if (gameTick >= firstUnprocessedTick) {
@@ -350,6 +418,17 @@ public final class StaggerTracker<S> {
 
         lastDecayProcessedTick = gameTick;
         lastObservedGameTick = gameTick;
+        if (stagger <= 0.0) {
+            milestoneTier = 0;
+            milestoneElapsedTicks = -1;
+        } else {
+            int currentTier = Math.min((int) Math.floor(stagger / (capacity * rapidFraction)),
+                    (int) Math.ceil(1.0 / rapidFraction) - 1);
+            if (currentTier < milestoneTier) {
+                milestoneTier = currentTier;
+                milestoneElapsedTicks = 0;
+            }
+        }
         if (sourceDedupeTicks == 0) {
             lastAcceptedTickBySource.clear();
         } else {
@@ -369,8 +448,17 @@ public final class StaggerTracker<S> {
         lastDecayProcessedTick = gameTick;
         pendingStun = false;
         lastAcceptedTickBySource.clear();
+        resetRapidControl();
         stunnedUntilExclusive = Math.addExact(gameTick, stunnedTicks);
         immunityUntilExclusive = Math.addExact(stunnedUntilExclusive, immunityTicks);
+    }
+
+    private void resetRapidControl() {
+        rapidLimited = false;
+        rapidBudget = 0.0;
+        recentRawRate = 0.0;
+        milestoneTier = 0;
+        milestoneElapsedTicks = -1;
     }
 
     private StaggerUpdate update(
@@ -494,6 +582,8 @@ public final class StaggerTracker<S> {
                 checkedState.stagger(),
                 checkedState.damageConversionRatio(),
                 checkedState.capacityHealthRatio(),
+                checkedState.rapidWindowTicks(),
+                checkedState.rapidFraction(),
                 checkedState.distanceBands(),
                 checkedState.sourceDedupeTicks(),
                 checkedState.decayDelayTicks(),
@@ -503,7 +593,12 @@ public final class StaggerTracker<S> {
                 checkedState.remainingDecayDelayTicks(),
                 checkedState.remainingStunnedTicks(),
                 checkedState.remainingImmunityTicks(),
-                checkedState.pendingStun()
+                checkedState.pendingStun(),
+                checkedState.rapidLimited(),
+                checkedState.rapidBudget(),
+                checkedState.recentRawRate(),
+                checkedState.milestoneTier(),
+                checkedState.milestoneElapsedTicks()
         );
         return checkedState;
     }
@@ -513,6 +608,8 @@ public final class StaggerTracker<S> {
             double stagger,
             double damageConversionRatio,
             double capacityHealthRatio,
+            int rapidWindowTicks,
+            double rapidFraction,
             List<DistanceBand> distanceBands,
             int sourceDedupeTicks,
             int decayDelayTicks,
@@ -522,7 +619,12 @@ public final class StaggerTracker<S> {
             long remainingDecayDelayTicks,
             long remainingStunnedTicks,
             long remainingImmunityTicks,
-            boolean pendingStun
+            boolean pendingStun,
+            boolean rapidLimited,
+            double rapidBudget,
+            double recentRawRate,
+            int milestoneTier,
+            int milestoneElapsedTicks
     ) {
         double checkedPhaseMaximumHealth = requirePositiveFinite(
                 phaseMaximumHealth,
@@ -533,6 +635,12 @@ public final class StaggerTracker<S> {
                 "capacityHealthRatio"
         );
         requireNonNegativeFinite(damageConversionRatio, "damageConversionRatio");
+        if (rapidWindowTicks <= 0 || !Double.isFinite(rapidFraction) || rapidFraction <= 0 || rapidFraction >= 1)
+            throw new IllegalArgumentException("invalid rapid stagger configuration");
+        requireNonNegativeFinite(recentRawRate, "recentRawRate");
+        if (milestoneTier < 0 || milestoneTier >= Math.ceil(1.0 / rapidFraction)
+                || milestoneElapsedTicks < -1 || milestoneElapsedTicks > rapidWindowTicks)
+            throw new IllegalArgumentException("invalid rapid stagger milestone");
         validateDistanceBands(distanceBands);
         if (sourceDedupeTicks < 0) {
             throw new IllegalArgumentException("sourceDedupeTicks must be non-negative");
@@ -549,6 +657,8 @@ public final class StaggerTracker<S> {
                 checkedPhaseMaximumHealth * checkedCapacityHealthRatio,
                 "capacity"
         );
+        if (!Double.isFinite(rapidBudget) || rapidBudget < 0 || rapidBudget > capacity * rapidFraction + 1e-9)
+            throw new IllegalArgumentException("invalid rapid stagger budget");
         double checkedStagger = requireNonNegativeFinite(stagger, "stagger");
         if (checkedStagger > capacity) {
             throw new IllegalArgumentException("stagger must not exceed capacity");
@@ -626,6 +736,8 @@ public final class StaggerTracker<S> {
             double stagger,
             double damageConversionRatio,
             double capacityHealthRatio,
+            int rapidWindowTicks,
+            double rapidFraction,
             List<DistanceBand> distanceBands,
             int sourceDedupeTicks,
             int decayDelayTicks,
@@ -635,7 +747,12 @@ public final class StaggerTracker<S> {
             long remainingDecayDelayTicks,
             long remainingStunnedTicks,
             long remainingImmunityTicks,
-            boolean pendingStun
+            boolean pendingStun,
+            boolean rapidLimited,
+            double rapidBudget,
+            double recentRawRate,
+            int milestoneTier,
+            int milestoneElapsedTicks
     ) {
         public PersistentState {
             distanceBands = validateDistanceBands(distanceBands);
@@ -644,6 +761,8 @@ public final class StaggerTracker<S> {
                     stagger,
                     damageConversionRatio,
                     capacityHealthRatio,
+                    rapidWindowTicks,
+                    rapidFraction,
                     distanceBands,
                     sourceDedupeTicks,
                     decayDelayTicks,
@@ -653,7 +772,12 @@ public final class StaggerTracker<S> {
                     remainingDecayDelayTicks,
                     remainingStunnedTicks,
                     remainingImmunityTicks,
-                    pendingStun
+                    pendingStun,
+                    rapidLimited,
+                    rapidBudget,
+                    recentRawRate,
+                    milestoneTier,
+                    milestoneElapsedTicks
             );
         }
     }

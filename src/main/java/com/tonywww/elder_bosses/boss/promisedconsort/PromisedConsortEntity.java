@@ -46,6 +46,7 @@ import com.tonywww.elder_bosses.platforms.client.PlatformPromisedConsortAnimatio
 import com.tonywww.elder_bosses.platforms.combat.PlatformShieldDurability;
 import com.tonywww.elder_bosses.platforms.combat.PlatformEnchantmentLevels;
 import com.tonywww.elder_bosses.platforms.entity.PlatformMonster;
+import com.tonywww.elder_bosses.platforms.entity.PlatformBossAttributes;
 import com.tonywww.elder_bosses.platforms.network.PlatformNetwork;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import com.tonywww.elder_bosses.platforms.registry.ModItems;
@@ -266,13 +267,13 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         setPersistenceRequired();
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.Builder createAttributes(PromisedConsortCombatConfigSnapshot.General general) {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 1600.0)
-                .add(Attributes.ATTACK_DAMAGE, 24.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.30)
-                .add(Attributes.FOLLOW_RANGE, 96.0)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
+                .add(Attributes.MAX_HEALTH, general.baseHealth())
+                .add(Attributes.ATTACK_DAMAGE, general.attackDamage())
+                .add(Attributes.MOVEMENT_SPEED, general.movementSpeed())
+                .add(Attributes.FOLLOW_RANGE, general.followRange())
+                .add(Attributes.KNOCKBACK_RESISTANCE, general.knockbackResistance());
     }
 
     @Override
@@ -414,7 +415,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         lastLegalPosition = combatCenter;
         holdArenaDormantPosition();
         setPersistenceRequired();
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(currentConfig().general().baseHealth());
         setHealth(getMaxHealth());
     }
 
@@ -464,7 +464,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         addTag("elder_bosses_skill_test");
         roster.add(observer.getUUID());
         highWaterParticipantCount = 1;
-        applyConfiguredAttributes();
         setHealth(getMaxHealth());
         setTarget(observer);
         entityData.set(ACTIVE_PHASE, testPhase.id());
@@ -742,7 +741,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         initializeCombatComponents();
         registerParticipant(initiator);
-        applyConfiguredAttributes();
         setHealth(getMaxHealth());
         if (arenaBinding != null) {
             holdArenaDormantPosition();
@@ -830,6 +828,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 getMaxHealth(),
                 stagger.damageConversionRatio(),
                 stagger.capacityHealthRatio(),
+                stagger.rapidWindowTicks(),
+                stagger.rapidFraction(),
                 stagger.distanceBands(),
                 stagger.sourceDedupeTicks(),
                 stagger.decayDelayTicks(),
@@ -860,30 +860,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         );
     }
 
-    private void applyConfiguredAttributes() {
-        double maximumHealth = scaledMaximumHealth();
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(maximumHealth);
-        getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(combatConfig.general().attackDamage());
-        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(combatConfig.general().movementSpeed());
-        getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(combatConfig.general().followRange());
-        getAttribute(Attributes.KNOCKBACK_RESISTANCE)
-                .setBaseValue(combatConfig.general().knockbackResistance());
-        if (combatState() != PromisedConsortCombatState.DORMANT
-            && getHealth() > maximumHealth) {
-            setHealth((float) maximumHealth);
-        }
-        if (staggerTracker != null) {
-            staggerTracker.resizePhaseMaximumHealth(maximumHealth, level().getGameTime());
-        }
-    }
-
-    private double scaledMaximumHealth() {
-        PromisedConsortCombatConfigSnapshot snapshotConfig = currentConfig();
-        int participants = scalingParticipantCount();
-        return snapshotConfig.general().baseHealth()
-                * (1.0 + snapshotConfig.general().healthPerExtraPlayer() * (participants - 1));
-    }
-
     private int scalingParticipantCount() {
         PromisedConsortCombatConfigSnapshot snapshotConfig = currentConfig();
         return Math.max(1, switch (snapshotConfig.encounter().scalingCountMode()) {
@@ -911,11 +887,12 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 activeParticipants().size()
         );
         double oldMaximum = getMaxHealth();
-        double newMaximum = scaledMaximumHealth();
+        PlatformBossAttributes.setHealthScaling(this,
+                combatConfig.general().healthPerExtraPlayer() * (scalingParticipantCount() - 1));
+        double newMaximum = getMaxHealth();
         if (Double.compare(oldMaximum, newMaximum) == 0) {
             return;
         }
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(newMaximum);
         if (combatState() != PromisedConsortCombatState.DORMANT) {
             double adjustedHealth = newMaximum > oldMaximum
                     ? getHealth() + newMaximum - oldMaximum
@@ -1507,7 +1484,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         disengaging = false;
         entityData.set(ACTIVE_PHASE, PromisedConsortPhase.PHASE_ONE.id());
         entityData.set(MIQUELLA_VISIBLE, false);
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(combatConfig.general().baseHealth());
+        PlatformBossAttributes.setHealthScaling(this, 0.0);
         setHealth(getMaxHealth());
         bossEvent.setVisible(false);
         setCombatState(PromisedConsortCombatState.DORMANT);
@@ -1585,7 +1562,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             return;
         }
         Set<UUID> observed = new HashSet<>();
-        for (ServerPlayer player : eligiblePlayers(combatConfig.general().followRange())) {
+        for (ServerPlayer player : eligiblePlayers(getAttributeValue(Attributes.FOLLOW_RANGE))) {
             observed.add(player.getUUID());
             boolean eligible = player.isUsingItem() && player.getUseItem().is(instantGuardItemTag);
             instantGuardTracker.updateGuarding(
@@ -1847,7 +1824,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             .filter(entry -> !currentIndicators.containsKey(entry.getKey()))
             .map(entry -> expired(entry.getValue(), level().getGameTime()))
             .toList();
-        double range = snapshotConfig.general().followRange();
+        double range = getAttributeValue(Attributes.FOLLOW_RANGE);
             List<ServerPlayer> recipients = eligiblePlayers(range);
             Set<UUID> currentRecipients = recipients.stream()
                 .map(ServerPlayer::getUUID)
@@ -1946,7 +1923,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        double range = combatConfig == null ? 0.0 : combatConfig.general().followRange();
+        double range = combatConfig == null ? 0.0 : getAttributeValue(Attributes.FOLLOW_RANGE);
         if (combatConfig != null && player.distanceToSqr(this) <= range * range) {
             if (audienceContains(player, combatConfig.presentation().bossBarAudience())) {
                 bossEvent.addPlayer(player);
@@ -2900,7 +2877,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
         private List<ServerPlayer> audience(String policy) {
-        return eligiblePlayers(combatConfig.general().followRange()).stream()
+        return eligiblePlayers(getAttributeValue(Attributes.FOLLOW_RANGE)).stream()
             .filter(player -> audienceContains(player, policy))
             .toList();
         }
@@ -2916,7 +2893,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 snapshotConfig.presentation().bossBarAudience()
             );
             case "tracking", "follow_range" -> {
-                double range = snapshotConfig.general().followRange();
+                double range = getAttributeValue(Attributes.FOLLOW_RANGE);
                 yield player.distanceToSqr(this) <= range * range;
             }
             default -> false;
@@ -3018,7 +2995,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         }
         activeCloneIds.clear();
         activeRockIds.clear();
-        double cleanupRange = currentConfig().general().followRange();
+        double cleanupRange = getAttributeValue(Attributes.FOLLOW_RANGE);
         level().getEntitiesOfClass(
             PromisedConsortCloneEntity.class,
             getBoundingBox().inflate(cleanupRange),
@@ -3305,7 +3282,6 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                     ));
                 }
             }
-            applyConfiguredAttributes();
             if ("reset_dormant".equals(combatConfig.encounter().restartPolicy())) {
                 resetEncounter();
                 return;

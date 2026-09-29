@@ -31,7 +31,7 @@ public final class MaleniaConfigNbt {
     private static final int DAMAGE_ROUTING_REMOVED_FORMAT_VERSION = 10;
     private static final int SKILL_TUNING_FORMAT_VERSION = 11;
     private static final int COMPONENT_TIMING_FORMAT_VERSION = 12;
-    private static final int FORMAT_VERSION = 14;
+    private static final int FORMAT_VERSION = 15;
 
     private MaleniaConfigNbt() {
     }
@@ -202,7 +202,7 @@ public final class MaleniaConfigNbt {
             readTargeting(readCompound(tag, "targeting")),
             readSelector(readCompound(tag, "selector"), formatVersion),
                 readHealing(readCompound(tag, "healing"), formatVersion),
-                readStagger(readCompound(tag, "stagger"), formatVersion),
+                readStagger(readCompound(tag, "stagger")),
                 readInstantGuard(readCompound(tag, "instantGuard"), formatVersion),
                 readScarletRot(readCompound(tag, "scarletRot"), formatVersion),
                 readPhaseTransition(readCompound(tag, "phaseTransition"), formatVersion),
@@ -697,6 +697,8 @@ public final class MaleniaConfigNbt {
         CompoundTag tag = new CompoundTag();
         tag.putDouble("damageConversionRatio", value.damageConversionRatio());
         tag.putDouble("capacityHealthRatio", value.capacityHealthRatio());
+        tag.putInt("rapidWindowTicks", value.rapidWindowTicks());
+        tag.putDouble("rapidFraction", value.rapidFraction());
         tag.put("distanceBands", writeDistanceBands(value.distanceBands()));
         tag.putInt("sourceDedupeTicks", value.sourceDedupeTicks());
         tag.putInt("decayDelayTicks", value.decayDelayTicks());
@@ -707,46 +709,16 @@ public final class MaleniaConfigNbt {
         return tag;
     }
 
-        private static MaleniaCombatConfigSnapshot.Stagger readStagger(
-            CompoundTag tag,
-            int formatVersion
-        ) {
-        if (formatVersion < FIXED_RUNTIME_RULES_FORMAT_VERSION) {
-            requireExactFields(
-                tag,
-                "damageConversionRatio",
-                "capacityHealthRatio",
-                "distanceBands",
-                "usesActualHealthLoss",
-                "aggregateByHitId",
-                "eligibleSources",
-                "sourceDedupeTicks",
-                "decayDelayTicks",
-                "decayPerTick",
-                "stunTicks",
-                "postStunImmunityTicks",
-                "resetOnPhaseChange"
-            );
-            readBoolean(tag, "usesActualHealthLoss");
-            readBoolean(tag, "aggregateByHitId");
-            readString(tag, "eligibleSources");
-        } else {
-            requireExactFields(
-                tag,
-                "damageConversionRatio",
-                "capacityHealthRatio",
-                "distanceBands",
-                "sourceDedupeTicks",
-                "decayDelayTicks",
-                "decayPerTick",
-                "stunTicks",
-                "postStunImmunityTicks",
-                "resetOnPhaseChange"
-            );
-        }
+        private static MaleniaCombatConfigSnapshot.Stagger readStagger(CompoundTag tag) {
+        requireExactFields(tag,
+                "damageConversionRatio", "capacityHealthRatio", "rapidWindowTicks", "rapidFraction",
+                "distanceBands", "sourceDedupeTicks", "decayDelayTicks", "decayPerTick",
+                "stunTicks", "postStunImmunityTicks", "resetOnPhaseChange");
         return new MaleniaCombatConfigSnapshot.Stagger(
                 readDouble(tag, "damageConversionRatio"),
                 readDouble(tag, "capacityHealthRatio"),
+                readInt(tag, "rapidWindowTicks"),
+                readDouble(tag, "rapidFraction"),
                 readDistanceBands(tag, "distanceBands"),
                 readInt(tag, "sourceDedupeTicks"),
                 readInt(tag, "decayDelayTicks"),

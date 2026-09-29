@@ -101,7 +101,7 @@ Object.assign(project.textures[0],{name:'malenia_phase_two.png',width,height,uv_
     path:'textures/malenia_phase_two.png',relative_path:'textures/malenia_phase_two.png',source:'data:image/png;base64,'+atlas.toString('base64')});
 Object.assign(geo['minecraft:geometry'][0].description,{identifier:'geometry.malenia_phase_two',texture_width:width,texture_height:height});
 write('malenia_phase_two.bbmodel',project);write('geo/malenia_phase_two.geo.json',geo);
-const assets=read('current_assets.json');assets.source_revision='phase_two_feedback_v16';
+const assets=read('current_assets.json');assets.source_revision='aeonia_bloom_rework_v17';
 assets.phase_two={bones:bones.size,cubes:elements.size,faces:[...bones.values()].flatMap(b=>b.cubes||[]).reduce((n,c)=>n+Object.keys(c.uv).length,0),texture_width:width,texture_height:height};
 for(const [source,runtime]of [
     ['malenia_phase_two.bbmodel',null],

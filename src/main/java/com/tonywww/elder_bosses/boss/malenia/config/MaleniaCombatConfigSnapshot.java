@@ -437,6 +437,8 @@ public record MaleniaCombatConfigSnapshot(
     public record Stagger(
             double damageConversionRatio,
             double capacityHealthRatio,
+            int rapidWindowTicks,
+            double rapidFraction,
             List<DistanceBand> distanceBands,
             int sourceDedupeTicks,
             int decayDelayTicks,
@@ -448,6 +450,8 @@ public record MaleniaCombatConfigSnapshot(
         public Stagger {
             requireFraction(damageConversionRatio, "stagger.damageConversionRatio");
             requirePositiveFraction(capacityHealthRatio, "stagger.capacityHealthRatio");
+            requirePositive(rapidWindowTicks, "stagger.rapidWindowTicks");
+            requirePositiveFraction(rapidFraction, "stagger.rapidFraction");
             distanceBands = validateDistanceBands(distanceBands);
             requireNonNegative(sourceDedupeTicks, "stagger.sourceDedupeTicks");
             requireNonNegative(decayDelayTicks, "stagger.decayDelayTicks");

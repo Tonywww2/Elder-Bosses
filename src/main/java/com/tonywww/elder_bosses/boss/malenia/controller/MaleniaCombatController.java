@@ -284,7 +284,7 @@ public final class MaleniaCombatController {
                 cooldowns.highThreatRemainingTicks(gameTime) == 0,
                 eligibleActions,
                 host.phaseTwoAerialWeightMultiplier(),
-                combatConfig.general().followRange()
+                host.followRange(combatConfig.general().followRange())
         );
         long seed = stableSeed(gameTime, phase, selectedTarget.getUUID());
         Optional<LivingEntity> actionTarget = target;
@@ -308,7 +308,7 @@ public final class MaleniaCombatController {
                 continue;
             }
             double distance = checkedDistance(target);
-            if (distance > combatConfig.general().followRange()) {
+            if (distance > host.followRange(combatConfig.general().followRange())) {
                 continue;
             }
             double recentDamage = host.recentDamage(target, windowTicks);
@@ -359,7 +359,7 @@ public final class MaleniaCombatController {
                 .filter(target -> !(target instanceof Player player)
                         || (!player.isCreative() && !player.isSpectator()))
                 .filter(target -> checkedDistance(target)
-                        <= combatConfig.general().followRange())
+                        <= host.followRange(combatConfig.general().followRange()))
                 .map(target -> (LivingEntity) target)
                 .findFirst();
         }
@@ -373,7 +373,7 @@ public final class MaleniaCombatController {
         LivingEntity target = candidate.target();
         MaleniaCombatConfigSnapshot.Targeting targeting = combatConfig.targeting();
         double distanceScore = 1.0 - Math.min(
-            candidate.distance() / combatConfig.general().followRange(),
+            candidate.distance() / host.followRange(combatConfig.general().followRange()),
             1.0
         );
         double recentDamageScore = maximumRecentDamage > 0.0
@@ -609,6 +609,10 @@ public final class MaleniaCombatController {
 
     public interface Host {
         long gameTime();
+
+        default double followRange(double configuredRange) {
+            return configuredRange;
+        }
 
         MaleniaCombatState combatState();
 

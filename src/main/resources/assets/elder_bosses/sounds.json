@@ -1,4 +1,13 @@
 {
+  "ui.boss_victory_banner": {
+    "subtitle": "subtitles.elder_bosses.ui.boss_victory_banner",
+    "sounds": [
+      {
+        "name": "elder_bosses:ui/boss_victory_banner",
+        "preload": true
+      }
+    ]
+  },
   "music.promised_consort.phase_one": {
     "sounds": [
       {

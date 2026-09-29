@@ -141,5 +141,6 @@
   "block.elder_bosses.haligtree_altar.blocked": "Clear the chamber spawn and anchor positions first.",
   "block.elder_bosses.haligtree_altar.failed": "The summoning failed. Your offering was not consumed.",
   "block.elder_bosses.haligtree_silt_slab": "Haligtree Silt Slab",
-  "subtitles.elder_bosses.entity.malenia.parry_success": "Malenia: Parry success"
+  "subtitles.elder_bosses.entity.malenia.parry_success": "Malenia: Parry success",
+  "subtitles.elder_bosses.ui.boss_victory_banner": "Boss defeated"
 }

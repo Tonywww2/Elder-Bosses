@@ -35,13 +35,15 @@
 
 	[promised_consort.stagger]
 		decay_delay_ticks = 120
-		capacity_health_ratio = 0.1
+		capacity_health_ratio = 0.5
+		rapid_window_ticks = 240
+		rapid_fraction = 0.25
 		generated_hazards_on_stun = "persist"
 		stun_ticks = 80
 		source_dedupe_ticks = 5
 		decay_per_tick = 2.0
 		pending_hazards_on_stun = "cancel"
-		damage_conversion_ratio = 0.75
+		damage_conversion_ratio = 1.0
 		reset_on_phase_change = false
 		post_stun_immunity_ticks = 100
 
@@ -838,9 +840,10 @@
 				attack_ratio = 0.45
 				flat = 2.0
 
-	# Promised Consort server-authoritative values are snapshotted when an encounter
-	# starts unless a field is explicitly documented as live client state.
+	# Base attributes are defaults at entity attribute registration. Other combat
+	# values are snapshotted when an encounter starts.
 	[promised_consort.general]
+		# Scripts changing base attributes on spawn take precedence in combat.
 		knockback_resistance = 1.0
 		# Balanced for 1-4 players; accepted range is 1-16.
 		max_active_players = 4
@@ -1112,11 +1115,13 @@
 
 	[malenia.stagger]
 		decay_delay_ticks = 120
-		capacity_health_ratio = 0.1
+		capacity_health_ratio = 0.5
+		rapid_window_ticks = 240
+		rapid_fraction = 0.25
 		stun_ticks = 70
 		source_dedupe_ticks = 5
 		decay_per_tick = 1.5
-		damage_conversion_ratio = 0.75
+		damage_conversion_ratio = 1.0
 		reset_on_phase_change = true
 		post_stun_immunity_ticks = 80
 
@@ -1469,6 +1474,8 @@
 
 	# Corruption Goddess (Malenia) server-authoritative values.
 	[malenia.general]
+		# Phase one sets registered max health; phase two keeps its configured ratio
+		# to phase one and scales from the entity's actual max health at combat start.
 		phase_one_health = 900.0
 		knockback_resistance = 0.75
 		max_active_players = 4

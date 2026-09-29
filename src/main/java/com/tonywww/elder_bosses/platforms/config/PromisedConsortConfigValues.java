@@ -152,6 +152,8 @@ public final class PromisedConsortConfigValues {
                 new PromisedConsortCombatConfigSnapshot.Stagger(
                         number("stagger.damage_conversion_ratio"),
                         number("stagger.capacity_health_ratio"),
+                        integer("stagger.rapid_window_ticks"),
+                        number("stagger.rapid_fraction"),
                         distanceBands(),
                         integer("stagger.source_dedupe_ticks"),
                         integer("stagger.decay_delay_ticks"),
@@ -404,8 +406,10 @@ public final class PromisedConsortConfigValues {
 
     private void defineCombatSystems(Builder builder) {
         builder.push("stagger");
-        putNumber("stagger.damage_conversion_ratio", builder.number("damage_conversion_ratio", 0.75, 0.0, 1.0));
-        putNumber("stagger.capacity_health_ratio", builder.number("capacity_health_ratio", 0.10, 0.001, 1.0));
+        putNumber("stagger.damage_conversion_ratio", builder.number("damage_conversion_ratio", 1.0, 0.0, 1.0));
+        putNumber("stagger.capacity_health_ratio", builder.number("capacity_health_ratio", 0.50, 0.001, 1.0));
+        putInteger("stagger.rapid_window_ticks", builder.integer("rapid_window_ticks", 240, 1, NetworkLimits.MAX_TICKS));
+        putNumber("stagger.rapid_fraction", builder.number("rapid_fraction", 0.25, 0.001, 0.999));
         putList("stagger.distance_bands", builder.distanceBandList("distance_bands"));
         putInteger("stagger.source_dedupe_ticks", builder.integer("source_dedupe_ticks", 5, 0, NetworkLimits.MAX_TICKS));
         putInteger("stagger.decay_delay_ticks", builder.integer("decay_delay_ticks", 120, 0, NetworkLimits.MAX_TICKS));

@@ -2,6 +2,7 @@ package com.tonywww.elder_bosses.platforms;
 
 import com.tonywww.elder_bosses.boss.malenia.MaleniaEntity;
 import com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity;
+import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig;
 import com.tonywww.elder_bosses.platforms.registry.ModAttributes;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import net.minecraft.world.entity.EntityType;
@@ -19,10 +20,12 @@ public final class ModEntityEvents {
     }
 
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.MALENIA.get(), MaleniaEntity.createAttributes().build());
+        event.put(ModEntities.MALENIA.get(), MaleniaEntity.createAttributes(
+                ElderBossesCommonConfig.VALUES.maleniaGeneral()).build());
         event.put(
                 ModEntities.PROMISED_CONSORT.get(),
-                PromisedConsortEntity.createAttributes().build()
+                PromisedConsortEntity.createAttributes(
+                        ElderBossesCommonConfig.VALUES.promisedConsortCombatSnapshot().general()).build()
         );
         event.put(
             ModEntities.PROMISED_CONSORT_CLONE.get(),

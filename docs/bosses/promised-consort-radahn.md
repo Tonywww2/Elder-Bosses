@@ -351,7 +351,7 @@ Boss 施法期间悬浮且不可被击退，但仍可受伤。玩家可以全速
 
 `硬直增量 = D × damage_conversion_ratio × distance_multiplier`
 
-默认 `damage_conversion_ratio = 0.75`，硬直值上限为多人缩放后最大生命的 10%。距离取伤害来源实体到 Boss 碰撞箱最近点的水平距离，采用离散区间而非连续函数：
+默认 `damage_conversion_ratio = 1.0`，硬直值上限为多人缩放后最大生命的 50%。若在默认的 240 tick 内累计达到上限的 25%，本次增量先截在 25%／50%／75% 档位，之后根据近期原始增量速率动态降低转化比例，以约每 240 tick 25% 的速度继续积累；`rapid_window_ticks` 和 `rapid_fraction` 可配置。距离取伤害来源实体到 Boss 碰撞箱最近点的水平距离，采用离散区间而非连续函数：
 
 | 命中距离 | 默认倍率 |
 | ---: | ---: |
@@ -484,8 +484,10 @@ physical_uses_armor = true
 magic_bypasses_armor = true
 
 [promised_consort.stagger]
-damage_conversion_ratio = 0.75
-capacity_health_ratio = 0.10
+damage_conversion_ratio = 1.0
+capacity_health_ratio = 0.50
+rapid_window_ticks = 240
+rapid_fraction = 0.25
 distance_bands = [
     { max_distance = 4.0, multiplier = 1.00 },
     { max_distance = 8.0, multiplier = 0.70 },

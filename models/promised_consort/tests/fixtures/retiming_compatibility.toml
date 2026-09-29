@@ -91,13 +91,15 @@
 
 	[promised_consort.stagger]
 		decay_delay_ticks = 120
-		capacity_health_ratio = 0.1
+		capacity_health_ratio = 0.5
+		rapid_window_ticks = 240
+		rapid_fraction = 0.25
 		generated_hazards_on_stun = "persist"
 		stun_ticks = 80
 		source_dedupe_ticks = 5
 		decay_per_tick = 2.0
 		pending_hazards_on_stun = "cancel"
-		damage_conversion_ratio = 0.75
+		damage_conversion_ratio = 1.0
 		reset_on_phase_change = false
 		post_stun_immunity_ticks = 100
 
@@ -774,11 +776,13 @@
 
 	[malenia.stagger]
 		decay_delay_ticks = 120
-		capacity_health_ratio = 0.1
+		capacity_health_ratio = 0.5
+		rapid_window_ticks = 240
+		rapid_fraction = 0.25
 		stun_ticks = 70
 		source_dedupe_ticks = 5
 		decay_per_tick = 1.5
-		damage_conversion_ratio = 0.75
+		damage_conversion_ratio = 1.0
 		reset_on_phase_change = true
 		post_stun_immunity_ticks = 80
 

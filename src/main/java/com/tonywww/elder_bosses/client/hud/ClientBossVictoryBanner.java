@@ -4,7 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.tonywww.elder_bosses.network.BossDefeatedPacket;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.client.PlatformVictoryFont;
+import com.tonywww.elder_bosses.platforms.registry.ModSoundEvents;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -29,7 +31,11 @@ public final class ClientBossVictoryBanner {
     public static void tick() {
         Minecraft client = Minecraft.getInstance();
         if (client.level == null || client.player == null) clear();
-        else if (!client.isPaused()) STATE.tick();
+        else if (!client.isPaused()) {
+            STATE.tick();
+            if (STATE.consumeStart()) client.getSoundManager().play(SimpleSoundInstance.forUI(
+                    ModSoundEvents.BOSS_VICTORY_BANNER.get(), 1.0F, 1.0F));
+        }
     }
 
     public static void clear() {

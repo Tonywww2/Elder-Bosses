@@ -34,6 +34,7 @@ public final class ModSoundEvents {
     public static final Supplier<SoundEvent> MALENIA_MUSIC_PHASE_ONE = register("music.malenia.phase_one");
     public static final Supplier<SoundEvent> MALENIA_MUSIC_PHASE_TWO = register("music.malenia.phase_two");
     public static final Supplier<SoundEvent> MALENIA_PARRY_SUCCESS = register("entity.malenia.parry_success");
+    public static final Supplier<SoundEvent> BOSS_VICTORY_BANNER = register("ui.boss_victory_banner");
         public static final Supplier<SoundEvent> PROMISED_CONSORT_INSTANT_GUARD_CUE = SOUNDS.register(
             "promised_consort.instant_guard_cue",
             () -> SoundEvent.createVariableRangeEvent(

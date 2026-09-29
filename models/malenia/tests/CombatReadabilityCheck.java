@@ -15,6 +15,14 @@ public final class CombatReadabilityCheck {
         var config=com.electronwill.nightconfig.core.CommentedConfig.inMemory();
         ElderBossesCommonConfig.SPEC.correct(config);ElderBossesCommonConfig.SPEC.setConfig(config);
         var combat=ElderBossesCommonConfig.VALUES.maleniaCombatSnapshot();
+        var maleniaStagger = combat.stagger();
+        var consortStagger = ElderBossesCommonConfig.VALUES.promisedConsortCombatSnapshot().stagger();
+        check(maleniaStagger.damageConversionRatio() == 1.0 && maleniaStagger.capacityHealthRatio() == .5
+                && maleniaStagger.rapidWindowTicks() == 240 && maleniaStagger.rapidFraction() == .25,
+                "Malenia stagger defaults differ from the current spec");
+        check(consortStagger.damageConversionRatio() == 1.0 && consortStagger.capacityHealthRatio() == .5
+                && consortStagger.rapidWindowTicks() == 240 && consortStagger.rapidFraction() == .25,
+                "Consort stagger defaults differ from the current spec");
         var skills=ElderBossesCommonConfig.VALUES.maleniaSkillSnapshot();
         var loaded=MaleniaConfigNbt.read(MaleniaConfigNbt.write(combat,skills)).orElseThrow();
         check(loaded.combat().equals(combat)&&loaded.skills().equals(skills),"Current config NBT roundtrip failed");

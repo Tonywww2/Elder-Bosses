@@ -1,7 +1,7 @@
 {
   "ticks_per_second": 20,
   "root_motion": "server_only",
-  "revision": "combat_readability_v15",
+  "revision": "aeonia_bloom_rework_v17",
   "figure_scale": 1.2,
   "interpolation": "anticipation_acceleration_followthrough_baked",
   "grip_rotation": "anatomical_elbow_fixed_grip_no_compensation",

@@ -26,6 +26,8 @@ public final class BossVictoryBannerCheck {
         var state = new BossVictoryBannerState();
         require(!state.frame(0).visible(), "Idle HUD must be empty");
         state.offer(RADAHN, Victory.GOD_SLAIN);
+        require(state.consumeStart(), "First victory must start the cue");
+        require(!state.consumeStart(), "The same banner played its cue twice");
         float previous = 0;
         for (int tick = 0; tick < BossVictoryBannerState.DURATION_TICKS; tick++) {
             for (int sample = 0; sample < 10; sample++) {
@@ -44,10 +46,13 @@ public final class BossVictoryBannerCheck {
                 state.offer(RADAHN, Victory.GOD_SLAIN);
                 require(state.frame(0).opacity() == before, "Duplicate event restarted banner");
                 state.offer(MALENIA, Victory.DEMIGOD_FELLED);
+                require(!state.consumeStart(), "Queued victory played its cue early");
             }
             state.tick();
         }
         require(state.frame(0).victory() == Victory.DEMIGOD_FELLED, "Concurrent victory was lost");
+        require(state.consumeStart(), "Queued victory did not play its cue");
+        require(!state.consumeStart(), "Queued victory repeated its cue");
         require(state.frame(0).opacity() == 0, "Queued banner must have its own fade-in");
         for (int tick = 0; tick < BossVictoryBannerState.DURATION_TICKS; tick++) state.tick();
         require(state.frame(0).victory() == null, "Duplicate packet queued another banner");
@@ -92,6 +97,13 @@ public final class BossVictoryBannerCheck {
                 "assets/elder_bosses/font/victory.json"))).getAsJsonObject();
         require(definition.getAsJsonArray("providers").get(0).getAsJsonObject()
                 .get("file").getAsString().equals("elder_bosses:cinzel_regular.ttf"), "Invalid font reference");
+        var sounds = JsonParser.parseString(Files.readString(resources.resolve(
+                "assets/elder_bosses/sounds.json"))).getAsJsonObject();
+        var cue = sounds.getAsJsonObject("ui.boss_victory_banner");
+        require(cue.getAsJsonArray("sounds").get(0).getAsJsonObject().get("name").getAsString()
+                .equals("elder_bosses:ui/boss_victory_banner"), "Victory sound event missing its cue");
+        Path cuePath = Path.of("assets/elder_bosses/sounds/ui/boss_victory_banner.ogg");
+        require(Files.size(resources.resolve(cuePath)) > 10_000, "Victory cue absent or empty");
         for (String language : new String[] {"en_us", "zh_cn"}) {
             var translations = JsonParser.parseString(Files.readString(resources.resolve(
                     "assets/elder_bosses/lang/" + language + ".json"))).getAsJsonObject();
@@ -102,7 +114,8 @@ public final class BossVictoryBannerCheck {
         }
         for (String version : new String[] {"1.20.1-forge", "1.21.1-neoforge"}) {
             for (String asset : new String[] {fontPath.toString(), "assets/elder_bosses/font/victory.json",
-                    "META-INF/CINZEL-OFL.txt", "META-INF/VICTORY-FONT-CREDITS.txt"}) {
+                    "META-INF/CINZEL-OFL.txt", "META-INF/VICTORY-FONT-CREDITS.txt",
+                    cuePath.toString(), "assets/elder_bosses/sounds.json"}) {
                 require(Arrays.equals(Files.readAllBytes(resources.resolve(asset)), Files.readAllBytes(
                         Path.of("versions", version, "build/resources/main").resolve(asset))),
                         version + " omitted/changed banner font resource: " + asset);

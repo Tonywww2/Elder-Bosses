@@ -52,6 +52,7 @@ import com.tonywww.elder_bosses.player.PlayerRotService;
 import com.tonywww.elder_bosses.platforms.PlatformResourceLocation;
 import com.tonywww.elder_bosses.platforms.combat.PlatformShieldDurability;
 import com.tonywww.elder_bosses.platforms.entity.PlatformMonster;
+import com.tonywww.elder_bosses.platforms.entity.PlatformBossAttributes;
 import com.tonywww.elder_bosses.platforms.client.PlatformMaleniaAnimationController;
 import com.tonywww.elder_bosses.platforms.network.PlatformNetwork;
 import com.tonywww.elder_bosses.platforms.registry.ModAttributes;
@@ -255,6 +256,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     private StaggerTracker.StaggerState syncedStaggerState;
     private long lastStaggerSyncGameTime = -1L;
     private boolean applyingResolvedDamage;
+    private boolean landTravelInWater;
     private float nativeHealthBeforeDamage;
     private double resolvedPhaseHealthLoss;
     private DamageSource defeatDamageSource;
@@ -273,15 +275,16 @@ public final class MaleniaEntity extends PlatformMonster implements
         );
         bossEvent.setVisible(false);
         setPersistenceRequired();
+        PlatformMaleniaArenaNavigation.configure(this);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.Builder createAttributes(ElderBossesCommonConfig.MaleniaGeneralValues general) {
         AttributeSupplier.Builder builder = Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 900.0)
-                .add(Attributes.ATTACK_DAMAGE, 20.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.34)
-                .add(Attributes.FOLLOW_RANGE, 56.0)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75);
+                .add(Attributes.MAX_HEALTH, general.phaseOneHealth())
+                .add(Attributes.ATTACK_DAMAGE, general.attackDamage())
+                .add(Attributes.MOVEMENT_SPEED, general.movementSpeed())
+                .add(Attributes.FOLLOW_RANGE, general.followRange())
+                .add(Attributes.KNOCKBACK_RESISTANCE, general.knockbackResistance());
         return ModAttributes.addScarletRotCapacity(builder, 1_000.0);
     }
 
@@ -338,7 +341,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                     holdArenaSpawn();
                 }
                 if (combatState() != MaleniaCombatState.DORMANT) {
-                    arenaEmptyTicks = countEligiblePlayers(currentConfig().general().followRange()) == 0 ? arenaEmptyTicks + 1 : 0;
+                    arenaEmptyTicks = countEligiblePlayers(followRange()) == 0 ? arenaEmptyTicks + 1 : 0;
                     if (arenaEmptyTicks > 0 && arenaEmptyTicks >= Math.max(1, arenaLeashGraceTicks)) {
                         resetBoundEncounter();
                         return;
@@ -349,7 +352,7 @@ public final class MaleniaEntity extends PlatformMonster implements
 
         if (combatState() == MaleniaCombatState.DORMANT) {
             if (tickCount % DORMANT_PLAYER_SCAN_INTERVAL_TICKS == 0) {
-                int playerCount = countEligiblePlayers(currentConfig().general().followRange());
+                int playerCount = countEligiblePlayers(followRange());
                 if (playerCount > 0) {
                     beginEncounter(playerCount);
                 }
@@ -405,7 +408,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     }
 
     public boolean beginEncounter() {
-        int playerCount = countEligiblePlayers(currentConfig().general().followRange());
+        int playerCount = countEligiblePlayers(followRange());
         return playerCount > 0 && beginEncounter(playerCount);
     }
 
@@ -414,7 +417,6 @@ public final class MaleniaEntity extends PlatformMonster implements
             throw new IllegalStateException("Only a fresh dormant Malenia can bind to an arena");
         }
         arenaBinding = Objects.requireNonNull(binding);
-        PlatformMaleniaArenaNavigation.configure(this,true);
         var config = ElderBossesCommonConfig.VALUES.maleniaArena();
         arenaRadius = Math.min(26, config.logicalRadius());
         arenaLeashGraceTicks = config.leashGraceTicks();
@@ -481,13 +483,55 @@ public final class MaleniaEntity extends PlatformMonster implements
 
     @Override
     public void travel(Vec3 input) {
-        if (!level().isClientSide && (cruiseHalted || currentActionSnapshot != null)) {
-            Vec3 velocity = getDeltaMovement();
-            setDeltaMovement(0, velocity.y, 0);
-            super.travel(Vec3.ZERO);
-            setDeltaMovement(0, getDeltaMovement().y, 0);
-        } else super.travel(input);
+        landTravelInWater = isInWater();
+        try {
+            if (!level().isClientSide && (cruiseHalted || currentActionSnapshot != null)) {
+                Vec3 velocity = getDeltaMovement();
+                setDeltaMovement(0, velocity.y, 0);
+                super.travel(Vec3.ZERO);
+                setDeltaMovement(0, getDeltaMovement().y, 0);
+            } else super.travel(input);
+        } finally {
+            landTravelInWater = false;
+        }
     }
+
+    @Override
+    protected boolean isAffectedByFluids() {
+        return !landTravelInWater;
+    }
+
+    //? if forge {
+    @Override
+    public boolean isPushedByFluid(net.minecraftforge.fluids.FluidType type) {
+        return type != net.minecraft.world.level.material.Fluids.WATER.getFluidType() && super.isPushedByFluid(type);
+    }
+
+    @Override
+    public void jumpInFluid(net.minecraftforge.fluids.FluidType type) {
+        if (type == net.minecraft.world.level.material.Fluids.WATER.getFluidType()) {
+            if (onGround()) jumpFromGround();
+        } else super.jumpInFluid(type);
+    }
+    //?} else {
+    /*@Override
+    public boolean isPushedByFluid(net.neoforged.neoforge.fluids.FluidType type) {
+        return type != net.minecraft.world.level.material.Fluids.WATER.getFluidType() && super.isPushedByFluid(type);
+    }
+
+    @Override
+    public void jumpInFluid(net.neoforged.neoforge.fluids.FluidType type) {
+        if (type == net.minecraft.world.level.material.Fluids.WATER.getFluidType()) {
+            if (onGround()) jumpFromGround();
+        } else super.jumpInFluid(type);
+    }
+    *///?}
+
+    @Override
+    public void onAboveBubbleCol(boolean down) { }
+
+    @Override
+    public void onInsideBubbleColumn(boolean down) { }
 
     private void haltCruise() {
         cruiseHalted = true;
@@ -514,15 +558,15 @@ public final class MaleniaEntity extends PlatformMonster implements
                 combatSnapshot.general().maxActivePlayers()
         );
         phaseHealthPool = new PhaseHealthPool(
-                combatSnapshot.general().phaseOneHealth(),
-                combatSnapshot.general().phaseTwoHealth(),
+                getMaxHealth(),
+                getMaxHealth() * combatSnapshot.general().phaseTwoHealth()
+                        / combatSnapshot.general().phaseOneHealth(),
                 checkedPlayerCount,
                 combatSnapshot.general().maxActivePlayers(),
                 combatSnapshot.multiplayer().healthPerExtraPlayer(),
                 combatSnapshot.general().phaseTwoStartRatio()
         );
         initializeCombatComponents();
-        applyConfiguredAttributes();
         super.setHealth(getMaxHealth());
         syncPhaseHealth();
         bossEvent.setVisible(true);
@@ -827,7 +871,7 @@ public final class MaleniaEntity extends PlatformMonster implements
 
     @Override
     public Collection<? extends LivingEntity> visibleEligibleTargets() {
-        return eligibleCombatTargets(currentConfig().general().followRange());
+        return eligibleCombatTargets(followRange());
     }
 
     @Override
@@ -984,6 +1028,8 @@ public final class MaleniaEntity extends PlatformMonster implements
                 phaseMaximumHealth,
                 stagger.damageConversionRatio(),
                 stagger.capacityHealthRatio(),
+                stagger.rapidWindowTicks(),
+                stagger.rapidFraction(),
                 stagger.distanceBands(),
                 stagger.sourceDedupeTicks(),
                 stagger.decayDelayTicks(),
@@ -1056,7 +1102,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                     PlayerRotService.addBuildup(
                             target,
                             rotBuildup,
-                            combatSnapshot.general().attackDamage(),
+                            getAttributeValue(Attributes.ATTACK_DAMAGE),
                             combatSnapshot.scarletRot()
                     );
                 }
@@ -1075,7 +1121,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 || combatState() == MaleniaCombatState.STUNNED) {
             return;
         }
-        int playerCount = Math.max(1, countEligiblePlayers(combatSnapshot.general().followRange()));
+        int playerCount = Math.max(1, countEligiblePlayers(followRange()));
         for (Map.Entry<HealingHitGroup, Double> entry : healingCandidates.entrySet()) {
             HealingHitGroup group = entry.getKey();
             if (group.actionSequence() != activeHealingActionSequence) {
@@ -1179,7 +1225,7 @@ public final class MaleniaEntity extends PlatformMonster implements
             case GRAB -> healing.grabHeal();
             case NONE -> throw new IllegalStateException("NONE healing profile has no formula");
         };
-        double candidate = formula.evaluate(combatSnapshot.general().attackDamage());
+        double candidate = formula.evaluate(getAttributeValue(Attributes.ATTACK_DAMAGE));
         double contactAdjusted = outcome.blocked()
             ? candidate * healing.blockedHitMultiplier()
             : candidate;
@@ -1249,7 +1295,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 staggerCapacity(),
                 healingBudgetRemaining()
         ));
-        double range = currentConfig().general().followRange();
+        double range = followRange();
         for (ServerPlayer player : level().getEntitiesOfClass(
                 ServerPlayer.class,
                 getBoundingBox().inflate(range),
@@ -1267,7 +1313,7 @@ public final class MaleniaEntity extends PlatformMonster implements
         }
         Entity resolvedTarget = serverLevel.getEntity(targetId.get());
         if (!(resolvedTarget instanceof LivingEntity target)
-            || !eligibleCombatTarget(serverLevel, target, currentConfig().general().followRange())) {
+            || !eligibleCombatTarget(serverLevel, target, followRange())) {
             setTarget(null);
             entityData.set(TARGET_ENTITY_ID, -1);
             return;
@@ -1311,7 +1357,7 @@ public final class MaleniaEntity extends PlatformMonster implements
 
     private void updateGuardStates() {
         Set<UUID> observed = new HashSet<>();
-        for (ServerPlayer player : eligiblePlayers(currentConfig().general().followRange())) {
+        for (ServerPlayer player : eligiblePlayers(followRange())) {
             UUID playerId = player.getUUID();
             observed.add(playerId);
             GuardState previous = guardStates.get(playerId);
@@ -1641,11 +1687,7 @@ public final class MaleniaEntity extends PlatformMonster implements
         if (combatSnapshot == null) {
             return;
         }
-        Objects.requireNonNull(getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(
-            hasHyperArmor(action)
-                ? 1.0
-                : combatSnapshot.general().knockbackResistance()
-        );
+        PlatformBossAttributes.setHyperArmor(this, hasHyperArmor(action));
         }
 
     private void cancelActiveAction(
@@ -1692,7 +1734,7 @@ public final class MaleniaEntity extends PlatformMonster implements
             entityData.set(HEALING_BUDGET, 0.0F);
             return;
         }
-        int playerCount = Math.max(1, countEligiblePlayers(combatSnapshot.general().followRange()));
+        int playerCount = Math.max(1, countEligiblePlayers(followRange()));
         HealingBudget.BudgetSnapshot budget = healingBudget.snapshot(
                 level().getGameTime(),
                 playerCount
@@ -1862,7 +1904,7 @@ public final class MaleniaEntity extends PlatformMonster implements
         if (dialogueController == null || combatSnapshot == null) {
             return;
         }
-        List<UUID> participantIds = eligiblePlayers(combatSnapshot.general().followRange())
+        List<UUID> participantIds = eligiblePlayers(followRange())
             .stream()
             .map(ServerPlayer::getUUID)
             .toList();
@@ -2489,7 +2531,7 @@ public final class MaleniaEntity extends PlatformMonster implements
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         arenaBinding = tag.contains("ArenaBinding",Tag.TAG_COMPOUND) ? new MaleniaArenaBinding(tag.getCompound("ArenaBinding")) : null;
-        PlatformMaleniaArenaNavigation.configure(this,arenaBinding!=null);
+        PlatformMaleniaArenaNavigation.configure(this);
         arenaOwnershipChecked = false;
         arenaEmptyTicks = 0;
         if (arenaBinding != null) {
@@ -2562,7 +2604,6 @@ public final class MaleniaEntity extends PlatformMonster implements
                     .phaseTwoOpeningRemainingTicks().isEmpty()) {
                 cooldowns.recordPhaseTwoOpeningEnded(level().getGameTime());
             }
-            applyConfiguredAttributes();
             projectNativeHealth();
             syncPhaseHealth();
             bossEvent.setVisible(combatState() != MaleniaCombatState.DORMANT);
@@ -2587,7 +2628,7 @@ public final class MaleniaEntity extends PlatformMonster implements
                 && phaseHealthPool != null
                 && phaseHealthPool.activePhase() == PhaseHealthPool.Phase.ONE) {
             int playerCount = Math.max(1, countEligiblePlayers(
-                    currentConfig().general().followRange()
+                    followRange()
             ));
             phaseHealthPool.startSecondPhase(playerCount);
             entityData.set(ACTIVE_PHASE, MaleniaPhase.PHASE_TWO.id());
@@ -2625,6 +2666,8 @@ public final class MaleniaEntity extends PlatformMonster implements
                     retainedStagger,
                     state.damageConversionRatio(),
                     state.capacityHealthRatio(),
+                    state.rapidWindowTicks(),
+                    state.rapidFraction(),
                     state.distanceBands(),
                     state.sourceDedupeTicks(),
                     state.decayDelayTicks(),
@@ -2634,14 +2677,16 @@ public final class MaleniaEntity extends PlatformMonster implements
                     remainingDecayDelayTicks,
                     state.remainingStunnedTicks(),
                     state.remainingImmunityTicks(),
-                    pendingStun
+                    pendingStun,
+                    state.rapidLimited(), state.rapidBudget(), state.recentRawRate(),
+                    state.milestoneTier(), state.milestoneElapsedTicks()
                 ),
                 gameTime
             );
             }
 
             private void cleanseParticipantRot() {
-            for (ServerPlayer player : eligiblePlayers(combatSnapshot.general().followRange())) {
+            for (ServerPlayer player : eligiblePlayers(followRange())) {
                 PlayerRotService.cleanse(player);
             }
             }
@@ -2673,7 +2718,7 @@ public final class MaleniaEntity extends PlatformMonster implements
         if (tickCount % interval != 0) {
             return;
         }
-        int playerCount = countEligiblePlayers(combatSnapshot.general().followRange());
+        int playerCount = countEligiblePlayers(followRange());
         if (playerCount == 0) {
             return;
         }
@@ -2758,19 +2803,13 @@ public final class MaleniaEntity extends PlatformMonster implements
         super.setHealth(Math.max(1.0F, (float) (getMaxHealth() * ratio)));
     }
 
-    private void applyConfiguredAttributes() {
-        if (combatSnapshot == null) {
-            return;
-        }
-        Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE))
-                .setBaseValue(combatSnapshot.general().attackDamage());
-        Objects.requireNonNull(getAttribute(Attributes.MOVEMENT_SPEED))
-                .setBaseValue(combatSnapshot.general().movementSpeed());
-        Objects.requireNonNull(getAttribute(Attributes.FOLLOW_RANGE))
-                .setBaseValue(combatSnapshot.general().followRange());
-        Objects.requireNonNull(getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(
-                combatSnapshot.general().knockbackResistance()
-        );
+    @Override
+    public double followRange(double configuredRange) {
+        return followRange();
+    }
+
+    private double followRange() {
+        return getAttributeValue(Attributes.FOLLOW_RANGE);
     }
 
     private MaleniaCombatConfigSnapshot currentConfig() {
@@ -2942,6 +2981,11 @@ public final class MaleniaEntity extends PlatformMonster implements
         tag.putLong("RemainingStunnedTicks", state.remainingStunnedTicks());
         tag.putLong("RemainingImmunityTicks", state.remainingImmunityTicks());
         tag.putBoolean("PendingStun", state.pendingStun());
+        tag.putBoolean("RapidLimited", state.rapidLimited());
+        tag.putDouble("RapidBudget", state.rapidBudget());
+        tag.putDouble("RecentRawRate", state.recentRawRate());
+        tag.putInt("MilestoneTier", state.milestoneTier());
+        tag.putInt("MilestoneElapsedTicks", state.milestoneElapsedTicks());
         return tag;
     }
 
@@ -2957,6 +3001,8 @@ public final class MaleniaEntity extends PlatformMonster implements
                     tag.getDouble("Stagger"),
                     stagger.damageConversionRatio(),
                     stagger.capacityHealthRatio(),
+                    stagger.rapidWindowTicks(),
+                    stagger.rapidFraction(),
                     stagger.distanceBands(),
                     stagger.sourceDedupeTicks(),
                     stagger.decayDelayTicks(),
@@ -2966,7 +3012,9 @@ public final class MaleniaEntity extends PlatformMonster implements
                     tag.getLong("RemainingDecayDelayTicks"),
                     tag.getLong("RemainingStunnedTicks"),
                     tag.getLong("RemainingImmunityTicks"),
-                    tag.getBoolean("PendingStun")
+                    tag.getBoolean("PendingStun"),
+                    tag.getBoolean("RapidLimited"), tag.getDouble("RapidBudget"), tag.getDouble("RecentRawRate"),
+                    tag.getInt("MilestoneTier"), tag.getInt("MilestoneElapsedTicks")
             );
             return StaggerTracker.restore(state, level().getGameTime());
         } catch (IllegalArgumentException exception) {

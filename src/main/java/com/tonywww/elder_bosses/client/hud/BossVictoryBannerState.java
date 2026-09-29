@@ -18,6 +18,7 @@ public final class BossVictoryBannerState {
     private final LinkedHashSet<UUID> seen = new LinkedHashSet<>();
     private Victory current;
     private int age;
+    private boolean started;
 
     public void offer(UUID bossUuid, Victory victory) {
         Objects.requireNonNull(bossUuid, "bossUuid");
@@ -27,6 +28,7 @@ public final class BossVictoryBannerState {
         if (current == null) {
             current = victory;
             age = 0;
+            started = true;
         } else if (pending.size() < MAX_QUEUED) {
             pending.addLast(victory);
         }
@@ -36,7 +38,14 @@ public final class BossVictoryBannerState {
         if (current != null && ++age >= DURATION_TICKS) {
             current = pending.pollFirst();
             age = 0;
+            started = current != null;
         }
+    }
+
+    public boolean consumeStart() {
+        boolean result = started;
+        started = false;
+        return result;
     }
 
     public Frame frame(float partialTick) {
@@ -54,6 +63,7 @@ public final class BossVictoryBannerState {
         seen.clear();
         current = null;
         age = 0;
+        started = false;
     }
 
     public record Frame(Victory victory, float opacity) {

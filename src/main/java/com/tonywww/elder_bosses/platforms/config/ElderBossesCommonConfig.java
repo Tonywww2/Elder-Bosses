@@ -116,6 +116,8 @@ public final class ElderBossesCommonConfig {
 
     private final Supplier<Double> staggerDamageConversionRatio;
     private final Supplier<Double> staggerCapacityHealthRatio;
+    private final Supplier<Integer> staggerRapidWindowTicks;
+    private final Supplier<Double> staggerRapidFraction;
     private final Supplier<? extends List<?>> staggerDistanceBands;
     private final Supplier<Integer> staggerSourceDedupeTicks;
     private final Supplier<Integer> staggerDecayDelayTicks;
@@ -299,8 +301,10 @@ public final class ElderBossesCommonConfig {
         builder.pop();
 
         builder.push("stagger");
-        staggerDamageConversionRatio = builder.defineInRange("damage_conversion_ratio", 0.5, 0.0, 1.0);
-        staggerCapacityHealthRatio = builder.defineInRange("capacity_health_ratio", 0.10, 0.001, 1.0);
+        staggerDamageConversionRatio = builder.defineInRange("damage_conversion_ratio", 1.0, 0.0, 1.0);
+        staggerCapacityHealthRatio = builder.defineInRange("capacity_health_ratio", 0.50, 0.001, 1.0);
+        staggerRapidWindowTicks = builder.defineInRange("rapid_window_ticks", 240, 1, NetworkLimits.MAX_TICKS);
+        staggerRapidFraction = builder.defineInRange("rapid_fraction", 0.25, 0.001, 0.999);
         staggerDistanceBands = builder.defineList(
             "distance_bands", defaultDistanceBandConfigs(), ElderBossesCommonConfig::isDistanceBand);
         staggerSourceDedupeTicks = builder.defineInRange("source_dedupe_ticks", 5, 0, Integer.MAX_VALUE);
@@ -632,6 +636,8 @@ public final class ElderBossesCommonConfig {
         return new MaleniaStaggerValues(
                 staggerDamageConversionRatio.get(),
                 staggerCapacityHealthRatio.get(),
+                staggerRapidWindowTicks.get(),
+                staggerRapidFraction.get(),
                 readDistanceBands(staggerDistanceBands.get()),
                 staggerSourceDedupeTicks.get(),
                 staggerDecayDelayTicks.get(),
@@ -828,6 +834,8 @@ public final class ElderBossesCommonConfig {
                 new MaleniaCombatConfigSnapshot.Stagger(
                     stagger.damageConversionRatio(),
                     stagger.capacityHealthRatio(),
+                    stagger.rapidWindowTicks(),
+                    stagger.rapidFraction(),
                     toCombatDistanceBands(stagger.distanceBands()),
                     stagger.sourceDedupeTicks(),
                     stagger.decayDelayTicks(),
@@ -2053,6 +2061,8 @@ public final class ElderBossesCommonConfig {
     public record MaleniaStaggerValues(
             double damageConversionRatio,
             double capacityHealthRatio,
+            int rapidWindowTicks,
+            double rapidFraction,
             List<DistanceBandValues> distanceBands,
             int sourceDedupeTicks,
             int decayDelayTicks,

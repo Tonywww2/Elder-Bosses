@@ -181,6 +181,8 @@ public record PromisedConsortCombatConfigSnapshot(
     public record Stagger(
             double damageConversionRatio,
             double capacityHealthRatio,
+            int rapidWindowTicks,
+            double rapidFraction,
             List<DistanceBand> distanceBands,
             int sourceDedupeTicks,
             int decayDelayTicks,

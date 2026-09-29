@@ -550,7 +550,13 @@
     let transition = make("transition", 150, [frame(0, rest), frame(15, "kneel", -11), frame(36, "kneel", -11), frame(42, merge(poses.kneel, {head: [5, 0, 0]}), -11), frame(65, "bloom", -12), frame(85, merge(poses.bloom, {head: [-10, 0, 0]}), -8), frame(106, "wings_open", -2), frame(120, "wings_open"), frame(135, "hover"), frame(150, "hover")], {events: {subtitle: [42], phase_layers: [71], unfold: [85, 120]}});
     scales(transition, armor, [[0, 1], [70, 1], [71, 0], [150, 0]]);
     scales(transition, wings, [[0, 0], [70, 0], [71, 0.02], [105, 1], [150, 1]]);
-    scales(transition, ["aeonia_core"], [[0, 0], [25, 0], [42, 0.25], [70, 0.42], [105, 0], [150, 0]]);
+    scales(transition, ["aeonia_core"], [[0, 0], [25, 0], [42, 0.28], [70, 0.65], [85, 0.65], [105, 0], [150, 0]]);
+    key(transition, "aeonia_core", "rotation", 0, [180, 0, 0]);
+    key(transition, "aeonia_core", "position", 0, [0, 26, 0]);
+    for (let index = 1; index <= 8; index++) {
+        for (let [tick, pitch] of [[0, 68], [42, 68], [55, 38], [70, -4], [85, -4], [105, 8], [150, 8]])
+            key(transition, "petal_0" + index, "rotation", tick, [pitch, 0, 0]);
+    }
     let aeonia = make("scarlet_aeonia", 166, [frame(0, "hover"), frame(14, "bloom"), frame(26, "bloom"), frame(35, "bloom"),
         frame(39, merge(poses.bloom, {pelvis: [-30, 0, -2], body: [-16, 0, 0]})), frame(43, "aeonia_dive"), frame(51, merge(poses.aeonia_dive, {pelvis: [-52, 0, -4], body: [-20, 0, 0]})),
         frame(61, merge(poses.aeonia_dive, {body: [-25, 0, 0], head: [25, 0, 0]}), -3),
@@ -592,13 +598,18 @@
     make("stun_recover", 16, [frame(0, "kneel", -11), frame(6, "crouch", -6), frame(12, merge(rest, {head: [10, 0, 0]}), -1), frame(16, rest)]);
     make("hurt", 10, [frame(0, rest), frame(2, merge(rest, {chest: [-7, -8, 3], head: [-6, 8, -2]})), frame(5, merge(rest, {chest: [3, 4, -1]})), frame(10, rest)]);
     let defeated = make("defeated", 160, [frame(0, rest), frame(12, "kneel", -11), frame(28, merge(poses.kneel, {head: [8, -8, 3]}), -11), frame(55, "kneel", -11), frame(82, "bloom", -13), frame(110, "bloom", -16), frame(135, "bloom", -20), frame(160, "bloom", -23)], {loop: "hold_on_last_frame", events: {subtitle: [28], flower: [110, 160]}});
-    scales(defeated, ["aeonia_core"], [[0, 0], [55, 0], [82, 0.2], [110, 0.45], [160, 0.6]]);
+    scales(defeated, ["aeonia_core"], [[0, 0], [55, 0], [82, 0.42], [110, 0.38], [160, 0.28]]);
+    key(defeated, "aeonia_core", "rotation", 0, [180, 0, 0]);
+    key(defeated, "aeonia_core", "position", 0, [0, 26, 0]);
     scales(defeated, ["pelvis"], [[0, 1], [82, 1], [135, 0.1], [160, 0]]);
-    for (let index = 1; index <= 8; index++) for (let [tick, pitch] of [[0, 0], [82, 8], [110, 40], [160, 65]]) key(defeated, "petal_0" + index, "rotation", tick, [pitch, 0, 0]);
+    for (let index = 1; index <= 8; index++) for (let [tick, pitch] of [[0, -4], [82, -4], [110, 38], [160, 68]])
+        key(defeated, "petal_0" + index, "rotation", tick, [pitch, 0, 0]);
     let flower = make("defeated_flower", 80, [frame(0, rest), frame(40, rest), frame(80, rest)], {loop: true, smooth: true});
     scales(flower, ["pelvis"], [[0, 0], [80, 0]]);
-    scales(flower, ["aeonia_core"], [[0, 0.6], [80, 0.6]]);
-    for (let index = 1; index <= 8; index++) key(flower, "petal_0" + index, "rotation", 0, [65, 0, 0]);
+    scales(flower, ["aeonia_core"], [[0, 0.28], [80, 0.28]]);
+    key(flower, "aeonia_core", "rotation", 0, [180, 0, 0]);
+    key(flower, "aeonia_core", "position", 0, [0, 26, 0]);
+    for (let index = 1; index <= 8; index++) key(flower, "petal_0" + index, "rotation", 0, [68, 0, 0]);
     make("phantom_slash", 14, [frame(0, "wind_right"), frame(3, "wind_right"), frame(6, "cross_right"), frame(9, "slash"), frame(14, "slash")]);
     make("phantom_thrust", 14, [frame(0, "thrust_load"), frame(2, "thrust_load"), frame(4, merge(poses.thrust_load, {prosthetic_arm_r: [52, -25, -24], prosthetic_forearm_r: [40, 2, 0], blade_mount: [-44, 4, 0]})), frame(6, "thrust"), frame(9, "thrust"), frame(14, "thrust")]);
     let zone = make("aeonia_loop", 84, [frame(0, "kneel", -11), frame(42, "kneel", -11), frame(84, "kneel", -11)], {loop: true, smooth: true});

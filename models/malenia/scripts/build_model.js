@@ -584,7 +584,7 @@
         let height = 2;
         let [tileX, tileY] = petalTiles[index % 4];
         for (let section = 0; section < 3; section++) {
-            let pitch = [5, 14, 29][section];
+            let pitch = [6, 24, 52][section];
             let radians = pitch * Math.PI / 180;
             let nextHeight = height + 30 * Math.sin(radians);
             let nextNear = near - 30 * Math.cos(radians);

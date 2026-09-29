@@ -2,7 +2,7 @@
   "schema": 1,
   "model": "malenia",
   "consolidation_date": "2026-09-18",
-  "source_revision": "phase_two_feedback_v16",
+  "source_revision": "aeonia_bloom_rework_v17",
   "policy": "One current authoring/runtime version; historical candidate media and snapshots removed by user request. Source history is in Git, not duplicated resources.",
   "bones": 92,
   "cubes": 385,
@@ -12,17 +12,17 @@
   "files": [
     {
       "source": "malenia.bbmodel",
-      "sha256": "bfc2bc2422c969811067642f5b48ea4231b354b8a0ff3fe28a86058e665372d2"
+      "sha256": "c8071a2579c3715c71664b3ad8bb26cfa188a2461b787049f379d3c920e3ec0f"
     },
     {
       "source": "geo/malenia.geo.json",
       "runtime": "../../src/main/resources/assets/elder_bosses/geo/malenia/malenia.geo.json",
-      "sha256": "945582f665713ff122054d9a0ae7f0b75f3bc6207071c582168eaa09b75809e6"
+      "sha256": "b9e79eecf55b8301da1ecee6e245415f7b281198a7314d1b4d73da09f8038c96"
     },
     {
       "source": "animations/malenia.animation.json",
       "runtime": "../../src/main/resources/assets/elder_bosses/animations/malenia/malenia.animation.json",
-      "sha256": "48eede6bcc3ee7ca3c374a32a1248550c9b0d97416e39eee1ebbc67a97419dbf"
+      "sha256": "b82d45d6c13ed392d0c42738b69ae5f8ff1545995901f278838ab3570b93abac"
     },
     {
       "source": "textures/malenia.png",
@@ -31,12 +31,12 @@
     },
     {
       "source": "malenia_phase_two.bbmodel",
-      "sha256": "76412dff8197b8de712c7e8e090a4f9ab05b615fbefd7357d1c471b5385c1190"
+      "sha256": "e90097f883ca9fae82d23599b50265c358d052d4b54000a494ea8e609114f1d3"
     },
     {
       "source": "geo/malenia_phase_two.geo.json",
       "runtime": "../../src/main/resources/assets/elder_bosses/geo/malenia/malenia_phase_two.geo.json",
-      "sha256": "d1d1bed7315fca5e7d11773a391233b1d921aeaa0900134ee57598c3b3d47fc6"
+      "sha256": "163f5256bda72e85b9c98f9b856ddd11ed9c5eaed938168725a1856b2dc84997"
     },
     {
       "source": "textures/malenia_phase_two.png",
@@ -44,7 +44,7 @@
       "sha256": "09de9c0cace37d1030a9700d4efc49653e94bfa52ba80edce0abb54c5c571e46"
     }
   ],
-  "acceptance": "Shared phase rig with asymmetric fungal relief, pale phase-two material, and shader wings; see V16 validation.",
+  "acceptance": "Shared deeper-curved aeonia petals, inverted opening, and smaller reverse-closing death bud.",
   "phase_two": {
     "bones": 92,
     "cubes": 155,

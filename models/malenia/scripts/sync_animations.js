@@ -4,7 +4,9 @@ const workspace = path.resolve(__dirname, '..');
 const read = file => JSON.parse(fs.readFileSync(path.join(workspace, file), 'utf8'));
 const write = (file, value) => fs.writeFileSync(path.join(workspace, file), JSON.stringify(value, null, 2) + '\n');
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(path.join(workspace, file))).digest('hex');
-const project = read('malenia.bbmodel'), library = read('animations/malenia.animation.json');
+const library = read('animations/malenia.animation.json');
+for (const projectFile of ['malenia.bbmodel', 'malenia_phase_two.bbmodel']) {
+const project = read(projectFile);
 const groups = new Map(project.groups.map(group => [group.name, group.uuid]));
 for (const [name, clip] of Object.entries(library.animations)) {
     const editor = project.animations.find(animation => animation.name === name);
@@ -29,11 +31,12 @@ for (const [name, clip] of Object.entries(library.animations)) {
         editor.animators[uuid] = animator;
     }
 }
-write('malenia.bbmodel', project);
+write(projectFile, project);
+}
 const assets = read('current_assets.json');
 for (const entry of assets.files) {
     const value = hash(entry.source);
-    if (!['malenia.bbmodel','animations/malenia.animation.json'].includes(entry.source) && value !== entry.sha256)
+    if (!['malenia.bbmodel','malenia_phase_two.bbmodel','animations/malenia.animation.json'].includes(entry.source) && value !== entry.sha256)
         throw new Error('Unrelated asset changed: ' + entry.source);
     if (entry.runtime && entry.source.startsWith('animations/')) fs.copyFileSync(path.join(workspace,entry.source),path.resolve(workspace,entry.runtime));
     entry.sha256 = value;
