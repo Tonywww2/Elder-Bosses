@@ -1,0 +1,336 @@
+{
+  "gravity_dive": [
+    {
+      "contact_tick": 38,
+      "start_tick": 36.0,
+      "end_tick": 40.5,
+      "sides": 3
+    }
+  ],
+  "left_combo_cross": [
+    {
+      "contact_tick": 11,
+      "start_tick": 9.0,
+      "end_tick": 15.0,
+      "sides": 1
+    },
+    {
+      "contact_tick": 21,
+      "start_tick": 19.0,
+      "end_tick": 25.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 44,
+      "start_tick": 42.0,
+      "end_tick": 49.0,
+      "sides": 3
+    }
+  ],
+  "left_combo_bloodflame": [
+    {
+      "contact_tick": 15,
+      "start_tick": 13.0,
+      "end_tick": 17.5,
+      "sides": 1
+    },
+    {
+      "contact_tick": 35,
+      "start_tick": 33.0,
+      "end_tick": 37.5,
+      "sides": 1
+    }
+  ],
+  "right_combo_cross": [
+    {
+      "contact_tick": 11,
+      "start_tick": 9.0,
+      "end_tick": 15.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 41,
+      "start_tick": 39.0,
+      "end_tick": 46.0,
+      "sides": 3
+    }
+  ],
+  "right_combo_left_twin": [
+    {
+      "contact_tick": 18,
+      "start_tick": 16.0,
+      "end_tick": 22.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 40,
+      "start_tick": 38.0,
+      "end_tick": 44.0,
+      "sides": 1
+    },
+    {
+      "contact_tick": 55,
+      "start_tick": 53.0,
+      "end_tick": 59.0,
+      "sides": 1
+    }
+  ],
+  "right_combo_tempest": [
+    {
+      "contact_tick": 12,
+      "start_tick": 10.0,
+      "end_tick": 16.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 33,
+      "start_tick": 31.0,
+      "end_tick": 37.0,
+      "sides": 1
+    },
+    {
+      "contact_tick": 56,
+      "start_tick": 54.0,
+      "end_tick": 60.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 82,
+      "start_tick": 80.0,
+      "end_tick": 87.0,
+      "sides": 3
+    },
+    {
+      "contact_tick": 112,
+      "start_tick": 110.0,
+      "end_tick": 117.0,
+      "sides": 3
+    }
+  ],
+  "right_combo_earthheave": [
+    {
+      "contact_tick": 16,
+      "start_tick": 14.0,
+      "end_tick": 20.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 42,
+      "start_tick": 40.0,
+      "end_tick": 46.0,
+      "sides": 1
+    },
+    {
+      "contact_tick": 54,
+      "start_tick": 52.0,
+      "end_tick": 58.0,
+      "sides": 2
+    },
+    {
+      "contact_tick": 87,
+      "start_tick": 85.0,
+      "end_tick": 93.0,
+      "sides": 3
+    },
+    {
+      "contact_tick": 105,
+      "start_tick": 103.0,
+      "end_tick": 112.0,
+      "sides": 3
+    }
+  ],
+  "lion_claw": [
+    {
+      "contact_tick": 8,
+      "start_tick": 6.0,
+      "end_tick": 10.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 32,
+      "start_tick": 30.0,
+      "end_tick": 34.5,
+      "sides": 3
+    }
+  ],
+  "lion_claw_double": [
+    {
+      "contact_tick": 6,
+      "start_tick": 4.0,
+      "end_tick": 8.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 26,
+      "start_tick": 24.0,
+      "end_tick": 28.5,
+      "sides": 3
+    }
+  ],
+  "starcaller_cry": [
+    {
+      "contact_tick": 58,
+      "start_tick": 56.0,
+      "end_tick": 60.5,
+      "sides": 3
+    }
+  ],
+  "gravity_meteor": [
+    {
+      "contact_tick": 21,
+      "start_tick": 19.0,
+      "end_tick": 23.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 90,
+      "start_tick": 88.0,
+      "end_tick": 92.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 144,
+      "start_tick": 142.0,
+      "end_tick": 146.5,
+      "sides": 3
+    }
+  ],
+  "stomp": [],
+  "cross_slash": [
+    {
+      "contact_tick": 17,
+      "start_tick": 15.0,
+      "end_tick": 21.0,
+      "sides": 3
+    }
+  ],
+  "spiral_assault": [
+    {
+      "contact_tick": 35,
+      "start_tick": 33.0,
+      "end_tick": 37.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 43,
+      "start_tick": 41.0,
+      "end_tick": 45.5,
+      "sides": 3
+    }
+  ],
+  "light_of_miquella": [],
+  "ring_of_light": [
+    {
+      "contact_tick": 26,
+      "start_tick": 24.0,
+      "end_tick": 28.5,
+      "sides": 2
+    }
+  ],
+  "lightspeed_slash": [
+    {
+      "contact_tick": 69,
+      "start_tick": 67.0,
+      "end_tick": 71.5,
+      "sides": 3
+    }
+  ],
+  "lightspeed_dash": [
+    {
+      "contact_tick": 73,
+      "start_tick": 71.0,
+      "end_tick": 75.5,
+      "sides": 3
+    }
+  ],
+  "lightspeed_side_dash": [
+    {
+      "contact_tick": 65,
+      "start_tick": 63.0,
+      "end_tick": 67.5,
+      "sides": 2
+    }
+  ],
+  "promised_consort": [
+    {
+      "contact_tick": 27,
+      "start_tick": 25.0,
+      "end_tick": 29.5,
+      "sides": 2
+    },
+    {
+      "contact_tick": 41,
+      "start_tick": 39.0,
+      "end_tick": 43.5,
+      "sides": 1
+    },
+    {
+      "contact_tick": 54,
+      "start_tick": 52.0,
+      "end_tick": 56.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 70,
+      "start_tick": 68.0,
+      "end_tick": 72.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 111,
+      "start_tick": 109.0,
+      "end_tick": 113.5,
+      "sides": 3
+    }
+  ],
+  "enhanced_earthheave": [
+    {
+      "contact_tick": 28,
+      "start_tick": 26.0,
+      "end_tick": 30.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 47,
+      "start_tick": 45.0,
+      "end_tick": 49.5,
+      "sides": 3
+    }
+  ],
+  "consort_meteor": [],
+  "gravity_bulwark": [],
+  "gravity_reflection": [],
+  "gravity_reprisal": [],
+  "cross_leap_combo": [
+    {
+      "contact_tick": 27,
+      "start_tick": 25.0,
+      "end_tick": 29.5,
+      "sides": 2
+    },
+    {
+      "contact_tick": 41,
+      "start_tick": 39.0,
+      "end_tick": 43.5,
+      "sides": 1
+    },
+    {
+      "contact_tick": 54,
+      "start_tick": 52.0,
+      "end_tick": 56.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 70,
+      "start_tick": 68.0,
+      "end_tick": 72.5,
+      "sides": 3
+    },
+    {
+      "contact_tick": 111,
+      "start_tick": 109.0,
+      "end_tick": 113.5,
+      "sides": 3
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "version": 3,
+  "torso_sections": [
+    {
+      "lower": 85,
+      "upper": 114,
+      "driver": 114
+    },
+    {
+      "lower": 114,
+      "upper": 115,
+      "driver": 114
+    },
+    {
+      "lower": 115,
+      "upper": 116,
+      "driver": 115
+    }
+  ],
+  "torso_overlap": 1.0,
+  "flowing_locks": 34,
+  "flowing_pieces": 274,
+  "face_locks": 6,
+  "nape_locks": 7,
+  "head_parent": "src_231_Miquella_Head",
+  "hands": [
+    {
+      "mesh": "miquella_upper_hand_l",
+      "source_wrist": 124,
+      "animated_phalanges": 15
+    },
+    {
+      "mesh": "miquella_upper_hand_r",
+      "source_wrist": 149,
+      "animated_phalanges": 15
+    },
+    {
+      "mesh": "miquella_lower_hand_l",
+      "source_wrist": 193,
+      "animated_phalanges": 15
+    },
+    {
+      "mesh": "miquella_lower_hand_r",
+      "source_wrist": 276,
+      "animated_phalanges": 15
+    }
+  ],
+  "policy": "Continuous articulated abdomen, tapered hair veil, shaped jaw and palms; original rig, animations and atlas preserved",
+  "geometry_sha256": "c1057291f7e11e3d36d6e6c9ba2df9ad9849e6fc5b2ac45abcc79774e55f57b7"
+}

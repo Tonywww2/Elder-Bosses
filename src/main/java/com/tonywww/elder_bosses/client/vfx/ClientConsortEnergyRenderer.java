@@ -57,6 +57,7 @@ public final class ClientConsortEnergyRenderer {
             ClientConsortCloneEffects.render(poses, cameraPosition, time, partialTick, config.renderDistance());
         }
         var current = ClientIndicatorStateStore.activeSnapshots(gameTick, partialTick).stream()
+                .filter(snapshot -> !snapshot.indicatorId().startsWith("source"))
                 .filter(snapshot -> minecraft.level.getEntity(snapshot.bossEntityId()) instanceof PromisedConsortEntity)
                 .filter(snapshot -> snapshot.slot() != IndicatorSnapshotPacket.SegmentSlot.NEXT)
                 .filter(snapshot -> snapshot.state() != IndicatorSnapshotPacket.IndicatorState.EXPIRED)
@@ -287,7 +288,7 @@ public final class ClientConsortEnergyRenderer {
                     ConsortEnergyShader.configure(8, (float) ((time % 24000) / 20), 0, 0);
                     consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
                     double scale = com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE;
-                    ribbon(consumer, poses.last(), center.subtract(rock.getDeltaMovement().normalize().scale(1.3 * scale)), center, 0.15 * scale, 0xB788FC, 0.65F);
+                    ribbon(consumer, poses.last(), center.subtract(rock.getDeltaMovement().normalize().scale(1.3 * scale)), center, 0.15 * scale, 0x9523EE, 0.65F);
                     buffers.endBatch(ConsortEnergyShader.ENERGY);
                 }
             }
@@ -300,10 +301,14 @@ public final class ClientConsortEnergyRenderer {
     }
 
     public static void rockAura(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center, Vec3 view, double time, boolean held) {
+        rockAura(consumer,pose,center,view,time,held,com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE,1);
+    }
+    public static void rockAura(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center, Vec3 view, double time, boolean held,double size,float strength) {
         double radius = (held ? 0.8 : 0.6) * (1 + Math.sin(time * 0.5) * 0.10 + Math.sin(time * 0.91) * 0.05);
-        radius *= com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortGravityRockEntity.SIZE_SCALE;
-        defenseSurface(consumer, pose, center, radius, radius, 0, 360, 0xB584FF, 0.35F);
-        sparkle(consumer, pose, center, view, radius * 0.5, 0xE2C4FF, 0.7F);
+        radius *= size;
+        defenseSurface(consumer, pose, center, radius, radius, 0, 360, 0x9B22EF, Math.min(1,0.55F*strength));
+        ringWall(consumer,pose,center,radius,radius*.7,0xAF2CFF,Math.min(1,.65F*strength),24);
+        sparkle(consumer, pose, center, view, radius * 0.5, 0xC66CFF, Math.min(1,0.85F*strength));
     }
 
     private static void renderDefenses(PoseStack poses, Vec3 view, double time, double distance) {
@@ -318,7 +323,7 @@ public final class ClientConsortEnergyRenderer {
                 var action=boss.actionId().orElseThrow();
                 Vec3 center=boss.position().add(0,0.15,0);
                 double radius=boss.rangedDefenseRadius();
-                int color=boss.miquellaVisible()?0xDEC5FF:0x9987EE;
+                int color=boss.miquellaVisible()?0xAF2CFF:0x9523EE;
                 ConsortEnergyShader.configure(13,(float)((time%24000)/20),0,0);
                 var consumer=buffers.getBuffer(ConsortEnergyShader.ENERGY);
                 if(action==com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId.GRAVITY_REFLECTION) {
@@ -356,9 +361,9 @@ public final class ClientConsortEnergyRenderer {
         ConsortEnergyShader.configure(14,(float)((time%24000)/20),(float)progress,0);
         var consumer=buffers.getBuffer(ConsortEnergyShader.ENERGY);
         quad(consumer,pose,center.subtract(across),center.add(across),center.add(across).add(0,height,0),
-                center.subtract(across).add(0,height,0),0xB8A0FA,0.88F);
+                center.subtract(across).add(0,height,0),0xAF2CFF,0.88F);
         quad(consumer,pose,start.subtract(across).add(0,height*0.4,0),start.add(across).add(0,height*0.4,0),
-            center.add(across).add(0,height*0.4,0),center.subtract(across).add(0,height*0.4,0),0x9C85EC,0.55F);
+            center.add(across).add(0,height*0.4,0),center.subtract(across).add(0,height*0.4,0),0x9523EE,0.55F);
         buffers.endBatch(ConsortEnergyShader.ENERGY);
     }
 

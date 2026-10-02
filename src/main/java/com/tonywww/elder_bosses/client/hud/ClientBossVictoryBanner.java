@@ -34,7 +34,7 @@ public final class ClientBossVictoryBanner {
         else if (!client.isPaused()) {
             STATE.tick();
             if (STATE.consumeStart()) client.getSoundManager().play(SimpleSoundInstance.forUI(
-                    ModSoundEvents.BOSS_VICTORY_BANNER.get(), 1.0F, 1.0F));
+                    ModSoundEvents.BOSS_VICTORY_BANNER.get(), 0.78F, 1.0F));
         }
     }
 

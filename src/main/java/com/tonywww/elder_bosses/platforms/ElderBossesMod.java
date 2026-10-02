@@ -64,6 +64,7 @@ public final class ElderBossesMod {
         PromisedConsortConfigProvider.installCombat(
             ElderBossesCommonConfig.VALUES::promisedConsortCombatSnapshot
         );
+        PromisedConsortConfigProvider.installSource(ElderBossesCommonConfig.VALUES::promisedConsortSourceSnapshot);
         PromisedConsortConfigProvider.installSkills(
             ElderBossesCommonConfig.VALUES::promisedConsortSkillSnapshot
         );

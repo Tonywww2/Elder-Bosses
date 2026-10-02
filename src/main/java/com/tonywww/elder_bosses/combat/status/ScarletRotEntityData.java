@@ -77,7 +77,11 @@ public class ScarletRotEntityData implements ScarletRotData {
         validateGameTick(gameTick);
         requireCapacity(capacity);
         if (state == null) {
-            return ScarletRotTickResult.unchanged();
+            boolean stateChanged = runtimeRefreshPending;
+            runtimeRefreshPending = false;
+            return stateChanged
+                    ? new ScarletRotTickResult(0, OptionalDouble.empty(), true)
+                    : ScarletRotTickResult.unchanged();
         }
 
         double previousBuildup = state.buildup();
@@ -107,7 +111,11 @@ public class ScarletRotEntityData implements ScarletRotData {
         if (state == null) {
             return ScarletRotSnapshot.inactive(gameTick, capacity);
         }
+        double previousBuildup = state.buildup();
+        boolean previouslyActive = state.active();
+        boolean refreshPending = runtimeRefreshPending;
         ScarletRotState.Snapshot snapshot = state.snapshot(gameTick, capacity);
+        refreshPending |= previousBuildup != snapshot.buildup() || previouslyActive != snapshot.active();
         ScarletRotSnapshot entitySnapshot = new ScarletRotSnapshot(
                 snapshot.gameTick(),
                 snapshot.buildup(),
@@ -118,6 +126,9 @@ public class ScarletRotEntityData implements ScarletRotData {
                 snapshot.movementSpeedMultiplier()
         );
         releaseIfIdle();
+        // Reads also advance the clock. Preserve their changes until tick updates movement and HUD,
+        // including the final observation that releases an exhausted state.
+        runtimeRefreshPending |= refreshPending;
         return state == null
                 ? ScarletRotSnapshot.inactive(gameTick, capacity)
                 : entitySnapshot;

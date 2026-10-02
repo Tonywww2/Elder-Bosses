@@ -5,6 +5,7 @@ import com.tonywww.elder_bosses.combat.damage.ModDamageSources;
 import com.tonywww.elder_bosses.item.RotBuildupMultiplierItem;
 import com.tonywww.elder_bosses.platforms.player.PlatformPlayerRotData;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -30,9 +31,13 @@ public final class ScarletRotService {
     ) {
         Objects.requireNonNull(entity, "entity");
         double checkedCapacity = requireCapacity(capacity);
+        Optional<ScarletRotData> availableData = data(entity);
+        if (availableData.isEmpty()) {
+            return false;
+        }
         long gameTick = entity.level().getGameTime();
         double adjustedAmount = applyPlayerEquipmentMultiplier(entity, amount);
-        ScarletRotData entityData = data(entity);
+        ScarletRotData entityData = availableData.get();
         ScarletRotSnapshot previousSnapshot = entityData.snapshot(gameTick, checkedCapacity);
         boolean triggered = entityData.addBuildup(
                 adjustedAmount,
@@ -54,7 +59,11 @@ public final class ScarletRotService {
     public static double applyHoney(ServerPlayer player, double capacity) {
         Objects.requireNonNull(player, "player");
         double checkedCapacity = requireCapacity(capacity);
-        double reduction = data(player).applyHoney(player.level().getGameTime());
+        Optional<ScarletRotData> availableData = data(player);
+        if (availableData.isEmpty()) {
+            return 0.0;
+        }
+        double reduction = availableData.get().applyHoney(player.level().getGameTime());
         if (reduction > 0.0) {
             requestSync(player, checkedCapacity, SyncReason.HONEY_APPLIED);
         }
@@ -64,7 +73,11 @@ public final class ScarletRotService {
     public static boolean cleanseWithGoldenNeedle(ServerPlayer player, double capacity) {
         Objects.requireNonNull(player, "player");
         double checkedCapacity = requireCapacity(capacity);
-        boolean changed = data(player).cleanse(player.level().getGameTime());
+        Optional<ScarletRotData> availableData = data(player);
+        if (availableData.isEmpty()) {
+            return false;
+        }
+        boolean changed = availableData.get().cleanse(player.level().getGameTime());
         if (changed) {
             requestSync(player, checkedCapacity, SyncReason.CLEANSED);
         }
@@ -74,7 +87,11 @@ public final class ScarletRotService {
     public static ScarletRotTickResult tick(LivingEntity entity, double capacity) {
         Objects.requireNonNull(entity, "entity");
         double checkedCapacity = requireCapacity(capacity);
-        ScarletRotTickResult result = data(entity).tick(
+        Optional<ScarletRotData> availableData = data(entity);
+        if (availableData.isEmpty()) {
+            return ScarletRotTickResult.unchanged();
+        }
+        ScarletRotTickResult result = availableData.get().tick(
                 entity.level().getGameTime(),
                 checkedCapacity
         );
@@ -87,7 +104,15 @@ public final class ScarletRotService {
 
     public static ScarletRotSnapshot snapshot(LivingEntity entity, double capacity) {
         Objects.requireNonNull(entity, "entity");
-        return data(entity).snapshot(entity.level().getGameTime(), requireCapacity(capacity));
+        double checkedCapacity = requireCapacity(capacity);
+        if (entity.isRemoved() || !entity.isAlive()) {
+            // A discarded entity has no live rot state. Do not access its world or capabilities.
+            return ScarletRotSnapshot.inactive(0L, checkedCapacity);
+        }
+        long gameTick = entity.level().getGameTime();
+        return data(entity)
+                .map(value -> value.snapshot(gameTick, checkedCapacity))
+                .orElseGet(() -> ScarletRotSnapshot.inactive(gameTick, checkedCapacity));
     }
 
     public static double healingMultiplier(LivingEntity entity, double capacity) {
@@ -108,7 +133,10 @@ public final class ScarletRotService {
     public static void copy(LivingEntity source, LivingEntity target) {
         Objects.requireNonNull(source, "source");
         Objects.requireNonNull(target, "target");
-        data(target).copyFrom(data(source));
+        // Clone explicitly revives the old player's capabilities, even though it is dead.
+        PlatformPlayerRotData.find(source).ifPresent(sourceData ->
+                PlatformPlayerRotData.find(target).ifPresent(targetData -> targetData.copyFrom(sourceData))
+        );
     }
 
     public static void installSyncSink(SyncSink sink) {
@@ -127,14 +155,23 @@ public final class ScarletRotService {
         Objects.requireNonNull(entity, "entity");
         Objects.requireNonNull(reason, "reason");
         double checkedCapacity = requireCapacity(capacity);
+        Optional<ScarletRotData> availableData = data(entity);
+        if (availableData.isEmpty()) {
+            return;
+        }
         movementStateSink.accept(entity);
-        if (entity instanceof ServerPlayer player) {
-            syncSink.sync(player, snapshot(player, checkedCapacity), reason);
+        if (!entity.isRemoved() && entity.isAlive() && entity instanceof ServerPlayer player) {
+            syncSink.sync(player, availableData.get().snapshot(player.level().getGameTime(), checkedCapacity), reason);
         }
     }
 
-    private static ScarletRotData data(LivingEntity entity) {
-        return PlatformPlayerRotData.get(entity);
+    private static Optional<ScarletRotData> data(LivingEntity entity) {
+        // Death, dimension removal and other mods can invalidate capabilities before late callbacks.
+        // Skip unavailable data rather than reviving a corpse or replacing its persisted rot state.
+        if (entity.isRemoved() || !entity.isAlive() || entity.level().isClientSide()) {
+            return Optional.empty();
+        }
+        return PlatformPlayerRotData.find(entity);
     }
 
     private static double applyPlayerEquipmentMultiplier(LivingEntity entity, double amount) {
@@ -165,7 +202,7 @@ public final class ScarletRotService {
         if (damage <= 0.0F) {
             return;
         }
-        for (int pulse = 0; pulse < result.damagePulses() && entity.isAlive(); pulse++) {
+        for (int pulse = 0; pulse < result.damagePulses() && !entity.isRemoved() && entity.isAlive(); pulse++) {
             entity.hurt(ModDamageSources.scarletRot(entity.level().registryAccess()), damage);
         }
     }

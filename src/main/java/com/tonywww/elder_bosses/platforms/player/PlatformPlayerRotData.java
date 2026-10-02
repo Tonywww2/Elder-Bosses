@@ -13,12 +13,6 @@ public final class PlatformPlayerRotData {
     private PlatformPlayerRotData() {
     }
 
-    public static ScarletRotData get(LivingEntity entity) {
-        return find(entity).orElseThrow(
-                () -> new IllegalStateException("Living entity scarlet rot capability is missing")
-        );
-    }
-
     public static Optional<ScarletRotData> find(LivingEntity entity) {
         //? if forge {
         return entity.getCapability(ForgePlayerRotCapability.CAPABILITY).resolve();

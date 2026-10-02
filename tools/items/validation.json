@@ -1,0 +1,10 @@
+{
+  "registered_items": 23,
+  "new_standalone_textures": 11,
+  "materials_16px": 6,
+  "equipment_32px": 5,
+  "block_item_models": 12,
+  "resolved_resources": 57,
+  "both_loaders_verified": true,
+  "passed": true
+}

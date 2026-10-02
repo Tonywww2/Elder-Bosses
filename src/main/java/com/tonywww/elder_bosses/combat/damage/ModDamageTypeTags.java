@@ -19,8 +19,6 @@ public final class ModDamageTypeTags {
     public static final TagKey<DamageType> POISON = create("poison");
     public static final TagKey<DamageType> WITHER = create("wither");
     public static final TagKey<DamageType> SLEEP = create("sleep");
-        public static final TagKey<DamageType> PROMISED_CONSORT_IMMUNE =
-            create("promised_consort_immune");
 
     private ModDamageTypeTags() {
     }

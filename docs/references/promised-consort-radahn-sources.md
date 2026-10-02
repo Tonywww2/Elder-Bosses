@@ -73,8 +73,8 @@
 
 | 来源 | 本地记录 | 实际处理 |
 | --- | --- | --- |
-| [Chaonero：神之门上面都有啥](https://www.bilibili.com/video/BV1aPhTeGEs3/)，2024-06-30，136 秒 | [研究帧](../assets/reference/promised-consort-radahn/arena-v2/gate_rooftop_overview.jpg)、[元数据](../assets/reference/promised-consort-radahn/arena-v2/gate_rooftop_overview.json) | 从 0 秒开始每 12 秒抽样，共 12 张；包含场地接近、根部、中央通路和越界上方探索 |
-| [阿鲁蒂娜：法环：神之门赏析](https://www.bilibili.com/video/BV1zVDiYqERQ/)，2024-11-09，220 秒 | [研究帧](../assets/reference/promised-consort-radahn/arena-v2/gate_architecture_overview.jpg)、[元数据](../assets/reference/promised-consort-radahn/arena-v2/gate_architecture_overview.json) | 从 0 秒开始每 20 秒抽样，共 11 张；包含完整正面、斜侧近景、地坪与局部展示，也有黑场/对照画面 |
+| [Chaonero：神之门上面都有啥](https://www.bilibili.com/video/BV1aPhTeGEs3/)，2024-06-30，136 秒 | 研究帧、元数据 | 从 0 秒开始每 12 秒抽样，共 12 张；包含场地接近、根部、中央通路和越界上方探索 |
+| [阿鲁蒂娜：法环：神之门赏析](https://www.bilibili.com/video/BV1zVDiYqERQ/)，2024-11-09，220 秒 | 研究帧、元数据 | 从 0 秒开始每 20 秒抽样，共 11 张；包含完整正面、斜侧近景、地坪与局部展示，也有黑场/对照画面 |
 | [法环：探索神之门](https://www.bilibili.com/video/BV1nH4y1w7wT/) | 仅定位链接，未取帧、未观看 | 候选来源，不能当作本轮已核验依据 |
 
 本轮实际查看的是一张最大 1200 像素、235,408 字节的合成研究预览 (historical artifact removed)，包含上述间隔帧与既有第 8 张正面、第 11 张前阶图；未观看两段完整视频，未逐张打开原尺寸研究帧。视频发布时间不同，实际游戏补丁版本未核实，不宣称完成同版本自由镜头测绘。

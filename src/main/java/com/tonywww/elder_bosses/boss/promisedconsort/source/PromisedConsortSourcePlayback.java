@@ -1,0 +1,60 @@
+package com.tonywww.elder_bosses.boss.promisedconsort.source;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.Vec3;
+import static com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTimeline.*;
+
+/** One atomic synced actor identity and clock, shared by body and independent clones. */
+public record PromisedConsortSourcePlayback(Actor actor,long startWorldMicros,double speed,long sourceOffsetMicros,PromisedConsortSourceTimeWarp warp) {
+    public PromisedConsortSourcePlayback(Actor actor,long startWorldMicros,double speed) {this(actor,startWorldMicros,speed,0,PromisedConsortSourceTimeWarp.IDENTITY);}
+    public PromisedConsortSourcePlayback(Actor actor,long startWorldMicros,double speed,long offset) {this(actor,startWorldMicros,speed,offset,PromisedConsortSourceTimeWarp.IDENTITY);}
+    public PromisedConsortSourcePlayback {
+        if (actor==null || warp==null || startWorldMicros<0 || sourceOffsetMicros<0 || !Double.isFinite(speed) || speed<=0)
+            throw new IllegalArgumentException("Invalid source playback");
+        Clip clip=PromisedConsortSourceAssets.bank().requireClip(actor.taeId());
+        if (clip.hkxId()!=actor.hkxId()) throw new IllegalArgumentException("Actor TAE/HKX mismatch");
+    }
+    public static PromisedConsortSourcePlayback of(PromisedConsortSourceSession.Started start) {
+        return new PromisedConsortSourcePlayback(start.actor(),start.startWorldMicros(),start.speed(),0,start.warp());
+    }
+    public long sourceMicros(long worldMicros) {
+        return warp.sourceAt(warp.gameAt(sourceOffsetMicros)+(long)Math.floor(Math.max(0,worldMicros-startWorldMicros)*speed));
+    }
+    public long worldAtSource(long source) {return startWorldMicros+(long)Math.ceil((warp.gameAt(source)-warp.gameAt(sourceOffsetMicros))/speed);}
+    public double animationTicks(long gameTick,double partialTick) {
+        if (!Double.isFinite(partialTick) || partialTick<0 || partialTick>1) throw new IllegalArgumentException("Invalid partial tick");
+        long time=sourceMicros(Math.addExact(Math.multiplyExact(gameTick,GAME_TICK_MICROS),(long)(partialTick*GAME_TICK_MICROS)));
+        return Math.min(time,PromisedConsortSourceAssets.bank().requireClip(actor.taeId()).durationMicros())/50_000.0;
+    }
+    public String animationClip() { return PromisedConsortSourceAssets.bank().requireClip(actor.taeId()).animationClip(); }
+
+    /** Transfer only Master translation to the actor; rendering removes that same channel. */
+    public Vec3 displacement(long worldMicros,double yawDegrees) {
+        long time=sourceMicros(worldMicros);
+        var motion=PromisedConsortSourceAssets.bank().motions().get(actor.taeId()).displacement(time,yawDegrees);
+        var master=PromisedConsortSourceAssets.pose(actor.hkxId()).masterTranslationDelta(time);
+        double yaw=Math.toRadians(yawAt(worldMicros,yawDegrees)),sin=Math.sin(yaw),cos=Math.cos(yaw);
+        return new Vec3(motion.x()+master.x()*cos+master.z()*sin,
+                motion.y()+master.y(),motion.z()+master.x()*sin-master.z()*cos);
+    }
+    public float yawAt(long worldMicros,double initialYaw) {
+        return (float)(initialYaw+PromisedConsortSourceAssets.bank().motions().get(actor.taeId()).yawDeltaDegrees(sourceMicros(worldMicros)));
+    }
+    public CompoundTag encode() {
+        CompoundTag tag=new CompoundTag();
+        tag.putInt("Version",3); tag.putLong("Sequence",actor.actionSequence());
+        tag.putInt("Segment",actor.segmentIndex()); tag.putInt("Slot",actor.slot());
+        tag.putInt("TAE",actor.taeId()); tag.putInt("HKX",actor.hkxId()); tag.putInt("StateInfo",actor.stateInfo());
+        tag.putLong("StartMicros",startWorldMicros); tag.putDouble("Speed",speed);
+        tag.putLong("SourceOffsetMicros",sourceOffsetMicros);
+        tag.putLongArray("Warp",new long[]{warp.sourceWindup(),warp.sourceActive(),warp.sourceRecovery(),warp.gameWindup(),warp.gameActive(),warp.gameRecovery()});
+        return tag;
+    }
+    public static PromisedConsortSourcePlayback decode(CompoundTag tag) {
+        if (tag.isEmpty()) return null;
+        if (tag.getInt("Version")!=3) throw new IllegalArgumentException("Unsupported source playback state");
+        long[] w=tag.getLongArray("Warp");if(w.length!=6) throw new IllegalArgumentException("Invalid source clock phases");
+        return new PromisedConsortSourcePlayback(new Actor(tag.getLong("Sequence"),tag.getInt("Segment"),tag.getInt("Slot"),
+                tag.getInt("TAE"),tag.getInt("HKX"),tag.getInt("StateInfo")),tag.getLong("StartMicros"),tag.getDouble("Speed"),tag.getLong("SourceOffsetMicros"),new PromisedConsortSourceTimeWarp(w[0],w[1],w[2],w[3],w[4],w[5]));
+    }
+}

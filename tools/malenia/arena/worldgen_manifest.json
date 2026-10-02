@@ -1,0 +1,285 @@
+{
+  "revision": 2,
+  "bounds": [
+    [
+      -36,
+      -4,
+      -38
+    ],
+    [
+      36,
+      64,
+      48
+    ]
+  ],
+  "surface_entry": [
+    3,
+    58,
+    46
+  ],
+  "stair_width": 3,
+  "stair_rise": 52,
+  "parts": [
+    {
+      "name": "part_00",
+      "offset": [
+        -36,
+        -4,
+        -38
+      ],
+      "size": [
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "part_01",
+      "offset": [
+        -36,
+        -4,
+        -6
+      ],
+      "size": [
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "worldgen_part_02",
+      "offset": [
+        -36,
+        -4,
+        26
+      ],
+      "size": [
+        32,
+        32,
+        19
+      ]
+    },
+    {
+      "name": "part_03",
+      "offset": [
+        -36,
+        28,
+        -38
+      ],
+      "size": [
+        32,
+        10,
+        32
+      ]
+    },
+    {
+      "name": "part_04",
+      "offset": [
+        -36,
+        28,
+        -6
+      ],
+      "size": [
+        32,
+        10,
+        32
+      ]
+    },
+    {
+      "name": "worldgen_part_05",
+      "offset": [
+        -36,
+        28,
+        26
+      ],
+      "size": [
+        32,
+        10,
+        19
+      ]
+    },
+    {
+      "name": "part_06",
+      "offset": [
+        -4,
+        -4,
+        -38
+      ],
+      "size": [
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "part_07",
+      "offset": [
+        -4,
+        -4,
+        -6
+      ],
+      "size": [
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "worldgen_part_08",
+      "offset": [
+        -4,
+        -4,
+        26
+      ],
+      "size": [
+        32,
+        32,
+        19
+      ]
+    },
+    {
+      "name": "part_09",
+      "offset": [
+        -4,
+        28,
+        -38
+      ],
+      "size": [
+        32,
+        10,
+        32
+      ]
+    },
+    {
+      "name": "part_10",
+      "offset": [
+        -4,
+        28,
+        -6
+      ],
+      "size": [
+        32,
+        10,
+        32
+      ]
+    },
+    {
+      "name": "worldgen_part_11",
+      "offset": [
+        -4,
+        28,
+        26
+      ],
+      "size": [
+        32,
+        10,
+        19
+      ]
+    },
+    {
+      "name": "part_12",
+      "offset": [
+        28,
+        -4,
+        -38
+      ],
+      "size": [
+        9,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "part_13",
+      "offset": [
+        28,
+        -4,
+        -6
+      ],
+      "size": [
+        9,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "part_14",
+      "offset": [
+        28,
+        -4,
+        26
+      ],
+      "size": [
+        9,
+        32,
+        19
+      ]
+    },
+    {
+      "name": "part_15",
+      "offset": [
+        28,
+        28,
+        -38
+      ],
+      "size": [
+        9,
+        10,
+        32
+      ]
+    },
+    {
+      "name": "part_16",
+      "offset": [
+        28,
+        28,
+        -6
+      ],
+      "size": [
+        9,
+        10,
+        32
+      ]
+    },
+    {
+      "name": "part_17",
+      "offset": [
+        28,
+        28,
+        26
+      ],
+      "size": [
+        9,
+        10,
+        19
+      ]
+    },
+    {
+      "name": "worldgen_entry_top",
+      "offset": [
+        -7,
+        38,
+        32
+      ],
+      "size": [
+        15,
+        27,
+        17
+      ]
+    }
+  ],
+  "sha256": {
+    "structures/worldgen_part_02": "f245df2c661c29df1f6c32bfacb1b416ba3ca98902a8429654e7870be31467db",
+    "structures/worldgen_part_05": "8a6f5e423b84d57bae3d6c0ec2a4ca8d062e0b91989b8c8778514eb18bf2409d",
+    "structures/worldgen_part_08": "2534b11bc1ff64e10751b234a3df9c11daca99e38dbd4be927c8fe0a4751b877",
+    "structures/worldgen_part_11": "063292ceb3185ec02e056e9f3efae0c0a0677f57efbd55122fbad06770eaf73e",
+    "structures/worldgen_entry_top": "32573226672de9fd85ce7120fe352610f3ef3b059121ae6fa75235465ec52770",
+    "structures/worldgen_root": "44711102df7aea65a8aabcc757f77f49f555e6eb17c7d9f60ffb9a0d7e8d16d9",
+    "structure/worldgen_part_02": "97d55332e9447befaab9c34c5d5e05c0496a2d09dfc593e67eef393d5fbc5ee1",
+    "structure/worldgen_part_05": "f7e0a700f5a54f01b35925373a56f11cdab5a0e1617c49259fd10f9ad4e4d367",
+    "structure/worldgen_part_08": "3d903bb76e5faec22c821488be3e7f13692b334ab96fa6eb36e6c8b5c892488c",
+    "structure/worldgen_part_11": "be7f61124f8ae71d77f0172387b7d8bb5a106c1749c5846e8941a34db281abbd",
+    "structure/worldgen_entry_top": "be3e7a4b62ecbb2052ac05f06c132020b5ad31bfab1f4597e8febd2e475fb8fa",
+    "structure/worldgen_root": "fc5696437b5f9a6eaf1ae457d5566ce8f5b93b1c51f5b9912530a4f619a630c9"
+  }
+}

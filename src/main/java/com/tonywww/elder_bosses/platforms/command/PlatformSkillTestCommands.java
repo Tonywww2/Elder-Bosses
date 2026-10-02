@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.tonywww.elder_bosses.boss.promisedconsort.PromisedConsortEntity;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortPhase;
+import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceAssets;
 import com.tonywww.elder_bosses.platforms.registry.ModEntities;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -42,27 +43,34 @@ public final class PlatformSkillTestCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var boss = Commands.literal("promised_consort");
-        for (PromisedConsortActionId action : PromisedConsortActionId.values()) {
-            var skill = Commands.literal(action.serializedName())
-                    .executes(context -> spawn(context.getSource(), action, 1, null))
-                    .then(Commands.argument("phase", IntegerArgumentType.integer(1, 2))
-                            .executes(context -> spawn(context.getSource(), action,
-                                    IntegerArgumentType.getInteger(context, "phase"), null))
-                            .then(Commands.argument("pos", Vec3Argument.vec3())
-                                    .executes(context -> spawn(context.getSource(), action,
-                                            IntegerArgumentType.getInteger(context, "phase"),
-                                                Vec3Argument.getVec3(context, "pos")))));
-                                if(action==PromisedConsortActionId.GRAVITY_DIVE || action==PromisedConsortActionId.SPIRAL_ASSAULT
-                                    || action==PromisedConsortActionId.LIGHTSPEED_DASH || action==PromisedConsortActionId.LIGHTSPEED_SIDE_DASH) {
-                                skill.then(Commands.literal("ranged")
-                                    .executes(context -> spawn(context.getSource(),action,1,null,true))
-                                    .then(Commands.argument("phase",IntegerArgumentType.integer(1,2))
-                                        .executes(context -> spawn(context.getSource(),action,IntegerArgumentType.getInteger(context,"phase"),null,true))
-                                        .then(Commands.argument("pos",Vec3Argument.vec3()).executes(context -> spawn(context.getSource(),action,
-                                            IntegerArgumentType.getInteger(context,"phase"),Vec3Argument.getVec3(context,"pos"),true)))));
-                                }
-                                boss.then(skill);
-        }
+        boss.then(Commands.literal("source_animation")
+                .then(Commands.argument("tae",IntegerArgumentType.integer(0))
+                        .suggests((context,builder) -> {
+                            PromisedConsortSourceAssets.bank().clips().keySet().stream().sorted()
+                                    .map(String::valueOf).filter(id -> id.startsWith(builder.getRemaining())).forEach(builder::suggest);
+                            return builder.buildFuture();
+                        })
+                        .executes(context -> spawnSource(context.getSource(),IntegerArgumentType.getInteger(context,"tae"),1,null))
+                        .then(Commands.argument("phase",IntegerArgumentType.integer(1,2))
+                                .executes(context -> spawnSource(context.getSource(),IntegerArgumentType.getInteger(context,"tae"),
+                                        IntegerArgumentType.getInteger(context,"phase"),null))
+                                .then(Commands.argument("pos",Vec3Argument.vec3())
+                                        .executes(context -> spawnSource(context.getSource(),IntegerArgumentType.getInteger(context,"tae"),
+                                                IntegerArgumentType.getInteger(context,"phase"),Vec3Argument.getVec3(context,"pos")))))));
+        boss.then(Commands.literal("source_act")
+                .then(Commands.argument("act",IntegerArgumentType.integer(0))
+                        .suggests((context,builder) -> {
+                            com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceAi.REGISTERED_ACTS.stream().sorted()
+                                    .map(String::valueOf).filter(id -> id.startsWith(builder.getRemaining())).forEach(builder::suggest);
+                            return builder.buildFuture();
+                        })
+                        .executes(context -> spawnSourceAct(context.getSource(),IntegerArgumentType.getInteger(context,"act"),1,null))
+                        .then(Commands.argument("phase",IntegerArgumentType.integer(1,2))
+                                .executes(context -> spawnSourceAct(context.getSource(),IntegerArgumentType.getInteger(context,"act"),
+                                        IntegerArgumentType.getInteger(context,"phase"),null))
+                                .then(Commands.argument("pos",Vec3Argument.vec3())
+                                        .executes(context -> spawnSourceAct(context.getSource(),IntegerArgumentType.getInteger(context,"act"),
+                                                IntegerArgumentType.getInteger(context,"phase"),Vec3Argument.getVec3(context,"pos")))))));
         dispatcher.register(Commands.literal("elderbosses")
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.literal("test").then(boss)));
@@ -75,6 +83,22 @@ public final class PlatformSkillTestCommands {
 
     private static int spawn(CommandSourceStack source, PromisedConsortActionId action,
                              int phaseId, Vec3 requestedPosition, boolean ranged) throws CommandSyntaxException {
+        return spawn(source,action,phaseId,requestedPosition,ranged,null,false);
+    }
+
+    private static int spawnSource(CommandSourceStack source,int taeId,int phaseId,Vec3 position) throws CommandSyntaxException {
+        try { PromisedConsortSourceAssets.bank().requireClip(taeId); }
+        catch (IllegalArgumentException exception) { throw failure("commands.elder_bosses.test.source_unavailable"); }
+        return spawn(source,null,phaseId,position,false,taeId,false);
+    }
+
+    private static int spawnSourceAct(CommandSourceStack source,int act,int phase,Vec3 position) throws CommandSyntaxException {
+        if(!com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceAi.REGISTERED_ACTS.contains(act)) throw failure("commands.elder_bosses.test.source_unavailable");
+        return spawn(source,null,phase,position,false,act,true);
+    }
+
+    private static int spawn(CommandSourceStack source,PromisedConsortActionId action,
+                             int phaseId,Vec3 requestedPosition,boolean ranged,Integer sourceTae,boolean sourceAct) throws CommandSyntaxException {
         ServerPlayer observer = source.getPlayerOrException();
         ServerLevel level = source.getLevel();
         if (observer.isSpectator() || !observer.isAlive() || observer.level() != level) {
@@ -107,8 +131,9 @@ public final class PlatformSkillTestCommands {
         }
         int duration;
         try {
-            duration = boss.beginSkillTest(observer, action, phaseId == 2
-                    ? PromisedConsortPhase.PHASE_TWO : PromisedConsortPhase.PHASE_ONE,ranged);
+            var phase=phaseId==2 ? PromisedConsortPhase.PHASE_TWO : PromisedConsortPhase.PHASE_ONE;
+            duration = sourceTae==null ? boss.beginSkillTest(observer,action,phase,ranged)
+                    : sourceAct?boss.beginSourceAcceptance(observer,sourceTae,phase):boss.beginSourcePreview(observer,sourceTae,phase);
         } catch (IllegalArgumentException | IllegalStateException exception) {
             boss.discard();
             throw failure("commands.elder_bosses.test.unavailable");
@@ -117,8 +142,9 @@ public final class PlatformSkillTestCommands {
             boss.discard();
             throw failure("commands.elder_bosses.test.spawn_failed");
         }
-        source.sendSuccess(() -> Component.translatable("commands.elder_bosses.test.started",
-                action.serializedName(), phaseId, duration), false);
+        source.sendSuccess(() -> sourceTae==null
+                ? Component.translatable("commands.elder_bosses.test.started",action.serializedName(),phaseId,duration)
+                : Component.translatable(sourceAct?"commands.elder_bosses.test.source_act_started":"commands.elder_bosses.test.source_started",sourceTae,phaseId,duration),false);
         return boss.getId();
     }
 

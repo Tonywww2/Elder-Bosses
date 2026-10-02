@@ -21,7 +21,8 @@ import java.util.OptionalDouble;
 
 public final class ClientIndicatorRenderer {
     private static final double FILL_OPACITY_MULTIPLIER = 0.72;
-    private static final RenderType TRANSLUCENT_FILLS = IndicatorRenderType.createTranslucentFills();
+    private static final RenderType TRANSLUCENT_FILLS = IndicatorRenderType.createTranslucentFills(false);
+    private static final RenderType CONSORT_FILLS = IndicatorRenderType.createTranslucentFills(true);
     private static final RenderType MALENIA_BACKDROP = IndicatorRenderType.createConsortLines("malenia_backdrop", 6.0);
     private static final RenderType VISIBLE_LINES = IndicatorRenderType.createVisibleLines();
     private static final RenderType OCCLUDED_LINES = IndicatorRenderType.createOccludedLines();
@@ -57,6 +58,7 @@ public final class ClientIndicatorRenderer {
             drawFills(poseStack.last(), buffers, regular, gameTick, config, false);
             drawFills(poseStack.last(), buffers, consort, gameTick, config, true);
             buffers.endBatch(TRANSLUCENT_FILLS);
+            buffers.endBatch(CONSORT_FILLS);
             drawBorders(poseStack.last(), buffers, regular, MALENIA_BACKDROP, false, gameTick, config);
             buffers.endBatch(MALENIA_BACKDROP);
             drawBorders(poseStack.last(), buffers, regular, VISIBLE_LINES, false, gameTick, config);
@@ -103,6 +105,7 @@ public final class ClientIndicatorRenderer {
                 || snapshot.slot() == IndicatorSnapshotPacket.SegmentSlot.NEXT;
         if (config.rangeEnabled(true)) {
             var mesh = ClientIndicatorGeometry.create(snapshot, config.maxSegmentsPerShape());
+            mesh=ClientIndicatorGeometry.flat(mesh,snapshot.anchor().y());
             drawLines(consumer, pose, mesh.borders(), color, alpha, dashed, config.surfaceOffset());
             if (!backdrop) drawLines(consumer, pose, mesh.accents(), color, alpha, true, config.surfaceOffset());
         }
@@ -125,12 +128,13 @@ public final class ClientIndicatorRenderer {
             boolean promisedConsort
     ) {
         if (!config.rangeEnabled(promisedConsort)) return;
-        VertexConsumer consumer = buffers.getBuffer(TRANSLUCENT_FILLS);
+        VertexConsumer consumer = buffers.getBuffer(promisedConsort ? CONSORT_FILLS : TRANSLUCENT_FILLS);
         for (IndicatorSnapshotPacket snapshot : snapshots) {
             ClientIndicatorGeometry.Mesh mesh = ClientIndicatorGeometry.create(
                     snapshot,
                     config.maxSegmentsPerShape()
             );
+            if(promisedConsort) mesh=ClientIndicatorGeometry.flat(mesh,snapshot.anchor().y());
                 int alpha = alpha(
                     visibility(snapshot, gameTick),
                     config.opacity() * FILL_OPACITY_MULTIPLIER
@@ -400,9 +404,9 @@ public final class ClientIndicatorRenderer {
             );
         }
 
-        private static RenderType createTranslucentFills() {
+        private static RenderType createTranslucentFills(boolean throughWalls) {
             return RenderType.create(
-                "elder_bosses_indicator_translucent_fills",
+                throughWalls ? "elder_bosses_consort_indicator_fills" : "elder_bosses_indicator_translucent_fills",
                 DefaultVertexFormat.POSITION_COLOR,
                 VertexFormat.Mode.QUADS,
                 256,
@@ -411,7 +415,7 @@ public final class ClientIndicatorRenderer {
                 CompositeState.builder()
                     .setShaderState(POSITION_COLOR_SHADER)
                     .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setDepthTestState(throughWalls ? NO_DEPTH_TEST : LEQUAL_DEPTH_TEST)
                     .setCullState(NO_CULL)
                     .setWriteMaskState(COLOR_WRITE)
                     .createCompositeState(true)

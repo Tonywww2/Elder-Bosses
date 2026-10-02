@@ -32,3 +32,10 @@ type = "optional"
 versionRange = "[9.5.0,10)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.elder_bosses]]
+modId = "configured"
+type = "optional"
+versionRange = "[2.6.3,3)"
+ordering = "AFTER"
+side = "CLIENT"

@@ -1,0 +1,406 @@
+{
+  "policy": "exact_small_decimal_constants_as_Molang_literal_strings",
+  "source_values_changed": false,
+  "clips": [
+    {
+      "clip": "source_000020.animation.json",
+      "decimal_literals": 291,
+      "sha256": "301873f903b8119bb64ad2281045d1cc5ea4ccbf465021658ee193ba9efa95b0"
+    },
+    {
+      "clip": "source_002000.animation.json",
+      "decimal_literals": 302,
+      "sha256": "89690fab7eddc1081f0fd255c4f683dd2d98586352af7a359b1d7465dba5a90f"
+    },
+    {
+      "clip": "source_002002.animation.json",
+      "decimal_literals": 293,
+      "sha256": "c5083c50e4141eb5ea71185b1df75217f069e58287e717ea0544967432b5f4a9"
+    },
+    {
+      "clip": "source_002003.animation.json",
+      "decimal_literals": 292,
+      "sha256": "32188109298382326fb4e520086f70e88be4ed99bd19979055ac90ca6b69007a"
+    },
+    {
+      "clip": "source_002100.animation.json",
+      "decimal_literals": 262,
+      "sha256": "9d70f6770f431ea13f9f70cd874cefe3c13f9faf37d58d5c1d44babe913f5220"
+    },
+    {
+      "clip": "source_003000.animation.json",
+      "decimal_literals": 336,
+      "sha256": "0e1eec142ac5bb72cc75762500a53c5b122964ee299ed229b9cd8256ca7860c3"
+    },
+    {
+      "clip": "source_003001.animation.json",
+      "decimal_literals": 322,
+      "sha256": "a4878fd80f0768d61050aa397b304b9371e9f692ba1e19947186eb58fb6f8aec"
+    },
+    {
+      "clip": "source_003002.animation.json",
+      "decimal_literals": 403,
+      "sha256": "c6e19ca07852088504c117cf6e9bd478c358f9732cf91e67c7187b7acd42e3c2"
+    },
+    {
+      "clip": "source_003003.animation.json",
+      "decimal_literals": 349,
+      "sha256": "7f5ecf0e76e854110f85ea795f908e3310f9ab340d6d1b43cca30c4e1c278647"
+    },
+    {
+      "clip": "source_003004.animation.json",
+      "decimal_literals": 363,
+      "sha256": "4a9b92e6949686adfbb72f62949956fa93117d8afb78aee264a6c5bc7aebfec2"
+    },
+    {
+      "clip": "source_003005.animation.json",
+      "decimal_literals": 379,
+      "sha256": "a5ac691c7f941ca148b78b079b237b9501991edc09b88b8014d5c4e7c3695611"
+    },
+    {
+      "clip": "source_003006.animation.json",
+      "decimal_literals": 402,
+      "sha256": "50b3309c25cb67d4e158627fca5051a3a9f2cb4906f825024fe9f87748ceeba7"
+    },
+    {
+      "clip": "source_003007.animation.json",
+      "decimal_literals": 368,
+      "sha256": "4aea24078b09d70b9137986a9ce5cac828ac912f543b3f9a9ad93610509067c5"
+    },
+    {
+      "clip": "source_003008.animation.json",
+      "decimal_literals": 375,
+      "sha256": "3d8f719fda323465d4e3029e2ed859c8cc66a541458874926dbff709578a5279"
+    },
+    {
+      "clip": "source_003009.animation.json",
+      "decimal_literals": 344,
+      "sha256": "6088c862e7f28b1ee8c2455f7f00b3147194f3bf0afd8dd9314d5296e4f273e5"
+    },
+    {
+      "clip": "source_003010.animation.json",
+      "decimal_literals": 345,
+      "sha256": "b25a36d0204d3784761d7a1328997ad1e495797ab79bfb5430b038199f56d21d"
+    },
+    {
+      "clip": "source_003011.animation.json",
+      "decimal_literals": 376,
+      "sha256": "20632dd07a689cb4c649f53667853588d292991e52f4668d1b2ebb583d245227"
+    },
+    {
+      "clip": "source_003012.animation.json",
+      "decimal_literals": 276,
+      "sha256": "a54bc63ee0f2ff835dd57dde7f0730c50c96b3ca63d784ab218d667bb2ec7dc7"
+    },
+    {
+      "clip": "source_003013.animation.json",
+      "decimal_literals": 496,
+      "sha256": "d776747326c1080321b8d006b910f3018439553fdf929739851991781b980696"
+    },
+    {
+      "clip": "source_003014.animation.json",
+      "decimal_literals": 394,
+      "sha256": "bbfd43f0d567a46b3ac030b356c93e018a48e57095d52e407f2eff2655a1bb70"
+    },
+    {
+      "clip": "source_003015.animation.json",
+      "decimal_literals": 281,
+      "sha256": "d311a9e92b0834a68951730ee35dbb67e602bab38db64be37f5893c31f872435"
+    },
+    {
+      "clip": "source_003016.animation.json",
+      "decimal_literals": 343,
+      "sha256": "40f35045435dfbd88ba30e3ddd9022885acbbc2ccd4f1a65dc65ac8db5fb4a80"
+    },
+    {
+      "clip": "source_003017.animation.json",
+      "decimal_literals": 783,
+      "sha256": "8d3ee6ae4d7db57ab3ce1ac3bf346cb9657c9a4d2038051c86aba4e72c664d6e"
+    },
+    {
+      "clip": "source_003018.animation.json",
+      "decimal_literals": 330,
+      "sha256": "dc1908d0081ba8e5153e0c0b3f28856c73f410177dcf6a6a733095e5f1e9d4d2"
+    },
+    {
+      "clip": "source_003019.animation.json",
+      "decimal_literals": 329,
+      "sha256": "517f6b0b57e063ba2daacb8ac9e2712a4b839fd50184339b76fb4a752a932906"
+    },
+    {
+      "clip": "source_003020.animation.json",
+      "decimal_literals": 535,
+      "sha256": "05ac11310234c67a5cadb004445d54828cc763cc026be1da95aa2a4c06194105"
+    },
+    {
+      "clip": "source_003021.animation.json",
+      "decimal_literals": 332,
+      "sha256": "94299fd9060b11ddcc953b479f78d5c46e78c53871a355e5c01abdfd5a489dec"
+    },
+    {
+      "clip": "source_003022.animation.json",
+      "decimal_literals": 316,
+      "sha256": "b9cb0dbaf8ae73f0cb93180b8b69e438f9d22faa84c8bec864476b4ab3f2e726"
+    },
+    {
+      "clip": "source_003023.animation.json",
+      "decimal_literals": 297,
+      "sha256": "4e30cfed827c84229699a32e124e8061cb2b501c06dff177fd6f0e5c871afb63"
+    },
+    {
+      "clip": "source_003024.animation.json",
+      "decimal_literals": 673,
+      "sha256": "f82aabdfcb08b1db7d24d974bd081c585eaf25e877aa4baa3d6801edcea905c4"
+    },
+    {
+      "clip": "source_003025.animation.json",
+      "decimal_literals": 681,
+      "sha256": "1baad438d425bcc948caceff7c1f930c617d642157c26ac0370833a4d5fd47f7"
+    },
+    {
+      "clip": "source_003026.animation.json",
+      "decimal_literals": 344,
+      "sha256": "4daf6c9785a7f32c490eb9dd70be5bce6a59fbb3a956cc89f45f560fdc609a62"
+    },
+    {
+      "clip": "source_003028.animation.json",
+      "decimal_literals": 548,
+      "sha256": "06282cee73d87c384fdc46d6971a42c0d4856c2f73d5397489339871c14161c7"
+    },
+    {
+      "clip": "source_003030.animation.json",
+      "decimal_literals": 485,
+      "sha256": "762738f7687aece0d5f398a84a126d80288a041df77102a91e24a6f273ec12d2"
+    },
+    {
+      "clip": "source_003031.animation.json",
+      "decimal_literals": 295,
+      "sha256": "61f589e7eedace58ad99866b400ab0049bf7b9c15ee09b25f9b1fc7c58a1d0a3"
+    },
+    {
+      "clip": "source_003032.animation.json",
+      "decimal_literals": 322,
+      "sha256": "fbf515394e91fd7eb2eb0f4aadb752f8c3c3febe55ab3deaf68376fd6a062233"
+    },
+    {
+      "clip": "source_003033.animation.json",
+      "decimal_literals": 391,
+      "sha256": "2502b01af9aa32f9455e7b74a7c43f0d298a6362f28fa6ddaefbc6096cb08aaf"
+    },
+    {
+      "clip": "source_003034.animation.json",
+      "decimal_literals": 363,
+      "sha256": "f040ec9fb31fc16614ae43d88f8d230226eddcf5b5723ff98d2670d20d02df08"
+    },
+    {
+      "clip": "source_003035.animation.json",
+      "decimal_literals": 324,
+      "sha256": "b3eec385dc45a9cb36e20a056ee23ca18889256b7045a86e3ef982c2523367af"
+    },
+    {
+      "clip": "source_003036.animation.json",
+      "decimal_literals": 487,
+      "sha256": "ea39eba64f233615ca09685f551e546e0dd30e731d2bd64f9964a16953ca14cc"
+    },
+    {
+      "clip": "source_004100.animation.json",
+      "decimal_literals": 455,
+      "sha256": "4364bf7ff128ce1b5f6af5be3312cddb87a340d886f9bd0b426b4d9cd42050d6"
+    },
+    {
+      "clip": "source_004101.animation.json",
+      "decimal_literals": 297,
+      "sha256": "543b903783ebac3e2659ba55216caa932d66ab92ea97ccb2aa9615f0d68eec60"
+    },
+    {
+      "clip": "source_005000.animation.json",
+      "decimal_literals": 262,
+      "sha256": "20d6187eef8ee0e946a5b6b7640f1091a4d2a81716b88597de81a27e4f61def2"
+    },
+    {
+      "clip": "source_005001.animation.json",
+      "decimal_literals": 266,
+      "sha256": "c53cb411a26ec97575116c6aaa45d9b533c15c5c6ce83c9a3a2f2cbb802b2a59"
+    },
+    {
+      "clip": "source_005002.animation.json",
+      "decimal_literals": 289,
+      "sha256": "4c4cf4cbddf3f60fa902fa8b5bd617b15c6ff9c5fa25ff2ceea0a155a74c01ff"
+    },
+    {
+      "clip": "source_005003.animation.json",
+      "decimal_literals": 242,
+      "sha256": "0d5b7c776dfd8b6489582f05f7ec3068a21fb9cee177b64ab6666cdd17ce6c80"
+    },
+    {
+      "clip": "source_006000.animation.json",
+      "decimal_literals": 262,
+      "sha256": "52ef0b03175c66c493d0dd055cf91ca1a83ee54290de3d71c3c30ba187774811"
+    },
+    {
+      "clip": "source_006002.animation.json",
+      "decimal_literals": 255,
+      "sha256": "c7716c4e44f81370fbd2c008989c5f6a083b92a3ac648c61118cabc745360a93"
+    },
+    {
+      "clip": "source_006003.animation.json",
+      "decimal_literals": 280,
+      "sha256": "916d3d6245bdb03625e38ac6ac8373aa4898ac9a4c439b7899d3b9bac30b8ad2"
+    },
+    {
+      "clip": "source_007000.animation.json",
+      "decimal_literals": 278,
+      "sha256": "f83c4755333a7fa695f619b0ebe487f46cf8c7c00ced860b52c9352dff750337"
+    },
+    {
+      "clip": "source_007400.animation.json",
+      "decimal_literals": 316,
+      "sha256": "1d74d7e67fc8b39a8c86e5c785d1c275351f28be95cc0c94eb6023b4dab1327e"
+    },
+    {
+      "clip": "source_007600.animation.json",
+      "decimal_literals": 264,
+      "sha256": "e8e40db44e4026968adddbbb15760baa846141e00eeb59e0843ed1cd7f209f88"
+    },
+    {
+      "clip": "source_008500.animation.json",
+      "decimal_literals": 510,
+      "sha256": "f42d25cee3750b39f20a3b014b254666385de614e8dfe4bb022b0736c8bee035"
+    },
+    {
+      "clip": "source_008501.animation.json",
+      "decimal_literals": 524,
+      "sha256": "bc9143a577a1f06107e58975a91461c427917abfaf1a13428de6a80d2ddde74f"
+    },
+    {
+      "clip": "source_008700.animation.json",
+      "decimal_literals": 589,
+      "sha256": "af84af0a2ae64865f37ae91656689887850862d4e8874701d451e6b15b964d4a"
+    },
+    {
+      "clip": "source_009000.animation.json",
+      "decimal_literals": 160,
+      "sha256": "619a6d6f23185b96a7f5ce78539df57219c7dbf8bb571c108b034c4078bafb87"
+    },
+    {
+      "clip": "source_009500.animation.json",
+      "decimal_literals": 156,
+      "sha256": "384cba1975d508547858e4811d7977af6f0225da7800178de01af766bca37b82"
+    },
+    {
+      "clip": "source_010000.animation.json",
+      "decimal_literals": 519,
+      "sha256": "8b646ca626497e4d28595c07506856f0cef6525c5ca3a78352c9a391f2e15b1e"
+    },
+    {
+      "clip": "source_010001.animation.json",
+      "decimal_literals": 250,
+      "sha256": "5d28d7d410695b6551748cb49a200ffd9b56aa7eab7a6f694dd86336c80a1407"
+    },
+    {
+      "clip": "source_011060.animation.json",
+      "decimal_literals": 475,
+      "sha256": "f31b08ac015849aac6f09c861e35c901fbfb9caadc45e9bce240fb26a068259c"
+    },
+    {
+      "clip": "source_011061.animation.json",
+      "decimal_literals": 435,
+      "sha256": "eda2f942deca913e43f7de117bbbddde7ddb5ca365334c8b4a8989d96233beee"
+    },
+    {
+      "clip": "source_020000.animation.json",
+      "decimal_literals": 301,
+      "sha256": "cced5bbfb8b7f543a0e0ec2166e8e58095a0487b321697eedfe9760aab30e395"
+    },
+    {
+      "clip": "source_020001.animation.json",
+      "decimal_literals": 388,
+      "sha256": "c21305f20d5364b5c0ed19dc8af919c647d3cc55cbfc16948283192eaecaf127"
+    },
+    {
+      "clip": "source_020002.animation.json",
+      "decimal_literals": 287,
+      "sha256": "dd1623c49e7cb82e8b1acf8f9d1d655057d331fd1717ec16c143ab195c80eeef"
+    },
+    {
+      "clip": "source_020003.animation.json",
+      "decimal_literals": 194,
+      "sha256": "aa92c5e35c675d6ca54efc9a100361beba0dbc8046a9e40b4a67a60c2191db01"
+    },
+    {
+      "clip": "source_020004.animation.json",
+      "decimal_literals": 304,
+      "sha256": "404e6f96c58cbe9e5398fd9d268df47ed6f3b670d281bb530333f67d5a0f6788"
+    },
+    {
+      "clip": "source_020005.animation.json",
+      "decimal_literals": 309,
+      "sha256": "5d72d3667f88d56a896683e0faaf265e9824bcf85eb98c5424a52346e2b99b9b"
+    },
+    {
+      "clip": "source_020006.animation.json",
+      "decimal_literals": 556,
+      "sha256": "572168d9c67e0f80f880d838c80bed1efee96ce53154c19f9a92cb7bfd26760c"
+    },
+    {
+      "clip": "source_020007.animation.json",
+      "decimal_literals": 308,
+      "sha256": "7e2ccfb7c73aa236be750421a733ee1c1e5385410df2dfd8f15bcdfa23e3ebc3"
+    },
+    {
+      "clip": "source_020008.animation.json",
+      "decimal_literals": 354,
+      "sha256": "11728d56fcc1cc8eb0cd827dce2bc49584585ac567827df88ba9ee6c5fe4b614"
+    },
+    {
+      "clip": "source_020009.animation.json",
+      "decimal_literals": 416,
+      "sha256": "dd82df579612b59536ec8177cf6252404fd929427594a5fc6344ff5d29f3adf7"
+    },
+    {
+      "clip": "source_020010.animation.json",
+      "decimal_literals": 237,
+      "sha256": "817a2c0664e9abf0f6d57548576b653f6bd20016c5d41a2ff34f75d1c9418171"
+    },
+    {
+      "clip": "source_020011.animation.json",
+      "decimal_literals": 296,
+      "sha256": "acc0b767a42159e2771e1049478b1800879edb8ebf25ba3c246d5da53f187ff5"
+    },
+    {
+      "clip": "source_020013.animation.json",
+      "decimal_literals": 372,
+      "sha256": "9fa8819c41c7de2bdf13c41172760e707c733a266aa9458e1694979a21d463e0"
+    },
+    {
+      "clip": "source_030010.animation.json",
+      "decimal_literals": 615,
+      "sha256": "656f24e22c003fb9ec88db0f08a0c6f322738ba5d1e6b3bb1918a39b8da8f77e"
+    },
+    {
+      "clip": "source_040000.animation.json",
+      "decimal_literals": 156,
+      "sha256": "3fc68e2688011f6363d118022107186310802b93a32953ac0eafb0676c933b80"
+    },
+    {
+      "clip": "source_041000.animation.json",
+      "decimal_literals": 48,
+      "sha256": "40e2d181d974a26f20d5a80f1b8db65a042a8fb6dd35f6cb618cebafec616cf2"
+    },
+    {
+      "clip": "source_041001.animation.json",
+      "decimal_literals": 44,
+      "sha256": "5879fc34d06334f7dfcc066a6d4e43af5595e4062932cd43dfc4f5690802f1a0"
+    },
+    {
+      "clip": "source_041002.animation.json",
+      "decimal_literals": 27,
+      "sha256": "5611e5f95b852640d3970f57d92cd2d996b5b56893cc63faa87c24749560c5b5"
+    },
+    {
+      "clip": "source_042000.animation.json",
+      "decimal_literals": 8,
+      "sha256": "7f877e46d7b6804105213782a9677f15c09289af0c89fb58d7dc814665a0a155"
+    }
+  ]
+}

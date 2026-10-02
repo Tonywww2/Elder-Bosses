@@ -77,18 +77,37 @@ public final class PlatformArenaSummoning {
                 return;
             }
             var instances = PlatformArenaSavedData.get(level);
-            if (instances.occupied(binding.origin())) {
+            var occupant = instances.occupant(binding.origin());
+            if (occupant != null && level.getEntity(occupant) != null) {
                 message(player, "occupied");
                 return;
             }
             var bounds = start.getBoundingBox();
             for (int chunkX = bounds.minX() >> 4; chunkX <= bounds.maxX() >> 4; chunkX++) {
                 for (int chunkZ = bounds.minZ() >> 4; chunkZ <= bounds.maxZ() >> 4; chunkZ++) {
-                    if (level.getChunkSource().getChunkNow(chunkX, chunkZ) == null) {
+                    if (level.getChunkSource().getChunkNow(chunkX, chunkZ) == null
+                            || !level.areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(chunkX, chunkZ))) {
                         message(player, "not_ready");
                         return;
                     }
                 }
+            }
+            // Loading can reject an entity's NBT without invoking its remove()
+            // hook. The persistent arena lease must not survive a missing boss.
+            // Also recover a live bound boss whose lease was lost; health zero
+            // still counts until its defeat sequence actually removes it.
+            java.util.UUID presentBoss = null;
+            BlockPos arenaOrigin = binding.origin();
+            for (var entity : level.getAllEntities()) {
+                if (entity instanceof PromisedConsortEntity consort && !consort.isRemoved()
+                        && consort.arenaBinding().map(b -> b.origin().equals(arenaOrigin)).orElse(false)) {
+                    presentBoss = consort.getUUID();
+                    break;
+                }
+            }
+            if (instances.reconcileLoaded(binding, presentBoss)) {
+                message(player, "occupied");
+                return;
             }
             boss = ModEntities.PROMISED_CONSORT.get().create(level);
             if (boss == null) {
@@ -107,12 +126,10 @@ public final class PlatformArenaSummoning {
                     message(player, "blocked");
                     return;
                 }
-                if (!anchor.equals("boss_spawn")) {
-                    var floor = binding.anchor(anchor).below();
-                    if (!level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP)) {
-                        message(player, "blocked");
-                        return;
-                    }
+                var floor = binding.anchor(anchor).below();
+                if (!level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP)) {
+                    message(player, "blocked");
+                    return;
                 }
             }
             if (!instances.claim(binding, boss.getUUID())) {

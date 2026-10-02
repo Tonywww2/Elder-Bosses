@@ -10,12 +10,19 @@ import software.bernie.geckolib.animation.RawAnimation;
 *///?}
 
 public final class PlatformPromisedConsortAnimationController extends AnimationController<PromisedConsortEntity> {
+    private Object sourceIdentity;
     public PlatformPromisedConsortAnimationController(PromisedConsortEntity entity) {
         super(entity, "main", 0, state -> {
             RawAnimation animation = RawAnimation.begin();
-            String clip = "animation.promised_consort." + entity.animationClip();
-            return state.setAndContinue(entity.hasSynchronizedAnimation()
-                    ? animation.thenPlayAndHold(clip) : animation.thenLoop(clip));
+                var playback=entity.sourcePlayback();
+                Object identity=playback==null?Integer.valueOf(entity.sourcePoseId()):playback.actor();
+                var controller=(PlatformPromisedConsortAnimationController)state.getController();
+                if(!java.util.Objects.equals(identity,controller.sourceIdentity)) {
+                    controller.forceAnimationReset();controller.sourceIdentity=identity;
+                }
+                return state.setAndContinue(playback==null
+                    ? animation.thenLoop("animation.promised_consort.source_"+String.format(java.util.Locale.ROOT,"%06d",entity.sourcePoseId()))
+                    : animation.thenPlayAndHold(playback.animationClip()));
         });
     }
 

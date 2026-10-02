@@ -32,6 +32,7 @@ Desktop.ini
 *.class
 
 # Local Python environment and caches
+.workspace-tools/
 .venv/
 **/__pycache__/
 *.py[cod]
@@ -39,6 +40,12 @@ Desktop.ini
 # Private conversation archives and raw research media
 chats/
 docs/assets/reference/
+# Local extraction inputs; keep authoring scripts and converted runtime assets.
+tools/consort/rig/player_grab_source/
+tools/consort/rig/source_map/
+tools/consort/rig/source_sfx_geometry/
+tools/consort/rig/source_sfx_textures/
+tools/consort/rig/source_shared_sfx/
 
 # Superseded authoring snapshots and disposable captures
 *.pre-*
@@ -46,7 +53,5 @@ docs/assets/reference/
 *.bak
 *.tmp
 *.temp
-models/*/previews/*.bbmodel
-models/*/previews/*.mp4
-models/*/previews/
-models/promised_consort/arena/previews/
+tools/*/previews/
+tools/consort/arena/previews/

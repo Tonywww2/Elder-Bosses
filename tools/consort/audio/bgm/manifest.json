@@ -1,0 +1,42 @@
+{
+  "title": "Blackmoor Colossus",
+  "author": "Matthew Pablo",
+  "source": "https://opengameart.org/content/colossal-boss-battle-theme",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0/",
+  "download_url": "https://opengameart.org/sites/default/files/Colossal%20Boss%20Battle%20Theme_0.zip",
+  "archive_sha256": "d4be654272c60c47d4821a6a3ddca9022ab37d9d350a9755b7e658cb6be315bb",
+  "elden_ring_audio_used": false,
+  "changes": "Original author-provided loop versions, 8ms boundary fades, two-pass loudness normalization, stereo Ogg Vorbis encoding. Phase one has no choir; phase two includes choir. No melody recreation or original-game recording.",
+  "audition_status": "in-game listening pending",
+  "tracks": [
+    {
+      "phase": "phase_one",
+      "source_member": "Colossal Boss Battle Theme/Blackmoor Colossus Loop (No Vocals).wav",
+      "source_sha256": "cca0aafdc5079da2addbc606c7790cda91f6387bf384bf75074ef5b2ce5936c5",
+      "runtime": "src/main/resources/assets/elder_bosses/sounds/music/promised_consort/phase_one.ogg",
+      "sha256": "ad7e5daf3a24bc8f6f87df28e327f9ecfea8b47dbe62123f987147c414abc268",
+      "duration_seconds": 117.64705215419501,
+      "sample_rate": 44100,
+      "channels": 2,
+      "decoded_peak": 0.4233503043651581,
+      "loop_boundary_step": 7.448399992426857e-05,
+      "normalization_target_lufs": -20,
+      "bytes": 2157583
+    },
+    {
+      "phase": "phase_two",
+      "source_member": "Colossal Boss Battle Theme/Blackmoor Colossus Loop.wav",
+      "source_sha256": "9c1cc130b53fff98585682765ddd1ff95b7d18b2ea84468f6c1e6b7aa2ca74d7",
+      "runtime": "src/main/resources/assets/elder_bosses/sounds/music/promised_consort/phase_two.ogg",
+      "sha256": "ff92e53c75c656046a30e01f186b23e9f807e1d3285d22e0e7b6aaae21385139",
+      "duration_seconds": 117.64705215419501,
+      "sample_rate": 44100,
+      "channels": 2,
+      "decoded_peak": 0.4047473967075348,
+      "loop_boundary_step": 0.00025170581648126245,
+      "normalization_target_lufs": -20,
+      "bytes": 2155848
+    }
+  ]
+}

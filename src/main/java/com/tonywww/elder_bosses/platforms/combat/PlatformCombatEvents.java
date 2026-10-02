@@ -9,6 +9,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -19,6 +21,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
@@ -37,8 +41,23 @@ public final class PlatformCombatEvents {
     }
 
     @SubscribeEvent
+    public static void onHeldPlayerAttack(AttackEntityEvent event) {
+        if(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrab.held(event.getEntity())) event.setCanceled(true);
+    }
+    @SubscribeEvent
+    public static void onHeldPlayerInteract(PlayerInteractEvent event) {
+        //? if forge {
+        if(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrab.held(event.getEntity()) && event.isCancelable()) event.setCanceled(true);
+        //?} else {
+        /*if(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrab.held(event.getEntity())
+                && event instanceof net.neoforged.bus.api.ICancellableEvent cancelable) cancelable.setCanceled(true);
+        *///?}
+    }
+
+    @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrab.clearCharm(player);
             notifyParticipantExit(player, PromisedConsortEntity.ParticipantExit.DEATH);
         }
     }
@@ -46,6 +65,12 @@ public final class PlatformCombatEvents {
     @SubscribeEvent
     public static void onProjectileLoaded(EntityJoinLevelEvent event) {
         if(!event.getLevel().isClientSide()) com.tonywww.elder_bosses.boss.promisedconsort.ranged.PromisedConsortRangedDefense.trackReflected(event.getEntity());
+        if(!event.getLevel().isClientSide() && !event.loadedFromDisk()
+                && event.getEntity() instanceof net.minecraft.world.entity.projectile.Projectile projectile
+                && projectile.getOwner() instanceof ServerPlayer player) {
+            for(var boss:event.getLevel().getEntitiesOfClass(PromisedConsortEntity.class,player.getBoundingBox().inflate(256)))
+                boss.notifySourceShoot(player);
+        }
     }
 
     @SubscribeEvent

@@ -45,6 +45,28 @@ public final class PlatformArenaSavedData extends SavedData {
         return occupants.containsKey(origin);
     }
 
+    /** Only reconcile after every arena chunk's entity load has completed. */
+    public boolean reconcileLoaded(PromisedConsortArenaBinding binding, UUID presentBoss) {
+        var current = occupants.get(binding.origin());
+        if (presentBoss == null) {
+            if (current != null) {
+                occupants.remove(binding.origin());
+                setDirty();
+            }
+            return false;
+        }
+        if (current == null || !current.boss().equals(presentBoss)) {
+            occupants.put(binding.origin(), new Occupant(binding, presentBoss));
+            setDirty();
+        }
+        return true;
+    }
+
+    public UUID occupant(BlockPos origin) {
+        var current = occupants.get(origin);
+        return current == null ? null : current.boss();
+    }
+
     public boolean claim(PromisedConsortArenaBinding binding, UUID boss) {
         var current = occupants.get(binding.origin());
         if (current != null) return current.boss().equals(boss) && current.binding().save().equals(binding.save());

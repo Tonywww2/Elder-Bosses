@@ -34,7 +34,7 @@ public final class ElderBossesCommonConfig {
         //?} else {
         /*ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         *///?}
-        VALUES = new ElderBossesCommonConfig(builder);
+        VALUES = new ElderBossesCommonConfig(new LocalizedConfigBuilder(builder));
         SPEC = builder.build();
     }
 
@@ -213,11 +213,7 @@ public final class ElderBossesCommonConfig {
     private final PromisedConsortConfigValues promisedConsort;
 
     private ElderBossesCommonConfig(
-            //? if forge {
-            ForgeConfigSpec.Builder builder
-            //?} else {
-            /*ModConfigSpec.Builder builder
-            *///?}
+            LocalizedConfigBuilder builder
     ) {
         equipment = new EquipmentConfigValues(builder);
         builder.push("boss_music");
@@ -250,14 +246,15 @@ public final class ElderBossesCommonConfig {
 
         builder.push("malenia");
         builder.push("general");
-        phaseOneHealth = builder.defineInRange("phase_one_health", 900.0, 1.0, 1_000_000.0);
-        phaseTwoHealth = builder.defineInRange("phase_two_health", 900.0, 1.0, 1_000_000.0);
-        phaseTwoStartRatio = builder.defineInRange("phase_two_start_ratio", 0.80, 0.01, 1.0);
-        attackDamage = builder.defineInRange("attack_damage", 20.0, 0.0, 2048.0);
-        movementSpeed = builder.defineInRange("movement_speed", 0.34, 0.0, 4.0);
-        followRange = builder.defineInRange("follow_range", 56.0, 1.0, 2048.0);
-        knockbackResistance = builder.defineInRange("knockback_resistance", 0.75, 0.0, 1.0);
-        maxActivePlayers = builder.defineInRange("max_active_players", 4, 1, 4);
+        MaleniaGeneralValues defaults = MaleniaGeneralValues.defaults();
+        phaseOneHealth = builder.defineInRange("phase_one_health", defaults.phaseOneHealth(), 1.0, 1_000_000.0);
+        phaseTwoHealth = builder.defineInRange("phase_two_health", defaults.phaseTwoHealth(), 1.0, 1_000_000.0);
+        phaseTwoStartRatio = builder.defineInRange("phase_two_start_ratio", defaults.phaseTwoStartRatio(), 0.01, 1.0);
+        attackDamage = builder.defineInRange("attack_damage", defaults.attackDamage(), 0.0, 2048.0);
+        movementSpeed = builder.defineInRange("movement_speed", defaults.movementSpeed(), 0.0, 4.0);
+        followRange = builder.defineInRange("follow_range", defaults.followRange(), 1.0, 2048.0);
+        knockbackResistance = builder.defineInRange("knockback_resistance", defaults.knockbackResistance(), 0.0, 1.0);
+        maxActivePlayers = builder.defineInRange("max_active_players", defaults.maxActivePlayers(), 1, 4);
         builder.pop();
 
         builder.push("debug");
@@ -302,7 +299,7 @@ public final class ElderBossesCommonConfig {
 
         builder.push("stagger");
         staggerDamageConversionRatio = builder.defineInRange("damage_conversion_ratio", 1.0, 0.0, 1.0);
-        staggerCapacityHealthRatio = builder.defineInRange("capacity_health_ratio", 0.50, 0.001, 1.0);
+        staggerCapacityHealthRatio = builder.defineInRange("capacity_health_ratio", 0.25, 0.001, 1.0);
         staggerRapidWindowTicks = builder.defineInRange("rapid_window_ticks", 240, 1, NetworkLimits.MAX_TICKS);
         staggerRapidFraction = builder.defineInRange("rapid_fraction", 0.25, 0.001, 0.999);
         staggerDistanceBands = builder.defineList(
@@ -915,6 +912,7 @@ public final class ElderBossesCommonConfig {
             promisedConsortSkillSnapshot() {
         return promisedConsort.skillSnapshot();
     }
+    public com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot promisedConsortSourceSnapshot() {return promisedConsort.sourceSnapshot();}
 
     public MaleniaPerformanceValues maleniaPerformance() {
         return new MaleniaPerformanceValues(performanceMaxRotZones.get());
@@ -1092,11 +1090,7 @@ public final class ElderBossesCommonConfig {
             private final Supplier<Double> wingedSweepRotBuildup;
 
             private MaleniaSkillsValues(
-                //? if forge {
-                ForgeConfigSpec.Builder builder
-                //?} else {
-                /*ModConfigSpec.Builder builder
-                *///?}
+                LocalizedConfigBuilder builder
             ) {
                 builder.push("skills");
 
@@ -1628,11 +1622,7 @@ public final class ElderBossesCommonConfig {
             private int componentCount;
 
             private SkillHeader(
-                //? if forge {
-                ForgeConfigSpec.Builder builder,
-                //?} else {
-                /*ModConfigSpec.Builder builder,
-                *///?}
+                LocalizedConfigBuilder builder,
                 double defaultWeight,
                 int defaultCooldownTicks,
                 String defaultHealProfile,
@@ -1654,11 +1644,7 @@ public final class ElderBossesCommonConfig {
             }
 
             private void components(
-                //? if forge {
-                ForgeConfigSpec.Builder builder,
-                //?} else {
-                /*ModConfigSpec.Builder builder,
-                *///?}
+                LocalizedConfigBuilder builder,
                 com.tonywww.elder_bosses.boss.malenia.domain.MaleniaActionId action
             ) {
                 var stages = MaleniaSkillConfigSnapshot.defaultComponentStages(action);
@@ -1966,6 +1952,9 @@ public final class ElderBossesCommonConfig {
             double knockbackResistance,
             int maxActivePlayers
     ) {
+        public static MaleniaGeneralValues defaults() {
+            return new MaleniaGeneralValues(900.0, 900.0, 0.80, 20.0, 0.34, 56.0, 0.75, 4);
+        }
     }
 
         public record MaleniaPhaseResistanceValues(

@@ -18,6 +18,9 @@ public abstract class PlatformConsortCloneRenderer extends GeoEntityRenderer<Pro
 
     @Override
     public Color getRenderColor(PromisedConsortCloneEntity entity, float partialTick, int light) {
+        if (entity.usesSourceRig() && !entity.projectPresentation()) return Color.ofRGBA(1.0F,1.0F,1.0F,
+                com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourcePresentation.opacity(
+                        entity.sourcePlayback(),entity.level().getGameTime()*50_000L+(long)(partialTick*50_000)));
         float opacity = ClientConsortCloneEffects.opacity(entity.level().getGameTime() + partialTick,
                 entity.appearTick(), entity.impactTick(), entity.fadeEndTick());
         return Color.ofRGBA(1.0F, 1.0F, 1.0F, opacity);

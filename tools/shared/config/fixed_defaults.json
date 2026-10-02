@@ -1,0 +1,3184 @@
+[
+  {
+    "path": "promised_consort.skills.animations.a3031.targeted_landing",
+    "default": true
+  },
+  {
+    "path": "promised_consort.meteor.damage_gate",
+    "default": true
+  },
+  {
+    "path": "promised_consort.meteor.damage_gate_mode",
+    "default": "truncate"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3028.targeted_landing",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3032.targeted_landing",
+    "default": true
+  },
+  {
+    "path": "malenia.arena.logical_radius",
+    "default": 26.0,
+    "range": "1.0 ~ 2048.0"
+  },
+  {
+    "path": "malenia.arena.leash_grace_ticks",
+    "default": 100,
+    "range": "> 0"
+  },
+  {
+    "path": "malenia.arena.logical_shallow_water",
+    "default": false
+  },
+  {
+    "path": "malenia.arena.unload_resets_fight",
+    "default": true
+  },
+  {
+    "path": "malenia.arena.boss_ignores_arena_height_variation",
+    "default": true
+  },
+  {
+    "path": "malenia.arena.allow_block_breaking",
+    "default": true
+  },
+  {
+    "path": "malenia.arena.breakable_block_tag",
+    "default": "elder_bosses:boss_breakable"
+  },
+  {
+    "path": "malenia.arena.protected_block_tag",
+    "default": "elder_bosses:arena_protected"
+  },
+  {
+    "path": "malenia.arena.block_break_radius",
+    "default": 1.5,
+    "range": "0.0 ~ 64.0"
+  },
+  {
+    "path": "malenia.arena.max_blocks_broken_per_tick",
+    "default": 24,
+    "range": "0 ~ 4096"
+  },
+  {
+    "path": "malenia.arena.restore_broken_blocks_on_reset",
+    "default": true
+  },
+  {
+    "path": "malenia.arena.allow_wall_phasing",
+    "default": true
+  },
+  {
+    "path": "malenia.arena.wall_phase_max_ticks",
+    "default": 20,
+    "range": "> 0"
+  },
+  {
+    "path": "malenia.instant_guard.eligible_item_tag",
+    "default": "elder_bosses:instant_guard_items"
+  },
+  {
+    "path": "promised_consort.arena.breakable_block_tag",
+    "default": "elder_bosses:boss_breakable"
+  },
+  {
+    "path": "promised_consort.arena.protected_block_tag",
+    "default": "elder_bosses:arena_protected"
+  },
+  {
+    "path": "promised_consort.instant_guard.cue_sound",
+    "default": "elder_bosses:promised_consort.instant_guard_cue"
+  },
+  {
+    "path": "promised_consort.instant_guard.eligible_item_tag",
+    "default": "elder_bosses:instant_guard_items"
+  },
+  {
+    "path": "promised_consort.selector.avoid_last_action_count",
+    "default": 2,
+    "range": "0 ~ 16"
+  },
+  {
+    "path": "promised_consort.selector.item_use_punish_min_range",
+    "default": 4.0,
+    "range": "0.0 ~ 2048.0"
+  },
+  {
+    "path": "promised_consort.selector.item_use_punish_max_range",
+    "default": 12.0,
+    "range": "0.0 ~ 2048.0"
+  },
+  {
+    "path": "promised_consort.selector.item_use_weight_multiplier",
+    "default": 1.8,
+    "range": "0.0 ~ 100.0"
+  },
+  {
+    "path": "promised_consort.selector.ranged_weight_multiplier",
+    "default": 2.0,
+    "range": "0.0 ~ 100.0"
+  },
+  {
+    "path": "promised_consort.selector.crowd_weight_multiplier",
+    "default": 1.7,
+    "range": "0.0 ~ 100.0"
+  },
+  {
+    "path": "promised_consort.selector.miss_recovery_weight_multiplier",
+    "default": 1.2,
+    "range": "0.0 ~ 100.0"
+  },
+  {
+    "path": "promised_consort.selector.blocked_branch_chance",
+    "default": 0.7,
+    "range": "0.0 ~ 1.0"
+  },
+  {
+    "path": "promised_consort.selector.blocked_branch_mode",
+    "default": "stomp"
+  },
+  {
+    "path": "promised_consort.selector.guard_chain_threshold",
+    "default": 3,
+    "range": "1 ~ 64"
+  },
+  {
+    "path": "promised_consort.selector.guard_chain_scope",
+    "default": "current_action"
+  },
+  {
+    "path": "promised_consort.selector.guard_chain_recovery_ticks",
+    "default": 20,
+    "range": "0 ~ 1000000"
+  },
+  {
+    "path": "promised_consort.selector.burst.minimum_skills",
+    "default": 2,
+    "range": "2 ~ 16"
+  },
+  {
+    "path": "promised_consort.selector.burst.maximum_skills",
+    "default": 4,
+    "range": "2 ~ 16"
+  },
+  {
+    "path": "promised_consort.selector.burst.minimum_link_ticks",
+    "default": 0,
+    "range": "0 ~ 200"
+  },
+  {
+    "path": "promised_consort.selector.burst.maximum_link_ticks",
+    "default": 2,
+    "range": "0 ~ 200"
+  },
+  {
+    "path": "promised_consort.selector.burst.minimum_rest_ticks",
+    "default": 24,
+    "range": "1 ~ 1200"
+  },
+  {
+    "path": "promised_consort.selector.burst.maximum_rest_ticks",
+    "default": 36,
+    "range": "1 ~ 1200"
+  },
+  {
+    "path": "promised_consort.selector.burst.chain_recovery_ticks",
+    "default": 6,
+    "range": "1 ~ 200"
+  },
+  {
+    "path": "promised_consort.visuals.gravity_projectile_block",
+    "default": "minecraft:crying_obsidian"
+  },
+  {
+    "path": "promised_consort.nonverbal_audio.intro_roar_tick",
+    "default": 18,
+    "range": "0 ~ 1000000"
+  },
+  {
+    "path": "promised_consort.nonverbal_audio.victory_roar_delay_ticks",
+    "default": 12,
+    "range": "0 ~ 1000000"
+  },
+  {
+    "path": "promised_consort.nonverbal_audio.hurt_cooldown_ticks",
+    "default": 20,
+    "range": "0 ~ 1000000"
+  },
+  {
+    "path": "promised_consort.skills.entries.swing_combo.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.entries.vertical_slash.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.entries.cross_slash.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.entries.stomp.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.entries.lion_claw.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.entries.gravity_pull.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.entries.uppercut_slam.approach_guard_chance",
+    "default": 0.0,
+    "range": "0.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.active_ticks",
+    "default": 60.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.active_ticks",
+    "default": 46.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a2000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.active_ticks",
+    "default": 46.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a2002.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.active_ticks",
+    "default": 46.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a2003.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.active_ticks",
+    "default": 20.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a2100.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3001.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3002.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3003.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3004.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3005.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3006.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3007.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3008.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3009.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3009.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3009.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3009.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3010.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3011.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3012.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3012.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3012.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3012.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3013.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3014.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3014.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3014.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3014.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3015.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3016.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3017.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3017.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3017.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3017.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3018.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3018.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3018.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3018.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3019.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3020.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.active_ticks",
+    "default": 116.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3021.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3022.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3022.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3022.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3022.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3023.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3023.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3023.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3023.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3024.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3024.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3024.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3024.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3025.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3025.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3025.targeted_landing",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3025.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3026.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3026.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a3026.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a3026.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3028.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3030.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3031.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3032.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3033.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3034.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3035.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a3036.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a4100.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4100.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4100.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a4100.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.active_ticks",
+    "default": 453.33332,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a4101.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.active_ticks",
+    "default": 13.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a5000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.active_ticks",
+    "default": 13.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a5001.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.active_ticks",
+    "default": 20.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a5002.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.active_ticks",
+    "default": 20.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a5003.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.active_ticks",
+    "default": 31.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a6000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.active_ticks",
+    "default": 37.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a6002.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.active_ticks",
+    "default": 37.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a6003.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.active_ticks",
+    "default": 48.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a7000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.active_ticks",
+    "default": 56.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a7400.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.active_ticks",
+    "default": 133.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a7600.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.active_ticks",
+    "default": 65.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a8500.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.active_ticks",
+    "default": 65.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a8501.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a8700.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8700.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a8700.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.active_ticks",
+    "default": 13.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a9000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.active_ticks",
+    "default": 0.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a9500.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.active_ticks",
+    "default": 166.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a10000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.active_ticks",
+    "default": 0.67084,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a10001.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.active_ticks",
+    "default": 123.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a11060.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.active_ticks",
+    "default": 133.33334,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a11061.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.active_ticks",
+    "default": 50.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.active_ticks",
+    "default": 50.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20001.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20002.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20003.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20004.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20005.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20006.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20006.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20006.targeted_landing",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20006.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20007.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20007.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20007.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20007.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20008.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20008.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20008.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20008.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20009.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20009.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20009.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20009.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20010.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20011.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20011.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20011.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20011.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.active_ticks",
+    "default": 453.33332,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20012.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a20013.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20013.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a20013.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a20013.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.active_ticks",
+    "default": 320.0,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a30010.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.active_ticks",
+    "default": 0.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a40000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.active_ticks",
+    "default": 46.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a41000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.active_ticks",
+    "default": 46.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a41001.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.active_ticks",
+    "default": 46.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a41002.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.windup_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.active_ticks",
+    "default": 0.66666,
+    "range": "2.0E-5 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.recovery_ticks",
+    "default": 0.0,
+    "range": "0.0 ~ 0.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.range_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.vertical_movement_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.turn_speed_multiplier",
+    "default": 1.0,
+    "range": "0.0 ~ 16.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.warning_lead_ticks",
+    "default": 5.0,
+    "range": "1.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.target_lock_lead_ticks",
+    "default": 1.0,
+    "range": "0.0 ~ 200.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.target_standoff",
+    "default": 0.0,
+    "range": "-32.0 ~ 32.0"
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.targeted_landing",
+    "default": false
+  },
+  {
+    "path": "promised_consort.skills.animations.a42000.hyper_armor_active",
+    "default": true
+  },
+  {
+    "path": "promised_consort.skills.effects.a19600.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19601.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19610.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19611.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19612.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19618.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19619.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19620.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19621.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19622.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19623.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19624.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19625.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19626.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19627.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19628.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19629.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19630.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19631.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19632.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19633.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19634.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19640.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19641.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19642.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19643.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19650.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19651.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19660.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19670.duration_ticks",
+    "default": 400.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19671.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19680.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19681.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19682.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19683.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19684.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19690.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a19691.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011500.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011501.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011502.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011503.duration_ticks",
+    "default": 20.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011549.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011550.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011551.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011552.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011553.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011554.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011555.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011556.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011557.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011558.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011559.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011560.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011561.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011562.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011563.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011564.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011565.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011566.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011567.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011568.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011569.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011570.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011571.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011572.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011573.duration_ticks",
+    "default": 3000.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011574.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011575.duration_ticks",
+    "default": 2400.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011576.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011580.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011581.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011582.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011583.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011584.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011585.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011586.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011587.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011588.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011589.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011590.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011591.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011592.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011593.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011594.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011595.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011596.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011597.duration_ticks",
+    "default": 800.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011598.duration_ticks",
+    "default": 1400.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20011599.duration_ticks",
+    "default": -1.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a0.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a30.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a31.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a36.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a40.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a41.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a50.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a52.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a500.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a5980.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a10690.duration_ticks",
+    "default": 40.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a10691.duration_ticks",
+    "default": 2.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a13945.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20010274.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20010275.duration_ticks",
+    "default": 0.0,
+    "range": "-1.0 ~ 1200000.0"
+  },
+  {
+    "path": "promised_consort.skills.effects.a20010442.duration_ticks",
+    "default": 3.4000000000000004,
+    "range": "-1.0 ~ 1200000.0"
+  }
+]

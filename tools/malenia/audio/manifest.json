@@ -1,0 +1,53 @@
+{
+  "music_title": "Invasion",
+  "author": "Sascha Ende",
+  "source": "https://ende.app/en/song/206-invasion",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source_sha256": "4bc64efb6d3bdcd1c2ec719524865efb578ff0c73b1819a7bd2fbb976c4a1c64",
+  "source_duration_seconds": 235.66473922902495,
+  "changes": "Two 66-second battle loops cut from the orchestral/choir score; 2-second cyclic crossfade, 8ms seam ramps, per-phase loudness normalization and Ogg Vorbis encoding.",
+  "original_game_recording_used": false,
+  "tracks": [
+    {
+      "runtime": "src/main/resources/assets/elder_bosses/sounds/music/malenia/phase_one.ogg",
+      "sha256": "72ea7b6dfbd75ebf57b40f3374b58cbb9defad7cc34b99257c5d7f6f0133a511",
+      "duration_seconds": 66.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "peak": 0.3737063407897949,
+      "loop_boundary_step": 0.00286819483153522,
+      "target_lufs": -21,
+      "source_excerpt_seconds": [
+        52,
+        120
+      ]
+    },
+    {
+      "runtime": "src/main/resources/assets/elder_bosses/sounds/music/malenia/phase_two.ogg",
+      "sha256": "f5314fb2a3b1a99137ec97ff8c928b9a42b60f5ffb237b577f7e0d4272b2897e",
+      "duration_seconds": 66.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "peak": 0.5905853509902954,
+      "loop_boundary_step": 0.00046542403288185596,
+      "target_lufs": -19,
+      "source_excerpt_seconds": [
+        136,
+        204
+      ]
+    }
+  ],
+  "parry": {
+    "runtime": "src/main/resources/assets/elder_bosses/sounds/entity/malenia/parry_success.ogg",
+    "sha256": "f1eb27be00e7e19e0d28e83fc2cf99f078a80275695d10cdefb931c9a5ea2ac9",
+    "duration_seconds": 0.8470975056689343,
+    "sample_rate": 44100,
+    "channels": 1,
+    "peak": 0.8280414938926697,
+    "loop_boundary_step": 0.018526745960116386,
+    "target_lufs": -14
+  },
+  "parry_source": "Original procedural synthesis",
+  "in_game_listening_verified": false
+}

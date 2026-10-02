@@ -1,0 +1,70 @@
+# Leaf key | Chinese explanation | English explanation
+simple_ranges|true：按各技能的地面范围直接命中；false：使用原作姿态轨迹。轨迹模式下，同一演员的单段只伤害同一目标一次。|true: directly hit targets in each skill's ground area; false: use source pose trajectories. In trajectory mode each actor's segment damages a target only once.
+instant_kill_enabled|控制第二次魅惑的秒杀。关闭后保留抓取、释放和魅惑表现，但不执行强制死亡。|Controls instant death on the second charm. Disabling retains the grab, release and charm presentation without forced death.
+ranged_damage_distance|受到有效生命伤害时，来源玩家到Boss碰撞箱的水平距离达到此值，也判为远程。继续保留投射物与标签判定。|Effective health damage also counts as ranged when the source player is at least this horizontal distance from the boss hitbox. Projectile and tag checks remain active.
+targeted_landing|把原作根移动适配到锁定的目标落点；启用后仍保留身体中心的垂直轨迹和贴地修正。|Adapts source root motion to the locked target landing point while retaining vertical body motion and terrain correction.
+target_standoff|落点到锁定目标的水平间距；0表示落在目标位置。只影响启用落点适配的动画段。|Horizontal separation from the locked target at landing; 0 lands at the target. Applies to animations with targeted landing enabled.
+target_lock_lead_ticks|在第一条攻击事件前提前锁定落点；锁定后不跟随目标后续移动。|Locks the landing point this many ticks before the first attack event; later target movement does not move the locked point.
+movement_multiplier|额外缩放此动画段的水平根移动；1保留原轨迹，0停止水平根移动。|Extra multiplier for this animation's horizontal root motion; 1 preserves the source motion and 0 stops it.
+vertical_movement_multiplier|额外缩放身体中心的上下移动。1保留原作升降；过小的值可能影响起跳及腿部姿态。|Extra multiplier for vertical body motion. 1 preserves source rise and fall; small values can affect jumps and leg poses.
+range_multiplier|缩放判定尺寸、相对身体位置、受控水平移动和对应预警；不改变动画时间。|Scales hit dimensions, body-relative offsets, controlled horizontal motion and matching warnings; does not change animation timing.
+windup_ticks|攻击开始前的准备时间。拉塔恩允许小数tick；多段数组按原段顺序填写。|Preparation before the attack. Radahn accepts fractional ticks; stage arrays retain their original order.
+active_ticks|攻击释放阶段的时间；不表示每tick都重复造成伤害。|Duration of the attack's active phase; this does not imply damage every tick.
+recovery_ticks|攻击释放后的恢复时间；多段数组与前摇、释放数组的长度和顺序一致。|Recovery after the attack; stage arrays must match the windup and active arrays in length and order.
+warning_lead_ticks|命中前的地面预警提前量，实际至少保留1tick。|Lead time for the ground warning before impact; runtime retains at least one tick.
+selection_distance_multiplier|缩放原作选招距离条件；只影响是否选择此入口。|Scales source distance conditions for choosing this entry.
+weight_multiplier|缩放原作选招权重；0表示不通过该权重被选中。|Scales source action selection weights; 0 prevents selection through that weight.
+weight_during_cooldown|覆盖原SetCoolTime的冷却期间权重；不改变技能本身的伤害。|Overrides the source SetCoolTime weight during cooldown; does not change attack damage.
+hyper_armor_active|控制此动画段原有霸体窗口；不新增原作中不存在的霸体窗口。|Controls the animation's source hyper armor windows without adding new windows.
+knockbackDist|实际Minecraft击退距离为该参数×0.1；负值表示向Boss牵引。|Minecraft knockback distance is this value × 0.1; negative values pull toward the boss.
+max_hits_per_target|限制该攻击或弹丸对每个目标的命中次数。轨迹模式的近战单段一次规则仍优先执行。|Limits hits by this attack or projectile per target. The trajectory mode's one melee hit per segment rule still takes priority.
+simple_radius|简单范围模式使用的地面圆形半径，与对应地面预警一致。|Ground circle radius used in simple range mode, matching the ground warning.
+simple_height|简单范围模式的垂直判定范围，防止只看平面距离误伤高度不同的目标。|Vertical extent in simple range mode, limiting hits on targets at other heights.
+life|原BulletParam寿命，单位为秒；负值保留原无限寿命含义。|Source BulletParam lifetime in seconds; a negative value retains the source unlimited lifetime.
+numShoot|一次发射的弹丸数量；0停止该发射。|Number of projectiles per shot; 0 disables that launch.
+hitRadiusMax|判定半径增长的上限；负值保留原作不设置增长上限的含义。|Upper radius for hitbox growth; negative values retain the source behavior without a growth limit.
+spreadTime|从初始判定半径增长到上限所用的秒数。|Seconds for the hit radius to grow from its initial value to the maximum.
+meteor_size|陨石的显示尺寸；当前4.05约为此前1.35的三倍，不直接扩大命中判定。|Visual meteor size; the current 4.05 is about three times the previous 1.35 and does not directly enlarge collision.
+gravity_size_multiplier|缩放紫色重力外观，包括陨石环绕效果；不改变伤害。|Scales purple gravity visuals, including the meteor aura, without changing damage.
+gravity_strength_multiplier|控制重力粒子与光效的表现强度；不改变牵引或伤害数值。|Controls the presentation strength of gravity particles and light, without changing pull or damage.
+holy_width_multiplier|统一放大圣光柱、光带和光环的可见宽度；当前默认3倍。不直接改变命中范围。|Widens visible holy columns, ribbons and rings; the current default is 3×. Does not directly change hit areas.
+holy_fade_in_ticks|圣光从透明变为可见所需的时间。|Time for holy effects to become visible.
+holy_fade_out_ticks|圣光消失前逐渐变为透明的时间。|Time for holy effects to fade before disappearing.
+trajectory_radius_multiplier|轨迹模式中剑刃判定的粗细倍率。|Sword collision thickness in trajectory mode.
+trajectory_hilt_extension|沿剑尖到剑柄方向扩大判定。|Extends collision from the blade toward the hilt.
+trajectory_arm_extension|从剑柄向前臂增加判定长度。|Adds collision from the hilt toward the forearm.
+max_step_up|贴地移动可上台阶的最大高度；仍受Minecraft碰撞约束。|Maximum step height for grounded movement; Minecraft collision still applies.
+ground_search_depth|寻找实际地面时向下搜索的深度，包括台阶和半砖表面。|Downward search depth for real terrain, including stairs and slabs.
+max_ground_drop_per_tick|每tick贴地下降的最大距离，避免地形变化导致突然遁地。|Maximum downward terrain adjustment per tick to avoid sudden sinking.
+foot_clearance|脚底到实际地面的保留间距；修正通过整身平移应用。|Clearance between the soles and real terrain; correction translates the whole body.
+rejoin_after_death|允许已登记玩家死亡复活后返回场地，重新参与当前战斗。|Allows registered players to return to the arena after death and respawn and rejoin the current fight.
+opacity|地面范围指示器的透明度，0完全透明，1完全不透明；不影响服务端命中。|Ground indicator opacity: 0 is invisible and 1 is opaque; server collision is unaffected.
+occluded_outline_opacity_multiplier|地面被遮挡时，边框透明度相对于正常显示的倍率。|Multiplier for outline opacity when the ground is occluded.
+surface_offset|指示器抬高到实际地面之上的距离，用于避免闪烁。|Height above real terrain for indicators, used to avoid flicker.
+damage_conversion_ratio|有效伤害转为架势累积的倍率；不改变Boss实际承受的生命伤害。|Multiplier converting effective damage into stagger buildup; does not alter health damage taken by the boss.
+capacity_health_ratio|架势上限相对于Boss生命上限的比例。|Stagger capacity as a fraction of the boss's maximum health.
+rapid_window_ticks|统计近期架势增长的时间窗口，用于快速失衡保护。|Window for tracking recent stagger growth for rapid stagger protection.
+rapid_fraction|快速增长触发的分档比例；0.25表示按25%容量档位保护。|Capacity fraction for rapid growth protection tiers; 0.25 means 25% capacity tiers.
+distance_bands|距离分档列表。每项包含max_distance和multiplier，按距离从小到大填写；最后一档max_distance=-1覆盖剩余距离。|Distance band list. Each entry contains max_distance and multiplier; use ascending distances and end with max_distance=-1 to cover the remaining distance.
+damage|伤害公式使用flat固定加值与attack_ratio攻击力系数；列表按技能段顺序填写。1点伤害为半颗心。|Damage formulas use flat and attack_ratio; lists follow skill stage order. One damage point is half a heart.
+heal_profile|回血档位：standard普通、heavy重击、grab投技、waterfowl水鸟乱舞、none不回血。|Healing profile: standard, heavy, grab, waterfowl, or none.
+blocked_hit_multiplier|被盾牌格挡的命中所产生的回血倍率；0停止此类回血。|Healing multiplier for shield-blocked hits; 0 disables this healing.
+attack_speed_bonus|饰品攻击速度加成比例；0.10表示+10%，仅功能性Curios槽位生效。|Curio attack speed bonus; 0.10 means +10%. Applies in functional Curios slots only.
+attack_damage_bonus|饰品攻击伤害加成比例；0.10表示+10%，仅功能性Curios槽位生效。|Curio attack damage bonus; 0.10 means +10%. Applies in functional Curios slots only.
+knockback_resistance_bonus|直接增加击退抗性；0.10表示增加10个百分点。|Flat knockback resistance addition; 0.10 adds 10 percentage points.
+rot_capacity_bonus|玩家基础腐败容量为100；此值直接增加容量，0关闭加成。|Adds to the player's base scarlet rot capacity of 100; 0 disables the bonus.
+luck_bonus|直接增加幸运，只影响使用幸运属性的战利品表。|Flat luck addition, affecting only loot tables that use the luck attribute.
+enchantability|附魔台附魔能力；0关闭该武器的附魔台选项。|Enchanting-table quality; 0 disables enchanting-table offers for this weapon.
+durability|武器最大耐久，同时应用于已有和新制作的武器。|Maximum weapon durability, applying to both existing and newly crafted weapons.
+intro_offset|相对于竞技场中心的[x,y,z]偏移，单位为格；不改写建筑的神门出生锚点。|Arena-center-relative [x,y,z] offset in blocks; does not rewrite the structure's Divine Gate spawn anchor.
+phase_return_offset|转阶段返回点相对于竞技场中心的[x,y,z]偏移，单位为格。|Arena-center-relative [x,y,z] phase return offset in blocks.
+source_policy|仅决定伤害来源资格。拉塔恩受伤数值继续使用Minecraft原版结算。|Controls damage source eligibility only. Radahn's incoming damage values still use vanilla Minecraft resolution.
+first_eligible_ticks|战斗开始后首次允许释放该技能的等待时间。|Time after the encounter starts before this skill becomes eligible.
+max_distance|此距离档的上限，单位为格；最后一档填-1表示覆盖剩余距离，其他档位从小到大排列。|Distance ceiling in blocks; use -1 in the final band for the remaining distance and order other bands from near to far.
+multiplier|此距离档的架势累积倍率；1表示原值，0停止该档的累积。|Stagger buildup multiplier for this distance band; 1 preserves the base value and 0 prevents buildup in this band.
+
+action_broadcast|在聊天栏播报技能开始和结束。|Announce skill starts and endings in chat.
+segment_immunity_ticks|同段接触免疫时长，默认10tick即0.5秒；进入下一段提前清除。|Contact immunity within a segment; 10 ticks is 0.5 seconds, cleared early on the next segment.
+invulnerable|米凯拉之光释放期间免疫伤害。|Immune to damage while casting Light of Miquella.
+flight_height|光环中心距离地面的高度。|Height of the ring center above the floor.
+shootAngleXZ|相对发射朝向的水平偏转角度。|Horizontal angle relative to the launch bearing.

@@ -1,0 +1,1894 @@
+{
+  "version": "continuous_torso_and_affine_waist_v2",
+  "torso_bind_levels": [
+    [
+      45.6,
+      8
+    ],
+    [
+      51.6,
+      54
+    ],
+    [
+      59.4,
+      55
+    ],
+    [
+      67.2,
+      56
+    ],
+    [
+      80.4,
+      314
+    ]
+  ],
+  "torso_edits": [
+    {
+      "part": "pelvis",
+      "old_cube": 0,
+      "new_segments": 13
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 1,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 2,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 3,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 4,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 5,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 6,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 7,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 8,
+      "new_segments": 1
+    },
+    {
+      "part": "pelvis",
+      "old_cube": 9,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 0,
+      "new_segments": 16
+    },
+    {
+      "part": "body",
+      "old_cube": 1,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 2,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 3,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 4,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 5,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 6,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 7,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 8,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 9,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 10,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 11,
+      "new_segments": 1
+    },
+    {
+      "part": "body",
+      "old_cube": 12,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 0,
+      "new_segments": 31
+    },
+    {
+      "part": "chest",
+      "old_cube": 1,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 2,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 3,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 4,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 5,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 6,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 7,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 8,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 9,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 10,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 11,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 12,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 13,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 14,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 15,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 16,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 17,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 18,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 19,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 20,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 21,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 22,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 23,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 24,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 25,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 26,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 27,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 28,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 29,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 30,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 31,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 32,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 33,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 34,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 35,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 36,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 37,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 38,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 39,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 40,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 41,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 42,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 43,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 44,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 45,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 46,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 47,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 48,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 49,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 50,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 51,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 52,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 53,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 54,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 55,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 56,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 57,
+      "new_segments": 1
+    },
+    {
+      "part": "chest",
+      "old_cube": 58,
+      "new_segments": 1
+    }
+  ],
+  "skin_controls": [
+    {
+      "name": "mesh_skin_pelvis_00_07",
+      "shear_bones": [
+        "mesh_skin_pelvis_00_07_xy_stretch",
+        "mesh_skin_pelvis_00_07_xy_basis",
+        "mesh_skin_pelvis_00_07_xz_stretch",
+        "mesh_skin_pelvis_00_07_xz_basis",
+        "mesh_skin_pelvis_00_07_yz_stretch",
+        "mesh_skin_pelvis_00_07_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        41.460865405,
+        -2.8830926449999996
+      ],
+      "weights": {
+        "8": 0.9636766398614746,
+        "54": 0.036323360138525405
+      },
+      "cube_half_size": [
+        9.6,
+        0.383998795,
+        5.951958035
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_00_08",
+      "shear_bones": [
+        "mesh_skin_pelvis_00_08_xy_stretch",
+        "mesh_skin_pelvis_00_08_xy_basis",
+        "mesh_skin_pelvis_00_08_xz_stretch",
+        "mesh_skin_pelvis_00_08_xz_basis",
+        "mesh_skin_pelvis_00_08_yz_stretch",
+        "mesh_skin_pelvis_00_08_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        41.868862995,
+        -2.8831765800000007
+      ],
+      "weights": {
+        "8": 0.8336766394472562,
+        "54": 0.16632336055274374
+      },
+      "cube_half_size": [
+        9.6,
+        0.383998795,
+        5.95195803
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_00_09",
+      "shear_bones": [
+        "mesh_skin_pelvis_00_09_xy_stretch",
+        "mesh_skin_pelvis_00_09_xy_basis",
+        "mesh_skin_pelvis_00_09_xz_stretch",
+        "mesh_skin_pelvis_00_09_xz_basis",
+        "mesh_skin_pelvis_00_09_yz_stretch",
+        "mesh_skin_pelvis_00_09_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        42.276860585,
+        -2.883260515
+      ],
+      "weights": {
+        "8": 0.703676639033038,
+        "54": 0.29632336096696205
+      },
+      "cube_half_size": [
+        9.6,
+        0.383998795,
+        5.951958035
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_00_10",
+      "shear_bones": [
+        "mesh_skin_pelvis_00_10_xy_stretch",
+        "mesh_skin_pelvis_00_10_xy_basis",
+        "mesh_skin_pelvis_00_10_xz_stretch",
+        "mesh_skin_pelvis_00_10_xz_basis",
+        "mesh_skin_pelvis_00_10_yz_stretch",
+        "mesh_skin_pelvis_00_10_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        42.68485817,
+        -2.8833444449999996
+      ],
+      "weights": {
+        "8": 0.5736766402119675,
+        "54": 0.42632335978803243
+      },
+      "cube_half_size": [
+        9.6,
+        0.38399879000000003,
+        5.951958035
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_00_11",
+      "shear_bones": [
+        "mesh_skin_pelvis_00_11_xy_stretch",
+        "mesh_skin_pelvis_00_11_xy_basis",
+        "mesh_skin_pelvis_00_11_xz_stretch",
+        "mesh_skin_pelvis_00_11_xz_basis",
+        "mesh_skin_pelvis_00_11_yz_stretch",
+        "mesh_skin_pelvis_00_11_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        43.092855755,
+        -2.88342838
+      ],
+      "weights": {
+        "8": 0.4436766413908949,
+        "54": 0.5563233586091051
+      },
+      "cube_half_size": [
+        9.6,
+        0.383998795,
+        5.95195803
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_00_12",
+      "shear_bones": [
+        "mesh_skin_pelvis_00_12_xy_stretch",
+        "mesh_skin_pelvis_00_12_xy_basis",
+        "mesh_skin_pelvis_00_12_xz_stretch",
+        "mesh_skin_pelvis_00_12_xz_basis",
+        "mesh_skin_pelvis_00_12_yz_stretch",
+        "mesh_skin_pelvis_00_12_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        43.500853345,
+        -2.883512315
+      ],
+      "weights": {
+        "8": 0.3136766409766766,
+        "54": 0.6863233590233234
+      },
+      "cube_half_size": [
+        9.6,
+        0.383998795,
+        5.951958035
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_01_00",
+      "shear_bones": [
+        "mesh_skin_pelvis_01_00_xy_stretch",
+        "mesh_skin_pelvis_01_00_xy_basis",
+        "mesh_skin_pelvis_01_00_xz_stretch",
+        "mesh_skin_pelvis_01_00_xz_basis",
+        "mesh_skin_pelvis_01_00_yz_stretch",
+        "mesh_skin_pelvis_01_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        42.602243805,
+        -2.8833089350000005
+      ],
+      "weights": {
+        "8": 0.6000000003186292,
+        "54": 0.39999999968137084
+      },
+      "cube_half_size": [
+        10.56,
+        1.255377195,
+        6.719741745
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_02_00",
+      "shear_bones": [
+        "mesh_skin_pelvis_02_00_xy_stretch",
+        "mesh_skin_pelvis_02_00_xy_basis",
+        "mesh_skin_pelvis_02_00_xz_stretch",
+        "mesh_skin_pelvis_02_00_xz_basis",
+        "mesh_skin_pelvis_02_00_yz_stretch",
+        "mesh_skin_pelvis_02_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        42.978856965,
+        -9.891386415
+      ],
+      "weights": {
+        "8": 0.4799999999362746,
+        "54": 0.5200000000637254
+      },
+      "cube_half_size": [
+        9.936,
+        0.376613155,
+        0.335922525
+      ]
+    },
+    {
+      "name": "mesh_skin_pelvis_03_00",
+      "shear_bones": [
+        "mesh_skin_pelvis_03_00_xy_stretch",
+        "mesh_skin_pelvis_03_00_xy_basis",
+        "mesh_skin_pelvis_03_00_xz_stretch",
+        "mesh_skin_pelvis_03_00_xz_basis",
+        "mesh_skin_pelvis_03_00_yz_stretch",
+        "mesh_skin_pelvis_03_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        41.849017485,
+        -10.659153985
+      ],
+      "weights": {
+        "8": 0.8400000010833404,
+        "54": 0.15999999891665959
+      },
+      "cube_half_size": [
+        2.496,
+        1.631990355,
+        0.767664265
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_00",
+      "shear_bones": [
+        "mesh_skin_body_00_00_xy_stretch",
+        "mesh_skin_body_00_00_xy_basis",
+        "mesh_skin_body_00_00_xz_stretch",
+        "mesh_skin_body_00_00_xz_basis",
+        "mesh_skin_body_00_00_yz_stretch",
+        "mesh_skin_body_00_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        42.41809052,
+        -2.4032895649999997
+      ],
+      "weights": {
+        "8": 0.6586766388896552,
+        "54": 0.3413233611103447
+      },
+      "cube_half_size": [
+        9.12,
+        0.39969100999999996,
+        5.759954805
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_01",
+      "shear_bones": [
+        "mesh_skin_body_00_01_xy_stretch",
+        "mesh_skin_body_00_01_xy_basis",
+        "mesh_skin_body_00_01_xz_stretch",
+        "mesh_skin_body_00_01_xz_basis",
+        "mesh_skin_body_00_01_yz_stretch",
+        "mesh_skin_body_00_01_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        42.857472535,
+        -2.403379955
+      ],
+      "weights": {
+        "8": 0.5186766400367211,
+        "54": 0.4813233599632789
+      },
+      "cube_half_size": [
+        9.12,
+        0.399691005,
+        5.759954805
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_02",
+      "shear_bones": [
+        "mesh_skin_body_00_02_xy_stretch",
+        "mesh_skin_body_00_02_xy_basis",
+        "mesh_skin_body_00_02_xz_stretch",
+        "mesh_skin_body_00_02_xz_basis",
+        "mesh_skin_body_00_02_yz_stretch",
+        "mesh_skin_body_00_02_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        43.29685455,
+        -2.4034703450000006
+      ],
+      "weights": {
+        "8": 0.37867664118378686,
+        "54": 0.6213233588162131
+      },
+      "cube_half_size": [
+        9.12,
+        0.39969100999999996,
+        5.759954805
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_03",
+      "shear_bones": [
+        "mesh_skin_body_00_03_xy_stretch",
+        "mesh_skin_body_00_03_xy_basis",
+        "mesh_skin_body_00_03_xz_stretch",
+        "mesh_skin_body_00_03_xz_basis",
+        "mesh_skin_body_00_03_yz_stretch",
+        "mesh_skin_body_00_03_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        43.73623657,
+        -2.403560735
+      ],
+      "weights": {
+        "8": 0.23867664073770467,
+        "54": 0.7613233592622953
+      },
+      "cube_half_size": [
+        9.12,
+        0.39969100999999996,
+        5.759954805
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_04",
+      "shear_bones": [
+        "mesh_skin_body_00_04_xy_stretch",
+        "mesh_skin_body_00_04_xy_basis",
+        "mesh_skin_body_00_04_xz_stretch",
+        "mesh_skin_body_00_04_xz_basis",
+        "mesh_skin_body_00_04_yz_stretch",
+        "mesh_skin_body_00_04_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        44.17561859,
+        -2.4036511249999997
+      ],
+      "weights": {
+        "8": 0.09867664029162482,
+        "54": 0.9013233597083752
+      },
+      "cube_half_size": [
+        9.12,
+        0.39969100999999996,
+        5.759954805
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_05",
+      "shear_bones": [
+        "mesh_skin_body_00_05_xy_stretch",
+        "mesh_skin_body_00_05_xy_basis",
+        "mesh_skin_body_00_05_xz_stretch",
+        "mesh_skin_body_00_05_xz_basis",
+        "mesh_skin_body_00_05_yz_stretch",
+        "mesh_skin_body_00_05_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        44.6076057,
+        -2.403527295
+      ],
+      "weights": {
+        "54": 0.9679964551397882,
+        "55": 0.03200354486021183
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_06",
+      "shear_bones": [
+        "mesh_skin_body_00_06_xy_stretch",
+        "mesh_skin_body_00_06_xy_basis",
+        "mesh_skin_body_00_06_xz_stretch",
+        "mesh_skin_body_00_06_xz_basis",
+        "mesh_skin_body_00_06_yz_stretch",
+        "mesh_skin_body_00_06_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        45.0321979,
+        -2.403189245
+      ],
+      "weights": {
+        "54": 0.8568853443194429,
+        "55": 0.14311465568055715
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_07",
+      "shear_bones": [
+        "mesh_skin_body_00_07_xy_stretch",
+        "mesh_skin_body_00_07_xy_basis",
+        "mesh_skin_body_00_07_xz_stretch",
+        "mesh_skin_body_00_07_xz_basis",
+        "mesh_skin_body_00_07_yz_stretch",
+        "mesh_skin_body_00_07_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        45.4567901,
+        -2.402851195
+      ],
+      "weights": {
+        "54": 0.7457742334990975,
+        "55": 0.25422576650090245
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_08",
+      "shear_bones": [
+        "mesh_skin_body_00_08_xy_stretch",
+        "mesh_skin_body_00_08_xy_basis",
+        "mesh_skin_body_00_08_xz_stretch",
+        "mesh_skin_body_00_08_xz_basis",
+        "mesh_skin_body_00_08_yz_stretch",
+        "mesh_skin_body_00_08_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        45.8813823,
+        -2.4025131450000003
+      ],
+      "weights": {
+        "54": 0.6346631226787522,
+        "55": 0.36533687732124775
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_09",
+      "shear_bones": [
+        "mesh_skin_body_00_09_xy_stretch",
+        "mesh_skin_body_00_09_xy_basis",
+        "mesh_skin_body_00_09_xz_stretch",
+        "mesh_skin_body_00_09_xz_basis",
+        "mesh_skin_body_00_09_yz_stretch",
+        "mesh_skin_body_00_09_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        46.305974504999995,
+        -2.4021750950000005
+      ],
+      "weights": {
+        "54": 0.5235520105499627,
+        "55": 0.4764479894500373
+      },
+      "cube_half_size": [
+        9.12,
+        0.392296105,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_10",
+      "shear_bones": [
+        "mesh_skin_body_00_10_xy_stretch",
+        "mesh_skin_body_00_10_xy_basis",
+        "mesh_skin_body_00_10_xz_stretch",
+        "mesh_skin_body_00_10_xz_basis",
+        "mesh_skin_body_00_10_yz_stretch",
+        "mesh_skin_body_00_10_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        46.73056671,
+        -2.4018370450000006
+      ],
+      "weights": {
+        "54": 0.41244089842117126,
+        "55": 0.5875591015788287
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_11",
+      "shear_bones": [
+        "mesh_skin_body_00_11_xy_stretch",
+        "mesh_skin_body_00_11_xy_basis",
+        "mesh_skin_body_00_11_xz_stretch",
+        "mesh_skin_body_00_11_xz_basis",
+        "mesh_skin_body_00_11_yz_stretch",
+        "mesh_skin_body_00_11_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        47.15515891,
+        -2.4014989950000007
+      ],
+      "weights": {
+        "54": 0.30132978760082596,
+        "55": 0.698670212399174
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_12",
+      "shear_bones": [
+        "mesh_skin_body_00_12_xy_stretch",
+        "mesh_skin_body_00_12_xy_basis",
+        "mesh_skin_body_00_12_xz_stretch",
+        "mesh_skin_body_00_12_xz_basis",
+        "mesh_skin_body_00_12_yz_stretch",
+        "mesh_skin_body_00_12_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        47.579751110000004,
+        -2.401160945
+      ],
+      "weights": {
+        "54": 0.19021867678047877,
+        "55": 0.8097813232195212
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_13",
+      "shear_bones": [
+        "mesh_skin_body_00_13_xy_stretch",
+        "mesh_skin_body_00_13_xy_basis",
+        "mesh_skin_body_00_13_xz_stretch",
+        "mesh_skin_body_00_13_xz_basis",
+        "mesh_skin_body_00_13_yz_stretch",
+        "mesh_skin_body_00_13_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        48.00434331,
+        -2.400822895
+      ],
+      "weights": {
+        "54": 0.07910756596013346,
+        "55": 0.9208924340398665
+      },
+      "cube_half_size": [
+        9.12,
+        0.3922961,
+        5.760169025
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_14",
+      "shear_bones": [
+        "mesh_skin_body_00_14_xy_stretch",
+        "mesh_skin_body_00_14_xy_basis",
+        "mesh_skin_body_00_14_xz_stretch",
+        "mesh_skin_body_00_14_xz_basis",
+        "mesh_skin_body_00_14_yz_stretch",
+        "mesh_skin_body_00_14_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        48.363618095,
+        -2.40029947
+      ],
+      "weights": {
+        "55": 0.985089757128049,
+        "56": 0.014910242871951017
+      },
+      "cube_half_size": [
+        9.12,
+        0.326978685,
+        5.7603544
+      ]
+    },
+    {
+      "name": "mesh_skin_body_00_15",
+      "shear_bones": [
+        "mesh_skin_body_00_15_xy_stretch",
+        "mesh_skin_body_00_15_xy_basis",
+        "mesh_skin_body_00_15_xz_stretch",
+        "mesh_skin_body_00_15_xz_basis",
+        "mesh_skin_body_00_15_yz_stretch",
+        "mesh_skin_body_00_15_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        48.657575464999994,
+        -2.3995906699999994
+      ],
+      "weights": {
+        "55": 0.9081666800036805,
+        "56": 0.09183331999631951
+      },
+      "cube_half_size": [
+        9.12,
+        0.326978685,
+        5.7603544
+      ]
+    },
+    {
+      "name": "mesh_skin_body_01_00",
+      "shear_bones": [
+        "mesh_skin_body_01_00_xy_stretch",
+        "mesh_skin_body_01_00_xy_basis",
+        "mesh_skin_body_01_00_xz_stretch",
+        "mesh_skin_body_01_00_xz_basis",
+        "mesh_skin_body_01_00_yz_stretch",
+        "mesh_skin_body_01_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -4.32,
+        48.247863550000005,
+        -9.599964790000001
+      ],
+      "weights": {
+        "54": 0.015380996386699541,
+        "55": 0.9846190036133005
+      },
+      "cube_half_size": [
+        4.08,
+        0.9700437,
+        1.0095082
+      ]
+    },
+    {
+      "name": "mesh_skin_body_02_00",
+      "shear_bones": [
+        "mesh_skin_body_02_00_xy_stretch",
+        "mesh_skin_body_02_00_xy_basis",
+        "mesh_skin_body_02_00_xz_stretch",
+        "mesh_skin_body_02_00_xz_basis",
+        "mesh_skin_body_02_00_yz_stretch",
+        "mesh_skin_body_02_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -4.32,
+        47.57176829,
+        -10.753238960000001
+      ],
+      "weights": {
+        "54": 0.19230769301223982,
+        "55": 0.8076923069877602
+      },
+      "cube_half_size": [
+        3.84,
+        0.24985618,
+        0.43219893
+      ]
+    },
+    {
+      "name": "mesh_skin_body_03_00",
+      "shear_bones": [
+        "mesh_skin_body_03_00_xy_stretch",
+        "mesh_skin_body_03_00_xy_basis",
+        "mesh_skin_body_03_00_xz_stretch",
+        "mesh_skin_body_03_00_xz_basis",
+        "mesh_skin_body_03_00_yz_stretch",
+        "mesh_skin_body_03_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -4.32,
+        46.425369345,
+        -9.218151695
+      ],
+      "weights": {
+        "54": 0.4923076935356181,
+        "55": 0.5076923064643819
+      },
+      "cube_half_size": [
+        3.864,
+        0.970029875,
+        1.008772315
+      ]
+    },
+    {
+      "name": "mesh_skin_body_04_00",
+      "shear_bones": [
+        "mesh_skin_body_04_00_xy_stretch",
+        "mesh_skin_body_04_00_xy_basis",
+        "mesh_skin_body_04_00_xz_stretch",
+        "mesh_skin_body_04_00_xz_basis",
+        "mesh_skin_body_04_00_yz_stretch",
+        "mesh_skin_body_04_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -4.32,
+        45.74928792,
+        -10.37068997
+      ],
+      "weights": {
+        "54": 0.6692307696937577,
+        "55": 0.3307692303062423
+      },
+      "cube_half_size": [
+        3.624,
+        0.24985618,
+        0.43219893
+      ]
+    },
+    {
+      "name": "mesh_skin_body_05_00",
+      "shear_bones": [
+        "mesh_skin_body_05_00_xy_stretch",
+        "mesh_skin_body_05_00_xy_basis",
+        "mesh_skin_body_05_00_xz_stretch",
+        "mesh_skin_body_05_00_xz_basis",
+        "mesh_skin_body_05_00_yz_stretch",
+        "mesh_skin_body_05_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -4.32,
+        44.57403999,
+        -8.835169735000001
+      ],
+      "weights": {
+        "54": 0.9767802324290867,
+        "55": 0.02321976757091323
+      },
+      "cube_half_size": [
+        3.648,
+        0.99887886,
+        1.008339345
+      ]
+    },
+    {
+      "name": "mesh_skin_body_06_00",
+      "shear_bones": [
+        "mesh_skin_body_06_00_xy_stretch",
+        "mesh_skin_body_06_00_xy_basis",
+        "mesh_skin_body_06_00_xz_stretch",
+        "mesh_skin_body_06_00_xz_basis",
+        "mesh_skin_body_06_00_yz_stretch",
+        "mesh_skin_body_06_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -4.32,
+        43.889005435,
+        -9.98757365
+      ],
+      "weights": {
+        "8": 0.18999999901224873,
+        "54": 0.8100000009877513
+      },
+      "cube_half_size": [
+        3.408,
+        0.266767655,
+        0.43194512
+      ]
+    },
+    {
+      "name": "mesh_skin_body_07_00",
+      "shear_bones": [
+        "mesh_skin_body_07_00_xy_stretch",
+        "mesh_skin_body_07_00_xy_basis",
+        "mesh_skin_body_07_00_xz_stretch",
+        "mesh_skin_body_07_00_xz_basis",
+        "mesh_skin_body_07_00_yz_stretch",
+        "mesh_skin_body_07_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        4.32,
+        48.247863550000005,
+        -9.599964790000001
+      ],
+      "weights": {
+        "54": 0.015380996386699541,
+        "55": 0.9846190036133005
+      },
+      "cube_half_size": [
+        4.08,
+        0.9700437,
+        1.0095082
+      ]
+    },
+    {
+      "name": "mesh_skin_body_08_00",
+      "shear_bones": [
+        "mesh_skin_body_08_00_xy_stretch",
+        "mesh_skin_body_08_00_xy_basis",
+        "mesh_skin_body_08_00_xz_stretch",
+        "mesh_skin_body_08_00_xz_basis",
+        "mesh_skin_body_08_00_yz_stretch",
+        "mesh_skin_body_08_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        4.32,
+        47.57176829,
+        -10.753238960000001
+      ],
+      "weights": {
+        "54": 0.19230769301223982,
+        "55": 0.8076923069877602
+      },
+      "cube_half_size": [
+        3.84,
+        0.24985618,
+        0.43219893
+      ]
+    },
+    {
+      "name": "mesh_skin_body_09_00",
+      "shear_bones": [
+        "mesh_skin_body_09_00_xy_stretch",
+        "mesh_skin_body_09_00_xy_basis",
+        "mesh_skin_body_09_00_xz_stretch",
+        "mesh_skin_body_09_00_xz_basis",
+        "mesh_skin_body_09_00_yz_stretch",
+        "mesh_skin_body_09_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        4.319999999999999,
+        46.425369345,
+        -9.218151695
+      ],
+      "weights": {
+        "54": 0.4923076935356181,
+        "55": 0.5076923064643819
+      },
+      "cube_half_size": [
+        3.864,
+        0.970029875,
+        1.008772315
+      ]
+    },
+    {
+      "name": "mesh_skin_body_10_00",
+      "shear_bones": [
+        "mesh_skin_body_10_00_xy_stretch",
+        "mesh_skin_body_10_00_xy_basis",
+        "mesh_skin_body_10_00_xz_stretch",
+        "mesh_skin_body_10_00_xz_basis",
+        "mesh_skin_body_10_00_yz_stretch",
+        "mesh_skin_body_10_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        4.32,
+        45.74928792,
+        -10.37068997
+      ],
+      "weights": {
+        "54": 0.6692307696937577,
+        "55": 0.3307692303062423
+      },
+      "cube_half_size": [
+        3.624,
+        0.24985618,
+        0.43219893
+      ]
+    },
+    {
+      "name": "mesh_skin_body_11_00",
+      "shear_bones": [
+        "mesh_skin_body_11_00_xy_stretch",
+        "mesh_skin_body_11_00_xy_basis",
+        "mesh_skin_body_11_00_xz_stretch",
+        "mesh_skin_body_11_00_xz_basis",
+        "mesh_skin_body_11_00_yz_stretch",
+        "mesh_skin_body_11_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        4.32,
+        44.57403999,
+        -8.835169735000001
+      ],
+      "weights": {
+        "54": 0.9767802324290867,
+        "55": 0.02321976757091323
+      },
+      "cube_half_size": [
+        3.648,
+        0.99887886,
+        1.008339345
+      ]
+    },
+    {
+      "name": "mesh_skin_body_12_00",
+      "shear_bones": [
+        "mesh_skin_body_12_00_xy_stretch",
+        "mesh_skin_body_12_00_xy_basis",
+        "mesh_skin_body_12_00_xz_stretch",
+        "mesh_skin_body_12_00_xz_basis",
+        "mesh_skin_body_12_00_yz_stretch",
+        "mesh_skin_body_12_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        4.32,
+        43.889005435,
+        -9.98757365
+      ],
+      "weights": {
+        "8": 0.18999999901224873,
+        "54": 0.8100000009877513
+      },
+      "cube_half_size": [
+        3.408,
+        0.266767655,
+        0.43194512
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_00",
+      "shear_bones": [
+        "mesh_skin_chest_00_00_xy_stretch",
+        "mesh_skin_chest_00_00_xy_basis",
+        "mesh_skin_chest_00_00_xz_stretch",
+        "mesh_skin_chest_00_00_xz_basis",
+        "mesh_skin_chest_00_00_yz_stretch",
+        "mesh_skin_chest_00_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        47.81980901,
+        -2.592969815
+      ],
+      "weights": {
+        "54": 0.12739816352046363,
+        "55": 0.8726018364795364
+      },
+      "cube_half_size": [
+        10.752,
+        0.3122768,
+        5.856105315
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_01",
+      "shear_bones": [
+        "mesh_skin_chest_00_01_xy_stretch",
+        "mesh_skin_chest_00_01_xy_basis",
+        "mesh_skin_chest_00_01_xz_stretch",
+        "mesh_skin_chest_00_01_xz_basis",
+        "mesh_skin_chest_00_01_yz_stretch",
+        "mesh_skin_chest_00_01_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        48.08436261,
+        -2.5927591850000002
+      ],
+      "weights": {
+        "54": 0.05816739487346234,
+        "55": 0.9418326051265377
+      },
+      "cube_half_size": [
+        10.752,
+        0.3122768,
+        5.856105315
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_02",
+      "shear_bones": [
+        "mesh_skin_chest_00_02_xy_stretch",
+        "mesh_skin_chest_00_02_xy_basis",
+        "mesh_skin_chest_00_02_xz_stretch",
+        "mesh_skin_chest_00_02_xz_basis",
+        "mesh_skin_chest_00_02_yz_stretch",
+        "mesh_skin_chest_00_02_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        48.428941955,
+        -2.5921419599999993
+      ],
+      "weights": {
+        "55": 0.9679957399893002,
+        "56": 0.032004260010699774
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_03",
+      "shear_bones": [
+        "mesh_skin_chest_00_03_xy_stretch",
+        "mesh_skin_chest_00_03_xy_basis",
+        "mesh_skin_chest_00_03_xz_stretch",
+        "mesh_skin_chest_00_03_xz_basis",
+        "mesh_skin_chest_00_03_yz_stretch",
+        "mesh_skin_chest_00_03_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        48.853547045,
+        -2.5911181400000007
+      ],
+      "weights": {
+        "55": 0.8568846285874323,
+        "56": 0.14311537141256764
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_04",
+      "shear_bones": [
+        "mesh_skin_chest_00_04_xy_stretch",
+        "mesh_skin_chest_00_04_xy_basis",
+        "mesh_skin_chest_00_04_xz_stretch",
+        "mesh_skin_chest_00_04_xz_basis",
+        "mesh_skin_chest_00_04_yz_stretch",
+        "mesh_skin_chest_00_04_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        49.278152135,
+        -2.5900943200000004
+      ],
+      "weights": {
+        "55": 0.7457735171855645,
+        "56": 0.2542264828144355
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_05",
+      "shear_bones": [
+        "mesh_skin_chest_00_05_xy_stretch",
+        "mesh_skin_chest_00_05_xy_basis",
+        "mesh_skin_chest_00_05_xz_stretch",
+        "mesh_skin_chest_00_05_xz_basis",
+        "mesh_skin_chest_00_05_yz_stretch",
+        "mesh_skin_chest_00_05_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        49.702757225,
+        -2.5890705
+      ],
+      "weights": {
+        "55": 0.6346624057836966,
+        "56": 0.3653375942163034
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_06",
+      "shear_bones": [
+        "mesh_skin_chest_00_06_xy_stretch",
+        "mesh_skin_chest_00_06_xy_basis",
+        "mesh_skin_chest_00_06_xz_stretch",
+        "mesh_skin_chest_00_06_xz_basis",
+        "mesh_skin_chest_00_06_yz_stretch",
+        "mesh_skin_chest_00_06_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        50.12736231,
+        -2.5880466799999997
+      ],
+      "weights": {
+        "55": 0.5235512956902333,
+        "56": 0.47644870430976677
+      },
+      "cube_half_size": [
+        10.752,
+        0.39230254,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_07",
+      "shear_bones": [
+        "mesh_skin_chest_00_07_xy_stretch",
+        "mesh_skin_chest_00_07_xy_basis",
+        "mesh_skin_chest_00_07_xz_stretch",
+        "mesh_skin_chest_00_07_xz_basis",
+        "mesh_skin_chest_00_07_yz_stretch",
+        "mesh_skin_chest_00_07_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        50.551967395000005,
+        -2.5870228599999994
+      ],
+      "weights": {
+        "55": 0.41244018559676987,
+        "56": 0.5875598144032301
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_08",
+      "shear_bones": [
+        "mesh_skin_chest_00_08_xy_stretch",
+        "mesh_skin_chest_00_08_xy_basis",
+        "mesh_skin_chest_00_08_xz_stretch",
+        "mesh_skin_chest_00_08_xz_basis",
+        "mesh_skin_chest_00_08_yz_stretch",
+        "mesh_skin_chest_00_08_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        50.976572485000005,
+        -2.585999040000001
+      ],
+      "weights": {
+        "55": 0.30132907419490196,
+        "56": 0.698670925805098
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_09",
+      "shear_bones": [
+        "mesh_skin_chest_00_09_xy_stretch",
+        "mesh_skin_chest_00_09_xy_basis",
+        "mesh_skin_chest_00_09_xz_stretch",
+        "mesh_skin_chest_00_09_xz_basis",
+        "mesh_skin_chest_00_09_yz_stretch",
+        "mesh_skin_chest_00_09_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        51.401177575000006,
+        -2.5849752200000005
+      ],
+      "weights": {
+        "55": 0.19021796279303416,
+        "56": 0.8097820372069658
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_00_10",
+      "shear_bones": [
+        "mesh_skin_chest_00_10_xy_stretch",
+        "mesh_skin_chest_00_10_xy_basis",
+        "mesh_skin_chest_00_10_xz_stretch",
+        "mesh_skin_chest_00_10_xz_basis",
+        "mesh_skin_chest_00_10_yz_stretch",
+        "mesh_skin_chest_00_10_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        51.825782665000006,
+        -2.5839514
+      ],
+      "weights": {
+        "55": 0.07910685139116624,
+        "56": 0.9208931486088338
+      },
+      "cube_half_size": [
+        10.752,
+        0.392302545,
+        5.85651191
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_26_00",
+      "shear_bones": [
+        "mesh_skin_chest_26_00_xy_stretch",
+        "mesh_skin_chest_26_00_xy_basis",
+        "mesh_skin_chest_26_00_xz_stretch",
+        "mesh_skin_chest_26_00_xz_basis",
+        "mesh_skin_chest_26_00_yz_stretch",
+        "mesh_skin_chest_26_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        -2.6879999999999997,
+        51.750040799999994,
+        -12.44376283
+      ],
+      "weights": {
+        "55": 0.09892706315499966,
+        "56": 0.9010729368450003
+      },
+      "cube_half_size": [
+        1.2,
+        2.03240602,
+        0.46548881
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_28_00",
+      "shear_bones": [
+        "mesh_skin_chest_28_00_xy_stretch",
+        "mesh_skin_chest_28_00_xy_basis",
+        "mesh_skin_chest_28_00_xz_stretch",
+        "mesh_skin_chest_28_00_xz_basis",
+        "mesh_skin_chest_28_00_yz_stretch",
+        "mesh_skin_chest_28_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        2.6879999999999997,
+        51.750040799999994,
+        -12.44376283
+      ],
+      "weights": {
+        "55": 0.09892706315499966,
+        "56": 0.9010729368450003
+      },
+      "cube_half_size": [
+        1.2,
+        2.03240602,
+        0.46548881
+      ]
+    },
+    {
+      "name": "mesh_skin_chest_36_00",
+      "shear_bones": [
+        "mesh_skin_chest_36_00_xy_stretch",
+        "mesh_skin_chest_36_00_xy_basis",
+        "mesh_skin_chest_36_00_xz_stretch",
+        "mesh_skin_chest_36_00_xz_basis",
+        "mesh_skin_chest_36_00_yz_stretch",
+        "mesh_skin_chest_36_00_yz_basis"
+      ],
+      "parent_source_index": 7,
+      "pivot": [
+        0.0,
+        52.10759198,
+        -14.433136885
+      ],
+      "weights": {
+        "55": 0.0053626902153105505,
+        "56": 0.9946373097846894
+      },
+      "cube_half_size": [
+        0.7728,
+        0.33279453,
+        0.027154465
+      ]
+    }
+  ],
+  "sword_fitting": [
+    {
+      "side": "l",
+      "source_bone": 81,
+      "grip": [
+        26.82353716,
+        37.12956254,
+        -14.15494805
+      ],
+      "blade_tip": [
+        26.79833221436,
+        56.56213760376,
+        -69.32816314697
+      ],
+      "tip_dummy_reference": 20,
+      "uniform_rest_scale": 0.8750368193807933,
+      "blade_root_marker_uses_exact_source_dummy": true
+    },
+    {
+      "side": "r",
+      "source_bone": 364,
+      "grip": [
+        -26.82346075,
+        37.12954852,
+        -14.15501414
+      ],
+      "blade_tip": [
+        -26.79833221436,
+        56.56213760376,
+        -69.32816314697
+      ],
+      "tip_dummy_reference": 10,
+      "uniform_rest_scale": 0.8750359560650972,
+      "blade_root_marker_uses_exact_source_dummy": true
+    }
+  ],
+  "hands": [
+    {
+      "mesh": "hand_l",
+      "source_wrist": 65,
+      "phalanges": 15,
+      "palm_width": 3.1560231959659104,
+      "fingertip_extension": "65% of final source phalanx; project geometry fit"
+    },
+    {
+      "mesh": "hand_r",
+      "source_wrist": 348,
+      "phalanges": 15,
+      "palm_width": 3.156016443916479,
+      "fingertip_extension": "65% of final source phalanx; project geometry fit"
+    },
+    {
+      "mesh": "miquella_upper_hand_l",
+      "source_wrist": 124,
+      "animated_phalanges": 15
+    },
+    {
+      "mesh": "miquella_upper_hand_r",
+      "source_wrist": 149,
+      "animated_phalanges": 15
+    },
+    {
+      "mesh": "miquella_lower_hand_l",
+      "source_wrist": 193,
+      "animated_phalanges": 15
+    },
+    {
+      "mesh": "miquella_lower_hand_r",
+      "source_wrist": 276,
+      "animated_phalanges": 15
+    }
+  ],
+  "source_curves_unchanged": true,
+  "legacy_animation_input": false,
+  "waist_policy": "Continuous bind map; source Pelvis/Spine linear weight bands with full affine basis in geometry-only children",
+  "limitations": [
+    "Waist bands approximate vertex skinning; rigid legacy relief and silhouette remain project artwork.",
+    "Shoulder seams, cape physics and final fingertip silhouettes still require visual fitting."
+  ],
+  "miquella": {
+    "version": 3,
+    "torso_sections": [
+      {
+        "lower": 85,
+        "upper": 114,
+        "driver": 114
+      },
+      {
+        "lower": 114,
+        "upper": 115,
+        "driver": 114
+      },
+      {
+        "lower": 115,
+        "upper": 116,
+        "driver": 115
+      }
+    ],
+    "torso_overlap": 1.0,
+    "flowing_locks": 34,
+    "flowing_pieces": 274,
+    "face_locks": 6,
+    "nape_locks": 7,
+    "head_parent": "src_231_Miquella_Head",
+    "hands": [
+      {
+        "mesh": "miquella_upper_hand_l",
+        "source_wrist": 124,
+        "animated_phalanges": 15
+      },
+      {
+        "mesh": "miquella_upper_hand_r",
+        "source_wrist": 149,
+        "animated_phalanges": 15
+      },
+      {
+        "mesh": "miquella_lower_hand_l",
+        "source_wrist": 193,
+        "animated_phalanges": 15
+      },
+      {
+        "mesh": "miquella_lower_hand_r",
+        "source_wrist": 276,
+        "animated_phalanges": 15
+      }
+    ],
+    "policy": "Continuous articulated abdomen, tapered hair veil, shaped jaw and palms; original rig, animations and atlas preserved",
+    "geometry_sha256": "c1057291f7e11e3d36d6e6c9ba2df9ad9849e6fc5b2ac45abcc79774e55f57b7"
+  }
+}

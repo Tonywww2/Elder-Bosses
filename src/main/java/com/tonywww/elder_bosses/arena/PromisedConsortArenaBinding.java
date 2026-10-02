@@ -50,7 +50,7 @@ public final class PromisedConsortArenaBinding {
     }
 
     public Vec3 dormantPosition() {
-        return standingAnchor("phase_return");
+        return standingAnchor("boss_spawn");
     }
 
     public float dormantYaw() {
@@ -59,12 +59,7 @@ public final class PromisedConsortArenaBinding {
     }
 
     public float yaw() {
-        return switch (rotation) {
-            case NONE -> 180.0F;
-            case CLOCKWISE_90 -> -90.0F;
-            case CLOCKWISE_180 -> 0.0F;
-            case COUNTERCLOCKWISE_90 -> 90.0F;
-        };
+        return dormantYaw();
     }
 
     public CompoundTag save() {

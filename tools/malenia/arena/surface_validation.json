@@ -1,0 +1,156 @@
+{
+  "date": "2026-09-27",
+  "revision": "malenia_arena_surfaces_r2",
+  "flowers": {
+    "plants_per_model": [
+      7,
+      9,
+      11
+    ],
+    "prior_plants_per_model": 4,
+    "blooms_per_sprite": 2,
+    "model_rotations": 12,
+    "height_model_units": [
+      6,
+      11
+    ],
+    "collision": false,
+    "preview": "build/malenia-arena/flower-model-review.png"
+  },
+  "pool": {
+    "block": "elder_bosses:haligtree_silt_slab",
+    "state": {
+      "type": "bottom",
+      "waterlogged": true
+    },
+    "count": 273,
+    "collision_top": 0.5,
+    "shore_top": 1.0,
+    "real_fluid": true,
+    "legacy_film_in_new_templates": 0,
+    "legacy_registration_retained_for_saves": true,
+    "existing_chambers_automatically_rebuilt": false,
+    "containment": "full-block foundation and shore checked before placement",
+    "navigation": "slab reports solid support; bound Malenia ignores WATER_BORDER cost; all fluid physics and hazard classifications retained"
+  },
+  "textures": {
+    "tool": "built-in image_gen.imagegen",
+    "prompts": "textures/PROMPTS.md",
+    "exporter": "ExportTextures.java",
+    "method": "premultiplied-alpha area downsample and binary alpha threshold; no procedural artwork",
+    "assets": [
+      {
+        "path": "src/main/resources/assets/elder_bosses/textures/block/haligtree_root.png",
+        "size": [
+          16,
+          16
+        ],
+        "sha256": "29ae09d185c20583f764a3e606c2d5506c6cc4a1626f68af5b899b6de1c1e299",
+        "source": "textures/source/haligtree_root.png"
+      },
+      {
+        "path": "src/main/resources/assets/elder_bosses/textures/block/haligtree_silt.png",
+        "size": [
+          16,
+          16
+        ],
+        "sha256": "721bbfccb9c1df0878f84634f05171eaf517db033ee6b3ac31950860a8ed5e85",
+        "source": "textures/source/haligtree_silt.png"
+      },
+      {
+        "path": "src/main/resources/assets/elder_bosses/textures/block/haligtree_white_petals.png",
+        "size": [
+          16,
+          16
+        ],
+        "sha256": "4bca9679f5aceea881931e0ef64685bb17d9f47025fef131ec841d12b1bb354c",
+        "source": "textures/source/haligtree_white_petals.png"
+      },
+      {
+        "path": "src/main/resources/assets/elder_bosses/textures/block/haligtree_altar.png",
+        "size": [
+          16,
+          16
+        ],
+        "sha256": "b2391a4edeb249393da5ddcb7cecc972a31b9c31732b12893fb04e60ec9f27b2",
+        "source": "textures/source/haligtree_altar.png"
+      }
+    ],
+    "preview": "textures/texture-review.png"
+  },
+  "forge_server": {
+    "passed": true,
+    "log": "build/malenia-surface-verified.log",
+    "world": "build/malenia-surface-gametest",
+    "tests_passed": 4,
+    "coverage": [
+      "all four manual rotations and exact durable undo",
+      "actual bound Malenia path search into and out of half-height pool",
+      "real FluidState.tick at each authored pool cell, three rounds per rotation, no block changes within basin and shore",
+      "18-block flight clearance above full and half-block floor",
+      "natural dark-forest generation with 19 pieces and waterlogged pool",
+      "surface stairs both ways and natural structure serialization",
+      "main-hand ritual, rejected/cancelled spawns, ownership, reset, unload and defeat release",
+      "Aeonia landing projects onto half-height floor rather than artificial roof",
+      "phase opening preserves continuous flight behavior already present in workspace"
+    ],
+    "natural_origin": [
+      2552,
+      10,
+      -376
+    ],
+    "natural_rotation": "CLOCKWISE_90"
+  },
+  "assets": {
+    "passed": true,
+    "assertions": 2581448,
+    "log": "build/malenia-surface-assets.log",
+    "coverage": [
+      "both roots and target-version NBT parity",
+      "complete seams, four rotations, malformed layout rejection",
+      "no legacy film or standalone fluid blocks",
+      "waterlogged bottom slab properties",
+      "native 16x16 textures with opaque/cutout alpha",
+      "three flower models and twelve variants"
+    ]
+  },
+  "builds": {
+    "forge_1_20_1": "passed",
+    "neoforge_1_21_1": "passed",
+    "log": "build/malenia-surface-build.log"
+  },
+  "artifacts": [
+    {
+      "path": "versions/1.20.1-forge/build/libs/elder_bosses-forge-0.1.0+1.20.1.jar",
+      "sha256": "2795698d8726cbba2511a10c3c8f916ec7ac2859f95077d2f22a2c7febe2fe8f",
+      "arena_templates": 25,
+      "haligtree_asset_files_match": 27,
+      "test_fixtures_absent": true,
+      "native_16x_textures": 4
+    },
+    {
+      "path": "versions/1.21.1-neoforge/build/libs/elder_bosses-neoforge-0.1.0+1.21.1.jar",
+      "sha256": "2492d799d4921f9fcce3f5c9236b5fcc62ff23b118ce8bc488a53ffc3ad84513",
+      "arena_templates": 25,
+      "haligtree_asset_files_match": 27,
+      "test_fixtures_absent": true,
+      "native_16x_textures": 4
+    }
+  ],
+  "visual_review": {
+    "passed": true,
+    "arena_preview": "build/malenia-arena/arena-review.png",
+    "log": "build/malenia-surface-visual.log",
+    "notes": "Offline OpenGL reads exported geometry, shipped textures and flower JSON. Water tint/height and lighting are illustrative; not a client screenshot."
+  },
+  "not_verified": [
+    "NeoForge server runtime",
+    "client-world water translucency, illumination and visual appearance",
+    "player-driven full two-phase encounter and multiplayer"
+  ],
+  "previous_reports": [
+    "validation.json",
+    "worldgen_validation.json",
+    "binding_validation.json"
+  ]
+}

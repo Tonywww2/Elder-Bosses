@@ -1,0 +1,392 @@
+# Config leaf key | Simplified Chinese name | English override (optional)
+enabled|启用
+attack_damage|攻击伤害
+attack_speed|攻击速度
+durability|耐久上限
+enchantability|附魔能力
+rot_capacity_bonus|腐败容量加成
+attack_speed_bonus|攻击速度加成
+attack_damage_bonus|攻击伤害加成
+knockback_resistance_bonus|击退抗性加成
+armor_bonus|护甲加成
+luck_bonus|幸运加成
+volume|音量
+pitch|音调
+distance|距离
+fade_ticks|淡出时间
+malenia_enabled|启用玛莲妮亚指示器
+promised_consort_enabled|启用拉塔恩指示器
+opacity|透明度
+occluded_outline_opacity_multiplier|遮挡时边框透明度倍率
+render_distance|渲染距离
+surface_offset|离地偏移
+max_active_indicators|同时显示的指示器上限
+max_segments_per_shape|单个形状的线段上限
+particle_budget_per_boss_per_tick|每个Boss每tick的粒子预算
+phase_one_health|一阶段生命值
+phase_two_health|二阶段生命值
+phase_two_start_ratio|二阶段开始生命比例
+movement_speed|移动速度
+follow_range|追踪距离
+knockback_resistance|击退抗性
+max_active_players|参战人数上限
+state_output|输出状态日志
+action_broadcast|播报技能|Announce skills
+health_per_extra_player|每增加一名玩家的生命加成
+damage_multiplier_per_extra_player|每增加一名玩家的伤害加成
+healing_window_cap_per_extra_player|每增加一名玩家的回血窗口上限加成
+retarget_interval_ticks|重新选取目标的间隔
+same_target_penalty_after_ticks|连续锁定同一目标的惩罚起点
+same_target_score_multiplier|同一目标评分倍率
+distance_weight|距离评分权重
+recent_damage_weight|近期伤害评分权重
+item_use_weight|使用物品评分权重
+recent_damage_window_ticks|近期伤害统计窗口
+target_unregistered_players|锁定未登记玩家
+target_creative_players|锁定创造模式玩家
+creative_players_can_join|允许创造模式玩家参战
+logical_radius|战斗场地逻辑半径
+allow_block_breaking|允许破坏方块
+breakable_block_tag|可破坏方块标签
+protected_block_tag|受保护方块标签
+block_break_radius|破坏方块的半径
+max_blocks_broken_per_tick|每tick破坏方块上限
+restore_broken_blocks_on_reset|重置时还原被破坏的方块
+logical_shallow_water|逻辑浅水区域
+leash_grace_ticks|越界宽限时间
+unload_resets_fight|区块卸载时重置战斗
+boss_ignores_arena_height_variation|忽略场地高度差
+damage_conversion_ratio|伤害转为架势累积的比例
+capacity_health_ratio|架势容量占生命上限的比例
+rapid_window_ticks|快速失衡保护统计窗口
+rapid_fraction|快速失衡保护分档比例
+distance_bands|距离分档规则
+source_dedupe_ticks|相同伤害来源去重窗口
+decay_delay_ticks|架势衰减前的等待时间
+decay_per_tick|每tick架势衰减量
+stun_ticks|失衡硬直时间
+post_stun_immunity_ticks|硬直结束后的架势保护时间
+reset_on_phase_change|转阶段时重置架势
+generated_hazards_on_stun|硬直时已生成的攻击区域处理
+pending_hazards_on_stun|硬直时待生成的攻击区域处理
+start_tick|开始tick
+end_tick|结束tick
+rearm_ticks|重新准备间隔
+window_ticks|判定窗口时间
+blocked_damage_multiplier|格挡后的伤害倍率
+shield_durability_multiplier|盾牌耐久消耗倍率
+shield_stamina_multiplier|盾牌架势消耗倍率
+default_cue_lead_ticks|默认提示提前时间
+cue_pulse_count|提示脉冲次数
+red_cue_color|提示颜色
+cue_sound|提示音效ID
+eligible_item_tag|允许触发的物品标签
+cue_volume|提示音量
+cue_pitch|提示音调
+cue_cooldown_ticks|提示音效冷却
+cue_effect_enabled|启用瞬防提示光圈
+standard_heal|普通攻击回血
+heavy_heal|重攻击回血
+grab_heal|投技回血
+waterfowl_heal|水鸟乱舞回血
+action_cap|单次动作回血上限
+window_cap|统计窗口内回血上限
+blocked_hit_multiplier|格挡命中回血倍率
+heal_from_players|命中玩家时回血
+heal_from_summons|命中召唤物时回血
+heal_from_tamed_entities|命中驯服生物时回血
+heal_from_non_hostile_entities|命中非敌对生物时回血
+heal_from_armor_stands|命中盔甲架时回血
+physical|物理伤害抗性
+fire|火焰伤害抗性
+magic|魔法伤害抗性
+lightning|雷电伤害抗性
+holy|圣属性伤害抗性
+pierce|穿刺伤害抗性
+ordinary_physical|普通物理伤害来源倍率
+bleed_trigger|出血触发伤害来源倍率
+frost_trigger|冻伤触发伤害来源倍率
+threshold|触发阈值
+duration_ticks|持续时间
+movement_speed_reduction|移动速度降低比例
+healing_reduction|治疗降低比例
+decay_per_second|每秒衰减量
+milk_clears_rot|牛奶清除腐败
+honey_buildup_reduction|蜂蜜降低腐败累积量
+cleanse_use_ticks|净化物品使用时间
+consume_cleanse_item|消耗净化物品
+decay_interval_ticks|衰减间隔
+decay_per_interval|每次衰减量
+ordinary_sword_buildup|普通刀击腐败累积
+heavy_thrust_buildup|重刺击腐败累积
+kick_buildup|踢击腐败累积
+waterfowl_buildup|水鸟乱舞腐败累积
+phase_one_idle_min_ticks|一阶段待机时间下限
+phase_one_idle_max_ticks|一阶段待机时间上限
+phase_two_idle_min_ticks|二阶段待机时间下限
+phase_two_idle_max_ticks|二阶段待机时间上限
+approach_walk_speed|接近时步行速度
+approach_run_speed|接近时跑动速度
+minimum_melee_distance|近战最小间距
+approach_stop_distance|接近停止距离
+retreat_distance|后退距离
+retreat_ticks|后退时间
+retreat_speed|后退速度
+retreat_cooldown_ticks|后退冷却
+retreat_when_crowded|被贴近时后退
+nearby_player_range|近处玩家检测范围
+nearby_player_count_threshold|近处玩家人数阈值
+nearby_player_retreat_weight_multiplier|近处玩家后退权重倍率
+avoid_last_action_count|避免重复的近期动作数量
+shield_kick_after_ticks|持续举盾后的踢击起点
+shield_kick_weight_multiplier|盾牌踢击权重倍率
+shield_grab_weight_multiplier|盾牌投技权重倍率
+long_range_threshold|远距离阈值
+long_range_running_slash_weight_multiplier|远距离奔跑斩权重倍率
+waterfowl_retreat_max_range|水鸟乱舞后退距离上限
+high_threat_group_cooldown_ticks|高威胁技能组冷却
+recent_interrupt_window_ticks|近期中断统计窗口
+recent_interrupt_count_threshold|近期中断次数阈值
+recent_interrupt_weight_multiplier|近期中断权重倍率
+forced_recovery_ticks|强制后摇时间
+clear_owned_slash_hazards|清除自身的斩击区域
+preserve_player_rot_buildup|保留玩家腐败累积
+reset_stagger|重置架势
+opening_aeonia|转阶段释放猩红艾奥尼亚
+max_rot_zones|腐败区域上限
+max_queued_lines|排队台词上限
+subtitle_duration_ticks|字幕显示时间
+intro_warning_tick|开场警告台词时刻
+transition_call_tick|转阶段呼唤台词时刻
+transition_release_tick|转阶段释放台词时刻
+player_defeat_delay_ticks|击败玩家后的台词延迟
+defeated_tick|战败台词时刻
+hurt_cooldown_ticks|受伤声音冷却
+grunt_cooldown_ticks|低吼声音冷却
+weight|技能选择权重
+cooldown_ticks|技能冷却时间
+heal_profile|回血档位
+range_multiplier|范围倍率
+range|范围
+windup_ticks|前摇时间
+active_ticks|释放时间
+recovery_ticks|后摇时间
+damage|伤害
+flat|固定伤害加值
+attack_ratio|攻击力系数
+rot_buildup|腐败累积量
+hyper_armor|霸体
+blade_damage|刀刃伤害
+blade_rot_buildup|刀刃腐败累积量
+impale_damage|穿刺伤害
+throw_damage|抛掷伤害
+minimum_start_range|释放距离下限
+burst_count|突进次数
+burst_width|突进宽度
+burst_max_travel|突进距离上限
+burst_max_hits_per_target|每目标突进命中上限
+burst_damage|突进伤害
+finisher_damage|终结攻击伤害
+burst_rot_buildup|突进腐败累积量
+opening_damage|开场伤害
+opening_hits|开场命中次数
+explosion_damage|爆炸伤害
+explosion_rot_buildup|爆炸腐败累积量
+zone_duration_ticks|区域持续时间
+zone_interval_ticks|区域伤害间隔
+zone_damage|区域伤害
+zone_rot_buildup|区域腐败累积量
+dive_damage|下砸伤害
+dive_rot_buildup|下砸腐败累积量
+max_hits_per_target|每目标命中次数上限
+phantom_count|分身数量
+phantom_width|分身攻击宽度
+max_early_hits_per_target|每目标前段命中上限
+max_late_hits_per_target|每目标后段命中上限
+phantom_damage|分身伤害
+phantom_rot_buildup|分身腐败累积量
+base_health|基础生命值
+phase_two_health_ratio|二阶段触发生命比例
+meteor_health_ratio|首次星陨剩余生命比例|First meteor remaining health ratio
+wake_source_policy|唤醒来源规则
+dormant_damage_policy|待战时受伤规则
+join_on_player_hit|玩家命中时登记参战
+join_on_boss_hit|被Boss命中时登记参战
+player_first_hit_mode|玩家首次命中处理
+boss_first_hit_mode|Boss首次命中处理
+boss_hit_at_full_roster|参战名额已满时Boss命中处理
+overflow_player_policy|超出参战名额的玩家处理
+roster_slot_policy|退出后名额处理
+scaling_count_mode|多人缩放人数统计方式
+allow_join_during_disengage|允许脱战期间登记参战
+rejoin_after_death|死亡复活后允许重新参战
+rejoin_after_disconnect|断线重连后允许重新参战
+rejoin_after_boundary_exit|越界返回后允许重新参战
+rejoin_after_dimension_change|返回维度后允许重新参战
+disengage_radius|脱战半径
+disengage_grace_ticks|脱战宽限时间
+disengage_behavior|脱战时动作处理
+cooldown_resume_policy|恢复战斗时冷却处理
+restart_policy|服务器重启后战斗处理
+unload_policy|区块卸载处理
+peaceful_policy|和平难度处理
+overlap_policy|重叠战斗处理
+persist_dormant|保存待战状态
+source_policy|允许伤害Boss的来源
+forced_death_bypasses_policy|强制死亡绕过来源限制
+intro_offset|开场相对场心偏移
+phase_return_offset|转阶段返回位置偏移
+allow_wall_phasing|允许穿墙恢复位置
+wall_phase_max_ticks|穿墙恢复时间上限
+wall_phase_failure|穿墙失败后处理
+primary_target_policy|主要锁定目标规则
+attack_target_policy|攻击可命中目标规则
+max_segment_pursuit_distance|单段追击距离上限
+ranged_damage_distance|受伤判为远程的玩家距离
+boss_bar_audience|Boss血条显示对象
+stagger_hud_audience|架势界面显示对象
+item_use_punish_min_range|使用物品惩罚距离下限
+item_use_punish_max_range|使用物品惩罚距离上限
+item_use_weight_multiplier|使用物品惩罚权重倍率
+ranged_weight_multiplier|远程反击权重倍率
+crowd_weight_multiplier|人群攻击权重倍率
+miss_recovery_weight_multiplier|攻击落空后权重倍率
+blocked_branch_chance|被格挡后分支概率
+blocked_branch_mode|被格挡后分支选择
+guard_chain_threshold|连续格挡次数阈值
+guard_chain_scope|连续格挡统计范围
+guard_chain_recovery_ticks|连续格挡后的恢复时间
+minimum_skills|连续技能数量下限
+maximum_skills|连续技能数量上限
+minimum_link_ticks|连段间隔下限
+maximum_link_ticks|连段间隔上限
+minimum_rest_ticks|连段休息下限
+maximum_rest_ticks|连段休息上限
+chain_recovery_ticks|连段结束后恢复时间
+damage_gate|启用生命门槛保护
+damage_gate_mode|生命门槛伤害处理
+clear_owned_hazards|清除自身已生成的攻击区域
+return_impact_tick|返回落地冲击时刻
+return_physical_damage|返回落地物理伤害
+return_holy_damage|返回落地圣属性伤害
+accepts_stagger|允许架势累积
+repeat_mode|大荒星陨重复释放方式
+delay_ticks|延迟时间
+interval_ticks|间隔时间
+radius|半径
+burst_radius|爆发半径
+length|长度
+width|宽度
+height|高度
+telegraph_ticks|预警时间
+damage_interval_ticks|伤害间隔
+gravity_projectile_block|重力陨石方块外观
+clone_render_mode|分身渲染方式
+gravity_distortion_strength|重力扭曲强度
+gravity_distortion_radius|重力扭曲半径
+meteor_size|陨石显示大小
+gravity_size_multiplier|重力特效大小倍率
+gravity_strength_multiplier|重力特效强度倍率
+bloodflame_particles_per_tick|每tick血焰粒子数量
+bleed_burst_particles|出血爆发粒子数量
+holy_width_multiplier|圣光宽度倍率
+holy_fade_in_ticks|圣光淡入时间
+holy_fade_out_ticks|圣光淡出时间
+trajectory_radius_multiplier|剑轨迹粗细倍率
+trajectory_hilt_extension|剑柄方向延伸
+trajectory_arm_extension|手臂方向延伸
+visual_clones_enabled|启用分身外观
+max_visual_clones|分身外观上限
+max_logical_light_columns|逻辑光柱上限
+max_logical_projectiles|逻辑弹丸上限
+max_logical_columns|逻辑光柱数量上限
+audience|台词接收对象
+intro_roar_tick|开场怒吼时刻
+phase_two_opening_delay_ticks|二阶段开场台词延迟
+phase_one_first_health_ratio|一阶段首次台词生命比例
+phase_two_vow_tick|二阶段誓言台词时刻
+victory_roar_delay_ticks|胜利怒吼延迟
+experience|经验奖励
+gate_fragment_min|神门碎片数量下限
+gate_fragment_max|神门碎片数量上限
+remembrance_count|追忆数量
+affected_by_looting|受抢夺附魔影响
+simple_ranges|使用简单范围命中判定
+instant_kill_enabled|启用重复魅惑秒杀投技
+max_capture_distance|投技捕获水平距离上限
+max_capture_height|投技捕获高度差上限
+angle|扇形角度
+forward|向前偏移
+yaw|偏转角度
+weight_multiplier|选择权重倍率
+selection_distance_multiplier|选招距离倍率
+weight_during_cooldown|冷却期间权重
+approach_walk_distance|步行接近距离
+approach_run_distance|跑动接近距离
+approach_run_chance|跑动接近概率
+approach_guard_chance|接近时防御概率
+approach_walk_ticks|步行接近时间
+approach_run_ticks|跑动接近时间
+movement_multiplier|水平移动倍率
+vertical_movement_multiplier|垂直移动倍率
+turn_speed_multiplier|转向速度倍率
+warning_lead_ticks|地面预警提前时间
+target_lock_lead_ticks|落点锁定提前时间
+target_standoff|落点与目标的间距
+targeted_landing|启用目标落点适配
+hyper_armor_active|启用原霸体窗口
+atkPhys|物理通道点数|Physical channel points
+atkMag|魔法通道点数|Magic channel points
+atkFire|火焰通道点数|Fire channel points
+atkThun|雷电通道点数|Lightning channel points
+atkDark|圣属性通道点数（原Dark）|Holy channel points (source Dark)
+knockbackDist|原作击退距离参数|Source knockback distance
+hit0_Radius|第0判定体半径|Hitbox 0 radius
+hit1_Radius|第1判定体半径|Hitbox 1 radius
+hit2_Radius|第2判定体半径|Hitbox 2 radius
+hit3_Radius|第3判定体半径|Hitbox 3 radius
+simple_radius|简单判定半径
+simple_height|简单判定高度
+warning_length|地面预警长度
+life|弹丸寿命|Projectile lifetime
+dist|弹丸射程|Projectile range
+shootInterval|发射间隔|Shot interval
+gravityInRange|射程内重力|Gravity inside range
+gravityOutRange|射程外重力|Gravity outside range
+initVellocity|初始速度|Initial velocity
+accelInRange|射程内加速度|Acceleration inside range
+accelOutRange|射程外加速度|Acceleration outside range
+maxVellocity|速度上限|Maximum velocity
+minVellocity|速度下限|Minimum velocity
+accelTime|加速起始时间|Acceleration start time
+homingBeginDist|诱导开始距离|Homing start distance
+hitRadius|弹丸判定半径|Projectile hit radius
+hitRadiusMax|弹丸判定半径上限|Maximum projectile hit radius
+spreadTime|半径增长时间|Radius growth time
+numShoot|每次发射数量|Projectiles per shot
+shootAngle|发射角度|Shot angle
+shootAngleInterval|水平发射角度间隔|Horizontal shot angle interval
+shootAngleXInterval|垂直发射角度间隔|Vertical shot angle interval
+homingAngle|诱导转向角度|Homing angle
+intervalCreateWaitTime|子弹生成等待时间|Child projectile creation delay
+intervalCreateTimeMin|子弹生成间隔下限|Minimum child projectile interval
+intervalCreateTimeMax|子弹生成间隔上限|Maximum child projectile interval
+buildup_per_pulse|每次脉冲累积量
+pulse_interval_ticks|脉冲间隔
+max_step_up|可上台阶高度
+ground_search_depth|地面搜索深度
+max_ground_drop_per_tick|每tick贴地下降上限
+foot_clearance|脚底离地间距
+arc_degrees|弧形角度
+slash_damage|斩击伤害
+grab_damage|投技伤害
+first_eligible_ticks|首次可释放时间
+action_heal_cap|单次动作回血上限
+health_ratio|生命比例
+interrupt_weight|中断反应权重
+max_distance|该档距离上限
+multiplier|该档架势累积倍率
+segment_immunity_ticks|重复命中间隔|Repeat contact interval
+invulnerable|释放时无敌|Invulnerable while casting
+flight_height|离地高度|Flight height
+shootAngleXZ|水平发射角度|Horizontal launch angle

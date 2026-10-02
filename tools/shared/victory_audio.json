@@ -1,0 +1,12 @@
+{
+  "source": "Original deterministic synthesis",
+  "sampled_game_audio": false,
+  "runtime": "src/main/resources/assets/elder_bosses/sounds/ui/boss_victory_banner.ogg",
+  "sha256": "2b7a86ed099ac9358b05a647b959c13dc40785de758d98574bd90f5d261c0750",
+  "duration_seconds": 3.5,
+  "sample_rate": 44100,
+  "channels": 2,
+  "peak": 0.9168,
+  "playback_pitch": 0.78,
+  "playback_duration_seconds": 4.487
+}

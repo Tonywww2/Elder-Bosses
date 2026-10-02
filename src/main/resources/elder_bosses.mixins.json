@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "elder_bosses.refmap.json",
   "mixins": [],
-  "client": [],
+  "client": ["ConsortGrabCameraMixin"],
   "injectors": {
     "defaultRequire": 1
   }

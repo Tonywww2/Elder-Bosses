@@ -103,7 +103,7 @@
 
 推荐以 16 像素/格为基础密度，英雄部位局部提高到 32 像素/格。模型由一个实体渲染，米凯拉作为可显隐骨骼层挂在 `miquella_root`，避免阶段转换更换实体导致生命、仇恨或动画不同步。
 
-2026-09-12 模型制作更新：当前[约定之王工程](../../models/promised_consort/README.md)为 `sculpted_lion_v5`，125 根骨骼、538 个 cube、3044 个可导出面、512×512 原创像素图集。拉塔恩 384 个 cube，米凯拉与发幕 154 个 cube。保留相连块状手、面甲遮挡与 v4 的甲片凹凸；身体皮肤按三维结构绘制肌肉明暗和接触阴影，双刀以整把剑的坐标连续取色，移除 92 个内部刀刃端面，修复分段 UV 造成的重复横带。已认可的盔甲、衣料、毛发与米凯拉贴图像素保持不变。43 段动画保留旋转和时序，只缩放必要的位置关键帧；因而动画哈希会变，但不重新求解动作。Forge 使用 GeckoLib 4.8.4，NeoForge 使用 4.9.2；v5 不继承旧版实机验收。
+2026-09-12 模型制作更新：当前[约定之王工程](../../tools/consort/README.md)为 `sculpted_lion_v5`，125 根骨骼、538 个 cube、3044 个可导出面、512×512 原创像素图集。拉塔恩 384 个 cube，米凯拉与发幕 154 个 cube。保留相连块状手、面甲遮挡与 v4 的甲片凹凸；身体皮肤按三维结构绘制肌肉明暗和接触阴影，双刀以整把剑的坐标连续取色，移除 92 个内部刀刃端面，修复分段 UV 造成的重复横带。已认可的盔甲、衣料、毛发与米凯拉贴图像素保持不变。43 段动画保留旋转和时序，只缩放必要的位置关键帧；因而动画哈希会变，但不重新求解动作。Forge 使用 GeckoLib 4.8.4，NeoForge 使用 4.9.2；v5 不继承旧版实机验收。
 
 最低骨骼表：
 
@@ -236,7 +236,7 @@ Boss 条分两行：上行为生命与固定名称「约定之王」，下行为
 
 2026-09-17 六样音已在用户要求提高3 dB后获准实装，现已接入25个技能与4种远程变体，不含人声和音乐。本轮复用六种音色，补齐逐刀、双刀和按挥角变化的播放；不是新增25套独立资产。接入授权不等于实机听感验收。
 
-[本地试听页](../../models/promised_consort/audio/audition.html)可直接打开，不需要服务器、不自动播放。样音顺序为：
+[本地试听页](../../tools/consort/audio/audition.html)可直接打开，不需要服务器、不自动播放。样音顺序为：
 
 | 试听名称 | 对应动作 | 制作长度 |
 | --- | --- | --- |
@@ -247,7 +247,7 @@ Boss 条分两行：上行为生命与固定名称「约定之王」，下行为
 | Reflection | 反镜成功反馈，薄晶与短金属瞬态 | 0.62秒 |
 | Meteor Impact | 星陨落地的一次主冲击，地面与能量层合并 | 1.35秒 |
 
-底材来自Kenney的Impact Sounds与RPG Audio，两个下载包内LICENSE均已核实为CC0；包、所用文件、许可文本和加工参数见[音频来源清单](../../models/promised_consort/audio/manifest.json)。同一钢铁、石质、重力压力与泛音底层由FFmpeg分层加工，原始输入不修改；原包与解压目录被忽略规则排除，仍保留本机。WAV母版保留在制作目录，六个48 kHz单声道Ogg Vorbis样音已原样部署，两加载器处理产物哈希一致；本地含Minecraft提示音的混音不部署。
+底材来自Kenney的Impact Sounds与RPG Audio，两个下载包内LICENSE均已核实为CC0；包、所用文件、许可文本和加工参数见[音频来源清单](../../tools/consort/audio/manifest.json)。同一钢铁、石质、重力压力与泛音底层由FFmpeg分层加工，原始输入不修改；原包与解压目录被忽略规则排除，仍保留本机。WAV母版保留在制作目录，六个48 kHz单声道Ogg Vorbis样音已原样部署，两加载器处理产物哈希一致；本地含Minecraft提示音的混音不部署。
 
 试听页下方A/B是相同增益的10.6秒密集混音。刀击参考当前左起三连11/20/40 tick；圣光延迟0.15秒和提示音增益0.7仅为试听编排，不宣称等于游戏内参数。B使用本机已安装Minecraft的原版盾牌提示声作本地对照，相关混音仅放在被Git忽略的build目录，**不得作为自制音效再分发**。没有提取或使用艾尔登法环音频。
 
@@ -258,9 +258,9 @@ Boss 条分两行：上行为生命与固定名称「约定之王」，下行为
 使用本机已保留的原包和工具可复核；已部署版本禁止使用 `build_audio.js --build` 原地覆盖：
 
 ```powershell
-node models/promised_consort/scripts/build_audio.js --check
-node models/promised_consort/scripts/deploy_audio.js --check --processed
-node models/promised_consort/tests/run_attack_plan_check.js ActionSoundPlanCheck.java
+node tools/consort/scripts/build_audio.js --check
+node tools/consort/scripts/deploy_audio.js --check --processed
+node tools/consort/tests/run_attack_plan_check.js ActionSoundPlanCheck.java
 ```
 
 ### 9.3 逐刀与运行接入

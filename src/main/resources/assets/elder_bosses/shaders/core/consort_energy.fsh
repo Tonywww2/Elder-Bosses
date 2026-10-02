@@ -20,7 +20,11 @@ void main() {
     float angle = atan(centered.y, centered.x);
     float opacity = 0.0;
     float core = 0.0;
-    if (EffectMode == 0) {
+    if (EffectMode == 18) {
+        fragColor = vertexColor * ColorModulator;
+        if (fragColor.a < 0.004) discard;
+        return;
+    } else if (EffectMode == 0) {
         float lengthFade = smoothstep(0.0, 0.12, effectUv.y) * (1.0 - smoothstep(0.75, 1.0, effectUv.y));
         core = band(centered.x, 0.10);
         opacity = (band(centered.x, 0.95) * 0.55 + core * 0.4) * lengthFade;
@@ -127,8 +131,9 @@ void main() {
         core = band(radius - wave, 0.022);
         opacity = band(radius - wave, 0.16) * 0.34 + core * 0.45;
     }
-    vec3 tint = mix(vertexColor.rgb, EffectMode == 11 ? vec3(1.0, 0.48, 0.12) : vec3(1.0, 0.98, 0.90),
-        clamp(core * (EffectMode >= 6 ? 0.88 : 0.42), 0.0, 1.0));
+    bool purple = vertexColor.b > vertexColor.g * 1.3 && vertexColor.r > vertexColor.g * 1.15;
+    vec3 highlight = purple ? vec3(0.76, 0.20, 1.0) : (EffectMode == 11 ? vec3(1.0, 0.48, 0.12) : vec3(1.0, 0.98, 0.90));
+    vec3 tint = mix(vertexColor.rgb, highlight, clamp(core * (EffectMode >= 6 ? 0.88 : 0.42), 0.0, 1.0));
     float alpha = min(1.0, opacity * vertexColor.a * ColorModulator.a);
     if (alpha < 0.004) discard;
     fragColor = vec4(tint * ColorModulator.rgb, alpha);

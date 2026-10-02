@@ -6,9 +6,19 @@ import java.util.function.Supplier;
 public final class PromisedConsortConfigProvider {
     private static volatile Supplier<PromisedConsortCombatConfigSnapshot> combatSupplier;
     private static volatile Supplier<PromisedConsortSkillConfigSnapshot> skillSupplier;
+    private static volatile Supplier<PromisedConsortSourceConfigSnapshot> sourceSupplier;
     private static volatile Supplier<Boolean> debugActionBroadcastSupplier;
 
     private PromisedConsortConfigProvider() {
+    }
+
+    public static synchronized void installSource(Supplier<PromisedConsortSourceConfigSnapshot> supplier) {
+        if(sourceSupplier!=null) throw new IllegalStateException("Original skill config already installed");
+        sourceSupplier=Objects.requireNonNull(supplier);
+    }
+    public static PromisedConsortSourceConfigSnapshot sourceSnapshot() {
+        if(sourceSupplier==null) throw new IllegalStateException("Original skill config not installed");
+        return Objects.requireNonNull(sourceSupplier.get());
     }
 
     public static synchronized void installDebugActionBroadcast(Supplier<Boolean> supplier) {

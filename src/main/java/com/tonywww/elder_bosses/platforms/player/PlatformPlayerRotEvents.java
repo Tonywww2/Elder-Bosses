@@ -69,16 +69,14 @@ public final class PlatformPlayerRotEvents {
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
-        if (!entity.level().isClientSide() && !entity.isRemoved()) {
+        if (canProcess(entity)) {
             tick(entity);
         }
     }
     //?} else {
     /*@SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
-        if (event.getEntity() instanceof LivingEntity entity
-                && !entity.level().isClientSide()
-                && !entity.isRemoved()) {
+        if (event.getEntity() instanceof LivingEntity entity && canProcess(entity)) {
             tick(entity);
         }
     }
@@ -87,6 +85,9 @@ public final class PlatformPlayerRotEvents {
     @SubscribeEvent
     public static void onLivingHeal(LivingHealEvent event) {
         LivingEntity entity = event.getEntity();
+        if (!canProcess(entity)) {
+            return;
+        }
         event.setAmount(ScarletRotService.adjustHealing(
                 entity,
                 event.getAmount(),
@@ -96,7 +97,7 @@ public final class PlatformPlayerRotEvents {
 
     @SubscribeEvent
     public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !canProcess(player)) {
             return;
         }
 
@@ -125,7 +126,7 @@ public final class PlatformPlayerRotEvents {
         //?} else {
         /*if (event.getOriginal() instanceof ServerPlayer source
                 && event.getEntity() instanceof ServerPlayer target) {
-            PlatformPlayerRotData.get(target).copyFrom(PlatformPlayerRotData.get(source));
+            PlayerRotService.copy(source, target);
         }
         *///?}
     }
@@ -225,6 +226,10 @@ public final class PlatformPlayerRotEvents {
 
     private static void tick(LivingEntity entity) {
         ScarletRotService.tick(entity, capacity(entity));
+    }
+
+    private static boolean canProcess(LivingEntity entity) {
+        return !entity.isRemoved() && entity.isAlive() && !entity.level().isClientSide();
     }
 
     private static double capacity(LivingEntity entity) {

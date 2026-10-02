@@ -49,7 +49,11 @@ public final class PromisedConsortConfigNbt {
         }
         try {
             JsonObject serializedCombat = JsonParser.parseString(tag.getString(COMBAT_KEY)).getAsJsonObject();
+            var currentFields = Arrays.stream(PromisedConsortCombatConfigSnapshot.class.getRecordComponents())
+                    .map(java.lang.reflect.RecordComponent::getName).collect(java.util.stream.Collectors.toSet());
+            if (!serializedCombat.keySet().equals(currentFields)) return Optional.empty();
             JsonObject targeting = serializedCombat.getAsJsonObject("targeting");
+            if (targeting == null || !targeting.has("rangedDamageDistance")) return Optional.empty();
             if (targeting != null && !targeting.has("maxSegmentPursuitDistance")) {
                 targeting.addProperty("maxSegmentPursuitDistance", 3.0);
             }

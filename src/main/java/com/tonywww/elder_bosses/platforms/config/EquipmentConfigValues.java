@@ -20,11 +20,7 @@ public final class EquipmentConfigValues {
     private final Supplier<Double> circletLuck;
 
     EquipmentConfigValues(
-            //? if forge {
-            ForgeConfigSpec.Builder builder
-            //?} else {
-            /*ModConfigSpec.Builder builder
-            *///?}
+            LocalizedConfigBuilder builder
     ) {
         EquipmentSettings defaults = EquipmentSettings.DEFAULT;
         builder.comment("Equipment balance. Restart the game/server after editing; server values are sent to clients.")
@@ -70,11 +66,7 @@ public final class EquipmentConfigValues {
         private final Supplier<Integer> enchantability;
 
         private WeaponValues(
-                //? if forge {
-                ForgeConfigSpec.Builder builder,
-                //?} else {
-                /*ModConfigSpec.Builder builder,
-                *///?}
+                LocalizedConfigBuilder builder,
                 String name, EquipmentSettings.Weapon defaults) {
             builder.push(name);
             attackDamage = builder.comment("Total main-hand attack damage, including the player's base 1 damage. Decimals supported.")

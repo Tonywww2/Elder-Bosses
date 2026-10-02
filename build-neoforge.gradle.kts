@@ -23,6 +23,7 @@ modstitch {
 }
 
 repositories {
+    // Modstitch provides an exclusive Cursemaven repository for curse.maven.
     exclusiveContent {
         forRepository { maven("https://maven.theillusivec4.top/") }
         filter { includeGroup("top.theillusivec4.curios") }
@@ -41,12 +42,14 @@ repositories {
 }
 
 dependencies {
+    // Official Configured: native config screens, separate client mod jar.
+    runtimeOnly("curse.maven:configured-457570:7276577") { isTransitive = false }
     implementation("software.bernie.geckolib:geckolib-neoforge-1.21.1:4.9.2")
     implementation("maven.modrinth:attributefix:21.1.3")
     compileOnly("top.theillusivec4.curios:curios-neoforge:$curiosVersion:api")
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:$curiosVersion")
     compileOnly("mezz.jei:jei-$mcVersion-neoforge-api:$jeiVersion")
-    // JEI already contains its internal modules and the required config mod as a nested jar.
+    // The full JEI mod already contains its internal modules and API classes.
     runtimeOnly("mezz.jei:jei-$mcVersion-neoforge:$jeiVersion") { isTransitive = false }
     runtimeOnly("maven.modrinth:uy4Cnpcm:1sdJl7J1")
     runtimeOnly("maven.modrinth:aaRl8GiW:EE1FHDyD")

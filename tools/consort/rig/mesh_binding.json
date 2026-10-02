@@ -1,0 +1,4590 @@
+{
+  "status": "refined_old_mesh_on_fresh_source_rig",
+  "user_direction": "2026-09-30: \u5141\u8bb8\u4fee\u6539\u65e7\u6a21\u578b\uff0c\u4fee\u590d\u8170\u90e8\u65ad\u88c2\u4e0e\u53cc\u5200\u8131\u624b",
+  "input_geometry": "tools/consort/mesh/base.geo.json",
+  "input_sha256": "2ba7aa4f976936ed2584052de8f15b89b4b3339f1c8e52c29d05ba1f994601e2",
+  "geometry": "src/main/resources/assets/elder_bosses/geo/entity/promised_consort.geo.json",
+  "geometry_sha256": "c1057291f7e11e3d36d6e6c9ba2df9ad9849e6fc5b2ac45abcc79774e55f57b7",
+  "source_bones": 379,
+  "source_basis_bones": 758,
+  "geometry_only_bones": 933,
+  "geometry_bones": 1691,
+  "old_cubes": 620,
+  "new_cubes": 979,
+  "uv_faces_unchanged": false,
+  "texture_atlas_preserved": true,
+  "waist_UVs_cropped_to_segments": true,
+  "textures": [
+    {
+      "path": "src/main/resources/assets/elder_bosses/textures/entity/promised_consort/promised_consort.png",
+      "sha256": "8cfc003ff9d797774e90594c16f8575a82f0c3fb5da2443287613f15d4b75698"
+    },
+    {
+      "path": "src/main/resources/assets/elder_bosses/textures/entity/promised_consort/promised_consort_clone.png",
+      "sha256": "e53721ca9d50be6619e473a718e5a01d5496c34ad2805707b9b4f001eb7c2edd"
+    }
+  ],
+  "old_animation_migration": false,
+  "animated_source_rig_unchanged": true,
+  "frozen_source_bones": [],
+  "max_rest_limb_endpoint_error_model_units": 7.255052636610586e-15,
+  "policy": "Continuous torso rest-space fitting and geometry-only affine waist skin controls; full source Master/Root TRS and extractedMotion remain unchanged.",
+  "refinement": "rig/mesh_refinement.json",
+  "limitations": [
+    "Waist uses segmented affine skinning; rigid legacy relief and cloth remain project geometry.",
+    "Cape, halo and stylized mesh proportions are retained project art, not source FLVER reconstruction.",
+    "Binding-pose alignment does not establish live damage or movement integration."
+  ],
+  "initial_rigid_binding_seeds": [
+    {
+      "old_geometry_bone": "root",
+      "source_index": 0,
+      "source_name": "Master",
+      "mesh_bone": "mesh_old_root",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        0,
+        0,
+        0
+      ],
+      "new_bind_anchor": [
+        0.0,
+        0.03827667,
+        -2.88305044
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "control",
+      "source_index": 7,
+      "source_name": "Root",
+      "mesh_bone": "mesh_old_control",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        0,
+        0,
+        0
+      ],
+      "new_bind_anchor": [
+        0.0,
+        41.34684753,
+        -2.88305068
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "pelvis",
+      "source_index": 8,
+      "source_name": "Pelvis",
+      "mesh_bone": "mesh_old_pelvis",
+      "cube_count": 10,
+      "old_bind_anchor": [
+        0,
+        45.6,
+        0
+      ],
+      "new_bind_anchor": [
+        0.0,
+        41.34686661,
+        -2.88305068
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "body",
+      "source_index": 54,
+      "source_name": "Spine",
+      "mesh_bone": "mesh_old_body",
+      "cube_count": 13,
+      "old_bind_anchor": [
+        0,
+        51.6,
+        0
+      ],
+      "new_bind_anchor": [
+        0.0,
+        44.4853096,
+        -2.88369632
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "chest",
+      "source_index": 56,
+      "source_name": "Spine2",
+      "mesh_bone": "mesh_old_chest",
+      "cube_count": 59,
+      "old_bind_anchor": [
+        0,
+        67.2,
+        0
+      ],
+      "new_bind_anchor": [
+        2.25e-06,
+        52.12808521,
+        -2.87143949
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "neck",
+      "source_index": 314,
+      "source_name": "Neck",
+      "mesh_bone": "mesh_old_neck",
+      "cube_count": 1,
+      "old_bind_anchor": [
+        0,
+        80.4,
+        0
+      ],
+      "new_bind_anchor": [
+        2.95e-06,
+        62.83277801,
+        -4.96036877
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "head",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_head",
+      "cube_count": 37,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_main",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_main",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_01",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_01",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_02",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_02",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_03",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_03",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_04",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_04",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_05",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_05",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_06",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_06",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_07",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_07",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_08",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_08",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_09",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_09",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_10",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_10",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_11",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_11",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "mane_lock_12",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_mane_lock_12",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_lock_01",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_lock_01",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_lock_02",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_lock_02",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_lock_03",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_lock_03",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_lock_04",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_lock_04",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_lock_05",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_lock_05",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hair_lock_06",
+      "source_index": 315,
+      "source_name": "Head",
+      "mesh_bone": "mesh_old_hair_lock_06",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        0,
+        84,
+        -0.6
+      ],
+      "new_bind_anchor": [
+        0.00024397,
+        65.71073942,
+        -6.84676646
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "cape",
+      "source_index": 56,
+      "source_name": "Spine2",
+      "mesh_bone": "mesh_old_cape",
+      "cube_count": 14,
+      "old_bind_anchor": [
+        0,
+        67.2,
+        0
+      ],
+      "new_bind_anchor": [
+        2.25e-06,
+        52.12808521,
+        -2.87143949
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "cape_middle",
+      "source_index": 56,
+      "source_name": "Spine2",
+      "mesh_bone": "mesh_old_cape_middle",
+      "cube_count": 14,
+      "old_bind_anchor": [
+        0,
+        67.2,
+        0
+      ],
+      "new_bind_anchor": [
+        2.25e-06,
+        52.12808521,
+        -2.87143949
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "cape_end",
+      "source_index": 56,
+      "source_name": "Spine2",
+      "mesh_bone": "mesh_old_cape_end",
+      "cube_count": 14,
+      "old_bind_anchor": [
+        0,
+        67.2,
+        0
+      ],
+      "new_bind_anchor": [
+        2.25e-06,
+        52.12808521,
+        -2.87143949
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "upper_arm_r",
+      "source_index": 343,
+      "source_name": "R_UpperArm",
+      "mesh_bone": "mesh_old_upper_arm_r",
+      "cube_count": 21,
+      "old_bind_anchor": [
+        -19.44,
+        75,
+        0
+      ],
+      "new_bind_anchor": [
+        -9.33418902,
+        61.22420691,
+        -2.16584864
+      ],
+      "fixed_mesh_scale": 0.684450706662314,
+      "fixed_source_rotation_matrix": [
+        [
+          0.7374460681510115,
+          0.6739241162324451,
+          0.04471668736536343
+        ],
+        [
+          -0.6753974272264615,
+          0.7361527076949305,
+          0.04378933944807794
+        ],
+        [
+          -0.003407618595211513,
+          -0.06249381180357153,
+          0.9980395340976075
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "forearm_r",
+      "source_index": 345,
+      "source_name": "R_Forearm",
+      "mesh_bone": "mesh_old_forearm_r",
+      "cube_count": 10,
+      "old_bind_anchor": [
+        -24,
+        58.2,
+        -0.24
+      ],
+      "new_bind_anchor": [
+        -19.39247362,
+        54.86014135,
+        -1.60055718
+      ],
+      "fixed_mesh_scale": 0.9060159139536921,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hand_r",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_hand_r",
+      "cube_count": 5,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "sword_r",
+      "source_index": 364,
+      "source_name": "R_Sword",
+      "mesh_bone": "mesh_old_sword_r",
+      "cube_count": 58,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.9,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "blade_root_r",
+      "source_index": 364,
+      "source_name": "R_Sword",
+      "mesh_bone": "mesh_old_blade_root_r",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.9,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "blade_tip_r",
+      "source_index": 364,
+      "source_name": "R_Sword",
+      "mesh_bone": "mesh_old_blade_tip_r",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.9,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_0",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_0",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_0_tip",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_0_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_1",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_1",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_1_tip",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_1_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_2",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_2",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_2_tip",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_2_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_3",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_3",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_r_3_tip",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_finger_r_3_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "thumb_r",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_thumb_r",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "thumb_tip_r",
+      "source_index": 348,
+      "source_name": "R_Hand",
+      "mesh_bone": "mesh_old_thumb_tip_r",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        -26.91262735,
+        48.31228561,
+        -11.286912
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732588534562236,
+          0.44288310457838115,
+          -0.20315888004056465
+        ],
+        [
+          -0.4674568158805414,
+          0.6438308014512923,
+          -0.6057772068916196
+        ],
+        [
+          -0.1374885455125171,
+          0.6239683123217086,
+          0.7692596733686561
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "upper_arm_l",
+      "source_index": 60,
+      "source_name": "L_UpperArm",
+      "mesh_bone": "mesh_old_upper_arm_l",
+      "cube_count": 19,
+      "old_bind_anchor": [
+        19.44,
+        75,
+        0
+      ],
+      "new_bind_anchor": [
+        9.33418397,
+        61.22419662,
+        -2.16579239
+      ],
+      "fixed_mesh_scale": 0.6844504866973413,
+      "fixed_source_rotation_matrix": [
+        [
+          0.737445079088298,
+          -0.6739250859716156,
+          -0.04471838354194462
+        ],
+        [
+          0.6753985087721114,
+          0.7361515850391773,
+          0.04379153106155424
+        ],
+        [
+          0.0034072975893057814,
+          -0.06249657864601425,
+          0.9980393619395381
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "forearm_l",
+      "source_index": 62,
+      "source_name": "L_Forearm",
+      "mesh_bone": "mesh_old_forearm_l",
+      "cube_count": 10,
+      "old_bind_anchor": [
+        24,
+        58.2,
+        -0.24
+      ],
+      "new_bind_anchor": [
+        19.39247368,
+        54.86014903,
+        -1.60047027
+      ],
+      "fixed_mesh_scale": 0.9060165361939283,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "hand_l",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_hand_l",
+      "cube_count": 5,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "sword_l",
+      "source_index": 81,
+      "source_name": "L_Sword",
+      "mesh_bone": "mesh_old_sword_l",
+      "cube_count": 58,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.9,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "blade_root_l",
+      "source_index": 81,
+      "source_name": "L_Sword",
+      "mesh_bone": "mesh_old_blade_root_l",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.9,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "blade_tip_l",
+      "source_index": 81,
+      "source_name": "L_Sword",
+      "mesh_bone": "mesh_old_blade_tip_l",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.9,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_0",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_0",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_0_tip",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_0_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_1",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_1",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_1_tip",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_1_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_2",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_2",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_2_tip",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_2_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_3",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_3",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "finger_l_3_tip",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_finger_l_3_tip",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "thumb_l",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_thumb_l",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "thumb_tip_l",
+      "source_index": 65,
+      "source_name": "L_Hand",
+      "mesh_bone": "mesh_old_thumb_tip_l",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        26.4,
+        43.2,
+        -2.4
+      ],
+      "new_bind_anchor": [
+        26.91268459,
+        48.31229122,
+        -11.286793
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8732568519833848,
+          -0.4428872041316528,
+          0.20315854616657522
+        ],
+        [
+          0.46746008674884826,
+          0.6438307852301042,
+          -0.605774700104541
+        ],
+        [
+          0.13749013695835807,
+          0.6239654192392676,
+          0.7692617355833689
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_root",
+      "source_index": 84,
+      "source_name": "Miquella_Root",
+      "mesh_bone": "mesh_old_miquella_root",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        0,
+        78,
+        12.6
+      ],
+      "new_bind_anchor": [
+        -2.94e-06,
+        60.07882762,
+        9.75878541
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_body",
+      "source_index": 116,
+      "source_name": "Miquella_Spine2",
+      "mesh_bone": "mesh_old_miquella_body",
+      "cube_count": 4,
+      "old_bind_anchor": [
+        0,
+        83,
+        15.1
+      ],
+      "new_bind_anchor": [
+        9.29e-06,
+        68.38810475,
+        9.20923224
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_head",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_head",
+      "cube_count": 8,
+      "old_bind_anchor": [
+        7,
+        94,
+        9.9
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_hair",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_hair",
+      "cube_count": 9,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_01",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_01",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_01_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_01_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_01_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_01_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_02",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_02",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_02_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_02_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_02_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_02_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_03",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_03",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_03_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_03_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_03_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_03_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_04",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_04",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_04_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_04_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_04_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_04_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_05",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_05",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_05_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_05_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_05_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_05_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_06",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_06",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_06_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_06_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_06_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_06_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_07",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_07",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_07_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_07_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_07_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_07_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_08",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_08",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_08_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_08_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_08_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_08_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_09",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_09",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_09_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_09_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_09_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_09_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_10",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_10",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_10_middle",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_10_middle",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lock_10_end",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_miquella_lock_10_end",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.8,
+        100.8,
+        10.6
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "halo",
+      "source_index": 231,
+      "source_name": "Miquella_Head",
+      "mesh_bone": "mesh_old_halo",
+      "cube_count": 24,
+      "old_bind_anchor": [
+        7.2,
+        100,
+        14.3
+      ],
+      "new_bind_anchor": [
+        0.00035132,
+        77.24953955,
+        7.93904861
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_arm_r",
+      "source_index": 144,
+      "source_name": "Miquella_ChildArm_R_UpperArm",
+      "mesh_bone": "mesh_old_miquella_upper_arm_r",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        -2,
+        93.9,
+        11.1
+      ],
+      "new_bind_anchor": [
+        -4.57676203,
+        72.11059262,
+        7.07288279
+      ],
+      "fixed_mesh_scale": 1.4005196813009024,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9428522702704536,
+          -0.32580548704234535,
+          -0.06985972415456375
+        ],
+        [
+          0.32704204189577657,
+          0.8646737319018472,
+          0.38129101771687934
+        ],
+        [
+          -0.06382083733775916,
+          -0.3823481685218757,
+          0.9218116829100588
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_forearm_r",
+      "source_index": 146,
+      "source_name": "Miquella_ChildArm_R_Forearm",
+      "mesh_bone": "mesh_old_miquella_upper_forearm_r",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        -4.66371,
+        91.76981,
+        7.96454
+      ],
+      "new_bind_anchor": [
+        -6.81537378,
+        66.63653928,
+        4.40373147
+      ],
+      "fixed_mesh_scale": 1.0415658716170257,
+      "fixed_source_rotation_matrix": [
+        [
+          0.977361258644629,
+          0.038882286036086046,
+          0.20797388762340951
+        ],
+        [
+          -0.12186040286071889,
+          0.9070042416051471,
+          0.40310463644678557
+        ],
+        [
+          -0.17295956844074828,
+          -0.41932263657341445,
+          0.8912090182117269
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_hand_r",
+      "source_index": 149,
+      "source_name": "Miquella_ChildArm_R_Hand",
+      "mesh_bone": "mesh_old_miquella_upper_hand_r",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        -5.09211,
+        88.14041,
+        1.55534
+      ],
+      "new_bind_anchor": [
+        -8.78681547,
+        60.5712362,
+        0.11669698
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.977361258644629,
+          0.038882286036086046,
+          0.20797388762340951
+        ],
+        [
+          -0.12186040286071889,
+          0.9070042416051471,
+          0.40310463644678557
+        ],
+        [
+          -0.17295956844074828,
+          -0.41932263657341445,
+          0.8912090182117269
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_fingers_r",
+      "source_index": 149,
+      "source_name": "Miquella_ChildArm_R_Hand",
+      "mesh_bone": "mesh_old_miquella_upper_fingers_r",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -5.09211,
+        88.14041,
+        1.55534
+      ],
+      "new_bind_anchor": [
+        -8.78681547,
+        60.5712362,
+        0.11669698
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.977361258644629,
+          0.038882286036086046,
+          0.20797388762340951
+        ],
+        [
+          -0.12186040286071889,
+          0.9070042416051471,
+          0.40310463644678557
+        ],
+        [
+          -0.17295956844074828,
+          -0.41932263657341445,
+          0.8912090182117269
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_arm_l",
+      "source_index": 119,
+      "source_name": "Miquella_ChildArm_L_UpperArm",
+      "mesh_bone": "mesh_old_miquella_upper_arm_l",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        6.4,
+        93.9,
+        11.1
+      ],
+      "new_bind_anchor": [
+        4.5768,
+        72.11058944,
+        7.07289631
+      ],
+      "fixed_mesh_scale": 1.5253584882770455,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9861325674363445,
+          0.1504303337858518,
+          -0.07009475100519817
+        ],
+        [
+          -0.11045499062179172,
+          0.9101394148550795,
+          0.3993068251031946
+        ],
+        [
+          0.12386385464752588,
+          -0.3860271495689527,
+          0.9141338990036011
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_forearm_l",
+      "source_index": 121,
+      "source_name": "Miquella_ChildArm_L_Forearm",
+      "mesh_bone": "mesh_old_miquella_upper_forearm_l",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        8.02691,
+        91.53005,
+        7.96454
+      ],
+      "new_bind_anchor": [
+        6.8154403,
+        66.63654182,
+        4.40374793
+      ],
+      "fixed_mesh_scale": 1.083566682450517,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9320688001693834,
+          -0.11384106638702694,
+          -0.3439301722074854
+        ],
+        [
+          0.27035040383456854,
+          0.850518574426057,
+          0.45114167808212235
+        ],
+        [
+          0.24116055004351716,
+          -0.5134767435435924,
+          0.8235188054577601
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_hand_l",
+      "source_index": 124,
+      "source_name": "Miquella_ChildArm_L_Hand",
+      "mesh_bone": "mesh_old_miquella_upper_hand_l",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        7.25531,
+        88.59365,
+        1.55534
+      ],
+      "new_bind_anchor": [
+        8.78689873,
+        60.57125309,
+        0.11672135
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9320688001693834,
+          -0.11384106638702694,
+          -0.3439301722074854
+        ],
+        [
+          0.27035040383456854,
+          0.850518574426057,
+          0.45114167808212235
+        ],
+        [
+          0.24116055004351716,
+          -0.5134767435435924,
+          0.8235188054577601
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_upper_fingers_l",
+      "source_index": 124,
+      "source_name": "Miquella_ChildArm_L_Hand",
+      "mesh_bone": "mesh_old_miquella_upper_fingers_l",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        7.25531,
+        88.59365,
+        1.55534
+      ],
+      "new_bind_anchor": [
+        8.78689873,
+        60.57125309,
+        0.11672135
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9320688001693834,
+          -0.11384106638702694,
+          -0.3439301722074854
+        ],
+        [
+          0.27035040383456854,
+          0.850518574426057,
+          0.45114167808212235
+        ],
+        [
+          0.24116055004351716,
+          -0.5134767435435924,
+          0.8235188054577601
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_arm_r",
+      "source_index": 271,
+      "source_name": "Miquella_R_UpperArm",
+      "mesh_bone": "mesh_old_miquella_lower_arm_r",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        -2,
+        90.2,
+        13.1
+      ],
+      "new_bind_anchor": [
+        -4.63162171,
+        73.91428542,
+        9.68528368
+      ],
+      "fixed_mesh_scale": 1.5730777971570404,
+      "fixed_source_rotation_matrix": [
+        [
+          0.732446460776929,
+          0.2904603159740302,
+          0.615755622742998
+        ],
+        [
+          -0.3911762190224384,
+          0.9197787742744865,
+          0.031435204237170444
+        ],
+        [
+          -0.5572282725837411,
+          -0.2638935604337283,
+          0.7873098760938733
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_forearm_r",
+      "source_index": 273,
+      "source_name": "Miquella_R_Forearm",
+      "mesh_bone": "mesh_old_miquella_lower_forearm_r",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        -6.23187,
+        87.43045,
+        10.16758
+      ],
+      "new_bind_anchor": [
+        -13.61345024,
+        72.36614465,
+        10.91269461
+      ],
+      "fixed_mesh_scale": 1.166955676876495,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8675250923739871,
+          0.1448391321705522,
+          0.4758380395613474
+        ],
+        [
+          -0.1555281543817655,
+          0.9876836669172072,
+          -0.017087050640204056
+        ],
+        [
+          -0.47245233335872816,
+          -0.059182766892571854,
+          0.8793669272873712
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_hand_r",
+      "source_index": 276,
+      "source_name": "Miquella_R_Hand",
+      "mesh_bone": "mesh_old_miquella_lower_hand_r",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        -9.52227,
+        85.46905,
+        4.43638
+      ],
+      "new_bind_anchor": [
+        -20.45847967,
+        70.81693677,
+        6.9809998
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8675250923739871,
+          0.1448391321705522,
+          0.4758380395613474
+        ],
+        [
+          -0.1555281543817655,
+          0.9876836669172072,
+          -0.017087050640204056
+        ],
+        [
+          -0.47245233335872816,
+          -0.059182766892571854,
+          0.8793669272873712
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_fingers_r",
+      "source_index": 276,
+      "source_name": "Miquella_R_Hand",
+      "mesh_bone": "mesh_old_miquella_lower_fingers_r",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        -9.52227,
+        85.46905,
+        4.43638
+      ],
+      "new_bind_anchor": [
+        -20.45847967,
+        70.81693677,
+        6.9809998
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8675250923739871,
+          0.1448391321705522,
+          0.4758380395613474
+        ],
+        [
+          -0.1555281543817655,
+          0.9876836669172072,
+          -0.017087050640204056
+        ],
+        [
+          -0.47245233335872816,
+          -0.059182766892571854,
+          0.8793669272873712
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_arm_l",
+      "source_index": 188,
+      "source_name": "Miquella_L_UpperArm",
+      "mesh_bone": "mesh_old_miquella_lower_arm_l",
+      "cube_count": 2,
+      "old_bind_anchor": [
+        6.4,
+        90.2,
+        13.1
+      ],
+      "new_bind_anchor": [
+        4.63163972,
+        73.91429226,
+        9.68529486
+      ],
+      "fixed_mesh_scale": 1.9267584427580338,
+      "fixed_source_rotation_matrix": [
+        [
+          0.5224073157172104,
+          -0.44044163532624336,
+          -0.7301381803167694
+        ],
+        [
+          0.6056073473476441,
+          0.7944374631938595,
+          -0.045922302998161246
+        ],
+        [
+          0.6002752179822924,
+          -0.41818689953805277,
+          0.681754633083679
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_forearm_l",
+      "source_index": 190,
+      "source_name": "Miquella_L_Forearm",
+      "mesh_bone": "mesh_old_miquella_lower_forearm_l",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        8.73107,
+        87.2421,
+        10.16758
+      ],
+      "new_bind_anchor": [
+        13.61345953,
+        72.36616117,
+        10.91273182
+      ],
+      "fixed_mesh_scale": 1.165680129345159,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8672685431199745,
+          -0.14841484157663787,
+          -0.4752034395017974
+        ],
+        [
+          0.1581343993287555,
+          0.9872205691714705,
+          -0.019724592611549303
+        ],
+        [
+          0.47205803230481164,
+          -0.05803949176672197,
+          0.8796548365876072
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_hand_l",
+      "source_index": 193,
+      "source_name": "Miquella_L_Hand",
+      "mesh_bone": "mesh_old_miquella_lower_hand_l",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        12.02147,
+        85.2543,
+        4.43638
+      ],
+      "new_bind_anchor": [
+        20.45852604,
+        70.81694193,
+        6.98107092
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8672685431199745,
+          -0.14841484157663787,
+          -0.4752034395017974
+        ],
+        [
+          0.1581343993287555,
+          0.9872205691714705,
+          -0.019724592611549303
+        ],
+        [
+          0.47205803230481164,
+          -0.05803949176672197,
+          0.8796548365876072
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_lower_fingers_l",
+      "source_index": 193,
+      "source_name": "Miquella_L_Hand",
+      "mesh_bone": "mesh_old_miquella_lower_fingers_l",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        12.02147,
+        85.2543,
+        4.43638
+      ],
+      "new_bind_anchor": [
+        20.45852604,
+        70.81694193,
+        6.98107092
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          0.8672685431199745,
+          -0.14841484157663787,
+          -0.4752034395017974
+        ],
+        [
+          0.1581343993287555,
+          0.9872205691714705,
+          -0.019724592611549303
+        ],
+        [
+          0.47205803230481164,
+          -0.05803949176672197,
+          0.8796548365876072
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "miquella_robe",
+      "source_index": 85,
+      "source_name": "Miquella_Pelvis",
+      "mesh_bone": "mesh_old_miquella_robe",
+      "cube_count": 13,
+      "old_bind_anchor": [
+        0,
+        82,
+        15.3
+      ],
+      "new_bind_anchor": [
+        2.81e-06,
+        60.07883906,
+        9.75878255
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "tabard_front",
+      "source_index": 8,
+      "source_name": "Pelvis",
+      "mesh_bone": "mesh_old_tabard_front",
+      "cube_count": 12,
+      "old_bind_anchor": [
+        0,
+        46.8,
+        -7.2
+      ],
+      "new_bind_anchor": [
+        0.0,
+        41.34686661,
+        -2.88305068
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "tabard_back",
+      "source_index": 8,
+      "source_name": "Pelvis",
+      "mesh_bone": "mesh_old_tabard_back",
+      "cube_count": 0,
+      "old_bind_anchor": [
+        0,
+        46.8,
+        7.2
+      ],
+      "new_bind_anchor": [
+        0.0,
+        41.34686661,
+        -2.88305068
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "thigh_r",
+      "source_index": 40,
+      "source_name": "R_Thigh",
+      "mesh_bone": "mesh_old_thigh_r",
+      "cube_count": 6,
+      "old_bind_anchor": [
+        -10.2,
+        44.4,
+        0
+      ],
+      "new_bind_anchor": [
+        -5.59474945,
+        41.34687544,
+        -2.88304626
+      ],
+      "fixed_mesh_scale": 0.9420868498420347,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9979811475914109,
+          -0.06349635437066012,
+          -0.0013572154457599382
+        ],
+        [
+          0.06350613499947694,
+          0.9974184496520135,
+          0.03351726586704061
+        ],
+        [
+          -0.0007745124652755969,
+          -0.03353579096143741,
+          0.9994372170652001
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "shin_r",
+      "source_index": 41,
+      "source_name": "R_Calf",
+      "mesh_bone": "mesh_old_shin_r",
+      "cube_count": 11,
+      "old_bind_anchor": [
+        -11.4,
+        25.56,
+        -0.72
+      ],
+      "new_bind_anchor": [
+        -5.59505927,
+        23.54925011,
+        -2.96486752
+      ],
+      "fixed_mesh_scale": 1.0456992009540191,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9994719235984647,
+          -0.03234459963962119,
+          0.0031146127427697542
+        ],
+        [
+          0.03177924522119309,
+          0.9929763174742289,
+          0.11396540048844063
+        ],
+        [
+          -0.00677890194324152,
+          -0.11380623800772964,
+          0.9934798370772161
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "foot_r",
+      "source_index": 45,
+      "source_name": "R_Foot",
+      "mesh_bone": "mesh_old_foot_r",
+      "cube_count": 4,
+      "old_bind_anchor": [
+        -12,
+        7.08,
+        0
+      ],
+      "new_bind_anchor": [
+        -5.59475856,
+        4.4263242,
+        -0.01336887
+      ],
+      "fixed_mesh_scale": 0.6251870338983051,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "toe_r",
+      "source_index": 47,
+      "source_name": "R_Toe0",
+      "mesh_bone": "mesh_old_toe_r",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        -12,
+        7.08,
+        0
+      ],
+      "new_bind_anchor": [
+        -5.59475856,
+        4.4263242,
+        -0.01336887
+      ],
+      "fixed_mesh_scale": 0.6251870338983051,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "tasset_r",
+      "source_index": 8,
+      "source_name": "Pelvis",
+      "mesh_bone": "mesh_old_tasset_r",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        -13.2,
+        46.8,
+        0
+      ],
+      "new_bind_anchor": [
+        0.0,
+        41.34686661,
+        -2.88305068
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "thigh_l",
+      "source_index": 25,
+      "source_name": "L_Thigh",
+      "mesh_bone": "mesh_old_thigh_l",
+      "cube_count": 6,
+      "old_bind_anchor": [
+        10.2,
+        44.4,
+        0
+      ],
+      "new_bind_anchor": [
+        5.59475327,
+        41.3468654,
+        -2.88305915
+      ],
+      "fixed_mesh_scale": 0.9420862443068768,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9979810453265221,
+          0.06349795976477321,
+          0.001357304200753653
+        ],
+        [
+          -0.06350774247495092,
+          0.9974183477388153,
+          0.03351725286635249
+        ],
+        [
+          0.0007744770606387181,
+          -0.03353578237767746,
+          0.9994372173806615
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "shin_l",
+      "source_index": 26,
+      "source_name": "L_Calf",
+      "mesh_bone": "mesh_old_shin_l",
+      "cube_count": 11,
+      "old_bind_anchor": [
+        11.4,
+        25.56,
+        -0.72
+      ],
+      "new_bind_anchor": [
+        5.59503442,
+        23.54925151,
+        -2.96488055
+      ],
+      "fixed_mesh_scale": 1.0456993040551392,
+      "fixed_source_rotation_matrix": [
+        [
+          0.9994719523928823,
+          0.03234370834894022,
+          -0.003114628420636584
+        ],
+        [
+          -0.03177835817423488,
+          0.9929763498235972,
+          0.11396536597912181
+        ],
+        [
+          0.0067788149192895015,
+          -0.11380620906279161,
+          0.993479840986744
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "foot_l",
+      "source_index": 30,
+      "source_name": "L_Foot",
+      "mesh_bone": "mesh_old_foot_l",
+      "cube_count": 4,
+      "old_bind_anchor": [
+        12,
+        7.08,
+        0
+      ],
+      "new_bind_anchor": [
+        5.59475094,
+        4.42632362,
+        -0.01338222
+      ],
+      "fixed_mesh_scale": 0.625186951977401,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "toe_l",
+      "source_index": 32,
+      "source_name": "L_Toe0",
+      "mesh_bone": "mesh_old_toe_l",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        12,
+        7.08,
+        0
+      ],
+      "new_bind_anchor": [
+        5.59475094,
+        4.42632362,
+        -0.01338222
+      ],
+      "fixed_mesh_scale": 0.625186951977401,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    },
+    {
+      "old_geometry_bone": "tasset_l",
+      "source_index": 8,
+      "source_name": "Pelvis",
+      "mesh_bone": "mesh_old_tasset_l",
+      "cube_count": 3,
+      "old_bind_anchor": [
+        13.2,
+        46.8,
+        0
+      ],
+      "new_bind_anchor": [
+        0.0,
+        41.34686661,
+        -2.88305068
+      ],
+      "fixed_mesh_scale": 0.8,
+      "fixed_source_rotation_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "animation_curves_migrated": false
+    }
+  ],
+  "miquella_refinement": {
+    "version": 3,
+    "torso_sections": [
+      {
+        "lower": 85,
+        "upper": 114,
+        "driver": 114
+      },
+      {
+        "lower": 114,
+        "upper": 115,
+        "driver": 114
+      },
+      {
+        "lower": 115,
+        "upper": 116,
+        "driver": 115
+      }
+    ],
+    "torso_overlap": 1.0,
+    "flowing_locks": 34,
+    "flowing_pieces": 274,
+    "face_locks": 6,
+    "nape_locks": 7,
+    "head_parent": "src_231_Miquella_Head",
+    "hands": [
+      {
+        "mesh": "miquella_upper_hand_l",
+        "source_wrist": 124,
+        "animated_phalanges": 15
+      },
+      {
+        "mesh": "miquella_upper_hand_r",
+        "source_wrist": 149,
+        "animated_phalanges": 15
+      },
+      {
+        "mesh": "miquella_lower_hand_l",
+        "source_wrist": 193,
+        "animated_phalanges": 15
+      },
+      {
+        "mesh": "miquella_lower_hand_r",
+        "source_wrist": 276,
+        "animated_phalanges": 15
+      }
+    ],
+    "policy": "Continuous articulated abdomen, tapered hair veil, shaped jaw and palms; original rig, animations and atlas preserved",
+    "geometry_sha256": "c1057291f7e11e3d36d6e6c9ba2df9ad9849e6fc5b2ac45abcc79774e55f57b7"
+  }
+}

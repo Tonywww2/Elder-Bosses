@@ -61,11 +61,14 @@ public final class ClientConsortGravityDistortion {
             if (entity.isRemoved() || entity.distanceToSqr(view) > config.renderDistance() * config.renderDistance()) continue;
             double radius;
             double height;
+            float intensity=1;
             if (entity instanceof PromisedConsortEntity boss) {
-                if (!boss.isAlive() || ClientConsortBladeTrails.enchantment(boss.actionId().orElse(null), boss.miquellaVisible(),
+                boolean sourceGravity=ClientConsortSourceEffects.hasGravity(boss);
+                if (!boss.isAlive() || !sourceGravity && ClientConsortBladeTrails.enchantment(boss.actionId().orElse(null), boss.miquellaVisible(),
                         boss.combatState() == PromisedConsortCombatState.INTRO || boss.isOpeningLion())
                         != ClientConsortBladeTrails.Enchantment.GRAVITY) continue;
-                radius = 2.6;
+                radius = sourceGravity?boss.sourceConfig().number("visuals.gravity_distortion_radius"):2.6;
+                if(sourceGravity) intensity=(float)boss.sourceConfig().number("visuals.gravity_distortion_strength");
                 height = boss.getBbHeight() * 0.65;
             } else if (entity instanceof PromisedConsortGravityRockEntity) {
                 radius = 0.85 * PromisedConsortGravityRockEntity.SIZE_SCALE;
@@ -76,7 +79,7 @@ public final class ClientConsortGravityDistortion {
             Vec3 center = new Vec3(Mth.lerp(partialTick, entity.xo, entity.getX()),
                     Mth.lerp(partialTick, entity.yo, entity.getY()) + height, Mth.lerp(partialTick, entity.zo, entity.getZ()));
             if (center.distanceToSqr(view) < radius * radius) continue;
-            lenses.add(new Lens(center, radius));
+            if(intensity>0) lenses.add(new Lens(center, radius,intensity));
             if (lenses.size() >= 24) break;
         }
         if (lenses.isEmpty() || !captureScene(minecraft)) return;
@@ -84,17 +87,18 @@ public final class ClientConsortGravityDistortion {
         shader.setSampler("SceneColor", scene.getColorTextureId());
         shader.safeGetUniform("ScreenSize").set((float) scene.width, (float) scene.height);
         shader.safeGetUniform("EffectTime").set((float) (((gameTick + partialTick) % 24000) / 20));
-        shader.safeGetUniform("Intensity").set(1.0F);
         var buffers = minecraft.renderBuffers().bufferSource();
         poses.pushPose();
         poses.translate(-view.x, -view.y, -view.z);
         try {
             for (var lens : lenses) {
+                shader.safeGetUniform("Intensity").set(lens.intensity());
                 poses.pushPose();
                 poses.translate(lens.center().x, lens.center().y, lens.center().z);
                 poses.mulPose(camera.rotation());
                 billboard(buffers.getBuffer(DISTORTION), poses.last(), (float) lens.radius());
                 poses.popPose();
+                buffers.endBatch(DISTORTION);
             }
             buffers.endBatch(DISTORTION);
         } finally {
@@ -138,7 +142,7 @@ public final class ClientConsortGravityDistortion {
         PlatformVertexConsumer.addPositionColorUv(consumer, pose, -radius, radius, 0, 255, 255, 255, 255, 0, 1);
     }
 
-    private record Lens(Vec3 center, double radius) {
+    private record Lens(Vec3 center, double radius,float intensity) {
     }
 
     private static final class DistortionRenderType extends RenderType {

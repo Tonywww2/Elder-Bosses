@@ -32,3 +32,10 @@ mandatory = false
 versionRange = "[5.14.0,6)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.elder_bosses]]
+modId = "configured"
+mandatory = false
+versionRange = "[2.2.3,3)"
+ordering = "AFTER"
+side = "CLIENT"

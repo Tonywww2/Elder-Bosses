@@ -4,8 +4,6 @@
     "minecraft:magic",
     "minecraft:indirect_magic",
     "elder_bosses:promised_consort_magic",
-    "elder_bosses:promised_consort_holy",
-    "elder_bosses:promised_consort_incoming_magic_armor",
-    "elder_bosses:promised_consort_incoming_magic_bypass_armor"
+    "elder_bosses:promised_consort_holy"
   ]
 }

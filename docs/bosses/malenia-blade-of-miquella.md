@@ -7,7 +7,7 @@
 > Boss ID：`elder_bosses:malenia`  
 > 资料核对日期：2026-09-07
 
-2026-09-26 已补充[技能设计 R1](malenia-skill-design.md)及[视频观察记录](../references/malenia-skill-video-analysis.md)，重点是原作动作、力量感与视觉层次。本文保留既有玩法基线；部分早期描述（统一施法倍率、突刺提前锁向、幻影精确数量）不能当作当前代码或本轮录像已证实的事实。设计时组件基线见 R1 第 3 节；刀轨、幻影、花域、接触反馈及艾奥尼亚新默认停顿已完成[首批实装](malenia-skill-implementation.md)，实际完成项、配置变化和待验证项以实现记录为准。
+2026-09-26 已补充[技能设计 R1](malenia-skill-design.md)及[视频观察记录](../references/malenia-skill-video-analysis.md)，重点是原作动作、力量感与视觉层次。本文保留既有玩法基线；部分早期描述（统一施法倍率、突刺提前锁向、幻影精确数量）不能当作当前代码或本轮录像已证实的事实。设计时组件基线见 R1 第 3 节；刀轨、幻影、花域、接触反馈及艾奥尼亚新默认停顿已完成[首批实装](malenia-blade-of-miquella.md)，实际完成项、配置变化和待验证项以实现记录为准。
 
 ## 1. 设计目标
 

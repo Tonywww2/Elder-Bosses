@@ -1,0 +1,313 @@
+{
+  "revision": "native_pixel_items_v2",
+  "generator": "built-in image_gen",
+  "source": "tools/items/source_atlas.png",
+  "source_sha256": "53e4bdf1ebe15074cec69c69501e4042a5e190e0e90dbdc64c5ad3b278217810",
+  "prompt": "tools/items/source_prompt.txt",
+  "source_size": [
+    1448,
+    1086
+  ],
+  "processing": "Redrawn pixel source; whole connected source silhouette selected by cell center to avoid cross-cell contamination; nearest-neighbor fit; one-texel border; 12/18-color palettes; binary alpha and one-texel silhouette cleanup",
+  "scope": "Six materials at native 16x16; five weapons/tools/equipment at native 32x32. Twelve block items retain their custom 3D block models.",
+  "outputs": [
+    {
+      "id": "golden_needle",
+      "label": "金针",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/golden_needle.png",
+      "sha256": "20b16c49ef62236a1d675c5e57faf6c522048d678dc5735992c2bc6c6322b557",
+      "model": "src/main/resources/assets/elder_bosses/models/item/golden_needle.json",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bounds": [
+        38,
+        57,
+        369,
+        383
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "category": "equipment",
+      "palette_limit": 18,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "rot_goddess_remembrance",
+      "label": "腐败女神的追忆",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/rot_goddess_remembrance.png",
+      "sha256": "1a14de72a57198c61827c91663becfb413c18be52d83c29f4d1e52d24bad977b",
+      "model": "src/main/resources/assets/elder_bosses/models/item/rot_goddess_remembrance.json",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bounds": [
+        419,
+        89,
+        701,
+        374
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "category": "material",
+      "palette_limit": 12,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "consecrated_prosthetic_blade",
+      "label": "奉献义手刀",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/consecrated_prosthetic_blade.png",
+      "sha256": "3d6fbd377bebb51e78eae7a1d2be52d1bd4fdc92e9d2a74638e5089650dbbffd",
+      "model": "src/main/resources/assets/elder_bosses/models/item/consecrated_prosthetic_blade.json",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bounds": [
+        744,
+        33,
+        1099,
+        382
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "category": "equipment",
+      "palette_limit": 18,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "unalloyed_winged_helm",
+      "label": "无垢金翼盔",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/unalloyed_winged_helm.png",
+      "sha256": "43f2c731ec90be5725486b9227b25a0392f4616c9993a29dc6ace2a4e6f12b64",
+      "model": "src/main/resources/assets/elder_bosses/models/item/unalloyed_winged_helm.json",
+      "source_cell": [
+        3,
+        0
+      ],
+      "source_bounds": [
+        1124,
+        76,
+        1418,
+        386
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "category": "equipment",
+      "palette_limit": 18,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "scarlet_aeonia_core",
+      "label": "猩红花芯",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/scarlet_aeonia_core.png",
+      "sha256": "385c634c61f7051f75c591e2e52d163e60fb7ec7351166dc6df0ada619801cf4",
+      "model": "src/main/resources/assets/elder_bosses/models/item/scarlet_aeonia_core.json",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bounds": [
+        30,
+        450,
+        341,
+        724
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "category": "material",
+      "palette_limit": 12,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "haligtree_root_fragment",
+      "label": "圣树根片",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/haligtree_root_fragment.png",
+      "sha256": "e4cf72e5661efb8da173308eedff5524b75aad80a0f1d2882e748b89c1ef4657",
+      "model": "src/main/resources/assets/elder_bosses/models/item/haligtree_root_fragment.json",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bounds": [
+        410,
+        414,
+        701,
+        745
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "category": "material",
+      "palette_limit": 12,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "god_and_lord_remembrance",
+      "label": "神与王的追忆",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/god_and_lord_remembrance.png",
+      "sha256": "df4350c297d52f7d014b9313579f14ff03732674a8c3cccb56c93e2b25cae1a5",
+      "model": "src/main/resources/assets/elder_bosses/models/item/god_and_lord_remembrance.json",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bounds": [
+        746,
+        408,
+        1066,
+        737
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "category": "material",
+      "palette_limit": 12,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "young_lion_greatsword",
+      "label": "年轻狮子大剑",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/young_lion_greatsword.png",
+      "sha256": "a082f8eb8bb058a3b1e9258bdcc4c313b7b0ea84325189c95c32a6b0664e9528",
+      "model": "src/main/resources/assets/elder_bosses/models/item/young_lion_greatsword.json",
+      "source_cell": [
+        3,
+        1
+      ],
+      "source_bounds": [
+        1111,
+        394,
+        1437,
+        737
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "category": "equipment",
+      "palette_limit": 18,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "circlet_of_fading_light",
+      "label": "渐隐光冠",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/circlet_of_fading_light.png",
+      "sha256": "58179c6e2d8a04a159217312bb38440133474d3d81f53e578307f4248fc30d33",
+      "model": "src/main/resources/assets/elder_bosses/models/item/circlet_of_fading_light.json",
+      "source_cell": [
+        0,
+        2
+      ],
+      "source_bounds": [
+        24,
+        796,
+        350,
+        1062
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "category": "equipment",
+      "palette_limit": 18,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "gate_fragment",
+      "label": "神门残片",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/gate_fragment.png",
+      "sha256": "919b7a638b83d2b2168c5fae6c41a47bbf89b7569131bfcdf7146c9d298860dc",
+      "model": "src/main/resources/assets/elder_bosses/models/item/gate_fragment.json",
+      "source_cell": [
+        1,
+        2
+      ],
+      "source_bounds": [
+        429,
+        765,
+        680,
+        1056
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "category": "material",
+      "palette_limit": 12,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    },
+    {
+      "id": "rune_fragment",
+      "label": "卢恩残片",
+      "texture": "src/main/resources/assets/elder_bosses/textures/item/rune_fragment.png",
+      "sha256": "8d7abd98a40a1c280ae87cfe40fdbac3a223846e486c1b5bd7babe56375304b6",
+      "model": "src/main/resources/assets/elder_bosses/models/item/rune_fragment.json",
+      "source_cell": [
+        2,
+        2
+      ],
+      "source_bounds": [
+        826,
+        803,
+        1011,
+        1058
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "category": "material",
+      "palette_limit": 12,
+      "pixel_cleanup": {
+        "isolated_texels_removed": 0,
+        "one_texel_bridges": 0
+      }
+    }
+  ],
+  "review": "Generated source atlas inspected; in-game inventory and held-item appearance pending."
+}

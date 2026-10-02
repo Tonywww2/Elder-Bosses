@@ -1,0 +1,6022 @@
+{
+  "source": "docs/assets/reference/elden_ring/promised_consort_radahn/expanded/c5220.chrbnd/c5220.flver",
+  "source_sha256": "6547F40E23C55AC6D8C53C8755FCAE8DA9B12FCCE66588355E70EE3B9107B02B",
+  "anchors": [
+    {
+      "dummy_index": 0,
+      "reference_id": 210,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        -4.470348358154297e-08,
+        1.2302614450454712,
+        -0.012405455112457275
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956868410110474
+      ],
+      "source_upward": [
+        1.4901161193847656e-07,
+        0.013047099113464355,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 0
+    },
+    {
+      "dummy_index": 1,
+      "reference_id": 211,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.00041846930980682373,
+        0.0
+      ],
+      "source_forward": [
+        8.940696716308594e-08,
+        0.0,
+        -0.09578236937522888
+      ],
+      "source_upward": [
+        0.0,
+        0.02768661081790924,
+        1.4901161193847656e-08
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 1
+    },
+    {
+      "dummy_index": 2,
+      "reference_id": 228,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.00041846930980682373,
+        0.0
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        0.0,
+        -0.10265545547008514
+      ],
+      "source_upward": [
+        0.0,
+        0.029673337936401367,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 2
+    },
+    {
+      "dummy_index": 3,
+      "reference_id": 230,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        4.470348358154297e-08,
+        1.4901161193847656e-08,
+        -2.4000227451324463
+      ],
+      "source_forward": [
+        -7.450580596923828e-08,
+        -1.4901161193847656e-08,
+        0.08984637260437012
+      ],
+      "source_upward": [
+        0.0,
+        0.020847290754318237,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 3
+    },
+    {
+      "dummy_index": 4,
+      "reference_id": 231,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        2.980232238769531e-08,
+        1.4901161193847656e-08,
+        -2.5999484062194824
+      ],
+      "source_forward": [
+        -7.450580596923828e-08,
+        -2.980232238769531e-08,
+        0.08984613418579102
+      ],
+      "source_upward": [
+        0.0,
+        0.020847290754318237,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 4
+    },
+    {
+      "dummy_index": 5,
+      "reference_id": 235,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_forward": [
+        4.470348358154297e-08,
+        0.0,
+        -0.07178643345832825
+      ],
+      "source_upward": [
+        0.0,
+        0.01665717363357544,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 5
+    },
+    {
+      "dummy_index": 6,
+      "reference_id": 236,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        6.669759750366211e-05,
+        0.00037682056427001953
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        0.0,
+        -0.0985390841960907
+      ],
+      "source_upward": [
+        0.0,
+        0.02286428213119507,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 6
+    },
+    {
+      "dummy_index": 7,
+      "reference_id": 242,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        -1.4901161193847656e-08,
+        -1.0500000715255737
+      ],
+      "source_forward": [
+        0.00011423230171203613,
+        0.0,
+        0.09217870235443115
+      ],
+      "source_upward": [
+        0.0,
+        0.04882359504699707,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 7
+    },
+    {
+      "dummy_index": 8,
+      "reference_id": 243,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        -1.4901161193847656e-08,
+        1.0499999523162842
+      ],
+      "source_forward": [
+        0.0001109689474105835,
+        0.0,
+        -0.09664130210876465
+      ],
+      "source_upward": [
+        0.0,
+        0.0489363893866539,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 8
+    },
+    {
+      "dummy_index": 9,
+      "reference_id": 244,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        1.0499999523162842,
+        -1.4901161193847656e-08,
+        0.0
+      ],
+      "source_forward": [
+        -0.1174309253692627,
+        0.0,
+        0.0003907233476638794
+      ],
+      "source_upward": [
+        0.0,
+        0.043784454464912415,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 9
+    },
+    {
+      "dummy_index": 10,
+      "reference_id": 245,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        -1.0499999523162842,
+        -1.4901161193847656e-08,
+        0.0
+      ],
+      "source_forward": [
+        0.11116582155227661,
+        0.0,
+        0.0003907233476638794
+      ],
+      "source_upward": [
+        0.0,
+        0.043784454464912415,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 10
+    },
+    {
+      "dummy_index": 11,
+      "reference_id": 246,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        -1.4901161193847656e-08,
+        -1.0500000715255737
+      ],
+      "source_forward": [
+        0.00011423230171203613,
+        0.0,
+        0.05623269081115723
+      ],
+      "source_upward": [
+        0.0,
+        0.03013092279434204,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 11
+    },
+    {
+      "dummy_index": 12,
+      "reference_id": 247,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        -1.4901161193847656e-08,
+        1.0499999523162842
+      ],
+      "source_forward": [
+        0.0001109689474105835,
+        0.0,
+        -0.06759053468704224
+      ],
+      "source_upward": [
+        0.0,
+        0.029268473386764526,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 12
+    },
+    {
+      "dummy_index": 13,
+      "reference_id": 248,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        1.0499999523162842,
+        -1.4901161193847656e-08,
+        0.0
+      ],
+      "source_forward": [
+        -0.08908355236053467,
+        0.0,
+        0.0003907233476638794
+      ],
+      "source_upward": [
+        0.0,
+        0.029779911041259766,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 13
+    },
+    {
+      "dummy_index": 14,
+      "reference_id": 249,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        -1.0499999523162842,
+        -1.4901161193847656e-08,
+        0.0
+      ],
+      "source_forward": [
+        0.08944851160049438,
+        0.0,
+        0.0003907233476638794
+      ],
+      "source_upward": [
+        0.0,
+        0.029779911041259766,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 14
+    },
+    {
+      "dummy_index": 15,
+      "reference_id": 260,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.0,
+        -1.4901161193847656e-08
+      ],
+      "source_forward": [
+        1.4901161193847656e-08,
+        0.0,
+        -0.05863875150680542
+      ],
+      "source_upward": [
+        0.0,
+        0.013606786727905273,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 15
+    },
+    {
+      "dummy_index": 16,
+      "reference_id": 510,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        8.940696716308594e-08,
+        -0.0018056631088256836,
+        -0.5072858929634094
+      ],
+      "source_forward": [
+        -4.470348358154297e-08,
+        0.0,
+        0.07222568988800049
+      ],
+      "source_upward": [
+        0.0,
+        0.02084730565547943,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 16
+    },
+    {
+      "dummy_index": 17,
+      "reference_id": 511,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        5.960464477539063e-08,
+        -0.0018056631088256836,
+        0.5059128403663635
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        0.0,
+        -0.07222568988800049
+      ],
+      "source_upward": [
+        0.0,
+        0.02084730565547943,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 17
+    },
+    {
+      "dummy_index": 18,
+      "reference_id": 512,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.3763396739959717,
+        -0.0018056631088256836,
+        4.470348358154297e-08
+      ],
+      "source_forward": [
+        -0.07222568988800049,
+        0.0,
+        -5.960464477539063e-08
+      ],
+      "source_upward": [
+        0.0,
+        0.02084730565547943,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 18
+    },
+    {
+      "dummy_index": 19,
+      "reference_id": 513,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        -0.3761752247810364,
+        -0.0018056631088256836,
+        1.4901161193847656e-08
+      ],
+      "source_forward": [
+        0.07222568988800049,
+        0.0,
+        4.470348358154297e-08
+      ],
+      "source_upward": [
+        0.0,
+        0.02084730565547943,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 19
+    },
+    {
+      "dummy_index": 20,
+      "reference_id": 179,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.00041846930980682373,
+        -1.1896194219589233
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        0.0,
+        -0.06976377964019775
+      ],
+      "source_upward": [
+        0.0,
+        0.020136669278144836,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 20
+    },
+    {
+      "dummy_index": 21,
+      "reference_id": 180,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.00041846930980682373,
+        -0.5611490607261658
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        0.0,
+        -0.06976377964019775
+      ],
+      "source_upward": [
+        0.0,
+        0.020136669278144836,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 21
+    },
+    {
+      "dummy_index": 22,
+      "reference_id": 181,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.4275754690170288,
+        0.00041846930980682373,
+        2.980232238769531e-08
+      ],
+      "source_forward": [
+        0.06976372003555298,
+        0.0,
+        5.960464477539063e-08
+      ],
+      "source_upward": [
+        0.0,
+        0.020136669278144836,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 22
+    },
+    {
+      "dummy_index": 23,
+      "reference_id": 182,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        -0.4275454580783844,
+        0.00041846930980682373,
+        7.450580596923828e-08
+      ],
+      "source_forward": [
+        -0.06976374983787537,
+        0.0,
+        -5.960464477539063e-08
+      ],
+      "source_upward": [
+        0.0,
+        0.020136669278144836,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 23
+    },
+    {
+      "dummy_index": 24,
+      "reference_id": 183,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        8.940696716308594e-08,
+        0.00041846930980682373,
+        0.561302125453949
+      ],
+      "source_forward": [
+        -4.470348358154297e-08,
+        0.0,
+        0.06976377964019775
+      ],
+      "source_upward": [
+        0.0,
+        0.020136669278144836,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 24
+    },
+    {
+      "dummy_index": 25,
+      "reference_id": 184,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        -0.07913973927497864,
+        0.0
+      ],
+      "source_upward": [
+        0.0,
+        0.0,
+        -0.019466444849967957
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 25
+    },
+    {
+      "dummy_index": 26,
+      "reference_id": 900,
+      "source_attach_name": null,
+      "target_bone": null,
+      "bind_point_source_world": [
+        0.0,
+        0.00041846930980682373,
+        -1.4901161193847656e-08
+      ],
+      "source_forward": [
+        5.960464477539063e-08,
+        0.0,
+        -0.08958370983600616
+      ],
+      "source_upward": [
+        0.0,
+        0.022238969802856445,
+        0.0
+      ],
+      "runtime_method": "actor_root_bind_point",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 26
+    },
+    {
+      "dummy_index": 27,
+      "reference_id": 1,
+      "source_attach_name": "R_Hand",
+      "target_bone": "src_348_R_Hand",
+      "bind_point_source_world": [
+        -1.7331295013427734,
+        2.961657762527466,
+        -0.7866457104682922
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956838607788086
+      ],
+      "source_upward": [
+        -3.5762786865234375e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 27
+    },
+    {
+      "dummy_index": 28,
+      "reference_id": 2,
+      "source_attach_name": "L_Hand",
+      "target_bone": "src_065_L_Hand",
+      "bind_point_source_world": [
+        1.7331290245056152,
+        2.961655855178833,
+        -0.7866458296775818
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956838607788086
+      ],
+      "source_upward": [
+        3.5762786865234375e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 28
+    },
+    {
+      "dummy_index": 29,
+      "reference_id": 3,
+      "source_attach_name": "R_Foot",
+      "target_bone": "src_045_R_Foot",
+      "bind_point_source_world": [
+        -0.3464219570159912,
+        0.10768754035234451,
+        -0.19954301416873932
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295685350894928
+      ],
+      "source_upward": [
+        6.854534149169922e-07,
+        0.013047188520431519,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 29
+    },
+    {
+      "dummy_index": 30,
+      "reference_id": 4,
+      "source_attach_name": "L_Foot",
+      "target_bone": "src_030_L_Foot",
+      "bind_point_source_world": [
+        0.346422016620636,
+        0.10768742114305496,
+        -0.1995430439710617
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295688331127167
+      ],
+      "source_upward": [
+        -6.854534149169922e-07,
+        0.013047188520431519,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 30
+    },
+    {
+      "dummy_index": 31,
+      "reference_id": 5,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        4.728396874043028e-08,
+        3.527787685394287,
+        0.13938045501708984
+      ],
+      "source_forward": [
+        7.35908400884e-09,
+        0.0,
+        0.032956868410110474
+      ],
+      "source_upward": [
+        -1.435345637901264e-07,
+        0.013047218322753906,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 31
+    },
+    {
+      "dummy_index": 32,
+      "reference_id": 6,
+      "source_attach_name": "SpineArmor1",
+      "target_bone": "src_367_SpineArmor1",
+      "bind_point_source_world": [
+        -6.072343694540905e-08,
+        3.3823139667510986,
+        -0.7492043972015381
+      ],
+      "source_forward": [
+        -1.9952040020143613e-11,
+        0.0,
+        -0.04284149408340454
+      ],
+      "source_upward": [
+        1.865841170456406e-07,
+        0.021286725997924805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 32
+    },
+    {
+      "dummy_index": 33,
+      "reference_id": 7,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -7.248798539194468e-08,
+        4.2244062423706055,
+        -0.4940483570098877
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.04522240161895752
+      ],
+      "source_upward": [
+        2.2269028931987123e-07,
+        0.023981571197509766,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 33
+    },
+    {
+      "dummy_index": 34,
+      "reference_id": 8,
+      "source_attach_name": "SpineArmor1",
+      "target_bone": "src_367_SpineArmor1",
+      "bind_point_source_world": [
+        -4.660942565237747e-08,
+        3.428910493850708,
+        -1.2554672956466675
+      ],
+      "source_forward": [
+        -1.5344170378739364e-11,
+        0.0,
+        -0.032956838607788086
+      ],
+      "source_upward": [
+        1.4353453536841698e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 34
+    },
+    {
+      "dummy_index": 35,
+      "reference_id": 90,
+      "source_attach_name": "Neck",
+      "target_bone": "src_314_Neck",
+      "bind_point_source_world": [
+        8.07208522246583e-08,
+        3.932699680328369,
+        -0.33692359924316406
+      ],
+      "source_forward": [
+        -5.684341886080802e-14,
+        0.0,
+        -0.02623799443244934
+      ],
+      "source_upward": [
+        -1.5308827983062656e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 35
+    },
+    {
+      "dummy_index": 36,
+      "reference_id": 91,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        -2.988867109365856e-08,
+        3.609821319580078,
+        -0.2869064509868622
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.021785706281661987
+      ],
+      "source_upward": [
+        9.488162788784393e-08,
+        0.00862431526184082,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 36
+    },
+    {
+      "dummy_index": 37,
+      "reference_id": 201,
+      "source_attach_name": "SpineArmor1",
+      "target_bone": "src_367_SpineArmor1",
+      "bind_point_source_world": [
+        -4.637357520209662e-08,
+        3.3823139667510986,
+        -0.7492043375968933
+      ],
+      "source_forward": [
+        -1.5344170378739364e-11,
+        0.0,
+        -0.032956838607788086
+      ],
+      "source_upward": [
+        1.4353452115756227e-07,
+        0.01737380027770996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 37
+    },
+    {
+      "dummy_index": 38,
+      "reference_id": 204,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        4.73556589497548e-08,
+        3.255086660385132,
+        0.13578040897846222
+      ],
+      "source_forward": [
+        7.36675431767253e-09,
+        0.0,
+        0.03295688331127167
+      ],
+      "source_upward": [
+        -1.435345637901264e-07,
+        0.013047218322753906,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 38
+    },
+    {
+      "dummy_index": 39,
+      "reference_id": 205,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        -4.125475783212096e-08,
+        2.9933865070343018,
+        -0.5599154233932495
+      ],
+      "source_forward": [
+        -1.4691323713122983e-08,
+        0.0,
+        -0.03295677900314331
+      ],
+      "source_upward": [
+        1.435345495792717e-07,
+        0.016895294189453125,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 39
+    },
+    {
+      "dummy_index": 40,
+      "reference_id": 220,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        -4.610631521018149e-08,
+        3.609821319580078,
+        -0.2869064509868622
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956868410110474
+      ],
+      "source_upward": [
+        1.435345637901264e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 40
+    },
+    {
+      "dummy_index": 41,
+      "reference_id": 250,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -6.221264214900657e-08,
+        4.2244062423706055,
+        -0.4940483570098877
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.037844181060791016
+      ],
+      "source_upward": [
+        1.7964066501008347e-07,
+        0.02006816864013672,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 41
+    },
+    {
+      "dummy_index": 42,
+      "reference_id": 251,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -5.0636842274798255e-08,
+        4.2244062423706055,
+        -0.4940483570098877
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03052830696105957
+      ],
+      "source_upward": [
+        1.4491324407117645e-07,
+        0.016189098358154297,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 42
+    },
+    {
+      "dummy_index": 43,
+      "reference_id": 255,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -5.2393829719221685e-08,
+        4.224435329437256,
+        -0.4940483570098877
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.024172186851501465
+      ],
+      "source_upward": [
+        1.0960184226860292e-07,
+        0.012818336486816406,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 43
+    },
+    {
+      "dummy_index": 44,
+      "reference_id": 199,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        0.05259653180837631,
+        4.218574047088623,
+        -0.5960811376571655
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026238083839416504
+      ],
+      "source_upward": [
+        -4.3213367462158203e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 44
+    },
+    {
+      "dummy_index": 45,
+      "reference_id": 199,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -0.052881330251693726,
+        4.218574047088623,
+        -0.5960811376571655
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026238083839416504
+      ],
+      "source_upward": [
+        -4.246830940246582e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 45
+    },
+    {
+      "dummy_index": 46,
+      "reference_id": 240,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        5.0550713837083094e-08,
+        2.965566396713257,
+        -0.5588233470916748
+      ],
+      "source_forward": [
+        -3.0588864774472313e-12,
+        0.0,
+        -0.02623802423477173
+      ],
+      "source_upward": [
+        -1.5308827983062656e-07,
+        0.013916015625,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 46
+    },
+    {
+      "dummy_index": 47,
+      "reference_id": 241,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        5.059844454535778e-08,
+        4.205896377563477,
+        -0.4928937554359436
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026237905025482178
+      ],
+      "source_upward": [
+        -1.5308826561977185e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 47
+    },
+    {
+      "dummy_index": 48,
+      "reference_id": 300,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6822205781936646,
+        2.107913017272949,
+        -1.6386562585830688
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026238083839416504
+      ],
+      "source_upward": [
+        0.0,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 48
+    },
+    {
+      "dummy_index": 49,
+      "reference_id": 301,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6822205781936646,
+        2.18792462348938,
+        -2.4242024421691895
+      ],
+      "source_forward": [
+        0.0,
+        0.0032548904418945312,
+        -0.026035308837890625
+      ],
+      "source_upward": [
+        0.0,
+        0.013808012008666992,
+        0.0017261505126953125
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 49
+    },
+    {
+      "dummy_index": 50,
+      "reference_id": 302,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6822205781936646,
+        2.3228580951690674,
+        -3.26186466217041
+      ],
+      "source_forward": [
+        0.0,
+        0.005954742431640625,
+        -0.025553226470947266
+      ],
+      "source_upward": [
+        0.0,
+        0.013552188873291016,
+        0.0031578540802001953
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 50
+    },
+    {
+      "dummy_index": 51,
+      "reference_id": 303,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6822205781936646,
+        2.7145144939422607,
+        -4.107655048370361
+      ],
+      "source_forward": [
+        0.0,
+        0.019399642944335938,
+        -0.017665386199951172
+      ],
+      "source_upward": [
+        0.0,
+        0.009369373321533203,
+        0.010289669036865234
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 51
+    },
+    {
+      "dummy_index": 52,
+      "reference_id": 304,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6822205781936646,
+        3.5345702171325684,
+        -4.334715843200684
+      ],
+      "source_forward": [
+        0.0,
+        0.026150226593017578,
+        -0.002143383026123047
+      ],
+      "source_upward": [
+        0.0,
+        0.0011370182037353516,
+        0.01386880874633789
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 52
+    },
+    {
+      "dummy_index": 53,
+      "reference_id": 310,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6822205781936646,
+        2.107910394668579,
+        -1.6386557817459106
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026238083839416504
+      ],
+      "source_upward": [
+        0.0,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 53
+    },
+    {
+      "dummy_index": 54,
+      "reference_id": 311,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6822205781936646,
+        2.187927722930908,
+        -2.4242069721221924
+      ],
+      "source_forward": [
+        0.0,
+        0.0032548904418945312,
+        -0.026035308837890625
+      ],
+      "source_upward": [
+        0.0,
+        0.013808012008666992,
+        0.0017261505126953125
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 54
+    },
+    {
+      "dummy_index": 55,
+      "reference_id": 312,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6822205781936646,
+        2.32285737991333,
+        -3.2618680000305176
+      ],
+      "source_forward": [
+        0.0,
+        0.005954742431640625,
+        -0.025553226470947266
+      ],
+      "source_upward": [
+        0.0,
+        0.013552188873291016,
+        0.0031578540802001953
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 55
+    },
+    {
+      "dummy_index": 56,
+      "reference_id": 313,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6822205781936646,
+        2.71451735496521,
+        -4.107656955718994
+      ],
+      "source_forward": [
+        0.0,
+        0.019399642944335938,
+        -0.017665386199951172
+      ],
+      "source_upward": [
+        0.0,
+        0.009369373321533203,
+        0.010289669036865234
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 56
+    },
+    {
+      "dummy_index": 57,
+      "reference_id": 314,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6822205781936646,
+        3.5345702171325684,
+        -4.334715843200684
+      ],
+      "source_forward": [
+        0.0,
+        0.026150226593017578,
+        -0.002143383026123047
+      ],
+      "source_upward": [
+        0.0,
+        0.0011370182037353516,
+        0.01386880874633789
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 57
+    },
+    {
+      "dummy_index": 58,
+      "reference_id": 400,
+      "source_attach_name": "R_Foot",
+      "target_bone": "src_045_R_Foot",
+      "bind_point_source_world": [
+        -0.33934730291366577,
+        -0.0021937014535069466,
+        -0.184308260679245
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.016911670565605164
+      ],
+      "source_upward": [
+        4.470348358154297e-07,
+        0.008969279006123543,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 58
+    },
+    {
+      "dummy_index": 59,
+      "reference_id": 420,
+      "source_attach_name": "L_Foot",
+      "target_bone": "src_030_L_Foot",
+      "bind_point_source_world": [
+        0.33934730291366577,
+        -0.0021938206627964973,
+        -0.18430829048156738
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.01691170036792755
+      ],
+      "source_upward": [
+        -4.470348358154297e-07,
+        0.008969279006123543,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 59
+    },
+    {
+      "dummy_index": 60,
+      "reference_id": 901,
+      "source_attach_name": "R_Hand",
+      "target_bone": "src_348_R_Hand",
+      "bind_point_source_world": [
+        -1.7378995418548584,
+        2.9750254154205322,
+        -0.7933087944984436
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956838607788086
+      ],
+      "source_upward": [
+        -4.76837158203125e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 60
+    },
+    {
+      "dummy_index": 61,
+      "reference_id": 902,
+      "source_attach_name": "L_Hand",
+      "target_bone": "src_065_L_Hand",
+      "bind_point_source_world": [
+        1.7378990650177002,
+        2.9750235080718994,
+        -0.7933089137077332
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956838607788086
+      ],
+      "source_upward": [
+        4.76837158203125e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 61
+    },
+    {
+      "dummy_index": 62,
+      "reference_id": 905,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        5.026366167726337e-08,
+        3.2623608112335205,
+        -0.6535732746124268
+      ],
+      "source_forward": [
+        -1.8324897155252984e-11,
+        0.0,
+        -0.026238083839416504
+      ],
+      "source_upward": [
+        -1.53088308252336e-07,
+        0.013915777206420898,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 62
+    },
+    {
+      "dummy_index": 63,
+      "reference_id": 906,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        5.059571606125246e-08,
+        2.7400989532470703,
+        -0.19822832942008972
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026238009333610535
+      ],
+      "source_upward": [
+        -1.5308826561977185e-07,
+        0.013916015625,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 63
+    },
+    {
+      "dummy_index": 64,
+      "reference_id": 907,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        6.886569536845855e-08,
+        4.205896377563477,
+        -0.49289369583129883
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03563046455383301
+      ],
+      "source_upward": [
+        -2.078900251945015e-07,
+        0.018897533416748047,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 64
+    },
+    {
+      "dummy_index": 65,
+      "reference_id": 908,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        6.638794047830743e-08,
+        3.5613656044006348,
+        -0.3362277150154114
+      ],
+      "source_forward": [
+        -4.973799150320701e-14,
+        0.0,
+        -0.018894165754318237
+      ],
+      "source_upward": [
+        -1.1024026491668337e-07,
+        0.010020732879638672,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 65
+    },
+    {
+      "dummy_index": 66,
+      "reference_id": 910,
+      "source_attach_name": "R_Elbow",
+      "target_bone": "src_344_R_Elbow",
+      "bind_point_source_world": [
+        -1.231363296508789,
+        3.431581497192383,
+        -0.05362855643033981
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026237986981868744
+      ],
+      "source_upward": [
+        7.152557373046875e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 66
+    },
+    {
+      "dummy_index": 67,
+      "reference_id": 920,
+      "source_attach_name": "L_Elbow",
+      "target_bone": "src_061_L_Elbow",
+      "bind_point_source_world": [
+        1.23136305809021,
+        3.431581974029541,
+        -0.05362872779369354
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.02623799443244934
+      ],
+      "source_upward": [
+        -7.152557373046875e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 67
+    },
+    {
+      "dummy_index": 68,
+      "reference_id": 930,
+      "source_attach_name": "R_Knee",
+      "target_bone": "src_048_R_Knee",
+      "bind_point_source_world": [
+        -0.3918081223964691,
+        1.4901692867279053,
+        -0.32966309785842896
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.02623799443244934
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.013915777206420898,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 68
+    },
+    {
+      "dummy_index": 69,
+      "reference_id": 940,
+      "source_attach_name": "L_Knee",
+      "target_bone": "src_033_L_Knee",
+      "bind_point_source_world": [
+        0.39180824160575867,
+        1.4901690483093262,
+        -0.32966315746307373
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.026237964630126953
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.013915538787841797,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 69
+    },
+    {
+      "dummy_index": 70,
+      "reference_id": 290,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        5.7835428890484764e-08,
+        2.763364553451538,
+        -0.17962972819805145
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.05923193693161011
+      ],
+      "source_upward": [
+        -1.7480741121289611e-07,
+        0.015889883041381836,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 70
+    },
+    {
+      "dummy_index": 71,
+      "reference_id": 960,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.3126614093780518,
+        -0.5251654982566833
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 71
+    },
+    {
+      "dummy_index": 72,
+      "reference_id": 960,
+      "source_attach_name": "L_Shoulder",
+      "target_bone": "src_059_L_Shoulder",
+      "bind_point_source_world": [
+        0.5771754384040833,
+        3.8473262786865234,
+        -0.09139465540647507
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.0132789611816406e-06,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 72
+    },
+    {
+      "dummy_index": 73,
+      "reference_id": 960,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.312661647796631,
+        0.026088839396834373
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 73
+    },
+    {
+      "dummy_index": 74,
+      "reference_id": 960,
+      "source_attach_name": "L_Knee",
+      "target_bone": "src_033_L_Knee",
+      "bind_point_source_world": [
+        0.31779223680496216,
+        1.566931128501892,
+        -0.19100062549114227
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 74
+    },
+    {
+      "dummy_index": 75,
+      "reference_id": 960,
+      "source_attach_name": "L_FootTwist",
+      "target_bone": "src_031_L_FootTwist",
+      "bind_point_source_world": [
+        0.35934188961982727,
+        0.08142256736755371,
+        -0.4397706687450409
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 75
+    },
+    {
+      "dummy_index": 76,
+      "reference_id": 960,
+      "source_attach_name": "L_Foot",
+      "target_bone": "src_030_L_Foot",
+      "bind_point_source_world": [
+        0.28939560055732727,
+        0.09817993640899658,
+        0.005908752791583538
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 76
+    },
+    {
+      "dummy_index": 77,
+      "reference_id": 960,
+      "source_attach_name": "L_CalfTwist",
+      "target_bone": "src_028_L_CalfTwist",
+      "bind_point_source_world": [
+        0.2893955707550049,
+        0.5716248750686646,
+        0.021311279386281967
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        1.862645149230957e-09
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 77
+    },
+    {
+      "dummy_index": 78,
+      "reference_id": 960,
+      "source_attach_name": "L_Calf",
+      "target_bone": "src_026_L_Calf",
+      "bind_point_source_world": [
+        0.28939563035964966,
+        1.0521612167358398,
+        -0.01934540830552578
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 78
+    },
+    {
+      "dummy_index": 79,
+      "reference_id": 960,
+      "source_attach_name": "L_ThighTwist1",
+      "target_bone": "src_037_L_ThighTwist1",
+      "bind_point_source_world": [
+        0.3177921772003174,
+        2.019697427749634,
+        -0.19100065529346466
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098712682724
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 79
+    },
+    {
+      "dummy_index": 80,
+      "reference_id": 960,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.31779220700263977,
+        2.4499523639678955,
+        -0.19100064039230347
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 80
+    },
+    {
+      "dummy_index": 81,
+      "reference_id": 960,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        0.30317726731300354,
+        2.86916446685791,
+        -0.5251653790473938
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 81
+    },
+    {
+      "dummy_index": 82,
+      "reference_id": 960,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        2.8691647052764893,
+        0.07835020124912262
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 82
+    },
+    {
+      "dummy_index": 83,
+      "reference_id": 960,
+      "source_attach_name": "L_Elbow",
+      "target_bone": "src_061_L_Elbow",
+      "bind_point_source_world": [
+        1.2944693565368652,
+        3.406395196914673,
+        -0.09139470010995865
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -9.5367431640625e-07,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 83
+    },
+    {
+      "dummy_index": 84,
+      "reference_id": 960,
+      "source_attach_name": "L_UpperArm",
+      "target_bone": "src_060_L_UpperArm",
+      "bind_point_source_world": [
+        0.941755473613739,
+        3.626403331756592,
+        -0.09139461815357208
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098712682724
+      ],
+      "source_upward": [
+        -8.344650268554688e-07,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 84
+    },
+    {
+      "dummy_index": 85,
+      "reference_id": 960,
+      "source_attach_name": "L_Hand",
+      "target_bone": "src_065_L_Hand",
+      "bind_point_source_world": [
+        1.7203634977340698,
+        2.989936351776123,
+        -0.7690417170524597
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -9.5367431640625e-07,
+        0.05913543701171875,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 85
+    },
+    {
+      "dummy_index": 86,
+      "reference_id": 960,
+      "source_attach_name": "L_ForeArmTwist1",
+      "target_bone": "src_064_L_ForeArmTwist1",
+      "bind_point_source_world": [
+        1.4928569793701172,
+        3.2027587890625,
+        -0.4148189425468445
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -9.5367431640625e-07,
+        0.05913519859313965,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 86
+    },
+    {
+      "dummy_index": 87,
+      "reference_id": 960,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.7446682453155518,
+        -0.5251654982566833
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 87
+    },
+    {
+      "dummy_index": 88,
+      "reference_id": 960,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.744668483734131,
+        0.02608885057270527
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 88
+    },
+    {
+      "dummy_index": 89,
+      "reference_id": 960,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.3126614093780518,
+        -0.5251654982566833
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 89
+    },
+    {
+      "dummy_index": 90,
+      "reference_id": 960,
+      "source_attach_name": "R_Shoulder",
+      "target_bone": "src_342_R_Shoulder",
+      "bind_point_source_world": [
+        -0.5771757364273071,
+        3.8473258018493652,
+        -0.09139464050531387
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        1.0132789611816406e-06,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 90
+    },
+    {
+      "dummy_index": 91,
+      "reference_id": 960,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.312661647796631,
+        0.026088839396834373
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 91
+    },
+    {
+      "dummy_index": 92,
+      "reference_id": 960,
+      "source_attach_name": "R_Knee",
+      "target_bone": "src_048_R_Knee",
+      "bind_point_source_world": [
+        -0.3177921772003174,
+        1.5669313669204712,
+        -0.19100061058998108
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 92
+    },
+    {
+      "dummy_index": 93,
+      "reference_id": 960,
+      "source_attach_name": "R_FootTwist",
+      "target_bone": "src_046_R_FootTwist",
+      "bind_point_source_world": [
+        -0.3593418598175049,
+        0.08142256736755371,
+        -0.4397706985473633
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 93
+    },
+    {
+      "dummy_index": 94,
+      "reference_id": 960,
+      "source_attach_name": "R_Foot",
+      "target_bone": "src_045_R_Foot",
+      "bind_point_source_world": [
+        -0.28939560055732727,
+        0.09817999601364136,
+        0.005908745341002941
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 94
+    },
+    {
+      "dummy_index": 95,
+      "reference_id": 960,
+      "source_attach_name": "R_CalfTwist",
+      "target_bone": "src_043_R_CalfTwist",
+      "bind_point_source_world": [
+        -0.28939560055732727,
+        0.5716248154640198,
+        0.021311283111572266
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        1.862645149230957e-09
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 95
+    },
+    {
+      "dummy_index": 96,
+      "reference_id": 960,
+      "source_attach_name": "R_Calf",
+      "target_bone": "src_041_R_Calf",
+      "bind_point_source_world": [
+        -0.28939563035964966,
+        1.0521612167358398,
+        -0.019345423206686974
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        -1.862645149230957e-09
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 96
+    },
+    {
+      "dummy_index": 97,
+      "reference_id": 960,
+      "source_attach_name": "R_ThighTwist1",
+      "target_bone": "src_052_R_ThighTwist1",
+      "bind_point_source_world": [
+        -0.31779223680496216,
+        2.0196971893310547,
+        -0.19100064039230347
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 97
+    },
+    {
+      "dummy_index": 98,
+      "reference_id": 960,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.31779220700263977,
+        2.4499526023864746,
+        -0.19100064039230347
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 98
+    },
+    {
+      "dummy_index": 99,
+      "reference_id": 960,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        -0.30317726731300354,
+        2.86916446685791,
+        -0.5251653790473938
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 99
+    },
+    {
+      "dummy_index": 100,
+      "reference_id": 960,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        -0.30317726731300354,
+        2.8691647052764893,
+        0.07835016399621964
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860975205898285
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 100
+    },
+    {
+      "dummy_index": 101,
+      "reference_id": 960,
+      "source_attach_name": "R_Elbow",
+      "target_bone": "src_344_R_Elbow",
+      "bind_point_source_world": [
+        -1.2944694757461548,
+        3.4063949584960938,
+        -0.09139459580183029
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        9.5367431640625e-07,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 101
+    },
+    {
+      "dummy_index": 102,
+      "reference_id": 960,
+      "source_attach_name": "R_UpperArm",
+      "target_bone": "src_343_R_UpperArm",
+      "bind_point_source_world": [
+        -0.9417552351951599,
+        3.6264030933380127,
+        -0.09139461815357208
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098712682724
+      ],
+      "source_upward": [
+        8.344650268554688e-07,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 102
+    },
+    {
+      "dummy_index": 103,
+      "reference_id": 960,
+      "source_attach_name": "R_Hand",
+      "target_bone": "src_348_R_Hand",
+      "bind_point_source_world": [
+        -1.720363736152649,
+        2.9899373054504395,
+        -0.7690416574478149
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        9.5367431640625e-07,
+        0.05913543701171875,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 103
+    },
+    {
+      "dummy_index": 104,
+      "reference_id": 960,
+      "source_attach_name": "R_ForeArmTwist1",
+      "target_bone": "src_347_R_ForeArmTwist1",
+      "bind_point_source_world": [
+        -1.492856740951538,
+        3.2027587890625,
+        -0.41481924057006836
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        9.5367431640625e-07,
+        0.05913519859313965,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 104
+    },
+    {
+      "dummy_index": 105,
+      "reference_id": 960,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.7446682453155518,
+        -0.5251654982566833
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 105
+    },
+    {
+      "dummy_index": 106,
+      "reference_id": 960,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.744668483734131,
+        0.02608885057270527
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 106
+    },
+    {
+      "dummy_index": 107,
+      "reference_id": 960,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        9.285053965868428e-05,
+        3.9878456592559814,
+        -0.16479924321174622
+      ],
+      "source_forward": [
+        0.0,
+        2.384185791015625e-07,
+        -0.13860997557640076
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.05913424491882324,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 107
+    },
+    {
+      "dummy_index": 108,
+      "reference_id": 960,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285053238272667e-05,
+        4.205726623535156,
+        -0.4675803780555725
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 108
+    },
+    {
+      "dummy_index": 109,
+      "reference_id": 960,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285053238272667e-05,
+        4.32511568069458,
+        -0.15561552345752716
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860993087291718
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 109
+    },
+    {
+      "dummy_index": 110,
+      "reference_id": 10,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6748957633972168,
+        3.5351336002349854,
+        -4.333010196685791
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295707702636719
+      ],
+      "source_upward": [
+        -2.384185791015625e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 110
+    },
+    {
+      "dummy_index": 111,
+      "reference_id": 11,
+      "source_attach_name": "R_Sword",
+      "target_bone": "src_364_R_Sword",
+      "bind_point_source_world": [
+        -1.6783527135849,
+        2.3261361122131348,
+        -1.4820271730422974
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956719398498535
+      ],
+      "source_upward": [
+        -3.5762786865234375e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 111
+    },
+    {
+      "dummy_index": 112,
+      "reference_id": 12,
+      "source_attach_name": "R_Elbow",
+      "target_bone": "src_344_R_Elbow",
+      "bind_point_source_world": [
+        -1.218621850013733,
+        3.4522006511688232,
+        -0.0998447835445404
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956719398498535
+      ],
+      "source_upward": [
+        -2.384185791015625e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 112
+    },
+    {
+      "dummy_index": 113,
+      "reference_id": 20,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6748957633972168,
+        3.5351336002349854,
+        -4.333010196685791
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295707702636719
+      ],
+      "source_upward": [
+        4.76837158203125e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 113
+    },
+    {
+      "dummy_index": 114,
+      "reference_id": 21,
+      "source_attach_name": "L_Sword",
+      "target_bone": "src_081_L_Sword",
+      "bind_point_source_world": [
+        1.6783527135849,
+        2.3261361122131348,
+        -1.4820271730422974
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.032956719398498535
+      ],
+      "source_upward": [
+        3.5762786865234375e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 114
+    },
+    {
+      "dummy_index": 115,
+      "reference_id": 22,
+      "source_attach_name": "L_Elbow",
+      "target_bone": "src_061_L_Elbow",
+      "bind_point_source_world": [
+        1.2186216115951538,
+        3.4522011280059814,
+        -0.09984496235847473
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295662999153137
+      ],
+      "source_upward": [
+        2.384185791015625e-07,
+        0.013046979904174805,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 115
+    },
+    {
+      "dummy_index": 116,
+      "reference_id": 30,
+      "source_attach_name": "Jaw",
+      "target_bone": "src_336_Jaw",
+      "bind_point_source_world": [
+        -4.610638626445507e-08,
+        4.095275402069092,
+        -0.594136118888855
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295689821243286
+      ],
+      "source_upward": [
+        1.435345637901264e-07,
+        0.013046741485595703,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 116
+    },
+    {
+      "dummy_index": 117,
+      "reference_id": 40,
+      "source_attach_name": "Miquella_R_Hand",
+      "target_bone": "src_276_Miquella_R_Hand",
+      "bind_point_source_world": [
+        -1.3396283388137817,
+        4.4191484451293945,
+        0.39021316170692444
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.03295689821243286
+      ],
+      "source_upward": [
+        1.1920928955078125e-07,
+        0.013046741485595703,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 117
+    },
+    {
+      "dummy_index": 118,
+      "reference_id": 51,
+      "source_attach_name": "SFX_01",
+      "target_bone": "src_369_SFX_01",
+      "bind_point_source_world": [
+        -1.4901154088420299e-08,
+        0.00041846930980682373,
+        -1.4901161193847656e-08
+      ],
+      "source_forward": [
+        1.043081283569336e-07,
+        0.0,
+        -0.13841032981872559
+      ],
+      "source_upward": [
+        0.0,
+        0.0400085523724556,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 118
+    },
+    {
+      "dummy_index": 119,
+      "reference_id": 52,
+      "source_attach_name": "SFX_02",
+      "target_bone": "src_370_SFX_02",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.00045490264892578125,
+        -1.4901161193847656e-08
+      ],
+      "source_forward": [
+        1.1920928955078125e-07,
+        0.0,
+        -0.15046241879463196
+      ],
+      "source_upward": [
+        -3.552713678800501e-15,
+        0.04349230229854584,
+        2.6645352591003757e-15
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 119
+    },
+    {
+      "dummy_index": 120,
+      "reference_id": 53,
+      "source_attach_name": "SFX_03",
+      "target_bone": "src_371_SFX_03",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.0004945099353790283,
+        -2.980232238769531e-08
+      ],
+      "source_forward": [
+        1.1920928955078125e-07,
+        0.0,
+        -0.16356392204761505
+      ],
+      "source_upward": [
+        -7.105427357601002e-15,
+        0.04727938771247864,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 120
+    },
+    {
+      "dummy_index": 121,
+      "reference_id": 54,
+      "source_attach_name": "SFX_04",
+      "target_bone": "src_372_SFX_04",
+      "bind_point_source_world": [
+        -5.052059721866902e-16,
+        0.0005375891923904419,
+        -1.4901161193847656e-08
+      ],
+      "source_forward": [
+        1.1920928955078125e-07,
+        0.0,
+        -0.17780625820159912
+      ],
+      "source_upward": [
+        -5.8430755215830785e-15,
+        0.05139623582363129,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 121
+    },
+    {
+      "dummy_index": 122,
+      "reference_id": 55,
+      "source_attach_name": "SFX_05",
+      "target_bone": "src_373_SFX_05",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.0005843788385391235,
+        -1.4901161193847656e-08
+      ],
+      "source_forward": [
+        1.4901161193847656e-07,
+        0.0,
+        -0.19328871369361877
+      ],
+      "source_upward": [
+        0.0,
+        0.05587157607078552,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 122
+    },
+    {
+      "dummy_index": 123,
+      "reference_id": 56,
+      "source_attach_name": "SFX_06",
+      "target_bone": "src_374_SFX_06",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.0006352663040161133,
+        -2.980232238769531e-08
+      ],
+      "source_forward": [
+        1.4901161193847656e-07,
+        0.0,
+        -0.2101193517446518
+      ],
+      "source_upward": [
+        0.0,
+        0.06073659658432007,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 123
+    },
+    {
+      "dummy_index": 124,
+      "reference_id": 57,
+      "source_attach_name": "SFX_07",
+      "target_bone": "src_375_SFX_07",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.0006906092166900635,
+        -2.980232238769531e-08
+      ],
+      "source_forward": [
+        1.7881393432617188e-07,
+        0.0,
+        -0.22841550409793854
+      ],
+      "source_upward": [
+        0.0,
+        0.06602521240711212,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 124
+    },
+    {
+      "dummy_index": 125,
+      "reference_id": 58,
+      "source_attach_name": "SFX_08",
+      "target_bone": "src_376_SFX_08",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.0007507205009460449,
+        -2.980232238769531e-08
+      ],
+      "source_forward": [
+        2.086162567138672e-07,
+        0.0,
+        -0.24830473959445953
+      ],
+      "source_upward": [
+        0.0,
+        0.07177436351776123,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 125
+    },
+    {
+      "dummy_index": 126,
+      "reference_id": 59,
+      "source_attach_name": "SFX_09",
+      "target_bone": "src_377_SFX_09",
+      "bind_point_source_world": [
+        -2.980232238769531e-08,
+        0.0008161067962646484,
+        -2.980232238769531e-08
+      ],
+      "source_forward": [
+        2.086162567138672e-07,
+        0.0,
+        -0.269925981760025
+      ],
+      "source_upward": [
+        0.0,
+        0.07802411913871765,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 126
+    },
+    {
+      "dummy_index": 127,
+      "reference_id": 60,
+      "source_attach_name": "SFX_10",
+      "target_bone": "src_378_SFX_10",
+      "bind_point_source_world": [
+        -7.450580596923828e-08,
+        0.0005056858062744141,
+        0.0016479194164276123
+      ],
+      "source_forward": [
+        2.384185791015625e-07,
+        0.0,
+        -0.2934297025203705
+      ],
+      "source_upward": [
+        0.0,
+        0.08481809496879578,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 127
+    },
+    {
+      "dummy_index": 128,
+      "reference_id": 200,
+      "source_attach_name": "L_Foot",
+      "target_bone": "src_030_L_Foot",
+      "bind_point_source_world": [
+        0.29968395829200745,
+        0.15914705395698547,
+        0.16501833498477936
+      ],
+      "source_forward": [
+        -1.1920928955078125e-07,
+        0.0,
+        -0.13860984146595
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.05913488566875458,
+        7.450580596923828e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 128
+    },
+    {
+      "dummy_index": 129,
+      "reference_id": 200,
+      "source_attach_name": "L_Shoulder",
+      "target_bone": "src_059_L_Shoulder",
+      "bind_point_source_world": [
+        0.7215683460235596,
+        3.914205312728882,
+        -0.15390074253082275
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -1.0132789611816406e-06,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 129
+    },
+    {
+      "dummy_index": 130,
+      "reference_id": 200,
+      "source_attach_name": "L_ForeArmTwist1",
+      "target_bone": "src_064_L_ForeArmTwist1",
+      "bind_point_source_world": [
+        1.4381873607635498,
+        3.413802146911621,
+        -0.41021639108657837
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -1.1920928955078125e-06,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 130
+    },
+    {
+      "dummy_index": 131,
+      "reference_id": 200,
+      "source_attach_name": "L_Hand",
+      "target_bone": "src_065_L_Hand",
+      "bind_point_source_world": [
+        1.6540902853012085,
+        2.9642932415008545,
+        -0.8332163691520691
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        -1.1920928955078125e-06,
+        0.05913519859313965,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 131
+    },
+    {
+      "dummy_index": 132,
+      "reference_id": 200,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        0.34255269169807434,
+        3.2032957077026367,
+        -0.43977075815200806
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 132
+    },
+    {
+      "dummy_index": 133,
+      "reference_id": 200,
+      "source_attach_name": "L_FootTwist",
+      "target_bone": "src_031_L_FootTwist",
+      "bind_point_source_world": [
+        0.4280852973461151,
+        0.0962185487151146,
+        -0.2946934998035431
+      ],
+      "source_forward": [
+        -8.940696716308594e-08,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -7.152557373046875e-07,
+        0.059134893119335175,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 133
+    },
+    {
+      "dummy_index": 134,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist1",
+      "target_bone": "src_037_L_ThighTwist1",
+      "bind_point_source_world": [
+        0.10018385946750641,
+        1.882983922958374,
+        -0.34180349111557007
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13861000537872314
+      ],
+      "source_upward": [
+        1.1548399925231934e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 134
+    },
+    {
+      "dummy_index": 135,
+      "reference_id": 200,
+      "source_attach_name": "L_Knee",
+      "target_bone": "src_033_L_Knee",
+      "bind_point_source_world": [
+        0.469706654548645,
+        1.5294464826583862,
+        -0.3806498646736145
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        8.642673492431641e-07,
+        0.059134840965270996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 135
+    },
+    {
+      "dummy_index": 136,
+      "reference_id": 200,
+      "source_attach_name": "L_Knee",
+      "target_bone": "src_033_L_Knee",
+      "bind_point_source_world": [
+        0.44860032200813293,
+        1.5341373682022095,
+        0.02406802773475647
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        8.046627044677734e-07,
+        0.059134840965270996,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 136
+    },
+    {
+      "dummy_index": 137,
+      "reference_id": 200,
+      "source_attach_name": "L_Knee",
+      "target_bone": "src_033_L_Knee",
+      "bind_point_source_world": [
+        0.16248080134391785,
+        1.5294464826583862,
+        -0.3806498646736145
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        8.642673492431641e-07,
+        0.059134840965270996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 137
+    },
+    {
+      "dummy_index": 138,
+      "reference_id": 200,
+      "source_attach_name": "L_Knee",
+      "target_bone": "src_033_L_Knee",
+      "bind_point_source_world": [
+        0.14137454330921173,
+        1.5341373682022095,
+        0.02406802773475647
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        7.897615432739258e-07,
+        0.059134840965270996,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 138
+    },
+    {
+      "dummy_index": 139,
+      "reference_id": 200,
+      "source_attach_name": "L_Foot",
+      "target_bone": "src_030_L_Foot",
+      "bind_point_source_world": [
+        0.3623441159725189,
+        0.24245263636112213,
+        -0.06816943734884262
+      ],
+      "source_forward": [
+        -1.7881393432617188e-07,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -8.046627044677734e-07,
+        0.059134915471076965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 139
+    },
+    {
+      "dummy_index": 140,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.4726741909980774,
+        2.552450180053711,
+        -0.251850426197052
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        1.1324882507324219e-06,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 140
+    },
+    {
+      "dummy_index": 141,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.3209174573421478,
+        2.557141065597534,
+        0.1185411810874939
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 141
+    },
+    {
+      "dummy_index": 142,
+      "reference_id": 200,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        0.2091122418642044,
+        2.9558188915252686,
+        -0.4936712980270386
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.087784767150879e-06,
+        0.059134483337402344,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 142
+    },
+    {
+      "dummy_index": 143,
+      "reference_id": 200,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        0.253162145614624,
+        2.6988487243652344,
+        -0.4011598825454712
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860970735549927
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.059134483337402344,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 143
+    },
+    {
+      "dummy_index": 144,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.28194549679756165,
+        2.47304368019104,
+        -0.4960797429084778
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.059134721755981445,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 144
+    },
+    {
+      "dummy_index": 145,
+      "reference_id": 200,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        0.20911221206188202,
+        2.2747409343719482,
+        0.4317018389701843
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        1.087784767150879e-06,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 145
+    },
+    {
+      "dummy_index": 146,
+      "reference_id": 200,
+      "source_attach_name": "L_Clavicle",
+      "target_bone": "src_058_L_Clavicle",
+      "bind_point_source_world": [
+        0.3835761845111847,
+        3.8560712337493896,
+        -0.41982629895210266
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860973715782166
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.059134721755981445,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 146
+    },
+    {
+      "dummy_index": 147,
+      "reference_id": 200,
+      "source_attach_name": "L_Clavicle",
+      "target_bone": "src_058_L_Clavicle",
+      "bind_point_source_world": [
+        0.5061531066894531,
+        3.904352903366089,
+        0.31285494565963745
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098712682724
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.059134721755981445,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 147
+    },
+    {
+      "dummy_index": 148,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor1",
+      "target_bone": "src_367_SpineArmor1",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.4325950145721436,
+        -0.5793646574020386
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 148
+    },
+    {
+      "dummy_index": 149,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        0.26048311591148376,
+        3.5316882133483887,
+        0.397084504365921
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.05913424491882324,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 149
+    },
+    {
+      "dummy_index": 150,
+      "reference_id": 200,
+      "source_attach_name": "L_UpperArm",
+      "target_bone": "src_060_L_UpperArm",
+      "bind_point_source_world": [
+        1.0252606868743896,
+        3.692262649536133,
+        -0.08553972095251083
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913519859313965,
+        4.470348358154297e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 150
+    },
+    {
+      "dummy_index": 151,
+      "reference_id": 200,
+      "source_attach_name": "L_Forearm",
+      "target_bone": "src_062_L_Forearm",
+      "bind_point_source_world": [
+        1.3096033334732056,
+        3.551561117172241,
+        -0.18937867879867554
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 151
+    },
+    {
+      "dummy_index": 152,
+      "reference_id": 200,
+      "source_attach_name": "L_Clavicle",
+      "target_bone": "src_058_L_Clavicle",
+      "bind_point_source_world": [
+        0.3112066984176636,
+        4.058916091918945,
+        -0.044398896396160126
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.05913543701171875,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 152
+    },
+    {
+      "dummy_index": 153,
+      "reference_id": 200,
+      "source_attach_name": "L_ForeArmTwist",
+      "target_bone": "src_063_L_ForeArmTwist",
+      "bind_point_source_world": [
+        1.5469077825546265,
+        3.127180576324463,
+        -0.6259369254112244
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -4.76837158203125e-07,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 153
+    },
+    {
+      "dummy_index": 154,
+      "reference_id": 200,
+      "source_attach_name": "L_Calf",
+      "target_bone": "src_026_L_Calf",
+      "bind_point_source_world": [
+        0.44075366854667664,
+        1.0781147480010986,
+        -0.2123042643070221
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.059134602546691895,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 154
+    },
+    {
+      "dummy_index": 155,
+      "reference_id": 200,
+      "source_attach_name": "L_Calf",
+      "target_bone": "src_026_L_Calf",
+      "bind_point_source_world": [
+        0.420948326587677,
+        1.0828056335449219,
+        0.19895054399967194
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860981166362762
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.059134840965270996,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 155
+    },
+    {
+      "dummy_index": 156,
+      "reference_id": 200,
+      "source_attach_name": "L_Calf",
+      "target_bone": "src_026_L_Calf",
+      "bind_point_source_world": [
+        0.15246537327766418,
+        1.0781147480010986,
+        -0.2123042643070221
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        8.344650268554688e-07,
+        0.059134602546691895,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 156
+    },
+    {
+      "dummy_index": 157,
+      "reference_id": 200,
+      "source_attach_name": "L_Calf",
+      "target_bone": "src_026_L_Calf",
+      "bind_point_source_world": [
+        0.1326601356267929,
+        1.0828056335449219,
+        0.19895054399967194
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860981166362762
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.059134840965270996,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 157
+    },
+    {
+      "dummy_index": 158,
+      "reference_id": 200,
+      "source_attach_name": "L_CalfTwist",
+      "target_bone": "src_028_L_CalfTwist",
+      "bind_point_source_world": [
+        0.4304649233818054,
+        0.6237866878509521,
+        -0.0950092226266861
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860996067523956
+      ],
+      "source_upward": [
+        7.152557373046875e-07,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 158
+    },
+    {
+      "dummy_index": 159,
+      "reference_id": 200,
+      "source_attach_name": "L_CalfTwist",
+      "target_bone": "src_028_L_CalfTwist",
+      "bind_point_source_world": [
+        0.4111219048500061,
+        0.6284774541854858,
+        0.16190294921398163
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860981166362762
+      ],
+      "source_upward": [
+        7.152557373046875e-07,
+        0.059134840965270996,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 159
+    },
+    {
+      "dummy_index": 160,
+      "reference_id": 200,
+      "source_attach_name": "L_CalfTwist",
+      "target_bone": "src_028_L_CalfTwist",
+      "bind_point_source_world": [
+        0.19703347980976105,
+        0.6237866878509521,
+        -0.0950092226266861
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860996067523956
+      ],
+      "source_upward": [
+        1.0579824447631836e-06,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 160
+    },
+    {
+      "dummy_index": 161,
+      "reference_id": 200,
+      "source_attach_name": "L_CalfTwist",
+      "target_bone": "src_028_L_CalfTwist",
+      "bind_point_source_world": [
+        0.1714387983083725,
+        0.6284774541854858,
+        0.16190294921398163
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860981166362762
+      ],
+      "source_upward": [
+        9.98377799987793e-07,
+        0.059134840965270996,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 161
+    },
+    {
+      "dummy_index": 162,
+      "reference_id": 200,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        0.3296756446361542,
+        3.2032957077026367,
+        0.015628322958946228
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        8.642673492431641e-07,
+        0.05913496017456055,
+        2.60770320892334e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 162
+    },
+    {
+      "dummy_index": 163,
+      "reference_id": 200,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        0.2091122567653656,
+        2.9558188915252686,
+        0.18445461988449097
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.05913496017456055,
+        1.4901161193847656e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 163
+    },
+    {
+      "dummy_index": 164,
+      "reference_id": 200,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        0.5069572329521179,
+        3.548638105392456,
+        -0.2241361439228058
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        2.086162567138672e-06,
+        0.059134721755981445,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 164
+    },
+    {
+      "dummy_index": 165,
+      "reference_id": 200,
+      "source_attach_name": "L_UpperArm",
+      "target_bone": "src_060_L_UpperArm",
+      "bind_point_source_world": [
+        0.8169097304344177,
+        3.4933269023895264,
+        0.339891254901886
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13861005008220673
+      ],
+      "source_upward": [
+        8.940696716308594e-07,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 165
+    },
+    {
+      "dummy_index": 166,
+      "reference_id": 200,
+      "source_attach_name": "L_UpArmTwist",
+      "target_bone": "src_082_L_UpArmTwist",
+      "bind_point_source_world": [
+        0.7379857897758484,
+        3.5936217308044434,
+        -0.09139464050531387
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.0132789611816406e-06,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 166
+    },
+    {
+      "dummy_index": 167,
+      "reference_id": 200,
+      "source_attach_name": "L_UpperArm",
+      "target_bone": "src_060_L_UpperArm",
+      "bind_point_source_world": [
+        1.0069851875305176,
+        3.424138307571411,
+        -0.08553972095251083
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913519859313965,
+        4.470348358154297e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 167
+    },
+    {
+      "dummy_index": 168,
+      "reference_id": 200,
+      "source_attach_name": "L_ForeArmTwist1",
+      "target_bone": "src_064_L_ForeArmTwist1",
+      "bind_point_source_world": [
+        1.4381873607635498,
+        3.135751247406006,
+        -0.41021639108657837
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -1.1920928955078125e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 168
+    },
+    {
+      "dummy_index": 169,
+      "reference_id": 200,
+      "source_attach_name": "L_Forearm",
+      "target_bone": "src_062_L_Forearm",
+      "bind_point_source_world": [
+        1.3096033334732056,
+        3.2339463233947754,
+        -0.18937867879867554
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 169
+    },
+    {
+      "dummy_index": 170,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        0.3112066388130188,
+        4.391816139221191,
+        -0.04439898207783699
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860981166362762
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 170
+    },
+    {
+      "dummy_index": 171,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        0.15057533979415894,
+        4.492134094238281,
+        -0.324570894241333
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860970735549927
+      ],
+      "source_upward": [
+        6.854534149169922e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 171
+    },
+    {
+      "dummy_index": 172,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        0.22883369028568268,
+        4.16452169418335,
+        0.19259509444236755
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860967755317688
+      ],
+      "source_upward": [
+        1.043081283569336e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 172
+    },
+    {
+      "dummy_index": 173,
+      "reference_id": 200,
+      "source_attach_name": "L_Clavicle",
+      "target_bone": "src_058_L_Clavicle",
+      "bind_point_source_world": [
+        0.22883372008800507,
+        3.8717522621154785,
+        0.3396183252334595
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860978186130524
+      ],
+      "source_upward": [
+        1.043081283569336e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 173
+    },
+    {
+      "dummy_index": 174,
+      "reference_id": 200,
+      "source_attach_name": "R_Foot",
+      "target_bone": "src_045_R_Foot",
+      "bind_point_source_world": [
+        -0.29968395829200745,
+        0.15914717316627502,
+        0.16501830518245697
+      ],
+      "source_forward": [
+        1.1920928955078125e-07,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.05913488566875458,
+        7.450580596923828e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 174
+    },
+    {
+      "dummy_index": 175,
+      "reference_id": 200,
+      "source_attach_name": "R_Shoulder",
+      "target_bone": "src_342_R_Shoulder",
+      "bind_point_source_world": [
+        -0.7215686440467834,
+        3.914205312728882,
+        -0.15390072762966156
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860984146595
+      ],
+      "source_upward": [
+        1.0132789611816406e-06,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 175
+    },
+    {
+      "dummy_index": 176,
+      "reference_id": 200,
+      "source_attach_name": "R_ForeArmTwist1",
+      "target_bone": "src_347_R_ForeArmTwist1",
+      "bind_point_source_world": [
+        -1.438186764717102,
+        3.4138026237487793,
+        -0.4102168679237366
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1920928955078125e-06,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 176
+    },
+    {
+      "dummy_index": 177,
+      "reference_id": 200,
+      "source_attach_name": "R_Hand",
+      "target_bone": "src_348_R_Hand",
+      "bind_point_source_world": [
+        -1.6540907621383667,
+        2.9642951488494873,
+        -0.8332162499427795
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        1.1920928955078125e-06,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 177
+    },
+    {
+      "dummy_index": 178,
+      "reference_id": 200,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        -0.34255269169807434,
+        3.2032957077026367,
+        -0.43977075815200806
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 178
+    },
+    {
+      "dummy_index": 179,
+      "reference_id": 200,
+      "source_attach_name": "R_FootTwist",
+      "target_bone": "src_046_R_FootTwist",
+      "bind_point_source_world": [
+        -0.42808523774147034,
+        0.09621860831975937,
+        -0.2946934998035431
+      ],
+      "source_forward": [
+        8.940696716308594e-08,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        7.152557373046875e-07,
+        0.059134893119335175,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 179
+    },
+    {
+      "dummy_index": 180,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist1",
+      "target_bone": "src_052_R_ThighTwist1",
+      "bind_point_source_world": [
+        -0.10018397867679596,
+        1.8829834461212158,
+        -0.34180349111557007
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -1.1548399925231934e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 180
+    },
+    {
+      "dummy_index": 181,
+      "reference_id": 200,
+      "source_attach_name": "R_Knee",
+      "target_bone": "src_048_R_Knee",
+      "bind_point_source_world": [
+        -0.46970653533935547,
+        1.5294469594955444,
+        -0.3806498348712921
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860997557640076
+      ],
+      "source_upward": [
+        -8.642673492431641e-07,
+        0.059134840965270996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 181
+    },
+    {
+      "dummy_index": 182,
+      "reference_id": 200,
+      "source_attach_name": "R_Knee",
+      "target_bone": "src_048_R_Knee",
+      "bind_point_source_world": [
+        -0.4486002027988434,
+        1.5341378450393677,
+        0.024068079888820648
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -8.046627044677734e-07,
+        0.059134840965270996,
+        9.313225746154785e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 182
+    },
+    {
+      "dummy_index": 183,
+      "reference_id": 200,
+      "source_attach_name": "R_Knee",
+      "target_bone": "src_048_R_Knee",
+      "bind_point_source_world": [
+        -0.1624806821346283,
+        1.5294469594955444,
+        -0.3806498348712921
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860997557640076
+      ],
+      "source_upward": [
+        -8.642673492431641e-07,
+        0.059134840965270996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 183
+    },
+    {
+      "dummy_index": 184,
+      "reference_id": 200,
+      "source_attach_name": "R_Knee",
+      "target_bone": "src_048_R_Knee",
+      "bind_point_source_world": [
+        -0.14137442409992218,
+        1.5341378450393677,
+        0.024068079888820648
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -7.897615432739258e-07,
+        0.059134840965270996,
+        9.313225746154785e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 184
+    },
+    {
+      "dummy_index": 185,
+      "reference_id": 200,
+      "source_attach_name": "R_Foot",
+      "target_bone": "src_045_R_Foot",
+      "bind_point_source_world": [
+        -0.3623441159725189,
+        0.24245275557041168,
+        -0.06816945225000381
+      ],
+      "source_forward": [
+        1.7881393432617188e-07,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        8.046627044677734e-07,
+        0.059134915471076965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 185
+    },
+    {
+      "dummy_index": 186,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.4726741909980774,
+        2.552450656890869,
+        -0.251850426197052
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1324882507324219e-06,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 186
+    },
+    {
+      "dummy_index": 187,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.3209174573421478,
+        2.5571415424346924,
+        0.1185411810874939
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 187
+    },
+    {
+      "dummy_index": 188,
+      "reference_id": 200,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        -0.2091122418642044,
+        2.9558188915252686,
+        -0.4936712980270386
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.087784767150879e-06,
+        0.059134483337402344,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 188
+    },
+    {
+      "dummy_index": 189,
+      "reference_id": 200,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        -0.253162145614624,
+        2.6988487243652344,
+        -0.4011598825454712
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860970735549927
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.059134483337402344,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 189
+    },
+    {
+      "dummy_index": 190,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.28194549679756165,
+        2.4730441570281982,
+        -0.4960797429084778
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.059134721755981445,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 190
+    },
+    {
+      "dummy_index": 191,
+      "reference_id": 200,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        -0.20911221206188202,
+        2.2747409343719482,
+        0.4317018389701843
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        -1.087784767150879e-06,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 191
+    },
+    {
+      "dummy_index": 192,
+      "reference_id": 200,
+      "source_attach_name": "R_Clavicle",
+      "target_bone": "src_341_R_Clavicle",
+      "bind_point_source_world": [
+        -0.3835761845111847,
+        3.8560707569122314,
+        -0.41982632875442505
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.059134721755981445,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 192
+    },
+    {
+      "dummy_index": 193,
+      "reference_id": 200,
+      "source_attach_name": "R_Clavicle",
+      "target_bone": "src_341_R_Clavicle",
+      "bind_point_source_world": [
+        -0.5061531066894531,
+        3.9043524265289307,
+        0.31285494565963745
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098712682724
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.059134721755981445,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 193
+    },
+    {
+      "dummy_index": 194,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor1",
+      "target_bone": "src_367_SpineArmor1",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.4325950145721436,
+        -0.5793646574020386
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 194
+    },
+    {
+      "dummy_index": 195,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        -0.26048311591148376,
+        3.5316882133483887,
+        0.397084504365921
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913424491882324,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 195
+    },
+    {
+      "dummy_index": 196,
+      "reference_id": 200,
+      "source_attach_name": "R_UpperArm",
+      "target_bone": "src_343_R_UpperArm",
+      "bind_point_source_world": [
+        -1.0252604484558105,
+        3.6922621726989746,
+        -0.08553972095251083
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        1.1920928955078125e-06,
+        0.05913519859313965,
+        4.470348358154297e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 196
+    },
+    {
+      "dummy_index": 197,
+      "reference_id": 200,
+      "source_attach_name": "R_Forearm",
+      "target_bone": "src_345_R_Forearm",
+      "bind_point_source_world": [
+        -1.3096033334732056,
+        3.5515615940093994,
+        -0.1893792450428009
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 197
+    },
+    {
+      "dummy_index": 198,
+      "reference_id": 200,
+      "source_attach_name": "R_Clavicle",
+      "target_bone": "src_341_R_Clavicle",
+      "bind_point_source_world": [
+        -0.3112066984176636,
+        4.058916091918945,
+        -0.044398896396160126
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 198
+    },
+    {
+      "dummy_index": 199,
+      "reference_id": 200,
+      "source_attach_name": "R_ForeArmTwist",
+      "target_bone": "src_346_R_ForeArmTwist",
+      "bind_point_source_world": [
+        -1.5469077825546265,
+        3.1271800994873047,
+        -0.625937283039093
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        4.76837158203125e-07,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 199
+    },
+    {
+      "dummy_index": 200,
+      "reference_id": 200,
+      "source_attach_name": "R_Calf",
+      "target_bone": "src_041_R_Calf",
+      "bind_point_source_world": [
+        -0.44075366854667664,
+        1.0781147480010986,
+        -0.21230429410934448
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.059134602546691895,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 200
+    },
+    {
+      "dummy_index": 201,
+      "reference_id": 200,
+      "source_attach_name": "R_Calf",
+      "target_bone": "src_041_R_Calf",
+      "bind_point_source_world": [
+        -0.420948326587677,
+        1.0828056335449219,
+        0.19895051419734955
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.059134840965270996,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 201
+    },
+    {
+      "dummy_index": 202,
+      "reference_id": 200,
+      "source_attach_name": "R_Calf",
+      "target_bone": "src_041_R_Calf",
+      "bind_point_source_world": [
+        -0.15246537327766418,
+        1.0781147480010986,
+        -0.21230429410934448
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -8.344650268554688e-07,
+        0.059134602546691895,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 202
+    },
+    {
+      "dummy_index": 203,
+      "reference_id": 200,
+      "source_attach_name": "R_Calf",
+      "target_bone": "src_041_R_Calf",
+      "bind_point_source_world": [
+        -0.1326601356267929,
+        1.0828056335449219,
+        0.19895051419734955
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.059134840965270996,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 203
+    },
+    {
+      "dummy_index": 204,
+      "reference_id": 200,
+      "source_attach_name": "R_CalfTwist",
+      "target_bone": "src_043_R_CalfTwist",
+      "bind_point_source_world": [
+        -0.4304649233818054,
+        0.6237866282463074,
+        -0.09500925242900848
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860996067523956
+      ],
+      "source_upward": [
+        -7.748603820800781e-07,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 204
+    },
+    {
+      "dummy_index": 205,
+      "reference_id": 200,
+      "source_attach_name": "R_CalfTwist",
+      "target_bone": "src_043_R_CalfTwist",
+      "bind_point_source_world": [
+        -0.4111219644546509,
+        0.6284773945808411,
+        0.1619030088186264
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -7.152557373046875e-07,
+        0.05913490056991577,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 205
+    },
+    {
+      "dummy_index": 206,
+      "reference_id": 200,
+      "source_attach_name": "R_CalfTwist",
+      "target_bone": "src_043_R_CalfTwist",
+      "bind_point_source_world": [
+        -0.19703353941440582,
+        0.6237866282463074,
+        -0.09500925242900848
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860996067523956
+      ],
+      "source_upward": [
+        -1.0579824447631836e-06,
+        0.059134721755981445,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 206
+    },
+    {
+      "dummy_index": 207,
+      "reference_id": 200,
+      "source_attach_name": "R_CalfTwist",
+      "target_bone": "src_043_R_CalfTwist",
+      "bind_point_source_world": [
+        -0.17143885791301727,
+        0.6284773945808411,
+        0.1619030088186264
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -9.98377799987793e-07,
+        0.05913490056991577,
+        1.1920928955078125e-07
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 207
+    },
+    {
+      "dummy_index": 208,
+      "reference_id": 200,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        -0.3296756446361542,
+        3.2032957077026367,
+        0.015628322958946228
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        -8.642673492431641e-07,
+        0.05913496017456055,
+        2.60770320892334e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 208
+    },
+    {
+      "dummy_index": 209,
+      "reference_id": 200,
+      "source_attach_name": "Spine",
+      "target_bone": "src_054_Spine",
+      "bind_point_source_world": [
+        -0.2091122567653656,
+        2.9558188915252686,
+        0.18445461988449097
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913496017456055,
+        1.4901161193847656e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 209
+    },
+    {
+      "dummy_index": 210,
+      "reference_id": 200,
+      "source_attach_name": "Spine2",
+      "target_bone": "src_056_Spine2",
+      "bind_point_source_world": [
+        -0.5069572329521179,
+        3.548638105392456,
+        -0.2241361439228058
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        -2.086162567138672e-06,
+        0.059134721755981445,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 210
+    },
+    {
+      "dummy_index": 211,
+      "reference_id": 200,
+      "source_attach_name": "R_UpperArm",
+      "target_bone": "src_343_R_UpperArm",
+      "bind_point_source_world": [
+        -0.8169092535972595,
+        3.493326425552368,
+        0.33989134430885315
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386100798845291
+      ],
+      "source_upward": [
+        -8.940696716308594e-07,
+        0.05913519859313965,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 211
+    },
+    {
+      "dummy_index": 212,
+      "reference_id": 200,
+      "source_attach_name": "R_UpArmTwist",
+      "target_bone": "src_365_R_UpArmTwist",
+      "bind_point_source_world": [
+        -0.737985372543335,
+        3.593621253967285,
+        -0.09139464050531387
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        1.0132789611816406e-06,
+        0.05913519859313965,
+        2.980232238769531e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 212
+    },
+    {
+      "dummy_index": 213,
+      "reference_id": 200,
+      "source_attach_name": "R_UpperArm",
+      "target_bone": "src_343_R_UpperArm",
+      "bind_point_source_world": [
+        -1.0069849491119385,
+        3.424137830734253,
+        -0.08553973585367203
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098563671112
+      ],
+      "source_upward": [
+        1.1920928955078125e-06,
+        0.05913519859313965,
+        4.470348358154297e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 213
+    },
+    {
+      "dummy_index": 214,
+      "reference_id": 200,
+      "source_attach_name": "R_ForeArmTwist1",
+      "target_bone": "src_347_R_ForeArmTwist1",
+      "bind_point_source_world": [
+        -1.438186764717102,
+        3.135751247406006,
+        -0.4102168679237366
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1920928955078125e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 214
+    },
+    {
+      "dummy_index": 215,
+      "reference_id": 200,
+      "source_attach_name": "R_Forearm",
+      "target_bone": "src_345_R_Forearm",
+      "bind_point_source_world": [
+        -1.3096033334732056,
+        3.2339468002319336,
+        -0.18937921524047852
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        1.0728836059570312e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 215
+    },
+    {
+      "dummy_index": 216,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -0.3112066388130188,
+        4.391816139221191,
+        -0.04439898207783699
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860981166362762
+      ],
+      "source_upward": [
+        -1.0728836059570312e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 216
+    },
+    {
+      "dummy_index": 217,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -0.15057536959648132,
+        4.492134094238281,
+        -0.324570894241333
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860970735549927
+      ],
+      "source_upward": [
+        -6.556510925292969e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 217
+    },
+    {
+      "dummy_index": 218,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        -0.22883369028568268,
+        4.16452169418335,
+        0.19259509444236755
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860967755317688
+      ],
+      "source_upward": [
+        -1.043081283569336e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 218
+    },
+    {
+      "dummy_index": 219,
+      "reference_id": 200,
+      "source_attach_name": "R_Clavicle",
+      "target_bone": "src_341_R_Clavicle",
+      "bind_point_source_world": [
+        -0.22883370518684387,
+        3.8717517852783203,
+        0.3396183252334595
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860978186130524
+      ],
+      "source_upward": [
+        -1.043081283569336e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 219
+    },
+    {
+      "dummy_index": 220,
+      "reference_id": 200,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        2.5398457050323486,
+        -0.5829773545265198
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 220
+    },
+    {
+      "dummy_index": 221,
+      "reference_id": 200,
+      "source_attach_name": "Jaw",
+      "target_bone": "src_336_Jaw",
+      "bind_point_source_world": [
+        9.285053238272667e-05,
+        4.001914024353027,
+        -0.5404740571975708
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 221
+    },
+    {
+      "dummy_index": 222,
+      "reference_id": 200,
+      "source_attach_name": "Pelvis",
+      "target_bone": "src_008_Pelvis",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        2.5398457050323486,
+        0.3258976340293884
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860978186130524
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 222
+    },
+    {
+      "dummy_index": 223,
+      "reference_id": 200,
+      "source_attach_name": "Spine1",
+      "target_bone": "src_055_Spine1",
+      "bind_point_source_world": [
+        9.285011037718505e-05,
+        3.1031041145324707,
+        -0.5829775929450989
+      ],
+      "source_forward": [
+        -1.4551915228366852e-10,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 223
+    },
+    {
+      "dummy_index": 224,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor1",
+      "target_bone": "src_367_SpineArmor1",
+      "bind_point_source_world": [
+        9.28503432078287e-05,
+        3.5934641361236572,
+        -0.5829774737358093
+      ],
+      "source_forward": [
+        -6.548361852765083e-11,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.05913424491882324,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 224
+    },
+    {
+      "dummy_index": 225,
+      "reference_id": 200,
+      "source_attach_name": "Neck",
+      "target_bone": "src_314_Neck",
+      "bind_point_source_world": [
+        9.285057603847235e-05,
+        3.956414222717285,
+        -0.23508034646511078
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860999047756195
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 225
+    },
+    {
+      "dummy_index": 226,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        9.285084524890408e-05,
+        3.4003055095672607,
+        0.48426690697669983
+      ],
+      "source_forward": [
+        -6.548361852765083e-11,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134483337402344,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 226
+    },
+    {
+      "dummy_index": 227,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        4.239256858825684,
+        -0.4866001605987549
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 227
+    },
+    {
+      "dummy_index": 228,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        4.606768608093262,
+        -0.0447850376367569
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386099010705948
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 228
+    },
+    {
+      "dummy_index": 229,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        3.99338698387146,
+        0.40221333503723145
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.059134721755981445,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 229
+    },
+    {
+      "dummy_index": 230,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        4.393633842468262,
+        0.19653266668319702
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 230
+    },
+    {
+      "dummy_index": 231,
+      "reference_id": 200,
+      "source_attach_name": "Head",
+      "target_bone": "src_315_Head",
+      "bind_point_source_world": [
+        9.285051783081144e-05,
+        4.215502738952637,
+        0.33459416031837463
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.1386098861694336
+      ],
+      "source_upward": [
+        -1.1007650755345821e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 231
+    },
+    {
+      "dummy_index": 232,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist1",
+      "target_bone": "src_037_L_ThighTwist1",
+      "bind_point_source_world": [
+        0.46970653533935547,
+        1.8792396783828735,
+        -0.38064998388290405
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860994577407837
+      ],
+      "source_upward": [
+        8.642673492431641e-07,
+        0.059134840965270996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 232
+    },
+    {
+      "dummy_index": 233,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist1",
+      "target_bone": "src_037_L_ThighTwist1",
+      "bind_point_source_world": [
+        0.4145370423793793,
+        1.8839305639266968,
+        0.009724782779812813
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.059134840965270996,
+        9.12696123123169e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 233
+    },
+    {
+      "dummy_index": 234,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist1",
+      "target_bone": "src_037_L_ThighTwist1",
+      "bind_point_source_world": [
+        0.13063956797122955,
+        1.8839305639266968,
+        0.009724782779812813
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860982656478882
+      ],
+      "source_upward": [
+        7.301568984985352e-07,
+        0.059134840965270996,
+        9.12696123123169e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 234
+    },
+    {
+      "dummy_index": 235,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist1",
+      "target_bone": "src_052_R_ThighTwist1",
+      "bind_point_source_world": [
+        -0.469706654548645,
+        1.8792392015457153,
+        -0.3806498944759369
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -8.642673492431641e-07,
+        0.059134840965270996,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 235
+    },
+    {
+      "dummy_index": 236,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist1",
+      "target_bone": "src_052_R_ThighTwist1",
+      "bind_point_source_world": [
+        -0.4145371615886688,
+        1.8839300870895386,
+        0.009724752977490425
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.059134840965270996,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 236
+    },
+    {
+      "dummy_index": 237,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist1",
+      "target_bone": "src_052_R_ThighTwist1",
+      "bind_point_source_world": [
+        -0.1306396871805191,
+        1.8839300870895386,
+        0.009724752977490425
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -7.301568984985352e-07,
+        0.059134840965270996,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 237
+    },
+    {
+      "dummy_index": 238,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.10018391907215118,
+        2.243075132369995,
+        -0.34180349111557007
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        1.1548399925231934e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 238
+    },
+    {
+      "dummy_index": 239,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.10018391907215118,
+        2.2430756092071533,
+        -0.34180349111557007
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -1.1548399925231934e-06,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 239
+    },
+    {
+      "dummy_index": 240,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.46970659494400024,
+        2.239330768585205,
+        -0.3806498944759369
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        8.642673492431641e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 240
+    },
+    {
+      "dummy_index": 241,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.41453710198402405,
+        2.2440218925476074,
+        0.009724751114845276
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        7.450580596923828e-07,
+        0.059134721755981445,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 241
+    },
+    {
+      "dummy_index": 242,
+      "reference_id": 200,
+      "source_attach_name": "L_ThighTwist",
+      "target_bone": "src_036_L_ThighTwist",
+      "bind_point_source_world": [
+        0.13063962757587433,
+        2.2440218925476074,
+        0.009724751114845276
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        7.301568984985352e-07,
+        0.059134721755981445,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 242
+    },
+    {
+      "dummy_index": 243,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.46970659494400024,
+        2.2393312454223633,
+        -0.3806498944759369
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860991597175598
+      ],
+      "source_upward": [
+        -8.642673492431641e-07,
+        0.05913496017456055,
+        0.0
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 243
+    },
+    {
+      "dummy_index": 244,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.41453710198402405,
+        2.2440223693847656,
+        0.009724749252200127
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -7.450580596923828e-07,
+        0.059134721755981445,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 244
+    },
+    {
+      "dummy_index": 245,
+      "reference_id": 200,
+      "source_attach_name": "R_ThighTwist",
+      "target_bone": "src_051_R_ThighTwist",
+      "bind_point_source_world": [
+        -0.13063962757587433,
+        2.2440223693847656,
+        0.009724749252200127
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860979676246643
+      ],
+      "source_upward": [
+        -7.301568984985352e-07,
+        0.059134721755981445,
+        8.940696716308594e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 245
+    },
+    {
+      "dummy_index": 246,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.4325954914093018,
+        0.07835018634796143
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 246
+    },
+    {
+      "dummy_index": 247,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.4325954914093018,
+        0.07835018634796143
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 247
+    },
+    {
+      "dummy_index": 248,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        0.3031772971153259,
+        3.658097505569458,
+        0.09986507892608643
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 248
+    },
+    {
+      "dummy_index": 249,
+      "reference_id": 200,
+      "source_attach_name": "SpineArmor2",
+      "target_bone": "src_368_SpineArmor2",
+      "bind_point_source_world": [
+        -0.3031772971153259,
+        3.658097505569458,
+        0.09986507892608643
+      ],
+      "source_forward": [
+        0.0,
+        0.0,
+        -0.13860976696014404
+      ],
+      "source_upward": [
+        -1.1026859283447266e-06,
+        0.05913496017456055,
+        5.960464477539063e-08
+      ],
+      "runtime_method": "skin_bind_point_by_target_bone_matrix",
+      "basis": "same global coordinate and unit contract as source_bone_map.json",
+      "source_model_dummy_index": 249
+    }
+  ],
+  "raw_evidence": "source_model_attachments.json",
+  "important_references": {
+    "right_sword_ffx_tip": 302,
+    "left_sword_ffx_tip": 312,
+    "right_hand": 901,
+    "left_hand": 902,
+    "right_foot": 400,
+    "left_foot": 420,
+    "grab_absorption": 231
+  },
+  "attack_dummy_ids_are_not_replaced_by_ffx_tip_ids": true,
+  "miquella": {
+    "root_source_bone": 84,
+    "head_source_bone": 231,
+    "four_arm_parent_chains_preserved": true
+  }
+}

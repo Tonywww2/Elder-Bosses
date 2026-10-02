@@ -11,6 +11,9 @@ import com.tonywww.elder_bosses.client.hud.ClientBossVictoryBanner;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -18,6 +21,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 //?} else {
 /*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -42,16 +48,41 @@ public final class ClientGameEvents {
         if (event.phase == TickEvent.Phase.END) {
             ClientBossMusic.tick();
             ClientBossVictoryBanner.tick();
+            com.tonywww.elder_bosses.client.render.ConsortGrabPlayerRenderer.lockLocalInput();
         com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.tick();
+        com.tonywww.elder_bosses.client.vfx.ClientConsortSourceEffects.tick();
         }
     }
     //?} else {
     /*public static void onClientTick(ClientTickEvent.Post event) {
         ClientBossMusic.tick();
         ClientBossVictoryBanner.tick();
+        com.tonywww.elder_bosses.client.render.ConsortGrabPlayerRenderer.lockLocalInput();
         com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.tick();
+        com.tonywww.elder_bosses.client.vfx.ClientConsortSourceEffects.tick();
     }
     *///?}
+
+    @SubscribeEvent
+    public static void onGrabPlayerRender(RenderPlayerEvent.Pre event) {
+        if(event.getEntity() instanceof net.minecraft.client.player.AbstractClientPlayer player
+                && com.tonywww.elder_bosses.client.render.ConsortGrabPlayerRenderer.render(player,event.getPartialTick(),
+                event.getPoseStack(),event.getMultiBufferSource(),event.getPackedLight())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onGrabHands(RenderHandEvent event) {
+        var player=net.minecraft.client.Minecraft.getInstance().player;
+        if(player!=null && com.tonywww.elder_bosses.client.render.ConsortGrabPlayerRenderer.owner(player)!=null) event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onGrabInput(InputEvent.InteractionKeyMappingTriggered event) {
+        var player=net.minecraft.client.Minecraft.getInstance().player;
+        if(player!=null && com.tonywww.elder_bosses.client.render.ConsortGrabPlayerRenderer.owner(player)!=null) {
+            event.setCanceled(true);event.setSwingHand(false);
+        }
+    }
 
     @SubscribeEvent
     public static void onPlaySound(PlaySoundEvent event) {

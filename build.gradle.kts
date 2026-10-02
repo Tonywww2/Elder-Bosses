@@ -32,6 +32,15 @@ loom {
 
 repositories {
     exclusiveContent {
+        forRepository {
+            maven("https://cursemaven.com") {
+                name = "ConfiguredCurseMaven"
+                metadataSources { artifact() }
+            }
+        }
+        filter { includeGroup("curse.maven") }
+    }
+    exclusiveContent {
         forRepository { maven("https://maven.theillusivec4.top/") }
         filter { includeGroup("top.theillusivec4.curios") }
     }
@@ -49,6 +58,8 @@ repositories {
 }
 
 dependencies {
+    // Official Configured: native config screens, separate client mod jar.
+    modRuntimeOnly("curse.maven:configured-457570:5180900") { isTransitive = false }
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.officialMojangMappings())
     forge("net.minecraftforge:forge:$mcVersion-$forgeVersion")

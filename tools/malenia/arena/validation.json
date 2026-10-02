@@ -1,0 +1,86 @@
+{
+  "date": "2026-09-26",
+  "revision": "haligtree_chamber_r1",
+  "authoring": "fixed NBT; no runtime procedural terrain",
+  "bounds": [
+    [
+      -36,
+      -4,
+      -38
+    ],
+    [
+      36,
+      37,
+      44
+    ]
+  ],
+  "parts_per_version": 18,
+  "authored_cells": 254478,
+  "builds": {
+    "forge_1_20_1": "passed",
+    "neoforge_1_21_1": "passed",
+    "log": "build/malenia-arena-build.log"
+  },
+  "asset_checks": {
+    "passed": true,
+    "assertions": 1272441,
+    "checks": [
+      "dual-version exact content parity apart from DataVersion",
+      "complete air-inclusive volume",
+      "non-overlapping seams",
+      "four rotations",
+      "missing/duplicate/unknown markers and bad palette indices rejected"
+    ],
+    "log": "build/malenia-arena-assets.log"
+  },
+  "forge_server": {
+    "passed": true,
+    "test": "placementAndRecovery",
+    "world": "build/malenia-arena-gametest",
+    "checks": [
+      "four placements and durable undos",
+      "core floor and 18-block clearance",
+      "actual Malenia pathfinding",
+      "overlap rejected",
+      "container/fluid rejected",
+      "later-edit undo conflict rejected",
+      "prior journal recovery after restart"
+    ],
+    "test_batch_wall_seconds_approximately": 14,
+    "log": "build/malenia-arena-runtime-final.log"
+  },
+  "visual": {
+    "preview": "build/malenia-arena/arena-review.png",
+    "viewed": true,
+    "type": "offscreen exported voxels and local vanilla textures; illustrative lighting",
+    "client_world_screenshot": false
+  },
+  "not_verified": [
+    "NeoForge server placement",
+    "Minecraft client lighting and translucent sorting",
+    "complete two-phase combat and multiplayer"
+  ],
+  "not_implemented": [
+    "natural generation",
+    "encounter boundary binding",
+    "battle fog door",
+    "battle destruction and reset"
+  ],
+  "artifacts": [
+    {
+      "path": "versions/1.20.1-forge/build/libs/elder_bosses-forge-0.1.0+1.20.1.jar",
+      "sha256": "eb59f6a2b7239c72978d77f329bf68542491d43455d761ba41b43d1062dd1b25",
+      "arena_templates": 19,
+      "test_fixtures_absent": true
+    },
+    {
+      "path": "versions/1.21.1-neoforge/build/libs/elder_bosses-neoforge-0.1.0+1.21.1.jar",
+      "sha256": "1241b6900ad028768141c6f7ad60441e79d719cfc1c5e1d89e1d561bdf6650fa",
+      "arena_templates": 19,
+      "test_fixtures_absent": true
+    }
+  ],
+  "subsequent_worldgen_report": "worldgen_validation.json",
+  "subsequent_binding_report": "binding_validation.json",
+  "subsequent_surface_report": "surface_validation.json"
+}

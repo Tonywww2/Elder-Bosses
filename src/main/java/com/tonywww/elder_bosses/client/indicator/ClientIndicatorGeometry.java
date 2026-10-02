@@ -23,6 +23,16 @@ public final class ClientIndicatorGeometry {
         return builder.build();
     }
 
+    /** One warning plane, including paths whose source points have different heights. */
+    public static Mesh flat(Mesh mesh, double y) {
+        return new Mesh(mesh.fills().stream().map(q -> new Quad(flat(q.first(), y), flat(q.second(), y),
+                        flat(q.third(), y), flat(q.fourth(), y))).toList(),
+                mesh.borders().stream().map(l -> new Line(flat(l.from(), y), flat(l.to(), y))).toList(),
+                mesh.accents().stream().map(l -> new Line(flat(l.from(), y), flat(l.to(), y))).toList());
+    }
+
+    private static Vertex flat(Vertex vertex, double y) { return new Vertex(vertex.x(), y, vertex.z()); }
+
     private static void appendSector(
             MeshBuilder builder,
             IndicatorSnapshotPacket snapshot,

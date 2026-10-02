@@ -76,6 +76,10 @@ public final class ClientModEvents {
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                 PlatformResourceLocation.id("consort_energy"), DefaultVertexFormat.POSITION_TEX_COLOR),
                 ConsortEnergyShader::install);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),PlatformResourceLocation.id("consort_source"),DefaultVertexFormat.POSITION_TEX_COLOR),
+                com.tonywww.elder_bosses.client.vfx.ConsortSourceShader::installNormal);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),PlatformResourceLocation.id("consort_source_add"),DefaultVertexFormat.POSITION_TEX_COLOR),
+                com.tonywww.elder_bosses.client.vfx.ConsortSourceShader::installAdd);
             try {
                 event.registerShader(new ShaderInstance(event.getResourceProvider(),
                         PlatformResourceLocation.id("consort_gravity"), DefaultVertexFormat.POSITION_TEX_COLOR),

@@ -1,5 +1,5 @@
 {
-  "geometrySource": "models/promised_consort/promised_consort.bbmodel",
+  "geometrySource": "tools/consort/promised_consort.bbmodel",
   "geometrySha256": "d2cd04b33a1b2317ca25142f96a42f2be1522f9f2029d45564f8bba36f693d36",
   "animationSha256": "329b673530b3d639c821a47408c231a264fa4b8b80d300bd20181163ceec4678",
   "windowsSha256": "5565383b044ed3a75a0a7168713e89753ae8dccabff0b10f404494857a298243",

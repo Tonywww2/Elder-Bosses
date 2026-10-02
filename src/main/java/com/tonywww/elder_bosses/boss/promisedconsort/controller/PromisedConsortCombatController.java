@@ -62,6 +62,11 @@ public final class PromisedConsortCombatController {
     }
 
     public TickResult tick() {
+        return tick(true);
+    }
+    /** Existing project branches finish normally before handing selection back to original AI. */
+    public TickResult tickRetainedAction() {return tick(false);}
+    private TickResult tick(boolean allowNewSelection) {
         long gameTick = host.gameTime();
         if (gameTick < lastTick) {
             throw new IllegalStateException("game time moved backwards");
@@ -113,7 +118,7 @@ public final class PromisedConsortCombatController {
             nextSelectionTick = saturatedAdd(gameTick, recovery > 0 ? recovery : delay.scaled(ranged.pursuitIdleMultiplier(), pursuing));
         }
 
-        if (!runtime.isActive() && gameTick >= nextSelectionTick) {
+        if (allowNewSelection && !runtime.isActive() && gameTick >= nextSelectionTick) {
             startSelectedAction(gameTick);
         }
 

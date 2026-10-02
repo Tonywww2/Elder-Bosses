@@ -9,7 +9,6 @@ import java.util.Objects;
 public record PromisedConsortCombatConfigSnapshot(
         General general,
         Encounter encounter,
-        DamageRouting damageRouting,
         IncomingDamage incomingDamage,
         Multiplayer multiplayer,
         Arena arena,
@@ -17,9 +16,6 @@ public record PromisedConsortCombatConfigSnapshot(
         Presentation presentation,
         Stagger stagger,
         InstantGuard instantGuard,
-        PhaseResistances resistance,
-        PhaseSourceMultipliers sourceMultiplier,
-        Status status,
         Selector selector,
         PhaseTransition phaseTransition,
         Meteor meteor,
@@ -27,13 +23,11 @@ public record PromisedConsortCombatConfigSnapshot(
         Visuals visuals,
         Performance performance,
         Dialogue dialogue,
-        NonverbalAudio nonverbalAudio,
-        Rewards rewards
+        NonverbalAudio nonverbalAudio
 ) {
     public PromisedConsortCombatConfigSnapshot {
         Objects.requireNonNull(general, "general");
         Objects.requireNonNull(encounter, "encounter");
-        Objects.requireNonNull(damageRouting, "damageRouting");
         Objects.requireNonNull(incomingDamage, "incomingDamage");
         Objects.requireNonNull(multiplayer, "multiplayer");
         Objects.requireNonNull(arena, "arena");
@@ -41,9 +35,6 @@ public record PromisedConsortCombatConfigSnapshot(
         Objects.requireNonNull(presentation, "presentation");
         Objects.requireNonNull(stagger, "stagger");
         Objects.requireNonNull(instantGuard, "instantGuard");
-        Objects.requireNonNull(resistance, "resistance");
-        Objects.requireNonNull(sourceMultiplier, "sourceMultiplier");
-        Objects.requireNonNull(status, "status");
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(phaseTransition, "phaseTransition");
         Objects.requireNonNull(meteor, "meteor");
@@ -52,7 +43,6 @@ public record PromisedConsortCombatConfigSnapshot(
         Objects.requireNonNull(performance, "performance");
         Objects.requireNonNull(dialogue, "dialogue");
         Objects.requireNonNull(nonverbalAudio, "nonverbalAudio");
-        Objects.requireNonNull(rewards, "rewards");
     }
 
     public record General(
@@ -66,6 +56,9 @@ public record PromisedConsortCombatConfigSnapshot(
             int maxActivePlayers,
             double healthPerExtraPlayer
     ) {
+        public static General defaults() {
+            return new General(1600.0, 24.0, 0.30, 96.0, 1.0, 0.65, 0.85, 4, 0.55);
+        }
     }
 
     public record Encounter(
@@ -84,6 +77,7 @@ public record PromisedConsortCombatConfigSnapshot(
             boolean rejoinAfterDisconnect,
             boolean rejoinAfterBoundaryExit,
             boolean rejoinAfterDimensionChange,
+            double disengageRadius,
             int disengageGraceTicks,
             String disengageBehavior,
             String cooldownResumePolicy,
@@ -92,18 +86,6 @@ public record PromisedConsortCombatConfigSnapshot(
             String peacefulPolicy,
             String overlapPolicy,
             boolean persistDormant
-    ) {
-    }
-
-    public record DamageRouting(
-            String ordinaryPhysical,
-            String pierce,
-            String bleedTrigger,
-            String magic,
-            String holy,
-            String frostTrigger,
-            boolean physicalUsesArmor,
-            boolean magicBypassesArmor
     ) {
     }
 
@@ -150,9 +132,12 @@ public record PromisedConsortCombatConfigSnapshot(
             String primaryTargetPolicy,
                         String attackTargetPolicy,
                         double maxSegmentPursuitDistance,
+                        double rangedDamageDistance,
                         PromisedConsortRangedConfig rangedCounter
     ) {
                 public Targeting {
+                        if (!Double.isFinite(rangedDamageDistance) || rangedDamageDistance <= 0 || rangedDamageDistance > 2048)
+                                throw new IllegalArgumentException("rangedDamageDistance must be between 0 (exclusive) and 2048 blocks");
                         if (rangedCounter == null) rangedCounter = PromisedConsortRangedConfig.defaults();
                         if (!Double.isFinite(maxSegmentPursuitDistance) || maxSegmentPursuitDistance < 0 || maxSegmentPursuitDistance > 16) {
                                 throw new IllegalArgumentException("maxSegmentPursuitDistance must be between 0 and 16 blocks");
@@ -163,7 +148,7 @@ public record PromisedConsortCombatConfigSnapshot(
                                  boolean targetUnregisteredPlayers, boolean targetCreativePlayers, boolean creativePlayersCanJoin,
                                  String primaryTargetPolicy, String attackTargetPolicy, double maxSegmentPursuitDistance) {
                         this(distanceWeight, recentDamageWeight, itemUseWeight, recentDamageWindowTicks, targetUnregisteredPlayers,
-                                targetCreativePlayers, creativePlayersCanJoin, primaryTargetPolicy, attackTargetPolicy, maxSegmentPursuitDistance,
+                                targetCreativePlayers, creativePlayersCanJoin, primaryTargetPolicy, attackTargetPolicy, maxSegmentPursuitDistance, 9.0,
                                 PromisedConsortRangedConfig.defaults());
                 }
 
@@ -216,35 +201,6 @@ public record PromisedConsortCombatConfigSnapshot(
     ) {
     }
 
-    public record PhaseResistances(ResistanceProfile phaseOne, ResistanceProfile phaseTwo) {
-    }
-
-    public record ResistanceProfile(double physical, double fire, double magic, double lightning) {
-    }
-
-    public record PhaseSourceMultipliers(
-            SourceMultiplierProfile phaseOne,
-            SourceMultiplierProfile phaseTwo
-    ) {
-    }
-
-    public record SourceMultiplierProfile(
-            double ordinaryPhysical,
-            double pierce,
-            double bleedTrigger,
-            double magic,
-            double holy,
-            double frostTrigger
-    ) {
-    }
-
-    public record Status(
-            double poisonDamageMultiplier,
-            double witherDamageMultiplier,
-            double sleepDamageMultiplier
-    ) {
-    }
-
     public record Selector(
             int avoidLastActionCount,
             double itemUsePunishMinRange,
@@ -289,9 +245,6 @@ public record PromisedConsortCombatConfigSnapshot(
     public record Meteor(
             boolean damageGate,
             String damageGateMode,
-            String pendingDamagePolicy,
-            int invulnerableStartTick,
-            int invulnerableEndTick,
             boolean acceptsStagger,
             boolean clearOwnedHazards,
             String repeatMode
@@ -346,12 +299,4 @@ public record PromisedConsortCombatConfigSnapshot(
     ) {
     }
 
-    public record Rewards(
-            int remembranceCount,
-            int gateFragmentMin,
-            int gateFragmentMax,
-            boolean affectedByLooting,
-            int experience
-    ) {
-    }
 }

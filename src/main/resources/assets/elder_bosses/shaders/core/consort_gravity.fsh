@@ -30,7 +30,8 @@ void main() {
     float center = (1.0 - smoothstep(0.06, 0.27, radius)) * Intensity;
     float ring = exp(-pow((radius - 0.30 - turbulence * 0.025 * envelope) * 28.0, 2.0)) * Intensity;
     scene *= 1.0 - center * 0.86;
-    scene += vec3(0.30, 0.08, 0.49) * ring * 0.7;
+    scene = mix(scene, scene * vec3(1.05, 0.58, 1.25), clamp(envelope * Intensity * 0.18, 0.0, 0.45));
+    scene += vec3(0.49, 0.035, 0.80) * ring * 0.7;
     float alpha = (1.0 - smoothstep(0.73, 1.0, radius)) * vertexColor.a * ColorModulator.a;
     fragColor = vec4(scene * ColorModulator.rgb, alpha);
 }

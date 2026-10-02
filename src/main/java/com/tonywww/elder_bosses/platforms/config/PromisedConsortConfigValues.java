@@ -4,6 +4,7 @@ import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.UnmodifiableConfig;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortCombatConfigSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSkillConfigSnapshot;
+import com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot;
 import com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortActionId;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 import com.tonywww.elder_bosses.combat.state.StaggerTracker.DistanceBand;
@@ -33,6 +34,8 @@ public final class PromisedConsortConfigValues {
     private final Map<PromisedConsortActionId, SkillValues> skills =
             new EnumMap<>(PromisedConsortActionId.class);
     private final Supplier<Boolean> debugActionBroadcast;
+    private final Map<String,Supplier<Double>> sourceNumbers=new LinkedHashMap<>();
+    private final Map<String,Supplier<Boolean>> sourceFlags=new LinkedHashMap<>();
 
     public PromisedConsortConfigValues(
             //? if forge {
@@ -41,20 +44,52 @@ public final class PromisedConsortConfigValues {
             /*ModConfigSpec.Builder rawBuilder
             *///?}
     ) {
+        this(new LocalizedConfigBuilder(rawBuilder));
+    }
+
+    public PromisedConsortConfigValues(LocalizedConfigBuilder rawBuilder) {
         Builder builder = new Builder(rawBuilder);
         builder.push("promised_consort");
         defineGeneral(builder);
         defineEncounter(builder);
         defineDamage(builder);
         defineArenaAndTargeting(builder);
-        defineRangedCounter(builder);
+        defineRangedCounter(new Builder(builder));
         defineCombatSystems(builder);
         definePresentation(builder);
-        defineSkills(builder);
+        defineSkills(new Builder(builder));
+        defineSourceSkills(builder);
         builder.push("debug");
         debugActionBroadcast = builder.bool("action_broadcast", false);
         builder.pop();
         builder.pop();
+    }
+
+    private void defineSourceSkills(Builder builder) {
+        builder.push("skills");
+        for(var value:PromisedConsortSourceConfigSnapshot.definition().getAsJsonArray("fields")) {
+            var row=value.getAsJsonObject();String path=row.get("path").getAsString();
+            String[] parts=path.split("\\.");
+            for(int i=0;i<parts.length-1;i++) {
+                String group=parts[i];
+                if(i==1 && parts[0].equals("entries")) group=PromisedConsortSourceConfigSnapshot.definition()
+                        .getAsJsonObject("entries").get(group.substring(3)).getAsString();
+                builder.push(group);
+            }
+            String leaf=parts[parts.length-1];
+            if(row.get("type").getAsString().equals("boolean")) sourceFlags.put(path,builder.bool(leaf,row.get("default").getAsBoolean()));
+            else if(row.get("type").getAsString().equals("integer")) {
+                Supplier<Integer> number=builder.integer(leaf,row.get("default").getAsInt(),row.get("min").getAsInt(),row.get("max").getAsInt());
+                sourceNumbers.put(path,()->number.get().doubleValue());
+            } else sourceNumbers.put(path,builder.number(leaf,row.get("default").getAsDouble(),row.get("min").getAsDouble(),row.get("max").getAsDouble()));
+            for(int i=0;i<parts.length-1;i++) builder.pop();
+        }
+        builder.pop();
+    }
+    public PromisedConsortSourceConfigSnapshot sourceSnapshot() {
+        var numbers=new LinkedHashMap<String,Double>();var flags=new LinkedHashMap<String,Boolean>();
+        sourceNumbers.forEach((k,v)->numbers.put(k,v.get()));sourceFlags.forEach((k,v)->flags.put(k,v.get()));
+        return new PromisedConsortSourceConfigSnapshot(numbers,flags);
     }
 
     public boolean debugActionBroadcast() {
@@ -90,6 +125,7 @@ public final class PromisedConsortConfigValues {
                         bool("encounter.rejoin_after_disconnect"),
                         bool("encounter.rejoin_after_boundary_exit"),
                         bool("encounter.rejoin_after_dimension_change"),
+                        number("encounter.disengage_radius"),
                         integer("encounter.disengage_grace_ticks"),
                         string("encounter.disengage_behavior"),
                         string("encounter.cooldown_resume_policy"),
@@ -98,16 +134,6 @@ public final class PromisedConsortConfigValues {
                         string("encounter.peaceful_policy"),
                         string("encounter.overlap_policy"),
                         bool("encounter.persist_dormant")
-                ),
-                new PromisedConsortCombatConfigSnapshot.DamageRouting(
-                        string("damage_routing.ordinary_physical"),
-                        string("damage_routing.pierce"),
-                        string("damage_routing.bleed_trigger"),
-                        string("damage_routing.magic"),
-                        string("damage_routing.holy"),
-                        string("damage_routing.frost_trigger"),
-                        bool("damage_routing.physical_uses_armor"),
-                        bool("damage_routing.magic_bypasses_armor")
                 ),
                 new PromisedConsortCombatConfigSnapshot.IncomingDamage(
                         string("incoming_damage.source_policy"),
@@ -143,6 +169,7 @@ public final class PromisedConsortConfigValues {
                         string("targeting.primary_target_policy"),
                         string("targeting.attack_target_policy"),
                         number("targeting.max_segment_pursuit_distance"),
+                        number("targeting.ranged_damage_distance"),
                         rangedCounterSnapshot()
                 ),
                 new PromisedConsortCombatConfigSnapshot.Presentation(
@@ -180,19 +207,6 @@ public final class PromisedConsortConfigValues {
                         number("instant_guard.cue_pitch"),
                         integer("instant_guard.cue_cooldown_ticks")
                 ),
-                new PromisedConsortCombatConfigSnapshot.PhaseResistances(
-                        resistance("resistance.phase_one"),
-                        resistance("resistance.phase_two")
-                ),
-                new PromisedConsortCombatConfigSnapshot.PhaseSourceMultipliers(
-                        sourceMultipliers("source_multiplier.phase_one"),
-                        sourceMultipliers("source_multiplier.phase_two")
-                ),
-                new PromisedConsortCombatConfigSnapshot.Status(
-                        number("status.poison_damage_multiplier"),
-                        number("status.wither_damage_multiplier"),
-                    number("status.sleep_damage_multiplier")
-                ),
                 new PromisedConsortCombatConfigSnapshot.Selector(
                         integer("selector.avoid_last_action_count"),
                         number("selector.item_use_punish_min_range"),
@@ -225,9 +239,6 @@ public final class PromisedConsortConfigValues {
                 new PromisedConsortCombatConfigSnapshot.Meteor(
                         bool("meteor.damage_gate"),
                         string("meteor.damage_gate_mode"),
-                        string("meteor.pending_damage_policy"),
-                        integer("meteor.invulnerable_start_tick"),
-                        integer("meteor.invulnerable_end_tick"),
                         bool("meteor.accepts_stagger"),
                         bool("meteor.clear_owned_hazards"),
                         string("meteor.repeat_mode")
@@ -269,13 +280,6 @@ public final class PromisedConsortConfigValues {
                         integer("nonverbal_audio.intro_roar_tick"),
                         integer("nonverbal_audio.victory_roar_delay_ticks"),
                         integer("nonverbal_audio.hurt_cooldown_ticks")
-                ),
-                new PromisedConsortCombatConfigSnapshot.Rewards(
-                        integer("rewards.remembrance_count"),
-                        integer("rewards.gate_fragment_min"),
-                        integer("rewards.gate_fragment_max"),
-                        bool("rewards.affected_by_looting"),
-                        integer("rewards.experience")
                 )
         );
     }
@@ -289,15 +293,16 @@ public final class PromisedConsortConfigValues {
 
     private void defineGeneral(Builder builder) {
         builder.push("general");
-        putNumber("general.base_health", builder.number("base_health", 1600.0, 1.0, 1_000_000.0));
-        putNumber("general.attack_damage", builder.number("attack_damage", 24.0, 0.0, 2048.0));
-        putNumber("general.movement_speed", builder.number("movement_speed", 0.30, 0.0, 4.0));
-        putNumber("general.follow_range", builder.number("follow_range", 96.0, 1.0, 2048.0));
-        putNumber("general.knockback_resistance", builder.number("knockback_resistance", 1.0, 0.0, 1.0));
-        putNumber("general.phase_two_health_ratio", builder.number("phase_two_health_ratio", 0.65, 0.01, 1.0));
-        putNumber("general.meteor_health_ratio", builder.number("meteor_health_ratio", 0.25, 0.01, 1.0));
-        putInteger("general.max_active_players", builder.integer("max_active_players", 4, 1, 16));
-        putNumber("general.health_per_extra_player", builder.number("health_per_extra_player", 0.55, 0.0, 10.0));
+        PromisedConsortCombatConfigSnapshot.General defaults = PromisedConsortCombatConfigSnapshot.General.defaults();
+        putNumber("general.base_health", builder.number("base_health", defaults.baseHealth(), 1.0, 1_000_000.0));
+        putNumber("general.attack_damage", builder.number("attack_damage", defaults.attackDamage(), 0.0, 2048.0));
+        putNumber("general.movement_speed", builder.number("movement_speed", defaults.movementSpeed(), 0.0, 4.0));
+        putNumber("general.follow_range", builder.number("follow_range", defaults.followRange(), 1.0, 2048.0));
+        putNumber("general.knockback_resistance", builder.number("knockback_resistance", defaults.knockbackResistance(), 0.0, 1.0));
+        putNumber("general.phase_two_health_ratio", builder.number("phase_two_health_ratio", defaults.phaseTwoHealthRatio(), 0.01, 1.0));
+        putNumber("general.meteor_health_ratio", builder.number("meteor_health_ratio", defaults.meteorHealthRatio(), 0.01, 1.0));
+        putInteger("general.max_active_players", builder.integer("max_active_players", defaults.maxActivePlayers(), 1, 16));
+        putNumber("general.health_per_extra_player", builder.number("health_per_extra_player", defaults.healthPerExtraPlayer(), 0.0, 10.0));
         builder.pop();
     }
 
@@ -314,10 +319,11 @@ public final class PromisedConsortConfigValues {
         putString("encounter.roster_slot_policy", builder.choice("roster_slot_policy", "never_reopen", "never_reopen", "reopen_on_exit"));
         putString("encounter.scaling_count_mode", builder.choice("scaling_count_mode", "cumulative_unique", "cumulative_unique", "current_active", "high_water_mark"));
         putBoolean("encounter.allow_join_during_disengage", builder.bool("allow_join_during_disengage", false));
-        putBoolean("encounter.rejoin_after_death", builder.bool("rejoin_after_death", false));
+        putBoolean("encounter.rejoin_after_death", builder.bool("rejoin_after_death", true));
         putBoolean("encounter.rejoin_after_disconnect", builder.bool("rejoin_after_disconnect", false));
         putBoolean("encounter.rejoin_after_boundary_exit", builder.bool("rejoin_after_boundary_exit", false));
         putBoolean("encounter.rejoin_after_dimension_change", builder.bool("rejoin_after_dimension_change", true));
+        putNumber("encounter.disengage_radius", builder.number("disengage_radius", 72.0, 1.0, 2048.0));
         putInteger("encounter.disengage_grace_ticks", builder.integer("disengage_grace_ticks", 100, 0, NetworkLimits.MAX_TICKS));
         putString("encounter.disengage_behavior", builder.choice("disengage_behavior", "finish_action_then_freeze", "cancel_and_freeze", "finish_action_then_freeze", "continue"));
         putString("encounter.cooldown_resume_policy", builder.choice("cooldown_resume_policy", "clear", "freeze", "elapse", "clear"));
@@ -330,37 +336,11 @@ public final class PromisedConsortConfigValues {
     }
 
     private void defineDamage(Builder builder) {
-        builder.push("damage_routing");
-        for (String key : List.of("ordinary_physical", "pierce", "bleed_trigger")) {
-            putString("damage_routing." + key, builder.choice(key, "physical", "physical", "magic"));
-        }
-        for (String key : List.of("magic", "holy", "frost_trigger")) {
-            putString("damage_routing." + key, builder.choice(key, "magic", "physical", "magic"));
-        }
-        putBoolean("damage_routing.physical_uses_armor", builder.bool("physical_uses_armor", true));
-        putBoolean("damage_routing.magic_bypasses_armor", builder.bool("magic_bypasses_armor", true));
-        builder.pop();
-
         builder.push("incoming_damage");
         putString("incoming_damage.source_policy", builder.choice("source_policy", "arena_player_and_owned", "arena_player_and_owned", "participants_only", "all_non_immune"));
         putBoolean("incoming_damage.forced_death_bypasses_policy", builder.bool("forced_death_bypasses_policy", true));
         builder.pop();
 
-        builder.push("resistance");
-        defineResistance(builder, "phase_one", 0.80, 0.80, 0.80, 0.80);
-        defineResistance(builder, "phase_two", 0.80, 0.80, 0.80, 0.80);
-        builder.pop();
-
-        builder.push("source_multiplier");
-        defineSourceMultipliers(builder, "phase_one", 1.00, 1.25, 0.50, 1.00, 1.25, 0.50);
-        defineSourceMultipliers(builder, "phase_two", 1.00, 1.25, 0.50, 1.00, 0.75, 0.50);
-        builder.pop();
-
-        builder.push("status");
-        putNumber("status.poison_damage_multiplier", builder.number("poison_damage_multiplier", 0.35, 0.0, 100.0));
-        putNumber("status.wither_damage_multiplier", builder.number("wither_damage_multiplier", 0.35, 0.0, 100.0));
-        putNumber("status.sleep_damage_multiplier", builder.number("sleep_damage_multiplier", 0.0, 0.0, 100.0));
-        builder.pop();
     }
 
     private void defineArenaAndTargeting(Builder builder) {
@@ -386,6 +366,7 @@ public final class PromisedConsortConfigValues {
         builder.pop();
 
         builder.push("targeting");
+        putNumber("targeting.ranged_damage_distance", builder.number("ranged_damage_distance", 9.0, 0.01, 2048.0));
         putNumber("targeting.max_segment_pursuit_distance", builder.number("max_segment_pursuit_distance", 3.0, 0.0, 16.0));
         putNumber("targeting.distance_weight", builder.number("distance_weight", 0.50, 0.0, 100.0));
         putNumber("targeting.recent_damage_weight", builder.number("recent_damage_weight", 0.35, 0.0, 100.0));
@@ -476,9 +457,6 @@ public final class PromisedConsortConfigValues {
         builder.push("meteor");
         putBoolean("meteor.damage_gate", builder.bool("damage_gate", true));
         putString("meteor.damage_gate_mode", builder.choice("damage_gate_mode", "truncate", "truncate", "full_damage", "leave_one_health"));
-        putString("meteor.pending_damage_policy", builder.choice("pending_damage_policy", "invulnerable", "invulnerable", "leave_one_health", "normal"));
-        putInteger("meteor.invulnerable_start_tick", builder.integer("invulnerable_start_tick", 0, 0, NetworkLimits.MAX_TICKS));
-        putInteger("meteor.invulnerable_end_tick", builder.integer("invulnerable_end_tick", 120, 0, NetworkLimits.MAX_TICKS));
         putBoolean("meteor.accepts_stagger", builder.bool("accepts_stagger", false));
         putBoolean("meteor.clear_owned_hazards", builder.bool("clear_owned_hazards", true));
         putString("meteor.repeat_mode", builder.choice("repeat_mode", "cooldown_forced", "cooldown_forced", "weighted", "once"));
@@ -529,20 +507,13 @@ public final class PromisedConsortConfigValues {
         putInteger("nonverbal_audio.hurt_cooldown_ticks", builder.integer("hurt_cooldown_ticks", 20, 0, NetworkLimits.MAX_TICKS));
         builder.pop();
 
-        builder.push("rewards");
-        putInteger("rewards.remembrance_count", builder.integer("remembrance_count", 1, 0, 64));
-        putInteger("rewards.gate_fragment_min", builder.integer("gate_fragment_min", 4, 0, 64));
-        putInteger("rewards.gate_fragment_max", builder.integer("gate_fragment_max", 8, 0, 64));
-        putBoolean("rewards.affected_by_looting", builder.bool("affected_by_looting", false));
-        putInteger("rewards.experience", builder.integer("experience", 500, 0, 1_000_000));
-        builder.pop();
     }
 
     private void defineRangedCounter(Builder builder) {
         builder.push("ranged_counter");
         putBoolean("ranged_counter.enabled", builder.bool("enabled", true));
         putNumber("ranged_counter.enter_distance", builder.number("enter_distance", 9, 0.01, 256));
-        putNumber("ranged_counter.exit_distance", builder.number("exit_distance", 5, 0, 256));
+        putNumber("ranged_counter.exit_distance", builder.number("exit_distance", 5, 0, 8.99));
         putNumber("ranged_counter.segment_adjustment_budget_multiplier", builder.number("segment_adjustment_budget_multiplier", 2, 0, 16));
         putNumber("ranged_counter.pursuit_selection_weight_multiplier", builder.number("pursuit_selection_weight_multiplier", 2, 0, 16));
         putNumber("ranged_counter.melee_suppression_distance", builder.number("melee_suppression_distance", 9, 0, 256));
@@ -802,64 +773,6 @@ public final class PromisedConsortConfigValues {
         );
         skills.put(actionId, values);
         return values;
-    }
-
-    private void defineResistance(
-            Builder builder,
-            String phase,
-            double physical,
-            double fire,
-            double magic,
-            double lightning
-    ) {
-        builder.push(phase);
-        putNumber("resistance." + phase + ".physical", builder.number("physical", physical, 0.0, 100.0));
-        putNumber("resistance." + phase + ".fire", builder.number("fire", fire, 0.0, 100.0));
-        putNumber("resistance." + phase + ".magic", builder.number("magic", magic, 0.0, 100.0));
-        putNumber("resistance." + phase + ".lightning", builder.number("lightning", lightning, 0.0, 100.0));
-        builder.pop();
-    }
-
-    private void defineSourceMultipliers(
-            Builder builder,
-            String phase,
-            double ordinaryPhysical,
-            double pierce,
-            double bleedTrigger,
-            double magic,
-            double holy,
-            double frostTrigger
-    ) {
-        builder.push(phase);
-        putNumber("source_multiplier." + phase + ".ordinary_physical", builder.number("ordinary_physical", ordinaryPhysical, 0.0, 100.0));
-        putNumber("source_multiplier." + phase + ".pierce", builder.number("pierce", pierce, 0.0, 100.0));
-        putNumber("source_multiplier." + phase + ".bleed_trigger", builder.number("bleed_trigger", bleedTrigger, 0.0, 100.0));
-        putNumber("source_multiplier." + phase + ".magic", builder.number("magic", magic, 0.0, 100.0));
-        putNumber("source_multiplier." + phase + ".holy", builder.number("holy", holy, 0.0, 100.0));
-        putNumber("source_multiplier." + phase + ".frost_trigger", builder.number("frost_trigger", frostTrigger, 0.0, 100.0));
-        builder.pop();
-    }
-
-    private PromisedConsortCombatConfigSnapshot.ResistanceProfile resistance(String prefix) {
-        return new PromisedConsortCombatConfigSnapshot.ResistanceProfile(
-                number(prefix + ".physical"),
-                number(prefix + ".fire"),
-                number(prefix + ".magic"),
-                number(prefix + ".lightning")
-        );
-    }
-
-    private PromisedConsortCombatConfigSnapshot.SourceMultiplierProfile sourceMultipliers(
-            String prefix
-    ) {
-        return new PromisedConsortCombatConfigSnapshot.SourceMultiplierProfile(
-                number(prefix + ".ordinary_physical"),
-                number(prefix + ".pierce"),
-                number(prefix + ".bleed_trigger"),
-                number(prefix + ".magic"),
-                number(prefix + ".holy"),
-                number(prefix + ".frost_trigger")
-        );
     }
 
     private List<DistanceBand> distanceBands() {
@@ -1138,8 +1051,8 @@ public final class PromisedConsortConfigValues {
                     }).toList()
             ));
                 return new PromisedConsortSkillConfigSnapshot.Skill(
-                    enabled.get(),
-                    weight.get(),
+                    false,
+                    0.0,
                     cooldownTicks.get(),
                     hyperArmorActive.get(),
                     1.0,
@@ -1156,59 +1069,63 @@ public final class PromisedConsortConfigValues {
     }
 
     private static final class Builder {
-        //? if forge {
-        private final ForgeConfigSpec.Builder delegate;
+        private boolean exported=true;
+        private Builder(Builder original) {delegate=original.delegate;exported=false;}
+        private final LocalizedConfigBuilder delegate;
 
-        private Builder(ForgeConfigSpec.Builder delegate) {
-        //?} else {
-        /*private final ModConfigSpec.Builder delegate;
-
-        private Builder(ModConfigSpec.Builder delegate) {
-        *///?}
+        private Builder(LocalizedConfigBuilder delegate) {
             this.delegate = delegate;
         }
 
         private void push(String path) {
-            delegate.push(path);
+            if(exported) delegate.push(path);
         }
 
         private void pop() {
-            delegate.pop();
+            if(exported) delegate.pop();
         }
 
         private Supplier<Boolean> bool(String key, boolean defaultValue) {
+            if(!exported) return ()->defaultValue;
             return delegate.define(key, defaultValue);
         }
 
         private Supplier<Integer> integer(String key, int defaultValue, int min, int max) {
+            if(!exported) return ()->defaultValue;
             return delegate.defineInRange(key, defaultValue, min, max);
         }
 
         private Supplier<Double> number(String key, double defaultValue, double min, double max) {
+            if(!exported) return ()->defaultValue;
             return delegate.defineInRange(key, defaultValue, min, max);
         }
 
         private Supplier<String> string(String key, String defaultValue) {
+            if(!exported) return ()->defaultValue;
             return delegate.define(key, defaultValue);
         }
 
         private Supplier<String> choice(String key, String defaultValue, String... allowed) {
+            if(!exported) return ()->defaultValue;
             Set<String> choices = Set.of(allowed);
             return delegate.define(key, defaultValue, value -> value instanceof String text
                     && choices.contains(text));
         }
 
         private Supplier<? extends List<?>> numberList(String key, List<Double> defaults) {
+            if(!exported) return ()->defaults;
             return delegate.defineList(key, defaults, value -> value instanceof Number number
                     && Double.isFinite(number.doubleValue()));
         }
 
         private Supplier<? extends List<?>> idList(String key, List<String> defaults) {
+            if(!exported) return ()->defaults;
             return delegate.defineListAllowEmpty(java.util.List.of(key), () -> defaults,
                 value -> value instanceof String text && text.matches("[a-z0-9_.-]+:[a-z0-9_./-]+"));
         }
 
         private Supplier<? extends List<?>> integerList(String key, List<Integer> defaults) {
+            if(!exported) return ()->defaults;
             int minimum = key.endsWith("windup_ticks") || key.endsWith("recovery_ticks") || key.equals("attack_event_offsets") ? 0 : 1;
             return delegate.defineList(key, defaults, value -> value instanceof Number number
                 && number.doubleValue() >= minimum && number.doubleValue() <= NetworkLimits.MAX_TICKS
@@ -1216,6 +1133,7 @@ public final class PromisedConsortConfigValues {
         }
 
         private Supplier<? extends List<?>> distanceBandList(String key) {
+            if(!exported) return PromisedConsortConfigValues::defaultDistanceBandConfigs;
             return delegate.defineList(key, defaultDistanceBandConfigs(), PromisedConsortConfigValues::isDistanceBand);
         }
 
@@ -1224,10 +1142,12 @@ public final class PromisedConsortConfigValues {
                 double flat,
                 double attackRatio
         ) {
+            if(!exported) return ()->formulaConfig(flat,attackRatio);
             return delegate.define(key, formulaConfig(flat, attackRatio), PromisedConsortConfigValues::isFormula);
         }
 
         private Supplier<? extends List<?>> formulaList(String key, List<Config> defaults) {
+            if(!exported) return ()->defaults;
             return delegate.defineList(key, defaults, PromisedConsortConfigValues::isFormula);
         }
     }

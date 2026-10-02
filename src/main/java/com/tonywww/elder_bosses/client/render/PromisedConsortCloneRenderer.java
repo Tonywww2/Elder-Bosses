@@ -22,6 +22,7 @@ public final class PromisedConsortCloneRenderer extends PlatformConsortCloneRend
 
     @Override
     public void render(PromisedConsortCloneEntity entity, float yaw, float partialTick, PoseStack poses, MultiBufferSource buffers, int light) {
+        entity.prepareSourceFrame(partialTick);
         for (String marker : java.util.List.of("blade_root_l", "blade_tip_l", "blade_root_r", "blade_tip_r"))
             getGeoModel().getBone(marker).ifPresent(bone -> bone.setTrackingMatrices(true));
         super.render(entity, yaw, partialTick, poses, buffers, LightTexture.FULL_BRIGHT);
@@ -29,7 +30,7 @@ public final class PromisedConsortCloneRenderer extends PlatformConsortCloneRend
 
     @Override
     public void firePostRenderEvent(PoseStack poses, BakedGeoModel model, MultiBufferSource buffers, float partialTick, int light) {
-        if (getAnimatable() != null) ClientConsortCloneEffects.capture(getAnimatable(), getGeoModel(), partialTick);
+        if (getAnimatable() != null && !getAnimatable().usesSourceRig()) ClientConsortCloneEffects.capture(getAnimatable(), getGeoModel(), partialTick);
         super.firePostRenderEvent(poses, model, buffers, partialTick, light);
     }
 }

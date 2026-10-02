@@ -58,7 +58,7 @@
 
 白花由原来的每丛 4 株增至 **7、9、11 株三种模型**，每个花株精灵含主花与侧芽；株高、宽度、位置与交叉平面角度各异，再结合四向旋转形成 12 种方块外观。花带位置与战斗净空保留，花丛没有实体碰撞。
 
-苍白圣树根、灰褐淤泥（完整方块与半砖共用）、白花与祈愿石均使用本轮原创 **16×16 PNG**，含成簇杂色、明暗色阶和细节。素材由内置 imagegen 生成后导出为原生 16×16；[提示词与源图记录](../../models/malenia/arena/textures/PROMPTS.md)可复现导出流程。洞壁和入口继续使用原版凝灰岩、深板岩、去皮白桦与石砖。水使用原版流体渲染，没有自定义反射 shader。
+苍白圣树根、灰褐淤泥（完整方块与半砖共用）、白花与祈愿石均使用本轮原创 **16×16 PNG**，含成簇杂色、明暗色阶和细节。素材由内置 imagegen 生成后导出为原生 16×16；[提示词与源图记录](../../tools/malenia/arena/textures/PROMPTS.md)可复现导出流程。洞壁和入口继续使用原版凝灰岩、深板岩、去皮白桦与石砖。水使用原版流体渲染，没有自定义反射 shader。
 
 创造物品栏提供 `haligtree_root`、`haligtree_silt`、`haligtree_silt_slab`、`haligtree_white_petals` 和 `haligtree_altar`。旧 `haligtree_shallow_water` 仅保留注册以兼容已有存档，不再出现在新模板与创造物品栏中。**旧洞厅不会自动改地形**；花丛模型和材质会更新，含水半砖水池需新建场地或探索新生成的区块。
 
@@ -99,15 +99,15 @@
 
 ## 验证与制作入口
 
-- [作者工具、分片和材质清单](../../models/malenia/arena/README.md)
-- [结构清单和 SHA-256](../../models/malenia/arena/manifest.json)
-- [验证记录](../../models/malenia/arena/validation.json)
-- [自然生成分片与哈希](../../models/malenia/arena/worldgen_manifest.json)
-- [自然生成验证记录](../../models/malenia/arena/worldgen_validation.json)
-- [召唤与绑定验证记录](../../models/malenia/arena/binding_validation.json)
-- [R2 花丛、含水半砖与材质验证](../../models/malenia/arena/surface_validation.json)
-- [16×16 材质预览](../../models/malenia/arena/textures/texture-review.png)与[三种花丛近景](../../build/malenia-arena/flower-model-review.png)
-- [四角度建筑预览](../../build/malenia-arena/arena-review.png)：使用导出的方块几何和运行时材质，照明为离屏示意；不作为客户端实际亮度或水面透明排序验收。
+- [作者工具、分片和材质清单](../../tools/malenia/arena/README.md)
+- [结构清单和 SHA-256](../../tools/malenia/arena/manifest.json)
+- [验证记录](../../tools/malenia/arena/validation.json)
+- [自然生成分片与哈希](../../tools/malenia/arena/worldgen_manifest.json)
+- [自然生成验证记录](../../tools/malenia/arena/worldgen_validation.json)
+- [召唤与绑定验证记录](../../tools/malenia/arena/binding_validation.json)
+- [R2 花丛、含水半砖与材质验证](../../tools/malenia/arena/surface_validation.json)
+- [16×16 材质预览](../../tools/malenia/arena/textures/texture-review.png)与三种花丛近景
+- 四角度建筑预览：使用导出的方块几何和运行时材质，照明为离屏示意；不作为客户端实际亮度或水面透明排序验收。
 
 Forge 独立 GameTest 使用真实 ServerLevel，覆盖四个朝向的完整放置与逐方块撤回、绑定女武神进出半砖池的寻路、真实流体 tick 后的围岸密封、半格池底与飞行净空、重叠/容器/流体拒绝、撤回编辑冲突。离线检查同时核对双版本 NBT 等价、分片覆盖、旋转、损坏模板拒绝及 16×16 材质与花丛变体。NeoForge 进行编译与资源入包检查；客户端实景光照、四人联机和完整水鸟/俯冲战斗仍需游玩验收。
 
