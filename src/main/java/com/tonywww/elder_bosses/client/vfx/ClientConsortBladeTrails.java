@@ -197,7 +197,7 @@ public final class ClientConsortBladeTrails {
                 boolean blood = entity.actionId().orElse(null) == PromisedConsortActionId.L_COMBO_BLOODFLAME;
                 if ((sample.sides() & 1) != 0) edge(consumer, poses.last(), sample.leftRoot(), sample.leftTip(), view, entity.miquellaVisible(), blood);
                 if ((sample.sides() & 2) != 0) edge(consumer, poses.last(), sample.rightRoot(), sample.rightTip(), view, entity.miquellaVisible(), blood);
-                if (sample.enchantment() != Enchantment.NONE) {
+                if (sample.enchantment() == Enchantment.GRAVITY) {
                     enchantedBlade(consumer, poses.last(), sample.leftRoot(), sample.leftTip(), view, sample.enchantment(), entity.tickCount + partialTick, -1);
                     enchantedBlade(consumer, poses.last(), sample.rightRoot(), sample.rightTip(), view, sample.enchantment(), entity.tickCount + partialTick, 1);
                 }

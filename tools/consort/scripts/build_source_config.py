@@ -9,6 +9,7 @@ def main():
     def number(path,value,minimum=0,maximum=1200000,integer=False):
         fields.append(dict(path=path,type='integer' if integer else 'number',default=value,min=minimum,max=maximum))
     def flag(path,value): fields.append(dict(path=path,type='boolean',default=value))
+    number('range_percent',100,1,1000)
     flag('hit_detection.simple_ranges',True)
     number('hit_detection.trajectory_radius_multiplier',1.3,.1,8)
     number('hit_detection.trajectory_hilt_extension',1.25,0,16)
@@ -16,8 +17,19 @@ def main():
     number('hit_detection.segment_immunity_ticks',10,0,1200)
     flag('entries.act14.invulnerable',True)
     number('projectiles.a205220400.flight_height',1.4,.1,16)
-    number('visuals.holy_fade_in_ticks',3,0,200)
-    number('visuals.holy_fade_out_ticks',8,0,200)
+    # Two square light layers share a two-stage decay, followed by a ground halo.
+    for name,value,lo,hi in [('inner_ratio',.52,.05,.95),('slow_end_alpha',.65,0,1),('slow_end_scale',.75,0,1),('halo_width_ratio',.16,.01,1)]:
+        number('visuals.holy_columns.'+name,value,lo,hi)
+    profiles={
+        'weapon':(1.25,7,10,4,1.25,12), 'impact':(2,10,12,4,2,14),
+        'burst':(5,18,18,6,5,18), 'great_light':(12,38,28,8,14,24),
+        'ring':(3,9,10,4,2.5,14), 'clone':(2,7,10,4,1.8,12),
+        'starfall':(10,42,24,6,12,24), 'gate':(8,24,130,16,7,20),
+        'back':(3.5,10,40,6,3,18),
+    }
+    for profile,values in profiles.items():
+        for name,value in zip(['width','height','slow_ticks','fast_ticks','halo_radius','halo_ticks'],values):
+            number(f'visuals.holy_columns.{profile}.{name}',value,.1 if name in ['width','height','halo_radius'] else 0 if name=='halo_ticks' else 1,128 if name in ['width','height','halo_radius'] else 1200)
     flag('grab.instant_kill_enabled',True)
     for area in read('source_ground_areas')['areas']:
         for name in ['length','width','angle','forward','yaw','height']:
@@ -29,7 +41,7 @@ def main():
     number('spacing.retreat_ticks',12,0,200,True)
     number('spacing.retreat_cooldown_ticks',30,1,1200,True)
     flag('spacing.retreat_when_crowded',True)
-    for name,value,lo,hi in [('gravity_size_multiplier',1.8,.1,8),('gravity_strength_multiplier',1.5,0,4),('gravity_distortion_radius',4.7,.1,32),('gravity_distortion_strength',1.5,0,4),('meteor_size',4.05,.1,16),('holy_width_multiplier',3,.1,8),('bloodflame_particles_per_tick',8,0,64),('bleed_burst_particles',20,0,128)]:
+    for name,value,lo,hi in [('gravity_size_multiplier',1.8,.1,8),('gravity_strength_multiplier',1.5,0,4),('gravity_distortion_radius',4.7,.1,32),('gravity_distortion_strength',1.5,0,4),('meteor_size',4.05,.1,16),('bloodflame_particles_per_tick',8,0,64),('bleed_burst_particles',20,0,128)]:
         number('visuals.'+name,value,lo,hi,name.endswith('particles_per_tick') or name.endswith('particles'))
     names=['swing_combo','vertical_slash','cross_slash','stomp','lion_claw','gravity_pull','uppercut_slam','vertical_followup','bloodflame','gravity_dive','cross_swing','clone_slam','gravity_meteor','light_of_miquella','ring_of_light','holy_burst','miquella_grab','forward_dash','side_dash','consort_combo','consort_meteor']
     entries={i+1:n for i,n in enumerate(names)};entries[30]='charm_death'
@@ -87,6 +99,10 @@ def main():
             path=re.sub(r'^entries\.act(\d+)\.',lambda m:'entries.'+entries[int(m[1])]+'.',path)
             public='promised_consort.skills.'+path
             if public in current:f['default']=current[public]
+    constants=json.loads((ROOT/'tools/consort/config/source_skill_constants.json').read_text(encoding='utf-8'))
+    result['constants']=constants
+    result['fields']=[f for f in fields if f['path'] not in constants]
+    fields=result['fields']
     content=json.dumps(result,indent=2)+'\n';(DATA/'source_config_defaults.json').write_text(content,encoding='utf-8')
     (ROOT/'src/main/resources/assets/elder_bosses/boss/promised_consort/source_config_defaults.json').write_text(content,encoding='utf-8')
     print(f'{len(fields)} current original skill configuration fields')

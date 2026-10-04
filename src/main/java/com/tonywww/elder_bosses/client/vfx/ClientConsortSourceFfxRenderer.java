@@ -50,12 +50,9 @@ public final class ClientConsortSourceFfxRenderer {
             list.sort(Comparator.comparingInt(t->t.contains("Trace")?0:1));
             for(int index=0;index<list.size() && budget>0;index++) {
                 var instance=list.get(index);double born=instance.getLong("Born")/1_000_000.0,active=now-born;
-                if(ClientConsortSourceEffects.replaced(instance.getInt("FXR"))) continue;
+                if(ClientConsortSourceEffects.replaced(instance.getInt("FXR")) || PromisedConsortSourceFfx.isHoly(instance.getInt("FXR"))) continue;
                 if(active<0) continue;
-                boolean holy=PromisedConsortSourceFfx.isHoly(instance.getInt("FXR"));
-                double thickness=holy?boss.sourceConfig().number("visuals.holy_width_multiplier"):1;
-                double fadeIn=holy?boss.sourceConfig().number("visuals.holy_fade_in_ticks")/20:0;
-                double fadeOut=holy?boss.sourceConfig().number("visuals.holy_fade_out_ticks")/20:0;
+                double thickness=1,fadeIn=0,fadeOut=0;
                 Vec3 position=new Vec3(instance.getDouble("X"),instance.getDouble("Y"),instance.getDouble("Z"));
                 Vec3 velocity=new Vec3(instance.getFloat("VX"),instance.getFloat("VY"),instance.getFloat("VZ"));
                 position=position.add(velocity.scale(Math.max(0,now-instance.getLong("At")/1_000_000.0)));
@@ -82,7 +79,7 @@ public final class ClientConsortSourceFfxRenderer {
                     JsonObject attributes=node.action("NodeAttributes"),particle=node.action("ParticleAttributes"),emitter=node.action("PeriodicEmitter");
                     double delay=field(attributes,"delay",0,0),age=active-delay;if(age<0) continue;
                     double duration=scalar(attributes,"duration",age,0,0,-1),sourceLife=scalar(particle,"duration",age,0,0,0);
-                    double life=holy && sourceLife>0?Math.max(sourceLife,fadeIn+fadeOut):sourceLife;
+                    double life=sourceLife;
                     if(life==0) continue;
                     double stop=instance.getLong("Stop")==Long.MAX_VALUE?Double.POSITIVE_INFINITY:Math.max(delay,instance.getLong("Stop")/1_000_000.0-born);
                     double emitEnd=Math.min(duration<0?Double.POSITIVE_INFINITY:duration,stop-delay);
@@ -105,9 +102,6 @@ public final class ClientConsortSourceFfxRenderer {
                         double curveAge=life>0?particleAge*sourceLife/life:particleAge;
                         var motion=particle(node,emitted,curveAge,instance.getLong("Born")^((long)node.path().hashCode()<<32)^particleIndex);
                         Matrix4f matrix=new Matrix4f().translation((float)(position.x-cameraPoint.x),(float)(position.y-cameraPoint.y),(float)(position.z-cameraPoint.z));
-                        // Lower only the tall ascent shaft, leaving its attached sparks/trails intact.
-                        if(instance.getInt("FXR")==652215 && node.path().equals("root/Containers/0/Containers/2/Effects/0"))
-                            matrix.translate(0,-.6F,0);
                         matrix.translate(0,(float)motion.gravity(),0);
                         int orientation=(int)field(appearance,"orientation",0,0);
                         if(orientation==1) matrix.rotate(camera.rotation());
@@ -123,8 +117,6 @@ public final class ClientConsortSourceFfxRenderer {
                         matrix.scale((float)sx,(float)sy,(float)sz);
                         double[] color=tint(appearance,age,emitted,curveAge),modifierTint=value(modifier,"color",age,emitted,curveAge,1,1,1,1);
                         for(int c=0;c<4;c++) color[c]*=modifierTint[c];
-                        if(holy) color[3]*=life<0?PromisedConsortSourceFfx.opacity(age,stop-delay+fadeOut,fadeIn,fadeOut)
-                                :PromisedConsortSourceFfx.opacity(particleAge,life,fadeIn,fadeOut);
                         if(GRAVITY_DEBRIS.contains(instance.getInt("FXR")) && !type.equals("Model") && !type.equals("RichModel")) {
                             color[0]=.61;color[1]=.13;color[2]=.94;
                         }
@@ -158,9 +150,14 @@ public final class ClientConsortSourceFfxRenderer {
                             if(type.equals("QuadLine") && width>height) height*=thickness;
                             else {width*=thickness;if(field(appearance,"uniformScale",0,0)==1) height*=thickness;}
                             if(width<=0 || height<=0) continue;
-                            var texture=Textures.DIFFUSE.get((int)scalar(appearance,"texture",age,emitted,curveAge,field(appearance,type.equals("MultiTextureBillboardEx")?"layer1":"texture",0,0)));
+                            boolean charmMask=instance.getInt("FXR")==652295 && type.equals("MultiTextureBillboardEx");
+                            int textureId=(int)scalar(appearance,"texture",age,emitted,curveAge,field(appearance,type.equals("MultiTextureBillboardEx")?"layer1":"texture",0,0));
+                            // Charm's layer1 may be solid white; layer2 then holds
+                            // the actual luminance glyph, not an RGBA background.
+                            if(charmMask && textureId==1) textureId=(int)field(appearance,"layer2",0,0);
+                            var texture=Textures.DIFFUSE.get(textureId);
                             if(texture==null) continue;
-                            var renderType=ConsortSourceShader.type(texture,blend);usedTypes.add(renderType);
+                            var renderType=charmMask?ConsortSourceShader.masked(texture):ConsortSourceShader.type(texture,blend);usedTypes.add(renderType);
                             stack.pushPose();stack.last().pose().mul(matrix);var consumer=buffers.getBuffer(renderType);
                             var uv=atlasCell(appearance,age,emitted,curveAge,instance.getLong("Born")^particleIndex);
                             for(var v:new Vertex[]{new Vertex(-width/2,-height/2,0,uv.u0(),uv.v0(),1),new Vertex(width/2,-height/2,0,uv.u1(),uv.v0(),1),new Vertex(width/2,height/2,0,uv.u1(),uv.v1(),1),new Vertex(-width/2,height/2,0,uv.u0(),uv.v1(),1)}) vertex(consumer,stack.last(),v,color,false);

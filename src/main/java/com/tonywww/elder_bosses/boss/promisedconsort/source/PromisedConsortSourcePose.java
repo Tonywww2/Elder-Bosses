@@ -92,6 +92,11 @@ public final class PromisedConsortSourcePose {
     public Sample sample(long sourceMicros) {
         return sampleThrough(sourceMicros,bones.size()-1);
     }
+    /** Attachment-only presentation does not need the later hair/finger chains. */
+    public Sample sampleJoint(long sourceMicros,int sourceBone) {
+        if(sourceBone<0 || sourceBone>=bones.size()) throw new IllegalArgumentException("Invalid source joint");
+        return sampleThrough(sourceMicros,sourceBone);
+    }
     /** Source indices are parent-first; foot grounding needs only bones 0..47. */
     Sample sampleThrough(long sourceMicros,int lastSourceBone) {
         if (sourceMicros<0) throw new IllegalArgumentException("Negative pose time");

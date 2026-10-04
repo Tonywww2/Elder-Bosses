@@ -63,6 +63,11 @@ GROUP_NAMES = {
     "effects": ("效果", "Effects"),
     "bleed": ("出血累积与脉冲", "Bleed buildup and pulses"), "terrain": ("贴地与台阶适配", "Grounding and step adaptation"),
     "spacing": ("近战站位与间距", "Melee positioning and spacing"),
+    "holy_columns": ("双层光柱", "Two-layer light columns"),
+    "weapon": ("剑击", "Weapon"), "impact": ("落点", "Impact"),
+    "great_light": ("大范围光芒", "Great light"), "ring": ("移动光环", "Moving ring"),
+    "clone": ("分身", "Clone"), "starfall": ("星陨", "Starfall"),
+    "gate": ("神门", "Gate"), "back": ("背部光芒", "Back light"),
 }
 MOVES = {
     "swing_combo": ("横斩连段", "Swing combo"), "vertical_slash": ("竖斩", "Vertical slash"),
@@ -153,6 +158,7 @@ def parameter_name(kind, identity):
 def group_name(path):
     parts = path.split("."); key = parts[-1]
     if len(parts)>1 and parts[-2]=="entries": return (key,key)
+    if key=="burst" and ".holy_columns." in path: return ("圣光爆发","Holy burst")
     if key in GROUP_NAMES: return GROUP_NAMES[key]
     if key in MOVES: return MOVES[key]
     if key in NAMES:
@@ -249,6 +255,9 @@ def value_row(row):
     if path == "promised_consort.skills.entries.consort_meteor.cooldown_ticks":
         zh_help = "首次星陨不受此值限制；0关闭后续重复，正数从收招结束开始计时。"
         en_help = "The first meteor is unaffected; 0 disables repeats, positive values count from recovery completion."
+    if ".holy_columns." in path:
+        if key=="width": zh_help,en_help="外层方形光柱的边长。","Side length of the outer square column."
+        if key=="height": zh_help,en_help="光柱初始高度。","Initial column height."
     # Units belong in labels; Configured already supplies defaults and bounds.
     units=unit(key,path)
     if units:

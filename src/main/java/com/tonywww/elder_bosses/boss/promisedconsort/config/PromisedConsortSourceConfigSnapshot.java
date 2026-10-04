@@ -8,7 +8,7 @@ import java.util.*;
 
 /** Current original-only skill configuration. No legacy field aliases or migrations. */
 public record PromisedConsortSourceConfigSnapshot(Map<String,Double> numbers,Map<String,Boolean> flags) {
-    public static final int SAVE_VERSION=6;
+    public static final int SAVE_VERSION=8;
     public static final String RESOURCE="/assets/elder_bosses/boss/promised_consort/source_config_defaults.json";
     public PromisedConsortSourceConfigSnapshot {
         numbers=Map.copyOf(numbers);flags=Map.copyOf(flags);
@@ -22,7 +22,15 @@ public record PromisedConsortSourceConfigSnapshot(Map<String,Double> numbers,Map
         }
         if(!numericKeys.equals(numbers.keySet()) || !flagKeys.equals(flags.keySet())) throw new IllegalArgumentException("Incomplete original skill config snapshot");
     }
-    private static final class Definition {static final JsonObject VALUE=loadDefinition();}
+    private static final class Definition {
+        static final JsonObject VALUE=loadDefinition();
+        static final Map<String,Double> CONSTANTS=constants();
+        private static Map<String,Double> constants() {
+            var values=new LinkedHashMap<String,Double>();
+            VALUE.getAsJsonObject("constants").entrySet().forEach(e->values.put(e.getKey(),e.getValue().getAsDouble()));
+            return Map.copyOf(values);
+        }
+    }
     public static JsonObject definition() {return Definition.VALUE;}
     private static JsonObject loadDefinition() {
         var stream=PromisedConsortSourceConfigSnapshot.class.getResourceAsStream(RESOURCE);
@@ -30,10 +38,15 @@ public record PromisedConsortSourceConfigSnapshot(Map<String,Double> numbers,Map
         try(var reader=new InputStreamReader(stream,StandardCharsets.UTF_8)) {return JsonParser.parseReader(reader).getAsJsonObject();}
         catch(java.io.IOException e) {throw new IllegalStateException(e);}
     }
-    public double number(String key) {var value=numbers.get(key);if(value==null) throw new IllegalArgumentException("Missing source config: "+key);return value;}
+    public double number(String key) {
+        var value=numbers.get(key);
+        if(value==null) value=Definition.CONSTANTS.get(key);
+        if(value==null) throw new IllegalArgumentException("Missing skill parameter: "+key);
+        return value;
+    }
     public boolean enabled(int act) {return flags.getOrDefault("entries.act"+act+".enabled",false);}
     public boolean flag(String key) {return flags.getOrDefault(key,false);}
-    public double optional(String key,double fallback) {return numbers.getOrDefault(key,fallback);}
+    public double optional(String key,double fallback) {return numbers.getOrDefault(key,Definition.CONSTANTS.getOrDefault(key,fallback));}
     public net.minecraft.nbt.CompoundTag save() {
         var tag=new net.minecraft.nbt.CompoundTag();tag.putInt("Version",SAVE_VERSION);
         tag.putByteArray("Snapshot",new Gson().toJson(this).getBytes(StandardCharsets.UTF_8));return tag;
@@ -47,7 +60,9 @@ public record PromisedConsortSourceConfigSnapshot(Map<String,Double> numbers,Map
         return result;
     }
     public String segment(int tae) {return "animations.a"+tae+".";}
-    public double range(int tae) {return number(segment(tae)+"range_multiplier");}
+    public double rangeFactor() {return number("range_percent")/100;}
+    public double motionScale(int tae) {return number(segment(tae)+"range_multiplier");}
+    public double range(int tae) {return motionScale(tae)*rangeFactor();}
     public PromisedConsortSourceTimeWarp warp(int tae) {
         var phases=definition().getAsJsonObject("source_phases").getAsJsonArray(Integer.toString(tae));
         String prefix=segment(tae);
@@ -75,7 +90,9 @@ public record PromisedConsortSourceConfigSnapshot(Map<String,Double> numbers,Map
     }
     public JsonObject override(String kind,int id,JsonObject original) {
         var result=original.deepCopy();String prefix=kind+".a"+id+".";
+        Definition.CONSTANTS.forEach((key,value)->{if(key.startsWith(prefix) && original.has(key.substring(prefix.length()))) result.addProperty(key.substring(prefix.length()),value);});
         numbers.forEach((key,value)->{if(key.startsWith(prefix) && original.has(key.substring(prefix.length()))) result.addProperty(key.substring(prefix.length()),value);});
+        if(kind.equals("projectiles") && result.has("dist")) result.addProperty("dist",result.get("dist").getAsDouble()*rangeFactor());
         return result;
     }
     public static PromisedConsortSourceConfigSnapshot defaults() {

@@ -21,12 +21,18 @@ public final class PromisedConsortModel extends PlatformPromisedConsortGeoModel 
         return RenderType.entityTranslucent(texture);
     }
     @Override protected void afterAnimations(PromisedConsortEntity entity) {
+        // The baked geometry is shared with cinematic/attack clones.
+        for(var bone:getAnimationProcessor().getRegisteredBones()) {bone.setHidden(false);bone.setChildrenHidden(false);}
         // Actor translation belongs to the server; preserve all body Root/Pelvis channels.
         if (entity.sourcePlayback() == null || entity.sourcePlayback().actor().actionSequence() < (1L << 60))
             getBone("frame_000").ifPresent(bone -> { bone.setPosX(0); bone.setPosY(0); bone.setPosZ(0); });
+        // Switch both representations on the same partial-frame clock; never interpolate between them.
+        boolean miquella=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.cinematic(entity.sourcePlayback())
+                && entity.combatState()==com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortCombatState.TRANSITION
+                ?entity.animationTime()/20>=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.TELEPORT:entity.miquellaVisible();
         getBone("src_084_Miquella_Root").ifPresent(bone -> {
-            bone.setHidden(!entity.miquellaVisible());
-            bone.setChildrenHidden(!entity.miquellaVisible());
+            bone.setHidden(!miquella);
+            bone.setChildrenHidden(!miquella);
         });
     }
 }

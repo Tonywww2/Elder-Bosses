@@ -30,6 +30,9 @@ public final class PromisedConsortSourceGrab {
     public void close() {release();ACTIVE.remove(this);}
     public static boolean held(LivingEntity entity) {return HELD.containsKey(entity.getUUID());}
     public boolean active() {return victim!=null || pending!=null;}
+    public static long pairedMicros(PromisedConsortSourceTimeWarp warp,long start,long now) {
+        return warp.sourceAt(Math.max(0,now-start));
+    }
     public SavedState save() {return new SavedState(Set.copyOf(charmed),Set.copyOf(heartStolen),Map.copyOf(charmStart),active());}
     public void restore(SavedState saved,long shift) {charmed.clear();charmed.addAll(saved.charmed());heartStolen.clear();heartStolen.addAll(saved.heartStolen());saved.charmStart().forEach((id,t)->charmStart.put(id,t+shift));}
     public Set<Integer> targetEffects(LivingEntity target) {
@@ -40,7 +43,7 @@ public final class PromisedConsortSourceGrab {
     public boolean tryCapture(LivingEntity target,long sourceWorldTime) {
         if(owner.isDisengaging() || active() || !(target instanceof ServerPlayer player) || player.isSpectator() || player.hasDisconnected()
                 || HELD.containsKey(player.getUUID()) || player.level()!=owner.level() || !player.isAlive()
-                || owner.distanceTo(player)>owner.sourceConfig().number("grab.max_capture_distance") || Math.abs(owner.getY()-player.getY())>owner.sourceConfig().number("grab.max_capture_height")) return false;
+                || owner.distanceTo(player)>owner.sourceConfig().number("grab.max_capture_distance")*owner.sourceConfig().rangeFactor() || Math.abs(owner.getY()-player.getY())>owner.sourceConfig().number("grab.max_capture_height")*owner.sourceConfig().rangeFactor()) return false;
         pending=player;return true;
     }
     public void tick(long now) {
@@ -56,7 +59,10 @@ public final class PromisedConsortSourceGrab {
         if(victim==null) return;
         if(owner.isRemoved() || !owner.isAlive() || owner.isSourceDefeated() || victim.isRemoved() || !victim.isAlive()
                 || victim.hasDisconnected() || victim.isSpectator() || victim.level()!=owner.level()) {release();return;}
-        var clock=combat.bodyFrame();long elapsed=clock==null?0:clock.playback.sourceMicros(now);
+        // The paired player clock belongs to4100. The host can enter20012
+        // before release; restarting the player's gates on that clip holds and
+        // repositions the victim long after the original paired movie ended.
+        long elapsed=pairedMicros(owner.sourceConfig().warp(4100),start,now);
         // Original target TAE applies19682 at frame3. The player HKS combines
         // this with an existing19681 to set19680 on a repeated capture.
         if(owner.sourceConfig().flag("grab.instant_kill_enabled") && elapsed>=100_000 && charmed.contains(victim.getUUID())) heartStolen.add(victim.getUUID());

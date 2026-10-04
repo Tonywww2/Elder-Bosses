@@ -6,7 +6,6 @@ import com.tonywww.elder_bosses.client.state.ClientIndicatorStateStore;
 import com.tonywww.elder_bosses.client.vfx.ClientBossVfxController;
 import com.tonywww.elder_bosses.client.vfx.ClientConsortEnergyRenderer;
 import com.tonywww.elder_bosses.client.vfx.ClientConsortBladeTrails;
-import com.tonywww.elder_bosses.client.vfx.ClientConsortMeteorRenderer;
 import com.tonywww.elder_bosses.platforms.config.ElderBossesCommonConfig;
 import net.minecraft.client.Minecraft;
 //? if forge {
@@ -46,9 +45,9 @@ public final class ClientIndicatorEvents {
         com.tonywww.elder_bosses.client.vfx.ClientConsortGravityDistortion.render(event.getPoseStack(), event.getCamera(), minecraft.level.getGameTime(), partialTick);
         ClientConsortEnergyRenderer.render(event.getPoseStack(), event.getCamera(), minecraft.level.getGameTime(), partialTick);
         ClientConsortBladeTrails.render(event.getPoseStack(), event.getCamera(), partialTick);
-        ClientConsortMeteorRenderer.render(event.getPoseStack(), event.getCamera(), partialTick);
         com.tonywww.elder_bosses.client.vfx.ClientConsortSourceFfxRenderer.render(event.getPoseStack(),event.getCamera(),minecraft.level.getGameTime(),partialTick);
         com.tonywww.elder_bosses.client.vfx.ClientConsortSourceEffects.render(event.getPoseStack(),event.getCamera(),minecraft.level.getGameTime(),partialTick);
+        com.tonywww.elder_bosses.client.vfx.ClientConsortHolyColumns.render(event.getPoseStack(),event.getCamera(),minecraft.level.getGameTime(),partialTick);
         com.tonywww.elder_bosses.client.vfx.ClientMaleniaSkillEffects.render(event.getPoseStack(), event.getCamera(), partialTick);
         com.tonywww.elder_bosses.client.vfx.ClientMaleniaWings.render(event.getPoseStack(), event.getCamera(), partialTick);
         com.tonywww.elder_bosses.client.vfx.ClientMaleniaParryCue.render(event.getPoseStack(), event.getCamera(), partialTick);

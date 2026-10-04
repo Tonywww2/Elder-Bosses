@@ -33,7 +33,9 @@ import com.tonywww.elder_bosses.boss.promisedconsort.sync.PromisedConsortOrigina
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourcePlayback;
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceRehearsal;
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceCombat;
+import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition;
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceAssets;
+import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceActivation;
 import com.tonywww.elder_bosses.combat.action.ActionPhase;
 import com.tonywww.elder_bosses.combat.damage.DamageFormula;
 import com.tonywww.elder_bosses.combat.damage.DamageSourceOwnership;
@@ -104,6 +106,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.HashMap;
@@ -128,6 +131,8 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     private PromisedConsortSourceCombat sourceCombat;
     private long sourceAcceptanceExpires;
     private static final EntityDataAccessor<Float> SOURCE_BODY_OFFSET_Y=SynchedEntityData.defineId(PromisedConsortEntity.class,EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<CompoundTag> SOURCE_TRANSITION_GATE=SynchedEntityData.defineId(PromisedConsortEntity.class,EntityDataSerializers.COMPOUND_TAG);
+    private UUID transitionMiquella;
     public float sourceBodyOffsetY() {return entityData.get(SOURCE_BODY_OFFSET_Y);}
     public void setSourceBodyOffsetY(double y) {entityData.set(SOURCE_BODY_OFFSET_Y,(float)y);}
     public boolean sourceGuardEnabled() {return currentConfig().instantGuard().enabled();}
@@ -304,6 +309,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     protected void definePlatformSynchedData(SynchedDataRegistrar registrar) {
         registrar.define(SOURCE_PLAYBACK, new CompoundTag());
         registrar.define(SOURCE_BODY_OFFSET_Y,0F);
+        registrar.define(SOURCE_TRANSITION_GATE,new CompoundTag());
         registrar.define(SOURCE_GRAB, new CompoundTag());
         registrar.define(SOURCE_VISUALS, new CompoundTag());
         registrar.define(SOURCE_LOCOMOTION,20);
@@ -404,10 +410,20 @@ public final class PromisedConsortEntity extends PlatformMonster implements
             getNavigation().stop();
             if (arenaBinding != null) {
                 holdArenaDormantPosition();
+                if(tickCount%5==0 && level() instanceof ServerLevel server) {
+                    var wake=currentConfig();double radius=wake.arena().logicalRadius();
+                    server.players().stream()
+                            .filter(p->p.isAlive() && !p.isSpectator() && (!p.isCreative() || wake.targeting().creativePlayersCanJoin()))
+                            .filter(p->PromisedConsortSourceActivation.inside(p.getX(),p.getZ(),combatCenter.x,combatCenter.z,radius))
+                            .min(Comparator.comparingDouble(p->p.position().subtract(combatCenter).multiply(1,0,1).lengthSqr()))
+                            .ifPresent(this::beginEncounter);
+                }
             }
-            bossEvent.setVisible(false);
-            syncNetworkState();
-            return;
+            if(combatState()==PromisedConsortCombatState.DORMANT) {
+                bossEvent.setVisible(false);
+                syncNetworkState();
+                return;
+            }
         }
 
         stateTicks++;
@@ -530,7 +546,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
     public boolean usesSourceRig() { return true; }
     public void setSourceRigEnabled(boolean enabled) {entityData.set(SOURCE_RIG_ENABLED,enabled);}
-    public int sourcePoseId() {return sourcePlayback()==null?entityData.get(SOURCE_LOCOMOTION):sourcePlayback().actor().hkxId();}
+    public int sourcePoseId() {return sourcePlayback()==null?entityData.get(SOURCE_LOCOMOTION):sourcePlayback().poseId();}
     @Override public double getBoneResetTime() {return usesSourceRig()?0:5;}
     public void setSourceLocomotion(int pose) {
         if(entityData.get(SOURCE_LOCOMOTION)!=pose) {entityData.set(SOURCE_LOCOMOTION,pose);entityData.set(SOURCE_LOCOMOTION_START,level().getGameTime());}
@@ -561,11 +577,19 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     public boolean sourceStunDone() {return stateTicks>=combatConfig.stagger().stunTicks();}
     public boolean sourcePhaseTwoPending() {return transitionTriggered || getHealth()/getMaxHealth()<=combatConfig.general().phaseTwoHealthRatio();}
     public void enterSourcePhaseTwo() {
-        entityData.set(ACTIVE_PHASE,PromisedConsortPhase.PHASE_TWO.id());
         entityData.set(MIQUELLA_VISIBLE,false);setCombatState(PromisedConsortCombatState.TRANSITION);
+        entityData.set(ACTIVE_PHASE,PromisedConsortPhase.PHASE_TWO.id());
+        Vec3 gate=arenaBinding==null?phaseReturnAnchor():arenaBinding.dormantPosition();
+        Vec3 towardCenter=combatCenter().subtract(gate).multiply(1,0,1).normalize();
+        // The authored door slit is five blocks behind its boss_spawn anchor.
+        if(arenaBinding!=null) gate=gate.subtract(towardCenter.scale(5));
+        var tag=new CompoundTag();tag.putDouble("X",gate.x);tag.putDouble("Y",gate.y);tag.putDouble("Z",gate.z);
+        tag.putFloat("Yaw",(float)Math.toDegrees(Math.atan2(-towardCenter.x,towardCenter.z)));
+        entityData.set(SOURCE_TRANSITION_GATE,tag);
     }
     public void enterSourceBattle() {
         if(combatState()==PromisedConsortCombatState.TRANSITION) {
+            finishSourceTransitionPresentation();
             entityData.set(MIQUELLA_VISIBLE,true);
             if(combatConfig.stagger().resetOnPhaseChange()) staggerTracker.resetForPhase(getMaxHealth(),level().getGameTime());
         }
@@ -701,45 +725,76 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     }
 
     public void tickSourceTransitionPresentation() {
-        int appeared=sourceTransitionWalkTicks();
-        if(stateTicks<appeared) return;
-        entityData.set(MIQUELLA_VISIBLE,true);
-        if(stateTicks==appeared) {
+        bossEvent.setName(getTypeName());
+        double seconds=sourceTransitionSeconds(0),previous=seconds-1/(20*sourceTransitionScale());
+        if(previous<PromisedConsortSourceTransition.APPEAR && seconds>=PromisedConsortSourceTransition.APPEAR)
             emitDialogue(PromisedConsortDialogueEvent.TRANSITION_CALL);
-            applyTransitionImpact();
-            playActionSound(PromisedConsortActionSoundPlan.cue("transition_impact", PromisedConsortActionSoundPlan.Sound.METEOR,0.8F,1),position(),new Vec2(0,1));
+        if(previous<PromisedConsortSourceTransition.TELEPORT && seconds>=PromisedConsortSourceTransition.TELEPORT)
+            emitDialogue(PromisedConsortDialogueEvent.PHASE_TWO_VOW);
+        entityData.set(MIQUELLA_VISIBLE,seconds>=PromisedConsortSourceTransition.TELEPORT);
+        if(seconds<PromisedConsortSourceTransition.APPEAR || seconds>=PromisedConsortSourceTransition.TELEPORT) {
+            finishSourceTransitionPresentation();return;
         }
-        getNavigation().stop();setDeltaMovement(Vec3.ZERO);setSourceLocomotion(20);
-        Vec3 toward=combatCenter().subtract(position()).multiply(1,0,1);
-        if(toward.lengthSqr()>1e-8) {
+        var display=transitionMiquella==null?null:serverLevel().getEntity(transitionMiquella);
+        if(!(display instanceof PromisedConsortCloneEntity clone) || clone.isRemoved()) {
+            var clone=ModEntities.PROMISED_CONSORT_CLONE.get().create(level());
+            if(clone==null) return;
+            clone.configureMiquella(this);clone.updateMiquellaPosition();
+            if(level().addFreshEntity(clone)) transitionMiquella=clone.getUUID();
+            else clone.discard();
+        } else clone.updateMiquellaPosition();
+    }
+    public void finishSourceTransitionPresentation() {
+        if(!level().isClientSide && transitionMiquella!=null) {
+            var clone=serverLevel().getEntity(transitionMiquella);if(clone!=null) clone.discard();
+        }
+        transitionMiquella=null;
+    }
+    public Vec3 sourceTransitionGate() {
+        var tag=entityData.get(SOURCE_TRANSITION_GATE);
+        return tag.isEmpty()?position():new Vec3(tag.getDouble("X"),tag.getDouble("Y"),tag.getDouble("Z"));
+    }
+    public float sourceTransitionGateYaw() {return entityData.get(SOURCE_TRANSITION_GATE).getFloat("Yaw");}
+    private double sourceTransitionScale() {
+        var playback=sourcePlayback();
+        if(PromisedConsortSourceTransition.cinematic(playback)) return PromisedConsortSourceTransition.scale(playback);
+        long original=PromisedConsortSourceAssets.bank().requireClip(20011).durationMicros();
+        return sourceConfig().warp(20011).gameAt(original)/(double)original;
+    }
+    public double sourceTransitionSeconds(float partial) {
+        var playback=sourcePlayback();
+        return PromisedConsortSourceTransition.cinematic(playback)?PromisedConsortSourceTransition.seconds(playback,level().getGameTime()*50_000L+(long)(partial*50_000)):(stateTicks+partial)/(20*sourceTransitionScale());
+    }
+    public boolean sourceTransitionDone() {
+        return stateTicks>=combatConfig.phaseTransition().durationTicks() && sourceTransitionSeconds(0)>=PromisedConsortSourceTransition.END;
+    }
+    public void tickSourceTransitionMotion(double elapsedTicks) {
+        getNavigation().stop();setDeltaMovement(Vec3.ZERO);setPursuing(false);
+        double seconds=sourceTransitionSeconds(0),scale=sourceTransitionScale();
+        Vec3 toward=(seconds>=PromisedConsortSourceTransition.TURN_BEGIN?combatCenter():sourceTransitionGate()).subtract(position()).multiply(1,0,1);
+        if(seconds>=PromisedConsortSourceTransition.RISE_BEGIN && toward.lengthSqr()>1e-8) {
             float desired=(float)Math.toDegrees(Math.atan2(-toward.x,toward.z));
-            float yaw=Mth.approachDegrees(getYRot(),desired,180F/sourceTransitionTurnTicks());
+            float yaw=Mth.approachDegrees(getYRot(),desired,(float)(180/((PromisedConsortSourceTransition.TURN_END-PromisedConsortSourceTransition.TURN_BEGIN)*20*scale)*elapsedTicks));
             setYRot(yaw);setYHeadRot(yaw);setYBodyRot(yaw);
         }
-        if(stateTicks==appeared+sourceTransitionTurnTicks()) emitDialogue(PromisedConsortDialogueEvent.PHASE_TWO_VOW);
+        if(seconds>=PromisedConsortSourceTransition.WALK_BEGIN && seconds<PromisedConsortSourceTransition.WALK_END && toward.lengthSqr()>1e-8) {
+            double stopping=1-PromisedConsortSourceTransition.progress(seconds,PromisedConsortSourceTransition.WALK_END-1,PromisedConsortSourceTransition.WALK_END);
+            double distance=1.8*elapsedTicks/(20*scale)*stopping*sourceConfig().number("animations.a20011.movement_multiplier");
+            moveSourceControlled(toward.normalize().scale(Math.min(distance,Math.max(0,toward.length()-6))),false);
+        }
     }
-
-    public int sourceTransitionWalkTicks() {
-        long duration=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceAssets.bank().requireClip(20011).durationMicros();
-        return (int)((sourceConfig().warp(20011).gameAt(duration)+49_999)/50_000);
+    public Vec3 sourceTransitionMiquellaPoint(float partial) {
+        return sourceTransitionSeconds(partial)<PromisedConsortSourceTransition.TELEPORT
+                ?sourceTransitionGate().add(0,2.5,0):sourceTransitionBackPoint(partial);
     }
-
-    private int sourceTransitionTurnTicks() {
-        return Math.max(1,combatConfig.dialogue().phaseTwoVowTick()-combatConfig.dialogue().transitionCallTick());
-    }
-
-    public boolean sourceTransitionDone() {
-        return stateTicks>=Math.max(combatConfig.phaseTransition().durationTicks(),sourceTransitionWalkTicks()+sourceTransitionTurnTicks());
-    }
-
-    public void walkSourceTransition(double distance,double elapsedTicks) {
-        Vec3 gate=arenaBinding==null?phaseReturnAnchor():arenaBinding.dormantPosition();
-        Vec3 toward=gate.subtract(position()).multiply(1,0,1);
-        if(toward.lengthSqr()<1e-8) return;
-        float desired=(float)Math.toDegrees(Math.atan2(-toward.x,toward.z));
-        float yaw=Mth.approachDegrees(getYRot(),desired,(float)(360.0/sourceTransitionTurnTicks()*elapsedTicks));
-        setYRot(yaw);setYHeadRot(yaw);setYBodyRot(yaw);
-        moveSourceControlled(toward.normalize().scale(Math.min(distance,toward.length())),false);
+    public Vec3 sourceTransitionBackPoint(float partial) {
+        double seconds=sourceTransitionSeconds(partial);
+        long at=(long)(Math.min(seconds,PromisedConsortSourceTransition.END)*1_000_000);
+        var pose=PromisedConsortSourceAssets.pose(PromisedConsortSourceTransition.POSE_ID).sampleJoint(at,84);
+        double bodyOffset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.transitionOffset(at);
+        Vec3 anchor=new Vec3(Mth.lerp(partial,xo,getX()),Mth.lerp(partial,yo,getY())+bodyOffset,Mth.lerp(partial,zo,getZ()));
+        var point=pose.worldJoint(84,new com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourcePose.Point(anchor.x,anchor.y,anchor.z),getYRot());
+        return new Vec3(point.x(),point.y(),point.z());
     }
 
     private void tickTransitionPresentation() {
@@ -1987,11 +2042,11 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 currentAction == null ? List.of() : actionExecutor.telegraphs(),
             actionExecutor.hazardSnapshots(), level().getGameTime()));
         if(sourceCombat!=null) {indicators.clear();indicators.addAll(sourceCombat.indicators(level().getGameTime()));}
-        if (indicatorGenerator != null && combatState() == PromisedConsortCombatState.TRANSITION) {
+        if (sourceCombat==null && indicatorGenerator != null && combatState() == PromisedConsortCombatState.TRANSITION) {
             long startTick = entityData.get(STATE_START_GAME_TIME);
             indicators.addAll(indicatorGenerator.createTransitionImpact(getId(), transitionImpactBounds(),
                 sourceCombat==null?phaseReturnAnchor().y:getY(), startTick,
-                startTick + (sourceCombat==null?combatConfig.phaseTransition().returnImpactTick():sourceTransitionWalkTicks()), level().getGameTime()));
+                startTick + combatConfig.phaseTransition().returnImpactTick(), level().getGameTime()));
         }
         Map<String, IndicatorSnapshotPacket> currentIndicators = new HashMap<>();
         indicators.forEach(packet -> currentIndicators.put(packet.indicatorId(), packet));
@@ -2200,7 +2255,9 @@ public final class PromisedConsortEntity extends PlatformMonster implements
 
     @Override
     protected Component getTypeName() {
-        return phase() == PromisedConsortPhase.PHASE_TWO
+        boolean second=phase()==PromisedConsortPhase.PHASE_TWO,transition=combatState()==PromisedConsortCombatState.TRANSITION;
+        double seconds=second && transition && usesSourceRig()?sourceTransitionSeconds(0):0;
+        return PromisedConsortSourceTransition.phaseTwoName(second,transition,seconds,miquellaVisible(),usesSourceRig())
                 ? Component.translatable("entity.elder_bosses.promised_consort.phase_two")
                 : super.getTypeName();
     }
@@ -2210,7 +2267,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         super.onSyncedDataUpdated(accessor);
         if(SOURCE_PLAYBACK.equals(accessor) || SOURCE_LOCOMOTION.equals(accessor) || SOURCE_LOCOMOTION_START.equals(accessor))
             animationFrameTime = -1;
-        if (ACTIVE_PHASE.equals(accessor) && bossEvent != null) {
+        if ((ACTIVE_PHASE.equals(accessor) || COMBAT_STATE.equals(accessor) || MIQUELLA_VISIBLE.equals(accessor)) && bossEvent != null) {
             bossEvent.setName(getTypeName());
         }
     }
@@ -3345,6 +3402,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
         super.addAdditionalSaveData(tag);
         if(sourceConfig!=null) tag.put("SourceSkillConfig",sourceConfig.save());
         if(sourceCombat!=null) tag.put("SourceCombat",sourceCombat.save());
+        tag.put("SourceTransitionGate",entityData.get(SOURCE_TRANSITION_GATE));
         tag.putLong("SourceAcceptanceExpires",sourceAcceptanceExpires);
         if (arenaBinding != null) {
             tag.put("ArenaBinding", arenaBinding.save());
@@ -3455,6 +3513,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        entityData.set(SOURCE_TRANSITION_GATE,tag.getCompound("SourceTransitionGate"));
         boolean invalidSourceState=false;
         if(tag.contains("SourceSkillConfig",Tag.TAG_COMPOUND)) {
             try {sourceConfig=PromisedConsortSourceConfigSnapshot.read(tag.getCompound("SourceSkillConfig"));}
@@ -3633,7 +3692,7 @@ public final class PromisedConsortEntity extends PlatformMonster implements
                 meteorTriggered = true;
                 meteorPending = true;
             } else if (restored == PromisedConsortCombatState.TRANSITION) {
-                entityData.set(MIQUELLA_VISIBLE, stateTicks >= (sourceCombat==null?MIQUELLA_VISIBLE_TICK:sourceTransitionWalkTicks()));
+                entityData.set(MIQUELLA_VISIBLE, sourceCombat==null?stateTicks>=MIQUELLA_VISIBLE_TICK:sourceTransitionSeconds(0)>=PromisedConsortSourceTransition.TELEPORT);
             }
                 entityData.set(STATE_START_GAME_TIME,
                     Math.max(0L, level().getGameTime() - stateTicks));

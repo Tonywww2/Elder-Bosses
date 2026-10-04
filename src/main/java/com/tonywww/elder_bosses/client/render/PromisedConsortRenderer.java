@@ -27,10 +27,15 @@ public final class PromisedConsortRenderer extends GeoEntityRenderer<PromisedCon
         var offset = entity.usesSourceRig()?net.minecraft.world.phys.Vec3.ZERO:ClientConsortMeteorRenderer.visualOffset(entity, partialTick);
         double bodyOffset=entity.usesSourceRig()?entity.sourceBodyOffsetY():0;
         var playback=entity.sourcePlayback();
+        if(playback!=null && playback.actor().taeId()==3024)
+            bodyOffset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.starfallOffset(
+                    playback.sourceMicros(entity.level().getGameTime()*50_000L+(long)(partialTick*50_000)));
+        if(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.cinematic(playback))
+            bodyOffset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.transitionOffset(playback.poseMicros(entity.level().getGameTime()*50_000L+(long)(partialTick*50_000)));
         if(playback!=null && playback.actor().taeId()==3017) {
             long source=playback.sourceMicros(entity.level().getGameTime()*50_000L+(long)(partialTick*50_000));
             if(source>=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN)
-                bodyOffset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.gravityMeteorOffset(source);
+                bodyOffset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.gravityMeteorOffset(source,playback.poseId());
         }
         poses.pushPose();
         try {

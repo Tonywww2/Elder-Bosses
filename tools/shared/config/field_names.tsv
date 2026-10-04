@@ -289,9 +289,6 @@ gravity_size_multiplier|重力特效大小倍率
 gravity_strength_multiplier|重力特效强度倍率
 bloodflame_particles_per_tick|每tick血焰粒子数量
 bleed_burst_particles|出血爆发粒子数量
-holy_width_multiplier|圣光宽度倍率
-holy_fade_in_ticks|圣光淡入时间
-holy_fade_out_ticks|圣光淡出时间
 trajectory_radius_multiplier|剑轨迹粗细倍率
 trajectory_hilt_extension|剑柄方向延伸
 trajectory_arm_extension|手臂方向延伸
@@ -390,3 +387,12 @@ segment_immunity_ticks|重复命中间隔|Repeat contact interval
 invulnerable|释放时无敌|Invulnerable while casting
 flight_height|离地高度|Flight height
 shootAngleXZ|水平发射角度|Horizontal launch angle
+inner_ratio|内层宽度比例|Inner width ratio
+slow_end_alpha|慢段结束透明度|Slow-end opacity
+slow_end_scale|慢段结束大小|Slow-end scale
+halo_width_ratio|光圈厚度比例|Halo width ratio
+slow_ticks|慢衰减时间|Slow decay
+fast_ticks|快衰减时间|Fast decay
+halo_radius|光圈半径|Halo radius
+halo_ticks|光圈持续时间|Halo duration
+range_percent|技能范围百分比|Skill range percent

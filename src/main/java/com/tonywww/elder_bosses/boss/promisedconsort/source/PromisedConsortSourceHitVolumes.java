@@ -69,7 +69,7 @@ public final class PromisedConsortSourceHitVolumes {
                                   PromisedConsortSourcePose.Sample pose,Point entityOrigin,
                                   PromisedConsortSourceMotion.Displacement motion,double yawDegrees) {
         Attack attack=require(taeId,eventIndex);
-        if (windows.get(new Key(taeId,eventIndex)).poseHkxId()!=pose.hkxId())
+        if (!PromisedConsortSourcePlayback.matchesSourcePose(windows.get(new Key(taeId,eventIndex)).poseHkxId(),pose.hkxId()))
             throw new IllegalArgumentException("Attack actor must sample its own source HKX pose");
         if (attack.hitSourceType()!=0) throw new IllegalStateException("Source attack requires a separate hit-source adapter: "+attack.id());
         var result=new ArrayList<Capsule>();

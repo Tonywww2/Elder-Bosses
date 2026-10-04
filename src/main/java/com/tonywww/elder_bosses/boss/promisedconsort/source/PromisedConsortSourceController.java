@@ -30,6 +30,7 @@ public final class PromisedConsortSourceController {
         void setSourceTimer(int slot,double seconds);
         /** Actual behavior/goal exit; the host must not derive this from a guessed TAE tail. */
         boolean bodyEngineExited(Actor actor);
+        default void bodyEntryCompleted(PromisedConsortSourceAi.Entry completed) {}
         void synchronize(PromisedConsortSourceSession.Snapshot snapshot);
     }
     private final Host host;
@@ -72,26 +73,34 @@ public final class PromisedConsortSourceController {
             // segment cannot cancel the newly started segment.
             if (session.bodyActor().filter(actor.get()::equals).isPresent() && host.bodyEngineExited(actor.get())) {
                 var exit=session.engineExit(actor.get(),now); host.dispatch(exit);
-                if (session.bodyActor().isEmpty()) { entry=shootApproach;shootApproach=null;started=false;shootCancellation=false;if(entry!=null) host.beginApproachOrEngineGoal(entry); }
+                if (session.bodyActor().isEmpty()) {
+                    var completed=entry;
+                    entry=shootApproach;shootApproach=null;started=false;shootCancellation=false;
+                    if(entry!=null) host.beginApproachOrEngineGoal(entry);
+                    else host.bodyEntryCompleted(completed);
+                }
                 else host.dispatch(session.advance(now));
             }
         }
-        if (entry!=null && !started) {
-            if (entry.sourceSegments().isEmpty()) {
-                if (host.engineGoalComplete(entry)) entry=null;
-            } else if (host.approachComplete(entry)) {
-                sequence=Math.incrementExact(sequence);
-                host.dispatch(session.start(entry,sequence,host.context().phaseTwo() ? 413 : 412,now,host.sourceSpeed()));
-                started=true;
-                host.dispatch(session.advance(now));
+        // Resolve ready goals immediately, with a bounded budget for zero-time
+        // movement/facing goals. A pending approach is advanced only once per tick.
+        for(int decisions=0;decisions<8;decisions++) {
+            if (entry!=null && !started) {
+                if (entry.sourceSegments().isEmpty()) {
+                    if (host.engineGoalComplete(entry)) entry=null;
+                } else if (host.approachComplete(entry)) {
+                    sequence=Math.incrementExact(sequence);
+                    host.dispatch(session.start(entry,sequence,host.context().phaseTwo() ? 413 : 412,now,host.sourceSpeed()));
+                    started=true;
+                    host.dispatch(session.advance(now));
+                }
             }
-        }
-        if (entry==null && session.bodyActor().isEmpty() && host.allowSelection()) {
+            if(entry!=null || session.bodyActor().isPresent() || !host.allowSelection()) break;
             var selected=PromisedConsortSourceAi.choose(host.selectionWeights(PromisedConsortSourceAi.weights(host.context(),host.coolTime())),host.selectionRoll());
             if (selected.isPresent()) {
                 entry=host.resolveEngineEntry(PromisedConsortSourceAi.entry(selected.getAsInt(),host.context(),host.rolls()));
                 host.beginApproachOrEngineGoal(entry);
-            }
+            } else break;
         }
         host.synchronize(session.snapshot(now));
     }

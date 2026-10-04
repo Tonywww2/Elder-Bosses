@@ -1,0 +1,103 @@
+{
+  "pose_id": 920011,
+  "source_pose": 20011,
+  "stages": [
+    {
+      "name": "kneel",
+      "begin": 0,
+      "end": 0.9,
+      "source_pose": 8700,
+      "source_begin": 0,
+      "source_end": 1.1
+    },
+    {
+      "name": "kneel_hold",
+      "begin": 0.9,
+      "end": 1.1,
+      "source_pose": 8700,
+      "source_begin": 1.1,
+      "source_end": 1.1
+    },
+    {
+      "name": "rise",
+      "begin": 1.1,
+      "end": 2.3,
+      "source_pose": 8700,
+      "source_begin": 1.1,
+      "source_end": 0
+    },
+    {
+      "name": "rise_join",
+      "begin": 2.3,
+      "end": 2.6,
+      "blend_to_pose": 20011,
+      "blend_to_source": 2
+    },
+    {
+      "name": "walk",
+      "begin": 2.6,
+      "end": 5.6,
+      "source_begin": 2,
+      "source_end": 5.0
+    },
+    {
+      "name": "walk_stop",
+      "begin": 5.6,
+      "end": 6.05,
+      "blend_to_source": 2
+    },
+    {
+      "name": "turn",
+      "begin": 6.05,
+      "end": 6.9,
+      "source_begin": 2,
+      "source_end": 2
+    },
+    {
+      "name": "receive",
+      "begin": 6.9,
+      "end": 7.2,
+      "blend_to_pose": 8700,
+      "blend_to_source": 0
+    },
+    {
+      "name": "receive_kneel",
+      "begin": 7.2,
+      "end": 8.3,
+      "source_pose": 8700,
+      "source_begin": 0,
+      "source_end": 1.1
+    },
+    {
+      "name": "teleport_wait",
+      "begin": 8.3,
+      "end": 10.3,
+      "source_pose": 8700,
+      "source_begin": 1.1,
+      "source_end": 1.1
+    },
+    {
+      "name": "rise_with_miquella",
+      "begin": 10.3,
+      "end": 11.5,
+      "source_pose": 8700,
+      "source_begin": 1.1,
+      "source_end": 0
+    },
+    {
+      "name": "ready",
+      "begin": 11.5,
+      "end": 12.2,
+      "blend_to_idle": true
+    }
+  ],
+  "gate_light_begin": 6.9,
+  "miquella_appear": 7.4,
+  "miquella_appear_end": 7.9,
+  "gate_bright_end": 8.2,
+  "back_light_begin": 9.5,
+  "miquella_teleport": 10.3,
+  "back_light_end": 11.5,
+  "teleport_flash_end": 10.6,
+  "gate_light_end": 11.8
+}

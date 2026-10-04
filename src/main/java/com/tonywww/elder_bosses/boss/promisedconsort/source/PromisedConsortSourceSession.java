@@ -56,7 +56,9 @@ public final class PromisedConsortSourceSession {
         Running(Clip clip, Actor actor, long start, double speed, int endEffect,SavedCursor saved) {
             this.clip=clip; this.actor=actor; this.cursor=new Cursor(clip,saved);
             this.startWorldMicros=start; this.speed=speed; this.cloneEndEffect=endEffect;
-            this.warp=bank.timeWarps().getOrDefault(actor.taeId(),PromisedConsortSourceTimeWarp.IDENTITY);
+            var configured=bank.timeWarps().getOrDefault(actor.taeId(),PromisedConsortSourceTimeWarp.IDENTITY);
+            this.warp=actor.slot()==-1 && actor.taeId()==3024 && bank.timeWarps().containsKey(3024)
+                    ?PromisedConsortSourceLanding.starfallClock(bank,configured,speed,cloneSpawnWaitMicros):configured;
         }
         long sourceAt(long worldMicros) {
             return warp.sourceAt((long)Math.floor(Math.max(0,worldMicros-startWorldMicros)*speed));

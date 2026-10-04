@@ -19,6 +19,7 @@ import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourc
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceCollision;
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceExecutionData;
 import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourcePlayerPose;
+import com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceFfx;
 import static com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTimeline.*;
 
 /** Focused regression for the new event cursor: skipped frames, restore, phase and clone identity. */
@@ -29,7 +30,46 @@ public class SourceTimelineCheck {
         checks++;
         if (!value) throw new AssertionError(message);
     }
+    private static double pointDistanceSquared(PromisedConsortSourcePose.Point a,PromisedConsortSourcePose.Point b) {
+        return Math.pow(a.x()-b.x(),2)+Math.pow(a.y()-b.y(),2)+Math.pow(a.z()-b.z(),2);
+    }
     public static void main(String[] args) throws Exception {
+        if(args.length>0 && args[0].equals("--phase-gravity-crash")) {
+            phaseGravityCrashChecks();
+            System.out.println("Repaired-pose capsule crash / name timing / leap gravity checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--pose-column-repairs")) {
+            holyColumnChecks();grabPresentationChecks();meteorLandingChecks();targetedPoseRepairChecks();
+            System.out.println("Targeted pose / paired grab / holy column / outer starfall warning checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--arena-timing-range")) {
+            arenaTimingRangeChecks();phaseTransitionChecks();
+            System.out.println("Early starfall warning / arena entry / range scale / gravity fades / faster cinematic checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--holy-columns")) {
+            holyColumnChecks();
+            System.out.println("Holy profiles / two-stage decay / delayed halos and current config checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--grab-presentation")) {
+            grabPresentationChecks();
+            System.out.println("Grab local rotation / connected skin and charm material checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--starfall-position")) {
+            starfallPositionChecks();
+            System.out.println("Starfall centre landing / recovery and shared rig offset checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--transition-teleport")) {
+            transitionTeleportChecks();
+            System.out.println("Transition gate/back light and instant handoff checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--starfall-follow")) {
+            starfallFollowChecks();
+            System.out.println("Starfall clone/body shared-clock checks passed: "+checks+"; no world launched.");return;
+        }
+        if(args.length>0 && args[0].equals("--state-transition")) {
+            controllerChecks(PromisedConsortSourceAssets.bank());phaseTransitionChecks();
+            System.out.println("Controller handoff / cinematic poses and beats passed: "+checks+"; no world launched.");return;
+        }
         if(args.length>0 && args[0].equals("--meteor-landing")) {
             meteorLandingChecks();
             System.out.println("Gravity meteor landing checks passed: "+checks+"; no world launched.");return;
@@ -322,10 +362,129 @@ public class SourceTimelineCheck {
         check(defaults.number("projectiles.a205220950.shootAngleXZ")==-30,"Side dash preserves its source horizontal fan");
         check(defaults.number("visuals.meteor_size")==1.35 && !defaults.flag("grab.instant_kill_enabled"),"Source defaults match the current run preset");
     }
+    private static void phaseGravityCrashChecks() {
+        var bank=PromisedConsortSourceAssets.bank();var hits=PromisedConsortSourceAssets.hitVolumes();
+        var origin=new PromisedConsortSourcePose.Point(0,64,0);var motion=new PromisedConsortSourceMotion.Displacement(0,0,0);
+        int samples=0;
+        for(int tae:new int[]{3013,3017,4100,20012}) {
+            var clip=bank.requireClip(tae);
+            for(int phase:new int[]{412,413}) {
+                var playback=new PromisedConsortSourcePlayback(new Actor(1,0,-1,tae,clip.hkxId(),phase),0,1);
+                check(PromisedConsortSourcePlayback.matchesSourcePose(clip.hkxId(),playback.poseId()),"Repair stays linked to its own original pose: "+tae);
+                for(var event:clip.events()) if(event.type()==1 && event.appliesTo(phase)) {
+                    for(long at:new long[]{event.startMicros(),(event.startMicros()+event.endMicros())/2,event.endMicros()-1}) {
+                        for(int poseId:new int[]{playback.poseId(),clip.hkxId()}) {
+                            var capsules=hits.capsules(tae,event.index(),PromisedConsortSourceAssets.attachments(),PromisedConsortSourceAssets.pose(poseId).sample(at),origin,motion,123);
+                            check(!capsules.isEmpty(),"Live repaired and preview poses produce attack capsules: "+tae+" / "+phase+" / "+at);samples++;
+                        }
+                    }
+                }
+            }
+        }
+        check(samples>=18,"Exercises the actual attack sampling path from the crash report");
+        var meteorAttack=bank.requireClip(3017).events().stream().filter(e->e.type()==1).findFirst().orElseThrow();
+        boolean rejected=false;
+        try {hits.capsules(3017,meteorAttack.index(),PromisedConsortSourceAssets.attachments(),PromisedConsortSourceAssets.pose(930013).sample(1_400_000),origin,motion,0);}
+        catch(IllegalArgumentException expected) {rejected=true;}
+        check(rejected,"An unrelated repaired animation is still rejected");
+        for(double seconds:new double[]{0,6.9,7.4,7.5,7.899999})
+            check(!com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.phaseTwoName(true,true,seconds,false,true),"Old name remains until Miquella is visible: "+seconds);
+        for(double seconds:new double[]{7.9,8.5,10.3,12.2})
+            check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.phaseTwoName(true,true,seconds,false,true),"New name appears after Miquella's fade-in: "+seconds);
+        check(!com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.phaseTwoName(false,false,12.2,true,true),"First phase retains its name");
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.phaseTwoName(true,false,0,false,true),"Second phase name persists outside the cinematic");
+        for(int id:new int[]{652210,652229,652231,652235})
+            check(PromisedConsortSourceFfx.gravitySkillIntensity(3015,id)==.6F,"Leap body, blades and impact are forty percent softer");
+        check(PromisedConsortSourceFfx.gravitySkillIntensity(3017,652210)==1 && PromisedConsortSourceFfx.gravitySkillIntensity(3017,652285)==1,"Meteor gravity keeps its accepted intensity");
+        check(PromisedConsortSourceFfx.gravitySkillIntensity(0,652235)==.6F,"Leap impact tail retains the reduced intensity");
+        check(PromisedConsortSourceFfx.gravitySkillIntensity(3015,652295)==1,"Charm glyph is unaffected by the leap mix");
+    }
+    private static void targetedPoseRepairChecks() {
+        var config=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
+        var bank=PromisedConsortSourceAssets.bank();var idle=PromisedConsortSourceAssets.pose(20).sample(0);
+        for(int tae:new int[]{3013,3017,4100,20012}) {
+            var clip=bank.requireClip(tae);var playback=new PromisedConsortSourcePlayback(new Actor(1,0,-1,tae,clip.hkxId(),413),0,1,0,config.warp(tae));
+            var preview=new PromisedConsortSourcePlayback(new Actor(1L<<60,0,-1,tae,clip.hkxId(),413),0,1);
+            check(preview.poseId()==clip.hkxId() && playback.poseId()!=clip.hkxId(),"Production repair preserves extracted previews: "+tae);
+            if(tae!=3017) {
+                var end=PromisedConsortSourceAssets.pose(playback.poseId()).sample(clip.durationMicros());
+                for(int bone:new int[]{7,8,30,45,54,55,56,58,80,108,136,231}) {
+                    var a=end.joint(bone);var ar=end.joint(0);var b=idle.joint(bone);var br=idle.joint(0);
+                    check(pointDistanceSquared(a,new PromisedConsortSourcePose.Point(b.x()+ar.x()-br.x(),b.y()+ar.y()-br.y(),b.z()+ar.z()-br.z()))<1e-7,"Completed recovery matches idle: "+tae+" / "+bone);
+                }
+            }
+        }
+        var repaired=PromisedConsortSourceAssets.pose(930017);
+        for(int bone:new int[]{7,8,54,55,56}) {
+            var previous=repaired.sample(5_433_334).joint(bone);double maximum=0;
+            for(long at=5_450_000;at<=6_550_000;at+=16_667) {
+                var next=repaired.sample(at).joint(bone);maximum=Math.max(maximum,Math.sqrt(pointDistanceSquared(next,previous)));previous=next;
+            }
+            check(maximum<.3,"Pre-slash repair removes the abrupt source pose reset: "+bone+" step="+maximum);
+        }
+        for(double yaw:new double[]{0,90,210}) {
+            double radians=Math.toRadians(yaw);var direction=new net.minecraft.world.phys.Vec3(Math.sin(radians),.8,Math.cos(radians)).normalize();
+            var floor=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceProjectiles.lightCarrierDirection(3026,205220315,direction);
+            var spread=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceProjectiles.lightCarrierDirection(3026,205220313,direction);
+            check(floor.equals(new net.minecraft.world.phys.Vec3(0,-1,0)),"Small light carrier cannot drift horizontally at any facing");
+            check(spread.y==0 && Math.abs(spread.length()-1)<1e-8,"Floor spread does not inherit a vertical pitch");
+            check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceProjectiles.lightCarrierDirection(3017,205220315,direction).equals(direction),"Other attacks retain their launch direction");
+        }
+        var execution=PromisedConsortSourceExecutionData.get();double radius=0;
+        for(int id:new int[]{205220441,205220442}) radius=Math.max(radius,
+                com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceProjectiles.warningRadius(config,id,config.override("projectiles",id,execution.bullet(id)),3024));
+        check(radius==33*config.range(3024),"Ascent warning includes the largest final starfall radius");
+        var warp=config.warp(4100);long start=1_000_000;
+        for(long gate:new long[]{100_000,6_033_333,9_333_333,9_666_667}) {
+            long now=start+warp.gameAt(gate);
+            check(Math.abs(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrab.pairedMicros(warp,start,now)-gate)<=1,"Paired player gates keep4100 time after host handoff");
+        }
+    }
+    private static void holyColumnChecks() throws Exception {
+        var config=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
+        check(com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.read(binaryNbt(config.save())).equals(config),"Current column parameters survive the encounter snapshot");
+        check(config.numbers().keySet().stream().noneMatch(k->k.equals("visuals.holy_width_multiplier") || k.equals("visuals.holy_fade_in_ticks") || k.equals("visuals.holy_fade_out_ticks")),"Only the current holy schema is registered");
+        var fxrs=com.google.gson.JsonParser.parseString(Files.readString(asset("boss/promised_consort/source_fxr_contracts.json"))).getAsJsonObject().getAsJsonArray("effects");
+        int holy=0;
+        for(var row:fxrs) {
+            int id=row.getAsJsonObject().get("id").getAsInt();if(!PromisedConsortSourceFfx.isHoly(id)) continue;holy++;
+            check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.PROFILES.contains(
+                    com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.profile(id)),"Every holy FXR uses a configured column preset: "+id);
+        }
+        check(holy==32,"All 32 holy FXRs are covered");
+        for(String name:com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.PROFILES) {
+            var preset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.settings(config,name);
+            var first=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,0);
+            check(first.alpha()==.5 && first.scale()==1 && first.haloAlpha()==0,"Half opacity and full width at birth: "+name);
+            check(preset.height()==config.number("visuals.holy_columns."+name+".height")*1.5,"Every column is taller: "+name);
+            check(preset.haloTicks()==config.number("visuals.holy_columns."+name+".halo_ticks")*.5,"Halo lifetime is halved: "+name);
+            double alpha=1,scale=1;
+            for(int step=1;step<20;step++) {
+                var phase=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,preset.columnTicks()*step/20);
+                check(phase.alpha()<=alpha && phase.scale()<=scale && phase.haloAlpha()==0,"Column shrinks/fades monotonically without an early halo: "+name);
+                alpha=phase.alpha();scale=phase.scale();
+            }
+            var boundary=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,preset.slowTicks());
+            check(Math.abs(boundary.alpha()-.5*preset.slowEndAlpha())<1e-9 && Math.abs(boundary.scale()-preset.slowEndScale())<1e-9,"No jump between slow and fast decay: "+name);
+            check(preset.slowEndAlpha()/preset.fastTicks()>(1-preset.slowEndAlpha())/preset.slowTicks()
+                    && preset.slowEndScale()/preset.fastTicks()>(1-preset.slowEndScale())/preset.slowTicks(),"Default second phase decays faster: "+name);
+            var ring=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,preset.columnTicks());
+            check(ring.alpha()==0 && ring.scale()==0 && ring.haloAlpha()==.06,"Faint halo begins only after the column disappears: "+name);
+            var gone=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,preset.totalTicks());
+            check(gone.alpha()==0 && gone.haloAlpha()==0,"Both effects disappear: "+name);
+        }
+        var numbers=new java.util.HashMap<>(config.numbers());numbers.put("visuals.holy_columns.impact.width",4.0);numbers.put("visuals.holy_columns.impact.fast_ticks",2.0);numbers.put("visuals.holy_columns.impact.halo_ticks",0.0);
+        var edited=new com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot(numbers,config.flags());
+        var impact=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.settings(edited,"impact");
+        check(impact.width()==4 && impact.fastTicks()==2,"An individual preset changes size and decay");
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.settings(edited,"weapon").equals(
+                com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.settings(config,"weapon")),"Editing impact leaves weapon settings unchanged");
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(impact,impact.columnTicks()).haloAlpha()==0,"Zero halo duration cleanly disables the ring");
+    }
     private static void arenaPolishChecks() throws Exception {
         var defaults=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
         check(defaults.number("visuals.meteor_size")==1.35,"Meteor display uses the current run preset");
-        check(defaults.number("visuals.holy_width_multiplier")==3,"Holy thickness has a current adjustable default");
+        check(defaults.number("visuals.holy_columns.impact.width")==2,"Holy columns have an adjustable impact preset");
         check(!defaults.flag("grab.instant_kill_enabled"),"Current preset disables instant grab death");
         var flags=new java.util.HashMap<>(defaults.flags());flags.put("grab.instant_kill_enabled",false);
         var harmless=new com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot(defaults.numbers(),flags);
@@ -410,8 +569,97 @@ public class SourceTimelineCheck {
         check(flat.fills().get(0).first().y()==64 && flat.fills().get(0).second().y()==64
                 && flat.borders().get(0).from().y()==64 && flat.borders().get(0).to().y()==64,"Warning fills and borders share one flat plane");
     }
+    private static void starfallFollowChecks() throws Exception {
+        var defaults=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
+        var changed=new java.util.HashMap<>(defaults.numbers());
+        changed.put("animations.a3024.windup_ticks",defaults.number("animations.a3024.windup_ticks")*2);
+        changed.put("animations.a20008.windup_ticks",defaults.number("animations.a20008.windup_ticks")*1.7);
+        var custom=new com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot(changed,defaults.flags());
+        for(var config:List.of(defaults,custom)) for(double speed:List.of(1.0,2.0)) {
+            var bank=config.configure(PromisedConsortSourceAssets.bank());
+            long start=1_000_000,wait=16_667;
+            var entry=new PromisedConsortSourceAi.Entry(21,List.of(3024),Set.of(),null,"starfall timing check");
+            var session=new PromisedConsortSourceSession(bank,wait);
+            var body=PromisedConsortSourcePlayback.of(session.start(entry,1,413,start,speed).started().get(0));
+            long impact=body.worldAtSource(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.STARFALL_IMPACT);
+            var update=session.advance(impact+100_000);
+            check(update.started().size()==4,"All four starfall clones retain their independent actors");
+            long last=update.events().stream().filter(n->n.crossing().identity().actor().slot()>=0
+                    && n.crossing().event().type()==1 && n.crossing().identity().edge()==Edge.ENTER)
+                    .mapToLong(PromisedConsortSourceSession.Notice::worldMicros).max().orElseThrow();
+            check(Math.abs(impact-last-150_000)<=2,"Body lands 150ms after the final clone, including configured child timing and speed");
+            long attack=update.events().stream().filter(n->n.crossing().identity().actor().slot()==-1
+                    && n.crossing().event().type()==1 && n.crossing().identity().edge()==Edge.ENTER)
+                    .mapToLong(PromisedConsortSourceSession.Notice::worldMicros).min().orElseThrow();
+            check(attack>last && attack<=impact,"Body contact advances with its landing, after the final clone");
+            var base=config.warp(3024);
+            for(var clone:update.started()) {
+                var cue=bank.cloneChains().stream().filter(c->c.parentTaeId()==3024).flatMap(c->c.actors().stream())
+                        .filter(c->c.slot()==clone.actor().slot()).findFirst().orElseThrow();
+                check(clone.startWorldMicros()==start+(long)Math.ceil(base.gameAt(cue.spawnSourceMicros())/speed)+wait,
+                        "Clone summons keep the existing configured timing");
+                check(clone.warp().equals(config.warp(clone.actor().taeId())),"Clone contact and animation retain their own configured clock");
+            }
+            check(PromisedConsortSourcePlayback.decode(binaryNbt(body.encode())).equals(body),"Retimed body clock survives client synchronization");
+            var warp=body.warp();
+            for(long source:new long[]{0,400_000,2_666_667,3_100_000,4_266_667,4_300_000,8_233_333})
+                check(Math.abs(warp.sourceAt(warp.gameAt(source))-source)<=2,"Retimed event/pose clock remains reversible at "+source);
+            check(warp.gameAt(8_233_333)-warp.gameAt(4_300_000)==base.gameAt(8_233_333)-base.gameAt(4_300_000),
+                    "Recovery pace remains configured after the landing");
+            var before=new PromisedConsortSourceSession(bank,wait);before.start(entry,1,413,start,speed);before.advance(start+1_000_000);
+            var restored=new PromisedConsortSourceSession(bank,wait);restored.restore(before.save(),2_000_000);
+            check(restored.snapshot(start+3_000_000).actors().get(0).sourceMicros()==before.snapshot(start+1_000_000).actors().get(0).sourceMicros(),
+                    "Restored controller uses the same retimed source clock");
+            check(restored.advance(impact+2_100_000).events().stream().filter(n->n.crossing().identity().actor().slot()>=0
+                    && n.crossing().event().type()==1 && n.crossing().identity().edge()==Edge.ENTER)
+                    .mapToLong(PromisedConsortSourceSession.Notice::worldMicros).max().orElseThrow()==last+2_000_000,
+                    "Restore shifts clone landings without replaying their clocks");
+        }
+        var raw=new PromisedConsortSourceSession(PromisedConsortSourceAssets.bank());
+        var rawBody=raw.start(new PromisedConsortSourceAi.Entry(21,List.of(3024),Set.of(),null,"original rehearsal"),1,413,0,1);
+        check(rawBody.started().get(0).warp().span()==null,"Original unconfigured rehearsal retains original timing");
+    }
+    private static void starfallPositionChecks() {
+        var config=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
+        var bank=config.configure(PromisedConsortSourceAssets.bank());
+        var source=PromisedConsortSourceAssets.pose(3024);
+        var center=new net.minecraft.world.phys.Vec3(120,64,-30);
+        for(double yaw:List.of(0.0,90.0,217.0)) {
+            var session=new PromisedConsortSourceSession(bank,16_667);
+            var playback=PromisedConsortSourcePlayback.of(session.start(new PromisedConsortSourceAi.Entry(21,List.of(3024),Set.of(),null,"landing"),1,413,0,1).started().get(0));
+            long contact=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.STARFALL_CONTACT;
+            var contactMotion=playback.displacement(playback.worldAtSource(contact),yaw);
+            var approachMotion=playback.displacement(playback.worldAtSource(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.STARFALL_APPROACH),yaw);
+            var begin=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.starfallPosition(center,approachMotion,contactMotion,approachMotion,12,false);
+            check(Math.abs(begin.subtract(center).horizontalDistance()-12)<1e-6,"Starfall enters within twelve blocks of the centre at every arena yaw");
+            for(long at:new long[]{400_000,3_700_000,4_033_333,4_133_333,4_233_333,contact,4_300_000,4_966_667,5_500_000,6_283_333,6_300_000,8_233_333,8_333_333}) {
+                var motion=playback.displacement(playback.worldAtSource(at),yaw);
+                var p=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.starfallPosition(center,motion,contactMotion,approachMotion,12,at>=contact);
+                check(p.subtract(center).horizontalDistance()<=12.000001,"Approach and recovery cannot drift to the arena edge");
+                check(p.y>=center.y,"Starfall descent cannot move the actor below its contact floor");
+                if(at>=contact) check(p.equals(center),"First damage contact and every recovery frame share the fixed centre despite the source reset");
+                var pose=source.sample(at);double masterY=source.masterTranslationDelta(at).y();
+                double authoritativeSole=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.soleY(pose,masterY);
+                double renderOffset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.starfallOffset(at);
+                check(Math.abs(authoritativeSole+renderOffset)<1e-8,"Render partial-frame and authoritative full pose use the same complete-rig compensation");
+            }
+            for(double multiplier:List.of(0.0,.5,2.0)) {
+                var scaledApproach=approachMotion.multiply(multiplier,1,multiplier);
+                var scaledContact=contactMotion.multiply(multiplier,1,multiplier);
+                var scaled=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.starfallPosition(center,scaledApproach,scaledContact,scaledApproach,12*multiplier,false);
+                check(Math.abs(scaled.subtract(center).horizontalDistance()-12*multiplier)<1e-6,"Existing movement/range multipliers still scale the compressed approach");
+            }
+        }
+        var jump=PromisedConsortSourceAssets.bank().motions().get(3024);
+        double maximum=0;
+        for(long at=4_300_000;at<=6_400_000;at+=100_000) {
+            var master=source.masterTranslationDelta(at);var motion=jump.displacement(at,0);
+            maximum=Math.max(maximum,new net.minecraft.world.phys.Vec3(motion.x()+master.x(),0,motion.z()-master.z()).horizontalDistance());
+        }
+        check(maximum>300,"Regression exercises the actual exported off-arena Master reset");
+    }
     private static void meteorLandingChecks() {
-        var pose=PromisedConsortSourceAssets.pose(3017);
+        var pose=PromisedConsortSourceAssets.pose(930017);
         var motion=PromisedConsortSourceAssets.bank().motions().get(3017);
         var warp=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults().warp(3017);
         long begin=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN;
@@ -438,7 +686,7 @@ public class SourceTimelineCheck {
         }
         check(maxStep<.6,"No single-tick landing snap in the actual root/body tracks: "+maxStep);
         check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.gravityDescent(5_433_333)==0,"Meteor launches complete before descent adaptation");
-        check(Math.abs(warp.gameAt(end)-warp.gameAt(begin)-3_000_000)<=2,"Current half-speed recovery gives a three-second descent");
+        check(Math.abs(warp.gameAt(end)-warp.gameAt(begin)-1_500_000)<=2,"Meteor descent no longer inherits the removed tail slowdown");
     }
     private static void dashContactChecks() {
         var defaults=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
@@ -462,7 +710,7 @@ public class SourceTimelineCheck {
         var meteor=defaults.warp(3017);
         long tail=meteor.sourceWindup()+meteor.sourceActive();
         check(tail==5_433_333 && Math.abs(meteor.gameAt(tail)-tail)<=1,"Meteor launch timing remains unchanged");
-        check(Math.abs(meteor.gameAt(tail+1_000_000)-meteor.gameAt(tail)-2_000_000)<=2,"Meteor aerial recovery plays at half speed on the shared clock");
+        check(Math.abs(meteor.gameAt(tail+1_000_000)-meteor.gameAt(tail)-1_000_000)<=2,"Meteor recovery uses the source speed again");
         var raw=original.requireClip(3024).events().stream().filter(e->e.type()==1).findFirst().orElseThrow();
         var charge=configured.requireClip(3024).events().stream().filter(e->e.type()==1).findFirst().orElseThrow();
         check(raw.endMicros()==4_366_667,"Original meteor attack evidence remains unchanged");
@@ -678,6 +926,47 @@ public class SourceTimelineCheck {
             check(doc.getAsJsonObject("input_release_gate").get("frame").getAsInt()==290,"Player input unlock uses source frame290");
         }
     }
+    private static void grabPresentationChecks() throws Exception {
+        var player=PromisedConsortSourcePlayerPose.get();
+        var names=List.of("Pelvis","Spine","Spine1","Head","L_UpperArm","L_Forearm","R_UpperArm","R_Forearm","L_Thigh","L_Calf","R_Thigh","R_Calf");
+        var doc=com.google.gson.JsonParser.parseString(Files.readString(asset("boss/promised_consort/source_player_grab_pose.json"))).getAsJsonObject();
+        var raw=doc.getAsJsonArray("frames_affine_row_major");
+        for(int frame:new int[]{0,40,41,180,280}) {
+            var pose=player.sample(Math.round(frame*11_000_000.0/330));
+            for(String name:names) {
+                int bone=player.bone(name);var expected=raw.get(frame).getAsJsonArray().get(bone).getAsJsonArray();var matrix=pose.matrix(bone);
+                double error=0;for(int r=0;r<4;r++) for(int c=0;c<4;c++) error=Math.max(error,Math.abs(matrix.get(c,r)-expected.get(r*4+c).getAsDouble()));
+                check(error<.0001,"Local TRS reconstruction retains the authored frame: "+name+" / "+frame+" / "+error);
+            }
+        }
+        for(long time:new long[]{0,1_333_333,1_341_667,1_350_000,1_358_333,3_000_000,6_033_333,9_333_333,9_666_667}) {
+            var sample=player.sample(time);
+            for(String name:names) {
+                var matrix=sample.matrix(player.bone(name));
+                check(Math.abs(matrix.determinant3x3()-1)<.0001,"Fast rotations do not flatten visible body parts: "+name);
+            }
+            for(String[] pair:new String[][]{{"Pelvis","Head"},{"L_UpperArm","L_Elbow"},{"L_Forearm","L_Hand"},{"R_UpperArm","R_Elbow"},{"R_Forearm","R_Hand"},{"L_Thigh","L_Knee"},{"L_Calf","L_Foot"},{"R_Thigh","R_Knee"},{"R_Calf","R_Foot"}}) {
+                int bone=player.bone(pair[0]),end=player.bone(pair[1]);int pixels=pair[0].equals("Pelvis")?12:6;
+                var bind=player.bind(end).sub(player.bind(bone));float length=bind.length();bind.normalize();
+                var x=new org.joml.Vector3f(bind).cross(new org.joml.Vector3f(0,0,1)).normalize();var z=new org.joml.Vector3f(x).cross(bind).normalize();
+                var basis=new org.joml.Matrix4f().setColumn(0,new org.joml.Vector4f(x.mul(.8f),0)).setColumn(1,new org.joml.Vector4f(bind.mul(length*16/pixels),0)).setColumn(2,new org.joml.Vector4f(z.mul(.8f),0));
+                var matrix=sample.segment(bone,end,basis,pixels);
+                var fitted=matrix.transformPosition(new org.joml.Vector3f(0,pixels/16f,0));var expected=sample.matrix(end).getTranslation(new org.joml.Vector3f());
+                check(fitted.distance(expected)<.00001,"Skin and armor segments meet their animated endpoint: "+pair[0]);
+                var xx=new org.joml.Vector3f(matrix.m00(),matrix.m01(),matrix.m02());var yy=new org.joml.Vector3f(matrix.m10(),matrix.m11(),matrix.m12());var zz=new org.joml.Vector3f(matrix.m20(),matrix.m21(),matrix.m22());
+                check(Math.abs(xx.dot(yy))<.00001 && Math.abs(zz.dot(yy))<.00001 && Math.abs(xx.dot(zz))<.00001,"Fitted cubes remain orthogonal through the grab");
+            }
+        }
+        var fx=PromisedConsortSourceFfx.get();int glyphs=0;
+        for(var node:fx.nodes(652295)) {
+            var appearance=node.appearance();if(appearance==null || !appearance.get("name").getAsString().equals("MultiTextureBillboardEx")) continue;
+            int first=(int)PromisedConsortSourceFfx.field(appearance,"layer1",0,0),glyph=first==1?(int)PromisedConsortSourceFfx.field(appearance,"layer2",0,0):first;
+            check(glyph==60670,"Every charm multi-layer billboard resolves to the original glyph rather than the solid white base");glyphs++;
+        }
+        check(glyphs==4,"All four original charm glyph layers receive transparency adaptation");
+        var shader=com.google.gson.JsonParser.parseString(Files.readString(asset("shaders/core/consort_source_mask.json"))).getAsJsonObject();
+        check(shader.getAsJsonObject("blend").get("dstrgb").getAsString().equals("1-srcalpha"),"Charm mask uses normal alpha compositing");
+    }
     private static void shootChecks(PromisedConsortSourceBank bank) {
         var near=PromisedConsortSourceAi.onShoot(context(8,.8,false),()->30,()->.5);
         check(!near.clearSubGoals() && near.sourceSegments().equals(List.of(3009)),"Near Shoot appends stomp without clearing old goals");
@@ -711,7 +1000,7 @@ public class SourceTimelineCheck {
             check(playback.sourceMicros(1_000_000)==0,"Future actor start holds its first pose");
             check(playback.sourceMicros(1_075_000)==75_000,"Sub-tick start and speed survive sync");
             check(playback.animationTicks(21,.5)==1.5,"Client clock uses the clone's own sub-tick origin");
-            check(playback.animationClip().endsWith(String.format(java.util.Locale.ROOT,"%06d",hkx)),"Imported TAE plays its actual HKX");
+            check(playback.animationClip().endsWith(String.format(java.util.Locale.ROOT,"%06d",playback.poseId())),"Actor plays its production pose from the original TAE identity");
             var pose=PromisedConsortSourceAssets.pose(hkx);
             for (long local : new long[]{0,600_000,1_400_000,2_200_000}) {
                 long world=playback.startWorldMicros()+(long)Math.ceil(local/playback.speed());
@@ -792,7 +1081,9 @@ public class SourceTimelineCheck {
             long time; int approaches,dispatched; final Set<Integer> active=new HashSet<>(Set.of(20011576));
             final Set<Integer> activated=new HashSet<>(); PromisedConsortSourceSession.Snapshot snapshot;
             PromisedConsortSourceAi.Shoot queuedShoot; int suppressedShots;
-            boolean completeAtEnd,selection=true;
+            boolean completeAtEnd,selection=true,approachReady=true,engineReady;
+            int completed;
+            java.util.Map<Integer,Double> weights;
             public long worldMicros() { return time; }
             public PromisedConsortSourceAi.Context context() { return new PromisedConsortSourceAi.Context(5,.7,false,active,Set.of()); }
             public PromisedConsortSourceAi.Rolls rolls() { return ()->100; }
@@ -800,9 +1091,11 @@ public class SourceTimelineCheck {
             public double selectionRoll() { return .5; }
             public double sourceSpeed() { return 1; }
             public boolean allowSelection() { return selection; }
+            public java.util.Map<Integer,Double> selectionWeights(java.util.Map<Integer,Double> original) {return weights==null?original:weights;}
             public void beginApproachOrEngineGoal(PromisedConsortSourceAi.Entry entry) { approaches++; }
-            public boolean approachComplete(PromisedConsortSourceAi.Entry entry) { return true; }
-            public boolean engineGoalComplete(PromisedConsortSourceAi.Entry entry) { return false; }
+            public boolean approachComplete(PromisedConsortSourceAi.Entry entry) { return approachReady; }
+            public boolean engineGoalComplete(PromisedConsortSourceAi.Entry entry) { return engineReady; }
+            public void bodyEntryCompleted(PromisedConsortSourceAi.Entry entry) {completed++;}
             public void dispatch(PromisedConsortSourceSession.Update update) {
                 dispatched+=update.started().size()+update.events().size()+update.ended().size();
                 for (var notice : update.events()) if (notice.crossing().event().referenceId()==20011552) {
@@ -825,10 +1118,11 @@ public class SourceTimelineCheck {
             void at(long value) { time=value; activated.clear(); }
         }
         var host=new SourceHost(); var controller=new PromisedConsortSourceController(host,bank);
+        host.approachReady=false;
         controller.tick();
         check(host.approaches==1 && controller.entry().orElseThrow().act()==3,"Source AI selection requests its actual approach goal");
         check(host.snapshot.actors().isEmpty(),"Selection cannot start a pose before the approach adapter responds");
-        host.at(50_000); controller.tick();
+        host.approachReady=true;host.at(50_000); controller.tick();
         check(host.snapshot.actors().get(0).actor().taeId()==3007,"Completed approach starts exact source3007");
         controller.shoot(new PromisedConsortSourceAi.Shoot(true,List.of(),Set.of(),1.4));
         check(controller.save().shootApproach()!=null && controller.save().shootCancellation(),"A previous Shoot can queue approach through the new-attack gate");
@@ -858,8 +1152,107 @@ public class SourceTimelineCheck {
                     "Source "+tae+" releases its final body pose in the completion tick");
             controller.cancel();
         }
+        var immediate=new SourceHost();var immediateController=new PromisedConsortSourceController(immediate,bank);
+        immediateController.tick();
+        check(immediate.snapshot.actors().stream().anyMatch(a->a.actor().taeId()==3007),"A ready selected attack starts in the selection tick");
+        immediateController.cancel();immediate.completeAtEnd=true;immediate.selection=false;
+        immediateController.startScript(20010);
+        immediate.at(bank.requireClip(20010).durationMicros());immediate.selection=true;immediateController.tick();
+        check(immediate.completed==1,"Opening completion releases the script before ordinary selection");
+        check(immediate.snapshot.actors().stream().anyMatch(a->a.actor().taeId()==3007),"Opening hands off to a ready attack in its completion tick");
+        var facing=new SourceHost();facing.engineReady=true;facing.weights=java.util.Map.of(43,100.0);
+        var facingController=new PromisedConsortSourceController(facing,bank);facingController.tick();
+        check(facing.approaches==8,"Repeated immediate engine goals obey the per-tick decision budget");
     }
 
+    private static void arenaTimingRangeChecks() throws Exception {
+        var config=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
+        var numbers=new java.util.HashMap<>(config.numbers());numbers.put("range_percent",150.0);
+        var larger=new com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot(numbers,config.flags());
+        check(config.rangeFactor()==1 && larger.rangeFactor()==1.5,"One percentage controls all authored hit geometry");
+        var anchor=new PromisedConsortSourcePose.Point(10,64,20);
+        for(var clip:PromisedConsortSourceAssets.bank().clips().values()) {
+            check(Math.abs(larger.range(clip.taeId())/config.range(clip.taeId())-1.5)<1e-10,"Range scales trajectory radii and endpoints for "+clip.taeId());
+            check(larger.motionScale(clip.taeId())==config.motionScale(clip.taeId()) && larger.warp(clip.taeId()).equals(config.warp(clip.taeId())),"Range never changes root motion or event speed: "+clip.taeId());
+            for(var e:clip.events()) if(e.type()==1) {
+                var base=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGroundAreas.configured(config,clip.taeId(),e.index(),anchor,38);
+                var big=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGroundAreas.configured(larger,clip.taeId(),e.index(),anchor,38);
+                check(Math.abs(big.length()/base.length()-1.5)<1e-10 && Math.abs(big.width()/base.width()-1.5)<1e-10 && Math.abs(big.height()/base.height()-1.5)<1e-10,"Flat warnings and simple hit areas share percentage: "+clip.taeId()+"/"+e.index());
+                check(big.angle()==base.angle() && big.yaw()==base.yaw() && Math.abs(big.anchor().x()-anchor.x()-(base.anchor().x()-anchor.x())*1.5)<1e-10,"Authored angle stays fixed while forward extent scales");
+            }
+        }
+        check(com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.read(larger.save()).equals(larger),"Current percentage survives binary encounter snapshot");
+        var clip=PromisedConsortSourceAssets.bank().requireClip(3021);
+        long ascent=clip.events().stream().filter(e->e.type()==96 && PromisedConsortSourceExecutionData.integer(PromisedConsortSourceExecutionData.get().eventFields(3021,e.index()),"FFX ID")==652215).mapToLong(Event::startMicros).min().orElseThrow();
+        check(ascent==com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.STARFALL_ASCENT,"Warning is tied to the original ascent beat");
+        for(double speed:new double[]{.5,1,2}) {
+            var playback=new PromisedConsortSourcePlayback(new Actor(17,0,-1,3021,clip.hkxId(),413),9_000_000,speed,0,config.warp(3021));
+            check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceLanding.warningAt(playback)-playback.worldAtSource(ascent)==1_000_000,"Warning delay is one real game second at speed "+speed);
+        }
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceActivation.inside(24,32,0,0,40),"Arena circle includes its boundary");
+        check(!com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceActivation.inside(24.01,32,0,0,40),"Players outside the arena cannot auto-start");
+        long born=7_000_000,stop=born+1_000_000;
+        check(PromisedConsortSourceFfx.gravityOpacity(born,stop,born)==0 && PromisedConsortSourceFfx.gravityOpacity(born,stop,born+250_000)==1,"Gravity starts transparently and reaches full strength");
+        check(PromisedConsortSourceFfx.gravityOpacity(born,stop,stop)==1 && PromisedConsortSourceFfx.gravityOpacity(born,stop,stop+650_000)==0,"Gravity tails fade completely after stopping");
+        double previous=0;
+        for(int t=0;t<=250;t+=10) {double alpha=PromisedConsortSourceFfx.gravityOpacity(born,Long.MAX_VALUE,born+t*1000);check(alpha>=previous && alpha<=1,"Gravity fade-in is bounded and monotonic");previous=alpha;}
+        previous=1;
+        for(int t=0;t<=650;t+=10) {double alpha=PromisedConsortSourceFfx.gravityOpacity(born,stop,stop+t*1000);check(alpha<=previous && alpha>=0,"Gravity fade-out is bounded and monotonic");previous=alpha;}
+        check(PromisedConsortSourceFfx.gravityOpacity(born,born,born+250_000)==1 && PromisedConsortSourceFfx.gravityOpacity(born,born,born+900_000)==0,"A short gravity pulse retains both smooth transitions");
+        var stages=com.google.gson.JsonParser.parseString(Files.readString(asset("boss/promised_consort/phase_transition.json"))).getAsJsonObject().getAsJsonArray("stages");
+        for(var s:stages) {var row=s.getAsJsonObject();if(row.get("name").getAsString().equals("walk")) check(Math.abs(row.get("source_end").getAsDouble()-row.get("source_begin").getAsDouble()-row.get("end").getAsDouble()+row.get("begin").getAsDouble())<1e-10,"Shorter walk keeps the original playback speed");}
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.END==12.2,"Default cinematic completes in 12.2 seconds");
+        var gate=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.settings(config,"gate");
+        var timed=gate.limitedTo((com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.LIGHT_END-com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.APPEAR)*20);
+        check(Math.abs(timed.columnTicks()-88)<1e-10 && Math.abs(timed.slowTicks()/timed.fastTicks()-gate.slowTicks()/gate.fastTicks())<1e-10,"Cinematic columns finish with the shortened lighting timeline");
+    }
+    private static void phaseTransitionChecks() {
+        var transition=PromisedConsortSourceAssets.pose(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.POSE_ID);
+        var original=PromisedConsortSourceAssets.pose(20011);var idle=PromisedConsortSourceAssets.pose(20);
+        var kneeling=transition.sample(1_000_000);var standing=transition.sample(2_300_000);
+        double kneeHip=kneeling.joint(8).y()-com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.soleY(kneeling,0);
+        double standHip=standing.joint(8).y()-com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceGrounding.soleY(standing,0);
+        check(kneeHip<standHip-.2,"Cinematic kneel lowers the grounded pelvis: "+kneeHip+" versus "+standHip);
+        double[][] beats={{0,8700,0},{.9,8700,1.1},{2.6,20011,2},{6.05,20011,2},{7.2,8700,0},{8.3,8700,1.1},{10.3,8700,1.1},{11.5,8700,0},{12.2,20,0}};
+        for(var beat:beats) {
+            var actual=transition.sample(Math.round(beat[0]*1_000_000));
+            var expected=PromisedConsortSourceAssets.pose((int)beat[1]).sample(Math.round(beat[2]*1_000_000));
+            var root=actual.joint(0);var expectedRoot=expected.joint(0);
+            for(int index:new int[]{7,8,43,47,54,55,56,84,85,114,115,116}) {
+                var a=actual.joint(index);var b=expected.joint(index);
+                double error=Math.sqrt(Math.pow(a.x()-root.x()-b.x()+expectedRoot.x(),2)+Math.pow(a.y()-root.y()-b.y()+expectedRoot.y(),2)+Math.pow(a.z()-root.z()-b.z()+expectedRoot.z(),2));
+                check(error<.0001,"Cinematic preserves the source/idle pose at "+beat[0]+" bone "+index+" error "+error);
+            }
+        }
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.TURN_END<=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.LIGHT_BEGIN,"Door light waits for the completed turn");
+        transitionTeleportChecks();
+        var clip=PromisedConsortSourceAssets.bank().requireClip(20011);
+        var playback=new PromisedConsortSourcePlayback(new Actor(1,0,-1,20011,clip.hkxId(),413),0,1);
+        check(playback.poseId()==920011 && playback.animationTicks(500,0)>160,"Cinematic pose clock continues after the original clip's end");
+        var restored=PromisedConsortSourcePlayback.decode(playback.encode());
+        check(restored.animationTicks(340,.5)==playback.animationTicks(340,.5),"Cinematic playback clock survives sync/save encoding");
+        var preview=new PromisedConsortSourcePlayback(new Actor(1L<<60,0,-1,20011,clip.hkxId(),413),0,1);
+        check(preview.poseId()==20011,"Source rehearsals still show the unmodified original clip");
+    }
+
+    private static void transitionTeleportChecks() {
+        double appear=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.APPEAR;
+        double bright=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.BRIGHT_END;
+        double back=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.BACK_LIGHT_BEGIN;
+        double teleport=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.TELEPORT;
+        check(appear<bright && bright<=back && back<teleport,"Gate appearance, brightness, back light and teleport follow the requested order");
+        var config=com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot.defaults();
+        for(String profile:List.of("gate","back")) {
+            var preset=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.settings(config,profile);
+            var born=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,0);
+            var finished=com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortHolyColumns.envelope(preset,preset.columnTicks());
+            check(born.alpha()==.5 && born.haloAlpha()==0,"Cinematic light starts half opaque: "+profile);
+            check(finished.alpha()==0 && finished.haloAlpha()==.06,"Faint cinematic halo waits for column disappearance: "+profile);
+        }
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.miquellaOpacity(appear)==0,"Gate Miquella fades in at appearance");
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.miquellaOpacity(teleport-.001)==1,"Gate Miquella remains fully visible up to teleport");
+        check(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.miquellaOpacity(teleport)==0,"Gate model disappears immediately at the back-model handoff");
+    }
     private static void poseChecks(Path work) throws Exception {
         var witness=com.google.gson.JsonParser.parseString(Files.readString(Path.of("build/asset-previews/consort/rig_review_data.json"))).getAsJsonObject();
         var indices=witness.getAsJsonArray("bone_indices");

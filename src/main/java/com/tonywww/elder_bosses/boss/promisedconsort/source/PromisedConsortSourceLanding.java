@@ -4,6 +4,28 @@ import net.minecraft.world.phys.Vec3;
 
 /** One correction curve for clone presentation, warning projection and authoritative contact. */
 public final class PromisedConsortSourceLanding {
+    public static final long STARFALL_ASCENT=2_333_333,STARFALL_WARNING_DELAY=1_000_000;
+    public static long warningAt(PromisedConsortSourcePlayback playback) {
+        return Math.addExact(playback.worldAtSource(STARFALL_ASCENT),STARFALL_WARNING_DELAY);
+    }
+    public static final long STARFALL_IMPACT=4_300_000,STARFALL_FOLLOW_DELAY=150_000;
+    public static final long STARFALL_CONTACT=4_266_667,STARFALL_APPROACH=400_000;
+    public static final double STARFALL_APPROACH_RADIUS=12;
+    /** Keep every clone's summon/contact clock; accelerate the body after the final summon. */
+    public static PromisedConsortSourceTimeWarp starfallClock(PromisedConsortSourceBank bank,
+            PromisedConsortSourceTimeWarp body,double speed,long cloneWait) {
+        long lastSummon=0;double lastContact=0;
+        for(var chain:bank.cloneChains()) if(chain.parentTaeId()==3024) for(var cue:chain.actors()) {
+            long contact=bank.requireClip(cue.taeId()).events().stream().filter(e->e.type()==1)
+                    .mapToLong(PromisedConsortSourceTimeline.Event::startMicros).min().orElseThrow();
+            var clone=bank.timeWarps().getOrDefault(cue.taeId(),PromisedConsortSourceTimeWarp.IDENTITY);
+            lastSummon=Math.max(lastSummon,cue.spawnSourceMicros());
+            lastContact=Math.max(lastContact,body.gameAt(cue.spawnSourceMicros())+clone.gameAt(contact)+cloneWait*speed);
+        }
+        if(lastSummon==0 || lastSummon>=STARFALL_IMPACT) throw new IllegalArgumentException("Missing starfall clone contacts");
+        long landing=(long)Math.ceil(lastContact+STARFALL_FOLLOW_DELAY*speed);
+        return body.withSpan(lastSummon,STARFALL_IMPACT,Math.max(1,landing-body.gameAt(lastSummon)));
+    }
     public static final long GRAVITY_DESCENT_BEGIN=6_000_000,GRAVITY_DESCENT_END=7_500_000;
     /** The exported meteor recovery leaves the body Root aloft until W_Idle. */
     public static double gravityDescent(long sourceMicros) {
@@ -26,6 +48,14 @@ public final class PromisedConsortSourceLanding {
     }
     public static Vec3 anchoredPosition(Vec3 contact,Vec3 currentMotion,Vec3 contactMotion) {
         return contact.add(currentMotion.subtract(contactMotion));
+    }
+    /** The source Master includes an off-arena reset after contact, not recovery locomotion. */
+    public static Vec3 starfallPosition(Vec3 contact,Vec3 currentMotion,Vec3 contactMotion,Vec3 approachMotion,double approachRadius,boolean landed) {
+        if(landed) return contact;
+        double distance=approachMotion.subtract(contactMotion).horizontalDistance();
+        double scale=distance>approachRadius?Math.max(0,approachRadius)/distance:1;
+        Vec3 offset=currentMotion.subtract(contactMotion);
+        return contact.add(offset.x*scale,Math.max(0,offset.y),offset.z*scale);
     }
     /** Preserve the authored acceleration without the overshoot introduced by blending a large correction. */
     public static Vec3 dashPosition(Vec3 begin,Vec3 current,Vec3 authoredEnd,Vec3 correctedEnd) {

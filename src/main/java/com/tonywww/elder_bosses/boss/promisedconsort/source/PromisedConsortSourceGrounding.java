@@ -4,7 +4,7 @@ package com.tonywww.elder_bosses.boss.promisedconsort.source;
 public final class PromisedConsortSourceGrounding {
     private PromisedConsortSourceGrounding() {}
     private static final class GravityRecovery {
-        static final PromisedConsortSourcePose POSE=PromisedConsortSourceAssets.pose(3017);
+        static final PromisedConsortSourcePose POSE=PromisedConsortSourceAssets.pose(930017);
         static final double BEGIN_SOLE=soleY(POSE,PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN);
     }
     public static double soleY(PromisedConsortSourcePose pose,long sourceMicros) {
@@ -14,6 +14,19 @@ public final class PromisedConsortSourceGrounding {
     public static double gravityMeteorOffset(long sourceMicros) {
         if(sourceMicros<PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN) return 0;
         return PromisedConsortSourceLanding.gravityBodyOffset(sourceMicros,GravityRecovery.BEGIN_SOLE,soleY(GravityRecovery.POSE,sourceMicros));
+    }
+    public static double gravityMeteorOffset(long sourceMicros,int poseId) {
+        if(poseId==930017) return gravityMeteorOffset(sourceMicros);
+        if(sourceMicros<PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN) return 0;
+        var pose=PromisedConsortSourceAssets.pose(poseId);
+        return PromisedConsortSourceLanding.gravityBodyOffset(sourceMicros,soleY(pose,PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN),soleY(pose,sourceMicros));
+    }
+    public static double transitionOffset(long sourceMicros) {
+        return -soleY(PromisedConsortSourceAssets.pose(PromisedConsortSourceTransition.POSE_ID),sourceMicros);
+    }
+    /** Keep the whole starfall rig at its actor height through the exported Root reset. */
+    public static double starfallOffset(long sourceMicros) {
+        return -soleY(PromisedConsortSourceAssets.pose(3024),sourceMicros);
     }
     public static double soleY(PromisedConsortSourcePose.Sample pose,double masterY) {
         var leftHeel=pose.bindPoint(30,new PromisedConsortSourcePose.Point(.3496719334843716,.008258596718994593,-.0008363886436926204));

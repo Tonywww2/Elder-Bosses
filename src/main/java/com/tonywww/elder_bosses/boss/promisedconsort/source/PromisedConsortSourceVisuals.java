@@ -11,15 +11,16 @@ import static com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConso
 public final class PromisedConsortSourceVisuals {
     private record Key(Actor actor,int event) {}
     public record TracePoint(long at,PromisedConsortSourcePose.Point base,PromisedConsortSourcePose.Point tip) {}
-    private record Instance(int id,int dummy,int tip,long born,long stop,boolean follow,Vec3 point,Vec3 direction,List<TracePoint> trace) {}
+    private record Instance(long visualId,int id,int dummy,int tip,long born,long stop,boolean follow,Vec3 point,Vec3 direction,List<TracePoint> trace) {}
     private final PromisedConsortSourceCombat combat;
     private final PromisedConsortEntity owner;
     private final Map<Key,Instance> attached=new LinkedHashMap<>();
     private final List<Instance> tails=new ArrayList<>();
     private final Map<Integer,Long> tailDurations=new HashMap<>();
-    public record InstanceState(Actor actor,int event,int id,int dummy,long born,long stop,boolean follow,
+    private long serial;
+    public record InstanceState(Actor actor,int event,long visualId,int id,int dummy,long born,long stop,boolean follow,
                                 PromisedConsortSourcePose.Point point,PromisedConsortSourcePose.Point direction,int tip,List<TracePoint> trace) {}
-    public record SavedState(List<InstanceState> instances) {}
+    public record SavedState(long serial,List<InstanceState> instances) {}
     public PromisedConsortSourceVisuals(PromisedConsortSourceCombat combat,PromisedConsortEntity owner) {this.combat=combat;this.owner=owner;}
     public void event(PromisedConsortSourceSession.Notice notice) {
         var crossing=notice.crossing();var actor=crossing.identity().actor();var e=crossing.event();
@@ -27,7 +28,7 @@ public final class PromisedConsortSourceVisuals {
         Key key=new Key(actor,e.index());
         if(crossing.identity().edge()!=Edge.ENTER) {
             Instance old=attached.remove(key);
-            if(old!=null) {trace(key,old,notice.worldMicros());tails.add(new Instance(old.id(),old.dummy(),old.tip(),old.born(),notice.worldMicros(),false,position(key,old,notice.worldMicros()),old.direction(),old.trace()));}
+            if(old!=null) {trace(key,old,notice.worldMicros());tails.add(new Instance(old.visualId(),old.id(),old.dummy(),old.tip(),old.born(),notice.worldMicros(),false,position(key,old,notice.worldMicros()),old.direction(),old.trace()));}
             return;
         }
         var fields=PromisedConsortSourceExecutionData.get().eventFields(actor.taeId(),e.index());
@@ -42,23 +43,23 @@ public final class PromisedConsortSourceVisuals {
         // R_Sword and 310/20 share L_Sword. This is not an invented TAE tip ID.
         if(e.type()==118 && tip<0) tip=dummy==300?10:dummy==310?20:-1;
         var path=new ArrayList<TracePoint>();
-        if(PromisedConsortSourceFfx.get().nodes(id).stream().anyMatch(n->n.action("Tracer")!=null || n.action("LegacyTracer")!=null))
+        if(!PromisedConsortSourceFfx.isHoly(id) && PromisedConsortSourceFfx.get().nodes(id).stream().anyMatch(n->n.action("Tracer")!=null || n.action("LegacyTracer")!=null))
             path.add(new TracePoint(notice.worldMicros(),point(p),tip<0?null:point(frame.visualPoint(tip,notice.worldMicros()))));
-        attached.put(key,new Instance(id,dummy,tip,notice.worldMicros(),stop,follow,p,frame.entity.getLookAngle(),path));
+        attached.put(key,new Instance(++serial,id,dummy,tip,notice.worldMicros(),stop,follow,p,frame.entity.getLookAngle(),path));
     }
     public void pulse(int id,Vec3 point,Vec3 direction,long time) {
-        if(PromisedConsortSourceFfx.get().has(id)) tails.add(new Instance(id,-1,-1,time,time,false,point,direction,new ArrayList<>()));
+        if(PromisedConsortSourceFfx.get().has(id)) tails.add(new Instance(++serial,id,-1,-1,time,time,false,point,direction,new ArrayList<>()));
     }
-    public void finishProjectile(int id,Vec3 point,Vec3 direction,long born,long stopped) {
-        if(PromisedConsortSourceFfx.isHoly(id) && PromisedConsortSourceFfx.get().has(id))
-            tails.add(new Instance(id,-1,-1,born,stopped,false,point,direction,new ArrayList<>()));
+    public void finishProjectile(long serial,int id,Vec3 point,Vec3 direction,long born,long stopped) {
+        if((PromisedConsortSourceFfx.isHoly(id) || PromisedConsortSourceFfx.isGravity(id)) && PromisedConsortSourceFfx.get().has(id))
+            tails.add(new Instance(-serial,id,-1,-1,born,stopped,false,point,direction,new ArrayList<>()));
     }
     public void append(ListTag list,long now) {
         tails.removeIf(i->now-i.stop()>tailMicros(i.id()));
         for(var entry:attached.entrySet()) {
-            var i=entry.getValue();trace(entry.getKey(),i,now);var tag=tag(i.id(),i.born(),i.stop(),position(entry.getKey(),i,now),i.direction(),Vec3.ZERO,now);appendTrace(tag,i,now);list.add(tag);
+            var i=entry.getValue();trace(entry.getKey(),i,now);var tag=tag(i.id(),i.born(),i.stop(),position(entry.getKey(),i,now),i.direction(),Vec3.ZERO,now);tag.putLong("VisualId",i.visualId());appendTrace(tag,i,now);list.add(tag);
         }
-        for(var i:tails) {var tag=tag(i.id(),i.born(),i.stop(),i.point(),i.direction(),Vec3.ZERO,now);appendTrace(tag,i,now);list.add(tag);}
+        for(var i:tails) {var tag=tag(i.id(),i.born(),i.stop(),i.point(),i.direction(),Vec3.ZERO,now);tag.putLong("VisualId",i.visualId());appendTrace(tag,i,now);list.add(tag);}
     }
     private static PromisedConsortSourcePose.Point point(Vec3 p) {return new PromisedConsortSourcePose.Point(p.x,p.y,p.z);}
     private void trace(Key key,Instance i,long now) {
@@ -88,12 +89,15 @@ public final class PromisedConsortSourceVisuals {
     }
     private long calculateTailMicros(int id) {
         double longest=0;
-        double fade=PromisedConsortSourceFfx.isHoly(id)?(owner.sourceConfig().number("visuals.holy_fade_in_ticks")+owner.sourceConfig().number("visuals.holy_fade_out_ticks"))/20:0;
+        if(PromisedConsortSourceFfx.isHoly(id))
+            return Math.round(PromisedConsortHolyColumns.settings(owner.sourceConfig(),PromisedConsortHolyColumns.profile(id)).totalTicks()*50_000);
+        if(PromisedConsortSourceFfx.isGravity(id))
+            return PromisedConsortSourceFfx.GRAVITY_FADE_IN+PromisedConsortSourceFfx.GRAVITY_FADE_OUT;
         for(var node:PromisedConsortSourceFfx.get().nodes(id)) {
             double delay=PromisedConsortSourceFfx.field(node.action("NodeAttributes"),"delay",0,0);
             double duration=PromisedConsortSourceFfx.scalar(node.action("NodeAttributes"),"duration",0,0,0,0);
             double particle=PromisedConsortSourceFfx.scalar(node.action("ParticleAttributes"),"duration",0,0,0,0);
-            longest=Math.max(longest,delay+Math.max(0,duration)+Math.max(fade,Math.max(0,particle)));
+            longest=Math.max(longest,delay+Math.max(0,duration)+Math.max(0,particle));
         }
         return Math.round(longest*1_000_000);
     }
@@ -101,16 +105,17 @@ public final class PromisedConsortSourceVisuals {
     public SavedState save() {
         var list=new ArrayList<InstanceState>();
         attached.forEach((key,i)->list.add(state(key,i)));
-        tails.forEach(i->list.add(state(null,i)));return new SavedState(List.copyOf(list));
+        tails.forEach(i->list.add(state(null,i)));return new SavedState(serial,List.copyOf(list));
     }
     private static InstanceState state(Key key,Instance i) {
-        return new InstanceState(key==null?null:key.actor(),key==null?-1:key.event(),i.id(),i.dummy(),i.born(),i.stop(),i.follow(),
+        return new InstanceState(key==null?null:key.actor(),key==null?-1:key.event(),i.visualId(),i.id(),i.dummy(),i.born(),i.stop(),i.follow(),
                 new PromisedConsortSourcePose.Point(i.point().x,i.point().y,i.point().z),
                 new PromisedConsortSourcePose.Point(i.direction().x,i.direction().y,i.direction().z),i.tip(),List.copyOf(i.trace()));
     }
     public void restore(SavedState saved,long shift) {
-        clear();for(var s:saved.instances()) {
-            var i=new Instance(s.id(),s.dummy(),s.tip(),Math.addExact(s.born(),shift),s.stop()==Long.MAX_VALUE?Long.MAX_VALUE:Math.addExact(s.stop(),shift),s.follow(),
+        clear();serial=saved.serial();for(var s:saved.instances()) {
+            if(!PromisedConsortSourceFfx.get().has(s.id())) continue;
+            var i=new Instance(s.visualId(),s.id(),s.dummy(),s.tip(),Math.addExact(s.born(),shift),s.stop()==Long.MAX_VALUE?Long.MAX_VALUE:Math.addExact(s.stop(),shift),s.follow(),
                     new Vec3(s.point().x(),s.point().y(),s.point().z()),new Vec3(s.direction().x(),s.direction().y(),s.direction().z()),new ArrayList<>(s.trace().stream().map(t->new TracePoint(Math.addExact(t.at(),shift),t.base(),t.tip())).toList()));
             if(s.actor()==null) tails.add(i);else if(combat.frame(s.actor())!=null) attached.put(new Key(s.actor(),s.event()),i);
         }

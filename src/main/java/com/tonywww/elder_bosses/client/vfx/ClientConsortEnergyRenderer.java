@@ -38,7 +38,6 @@ public final class ClientConsortEnergyRenderer {
             AFTERGLOWS.clear();
             PARTICLE_TICKS.clear();
             PARTICLE_BUDGETS.clear();
-            ClientConsortCloneEffects.clear();
             effectLevel = minecraft.level;
         }
         if (!config.enabled() || minecraft.level == null) return;
@@ -53,8 +52,6 @@ public final class ClientConsortEnergyRenderer {
         if (shaderReady) {
             renderDefenses(poses,cameraPosition,time,config.renderDistance());
             renderGravityRocks(poses, cameraPosition, time, partialTick, config.renderDistance());
-            renderHolyCharge(poses, cameraPosition, time, partialTick, config.renderDistance());
-            ClientConsortCloneEffects.render(poses, cameraPosition, time, partialTick, config.renderDistance());
         }
         var current = ClientIndicatorStateStore.activeSnapshots(gameTick, partialTick).stream()
                 .filter(snapshot -> !snapshot.indicatorId().startsWith("source"))
@@ -110,7 +107,6 @@ public final class ClientConsortEnergyRenderer {
                 }
                 if (!shaderReady) continue;
                 if (style.contains("HOLY") || style.contains("CLONE")) {
-                    holyLayers(buffers, poses.last(), snapshot, cameraPosition, time, active, progress, strength);
                     continue;
                 }
                 if(snapshot.indicatorId().endsWith(":reprisal")) {
@@ -174,20 +170,7 @@ public final class ClientConsortEnergyRenderer {
                         rgb, active ? strength : 0.66F);
                     buffers.endBatch(ConsortEnergyShader.ENERGY);
                 }
-                if (style.contains("HOLY") && (snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.CIRCLE
-                        || snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.ZONE)) {
-                    ConsortEnergyShader.configure(2, (float) ((time % 24000) / 20), progress, 0);
-                    consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-                    double width = Math.min(2.4, Math.max(0.35, outer * 0.45));
-                    double height = Math.min(14.0, Math.max(4.0, outer * 1.7));
-                    Vec3 across = cameraPosition.subtract(center).multiply(1, 0, 1).normalize().cross(new Vec3(0, 1, 0)).scale(width);
-                    quad(consumer, poses.last(), center.subtract(across), center.add(across),
-                            center.add(across).add(0, height, 0), center.subtract(across).add(0, height, 0), rgb, strength);
-                    buffers.endBatch(ConsortEnergyShader.ENERGY);
-                }
-                if (style.contains("HOLY") || style.contains("CLONE")) {
-                    holyLayers(buffers, poses.last(), snapshot, cameraPosition, time, active, progress, strength);
-                }
+
             }
         } finally {
             RenderSystem.enableDepthTest();
@@ -200,71 +183,11 @@ public final class ClientConsortEnergyRenderer {
     private record VisualKey(int entityId, String indicatorId) {
     }
 
-    /** Authored animation ticks, so combat speed/retiming also retimes the light buildup. */
-    public static float holyChargeStrength(PromisedConsortActionId action, double tick) {
-        if (action == null || !Double.isFinite(tick)) return 0;
-        return switch (action) {
-            case LIGHT_OF_MIQUELLA -> chargeWindow(tick, 8, 100, 110, 115);
-            case RING_OF_LIGHT -> chargeWindow(tick, 4, 20, 26, 31);
-            case LIGHTSPEED_SLASH -> chargeWindow(tick, 8, 28, 62, 70);
-            case LIGHTSPEED_DASH -> chargeWindow(tick, 12, 36, 65, 71);
-            case LIGHTSPEED_SIDE_DASH -> chargeWindow(tick, 4, 22, 54, 60);
-            case PROMISED_CONSORT, CROSS_LEAP_COMBO -> chargeWindow(tick, 83, 102, 111, 116);
-            case ENHANCED_EARTHHEAVE -> chargeWindow(tick, 8, 23, 28, 33);
-            default -> 0;
-        };
-    }
 
-    private static float chargeWindow(double tick, double begin, double peak, double release, double end) {
-        return (float) (ClientConsortCloneEffects.smooth((tick - begin) / (peak - begin))
-                * (1 - ClientConsortCloneEffects.smooth((tick - release) / (end - release))));
-    }
 
-    private static void renderHolyCharge(PoseStack poses, Vec3 view, double time, float partialTick, double distance) {
-        var minecraft = Minecraft.getInstance();
-        var buffers = minecraft.renderBuffers().bufferSource();
-        int count = 0;
-        poses.pushPose();
-        poses.translate(-view.x, -view.y, -view.z);
-        try {
-            for (var entity : minecraft.level.entitiesForRendering()) {
-                if (!(entity instanceof PromisedConsortEntity boss) || !boss.isAlive() || !boss.miquellaVisible()
-                        || boss.distanceToSqr(view) > distance * distance) continue;
-                boss.prepareAnimationFrame(partialTick);
-                var action = boss.actionId().orElse(null);
-                float charge = holyChargeStrength(action, boss.animationTime());
-                if (charge <= 0) continue;
-                if (++count > 8) break;
-                Vec3 center = new Vec3(net.minecraft.util.Mth.lerp(partialTick, boss.xo, boss.getX()),
-                        net.minecraft.util.Mth.lerp(partialTick, boss.yo, boss.getY()),
-                        net.minecraft.util.Mth.lerp(partialTick, boss.zo, boss.getZ()));
-                float clock = (float) ((time % 24000) / 20);
-                boolean greatLight = action == PromisedConsortActionId.LIGHT_OF_MIQUELLA;
-                // Keep the silhouette visible: a pale core with a much dimmer, soft outer glow.
-                ConsortEnergyShader.configure(2, clock, 0, 0);
-                var consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-                pillar(consumer, poses.last(), center.add(0, 0.3, 0), view, 1.7, 6.5, 0xFFF1CC, charge * 0.12F);
-                pillar(consumer, poses.last(), center.add(0, 2, 0), view, 0.3, 4.5, 0xFFFAEB, charge * 0.25F);
-                buffers.endBatch(ConsortEnergyShader.ENERGY);
-                if (greatLight) {
-                    // The floating ring belongs to Miquella's great light; no generic rune circles on sword attacks.
-                    ConsortEnergyShader.configure(16, clock, 0, 0);
-                    holyHalo(buffers.getBuffer(ConsortEnergyShader.ENERGY), poses.last(), center.add(0, 4.6, 0),
-                            2.2 + charge * 1.8, 0xFFE7AB, charge * 0.70F);
-                    buffers.endBatch(ConsortEnergyShader.ENERGY);
-                }
-                ConsortEnergyShader.configure(17, clock + boss.getId() * 0.13F, 0, 0);
-                consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-                pillar(consumer, poses.last(), center.add(0, 0.3, 0), view, greatLight ? 2.4 : 1.5, 6.8, 0xFFEAC0, charge * 0.52F);
-                buffers.endBatch(ConsortEnergyShader.ENERGY);
-            }
-        } finally {
-            RenderSystem.enableDepthTest();
-            RenderSystem.depthMask(true);
-            RenderSystem.disableBlend();
-            poses.popPose();
-        }
-    }
+
+
+
 
     private static void renderGravityRocks(PoseStack poses, Vec3 view, double time, float partialTick, double distance) {
         var minecraft = Minecraft.getInstance();
@@ -306,9 +229,24 @@ public final class ClientConsortEnergyRenderer {
     public static void rockAura(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center, Vec3 view, double time, boolean held,double size,float strength) {
         double radius = (held ? 0.8 : 0.6) * (1 + Math.sin(time * 0.5) * 0.10 + Math.sin(time * 0.91) * 0.05);
         radius *= size;
-        defenseSurface(consumer, pose, center, radius, radius, 0, 360, 0x9B22EF, Math.min(1,0.55F*strength));
-        ringWall(consumer,pose,center,radius,radius*.7,0xAF2CFF,Math.min(1,.65F*strength),24);
-        sparkle(consumer, pose, center, view, radius * 0.5, 0xC66CFF, Math.min(1,0.85F*strength));
+        gravityAura(consumer,pose,center,view,time,radius,radius,Math.min(1,.22F*strength));
+    }
+
+    /** Two full-UV veils avoid repeating one bright spiral on every sphere tile. */
+    public static void gravityAura(VertexConsumer consumer,PoseStack.Pose pose,Vec3 center,Vec3 view,double time,
+                                   double radius,double height,float alpha) {
+        Vec3 facing=view.subtract(center).normalize(),across=facing.cross(new Vec3(0,1,0)).normalize();
+        if(across.lengthSqr()<.01) across=new Vec3(1,0,0);
+        Vec3 up=across.cross(facing).normalize();
+        for(int layer=0;layer<2;layer++) {
+            double angle=time*.017*(layer==0?1:-1)+layer*1.73;
+            double scale=layer==0?1:.81;
+            Vec3 horizontal=across.scale(Math.cos(angle)).add(up.scale(Math.sin(angle))).scale(radius*scale);
+            Vec3 vertical=up.scale(Math.cos(angle)).subtract(across.scale(Math.sin(angle))).scale(height*scale);
+            Vec3 p=center.add(across.scale(Math.sin(time*.13+layer*2.4)*radius*.11)).add(up.scale(Math.cos(time*.19+layer)*height*.08));
+            quad(consumer,pose,p.subtract(horizontal).subtract(vertical),p.add(horizontal).subtract(vertical),
+                    p.add(horizontal).add(vertical),p.subtract(horizontal).add(vertical),0x9B22EF,alpha*(layer==0?1:.45F));
+        }
     }
 
     private static void renderDefenses(PoseStack poses, Vec3 view, double time, double distance) {
@@ -421,65 +359,7 @@ public final class ClientConsortEnergyRenderer {
         return snapshot.endTick() + afterglowTicks(snapshot);
     }
 
-    private static void holyLayers(MultiBufferSource.BufferSource buffers, PoseStack.Pose pose, IndicatorSnapshotPacket snapshot,
-                                   Vec3 view, double time, boolean active, float progress, float strength) {
-        Vec3 center = anchor(snapshot).add(0, 0.16, 0), direction = forward(snapshot.directionYawDegrees());
-        double length = snapshot.ranges().get(0);
-        boolean corridor = snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.RECTANGLE
-                || snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.CAPSULE;
-        boolean ring = snapshot.shapeType() == IndicatorSnapshotPacket.ShapeType.ANNULUS;
-        double radius = ring ? snapshot.ranges().get(1) : length;
-        float clock = (float) ((time % 24000) / 20);
-        ConsortEnergyShader.configure(10, clock, progress, ring ? (float) (length / Math.max(0.01, radius)) : 0);
-        VertexConsumer consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-        if (corridor) {
-            double width = snapshot.ranges().get(1);
-            ground(consumer, pose, center.add(direction.scale(length / 2)), width * 1.2, length * 0.65,
-                snapshot.directionYawDegrees(), 0xFFF3D8, active ? strength * 0.32F : 0.06F);
-        } else ground(consumer, pose, center, radius * 1.5, radius * 1.5, 0, 0xFFF3D8, active ? strength * 0.32F : 0.06F);
-        buffers.endBatch(ConsortEnergyShader.ENERGY);
-        ConsortEnergyShader.configure(2, clock, progress, 0);
-        consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-        if (!corridor && !ring && active) {
-            double width = Math.max(0.9, Math.min(3.5, radius * 0.45));
-            double height = Math.min(32, 12 + radius * 2) * (1 - progress * 0.55);
-            pillar(consumer, pose, center, view, width, height, 0xFFFBF2, strength);
-            pillar(consumer, pose, center, view, width * 3.2, height * 1.08, 0xFFF2D0, strength * 0.14F);
-        }
-        int columns = corridor ? Math.min(10, Math.max(3, (int) Math.ceil(length / 2))) : radius > 5 ? 12 : 6;
-        for (int index = 0; index < columns; index++) {
-            double ratio = (index + 0.5) / columns, angle = ratio * Math.PI * 2;
-            Vec3 point = corridor ? center.add(direction.scale(length * ratio))
-                    : center.add(Math.cos(angle) * (ring ? (length + radius) * 0.5 : radius * 0.66), 0,
-                            Math.sin(angle) * (ring ? (length + radius) * 0.5 : radius * 0.66));
-            double height = active ? (5 + Math.min(20, radius * 1.5) * (index % 2 == 0 ? 1.0 : 0.75)) * (1 - progress * 0.6) : 0.55;
-            double width = active ? 0.7 + Math.min(1.0, radius * 0.08) : 0.14;
-            pillar(consumer, pose, point, view, width, height, 0xFFF7E8, active ? strength : 0.22F);
-            if (active) pillar(consumer, pose, point, view, width * 3.2, height * 1.1, 0xFFF1CC, strength * 0.14F);
-            if (active) {
-                // Narrow secondary threads make the eruption richer without widening the opaque core.
-                double offset = 0.22 + 0.12 * Math.sin(index * 2.4);
-                Vec3 side = new Vec3(direction.z, 0, -direction.x).scale(offset);
-                pillar(consumer, pose, point.add(side), view, 0.10, height * 1.20, 0xFFEAC0, strength * 0.38F);
-                pillar(consumer, pose, point.subtract(side), view, 0.07, height * 0.82, 0xFFFAE8, strength * 0.27F);
-            }
-        }
-        buffers.endBatch(ConsortEnergyShader.ENERGY);
-        if (active) {
-            ConsortEnergyShader.configure(17, clock + Math.floorMod(snapshot.indicatorId().hashCode(), 100) * 0.17F, progress, 0);
-            consumer = buffers.getBuffer(ConsortEnergyShader.ENERGY);
-            int clusters = Math.min(6, columns);
-            for (int index = 0; index < clusters; index++) {
-                double ratio = (index + 0.5) / clusters, angle = ratio * Math.PI * 2;
-                Vec3 point = corridor ? center.add(direction.scale(length * ratio))
-                        : center.add(Math.cos(angle) * (ring ? (length + radius) * 0.5 : radius * 0.6), 0,
-                                Math.sin(angle) * (ring ? (length + radius) * 0.5 : radius * 0.6));
-                pillar(consumer, pose, point, view, 0.6 + Math.min(1.0, radius * 0.08),
-                        3 + Math.min(5, radius * 0.6), 0xFFEBC2, strength * 0.48F);
-            }
-            buffers.endBatch(ConsortEnergyShader.ENERGY);
-        }
-    }
+
 
     public static int impactParticleCount(boolean stomp, long elapsed, int budgetRemaining) {
         if (elapsed < 0 || elapsed >= (stomp ? 8 : 24)) return 0;
@@ -563,9 +443,7 @@ public final class ClientConsortEnergyRenderer {
         return new Vec3(-Math.sin(angle), 0, Math.cos(angle));
     }
 
-    public static void holyHalo(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center, double radius, int color, float alpha) {
-        ground(consumer, pose, center, radius, radius, 0, color, alpha);
-    }
+
 
     private static void ground(VertexConsumer consumer, PoseStack.Pose pose, Vec3 center,
                                double width, double length, double yaw, int rgb, float alpha) {

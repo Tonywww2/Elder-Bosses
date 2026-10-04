@@ -57,6 +57,16 @@ public final class PromisedConsortSourceProjectiles {
         double pitch=Math.atan2(direction.y,horizontal)+Math.toRadians(pitchDegrees);
         return bearing.scale(Math.cos(pitch)).add(0,Math.sin(pitch),0).normalize();
     }
+    /** Ground carriers in3026 distribute floor impacts, rather than inherit an upward launch pitch. */
+    public static Vec3 lightCarrierDirection(int tae,int id,Vec3 direction) {
+        if(tae!=3026) return direction;
+        if(id==205220315) return new Vec3(0,-1,0);
+        if(id==205220313) {
+            Vec3 horizontal=direction.multiply(1,0,1);
+            return horizontal.lengthSqr()<1e-8?new Vec3(0,0,1):horizontal.normalize();
+        }
+        return direction;
+    }
     private void emit(Actor actor,int event,int id,Vec3 p,Vec3 direction,long time) {
         // The original full Bullet.param confirms 205220301 is absent. Its dangling
         // reference has no executable child; do not synthesize a nearby ID.
@@ -65,10 +75,12 @@ public final class PromisedConsortSourceProjectiles {
         for(int i=0;i<count;i++) {
             double spread=number(row,"shootAngleXZ")+(i-(count-1)*.5)*number(row,"shootAngleInterval");
             double elevation=number(row,"shootAngle")+(i-(count-1)*.5)*number(row,"shootAngleXInterval");
-            Vec3 vector=launchDirection(direction,spread,elevation);
+            Vec3 vector=lightCarrierDirection(actor.taeId(),id,launchDirection(direction,spread,elevation));
+            Vec3 origin=actor.taeId()==3026 && id==205220315
+                    ?PromisedConsortSourceGroundAreas.ground(owner,p).add(0,.08,0):p;
             long born=Math.max(time+Math.round(i*number(row,"shootInterval")*1_000_000),combat.worldMicros()+50_000);
             // Child impacts get one server tick of warning before becoming damaging.
-            pending.add(new Bullet(serial++,actor,event,id,row,p,vector,born));
+            pending.add(new Bullet(serial++,actor,event,id,row,origin,vector,born));
         }
     }
     public void tick(long now) {
@@ -115,7 +127,7 @@ public final class PromisedConsortSourceProjectiles {
         else b.velocity=b.velocity.add(0,-number(row,inRange?"gravityInRange":"gravityOutRange")*dt,0);
         Vec3 from=b.point,to=from.add(b.velocity.scale(dt));
         if(b.id==205220400) to=PromisedConsortSourceGroundAreas.ground(owner,to).add(0,owner.sourceConfig().number("projectiles.a205220400.flight_height"),0);
-        if(integer(row,"isPenetrateMap")==0 && from.distanceToSqr(to)>0) {
+        if((integer(row,"isPenetrateMap")==0 || b.actor.taeId()==3026 && b.id==205220315) && from.distanceToSqr(to)>0) {
             HitResult hit=owner.level().clip(new ClipContext(from,to,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,owner));
             if(hit.getType()!=HitResult.Type.MISS) {b.point=hit.getLocation();end(b,next);return;}
         }
@@ -126,7 +138,7 @@ public final class PromisedConsortSourceProjectiles {
         radius*=owner.sourceConfig().range(b.actor.taeId());
         boolean simple=owner.sourceConfig().flag("hit_detection.simple_ranges");
         int maximumHits=PromisedConsortSourceSegmentHits.maximumHits(simple,(int)owner.sourceConfig().number("projectiles.a"+b.id+".max_hits_per_target"));
-        double simpleHeight=owner.sourceConfig().number("projectiles.a"+b.id+".simple_height");
+        double simpleHeight=owner.sourceConfig().number("projectiles.a"+b.id+".simple_height")*owner.sourceConfig().range(b.actor.taeId());
         if(simple) radius=owner.sourceConfig().number("projectiles.a"+b.id+".simple_radius")*owner.sourceConfig().range(b.actor.taeId());
         AABB area=new AABB(Math.min(from.x,to.x)-radius,Math.min(from.y,to.y)-radius,Math.min(from.z,to.z)-radius,Math.max(from.x,to.x)+radius,Math.max(from.y,to.y)+radius,Math.max(from.z,to.z)+radius);
         boolean floorZone=number(row,"initVellocity")<=.1 && number(row,"gravityInRange")==0;
@@ -162,7 +174,7 @@ public final class PromisedConsortSourceProjectiles {
     }
     private void end(Bullet b,long time) {
         if(b.dead) return;b.dead=true;
-        combat.visuals().finishProjectile(integer(b.row,"sfxId_Bullet"),b.point,b.direction,b.born,time);
+        combat.visuals().finishProjectile(b.serial,integer(b.row,"sfxId_Bullet"),b.point,b.direction,b.born,time);
         emit(b.actor,b.event,integer(b.row,"HitBulletID"),b.point,b.direction,time);
         combat.visuals().pulse(integer(b.row,"sfxId_Hit"),b.point,b.direction,time);
         combat.audio().projectile(b.actor,integer(b.row,"sfxId_Hit"),b.point);
@@ -202,7 +214,7 @@ public final class PromisedConsortSourceProjectiles {
             if(tae==3026) {stationary=true;radius=owner.sourceConfig().number("projectiles.a205220312.simple_radius")*owner.sourceConfig().range(tae);}
             if(tae==3014) radius=Math.max(radius,owner.sourceConfig().number("projectiles.a205220241.simple_radius")*owner.sourceConfig().range(tae));
             packets.add(warning(integer(row,"atkId_Bullet"),"source_launch:"+frame.playback.actor().actionSequence()+":"+frame.playback.actor().segmentIndex()+":"+frame.playback.actor().slot()+":"+event.index(),p,direction,stationary,radius,
-                    owner.sourceConfig().number("projectiles.a"+launch.bulletId()+".warning_length"),tae,Math.max(frame.playback.startWorldMicros(),at-lead),Math.max(frame.playback.startWorldMicros(),at-50_000),at,at+50_000,gameTick));
+                    owner.sourceConfig().number("projectiles.a"+launch.bulletId()+".warning_length")*owner.sourceConfig().range(tae),tae,Math.max(frame.playback.startWorldMicros(),at-lead),Math.max(frame.playback.startWorldMicros(),at-50_000),at,at+50_000,gameTick));
         }
         var all=new ArrayList<>(running);all.addAll(pending);
         for(var b:all) if(!b.dead) {
@@ -212,12 +224,21 @@ public final class PromisedConsortSourceProjectiles {
             if(attack>=0 && attack<=4) continue; // travel helpers have no damaging floor footprint
             double life=number(b.row,"life");long end=life<0?now+1_000_000:b.born+Math.round(life*1_000_000);
             if(end<now || b.born-now>250_000) continue;
-            packets.add(warning(attack,"source_bullet:"+b.serial,b.point,b.velocity.lengthSqr()>0?b.velocity.normalize():b.direction,stationary,radius,owner.sourceConfig().number("projectiles.a"+b.id+".warning_length"),b.actor.taeId(),Math.max(0,b.born-50_000),b.born,b.born,Math.max(b.born+50_000,end),gameTick));
+            packets.add(warning(attack,"source_bullet:"+b.serial,b.point,b.velocity.lengthSqr()>0?b.velocity.normalize():b.direction,stationary,radius,owner.sourceConfig().number("projectiles.a"+b.id+".warning_length")*owner.sourceConfig().range(b.actor.taeId()),b.actor.taeId(),Math.max(0,b.born-50_000),b.born,b.born,Math.max(b.born+50_000,end),gameTick));
         }
         return packets;
     }
     private double warningRadius(int id,JsonObject row,int tae) {
-        return (owner.sourceConfig().flag("hit_detection.simple_ranges")?owner.sourceConfig().number("projectiles.a"+id+".simple_radius"):Math.max(.1,Math.max(number(row,"hitRadius"),number(row,"hitRadiusMax"))))*owner.sourceConfig().range(tae);
+        return warningRadius(owner.sourceConfig(),id,row,tae);
+    }
+    public static double warningRadius(com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot config,int id,JsonObject row,int tae) {
+        double simple=config.number("projectiles.a"+id+".simple_radius");
+        double radius=config.flag("hit_detection.simple_ranges")?simple:Math.max(.1,Math.max(number(row,"hitRadius"),number(row,"hitRadiusMax")));
+        if(id==205220410) radius=Math.min(radius,simple);
+        return radius*config.range(tae);
+    }
+    public double starfallWarningRadius() {
+        return Math.max(warningRadius(205220441,combat.bulletRow(205220441),3024),warningRadius(205220442,combat.bulletRow(205220442),3024));
     }
     private com.tonywww.elder_bosses.network.IndicatorSnapshotPacket warning(int attackId,String id,Vec3 p,Vec3 direction,boolean stationary,double radius,double length,int tae,long start,long lock,long active,long end,long tick) {
         p=PromisedConsortSourceGroundAreas.ground(owner,p);radius=Math.max(.001,radius);
@@ -236,7 +257,10 @@ public final class PromisedConsortSourceProjectiles {
     public void appendVisuals(net.minecraft.nbt.ListTag list,long now) {
         for(var b:running) if(!b.dead && now>=b.born) {
             int id=integer(b.row,"sfxId_Bullet");
-            if(PromisedConsortSourceFfx.get().has(id)) list.add(PromisedConsortSourceVisuals.tag(id,b.born,Long.MAX_VALUE,b.point,b.velocity.lengthSqr()>0?b.velocity.normalize():b.direction,b.velocity,now));
+            if(PromisedConsortSourceFfx.get().has(id)) {
+                var tag=PromisedConsortSourceVisuals.tag(id,b.born,Long.MAX_VALUE,b.point,b.velocity.lengthSqr()>0?b.velocity.normalize():b.direction,b.velocity,now);
+                tag.putLong("VisualId",-b.serial);list.add(tag);
+            }
         }
     }
     private static Point point(Vec3 p) {return new Point(p.x,p.y,p.z);}

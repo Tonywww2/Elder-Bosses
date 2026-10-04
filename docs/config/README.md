@@ -222,7 +222,7 @@ fade_ticks = 40
 
 ### 拉塔恩地面范围与命中模式（2026-09-30）
 
-`[promised_consort.skills.hit_detection].simple_ranges` 默认为 `true`，使用简单地面范围；设为 `false` 使用当前原姿态轨迹判定。两版均显示逐段匹配的地面预警。每段范围、弹体简单半径和高度、接近与短暂退让距离均可配置。完整说明见[原作技能配置](promised-consort-source-skills.md)。拉塔恩技能子树为3899项，主配置合计4416项。
+`[promised_consort.skills.hit_detection].simple_ranges` 默认为 `true`，使用简单地面范围；设为 `false` 使用当前原姿态轨迹判定。两版均显示逐段匹配的地面预警。全部招式的地面范围、轨迹、弹体和投技捕获范围统一由 `promised_consort.skills.range_percent` 控制，100为当前基准；逐段角度、尺寸和技能速度为内部基准。接近与短暂退让距离继续配置。完整说明见[原作技能配置](promised-consort-source-skills.md)。当前拉塔恩技能子树为1820项，主配置合计2337项。
 
 
 ### 技能播报与数据包掉落（2026-10-01）

@@ -35,6 +35,8 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
     private static final int DEFAULT_LIFETIME_TICKS = 16;
     private static final EntityDataAccessor<CompoundTag> SOURCE_PLAYBACK =
             SynchedEntityData.defineId(PromisedConsortCloneEntity.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> CINEMATIC_MIQUELLA=SynchedEntityData.defineId(PromisedConsortCloneEntity.class,EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> OWNER_ENTITY=SynchedEntityData.defineId(PromisedConsortCloneEntity.class,EntityDataSerializers.INT);
     private Vec3 sourceOrigin;
     private float sourceYaw;
     private double sourceAnimationTicks;
@@ -67,6 +69,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
 
     public void configure(PromisedConsortEntity owner, int lifetimeTicks, long impactTick) {
         ownerId = owner.getUUID();
+        entityData.set(OWNER_ENTITY,owner.getId());
         actionSequence = owner.activeActionSequence();
         remainingTicks = Math.max(1, lifetimeTicks);
         entityData.set(PARENT_ACTION, owner.actionId().map(Enum::ordinal).orElse(-1));
@@ -90,6 +93,8 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
     @Override
     protected void definePlatformSynchedData(SynchedDataRegistrar registrar) {
         registrar.define(SOURCE_PLAYBACK, new CompoundTag());
+        registrar.define(CINEMATIC_MIQUELLA,false);
+        registrar.define(OWNER_ENTITY,-1);
         registrar.define(PARENT_ACTION, -1);
         registrar.define(APPEAR_TICK, 0L);
         registrar.define(IMPACT_TICK, 4L);
@@ -143,7 +148,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
 
     public void configureSource(PromisedConsortEntity owner,PromisedConsortSourcePlayback playback,Vec3 origin,float yaw) {
         if (level().isClientSide || playback.actor().slot()<0) throw new IllegalArgumentException("Invalid source clone");
-        ownerId=owner.getUUID(); sourceOrigin=origin; sourceYaw=yaw;
+        ownerId=owner.getUUID();entityData.set(OWNER_ENTITY,owner.getId()); sourceOrigin=origin; sourceYaw=yaw;
         entityData.set(SOURCE_PLAYBACK,playback.encode());
         entityData.set(APPEAR_TICK,playback.startWorldMicros()/50_000L);
         entityData.set(IMPACT_TICK,playback.startWorldMicros()/50_000L+1);
@@ -155,12 +160,33 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
         updateSourcePosition();
     }
     private boolean sourceCombatDriven;
+    public boolean cinematicMiquella() {return entityData.get(CINEMATIC_MIQUELLA);}
+    public PromisedConsortEntity cinematicOwner() {return level().getEntity(entityData.get(OWNER_ENTITY)) instanceof PromisedConsortEntity owner?owner:null;}
+    public void configureMiquella(PromisedConsortEntity owner) {
+        ownerId=owner.getUUID();entityData.set(OWNER_ENTITY,owner.getId());entityData.set(CINEMATIC_MIQUELLA,true);
+        var clip=PromisedConsortSourceAssets.bank().requireClip(20);
+        var actor=new com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTimeline.Actor((1L<<60),0,0,20,clip.hkxId(),413);
+        entityData.set(SOURCE_PLAYBACK,new PromisedConsortSourcePlayback(actor,level().getGameTime()*50_000L,1).encode());
+        entityData.set(APPEAR_TICK,level().getGameTime());
+    }
+    public Vec3 miquellaRenderOrigin(float partial) {
+        var owner=cinematicOwner();if(owner==null) return position();
+        var pose=PromisedConsortSourceAssets.pose(com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourceTransition.POSE_ID)
+            .sampleJoint((long)(owner.sourceTransitionSeconds(partial)*1_000_000),84);
+        var root=pose.worldJoint(84,new com.tonywww.elder_bosses.boss.promisedconsort.source.PromisedConsortSourcePose.Point(0,0,0),owner.getYRot());
+        return owner.sourceTransitionMiquellaPoint(partial).subtract(root.x(),root.y(),root.z());
+    }
+    public void updateMiquellaPosition() {
+        Vec3 p=miquellaRenderOrigin(0);setPos(p.x,p.y,p.z);
+        var owner=cinematicOwner();if(owner!=null) {setYRot(owner.getYRot());setYBodyRot(owner.getYRot());setYHeadRot(owner.getYRot());}
+    }
     public void bindSourceCombatMotion() {sourceCombatDriven=true;}
     public boolean usesSourceRig() { return !entityData.get(SOURCE_PLAYBACK).isEmpty(); }
     public boolean projectPresentation() {return usesSourceRig() && sourcePlayback().actor().actionSequence()>=(1L<<60);}
     public PromisedConsortSourcePlayback sourcePlayback() { return PromisedConsortSourcePlayback.decode(entityData.get(SOURCE_PLAYBACK)); }
     public void prepareSourceFrame(float partialTick) {
-        if (usesSourceRig()) sourceAnimationTicks=sourcePlayback().animationTicks(level().getGameTime(),partialTick);
+        if(cinematicMiquella()) {var owner=cinematicOwner();sourceAnimationTicks=owner==null?0:owner.sourceTransitionSeconds(partialTick)*20;}
+        else if (usesSourceRig()) sourceAnimationTicks=sourcePlayback().animationTicks(level().getGameTime(),partialTick);
     }
     private void updateSourcePosition() {
         Vec3 position=sourceOrigin.add(sourcePlayback().displacement(level().getGameTime()*50_000L,sourceYaw));
@@ -173,6 +199,11 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
         super.tick();
         setDeltaMovement(0.0, 0.0, 0.0);
         if (level() instanceof ServerLevel serverLevel) {
+            if(cinematicMiquella()) {
+                var owner=cinematicOwner();
+                if(owner==null || owner.isRemoved() || owner.combatState()!=com.tonywww.elder_bosses.boss.promisedconsort.domain.PromisedConsortCombatState.TRANSITION || owner.miquellaVisible()) discard();
+                return;
+            }
             if (usesSourceRig() && !projectPresentation()) {
                 if (ownerId==null || !(serverLevel.getEntity(ownerId) instanceof PromisedConsortEntity owner)
                         || owner.isRemoved()) discard();
@@ -198,7 +229,11 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
     }
 
     @Override
-    public boolean shouldBeSaved() { return (!usesSourceRig() || projectPresentation()) && super.shouldBeSaved(); }
+    public boolean shouldBeSaved() { return !cinematicMiquella() && (!usesSourceRig() || projectPresentation()) && super.shouldBeSaved(); }
+    @Override
+    public net.minecraft.world.phys.AABB getBoundingBoxForCulling() {
+        return cinematicMiquella()?super.getBoundingBoxForCulling().inflate(8):super.getBoundingBoxForCulling();
+    }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
@@ -240,7 +275,7 @@ public final class PromisedConsortCloneEntity extends PlatformArmorStand impleme
             "main",
             0,
             state -> {
-                if (usesSourceRig()) return state.setAndContinue(RawAnimation.begin().thenPlayAndHold(sourcePlayback().animationClip()));
+                if (usesSourceRig()) return state.setAndContinue(RawAnimation.begin().thenPlayAndHold(cinematicMiquella()?"animation.promised_consort.source_920011":sourcePlayback().animationClip()));
                 return state.setAndContinue(RawAnimation.begin().thenLoop("animation.promised_consort.source_002000"));
             }
         ) {

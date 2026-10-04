@@ -11,6 +11,21 @@ public final class PromisedConsortSourceFfx {
             652252,652253,652254,652255,652256,652260,652261,652262,652263,652264,652265,652266,652267,
             652270,652271,652272,652273,652274,652275,652276,652290,652291,652292,652293);
     public static boolean isHoly(int id) {return HOLY.contains(id);}
+    private static final Set<Integer> GRAVITY=Set.of(652210,652211,652212,652213,652225,652229,652230,652231,
+            652232,652233,652234,652235,652236,652280,652285,652286);
+    public static final long GRAVITY_FADE_IN=250_000,GRAVITY_FADE_OUT=650_000;
+    public static boolean isGravity(int id) {return GRAVITY.contains(id);}
+    /** Leap/dive's body, blades and impact use a softer local gravity mix. */
+    public static float gravitySkillIntensity(int sourceTae,int fxr) {
+        return isGravity(fxr) && (sourceTae==3015 || fxr>=652229 && fxr<=652236)?.6F:1F;
+    }
+    /** The surface aura and scene distortion share this envelope, including short pulses. */
+    public static double gravityOpacity(long born,long stop,double now) {
+        double in=smooth((now-born)/GRAVITY_FADE_IN);
+        double out=stop==Long.MAX_VALUE?1:1-smooth((now-Math.max((double)stop,born+GRAVITY_FADE_IN))/GRAVITY_FADE_OUT);
+        return in*out;
+    }
+    private static double smooth(double t) {t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);}
     public static double opacity(double age,double life,double fadeIn,double fadeOut) {
         if(age<0 || life>=0 && age>=life) return 0;
         double in=fadeIn<=0?1:Math.max(0,Math.min(1,age/fadeIn));
@@ -53,7 +68,10 @@ public final class PromisedConsortSourceFfx {
             if(root.get("schema_version").getAsInt()!=2) throw new IllegalArgumentException("Invalid FXR contract");
             var result=new PromisedConsortSourceFfx();
             for(var e:root.getAsJsonArray("effects")) {
-                var effect=e.getAsJsonObject();var nodes=new ArrayList<Node>();
+                var effect=e.getAsJsonObject();
+                // Remove the costly death burst from runtime; keep the extracted contract as evidence.
+                if(effect.get("id").getAsInt()==214) continue;
+                var nodes=new ArrayList<Node>();
                 for(var n:effect.getAsJsonArray("nodes")) {
                     var node=n.getAsJsonObject();var actions=new ArrayList<JsonObject>();
                     for(var a:node.getAsJsonArray("actions")) actions.add(a.getAsJsonObject());

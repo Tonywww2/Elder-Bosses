@@ -45,14 +45,16 @@ void main() {
         opacity = (band(fracture, 0.28) * 0.40 + core * 0.5)
             * smoothstep(0.0, 0.08, effectUv.y) * (1.0 - smoothstep(0.88, 1.0, effectUv.y));
     } else if (EffectMode == 4) {
-        float turbulence = sin(angle * 7.0 - EffectTime * 8.3 + radius * 11.0) * 0.65
-            + sin(angle * 13.0 + EffectTime * 5.7 - radius * 19.0) * 0.28;
-        float spiral = sin(angle * 4.0 + radius * 23.0 + EffectTime * 5.0 + turbulence);
-        core = band(spiral, 0.09);
-        float rupture = band(sin(angle * 11.0 + turbulence * 1.5 + radius * 6.0), 0.16);
-        opacity = (band(spiral, 0.48) * 0.38 + core * 0.5 + rupture * 0.22)
-            * (0.80 + 0.20 * sin(EffectTime * 11.0 + angle * 3.0)) * smoothstep(0.10, 0.25, radius)
-            * (1.0 - smoothstep(0.85, 1.0, radius));
+        vec2 flow = vec2(sin(centered.y * 4.7 + EffectTime * 1.3) + 0.5 * sin(centered.x * 8.1 - EffectTime * 0.8),
+            sin(centered.x * 5.3 - EffectTime * 1.1) + 0.5 * cos(centered.y * 7.7 + EffectTime * 0.9));
+        vec2 warped = centered + flow * 0.30;
+        float fold = sin(warped.x * 12.7 + warped.y * 6.3 + EffectTime * 2.1)
+            + 0.62 * sin(warped.y * 17.3 - warped.x * 9.1 - EffectTime * 1.7);
+        float swirl = sin(atan(warped.y, warped.x) * 3.0 + length(warped) * 18.0 - EffectTime * 3.0 + fold * 2.2);
+        float fragments = smoothstep(-0.25, 0.55, fold);
+        core = band(swirl, 0.08) * fragments * 0.24;
+        opacity = (band(swirl, 0.34) * fragments * 0.30 + band(fold, 0.15) * 0.17 + core)
+            * smoothstep(0.04, 0.18, radius) * (1.0 - smoothstep(0.72, 1.0, radius));
     } else if (EffectMode == 6) {
         float bladeLength = smoothstep(0.02, 0.20, effectUv.x);
         float wake = pow(clamp(effectUv.y, 0.0, 1.0), 0.55);

@@ -259,26 +259,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a20.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a20.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -287,11 +267,6 @@
     "path": "promised_consort.skills.animations.a20.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20.targeted_landing",
@@ -317,26 +292,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a2000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a2000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -345,11 +300,6 @@
     "path": "promised_consort.skills.animations.a2000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a2000.targeted_landing",
@@ -375,26 +325,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a2002.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2002.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2002.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2002.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a2002.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -403,11 +333,6 @@
     "path": "promised_consort.skills.animations.a2002.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2002.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a2002.targeted_landing",
@@ -433,26 +358,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a2003.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2003.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2003.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2003.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a2003.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -461,11 +366,6 @@
     "path": "promised_consort.skills.animations.a2003.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2003.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a2003.targeted_landing",
@@ -491,26 +391,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a2100.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2100.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2100.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2100.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a2100.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -519,11 +399,6 @@
     "path": "promised_consort.skills.animations.a2100.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a2100.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a2100.targeted_landing",
@@ -575,11 +450,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3009.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3009.targeted_landing",
     "default": false
   },
@@ -601,11 +471,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3012.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3012.targeted_landing",
     "default": false
   },
@@ -621,11 +486,6 @@
     "path": "promised_consort.skills.animations.a3014.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3014.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a3014.targeted_landing",
@@ -649,11 +509,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3017.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3017.targeted_landing",
     "default": false
   },
@@ -665,11 +520,6 @@
     "path": "promised_consort.skills.animations.a3018.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3018.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a3018.targeted_landing",
@@ -703,26 +553,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3021.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3021.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3021.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3021.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3021.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -731,11 +561,6 @@
     "path": "promised_consort.skills.animations.a3021.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3021.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a3021.targeted_landing",
@@ -751,11 +576,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3022.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3022.targeted_landing",
     "default": false
   },
@@ -767,11 +587,6 @@
     "path": "promised_consort.skills.animations.a3023.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3023.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a3023.targeted_landing",
@@ -787,11 +602,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3024.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3024.targeted_landing",
     "default": false
   },
@@ -805,11 +615,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a3025.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a3025.targeted_landing",
     "default": true
   },
@@ -821,11 +626,6 @@
     "path": "promised_consort.skills.animations.a3026.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a3026.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a3026.targeted_landing",
@@ -873,11 +673,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a4100.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a4100.targeted_landing",
     "default": false
   },
@@ -901,26 +696,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a4101.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a4101.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a4101.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a4101.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a4101.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -929,11 +704,6 @@
     "path": "promised_consort.skills.animations.a4101.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a4101.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a4101.targeted_landing",
@@ -959,26 +729,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a5000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a5000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -987,11 +737,6 @@
     "path": "promised_consort.skills.animations.a5000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a5000.targeted_landing",
@@ -1017,26 +762,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a5001.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5001.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5001.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5001.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a5001.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1045,11 +770,6 @@
     "path": "promised_consort.skills.animations.a5001.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5001.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a5001.targeted_landing",
@@ -1075,26 +795,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a5002.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5002.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5002.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5002.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a5002.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1103,11 +803,6 @@
     "path": "promised_consort.skills.animations.a5002.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5002.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a5002.targeted_landing",
@@ -1133,26 +828,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a5003.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5003.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5003.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5003.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a5003.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1161,11 +836,6 @@
     "path": "promised_consort.skills.animations.a5003.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a5003.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a5003.targeted_landing",
@@ -1191,26 +861,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a6000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a6000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1219,11 +869,6 @@
     "path": "promised_consort.skills.animations.a6000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a6000.targeted_landing",
@@ -1249,26 +894,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a6002.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6002.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6002.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6002.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a6002.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1277,11 +902,6 @@
     "path": "promised_consort.skills.animations.a6002.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6002.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a6002.targeted_landing",
@@ -1307,26 +927,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a6003.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6003.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6003.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6003.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a6003.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1335,11 +935,6 @@
     "path": "promised_consort.skills.animations.a6003.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a6003.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a6003.targeted_landing",
@@ -1365,26 +960,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a7000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a7000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1393,11 +968,6 @@
     "path": "promised_consort.skills.animations.a7000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a7000.targeted_landing",
@@ -1423,26 +993,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a7400.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7400.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7400.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7400.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a7400.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1451,11 +1001,6 @@
     "path": "promised_consort.skills.animations.a7400.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7400.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a7400.targeted_landing",
@@ -1481,26 +1026,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a7600.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7600.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7600.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7600.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a7600.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1509,11 +1034,6 @@
     "path": "promised_consort.skills.animations.a7600.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a7600.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a7600.targeted_landing",
@@ -1539,26 +1059,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a8500.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8500.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8500.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8500.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a8500.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1567,11 +1067,6 @@
     "path": "promised_consort.skills.animations.a8500.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8500.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a8500.targeted_landing",
@@ -1597,26 +1092,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a8501.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8501.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8501.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8501.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a8501.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1625,11 +1100,6 @@
     "path": "promised_consort.skills.animations.a8501.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8501.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a8501.targeted_landing",
@@ -1643,11 +1113,6 @@
     "path": "promised_consort.skills.animations.a8700.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a8700.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a8700.targeted_landing",
@@ -1669,26 +1134,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a9000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a9000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1697,11 +1142,6 @@
     "path": "promised_consort.skills.animations.a9000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a9000.targeted_landing",
@@ -1727,26 +1167,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a9500.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9500.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9500.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9500.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a9500.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1755,11 +1175,6 @@
     "path": "promised_consort.skills.animations.a9500.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a9500.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a9500.targeted_landing",
@@ -1785,26 +1200,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a10000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a10000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1813,11 +1208,6 @@
     "path": "promised_consort.skills.animations.a10000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a10000.targeted_landing",
@@ -1843,26 +1233,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a10001.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10001.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10001.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10001.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a10001.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1871,11 +1241,6 @@
     "path": "promised_consort.skills.animations.a10001.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a10001.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a10001.targeted_landing",
@@ -1901,26 +1266,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a11060.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11060.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11060.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11060.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a11060.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1929,11 +1274,6 @@
     "path": "promised_consort.skills.animations.a11060.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11060.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a11060.targeted_landing",
@@ -1959,26 +1299,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a11061.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11061.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11061.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11061.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a11061.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -1987,11 +1307,6 @@
     "path": "promised_consort.skills.animations.a11061.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a11061.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a11061.targeted_landing",
@@ -2017,26 +1332,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a20000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a20000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2045,11 +1340,6 @@
     "path": "promised_consort.skills.animations.a20000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20000.targeted_landing",
@@ -2075,26 +1365,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a20001.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20001.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20001.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20001.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a20001.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2103,11 +1373,6 @@
     "path": "promised_consort.skills.animations.a20001.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20001.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20001.targeted_landing",
@@ -2139,11 +1404,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a20006.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a20006.targeted_landing",
     "default": true
   },
@@ -2155,11 +1415,6 @@
     "path": "promised_consort.skills.animations.a20007.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20007.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20007.targeted_landing",
@@ -2175,11 +1430,6 @@
     "range": "0.0 ~ 200.0"
   },
   {
-    "path": "promised_consort.skills.animations.a20008.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a20008.targeted_landing",
     "default": false
   },
@@ -2191,11 +1441,6 @@
     "path": "promised_consort.skills.animations.a20009.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20009.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20009.targeted_landing",
@@ -2213,11 +1458,6 @@
     "path": "promised_consort.skills.animations.a20011.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20011.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20011.targeted_landing",
@@ -2243,26 +1483,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a20012.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20012.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20012.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20012.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a20012.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2271,11 +1491,6 @@
     "path": "promised_consort.skills.animations.a20012.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20012.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20012.targeted_landing",
@@ -2289,11 +1504,6 @@
     "path": "promised_consort.skills.animations.a20013.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a20013.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a20013.targeted_landing",
@@ -2319,26 +1529,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a30010.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a30010.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a30010.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a30010.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a30010.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2347,11 +1537,6 @@
     "path": "promised_consort.skills.animations.a30010.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a30010.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a30010.targeted_landing",
@@ -2377,26 +1562,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a40000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a40000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a40000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a40000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a40000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2405,11 +1570,6 @@
     "path": "promised_consort.skills.animations.a40000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a40000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a40000.targeted_landing",
@@ -2435,26 +1595,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a41000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a41000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2463,11 +1603,6 @@
     "path": "promised_consort.skills.animations.a41000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a41000.targeted_landing",
@@ -2493,26 +1628,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a41001.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41001.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41001.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41001.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a41001.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2521,11 +1636,6 @@
     "path": "promised_consort.skills.animations.a41001.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41001.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a41001.targeted_landing",
@@ -2551,26 +1661,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a41002.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41002.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41002.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41002.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a41002.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2579,11 +1669,6 @@
     "path": "promised_consort.skills.animations.a41002.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a41002.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a41002.targeted_landing",
@@ -2609,26 +1694,6 @@
     "range": "0.0 ~ 0.0"
   },
   {
-    "path": "promised_consort.skills.animations.a42000.range_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a42000.movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a42000.vertical_movement_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a42000.turn_speed_multiplier",
-    "default": 1.0,
-    "range": "0.0 ~ 16.0"
-  },
-  {
     "path": "promised_consort.skills.animations.a42000.warning_lead_ticks",
     "default": 5.0,
     "range": "1.0 ~ 200.0"
@@ -2637,11 +1702,6 @@
     "path": "promised_consort.skills.animations.a42000.target_lock_lead_ticks",
     "default": 1.0,
     "range": "0.0 ~ 200.0"
-  },
-  {
-    "path": "promised_consort.skills.animations.a42000.target_standoff",
-    "default": 0.0,
-    "range": "-32.0 ~ 32.0"
   },
   {
     "path": "promised_consort.skills.animations.a42000.targeted_landing",

@@ -136,10 +136,15 @@ public final class ConfigPresentationCheck {
             if(original.number("hit_detection.segment_immunity_ticks")!=10 || !original.flag("entries.act14.invulnerable")) throw new AssertionError("Current contact and light defaults are missing");
             config.set("promised_consort.skills.hit_detection.segment_immunity_ticks",24.0);
             config.set("promised_consort.skills.entries.light_of_miquella.invulnerable",false);
-            config.set("promised_consort.skills.projectiles.a205220400.flight_height",2.0);
+            config.set("promised_consort.skills.range_percent",150.0);
             spec.getClass().getMethod("afterReload").invoke(spec);
             var changed=(com.tonywww.elder_bosses.boss.promisedconsort.config.PromisedConsortSourceConfigSnapshot)invoke(values,"promisedConsortSourceSnapshot");
-            if(changed.number("hit_detection.segment_immunity_ticks")!=24 || changed.flag("entries.act14.invulnerable") || changed.number("projectiles.a205220400.flight_height")!=2) throw new AssertionError("Edited current fields did not reach the encounter snapshot");
+            if(changed.number("hit_detection.segment_immunity_ticks")!=24 || changed.flag("entries.act14.invulnerable") || changed.rangeFactor()!=1.5) throw new AssertionError("Edited current fields did not reach the encounter snapshot");
+            if(original.rangeFactor()!=1 || original.motionScale(3010)!=changed.motionScale(3010)) throw new AssertionError("Range changed the frozen motion base or an existing snapshot");
+            for(String path:List.of("promised_consort.skills.projectiles.a205220400.flight_height","promised_consort.skills.projectiles.a205220400.initVellocity",
+                    "promised_consort.skills.animations.a3010.range_multiplier","promised_consort.skills.animations.a3010.turn_speed_multiplier",
+                    "promised_consort.skills.ground_areas.a3024_e0.angle","promised_consort.skills.ground_areas.a3024_e0.length"))
+                if(rows.stream().anyMatch(row->path.equals(row.get("path")))) throw new AssertionError("Authored skill geometry/motion must not be editable: "+path);
             if(original.number("hit_detection.segment_immunity_ticks")!=10 || !original.flag("entries.act14.invulnerable")) throw new AssertionError("Reload changed an existing frozen snapshot");
         }
         System.out.println("Registered config presentation "+args[0]+": "+rows.size()+" values; no game config or world opened.");

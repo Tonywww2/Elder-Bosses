@@ -43,7 +43,7 @@ public final class PromisedConsortSourceGroundAreas {
         double yaw=facing+config.number(prefix+"yaw"),radians=Math.toRadians(yaw);
         Point p=new Point(anchor.x()-Math.sin(radians)*config.number(prefix+"forward")*scale,anchor.y(),anchor.z()+Math.cos(radians)*config.number(prefix+"forward")*scale);
         return new Area(Objects.requireNonNull(Definitions.TYPES.get(key),"Unmapped original area "+key),p,yaw,
-                Math.max(.001,config.number(prefix+"length")*scale),Math.max(.001,config.number(prefix+"width")*scale),config.number(prefix+"angle"),config.number(prefix+"height"));
+                Math.max(.001,config.number(prefix+"length")*scale),Math.max(.001,config.number(prefix+"width")*scale),config.number(prefix+"angle"),config.number(prefix+"height")*scale);
     }
     public static Vec3 ground(PromisedConsortEntity owner,Vec3 p) {
         // Raycast a floor point, not a boss-sized standing box: a warning also covers narrow steps.

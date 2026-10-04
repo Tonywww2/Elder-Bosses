@@ -27,9 +27,6 @@ spreadTime|从初始判定半径增长到上限所用的秒数。|Seconds for th
 meteor_size|陨石的显示尺寸；当前4.05约为此前1.35的三倍，不直接扩大命中判定。|Visual meteor size; the current 4.05 is about three times the previous 1.35 and does not directly enlarge collision.
 gravity_size_multiplier|缩放紫色重力外观，包括陨石环绕效果；不改变伤害。|Scales purple gravity visuals, including the meteor aura, without changing damage.
 gravity_strength_multiplier|控制重力粒子与光效的表现强度；不改变牵引或伤害数值。|Controls the presentation strength of gravity particles and light, without changing pull or damage.
-holy_width_multiplier|统一放大圣光柱、光带和光环的可见宽度；当前默认3倍。不直接改变命中范围。|Widens visible holy columns, ribbons and rings; the current default is 3×. Does not directly change hit areas.
-holy_fade_in_ticks|圣光从透明变为可见所需的时间。|Time for holy effects to become visible.
-holy_fade_out_ticks|圣光消失前逐渐变为透明的时间。|Time for holy effects to fade before disappearing.
 trajectory_radius_multiplier|轨迹模式中剑刃判定的粗细倍率。|Sword collision thickness in trajectory mode.
 trajectory_hilt_extension|沿剑尖到剑柄方向扩大判定。|Extends collision from the blade toward the hilt.
 trajectory_arm_extension|从剑柄向前臂增加判定长度。|Adds collision from the hilt toward the forearm.
@@ -68,3 +65,12 @@ segment_immunity_ticks|同段接触免疫时长，默认10tick即0.5秒；进入
 invulnerable|米凯拉之光释放期间免疫伤害。|Immune to damage while casting Light of Miquella.
 flight_height|光环中心距离地面的高度。|Height of the ring center above the floor.
 shootAngleXZ|相对发射朝向的水平偏转角度。|Horizontal angle relative to the launch bearing.
+inner_ratio|内层浅白光柱相对于金色外层的边长比例。|Pale inner column width relative to the gold outer layer.
+slow_end_alpha|相对50%初始不透明度的慢段结束比例，随后降至0。|Slow-stage fraction of the 50% initial opacity, followed by decay to 0.
+slow_end_scale|柱体宽度缓慢缩至此比例，再快速收窄；高度保持不变。|Width shrinks slowly to this ratio, then quickly to zero; height stays fixed.
+halo_width_ratio|光圈环带厚度占半径的比例。|Halo band thickness relative to its radius.
+slow_ticks|先缓慢缩小并变透明的时间。|Duration of the initial slow shrink and fade.
+fast_ticks|随后快速缩小并消失的时间。|Duration of the final fast shrink and fade.
+halo_radius|光柱消失后地面光圈的初始半径。|Initial ground halo radius after the column disappears.
+halo_ticks|光圈以6%不透明度淡出，实际时长为此值的一半；0关闭。|Halo fades from 6% opacity over half this duration; 0 disables it.
+range_percent|100为当前基准范围，150为1.5倍；同步调整预警与两种命中范围。|100 is the current base range, 150 is 1.5×; scales warnings and both hit modes.

@@ -23,7 +23,7 @@ import org.joml.Vector3f;
 
 /** Segmented Minecraft skin follows the original player's70890 skeleton. */
 public final class ConsortGrabPlayerRenderer {
-    private record Piece(int bone,Matrix4f bindBasis,ModelPart skin,ModelPart overlay) {}
+    private record Piece(int bone,int end,int pixels,Matrix4f bindBasis,ModelPart skin,ModelPart overlay) {}
     private static final Map<Boolean,List<Piece>> PIECES=new HashMap<>();
     private static final Map<String,ModelPart> ARMOR=new HashMap<>();
     private ConsortGrabPlayerRenderer() {}
@@ -64,11 +64,12 @@ public final class ConsortGrabPlayerRenderer {
         /*var texture=player.getSkin().texture();boolean slim=player.getSkin().model()==net.minecraft.client.resources.PlayerSkin.Model.SLIM;
         *///?}
         var pose=PromisedConsortSourcePlayerPose.get();
+        var sample=pose.sample(elapsed);
         stack.pushPose();
         stack.mulPose(new org.joml.Quaternionf().rotationY((float)Math.toRadians(-state.getFloat("Yaw"))));
         stack.scale(1,1,-1);
         for(var piece:PIECES.computeIfAbsent(slim,ConsortGrabPlayerRenderer::build)) {
-            stack.pushPose();var transform=pose.skin(piece.bone(),elapsed).mul(piece.bindBasis());
+            stack.pushPose();var transform=sample.segment(piece.bone(),piece.end(),piece.bindBasis(),piece.pixels());
             stack.last().pose().mul(transform);
             stack.last().normal().mul(new org.joml.Matrix3f(transform).invert().transpose());
             var consumer=buffers.getBuffer(RenderType.entityTranslucent(texture));
@@ -81,13 +82,13 @@ public final class ConsortGrabPlayerRenderer {
             *///?}
             stack.popPose();
         }
-        renderArmor(player,elapsed,slim,stack,buffers,light);
-        renderHeld(player,elapsed,stack,buffers,light);
-        renderCape(player,elapsed,stack,buffers,light);
+        renderArmor(player,sample,slim,stack,buffers,light);
+        renderHeld(player,sample,stack,buffers,light);
+        renderCape(player,sample,stack,buffers,light);
         stack.popPose();return true;
     }
-    private static void renderArmor(AbstractClientPlayer player,long elapsed,boolean slim,PoseStack stack,MultiBufferSource buffers,int light) {
-        var pieces=PIECES.get(slim);var pose=PromisedConsortSourcePlayerPose.get();
+    private static void renderArmor(AbstractClientPlayer player,PromisedConsortSourcePlayerPose.Sample sample,boolean slim,PoseStack stack,MultiBufferSource buffers,int light) {
+        var pieces=PIECES.get(slim);
         for(var slot:new EquipmentSlot[]{EquipmentSlot.HEAD,EquipmentSlot.CHEST,EquipmentSlot.LEGS,EquipmentSlot.FEET}) {
             var item=player.getItemBySlot(slot);if(!(item.getItem() instanceof ArmorItem armor)) continue;
             var textures=new ArrayList<ResourceLocation>();int color=0xffffff;
@@ -104,15 +105,15 @@ public final class ConsortGrabPlayerRenderer {
             if(item.is(net.minecraft.tags.ItemTags.DYEABLE)) color=net.minecraft.world.item.component.DyedItemColor.getOrDefault(item,0xa06540);
             *///?}
             for(int index=0;index<pieces.size();index++) {
-                boolean torso=index<3,head=index==3,arm=index>=4 && (index-4)%4<2,leg=index>=4 && !arm;
+                boolean torso=index==0,head=index==1,arm=index>=2 && (index-2)%4<2,leg=index>=2 && !arm;
                 if(!(slot==EquipmentSlot.HEAD && head || slot==EquipmentSlot.CHEST && (torso||arm)
                         || slot==EquipmentSlot.LEGS && (torso||leg) || slot==EquipmentSlot.FEET && leg)) continue;
-                int width=head?8:torso?8:4,height=head?8:torso?4:6,depth=head?8:4;
-                int u=head?0:torso?16:arm?40:0,v=head?0:torso?24-index*4:16+(index-4)%2*6;
-                boolean mirror=index>=4 && index<8;
+                int width=head?8:torso?8:4,height=head?8:torso?12:6,depth=head?8:4;
+                int u=head?0:torso?16:arm?40:0,v=head?0:torso?16:16+(index-2)%2*6;
+                boolean mirror=index>=2 && index<6;
                 String key=slot+":"+index+":"+slim;
                 var part=ARMOR.computeIfAbsent(key,k->armorBox(u,v,width,height,depth,mirror,slot==EquipmentSlot.LEGS?.3f:.6f,head));
-                var piece=pieces.get(index);stack.pushPose();Matrix4f transform=pose.skin(piece.bone(),elapsed).mul(piece.bindBasis());
+                var piece=pieces.get(index);stack.pushPose();Matrix4f transform=sample.segment(piece.bone(),piece.end(),piece.bindBasis(),piece.pixels());
                 stack.last().pose().mul(transform);stack.last().normal().mul(new org.joml.Matrix3f(transform).invert().transpose());
                 for(int layer=0;layer<textures.size();layer++) {
                     //? if forge {
@@ -136,19 +137,19 @@ public final class ConsortGrabPlayerRenderer {
                 .addBox(-w/2f,head?-h:0,-d/2f,w,h,d,new CubeDeformation(inflate)),PartPose.ZERO);
         return LayerDefinition.create(mesh,64,32).bakeRoot().getChild("cube");
     }
-    private static void renderHeld(AbstractClientPlayer player,long elapsed,PoseStack stack,MultiBufferSource buffers,int light) {
+    private static void renderHeld(AbstractClientPlayer player,PromisedConsortSourcePlayerPose.Sample sample,PoseStack stack,MultiBufferSource buffers,int light) {
         var pose=PromisedConsortSourcePlayerPose.get();
         for(boolean left:new boolean[]{false,true}) {
             var item=left?player.getOffhandItem():player.getMainHandItem();if(item.isEmpty()) continue;
             boolean actualLeft=left==(player.getMainArm()==net.minecraft.world.entity.HumanoidArm.RIGHT);
-            stack.pushPose();stack.last().pose().mul(pose.skin(pose.bone(actualLeft?"L_Hand":"R_Hand"),elapsed));
+            stack.pushPose();stack.last().pose().mul(sample.skin(pose.bone(actualLeft?"L_Hand":"R_Hand")));
             stack.scale(.8f,-.8f,.8f);stack.mulPose(new org.joml.Quaternionf().rotationX((float)-Math.PI/2).rotateY((float)Math.PI));
             stack.translate(0,.125,-.625);
             Minecraft.getInstance().getItemRenderer().renderStatic(player,item,actualLeft?ItemDisplayContext.THIRD_PERSON_LEFT_HAND:ItemDisplayContext.THIRD_PERSON_RIGHT_HAND,
                     actualLeft,stack,buffers,player.level(),light,OverlayTexture.NO_OVERLAY,player.getId());stack.popPose();
         }
     }
-    private static void renderCape(AbstractClientPlayer player,long elapsed,PoseStack stack,MultiBufferSource buffers,int light) {
+    private static void renderCape(AbstractClientPlayer player,PromisedConsortSourcePlayerPose.Sample sample,PoseStack stack,MultiBufferSource buffers,int light) {
         //? if forge {
         var texture=player.getCloakTextureLocation();
         //?} else {
@@ -157,7 +158,7 @@ public final class ConsortGrabPlayerRenderer {
         if(texture==null || !player.isModelPartShown(net.minecraft.world.entity.player.PlayerModelPart.CAPE)) return;
         var part=ARMOR.computeIfAbsent("cape",key->{MeshDefinition mesh=new MeshDefinition();mesh.getRoot().addOrReplaceChild("cape",
                 CubeListBuilder.create().texOffs(0,0).addBox(-5,0,2,10,16,1),PartPose.ZERO);return LayerDefinition.create(mesh,64,32).bakeRoot().getChild("cape");});
-        stack.pushPose();var pose=PromisedConsortSourcePlayerPose.get();stack.last().pose().mul(pose.skin(pose.bone("Spine1"),elapsed));stack.scale(.8f,-.8f,.8f);
+        stack.pushPose();var pose=PromisedConsortSourcePlayerPose.get();stack.last().pose().mul(sample.skin(pose.bone("Spine1")));stack.scale(.8f,-.8f,.8f);
         var consumer=buffers.getBuffer(RenderType.entityCutoutNoCull(texture));
         //? if forge {
         part.render(stack,consumer,light,OverlayTexture.NO_OVERLAY,1,1,1,1);
@@ -168,13 +169,12 @@ public final class ConsortGrabPlayerRenderer {
     }
     private static List<Piece> build(boolean slim) {
         var list=new ArrayList<Piece>();var pose=PromisedConsortSourcePlayerPose.get();
-        // Rest fitting is shared by every70890 frame, with no per-frame limb scaling.
-        int pelvis=pose.bone("Pelvis"),spine=pose.bone("Spine"),spine1=pose.bone("Spine1"),head=pose.bone("Head");
-        add(list,pelvis,spine,16,24,16,40,8,4,4,false,false);
-        add(list,spine,spine1,16,20,16,36,8,4,4,false,false);
-        add(list,spine1,head,16,16,16,32,8,4,4,false,false);
+        // Minecraft's torso is one rigid box. Three equal UV strips stretched
+        // onto unequal source spine spans produce a pinched, twisted chest.
+        int pelvis=pose.bone("Pelvis"),head=pose.bone("Head");
+        add(list,pelvis,head,16,16,16,32,8,12,4,false,false);
         Matrix4f headBasis=new Matrix4f().scale(.8f,-.8f,.8f);
-        list.add(new Piece(head,headBasis,box(0,0,8,8,8,false,0,true),box(32,0,8,8,8,false,.35f,true)));
+        list.add(new Piece(head,-1,8,headBasis,box(0,0,8,8,8,false,0,true),box(32,0,8,8,8,false,.35f,true)));
         for(String side:new String[]{"L_","R_"}) {
             boolean left=side.equals("L_");int armWidth=slim?3:4;
             add(list,pose.bone(side+"UpperArm"),pose.bone(side+"Elbow"),left?32:40,left?48:16,left?48:40,left?48:32,armWidth,6,4,false,false);
@@ -189,7 +189,7 @@ public final class ConsortGrabPlayerRenderer {
         Vector3f z=new Vector3f(0,0,1),x=new Vector3f(y).cross(z).normalize();z=new Vector3f(x).cross(y).normalize();
         Matrix4f basis=new Matrix4f().setColumn(0,new org.joml.Vector4f(x.mul(.8f),0))
                 .setColumn(1,new org.joml.Vector4f(y.mul(length*16/height),0)).setColumn(2,new org.joml.Vector4f(z.mul(.8f),0));
-        list.add(new Piece(bone,basis,box(u,v,width,height,depth,mirror,0,head),box(ou,ov,width,height,depth,mirror,.2f,head)));
+        list.add(new Piece(bone,end,height,basis,box(u,v,width,height,depth,mirror,0,head),box(ou,ov,width,height,depth,mirror,.2f,head)));
     }
     private static ModelPart box(int u,int v,int width,int height,int depth,boolean mirror,float inflate,boolean head) {
         MeshDefinition mesh=new MeshDefinition();

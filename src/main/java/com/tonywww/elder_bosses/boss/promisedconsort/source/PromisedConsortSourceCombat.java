@@ -41,12 +41,15 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
     private PromisedConsortSourceAi.Entry approaching;
     private long approachEnd;
     private boolean approachWalk;
+    private Vec3 navigationGoal;
+    private long navigationAttempt=Long.MIN_VALUE/2;
     private int script;
     private boolean initialized,closed;
     private boolean selectionEnabled=true;
     private boolean meteorMapPending;
     private PromisedConsortSourceMap.Landing meteorLanding;
     private long meteorWarpAt=Long.MAX_VALUE;
+    private long meteorWarningAt=Long.MAX_VALUE,meteorWarningSequence;
     private long recoveryEnd;
     private boolean shootPending;
     private boolean acceptanceOnly;
@@ -60,7 +63,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
                               PromisedConsortSourceProjectiles.SavedState projectiles,PromisedConsortSourceGrab.SavedState grab,
                               PromisedConsortSourceAi.Entry approaching,long approachEnd,boolean approachWalk,PromisedConsortSourceIndicators.SavedState warnings,
                               PromisedConsortSourceVisuals.SavedState visuals,PromisedConsortSourceTargetEffects.SavedState targetEffects,
-                              boolean meteorMapPending,Point meteorPoint,float meteorYaw,long meteorWarpAt,long recoveryEnd,
+                              boolean meteorMapPending,Point meteorPoint,float meteorYaw,long meteorWarpAt,long meteorWarningAt,long meteorWarningSequence,long recoveryEnd,
                               PromisedConsortSourcePlayback heldPresentation,boolean acceptanceOnly,boolean shootPending,List<PromisedConsortSourceSegmentHits.Claim> segmentHits) {}
     private SavedState restoring;
 
@@ -118,7 +121,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         }
         private Vec3 movement(long world) {
             String prefix=owner.sourceConfig().segment(playback.actor().taeId());
-            double horizontal=owner.sourceConfig().number(prefix+"movement_multiplier")*owner.sourceConfig().range(playback.actor().taeId());
+            double horizontal=owner.sourceConfig().number(prefix+"movement_multiplier")*owner.sourceConfig().motionScale(playback.actor().taeId());
             Vec3 authored=playback.displacement(world,initialYaw);
             if(playback.actor().taeId()==3017) {
                 // Replace the exported 1.5-block root step with the same descent
@@ -159,6 +162,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         }
         public Vec3 projected(long world) {return projectedCache.computeIfAbsent(world,this::project);}
         private Vec3 project(long world) {
+            if(PromisedConsortSourceTransition.cinematic(playback)) return owner.position();
             if(entity!=owner) return origin.add(adjusted(world));
             if(meteorAnchored()) return owner.sourcePredictDestination(owner.position(),meteorPosition(world),airborne(world));
             Vec3 now=owner.position(),delta=adjusted(world).subtract(adjusted(through));
@@ -170,34 +174,41 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
             return entity==owner && playback.actor().taeId()==3024 && landingLocked && meteorWarpAt==Long.MAX_VALUE;
         }
         private Vec3 meteorPosition(long world) {
-            return owner.sourceArenaPoint(PromisedConsortSourceLanding.anchoredPosition(landing,movement(world),movement(landingAt)));
+            return owner.sourceArenaPoint(PromisedConsortSourceLanding.starfallPosition(landing,movement(world),movement(landingAt),
+                    movement(playback.worldAtSource(PromisedConsortSourceLanding.STARFALL_APPROACH)),meteorApproachRadius(),world>=landingAt));
+        }
+        private double meteorApproachRadius() {
+            return PromisedConsortSourceLanding.STARFALL_APPROACH_RADIUS*owner.sourceConfig().number(owner.sourceConfig().segment(3024)+"movement_multiplier")
+                    *owner.sourceConfig().motionScale(3024);
         }
         private boolean airborne(long world) {
             if(playback.actor().taeId()==20011) return false;
             long at=playback.sourceMicros(world);
+            if(meteorAnchored()) return world<landingAt;
             if(playback.actor().taeId()==3017 && at>=PromisedConsortSourceLanding.GRAVITY_DESCENT_END) return false;
             return landingAt!=Long.MAX_VALUE && world<landingAt || activeJump(playback,27,at) || activeJump(playback,129,at) || activeJump(playback,113,at);
         }
-        public PromisedConsortSourcePose.Sample pose(long world) {return poseCache.computeIfAbsent(world,t->PromisedConsortSourceAssets.pose(playback.actor().hkxId()).sample(playback.sourceMicros(t)));}
+        public PromisedConsortSourcePose.Sample pose(long world) {return poseCache.computeIfAbsent(world,t->PromisedConsortSourceAssets.pose(playback.poseId()).sample(playback.poseMicros(t)));}
         private double bodyOffset(long world) {
             return bodyOffsetCache.computeIfAbsent(world,t->{
                 if(entity!=owner) return 0.0;
                 long source=playback.sourceMicros(t);
+                if(playback.actor().taeId()==3024) return PromisedConsortSourceGrounding.starfallOffset(source);
                 if(playback.actor().taeId()==3017 && source>=PromisedConsortSourceLanding.GRAVITY_DESCENT_BEGIN) {
                     // Keep the whole rig, its attachment points and hit volumes
                     // together; touching down happens before the idle switch.
-                    return PromisedConsortSourceGrounding.gravityMeteorOffset(source);
+                    return PromisedConsortSourceGrounding.gravityMeteorOffset(source,playback.poseId());
                 }
                 if(airborne(t)) return 0.0;
                 Vec3 p=projected(t);
                 var support=owner.sourceGroundPosition(p,p.y,0);
                 if(support.isEmpty() || Math.abs(support.get().y-p.y)>.1) return 0.0;
-                double master=PromisedConsortSourceAssets.pose(playback.actor().hkxId()).masterTranslationDelta(playback.sourceMicros(t)).y();
+                double master=PromisedConsortSourceAssets.pose(playback.poseId()).masterTranslationDelta(playback.poseMicros(t)).y();
                 return -PromisedConsortSourceGrounding.soleY(pose(t),master);
             });
         }
         public Point poseOrigin(long world) {
-            Vec3 p=projected(world);var m=PromisedConsortSourceAssets.pose(playback.actor().hkxId()).masterTranslationDelta(playback.sourceMicros(world));
+            Vec3 p=projected(world);var m=PromisedConsortSourceAssets.pose(playback.poseId()).masterTranslationDelta(playback.poseMicros(world));
             double yaw=Math.toRadians(playback.yawAt(world,initialYaw)),sin=Math.sin(yaw),cos=Math.cos(yaw);
             return new Point(p.x-m.x()*cos-m.z()*sin,p.y+bodyOffset(world)-m.y(),p.z-m.x()*sin+m.z()*cos);
         }
@@ -216,8 +227,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
             projectedCache.clear();poseCache.clear();bodyOffsetCache.clear();
             if(world<through) throw new IllegalArgumentException("Source movement clock reversed");
             if(playback.actor().taeId()==20011) {
-                Vec3 step=movement(world).subtract(movement(through));
-                owner.walkSourceTransition(step.horizontalDistance(),(world-through)/(double)GAME_TICK_MICROS);
+                owner.tickSourceTransitionMotion((world-through)/(double)GAME_TICK_MICROS);
                 through=world;initialYaw=owner.getYRot();
                 projectedCache.clear();bodyOffsetCache.clear();owner.setSourceBodyOffsetY(bodyOffset(world));return;
             }
@@ -304,15 +314,16 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         }
         if(meteorMapPending) {
             meteorMapPending=false;meteorLanding=PromisedConsortSourceMap.get().landing(owner);
-            startScript(3024);meteorWarpAt=bodyFrame().playback.worldAtSource(400_000);
+            startScript(3024);meteorWarpAt=bodyFrame().playback.worldAtSource(PromisedConsortSourceLanding.STARFALL_APPROACH);
         }
         body=bodyFrame();
         if(body!=null && body.playback.actor().taeId()==3024) {
             if(now>=meteorWarpAt) {
                 body.initialYaw=meteorLanding.yaw();
-                long impact=body.playback.worldAtSource(4_300_000);
+                long impact=body.playback.worldAtSource(PromisedConsortSourceLanding.STARFALL_CONTACT);
                 Vec3 atImpact=body.movement(impact),atWarp=body.movement(now);
-                Vec3 position=PromisedConsortSourceLanding.anchoredPosition(meteorLanding.point(),atWarp,atImpact);
+                Vec3 position=PromisedConsortSourceLanding.starfallPosition(meteorLanding.point(),atWarp,atImpact,
+                        body.movement(body.playback.worldAtSource(PromisedConsortSourceLanding.STARFALL_APPROACH)),body.meteorApproachRadius(),now>=impact);
                 owner.placeSourceMeteor(position);
                 body.landingAt=impact;body.landing=meteorLanding.point();body.landingLocked=true;
                 body.correction=Vec3.ZERO;body.baseY=meteorLanding.point().y-atImpact.y;
@@ -321,9 +332,8 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
                 owner.setYRot(body.initialYaw);owner.setYBodyRot(body.initialYaw);owner.setYHeadRot(body.initialYaw);
                 meteorWarpAt=Long.MAX_VALUE;
             }
-            if(!owner.meteorLanded() && body.playback.sourceMicros(now)>=4_300_000) {
-                owner.placeSourceMeteor(meteorLanding.point());
-                body.projectedCache.clear();body.bodyOffsetCache.clear();owner.landSourceMeteor();
+            if(!owner.meteorLanded() && body.playback.sourceMicros(now)>=PromisedConsortSourceLanding.STARFALL_IMPACT) {
+                owner.landSourceMeteor();
             }
         }
         for(var entry:List.copyOf(windows.entrySet())) sample(entry.getKey(),entry.getValue(),now);
@@ -331,22 +341,25 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         var liveActors=new HashSet<>(frames.keySet());liveActors.addAll(projectiles.activeActors());segmentHits.retain(liveActors);
         var visible=new net.minecraft.nbt.ListTag();visuals.append(visible,now);projectiles.appendVisuals(visible,now);
         var visualState=new CompoundTag();visualState.put("Instances",visible);visualState.put("Charmed",grab.charmTags());owner.setSourceVisuals(visualState);
-        if(script!=0 && controller.entry().isEmpty() && (script!=8700 || owner.sourceStunDone())
-                && (script!=20011 || owner.sourceTransitionDone())) {
-            if(script==10000) owner.finishSourceDeath();
-            else {if(script==8700) owner.setSourcePlayback(null);script=0;owner.enterSourceBattle();}
-        }
+        finishCompletedScript();
     }
-    public void startScript(int tae) {lastEntry.remove(-3);shootPending=false;owner.cancelSourceRetainedAction();script=tae;controller.startScript(tae);}
+    private void finishCompletedScript() {
+        if(script==0 || controller.entry().isPresent() || script==8700 && !owner.sourceStunDone()
+                || script==20011 && !owner.sourceTransitionDone()) return;
+        if(script==10000) owner.finishSourceDeath();
+        else {if(script==8700) owner.setSourcePlayback(null);script=0;meteorWarningAt=Long.MAX_VALUE;owner.enterSourceBattle();}
+    }
+    @Override public void bodyEntryCompleted(PromisedConsortSourceAi.Entry completed) {finishCompletedScript();}
+    public void startScript(int tae) {lastEntry.remove(-3);shootPending=false;owner.cancelSourceRetainedAction();script=tae;if(tae!=3024) meteorWarningAt=Long.MAX_VALUE;controller.startScript(tae);}
     public void startThrow() {
         script=4100;owner.getNavigation().stop();
         controller.startEntry(new PromisedConsortSourceAi.Entry(17,List.of(4100),Set.of(20011568),null,"ThrowParam34522000"));
     }
     public void close() {
-        if(closed) return;controller.cancel();projectiles.clear();visuals.clear();targetEffects.clear();grab.close();segmentHits.clear();closed=true;
+        if(closed) return;controller.cancel();owner.finishSourceTransitionPresentation();projectiles.clear();visuals.clear();targetEffects.clear();grab.close();segmentHits.clear();closed=true;
     }
     public boolean idle() {return bodyFrame()==null && controller.entry().isEmpty();}
-    public boolean gateOpening() {return script==20010;}
+    public boolean gateOpening() {return script==20010 || script==20011;}
     public boolean scripted() {return script!=0;}
     public void beginAcceptance(int act) {
         if(initialized || !PromisedConsortSourceAi.REGISTERED_ACTS.contains(act) || owner.sourceConfig().flags().containsKey("entries.act"+act+".enabled") && !owner.sourceConfig().enabled(act)) throw new IllegalArgumentException("Unavailable source Act");
@@ -364,12 +377,12 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
                 frames.values().stream().map(f->new FrameState(f.playback.actor(),f.playback.startWorldMicros(),f.playback.speed(),point(f.origin),f.initialYaw,point(f.displacement),f.through,f.playback.warp(),f.landing==null?null:point(f.landing),point(f.correction),f.lockAt,f.landingAt,f.warpBeginAt,f.landingLocked,f.baseY)).toList(),
                 windows.entrySet().stream().map(e->new WindowState(e.getKey().actor(),e.getKey().event(),e.getValue().through,Map.copyOf(e.getValue().hit),Map.copyOf(e.getValue().lastHit))).toList(),
                 projectiles.save(),grab.save(),approaching,approachEnd,approachWalk,warnings.save(),visuals.save(),targetEffects.save(),meteorMapPending,
-                meteorLanding==null?null:point(meteorLanding.point()),meteorLanding==null?0:meteorLanding.yaw(),meteorWarpAt,recoveryEnd,
+                meteorLanding==null?null:point(meteorLanding.point()),meteorLanding==null?0:meteorLanding.yaw(),meteorWarpAt,meteorWarningAt,meteorWarningSequence,recoveryEnd,
                 bodyFrame()==null?owner.sourcePlayback():null,acceptanceOnly,shootPending,segmentHits.save());
-        CompoundTag tag=new CompoundTag();tag.putInt("Version",9);tag.putByteArray("State",SAVE_JSON.toJson(state).getBytes(java.nio.charset.StandardCharsets.UTF_8));return tag;
+        CompoundTag tag=new CompoundTag();tag.putInt("Version",12);tag.putByteArray("State",SAVE_JSON.toJson(state).getBytes(java.nio.charset.StandardCharsets.UTF_8));return tag;
     }
     public void restore(CompoundTag tag) {
-        if(tag.getInt("Version")!=9 || initialized || restoring!=null) throw new IllegalArgumentException("Invalid source combat save");
+        if(tag.getInt("Version")!=12 || initialized || restoring!=null) throw new IllegalArgumentException("Invalid source combat save");
         restoring=SAVE_JSON.fromJson(new String(tag.getByteArray("State"),java.nio.charset.StandardCharsets.UTF_8),SavedState.class);
         if(restoring==null) throw new IllegalArgumentException("Missing source combat state");
     }
@@ -380,6 +393,8 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         segmentHits.restore(state.segmentHits(),shift);
         meteorMapPending=state.meteorMapPending();meteorLanding=state.meteorPoint()==null?null:new PromisedConsortSourceMap.Landing(vector(state.meteorPoint()),state.meteorYaw());
         meteorWarpAt=state.meteorWarpAt()==Long.MAX_VALUE?Long.MAX_VALUE:Math.addExact(state.meteorWarpAt(),shift);
+        meteorWarningAt=state.meteorWarningAt()==Long.MAX_VALUE?Long.MAX_VALUE:Math.addExact(state.meteorWarningAt(),shift);
+        meteorWarningSequence=state.meteorWarningSequence();
         recoveryEnd=Math.addExact(state.recoveryEnd(),shift);
         if(state.heldPresentation()!=null) owner.setSourcePlayback(new PromisedConsortSourcePlayback(state.heldPresentation().actor(),
                 Math.addExact(state.heldPresentation().startWorldMicros(),shift),state.heldPresentation().speed(),state.heldPresentation().sourceOffsetMicros(),state.heldPresentation().warp()));
@@ -411,14 +426,43 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         warnings.restore(state.warnings(),shift);projectiles.restore(state.projectiles(),shift);visuals.restore(state.visuals(),shift);targetEffects.restore(state.targetEffects(),shift);owner.setSourceRigEnabled(true);
         // A disconnected/unloaded victim is released by close(). Resume the
         // encounter safely, retaining the charm mark but not an orphaned lock.
-        if(state.grab().interruptedThrow()) {controller.cancel();script=0;owner.enterSourceBattle();}
+        if(state.grab().interruptedThrow()) {controller.cancel();script=0;meteorWarningAt=Long.MAX_VALUE;owner.enterSourceBattle();}
     }
     public Frame bodyFrame() {return frames.values().stream().filter(f->f.playback.actor().slot()==-1).findFirst().orElse(null);}
     public Collection<Frame> frames() {return List.copyOf(frames.values());}
     public java.util.List<com.tonywww.elder_bosses.network.IndicatorSnapshotPacket> indicators(long gameTick) {
-        var result=new ArrayList<>(warnings.packets(gameTick));result.addAll(projectiles.indicators(gameTick));return result;
+        var result=new ArrayList<>(warnings.packets(gameTick));result.addAll(projectiles.indicators(gameTick));
+        var warning=meteorWarning(gameTick);if(warning!=null) {
+            // Announce the outer final impact as well as the body footprint during ascent.
+            result.removeIf(p->p.indicatorId().startsWith("source:") && p.indicatorId().contains(":-1:3024:0"));
+            result.add(warning);
+        }
+        return result;
     }
     public Frame frame(Actor actor) {return frames.get(actor);}
+    private com.tonywww.elder_bosses.network.IndicatorSnapshotPacket meteorWarning(long tick) {
+        long now=tick*GAME_TICK_MICROS;
+        if(meteorWarningAt==Long.MAX_VALUE || now<meteorWarningAt || meteorLanding==null || owner.meteorLanded()
+                || script!=3021 && script!=3024) return null;
+        var body=bodyFrame();
+        long active=body!=null && body.playback.actor().taeId()==3024
+                ?body.playback.worldAtSource(PromisedConsortSourceLanding.STARFALL_CONTACT)
+                :body!=null?body.playback.worldAtSource(bank.requireClip(3021).durationMicros())
+                    +(long)Math.ceil(owner.sourceConfig().warp(3024).gameAt(PromisedConsortSourceLanding.STARFALL_CONTACT)/body.playback.speed())
+                :now+1_000_000;
+        active=Math.max(now+GAME_TICK_MICROS,active);
+        var p=meteorLanding.point();
+        var area=PromisedConsortSourceGroundAreas.configured(owner.sourceConfig(),3024,0,point(p),meteorLanding.yaw());
+        return new com.tonywww.elder_bosses.network.IndicatorSnapshotPacket(owner.getId(),"source_meteor:"+meteorWarningSequence,
+                com.tonywww.elder_bosses.network.IndicatorSnapshotPacket.SegmentSlot.CURRENT,
+                com.tonywww.elder_bosses.network.IndicatorSnapshotPacket.StyleRole.HOLY_IVORY,
+                com.tonywww.elder_bosses.network.IndicatorSnapshotPacket.Semantic.HOLY,
+                com.tonywww.elder_bosses.network.IndicatorSnapshotPacket.IndicatorState.IMMINENT,
+                com.tonywww.elder_bosses.network.IndicatorSnapshotPacket.ShapeType.CIRCLE,
+                new com.tonywww.elder_bosses.network.IndicatorSnapshotPacket.Point(p.x,p.y,p.z),0,List.of((float)Math.max(area.length(),projectiles.starfallWarningRadius())),List.of(),
+                (meteorWarningAt+GAME_TICK_MICROS-1)/GAME_TICK_MICROS,(meteorWarningAt+GAME_TICK_MICROS-1)/GAME_TICK_MICROS,
+                (active+GAME_TICK_MICROS-1)/GAME_TICK_MICROS,(active+2*GAME_TICK_MICROS-1)/GAME_TICK_MICROS,false);
+    }
     public PromisedConsortSourceVisuals visuals() {return visuals;}
     public PromisedConsortSourceAudio audio() {return audio;}
     public void applyTargetEffect(LivingEntity target,int id,long time) {
@@ -442,6 +486,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
     // EMEVD WaitFixedTimeFrames(1), sampled on a60Hz original engine clock.
     @Override public long cloneSpawnWaitMicros() {return 16_667;}
     @Override public boolean allowSelection() {
+        finishCompletedScript();
         if(owner.sourceMeteorForced()) return false;
         if(acceptanceOnly || lastEntry.containsKey(-3) || !selectionEnabled || worldMicros()<recoveryEnd || owner.isDisengaging() || script!=0 || target()==null || grab.active() || owner.sourceRetainedActionActive()) return false;
         if(idle() && owner.sourceConfig().flag("spacing.retreat_when_crowded")) {
@@ -495,6 +540,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         }return result;
     }
     @Override public void beginApproachOrEngineGoal(PromisedConsortSourceAi.Entry entry) {
+        navigationGoal=null;navigationAttempt=Long.MIN_VALUE/2;
         approaching=entry;
         if(entry.act()>0) lastEntry.put(entry.act(),worldMicros());
         if(entry.act()==-2) {
@@ -531,19 +577,26 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         }
         Vec3 toward=target().position().subtract(owner.position()).multiply(1,0,1).normalize();
         Vec3 p=owner.sourceStandingPosition(target().position().subtract(toward.scale(stop)),target().getY());
-        owner.getNavigation().moveTo(p.x,p.y,p.z,owner.sourceConfig().optional("entries.act"+entry.act()+"."+(approachWalk?"approach_walk_speed":"approach_run_speed"),approachWalk?1:1.5));owner.setPursuing(true);faceTarget();return false;
+        navigate(p,owner.sourceConfig().optional("entries.act"+entry.act()+"."+(approachWalk?"approach_walk_speed":"approach_run_speed"),approachWalk?1:1.5));owner.setPursuing(true);faceTarget();return false;
+    }
+    private void navigate(Vec3 point,double speed) {
+        long now=worldMicros();
+        if(now-navigationAttempt<400_000 && navigationGoal!=null && navigationGoal.distanceToSqr(point)<1) return;
+        navigationGoal=point;navigationAttempt=now;
+        if(!owner.getNavigation().moveTo(point.x,point.y,point.z,speed))
+            approachEnd=Math.min(approachEnd,now+250_000);
     }
     @Override public boolean engineGoalComplete(PromisedConsortSourceAi.Entry entry) {
-        if(target()==null || worldMicros()>=approachEnd || entry.act()==31 && context().distance()<=owner.sourceRangedConfig().exitDistance()) {
+        if(target()==null || worldMicros()>=approachEnd || entry.act()==31 && (!context().has(20011574) || context().distance()<=owner.sourceRangedConfig().exitDistance())) {
             if(entry.act()==31) effectExpiry.remove(20011574);
             owner.getNavigation().stop();return true;
         }
         switch(entry.act()) {
-            case -2 -> {if(context().distance()<=10) {owner.getNavigation().stop();return true;}owner.getNavigation().moveTo(target(),1);owner.setPursuing(true);}
+            case -2 -> {if(context().distance()<=10) {owner.getNavigation().stop();return true;}navigate(target().position(),1);owner.setPursuing(true);}
             case 31 -> {owner.getNavigation().stop();return false;}
-            case 39,40 -> {Vec3 toward=target().position().subtract(owner.position()).multiply(1,0,1).normalize();Vec3 p=target().position().subtract(toward.scale(owner.sourceConfig().number("spacing.minimum_melee_distance")));owner.getNavigation().moveTo(p.x,p.y,p.z,1);owner.setPursuing(true);}
-            case 41 -> {Vec3 away=owner.position().subtract(target().position()).multiply(1,0,1).normalize();Vec3 p=target().position().add(away.scale(10));owner.getNavigation().moveTo(p.x,p.y,p.z,1);}
-            case 42 -> {Vec3 toward=target().position().subtract(owner.position()).multiply(1,0,1).normalize();Vec3 p=owner.position().add(-toward.z*3,0,toward.x*3);owner.getNavigation().moveTo(p.x,p.y,p.z,1);}
+            case 39,40 -> {Vec3 toward=target().position().subtract(owner.position()).multiply(1,0,1).normalize();Vec3 p=target().position().subtract(toward.scale(owner.sourceConfig().number("spacing.minimum_melee_distance")));navigate(p,1);owner.setPursuing(true);}
+            case 41 -> {Vec3 away=owner.position().subtract(target().position()).multiply(1,0,1).normalize();Vec3 p=target().position().add(away.scale(10));navigate(p,1);owner.setPursuing(true);}
+            case 42 -> {Vec3 toward=target().position().subtract(owner.position()).multiply(1,0,1).normalize();Vec3 p=owner.position().add(-toward.z*3,0,toward.x*3);navigate(p,1);owner.setPursuing(true);}
             case 43 -> {faceTarget();return true;}
             default -> owner.getNavigation().stop();
         }
@@ -557,7 +610,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
     public void tickDisengaged(boolean cancel) {
         grab.release();selectionEnabled=false;
         try {
-            if(cancel) {controller.cancel();script=0;meteorMapPending=false;meteorWarpAt=Long.MAX_VALUE;}
+            if(cancel) {controller.cancel();script=0;meteorMapPending=false;meteorWarpAt=Long.MAX_VALUE;meteorWarningAt=Long.MAX_VALUE;}
             else if(!frames.isEmpty() || controller.entry().isPresent()) tick();
             if(frames.isEmpty() && controller.entry().isEmpty()) {
                 projectiles.clear();visuals.clear();segmentHits.clear();owner.setSourcePlayback(null);owner.setSourceLocomotion(20);owner.setNoGravity(false);
@@ -599,7 +652,11 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
                 owner.getNavigation().stop();owner.setPursuing(false);
                 owner.setSourcePlayback(playback);frame.move(start.startWorldMicros());lastAttack.put(start.actor().taeId(),start.startWorldMicros());
                 owner.broadcastSourceActionDebug(controller.entry().map(PromisedConsortSourceAi.Entry::act).orElse(-1),start.actor(),true);
-                if(start.actor().taeId()==3021) owner.beginSourceMeteor();
+                if(start.actor().taeId()==3021) {
+                    owner.beginSourceMeteor();meteorLanding=PromisedConsortSourceMap.get().landing(owner);
+                    meteorWarningAt=PromisedConsortSourceLanding.warningAt(playback);
+                    meteorWarningSequence=start.actor().actionSequence();
+                }
             } else {
                 Frame parent=bodyFrame();if(parent==null) throw new IllegalStateException("Source clone lost spawn parent");
                 long summon=start.startWorldMicros()-cloneSpawnWaitMicros();
@@ -618,6 +675,9 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
         }
         warnings.prepare(worldMicros());
         for(var notice:update.events()) {
+            // The cinematic owns its light/dialogue/flight beats. Original
+            // combat events must not fire while its source poses are rearranged.
+            if(script==20011 && notice.crossing().identity().actor().taeId()==20011) continue;
             visuals.event(notice);
             audio.event(notice);
             Crossing crossing=notice.crossing();Actor actor=crossing.identity().actor();Event event=crossing.event();
@@ -647,7 +707,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
             if(end.actor().slot()==-1 && bodyFrame()==null && (end.actor().taeId()!=8700 || owner.sourceStunDone())) {
                 owner.setSourcePlayback(null);
                 int tae=end.actor().taeId();
-                if(tae==3006 || tae==3025) {
+                if(tae==3006 || tae==3025 || tae==3013 || tae==4100 || tae==20012) {
                     owner.setSourceLocomotion(20);
                     var idle=PromisedConsortSourceAssets.pose(20);
                     owner.setSourceBodyOffsetY(-PromisedConsortSourceGrounding.soleY(idle.sample(0),idle.masterTranslationDelta(0).y()));
@@ -797,6 +857,7 @@ public final class PromisedConsortSourceCombat implements PromisedConsortSourceC
     @Override public boolean bodyEngineExited(Actor actor) {
         Frame frame=frames.get(actor);
         if(frame==null) return false;
+        if(PromisedConsortSourceTransition.cinematic(frame.playback)) return owner.sourceTransitionDone();
         // Death has no W_Idle transition. Its completed single play is the
         // terminal entity state, after which Minecraft delivers the rewards.
         return (actor.taeId()==10000 || data.behavior(actor.taeId()).exitAtEnd())

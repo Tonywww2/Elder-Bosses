@@ -131,7 +131,6 @@ public final class ClientBossVfxController {
                             double angle = index * Math.PI / 6;
                             Vec3 radial = new Vec3(Math.cos(angle), 0, Math.sin(angle));
                             emitter.add(ParticleTypes.ASH, point.add(radial.scale(1.1)), radial.scale(0.16).add(0, 0.04, 0));
-                            if (index % 3 == 0) emitter.add(ParticleTypes.END_ROD, point.add(radial.scale(0.65)), radial.scale(0.035).add(0, 0.06, 0));
                         }
                         continue;
                     }

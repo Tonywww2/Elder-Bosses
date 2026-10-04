@@ -23,10 +23,25 @@ public record PromisedConsortSourcePlayback(Actor actor,long startWorldMicros,do
     public long worldAtSource(long source) {return startWorldMicros+(long)Math.ceil((warp.gameAt(source)-warp.gameAt(sourceOffsetMicros))/speed);}
     public double animationTicks(long gameTick,double partialTick) {
         if (!Double.isFinite(partialTick) || partialTick<0 || partialTick>1) throw new IllegalArgumentException("Invalid partial tick");
-        long time=sourceMicros(Math.addExact(Math.multiplyExact(gameTick,GAME_TICK_MICROS),(long)(partialTick*GAME_TICK_MICROS)));
-        return Math.min(time,PromisedConsortSourceAssets.bank().requireClip(actor.taeId()).durationMicros())/50_000.0;
+        long time=poseMicros(Math.addExact(Math.multiplyExact(gameTick,GAME_TICK_MICROS),(long)(partialTick*GAME_TICK_MICROS)));
+        long duration=PromisedConsortSourceTransition.cinematic(this)?(long)(PromisedConsortSourceTransition.END*1_000_000):PromisedConsortSourceAssets.bank().requireClip(actor.taeId()).durationMicros();
+        return Math.min(time,duration)/50_000.0;
     }
-    public String animationClip() { return PromisedConsortSourceAssets.bank().requireClip(actor.taeId()).animationClip(); }
+    public int poseId() {
+        if(PromisedConsortSourceTransition.cinematic(this)) return PromisedConsortSourceTransition.POSE_ID;
+        // Source preview actors keep the extracted animation. Production repairs
+        // use one baked skeleton for rendering, attachments and hit samples.
+        if(actor.actionSequence()>=(1L<<60)) return actor.hkxId();
+        return productionPose(actor.hkxId());
+    }
+    public static int productionPose(int sourceHkx) {
+        return switch(sourceHkx) {case 3013->930013;case 3017->930017;case 4100->934100;case 4101->934101;default->sourceHkx;};
+    }
+    public static boolean matchesSourcePose(int sourceHkx,int sampledPose) {
+        return sampledPose==sourceHkx || sampledPose==productionPose(sourceHkx);
+    }
+    public long poseMicros(long world) {return PromisedConsortSourceTransition.cinematic(this)?(long)(PromisedConsortSourceTransition.seconds(this,world)*1_000_000):sourceMicros(world);}
+    public String animationClip() {return "animation.promised_consort.source_"+String.format(java.util.Locale.ROOT,"%06d",poseId());}
 
     /** Transfer only Master translation to the actor; rendering removes that same channel. */
     public Vec3 displacement(long worldMicros,double yawDegrees) {
@@ -42,19 +57,19 @@ public record PromisedConsortSourcePlayback(Actor actor,long startWorldMicros,do
     }
     public CompoundTag encode() {
         CompoundTag tag=new CompoundTag();
-        tag.putInt("Version",3); tag.putLong("Sequence",actor.actionSequence());
+        tag.putInt("Version",4); tag.putLong("Sequence",actor.actionSequence());
         tag.putInt("Segment",actor.segmentIndex()); tag.putInt("Slot",actor.slot());
         tag.putInt("TAE",actor.taeId()); tag.putInt("HKX",actor.hkxId()); tag.putInt("StateInfo",actor.stateInfo());
         tag.putLong("StartMicros",startWorldMicros); tag.putDouble("Speed",speed);
         tag.putLong("SourceOffsetMicros",sourceOffsetMicros);
-        tag.putLongArray("Warp",new long[]{warp.sourceWindup(),warp.sourceActive(),warp.sourceRecovery(),warp.gameWindup(),warp.gameActive(),warp.gameRecovery()});
+        tag.putLongArray("Warp",warp.values());
         return tag;
     }
     public static PromisedConsortSourcePlayback decode(CompoundTag tag) {
         if (tag.isEmpty()) return null;
-        if (tag.getInt("Version")!=3) throw new IllegalArgumentException("Unsupported source playback state");
-        long[] w=tag.getLongArray("Warp");if(w.length!=6) throw new IllegalArgumentException("Invalid source clock phases");
+        if (tag.getInt("Version")!=4) throw new IllegalArgumentException("Unsupported source playback state");
+        long[] w=tag.getLongArray("Warp");
         return new PromisedConsortSourcePlayback(new Actor(tag.getLong("Sequence"),tag.getInt("Segment"),tag.getInt("Slot"),
-                tag.getInt("TAE"),tag.getInt("HKX"),tag.getInt("StateInfo")),tag.getLong("StartMicros"),tag.getDouble("Speed"),tag.getLong("SourceOffsetMicros"),new PromisedConsortSourceTimeWarp(w[0],w[1],w[2],w[3],w[4],w[5]));
+                tag.getInt("TAE"),tag.getInt("HKX"),tag.getInt("StateInfo")),tag.getLong("StartMicros"),tag.getDouble("Speed"),tag.getLong("SourceOffsetMicros"),PromisedConsortSourceTimeWarp.from(w));
     }
 }
